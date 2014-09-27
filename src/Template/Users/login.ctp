@@ -1,8 +1,12 @@
-<div class="users form">
+<?php $this->assign('title', 'Belépés'); ?>
+<div class="users form" id="loginform">
 <?= $this->Flash->render('auth') ?>
+<?php
+	echo $this->Html->image('logo-big.png', ['alt' => 'Sanga logo'])
+?>
 <?= $this->Form->create() ?>
     <fieldset>
-        <legend><?= __('Please enter your username and password') ?></legend>
+        <legend>Bejelentkezés</legend>
         <?= $this->Form->input('username') ?>
         <?= $this->Form->input('password') ?>
     </fieldset>
