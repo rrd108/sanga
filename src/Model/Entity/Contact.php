@@ -31,6 +31,7 @@ class Contact extends Entity {
 		'histories' => true,
 		'groups' => true,
 		'users' => true,
+        'linkups' => true,
 	];
 
 }

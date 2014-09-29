@@ -26,6 +26,11 @@ class LinkupsTable extends Table {
 			'targetForeignKey' => 'user_id',
 			'joinTable' => 'linkups_users',
 		]);
+		$this->belongsToMany('Contacts', [
+			'foreignKey' => 'linkup_id',
+			'targetForeignKey' => 'contact_id',
+			'joinTable' => 'contacts_users',
+		]);
 	}
 
 /**
