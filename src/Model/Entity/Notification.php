@@ -15,7 +15,6 @@ class Notification extends Entity {
  */
 	protected $_accessible = [
 		'notification' => true,
-        'users_id' => true,
 		'unread' => true,
 		'user' => true,
 	];

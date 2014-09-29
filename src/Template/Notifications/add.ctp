@@ -11,7 +11,6 @@
 	<fieldset>
 		<legend><?= __('Add Notification'); ?></legend>
 	<?php
-		echo $this->Form->input('users_id', array('type' => 'text'));
 		echo $this->Form->input('notification');
 		echo $this->Form->input('unread');
 	?>

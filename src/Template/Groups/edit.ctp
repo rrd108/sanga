@@ -3,6 +3,8 @@
 	<ul class="side-nav">
 		<li><?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $group->id], ['confirm' => __('Are you sure you want to delete # %s?', $group->id)]) ?></li>
 		<li><?= $this->Html->link(__('List Groups'), ['action' => 'index']) ?></li>
+		<li><?= $this->Html->link(__('List Grouptypes'), ['controller' => 'Grouptypes', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Grouptype'), ['controller' => 'Grouptypes', 'action' => 'add']) ?> </li>
 	</ul>
 </div>
 <div class="groups form large-10 medium-9 columns">

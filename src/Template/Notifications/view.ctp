@@ -13,10 +13,10 @@
 	<h2><?= h($notification->id) ?></h2>
 	<div class="row">
 		<div class="large-5 columns strings">
-			<h6 class="subheader"><?= __('Notification') ?></h6>
-			<p><?= h($notification->notification) ?></p>
 			<h6 class="subheader"><?= __('User') ?></h6>
 			<p><?= $notification->has('user') ? $this->Html->link($notification->user->id, ['controller' => 'Users', 'action' => 'view', $notification->user->id]) : '' ?></p>
+			<h6 class="subheader"><?= __('Notification') ?></h6>
+			<p><?= h($notification->notification) ?></p>
 		</div>
 		<div class="large-2 larege-offset-1 columns numbers end">
 			<h6 class="subheader"><?= __('Id') ?></h6>

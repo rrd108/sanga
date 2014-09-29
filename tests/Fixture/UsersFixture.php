@@ -21,7 +21,7 @@ class UsersFixture extends TestFixture {
 		'realname' => ['type' => 'string', 'length' => 45, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
 		'email' => ['type' => 'string', 'length' => 45, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
 		'phone' => ['type' => 'string', 'length' => 45, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
-		'active' => ['type' => 'boolean', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+		'active' => ['type' => 'boolean', 'length' => null, 'null' => true, 'default' => '1', 'comment' => '', 'precision' => null],
 		'role' => ['type' => 'string', 'length' => 45, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
 		'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
 		'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
@@ -48,8 +48,8 @@ class UsersFixture extends TestFixture {
 			'phone' => 'Lorem ipsum dolor sit amet',
 			'active' => 1,
 			'role' => 'Lorem ipsum dolor sit amet',
-			'created' => '2014-09-25 22:14:50',
-			'modified' => '2014-09-25 22:14:50'
+			'created' => '2014-09-27 09:29:07',
+			'modified' => '2014-09-27 09:29:07'
 		],
 	];
 

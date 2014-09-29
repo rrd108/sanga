@@ -16,6 +16,9 @@ class ContactsController extends AppController {
  * @return void
  */
 	public function index() {
+		$this->paginate = [
+			'contain' => ['Countries', 'Zips', 'Contactsources']
+		];
 		$this->set('contacts', $this->paginate($this->Contacts));
 	}
 
@@ -28,7 +31,7 @@ class ContactsController extends AppController {
  */
 	public function view($id = null) {
 		$contact = $this->Contacts->get($id, [
-			'contain' => []
+			'contain' => ['Countries', 'Zips', 'Contactsources']
 		]);
 		$this->set('contact', $contact);
 	}
@@ -48,7 +51,10 @@ class ContactsController extends AppController {
 				$this->Flash->error('The contact could not be saved. Please, try again.');
 			}
 		}
-		$this->set(compact('contact'));
+		$countries = $this->Contacts->Countries->find('list');
+		$zips = $this->Contacts->Zips->find('list');
+		$contactsources = $this->Contacts->Contactsources->find('list');
+		$this->set(compact('contact', 'countries', 'zips', 'contactsources'));
 	}
 
 /**
@@ -71,7 +77,10 @@ class ContactsController extends AppController {
 				$this->Flash->error('The contact could not be saved. Please, try again.');
 			}
 		}
-		$this->set(compact('contact'));
+		$countries = $this->Contacts->Countries->find('list');
+		$zips = $this->Contacts->Zips->find('list');
+		$contactsources = $this->Contacts->Contactsources->find('list');
+		$this->set(compact('contact', 'countries', 'zips', 'contactsources'));
 	}
 
 /**

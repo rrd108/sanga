@@ -15,7 +15,8 @@ class GroupsControllerTest extends IntegrationTestCase {
  * @var array
  */
 	public $fixtures = [
-		'app.groups'
+		'app.groups',
+		'app.grouptypes'
 	];
 
 /**

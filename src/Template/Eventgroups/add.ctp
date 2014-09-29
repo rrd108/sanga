@@ -2,6 +2,8 @@
 	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
 		<li><?= $this->Html->link(__('List Eventgroups'), ['action' => 'index']) ?></li>
+		<li><?= $this->Html->link(__('List Events'), ['controller' => 'Events', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Event'), ['controller' => 'Events', 'action' => 'add']) ?> </li>
 	</ul>
 </div>
 <div class="eventgroups form large-10 medium-9 columns">

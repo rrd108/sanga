@@ -15,7 +15,10 @@ class CountriesControllerTest extends IntegrationTestCase {
  * @var array
  */
 	public $fixtures = [
-		'app.countries'
+		'app.countries',
+		'app.contacts',
+		'app.zips',
+		'app.contactsources'
 	];
 
 /**

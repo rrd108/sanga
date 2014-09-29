@@ -16,6 +16,9 @@ class GroupsController extends AppController {
  * @return void
  */
 	public function index() {
+		$this->paginate = [
+			'contain' => ['Grouptypes']
+		];
 		$this->set('groups', $this->paginate($this->Groups));
 	}
 
@@ -28,7 +31,7 @@ class GroupsController extends AppController {
  */
 	public function view($id = null) {
 		$group = $this->Groups->get($id, [
-			'contain' => []
+			'contain' => ['Grouptypes']
 		]);
 		$this->set('group', $group);
 	}
@@ -48,7 +51,8 @@ class GroupsController extends AppController {
 				$this->Flash->error('The group could not be saved. Please, try again.');
 			}
 		}
-		$this->set(compact('group'));
+		$grouptypes = $this->Groups->Grouptypes->find('list');
+		$this->set(compact('group', 'grouptypes'));
 	}
 
 /**
@@ -71,7 +75,8 @@ class GroupsController extends AppController {
 				$this->Flash->error('The group could not be saved. Please, try again.');
 			}
 		}
-		$this->set(compact('group'));
+		$grouptypes = $this->Groups->Grouptypes->find('list');
+		$this->set(compact('group', 'grouptypes'));
 	}
 
 /**

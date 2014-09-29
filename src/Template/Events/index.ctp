@@ -2,6 +2,10 @@
 	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
 		<li><?= $this->Html->link(__('New Event'), ['action' => 'add']) ?></li>
+		<li><?= $this->Html->link(__('List Eventgroups'), ['controller' => 'Eventgroups', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Eventgroup'), ['controller' => 'Eventgroups', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Histories'), ['controller' => 'Histories', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New History'), ['controller' => 'Histories', 'action' => 'add']) ?> </li>
 	</ul>
 </div>
 <div class="events index large-10 medium-9 columns">
@@ -10,7 +14,7 @@
 		<tr>
 			<th><?= $this->Paginator->sort('id') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
-			<th><?= $this->Paginator->sort('eventgroups_id') ?></th>
+			<th><?= $this->Paginator->sort('eventgroup_id') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
@@ -19,7 +23,9 @@
 		<tr>
 			<td><?= $this->Number->format($event->id) ?></td>
 			<td><?= h($event->name) ?></td>
-			<td><?= $this->Number->format($event->eventgroups_id) ?></td>
+			<td>
+				<?= $event->has('eventgroup') ? $this->Html->link($event->eventgroup->name, ['controller' => 'Eventgroups', 'action' => 'view', $event->eventgroup->id]) : '' ?>
+			</td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $event->id]) ?>
 				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $event->id]) ?>

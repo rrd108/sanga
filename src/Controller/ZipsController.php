@@ -28,7 +28,7 @@ class ZipsController extends AppController {
  */
 	public function view($id = null) {
 		$zip = $this->Zips->get($id, [
-			'contain' => []
+			'contain' => ['Contacts']
 		]);
 		$this->set('zip', $zip);
 	}

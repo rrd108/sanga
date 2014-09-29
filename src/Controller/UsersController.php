@@ -4,7 +4,6 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Event\Event;
-
 /**
  * Users Controller
  *
@@ -38,24 +37,28 @@ class UsersController extends AppController {
 /**
  * View method
  *
+ * @param string $id
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view() {
-		$user = $this->Users->get($this->Auth->user('id'),
-								  ['contain' => []]);
+		$user = $this->Users->get($this->Auth->user('id'), [
+			'contain' => ['Contacts', 'Linkups', 'Histories', 'Notifications']
+		]);
 		$this->set('user', $user);
 	}
 
 /**
  * Edit method
  *
+ * @param string $id
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function edit() {
-		$user = $this->Users->get($this->Auth->user('id'),
-								  ['contain' => []]);
+		$user = $this->Users->get($this->Auth->user('id'), [
+			'contain' => ['Contacts', 'Linkups']
+		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$user = $this->Users->patchEntity($user, $this->request->data);
 			if ($this->Users->save($user)) {
@@ -65,6 +68,8 @@ class UsersController extends AppController {
 				$this->Flash->error('The user could not be saved. Please, try again.');
 			}
 		}
-		$this->set(compact('user'));
+		$contacts = $this->Users->Contacts->find('list');
+		$linkups = $this->Users->Linkups->find('list');
+		$this->set(compact('user', 'contacts', 'linkups'));
 	}
 }

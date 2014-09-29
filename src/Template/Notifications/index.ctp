@@ -11,10 +11,10 @@
 	<thead>
 		<tr>
 			<th><?= $this->Paginator->sort('id') ?></th>
+			<th><?= $this->Paginator->sort('user_id') ?></th>
 			<th><?= $this->Paginator->sort('notification') ?></th>
 			<th><?= $this->Paginator->sort('unread') ?></th>
 			<th><?= $this->Paginator->sort('created') ?></th>
-			<th><?= $this->Paginator->sort('users_id') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
@@ -22,12 +22,12 @@
 	<?php foreach ($notifications as $notification): ?>
 		<tr>
 			<td><?= $this->Number->format($notification->id) ?></td>
-			<td><?= h($notification->notification) ?></td>
-			<td><?= h($notification->unread) ?></td>
-			<td><?= h($notification->created) ?></td>
 			<td>
 				<?= $notification->has('user') ? $this->Html->link($notification->user->id, ['controller' => 'Users', 'action' => 'view', $notification->user->id]) : '' ?>
 			</td>
+			<td><?= h($notification->notification) ?></td>
+			<td><?= h($notification->unread) ?></td>
+			<td><?= h($notification->created) ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $notification->id]) ?>
 				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $notification->id]) ?>

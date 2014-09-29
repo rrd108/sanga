@@ -15,7 +15,20 @@ class EventgroupsControllerTest extends IntegrationTestCase {
  * @var array
  */
 	public $fixtures = [
-		'app.eventgroups'
+		'app.eventgroups',
+		'app.events',
+		'app.histories',
+		'app.contacts',
+		'app.countries',
+		'app.zips',
+		'app.contactsources',
+		'app.users',
+		'app.notifications',
+		'app.contacts_users',
+		'app.linkups',
+		'app.linkups_users',
+		'app.groups',
+		'app.grouptypes'
 	];
 
 /**

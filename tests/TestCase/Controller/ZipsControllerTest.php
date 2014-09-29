@@ -15,7 +15,10 @@ class ZipsControllerTest extends IntegrationTestCase {
  * @var array
  */
 	public $fixtures = [
-		'app.zips'
+		'app.zips',
+		'app.contacts',
+		'app.countries',
+		'app.contactsources'
 	];
 
 /**

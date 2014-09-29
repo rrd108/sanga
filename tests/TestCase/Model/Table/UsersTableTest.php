@@ -11,15 +11,6 @@ use Cake\TestSuite\TestCase;
 class UsersTableTest extends TestCase {
 
 /**
- * Fixtures
- *
- * @var array
- */
-	public $fixtures = [
-		'app.users'
-	];
-
-/**
  * setUp method
  *
  * @return void

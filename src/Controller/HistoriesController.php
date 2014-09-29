@@ -16,6 +16,9 @@ class HistoriesController extends AppController {
  * @return void
  */
 	public function index() {
+		$this->paginate = [
+			'contain' => ['Contacts', 'Users', 'Events', 'Groups']
+		];
 		$this->set('histories', $this->paginate($this->Histories));
 	}
 
@@ -28,7 +31,7 @@ class HistoriesController extends AppController {
  */
 	public function view($id = null) {
 		$history = $this->Histories->get($id, [
-			'contain' => []
+			'contain' => ['Contacts', 'Users', 'Events', 'Groups']
 		]);
 		$this->set('history', $history);
 	}
@@ -48,7 +51,11 @@ class HistoriesController extends AppController {
 				$this->Flash->error('The history could not be saved. Please, try again.');
 			}
 		}
-		$this->set(compact('history'));
+		$contacts = $this->Histories->Contacts->find('list');
+		$users = $this->Histories->Users->find('list');
+		$events = $this->Histories->Events->find('list');
+		$groups = $this->Histories->Groups->find('list');
+		$this->set(compact('history', 'contacts', 'users', 'events', 'groups'));
 	}
 
 /**
@@ -71,7 +78,11 @@ class HistoriesController extends AppController {
 				$this->Flash->error('The history could not be saved. Please, try again.');
 			}
 		}
-		$this->set(compact('history'));
+		$contacts = $this->Histories->Contacts->find('list');
+		$users = $this->Histories->Users->find('list');
+		$events = $this->Histories->Events->find('list');
+		$groups = $this->Histories->Groups->find('list');
+		$this->set(compact('history', 'contacts', 'users', 'events', 'groups'));
 	}
 
 /**

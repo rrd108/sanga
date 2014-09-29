@@ -2,6 +2,12 @@
 	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
 		<li><?= $this->Html->link(__('New Contact'), ['action' => 'add']) ?></li>
+		<li><?= $this->Html->link(__('List Countries'), ['controller' => 'Countries', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Country'), ['controller' => 'Countries', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Zips'), ['controller' => 'Zips', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Zip'), ['controller' => 'Zips', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Contactsources'), ['controller' => 'Contactsources', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Contactsource'), ['controller' => 'Contactsources', 'action' => 'add']) ?> </li>
 	</ul>
 </div>
 <div class="contacts index large-10 medium-9 columns">
@@ -11,8 +17,8 @@
 			<th><?= $this->Paginator->sort('id') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
 			<th><?= $this->Paginator->sort('contactname') ?></th>
-			<th><?= $this->Paginator->sort('countries_id') ?></th>
-			<th><?= $this->Paginator->sort('zips_id') ?></th>
+			<th><?= $this->Paginator->sort('country_id') ?></th>
+			<th><?= $this->Paginator->sort('zip_id') ?></th>
 			<th><?= $this->Paginator->sort('address') ?></th>
 			<th><?= $this->Paginator->sort('phone') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
@@ -24,8 +30,12 @@
 			<td><?= $this->Number->format($contact->id) ?></td>
 			<td><?= h($contact->name) ?></td>
 			<td><?= h($contact->contactname) ?></td>
-			<td><?= $this->Number->format($contact->countries_id) ?></td>
-			<td><?= h($contact->zips_id) ?></td>
+			<td>
+				<?= $contact->has('country') ? $this->Html->link($contact->country->name, ['controller' => 'Countries', 'action' => 'view', $contact->country->id]) : '' ?>
+			</td>
+			<td>
+				<?= $contact->has('zip') ? $this->Html->link($contact->zip->name, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?>
+			</td>
 			<td><?= h($contact->address) ?></td>
 			<td><?= h($contact->phone) ?></td>
 			<td class="actions">

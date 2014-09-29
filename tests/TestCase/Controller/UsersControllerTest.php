@@ -15,7 +15,20 @@ class UsersControllerTest extends IntegrationTestCase {
  * @var array
  */
 	public $fixtures = [
-		'app.users'
+		'app.users',
+		'app.histories',
+		'app.contacts',
+		'app.countries',
+		'app.zips',
+		'app.contactsources',
+		'app.events',
+		'app.eventgroups',
+		'app.groups',
+		'app.grouptypes',
+		'app.notifications',
+		'app.contacts_users',
+		'app.linkups',
+		'app.linkups_users'
 	];
 
 /**

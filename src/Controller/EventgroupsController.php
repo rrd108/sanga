@@ -28,7 +28,7 @@ class EventgroupsController extends AppController {
  */
 	public function view($id = null) {
 		$eventgroup = $this->Eventgroups->get($id, [
-			'contain' => []
+			'contain' => ['Events']
 		]);
 		$this->set('eventgroup', $eventgroup);
 	}

@@ -20,6 +20,10 @@ class EventgroupsTable extends Table {
 		$this->table('eventgroups');
 		$this->displayField('name');
 		$this->primaryKey('id');
+
+		$this->hasMany('Events', [
+			'foreignKey' => 'eventgroup_id',
+		]);
 	}
 
 /**

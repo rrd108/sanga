@@ -28,7 +28,7 @@ class GrouptypesController extends AppController {
  */
 	public function view($id = null) {
 		$grouptype = $this->Grouptypes->get($id, [
-			'contain' => []
+			'contain' => ['Groups']
 		]);
 		$this->set('grouptype', $grouptype);
 	}

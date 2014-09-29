@@ -21,6 +21,10 @@ class User extends Entity {
 		'phone' => true,
 		'active' => true,
 		'role' => true,
+		'histories' => true,
+		'notifications' => true,
+		'contacts' => true,
+		'linkups' => true,
 	];
 
 }

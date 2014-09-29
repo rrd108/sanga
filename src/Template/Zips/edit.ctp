@@ -3,6 +3,8 @@
 	<ul class="side-nav">
 		<li><?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $zip->id], ['confirm' => __('Are you sure you want to delete # %s?', $zip->id)]) ?></li>
 		<li><?= $this->Html->link(__('List Zips'), ['action' => 'index']) ?></li>
+		<li><?= $this->Html->link(__('List Contacts'), ['controller' => 'Contacts', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?> </li>
 	</ul>
 </div>
 <div class="zips form large-10 medium-9 columns">
@@ -10,7 +12,7 @@
 	<fieldset>
 		<legend><?= __('Edit Zip'); ?></legend>
 	<?php
-		echo $this->Form->input('id', array('type' => 'text'));
+		echo $this->Form->input('zip');
 		echo $this->Form->input('name');
 	?>
 	</fieldset>

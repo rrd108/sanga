@@ -19,11 +19,11 @@ class NotificationsTable extends Table {
 	public function initialize(array $config) {
 		$this->table('notifications');
 		$this->displayField('id');
-		$this->primaryKey(['id', 'users_id']);
+		$this->primaryKey(['id']);
 		$this->addBehavior('Timestamp');
 
 		$this->belongsTo('Users', [
-			'foreignKey' => 'users_id',
+			'foreignKey' => 'user_id',
 		]);
 	}
 
@@ -37,11 +37,11 @@ class NotificationsTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
+			->add('user_id', 'valid', ['rule' => 'numeric'])
+			->allowEmpty('user_id', 'create')
 			->allowEmpty('notification')
 			->add('unread', 'valid', ['rule' => 'boolean'])
-			->allowEmpty('unread')
-			->add('users_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('users_id', 'create');
+			->allowEmpty('unread');
 
 		return $validator;
 	}

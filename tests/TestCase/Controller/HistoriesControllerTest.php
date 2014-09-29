@@ -15,7 +15,20 @@ class HistoriesControllerTest extends IntegrationTestCase {
  * @var array
  */
 	public $fixtures = [
-		'app.histories'
+		'app.histories',
+		'app.contacts',
+		'app.countries',
+		'app.zips',
+		'app.contactsources',
+		'app.users',
+		'app.notifications',
+		'app.contacts_users',
+		'app.linkups',
+		'app.linkups_users',
+		'app.events',
+		'app.eventgroups',
+		'app.groups',
+		'app.grouptypes'
 	];
 
 /**

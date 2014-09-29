@@ -28,7 +28,7 @@ class ContactsourcesController extends AppController {
  */
 	public function view($id = null) {
 		$contactsource = $this->Contactsources->get($id, [
-			'contain' => []
+			'contain' => ['Contacts']
 		]);
 		$this->set('contactsource', $contactsource);
 	}

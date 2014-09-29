@@ -22,6 +22,12 @@ class UsersTable extends Table {
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
 
+		$this->hasMany('Histories', [
+			'foreignKey' => 'user_id',
+		]);
+		$this->hasMany('Notifications', [
+			'foreignKey' => 'user_id',
+		]);
 		$this->belongsToMany('Contacts', [
 			'foreignKey' => 'user_id',
 			'targetForeignKey' => 'contact_id',
