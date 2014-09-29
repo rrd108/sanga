@@ -24,7 +24,7 @@ class NotificationsFixture extends TestFixture {
 			'fk_notifications_users1_idx' => ['type' => 'index', 'columns' => ['user_id'], 'length' => []],
 		],
 		'_constraints' => [
-			'primary' => ['type' => 'primary', 'columns' => ['id', 'user_id'], 'length' => []],
+			'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
 			'fk_notifications_users1' => ['type' => 'foreign', 'columns' => ['user_id'], 'references' => ['users', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
 		],
 		'_options' => [
@@ -43,7 +43,7 @@ class NotificationsFixture extends TestFixture {
 			'user_id' => 1,
 			'notification' => 'Lorem ipsum dolor sit amet',
 			'unread' => 1,
-			'created' => '2014-09-27 09:29:33'
+			'created' => '2014-09-29 14:14:53'
 		],
 	];
 

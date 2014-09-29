@@ -11,8 +11,9 @@
 	<fieldset>
 		<legend><?= __('Add Notification'); ?></legend>
 	<?php
+		echo $this->Form->input('user_id', ['options' => $users]);
 		echo $this->Form->input('notification');
-		echo $this->Form->input('unread');
+		echo $this->Form->input('unread', ['checked' => true]);
 	?>
 	</fieldset>
 <?= $this->Form->button(__('Submit')) ?>

@@ -15,6 +15,7 @@ class Group extends Entity {
  */
 	protected $_accessible = [
 		'name' => true,
+		'grouptype_id' => true,
 		'grouptype' => true,
 	];
 

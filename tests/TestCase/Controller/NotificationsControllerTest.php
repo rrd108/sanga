@@ -26,6 +26,7 @@ class NotificationsControllerTest extends IntegrationTestCase {
 		'app.eventgroups',
 		'app.groups',
 		'app.grouptypes',
+		'app.contacts_groups',
 		'app.contacts_users',
 		'app.linkups',
 		'app.linkups_users'

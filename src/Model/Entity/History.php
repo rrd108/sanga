@@ -15,8 +15,11 @@ class History extends Entity {
  */
 	protected $_accessible = [
 		'date' => true,
+		'contact_id' => true,
+		'user_id' => true,
 		'detail' => true,
 		'amount' => true,
+		'event_id' => true,
 		'group_id' => true,
 		'contact' => true,
 		'user' => true,

@@ -68,7 +68,7 @@
 					<ul>
 						<?php
 							print '<li>' . $this->Html->link('☭ Adatlapom', '/users/view') . '</li>';
-							print '<li>' . $this->Html->link('⚠ Értesítések', '/notifiations') . '</li>';
+							print '<li>' . $this->Html->link('⚠ Értesítések', '/notifications') . '</li>';
 							print '<li>' . $this->Html->link('⊗ Kijelentkezem', '/users/logout') . '</li>';
 						?>
 					</ul>

@@ -35,7 +35,7 @@ class ContactsFixture extends TestFixture {
 			'fk_contacts_contactsources1_idx' => ['type' => 'index', 'columns' => ['contactsource_id'], 'length' => []],
 		],
 		'_constraints' => [
-			'primary' => ['type' => 'primary', 'columns' => ['id', 'contactsource_id'], 'length' => []],
+			'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
 			'fk_contacts_zips1' => ['type' => 'foreign', 'columns' => ['zip_id'], 'references' => ['zips', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
 			'fk_contacts_countries1' => ['type' => 'foreign', 'columns' => ['country_id'], 'references' => ['countries', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
 			'fk_contacts_contactsources1' => ['type' => 'foreign', 'columns' => ['contactsource_id'], 'references' => ['contactsources', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
@@ -60,11 +60,11 @@ class ContactsFixture extends TestFixture {
 			'address' => 'Lorem ipsum dolor sit amet',
 			'phone' => 'Lorem ipsum dolor sit amet',
 			'email' => 'Lorem ipsum dolor sit amet',
-			'birth' => '2014-09-27',
+			'birth' => '2014-09-29',
 			'active' => 1,
 			'comment' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-			'created' => '2014-09-27 09:29:59',
-			'modified' => '2014-09-27 09:29:59',
+			'created' => '2014-09-29 14:45:16',
+			'modified' => '2014-09-29 14:45:16',
 			'contactsource_id' => 1
 		],
 	];

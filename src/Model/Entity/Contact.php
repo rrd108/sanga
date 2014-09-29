@@ -24,9 +24,13 @@ class Contact extends Entity {
 		'birth' => true,
 		'active' => true,
 		'comment' => true,
+		'contactsource_id' => true,
 		'country' => true,
 		'zip' => true,
 		'contactsource' => true,
+		'histories' => true,
+		'groups' => true,
+		'users' => true,
 	];
 
 }

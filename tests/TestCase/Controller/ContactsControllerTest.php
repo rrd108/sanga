@@ -18,7 +18,19 @@ class ContactsControllerTest extends IntegrationTestCase {
 		'app.contacts',
 		'app.countries',
 		'app.zips',
-		'app.contactsources'
+		'app.contactsources',
+		'app.histories',
+		'app.users',
+		'app.notifications',
+		'app.contacts_users',
+		'app.linkups',
+		'app.linkups_users',
+		'app.events',
+		'app.eventgroups',
+		'app.groups',
+		'app.grouptypes',
+		'app.contacts_groups',
+		'app.contacts_linkups'
 	];
 
 /**

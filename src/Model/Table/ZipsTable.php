@@ -18,7 +18,7 @@ class ZipsTable extends Table {
  */
 	public function initialize(array $config) {
 		$this->table('zips');
-		$this->displayField('name');
+		$this->displayField('zip');
 		$this->primaryKey('id');
 
 		$this->hasMany('Contacts', [

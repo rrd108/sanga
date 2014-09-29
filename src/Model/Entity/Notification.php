@@ -14,6 +14,7 @@ class Notification extends Entity {
  * @var array
  */
 	protected $_accessible = [
+		'user_id' => true,
 		'notification' => true,
 		'unread' => true,
 		'user' => true,

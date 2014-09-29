@@ -60,3 +60,7 @@ header img{
 .actions{
   clear: left;
 }
+
+select[multiple]{
+  height: 300%;
+}

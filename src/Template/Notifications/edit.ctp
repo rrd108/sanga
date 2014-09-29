@@ -12,6 +12,7 @@
 	<fieldset>
 		<legend><?= __('Edit Notification'); ?></legend>
 	<?php
+		echo $this->Form->input('user_id', ['options' => $users]);
 		echo $this->Form->input('notification');
 		echo $this->Form->input('unread');
 	?>

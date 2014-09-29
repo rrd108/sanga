@@ -20,15 +20,16 @@ class HistoriesControllerTest extends IntegrationTestCase {
 		'app.countries',
 		'app.zips',
 		'app.contactsources',
+		'app.groups',
+		'app.grouptypes',
+		'app.contacts_groups',
 		'app.users',
 		'app.notifications',
 		'app.contacts_users',
 		'app.linkups',
 		'app.linkups_users',
 		'app.events',
-		'app.eventgroups',
-		'app.groups',
-		'app.grouptypes'
+		'app.eventgroups'
 	];
 
 /**

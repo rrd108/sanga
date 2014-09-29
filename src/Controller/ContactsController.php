@@ -31,7 +31,7 @@ class ContactsController extends AppController {
  */
 	public function view($id = null) {
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['Countries', 'Zips', 'Contactsources']
+			'contain' => ['Countries', 'Zips', 'Contactsources', 'Groups', 'Linkups', 'Users', 'Histories']
 		]);
 		$this->set('contact', $contact);
 	}
@@ -52,9 +52,12 @@ class ContactsController extends AppController {
 			}
 		}
 		$countries = $this->Contacts->Countries->find('list');
-		$zips = $this->Contacts->Zips->find('list');
+		$zips = $this->Contacts->Zips->find('list', ['idField' => 'id', 'valueField' => 'full_zip']);
 		$contactsources = $this->Contacts->Contactsources->find('list');
-		$this->set(compact('contact', 'countries', 'zips', 'contactsources'));
+		$groups = $this->Contacts->Groups->find('list');
+		$linkups = $this->Contacts->Linkups->find('list');
+		$users = $this->Contacts->Users->find('list');
+		$this->set(compact('contact', 'countries', 'zips', 'contactsources', 'groups', 'linkups', 'users'));
 	}
 
 /**
@@ -66,7 +69,7 @@ class ContactsController extends AppController {
  */
 	public function edit($id = null) {
 		$contact = $this->Contacts->get($id, [
-			'contain' => []
+			'contain' => ['Groups', 'Linkups', 'Users']
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
@@ -80,7 +83,10 @@ class ContactsController extends AppController {
 		$countries = $this->Contacts->Countries->find('list');
 		$zips = $this->Contacts->Zips->find('list');
 		$contactsources = $this->Contacts->Contactsources->find('list');
-		$this->set(compact('contact', 'countries', 'zips', 'contactsources'));
+		$groups = $this->Contacts->Groups->find('list');
+		$linkups = $this->Contacts->Linkups->find('list');
+		$users = $this->Contacts->Users->find('list');
+		$this->set(compact('contact', 'countries', 'zips', 'contactsources', 'groups', 'linkups', 'users'));
 	}
 
 /**

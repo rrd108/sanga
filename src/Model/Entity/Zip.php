@@ -18,5 +18,10 @@ class Zip extends Entity {
 		'name' => true,
 		'contacts' => true,
 	];
+    
+    protected function _getFullZip() {
+        return $this->_properties['zip'] . '  ' .
+            $this->_properties['name'];
+    }
 
 }

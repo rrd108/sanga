@@ -19,10 +19,18 @@ class GroupsTable extends Table {
 	public function initialize(array $config) {
 		$this->table('groups');
 		$this->displayField('name');
-		$this->primaryKey(['id']);
+		$this->primaryKey('id');
 
 		$this->belongsTo('Grouptypes', [
 			'foreignKey' => 'grouptype_id',
+		]);
+		$this->hasMany('Histories', [
+			'foreignKey' => 'group_id',
+		]);
+		$this->belongsToMany('Contacts', [
+			'foreignKey' => 'group_id',
+			'targetForeignKey' => 'contact_id',
+			'joinTable' => 'contacts_groups',
 		]);
 	}
 
@@ -38,7 +46,8 @@ class GroupsTable extends Table {
 			->allowEmpty('id', 'create')
 			->allowEmpty('name')
 			->add('grouptype_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('grouptype_id', 'create');
+			->validatePresence('grouptype_id', 'create')
+			->notEmpty('grouptype_id');
 
 		return $validator;
 	}

@@ -11,6 +11,29 @@ use Cake\TestSuite\TestCase;
 class ContactsTableTest extends TestCase {
 
 /**
+ * Fixtures
+ *
+ * @var array
+ */
+	public $fixtures = [
+		'app.contacts',
+		'app.countries',
+		'app.zips',
+		'app.contactsources',
+		'app.histories',
+		'app.users',
+		'app.notifications',
+		'app.contacts_users',
+		'app.linkups',
+		'app.linkups_users',
+		'app.events',
+		'app.eventgroups',
+		'app.groups',
+		'app.grouptypes',
+		'app.contacts_groups'
+	];
+
+/**
  * setUp method
  *
  * @return void

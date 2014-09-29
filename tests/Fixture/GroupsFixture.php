@@ -22,7 +22,7 @@ class GroupsFixture extends TestFixture {
 			'fk_groups_grouptypes1_idx' => ['type' => 'index', 'columns' => ['grouptype_id'], 'length' => []],
 		],
 		'_constraints' => [
-			'primary' => ['type' => 'primary', 'columns' => ['id', 'grouptype_id'], 'length' => []],
+			'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
 			'fk_groups_grouptypes1' => ['type' => 'foreign', 'columns' => ['grouptype_id'], 'references' => ['grouptypes', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
 		],
 		'_options' => [

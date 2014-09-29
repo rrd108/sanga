@@ -16,7 +16,20 @@ class GroupsControllerTest extends IntegrationTestCase {
  */
 	public $fixtures = [
 		'app.groups',
-		'app.grouptypes'
+		'app.grouptypes',
+		'app.histories',
+		'app.contacts',
+		'app.countries',
+		'app.zips',
+		'app.contactsources',
+		'app.users',
+		'app.notifications',
+		'app.contacts_users',
+		'app.linkups',
+		'app.linkups_users',
+		'app.events',
+		'app.eventgroups',
+		'app.contacts_groups'
 	];
 
 /**

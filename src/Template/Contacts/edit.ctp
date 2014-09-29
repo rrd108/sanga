@@ -9,6 +9,14 @@
 		<li><?= $this->Html->link(__('New Zip'), ['controller' => 'Zips', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Contactsources'), ['controller' => 'Contactsources', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Contactsource'), ['controller' => 'Contactsources', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Histories'), ['controller' => 'Histories', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New History'), ['controller' => 'Histories', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Groups'), ['controller' => 'Groups', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Group'), ['controller' => 'Groups', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Linkups'), ['controller' => 'Linkups', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Linkup'), ['controller' => 'Linkups', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
 	</ul>
 </div>
 <div class="contacts form large-10 medium-9 columns">
@@ -26,6 +34,10 @@
 		echo $this->Form->input('birth');
 		echo $this->Form->input('active');
 		echo $this->Form->input('comment');
+		echo $this->Form->input('contactsource_id', ['options' => $contactsources]);
+		echo $this->Form->input('groups._ids', ['options' => $groups]);
+		echo $this->Form->input('linkups._ids', ['options' => $linkups]);
+		echo $this->Form->input('users._ids', ['options' => $users]);
 	?>
 	</fieldset>
 <?= $this->Form->button(__('Submit')) ?>

@@ -19,7 +19,7 @@ class HistoriesTable extends Table {
 	public function initialize(array $config) {
 		$this->table('histories');
 		$this->displayField('id');
-		$this->primaryKey(['id']);
+		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
 
 		$this->belongsTo('Contacts', [
@@ -49,14 +49,17 @@ class HistoriesTable extends Table {
 			->add('date', 'valid', ['rule' => 'date'])
 			->allowEmpty('date')
 			->add('contact_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('contact_id', 'create')
+			->validatePresence('contact_id', 'create')
+			->notEmpty('contact_id')
 			->add('user_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('user_id', 'create')
+			->validatePresence('user_id', 'create')
+			->notEmpty('user_id')
 			->allowEmpty('detail')
 			->add('amount', 'valid', ['rule' => 'decimal'])
 			->allowEmpty('amount')
 			->add('event_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('event_id', 'create')
+			->validatePresence('event_id', 'create')
+			->notEmpty('event_id')
 			->add('group_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('group_id', 'create')
 			->notEmpty('group_id');

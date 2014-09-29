@@ -31,7 +31,7 @@ class GroupsController extends AppController {
  */
 	public function view($id = null) {
 		$group = $this->Groups->get($id, [
-			'contain' => ['Grouptypes']
+			'contain' => ['Grouptypes', 'Contacts', 'Histories']
 		]);
 		$this->set('group', $group);
 	}
@@ -52,7 +52,8 @@ class GroupsController extends AppController {
 			}
 		}
 		$grouptypes = $this->Groups->Grouptypes->find('list');
-		$this->set(compact('group', 'grouptypes'));
+		$contacts = $this->Groups->Contacts->find('list');
+		$this->set(compact('group', 'grouptypes', 'contacts'));
 	}
 
 /**
@@ -64,7 +65,7 @@ class GroupsController extends AppController {
  */
 	public function edit($id = null) {
 		$group = $this->Groups->get($id, [
-			'contain' => []
+			'contain' => ['Contacts']
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$group = $this->Groups->patchEntity($group, $this->request->data);
@@ -76,7 +77,8 @@ class GroupsController extends AppController {
 			}
 		}
 		$grouptypes = $this->Groups->Grouptypes->find('list');
-		$this->set(compact('group', 'grouptypes'));
+		$contacts = $this->Groups->Contacts->find('list');
+		$this->set(compact('group', 'grouptypes', 'contacts'));
 	}
 
 /**

@@ -19,8 +19,9 @@ class ContactsTable extends Table {
 	public function initialize(array $config) {
 		$this->table('contacts');
 		$this->displayField('name');
-		$this->primaryKey(['id']);
+		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
+		$this->addBehavior('Translate', ['fields' => ['name', 'contactname', 'address', 'phone', 'birth', 'active', 'comment']]);
 
 		$this->belongsTo('Countries', [
 			'foreignKey' => 'country_id',
@@ -30,6 +31,24 @@ class ContactsTable extends Table {
 		]);
 		$this->belongsTo('Contactsources', [
 			'foreignKey' => 'contactsource_id',
+		]);
+		$this->hasMany('Histories', [
+			'foreignKey' => 'contact_id',
+		]);
+		$this->belongsToMany('Groups', [
+			'foreignKey' => 'contact_id',
+			'targetForeignKey' => 'group_id',
+			'joinTable' => 'contacts_groups',
+		]);
+		$this->belongsToMany('Linkups', [
+			'foreignKey' => 'contact_id',
+			'targetForeignKey' => 'linkup_id',
+			'joinTable' => 'contacts_linkups',
+		]);
+		$this->belongsToMany('Users', [
+			'foreignKey' => 'contact_id',
+			'targetForeignKey' => 'user_id',
+			'joinTable' => 'contacts_users',
 		]);
 	}
 
@@ -62,7 +81,8 @@ class ContactsTable extends Table {
 			->allowEmpty('active')
 			->allowEmpty('comment')
 			->add('contactsource_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('contactsource_id', 'create');
+			->validatePresence('contactsource_id', 'create')
+			->notEmpty('contactsource_id');
 
 		return $validator;
 	}

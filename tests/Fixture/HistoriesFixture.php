@@ -32,11 +32,11 @@ class HistoriesFixture extends TestFixture {
 			'fk_histories_groups1_idx' => ['type' => 'index', 'columns' => ['group_id'], 'length' => []],
 		],
 		'_constraints' => [
-			'primary' => ['type' => 'primary', 'columns' => ['id', 'contact_id', 'user_id', 'event_id'], 'length' => []],
+			'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
 			'fk_histories_contacts1' => ['type' => 'foreign', 'columns' => ['contact_id'], 'references' => ['contacts', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
-			'fk_histories_users1' => ['type' => 'foreign', 'columns' => ['user_id'], 'references' => ['users', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
 			'fk_histories_events1' => ['type' => 'foreign', 'columns' => ['event_id'], 'references' => ['events', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
 			'fk_histories_groups1' => ['type' => 'foreign', 'columns' => ['group_id'], 'references' => ['groups', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
+			'fk_histories_users1' => ['type' => 'foreign', 'columns' => ['user_id'], 'references' => ['users', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
 		],
 		'_options' => [
 'engine' => 'InnoDB', 'collation' => 'utf8_hungarian_ci'
@@ -51,15 +51,15 @@ class HistoriesFixture extends TestFixture {
 	public $records = [
 		[
 			'id' => 1,
-			'date' => '2014-09-27',
+			'date' => '2014-09-29',
 			'contact_id' => 1,
 			'user_id' => 1,
 			'detail' => 'Lorem ipsum dolor sit amet',
 			'amount' => '',
 			'event_id' => 1,
 			'group_id' => 1,
-			'created' => '2014-09-27 09:30:15',
-			'modified' => '2014-09-27 09:30:15'
+			'created' => '2014-09-29 14:24:35',
+			'modified' => '2014-09-29 14:24:35'
 		],
 	];
 

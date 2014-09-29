@@ -11,6 +11,16 @@ use Cake\TestSuite\TestCase;
 class GroupsTableTest extends TestCase {
 
 /**
+ * Fixtures
+ *
+ * @var array
+ */
+	public $fixtures = [
+		'app.groups',
+		'app.grouptypes'
+	];
+
+/**
  * setUp method
  *
  * @return void

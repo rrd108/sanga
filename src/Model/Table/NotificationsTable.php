@@ -19,7 +19,7 @@ class NotificationsTable extends Table {
 	public function initialize(array $config) {
 		$this->table('notifications');
 		$this->displayField('id');
-		$this->primaryKey(['id']);
+		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
 
 		$this->belongsTo('Users', [
@@ -38,7 +38,8 @@ class NotificationsTable extends Table {
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
 			->add('user_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('user_id', 'create')
+			->validatePresence('user_id', 'create')
+			->notEmpty('user_id')
 			->allowEmpty('notification')
 			->add('unread', 'valid', ['rule' => 'boolean'])
 			->allowEmpty('unread');
