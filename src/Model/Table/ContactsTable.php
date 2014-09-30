@@ -62,7 +62,7 @@ class ContactsTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
-			->allowEmpty('name')
+			->notEmpty('name')
 			->allowEmpty('contactname')
 			->add('country_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('country_id', 'create')
