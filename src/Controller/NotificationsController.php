@@ -17,7 +17,8 @@ class NotificationsController extends AppController {
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Users']
+			'contain' => ['Users'],
+			'order' => ['unread' => 'DESC', 'Notifications.created' => 'DESC']
 		];
 		$this->set('notifications', $this->paginate($this->Notifications));
 	}
@@ -25,6 +26,8 @@ class NotificationsController extends AppController {
 /**
  * View method
  *
+ * Viewing a notification by its owner sets unread to false
+ * 
  * @param string $id
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
@@ -33,6 +36,11 @@ class NotificationsController extends AppController {
 		$notification = $this->Notifications->get($id, [
 			'contain' => ['Users']
 		]);
+		if($notification->user_id == $this->Auth->user('id')){
+			$notification->unread = false;
+			$this->Notifications->save($notification);
+		}
+    	$this->set('notification_count', ($this->Notifications->find('unread', ['user_id' => $this->Auth->user('id')])->count()));
 		$this->set('notification', $notification);
 	}
 

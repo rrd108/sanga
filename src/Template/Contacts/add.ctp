@@ -28,14 +28,14 @@ $this->Html->addCrumb('Új', '/contacts/add');
 	<fieldset>
 		<legend><?= __('Add Contact'); ?></legend>
 	<?php
-		echo $this->Form->input('name', ['label' => 'Név']);
-		echo $this->Form->input('contactname');
+		echo $this->Form->autocomplete('name', ['source' => 'searchname', 'label' => 'Név', 'title' => 'A kapcsolat hivatalos neve, pl polgári név, cégnév']);
+		echo $this->Form->input('contactname', ['title' => 'A kapcsolat ismert neve, pl avatott név, becenév']);
 		echo $this->Form->input('country_id', ['options' => $countries, 'default' => '1', 'empty' => 'Egyéb']);
 		echo $this->Form->input('zip_id', ['options' => $zips]);
 		echo $this->Form->input('address');
 		echo $this->Form->input('phone');
 		echo $this->Form->input('email');
-		echo $this->Form->input('birth', ['minYear' => date('Y')-100, 'maxYear' => date('Y')]);
+		echo $this->Form->input('birth', ['type' => 'text']);
 		echo $this->Form->input('active', ['checked' => true]);
 		echo $this->Form->input('comment');
 		echo $this->Form->input('contactsource_id', ['options' => $contactsources, 'empty' => '---Válassz---']);

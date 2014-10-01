@@ -21,7 +21,6 @@ class NotificationsTable extends Table {
 		$this->displayField('id');
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
-
 		$this->belongsTo('Users', [
 			'foreignKey' => 'user_id',
 		]);
@@ -47,4 +46,11 @@ class NotificationsTable extends Table {
 		return $validator;
 	}
 
+	public function findUnread(Query $query, array $options){
+		$query->where([
+			'Notifications.unread' => true,
+			'Notifications.user_id' => $options['user_id']
+			]);
+		return $query;
+	}
 }

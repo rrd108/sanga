@@ -37,6 +37,7 @@ class AppController extends Controller {
  */
 	public $components = [
         'Flash',
+        'RequestHandler',
         'Auth' => [
             'loginRedirect' => [
                 'controller' => 'users',
@@ -49,8 +50,24 @@ class AppController extends Controller {
             ]
         ]
     ];
+    
+    public $helpers = [
+        'Form' => [
+            'widgets' => [
+                'autocomplete' => [
+                    'App\View\Widget\Autocomplete',
+                    'text',
+                    'label'
+                ]
+            ],
+            'templates' => 'app_form.php'
+        ]
+    ];
 
     public function beforeFilter(Event $event) {
         $this->Auth->deny();
-    }
+        $this->loadModel('Notifications');
+        $nc = $this->Notifications->find('unread', ['user_id' => $this->Auth->user('id')])->count();
+    	$this->set('notification_count', $nc);
+    }    
 }

@@ -57,10 +57,18 @@ header img{
   color: #fff;
 }
 
+.header-help span.notice{
+  background: #fc0;
+}
+
 .actions{
   clear: left;
 }
 
 select[multiple]{
   height: 300%;
+}
+
+.b{
+  font-weight: bold;
 }

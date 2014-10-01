@@ -14,11 +14,17 @@
 	
 	print $this->Html->css('superfish.css');
 	
+	print $this->Html->css('jquery-ui.min.css');
+	print $this->Html->css('jquery-ui.structure.min.css');
+	print $this->Html->css('jquery-ui.theme.min.css');
+	
 	print $this->Html->css('sanga.css');
 	
 	print $this->Html->script('jquery-2.1.1.min.js');
 	print $this->Html->script('superfish.js');
 	print $this->Html->script('hoverIntent.js');
+	print $this->Html->script('jquery-ui.min.js');
+	print $this->Html->script('ui.datepicker-hu.js');
 	
 	print $this->Html->script('sanga.js');
 
@@ -65,10 +71,14 @@
 				</li>
 				<li>
 					★ Adataim
+					<?php
+						if($notification_count)
+							print $nc = '<span class="notice">'.$notification_count.'</span>';
+					?>
 					<ul>
 						<?php
 							print '<li>' . $this->Html->link('☭ Adatlapom', '/users/view') . '</li>';
-							print '<li>' . $this->Html->link('⚠ Értesítések', '/notifications') . '</li>';
+							print '<li>' . $this->Html->link('⚠ Értesítések '.$nc, '/notifications', ['escapeTitle' => false]) . '</li>';
 							print '<li>' . $this->Html->link('⊗ Kijelentkezem', '/users/logout') . '</li>';
 						?>
 					</ul>
@@ -99,7 +109,7 @@
 		</div>
 		<footer>
 			<?php
-				//debug($this->request->params['controller']);
+				//debug($this->Notifications);
 			?>
 		</footer>
 	</div>

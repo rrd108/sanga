@@ -10,6 +10,20 @@ use App\Controller\AppController;
  */
 class ContactsController extends AppController {
 
+	public function searchname(){
+		$query = $this->Contacts->find()
+				->select(['id', 'name', 'contactname'])
+				->where(['name LIKE "%'.$this->request->query('term').'%"'])
+				->orWhere(['contactname LIKE "%'.$this->request->query('term').'%"']);
+		//debug($query);
+		foreach($query as $row){
+			$result[] = array('value' => $row->id,
+							  'label' => $row->name . ' : ' . $row->contactname);
+		}
+		//debug($result);
+		$this->set('result', $result);
+	}
+
 /**
  * Index method
  *

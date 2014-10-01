@@ -10,8 +10,8 @@
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
-			<th><?= $this->Paginator->sort('id') ?></th>
-			<th><?= $this->Paginator->sort('user_id') ?></th>
+			<!--th><?= $this->Paginator->sort('id') ?></th>
+			<th><?= $this->Paginator->sort('user_id') ?></th-->
 			<th><?= $this->Paginator->sort('notification') ?></th>
 			<th><?= $this->Paginator->sort('unread') ?></th>
 			<th><?= $this->Paginator->sort('created') ?></th>
@@ -20,11 +20,11 @@
 	</thead>
 	<tbody>
 	<?php foreach ($notifications as $notification): ?>
-		<tr>
-			<td><?= $this->Number->format($notification->id) ?></td>
+		<tr <?php if($notification->unread) print 'class="b"' ?> >
+			<!--td><?= $this->Number->format($notification->id) ?></td>
 			<td>
 				<?= $notification->has('user') ? $this->Html->link($notification->user->id, ['controller' => 'Users', 'action' => 'view', $notification->user->id]) : '' ?>
-			</td>
+			</td-->
 			<td><?= h($notification->notification) ?></td>
 			<td><?= h($notification->unread) ?></td>
 			<td><?= h($notification->created) ?></td>
