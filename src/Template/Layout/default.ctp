@@ -20,11 +20,14 @@
 	
 	print $this->Html->css('sanga.css');
 	
-	print $this->Html->script('jquery-2.1.1.min.js');
+	print $this->Html->script('jquery.js');
 	print $this->Html->script('superfish.js');
 	print $this->Html->script('hoverIntent.js');
 	print $this->Html->script('jquery-ui.min.js');
+	print $this->Html->script('jquery.ui.autocomplete.html.js');
 	print $this->Html->script('ui.datepicker-hu.js');
+	print $this->Html->script('gmap3.min.js');
+	print $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
 	
 	print $this->Html->script('sanga.js');
 
@@ -89,6 +92,7 @@
 						<?php
 							print '<li>' . $this->Html->link('♥ Kapcsolatok', '/contacts') . '</li>';
 							print '<li>' . $this->Html->link('⚑ Történések', '/histories') . '</li>';
+							print '<li>' . $this->Html->link('✈ Térkép', '/contacts/showmap') . '</li>';
 						?>
 					</ul>
 				</li>

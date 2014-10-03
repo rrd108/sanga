@@ -28,8 +28,8 @@ $this->Html->addCrumb('Új', '/contacts/add');
 	<fieldset>
 		<legend><?= __('Add Contact'); ?></legend>
 	<?php
-		echo $this->Form->autocomplete('name', ['source' => 'searchname', 'label' => 'Név', 'title' => 'A kapcsolat hivatalos neve, pl polgári név, cégnév']);
-		echo $this->Form->input('contactname', ['title' => 'A kapcsolat ismert neve, pl avatott név, becenév']);
+		echo $this->Form->autocomplete('name', ['source' => 'searchname', 'label' => 'Ismert név', 'title' => 'A kapcsolat ismert neve, pl avatott név, becenév']);
+		echo $this->Form->autocomplete('contactname', ['source' => 'searchname', 'label' => 'Név', 'title' => 'A kapcsolat hivatalos neve, pl polgári név, cégnév']);
 		echo $this->Form->input('country_id', ['options' => $countries, 'default' => '1', 'empty' => 'Egyéb']);
 		echo $this->Form->input('zip_id', ['options' => $zips]);
 		echo $this->Form->input('address');

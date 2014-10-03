@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Utility\String;
 
 /**
  * Contacts Controller
@@ -16,14 +17,26 @@ class ContactsController extends AppController {
 				->where(['name LIKE "%'.$this->request->query('term').'%"'])
 				->orWhere(['contactname LIKE "%'.$this->request->query('term').'%"']);
 		//debug($query);
+		$highlight = array('format' => '<span class="b i">\1</span>');
 		foreach($query as $row){
 			$result[] = array('value' => $row->id,
-							  'label' => $row->name . ' : ' . $row->contactname);
+							  'label' => String::highlight($row->name, $this->request->query('term'), $highlight)  . ' : ' .
+										String::highlight($row->contactname, $this->request->query('term'), $highlight));
 		}
-		//debug($result);
+		//debug($result);die();
 		$this->set('result', $result);
 	}
 
+	public function showmap(){
+		$result = $this->Contacts->find()
+				->contain(['Zips', 'Countries'])
+				->select(['Contacts.lat', 'Contacts.lng', 'Zips.zip', 'Zips.name', 'Countries.name'])
+				->where('Contacts.lat != 0')
+				->toArray();
+		//debug($result);
+		$this->set('result', $result);
+	}
+	
 /**
  * Index method
  *

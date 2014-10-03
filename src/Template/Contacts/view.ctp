@@ -200,3 +200,30 @@
 	<?php endif; ?>
 	</div>
 </div>
+<div id="map" class="row">
+<?php
+if($contact->lat){
+	$place = 'latLng : ['.$contact->lat.','.$contact->lng.']';
+}
+else{
+	$place = 'address : ' . $contact->country->name . ' ' . $contact->zip->name . ' ' . $contact->address;
+}
+$this->Html->scriptStart(['block' => true]);
+?>
+$(function() {
+	$('#map').gmap3({
+			map : {
+				options : {
+					zoom : 13,
+					center : [<?php print $contact->zip->lat . ', ' . $contact->zip->lng; ?>]
+					}
+				},
+			marker:{
+				address: <?php print $place; ?>
+				}
+			});
+});
+<?php
+$this->Html->scriptEnd();
+?>
+</div>
