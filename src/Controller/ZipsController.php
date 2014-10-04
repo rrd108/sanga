@@ -10,6 +10,20 @@ use App\Controller\AppController;
  */
 class ZipsController extends AppController {
 
+	public function searchzip(){
+		$query = $this->Zips->find()
+				->select(['id', 'zip', 'name'])
+				->where(['zip LIKE "'.$this->request->query('term').'%"']);
+		//debug($query);
+		foreach($query as $row){
+			$result[] = array('value' => $row->id,
+							  'label' => $row->zip . ' ' . $row['name']
+							  );
+		}
+		//debug($result);die();
+		$this->set('result', $result);
+	}
+
 /**
  * Index method
  *

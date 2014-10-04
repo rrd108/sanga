@@ -6,6 +6,6 @@ jQuery(document).ready(function() {
 );
 
 $(function() {
-	$( document ).tooltip();
+	$( document ).tooltip({position : { my: "right center", at: "right bottom", collision: "flipfit" }});
 	$( "#birth" ).datepicker();
 });

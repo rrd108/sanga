@@ -152,3 +152,8 @@ select[multiple]{
     position: absolute;
     width: 0;
 }
+
+.addlinkups .checkbox{
+  width: 24%;
+  float: left;
+}

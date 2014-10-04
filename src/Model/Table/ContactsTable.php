@@ -86,5 +86,4 @@ class ContactsTable extends Table {
 
 		return $validator;
 	}
-
 }

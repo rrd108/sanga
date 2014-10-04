@@ -28,20 +28,22 @@ $this->Html->addCrumb('Új', '/contacts/add');
 	<fieldset>
 		<legend><?= __('Add Contact'); ?></legend>
 	<?php
-		echo $this->Form->autocomplete('name', ['source' => 'searchname', 'label' => 'Ismert név', 'title' => 'A kapcsolat ismert neve, pl avatott név, becenév']);
-		echo $this->Form->autocomplete('contactname', ['source' => 'searchname', 'label' => 'Név', 'title' => 'A kapcsolat hivatalos neve, pl polgári név, cégnév']);
-		echo $this->Form->input('country_id', ['options' => $countries, 'default' => '1', 'empty' => 'Egyéb']);
-		echo $this->Form->input('zip_id', ['options' => $zips]);
-		echo $this->Form->input('address');
-		echo $this->Form->input('phone');
+		echo $this->Form->autocomplete('name', ['select' => false, 'source' => 'searchname', 'label' => 'Ismert név', 'title' => 'A kapcsolat ismert neve, pl avatott név, becenév']);
+		echo $this->Form->autocomplete('contactname', ['select' => false, 'source' => 'searchname', 'label' => 'Név', 'title' => 'A kapcsolat hivatalos neve, pl polgári név, cégnév']);
+		echo $this->Form->input('country_id', ['options' => $countries, 'label' => 'Ország', 'default' => '1', 'empty' => 'Egyéb']);
+		echo $this->Form->autocomplete('zip_id', ['source' => '../zips/searchzip', 'label' => 'Irányítószám']);
+		echo $this->Form->input('address', ['label' => 'Cím']);
+		echo $this->Form->input('phone', ['label' => 'Telefon']);
 		echo $this->Form->input('email');
-		echo $this->Form->input('birth', ['type' => 'text']);
-		echo $this->Form->input('active', ['checked' => true]);
-		echo $this->Form->input('comment');
-		echo $this->Form->input('contactsource_id', ['options' => $contactsources, 'empty' => '---Válassz---']);
-		echo $this->Form->input('groups._ids', ['options' => $groups, 'empty' => '---Válassz---']);
-		echo $this->Form->input('linkups._ids', ['options' => $linkups, 'empty' => '---Válassz---']);
-		echo $this->Form->input('users._ids', ['options' => $users, 'default' => $this->Session->read('Auth.User.id'), 'empty' => '---Válassz---']);
+		echo $this->Form->input('birth', ['type' => 'text', 'label' => 'Születési dátum']);
+		echo $this->Form->input('active', ['checked' => true, 'label' => 'Aktív', 'title' => 'Az inaktív kapcsolatok az akik eltűntek, eltávoztak, elérhetetlenek, stb.']);
+		echo $this->Form->input('comment', ['label' => 'Megjegyzés', 'title' => 'Másodlagos elérhetőségek, egyéb megjegyzések']);
+		echo $this->Form->input('contactsource_id', ['options' => $contactsources, 'empty' => '---Válassz---', 'label' => 'A kapcsolat forrása', 'title' => 'Hogyan kerültünk vele kapcsolatba?']);
+		echo $this->Form->input('groups._ids', ['options' => $groups, 'empty' => '---Válassz---', 'label' => 'Csoportok', 'title' => 'Melyik csoportokba tartozik']);
+		print '<div class="addlinkups">';
+			echo $this->Form->input('linkups._ids', ['type' => 'select', 'multiple' => 'checkbox', 'options' => $linkups, 'empty' => '---Válassz---', 'label' => 'Kapcsolati területek', 'title' => 'Mely témákban vagyunk kapcsolatban']);
+		print '</div>';
+		echo $this->Form->input('users._ids', ['options' => $users, 'default' => $this->Session->read('Auth.User.id'), 'empty' => '---Válassz---', 'label' => 'Kapcsolattartók']);
 	?>
 	</fieldset>
 <?= $this->Form->button(__('Submit')) ?>

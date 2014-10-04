@@ -10,7 +10,7 @@ use Cake\Utility\String;
  * @property App\Model\Table\ContactsTable $Contacts
  */
 class ContactsController extends AppController {
-
+	
 	public function searchname(){
 		$query = $this->Contacts->find()
 				->select(['id', 'name', 'contactname'])
