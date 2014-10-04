@@ -38,7 +38,7 @@ class DbRefineShell extends Shell {
 			$this->out('Success: ' . $latLngContact['id']);
 		}
 		else{
-			$this->out('Error: ' . $latLngContact['id']);
+			$this->out('<error>Error:</error> ' . $latLngContact['id']);
 		}
 	}
 	
