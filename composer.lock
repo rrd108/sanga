@@ -131,12 +131,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "b1ca01ddafe7dab9b2977d92488b9debbab09b3f"
+                "reference": "987ad659a90f70e11f51e6f04cf87056fa965839"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/b1ca01ddafe7dab9b2977d92488b9debbab09b3f",
-                "reference": "b1ca01ddafe7dab9b2977d92488b9debbab09b3f",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/987ad659a90f70e11f51e6f04cf87056fa965839",
+                "reference": "987ad659a90f70e11f51e6f04cf87056fa965839",
                 "shasum": ""
             },
             "require": {
@@ -188,7 +188,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-10-03 07:56:59"
+            "time": "2014-10-04 02:49:43"
         },
         {
             "name": "cakephp/debug_kit",
@@ -496,59 +496,6 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "time": "2014-01-17 12:21:18"
-        },
-        {
-            "name": "dereuromark/cakephp-geo",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dereuromark/cakephp-geo.git",
-                "reference": "fc176b0901ec57b705be6c9fb17a3c94c067358d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dereuromark/cakephp-geo/zipball/fc176b0901ec57b705be6c9fb17a3c94c067358d",
-                "reference": "fc176b0901ec57b705be6c9fb17a3c94c067358d",
-                "shasum": ""
-            },
-            "require": {
-                "cakephp/cakephp": "3.0.x-dev",
-                "php": ">=5.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*"
-            },
-            "type": "cakephp-plugin",
-            "extra": {
-                "installer-name": "Geo"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Geo\\": "src",
-                    "Geo\\Test\\Fixture\\": "tests\\Fixture"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mark Scherer",
-                    "homepage": "http://www.dereuromark.de",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "A CakePHP plugin around geocoding tools and helpers.",
-            "homepage": "https://github.com/dereuromark/cakephp-geo",
-            "keywords": [
-                "cakephp",
-                "geocoding",
-                "helpers",
-                "maps",
-                "plugin"
-            ],
-            "time": "2014-10-01 22:35:04"
         }
     ],
     "aliases": [

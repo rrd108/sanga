@@ -157,3 +157,12 @@ select[multiple]{
   width: 24%;
   float: left;
 }
+
+td.actions a{
+  display: block;
+  border: thin solid #15848F;
+  border-radius: 5px;
+  text-align: center;
+  width: 80%;
+  margin: 1px auto;
+}

@@ -22,30 +22,22 @@
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
-			<th><?= $this->Paginator->sort('id') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
 			<th><?= $this->Paginator->sort('contactname') ?></th>
-			<th><?= $this->Paginator->sort('country_id') ?></th>
-			<th><?= $this->Paginator->sort('zip_id') ?></th>
 			<th><?= $this->Paginator->sort('address') ?></th>
 			<th><?= $this->Paginator->sort('phone') ?></th>
+			<th><?= $this->Paginator->sort('email') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
 	<tbody>
 	<?php foreach ($contacts as $contact): ?>
 		<tr>
-			<td><?= $this->Number->format($contact->id) ?></td>
 			<td><?= h($contact->name) ?></td>
 			<td><?= h($contact->contactname) ?></td>
-			<td>
-				<?= $contact->has('country') ? $this->Html->link($contact->country->name, ['controller' => 'Countries', 'action' => 'view', $contact->country->id]) : '' ?>
-			</td>
-			<td>
-				<?= $contact->has('zip') ? $this->Html->link($contact->zip->name, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?>
-			</td>
-			<td><?= h($contact->address) ?></td>
+			<td><?= h($contact->zip->zip . ' ' . $contact->zip->name . ' ' . $contact->address) ?></td>
 			<td><?= h($contact->phone) ?></td>
+			<td><?= h($contact->email) ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $contact->id]) ?>
 				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id]) ?>

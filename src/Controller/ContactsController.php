@@ -83,8 +83,13 @@ class ContactsController extends AppController {
 		$contactsources = $this->Contacts->Contactsources->find('list');
 		$groups = $this->Contacts->Groups->find('list');
 		$linkups = $this->Contacts->Linkups->find('list');
+		$_linkupsSwitched = $this->Contacts->Linkups->find('list')->select('id')->where('switched = 1')->toArray();
+		foreach($_linkupsSwitched as $i => $l){
+			$linkupsSwitched[] = $i;
+		}
+		//debug($linkupsSwitched);
 		$users = $this->Contacts->Users->find('list');
-		$this->set(compact('contact', 'countries', 'zips', 'contactsources', 'groups', 'linkups', 'users'));
+		$this->set(compact('contact', 'countries', 'zips', 'contactsources', 'groups', 'linkups', 'linkupsSwitched', 'users'));
 	}
 
 /**
