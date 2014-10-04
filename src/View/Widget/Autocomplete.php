@@ -16,15 +16,29 @@ class Autocomplete implements WidgetInterface {
         $data += [
             'name' => '',
             'label' => '',
-            'source' => ''
+            'source' => '',
+            'select' => true
         ];
-        return $this->_templates->format('autocomplete', [
-            'name' => $data['name'],
-            'label' => $data['label'],
-            'source' => $data['source'],
-            'title' => $data['title'],
-            'attrs' => $this->_templates->formatAttributes($data, ['name', 'label', 'title', 'source'])
-        ]);
+        if($data['select']){
+            return $this->_templates->format('autocompleteselect', [
+                'name' => $data['name'],
+                'label' => $data['label'],
+                'source' => $data['source'],
+                'attrs' => $this->_templates->formatAttributes($data,
+                                                               ['name', 'label', 'source']
+                                                               )
+            ]);
+        }
+        else{
+            return $this->_templates->format('autocompletechecker', [
+                'name' => $data['name'],
+                'label' => $data['label'],
+                'source' => $data['source'],
+                'attrs' => $this->_templates->formatAttributes($data,
+                                                               ['name', 'label', 'source']
+                                                               )
+            ]);
+        }
     }
     
     public function secureFields(array $data){
