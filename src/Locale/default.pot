@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-10-04 09:40+0000\n"
+"POT-Creation-Date: 2014-10-06 10:29+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -24,7 +24,7 @@ msgstr ""
 #: Template/Admin/Users/view.ctp:2
 #: Template/Contacts/add.ctp:7
 #: Template/Contacts/edit.ctp:2
-#: Template/Contacts/index.ctp:2;32
+#: Template/Contacts/index.ctp:2;30
 #: Template/Contacts/view.ctp:2;85;119;145;178
 #: Template/ContactsGroups/add.ctp:2
 #: Template/ContactsGroups/edit.ctp:2
@@ -117,7 +117,7 @@ msgstr ""
 
 #: Template/Admin/Users/add.ctp:17
 #: Template/Admin/Users/edit.ctp:18
-#: Template/Contacts/add.ctp:49
+#: Template/Contacts/add.ctp:53
 #: Template/Contacts/edit.ctp:43
 #: Template/ContactsGroups/add.ctp:14
 #: Template/ContactsGroups/edit.ctp:15
@@ -155,7 +155,7 @@ msgstr ""
 #: Template/Admin/Users/edit.ctp:4
 #: Template/Admin/Users/index.ctp:35
 #: Template/Contacts/edit.ctp:4
-#: Template/Contacts/index.ctp:52
+#: Template/Contacts/index.ctp:44
 #: Template/Contacts/view.ctp:102;129;154;195
 #: Template/ContactsGroups/edit.ctp:4
 #: Template/ContactsGroups/index.ctp:24
@@ -265,7 +265,7 @@ msgid "New User"
 msgstr ""
 
 #: Template/Admin/Users/index.ctp:33
-#: Template/Contacts/index.ctp:50
+#: Template/Contacts/index.ctp:42
 #: Template/Contacts/view.ctp:100;127;152;193
 #: Template/ContactsGroups/index.ctp:22
 #: Template/ContactsUsers/index.ctp:22
@@ -294,7 +294,7 @@ msgid "View"
 msgstr ""
 
 #: Template/Admin/Users/index.ctp:34
-#: Template/Contacts/index.ctp:51
+#: Template/Contacts/index.ctp:43
 #: Template/Contacts/view.ctp:101;128;153;194
 #: Template/ContactsGroups/index.ctp:23
 #: Template/ContactsUsers/index.ctp:23
@@ -323,7 +323,7 @@ msgid "Edit"
 msgstr ""
 
 #: Template/Admin/Users/index.ctp:35
-#: Template/Contacts/index.ctp:52
+#: Template/Contacts/index.ctp:44
 #: Template/ContactsGroups/index.ctp:24
 #: Template/ContactsUsers/index.ctp:24
 #: Template/Contactsources/index.ctp:26
@@ -342,7 +342,7 @@ msgid "Are you sure you want to delete # {0}?"
 msgstr ""
 
 #: Template/Admin/Users/index.ctp:44
-#: Template/Contacts/index.ctp:61
+#: Template/Contacts/index.ctp:53
 #: Template/ContactsGroups/index.ctp:33
 #: Template/ContactsUsers/index.ctp:33
 #: Template/Contactsources/index.ctp:35
@@ -361,7 +361,7 @@ msgid "previous"
 msgstr ""
 
 #: Template/Admin/Users/index.ctp:46
-#: Template/Contacts/index.ctp:63
+#: Template/Contacts/index.ctp:55
 #: Template/ContactsGroups/index.ctp:35
 #: Template/ContactsUsers/index.ctp:35
 #: Template/Contactsources/index.ctp:37
@@ -629,6 +629,12 @@ msgstr ""
 msgid "Add Contact"
 msgstr ""
 
+#: Template/Contacts/add.ctp:34
+#: Template/Contacts/view.ctp:34
+#: Template/Zips/view.ctp:16
+msgid "Zip"
+msgstr ""
+
 #: Template/Contacts/edit.ctp:25
 #: Template/Contacts/view.ctp:4
 msgid "Edit Contact"
@@ -689,11 +695,6 @@ msgstr ""
 
 #: Template/Contacts/view.ctp:32
 msgid "Country"
-msgstr ""
-
-#: Template/Contacts/view.ctp:34
-#: Template/Zips/view.ctp:16
-msgid "Zip"
 msgstr ""
 
 #: Template/Contacts/view.ctp:36
@@ -863,6 +864,10 @@ msgstr ""
 #: Template/Linkups/view.ctp:34
 #: Template/Users/view.ctp:26
 msgid "Realname"
+msgstr ""
+
+#: Template/Contacts/view.ctp:205
+msgid "Map"
 msgstr ""
 
 #: Template/ContactsGroups/add.ctp:4
@@ -1243,6 +1248,10 @@ msgstr ""
 
 #: Template/Sessions/view.ctp:24
 msgid "Data"
+msgstr ""
+
+#: Template/Users/login.ctp:1
+msgid "Log in"
 msgstr ""
 
 #: Template/Users/login.ctp:13
