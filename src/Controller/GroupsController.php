@@ -17,7 +17,7 @@ class GroupsController extends AppController {
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Grouptypes']
+			'contain' => ['Users']
 		];
 		$this->set('groups', $this->paginate($this->Groups));
 	}
@@ -31,7 +31,7 @@ class GroupsController extends AppController {
  */
 	public function view($id = null) {
 		$group = $this->Groups->get($id, [
-			'contain' => ['Grouptypes', 'Contacts', 'Histories']
+			'contain' => ['Users', 'Contacts', 'Histories']
 		]);
 		$this->set('group', $group);
 	}
@@ -51,9 +51,9 @@ class GroupsController extends AppController {
 				$this->Flash->error('The group could not be saved. Please, try again.');
 			}
 		}
-		$grouptypes = $this->Groups->Grouptypes->find('list');
+		$users = $this->Groups->Users->find('list');
 		$contacts = $this->Groups->Contacts->find('list');
-		$this->set(compact('group', 'grouptypes', 'contacts'));
+		$this->set(compact('group', 'users', 'contacts'));
 	}
 
 /**
@@ -76,9 +76,9 @@ class GroupsController extends AppController {
 				$this->Flash->error('The group could not be saved. Please, try again.');
 			}
 		}
-		$grouptypes = $this->Groups->Grouptypes->find('list');
+		$users = $this->Groups->Users->find('list');
 		$contacts = $this->Groups->Contacts->find('list');
-		$this->set(compact('group', 'grouptypes', 'contacts'));
+		$this->set(compact('group', 'users', 'contacts'));
 	}
 
 /**

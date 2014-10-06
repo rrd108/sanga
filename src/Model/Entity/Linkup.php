@@ -15,8 +15,9 @@ class Linkup extends Entity {
  */
 	protected $_accessible = [
 		'name' => true,
+		'switched' => true,
 		'users' => true,
-        'switched' => true
+		'contacts' => true,
 	];
 
 }

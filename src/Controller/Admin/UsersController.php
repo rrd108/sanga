@@ -12,16 +12,15 @@ use Cake\Event\Event;
  */
 class UsersController extends AppController {
 
-/*    public function beforeFilter(Event $event) {
-        parent::beforeFilter($event);
-    }
-*/
-
 /**
  * Index method
  *
  * @return void
  */
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+    }
+
 	public function index() {
 		$this->set('users', $this->paginate($this->Users));
 	}
@@ -35,7 +34,7 @@ class UsersController extends AppController {
  */
 	public function view($id = null) {
 		$user = $this->Users->get($id, [
-			'contain' => []
+			'contain' => ['Contacts', 'Linkups', 'Events', 'Groups', 'Histories', 'Notifications']
 		]);
 		$this->set('user', $user);
 	}
@@ -55,7 +54,9 @@ class UsersController extends AppController {
 				$this->Flash->error('The user could not be saved. Please, try again.');
 			}
 		}
-		$this->set(compact('user'));
+		$contacts = $this->Users->Contacts->find('list');
+		$linkups = $this->Users->Linkups->find('list');
+		$this->set(compact('user', 'contacts', 'linkups'));
 	}
 
 /**
@@ -67,7 +68,7 @@ class UsersController extends AppController {
  */
 	public function edit($id = null) {
 		$user = $this->Users->get($id, [
-			'contain' => []
+			'contain' => ['Contacts', 'Linkups']
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$user = $this->Users->patchEntity($user, $this->request->data);
@@ -78,7 +79,9 @@ class UsersController extends AppController {
 				$this->Flash->error('The user could not be saved. Please, try again.');
 			}
 		}
-		$this->set(compact('user'));
+		$contacts = $this->Users->Contacts->find('list');
+		$linkups = $this->Users->Linkups->find('list');
+		$this->set(compact('user', 'contacts', 'linkups'));
 	}
 
 /**

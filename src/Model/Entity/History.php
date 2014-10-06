@@ -14,12 +14,14 @@ class History extends Entity {
  * @var array
  */
 	protected $_accessible = [
-		'date' => true,
 		'contact_id' => true,
+		'date' => true,
 		'user_id' => true,
-		'detail' => true,
-		'amount' => true,
+		'linkup_id' => true,
 		'event_id' => true,
+		'detail' => true,
+		'quantity' => true,
+		'unit_id' => true,
 		'group_id' => true,
 		'contact' => true,
 		'user' => true,

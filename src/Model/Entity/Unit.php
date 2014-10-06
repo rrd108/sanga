@@ -4,9 +4,9 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Group Entity.
+ * Unit Entity.
  */
-class Group extends Entity {
+class Unit extends Entity {
 
 /**
  * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -15,10 +15,7 @@ class Group extends Entity {
  */
 	protected $_accessible = [
 		'name' => true,
-		'user_id' => true,
-		'grouptype' => true,
 		'histories' => true,
-		'contacts' => true,
 	];
 
 }

@@ -30,6 +30,9 @@ class ZipsController extends AppController {
  * @return void
  */
 	public function index() {
+		$this->paginate = [
+			'contain' => ['Countries']
+		];
 		$this->set('zips', $this->paginate($this->Zips));
 	}
 
@@ -42,7 +45,7 @@ class ZipsController extends AppController {
  */
 	public function view($id = null) {
 		$zip = $this->Zips->get($id, [
-			'contain' => ['Contacts']
+			'contain' => ['Countries', 'Contacts']
 		]);
 		$this->set('zip', $zip);
 	}
@@ -62,7 +65,8 @@ class ZipsController extends AppController {
 				$this->Flash->error('The zip could not be saved. Please, try again.');
 			}
 		}
-		$this->set(compact('zip'));
+		$countries = $this->Zips->Countries->find('list');
+		$this->set(compact('zip', 'countries'));
 	}
 
 /**
@@ -85,7 +89,8 @@ class ZipsController extends AppController {
 				$this->Flash->error('The zip could not be saved. Please, try again.');
 			}
 		}
-		$this->set(compact('zip'));
+		$countries = $this->Zips->Countries->find('list');
+		$this->set(compact('zip', 'countries'));
 	}
 
 /**

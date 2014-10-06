@@ -14,18 +14,16 @@ class Zip extends Entity {
  * @var array
  */
 	protected $_accessible = [
+		'country_id' => true,
 		'zip' => true,
 		'name' => true,
-        'lat' => true,
-        'lng' => true,
+		'lat' => true,
+		'lng' => true,
 		'contacts' => true,
 	];
-    
+
     protected function _getFullZip() {
         return $this->_properties['zip'] . '  ' .
-            $this->_properties['name'] . '  ' .
-            $this->_properties['lat'] . '  ' .
-            $this->_properties['lng'];
+            $this->_properties['name'];
     }
-
 }

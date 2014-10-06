@@ -2,7 +2,6 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\Utility\String;
 
 /**
  * Contacts Controller
@@ -10,7 +9,7 @@ use Cake\Utility\String;
  * @property App\Model\Table\ContactsTable $Contacts
  */
 class ContactsController extends AppController {
-	
+
 	public function searchname(){
 		$query = $this->Contacts->find()
 				->select(['id', 'name', 'contactname'])
@@ -29,14 +28,14 @@ class ContactsController extends AppController {
 
 	public function showmap(){
 		$result = $this->Contacts->find()
-				->contain(['Zips', 'Countries'])
+				->contain(['Zips' => ['Countries']])
 				->select(['Contacts.lat', 'Contacts.lng', 'Zips.zip', 'Zips.name', 'Countries.name'])
 				->where('Contacts.lat != 0')
 				->toArray();
 		//debug($result);
 		$this->set('result', $result);
 	}
-	
+
 /**
  * Index method
  *
@@ -44,7 +43,7 @@ class ContactsController extends AppController {
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Countries', 'Zips', 'Contactsources']
+			'contain' => ['Zips', 'Contactsources']
 		];
 		$this->set('contacts', $this->paginate($this->Contacts));
 	}
@@ -58,7 +57,7 @@ class ContactsController extends AppController {
  */
 	public function view($id = null) {
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['Countries', 'Zips', 'Contactsources', 'Groups', 'Linkups', 'Users', 'Histories']
+			'contain' => ['Zips', 'Contactsources', 'Groups', 'Linkups', 'Users', 'Histories']
 		]);
 		$this->set('contact', $contact);
 	}
@@ -78,7 +77,6 @@ class ContactsController extends AppController {
 				$this->Flash->error('The contact could not be saved. Please, try again.');
 			}
 		}
-		$countries = $this->Contacts->Countries->find('list');
 		$zips = $this->Contacts->Zips->find('list', ['idField' => 'id', 'valueField' => 'full_zip']);
 		$contactsources = $this->Contacts->Contactsources->find('list');
 		$groups = $this->Contacts->Groups->find('list');
@@ -112,13 +110,12 @@ class ContactsController extends AppController {
 				$this->Flash->error('The contact could not be saved. Please, try again.');
 			}
 		}
-		$countries = $this->Contacts->Countries->find('list');
 		$zips = $this->Contacts->Zips->find('list');
 		$contactsources = $this->Contacts->Contactsources->find('list');
 		$groups = $this->Contacts->Groups->find('list');
 		$linkups = $this->Contacts->Linkups->find('list');
 		$users = $this->Contacts->Users->find('list');
-		$this->set(compact('contact', 'countries', 'zips', 'contactsources', 'groups', 'linkups', 'users'));
+		$this->set(compact('contact', 'zips', 'contactsources', 'groups', 'linkups', 'users'));
 	}
 
 /**

@@ -22,6 +22,12 @@ class UsersTable extends Table {
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
 
+		$this->hasMany('Events', [
+			'foreignKey' => 'user_id',
+		]);
+		$this->hasMany('Groups', [
+			'foreignKey' => 'user_id',
+		]);
 		$this->hasMany('Histories', [
 			'foreignKey' => 'user_id',
 		]);
@@ -60,7 +66,9 @@ class UsersTable extends Table {
 			->allowEmpty('phone')
 			->add('active', 'valid', ['rule' => 'boolean'])
 			->allowEmpty('active')
-			->allowEmpty('role');
+			->add('role', 'valid', ['rule' => 'numeric'])
+			->validatePresence('role', 'create')
+			->notEmpty('role');
 
 		return $validator;
 	}

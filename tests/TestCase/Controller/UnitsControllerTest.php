@@ -1,13 +1,13 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\HistoriesController;
+use App\Controller\UnitsController;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * App\Controller\HistoriesController Test Case
+ * App\Controller\UnitsController Test Case
  */
-class HistoriesControllerTest extends IntegrationTestCase {
+class UnitsControllerTest extends IntegrationTestCase {
 
 /**
  * Fixtures
@@ -15,21 +15,31 @@ class HistoriesControllerTest extends IntegrationTestCase {
  * @var array
  */
 	public $fixtures = [
+		'app.units',
 		'app.histories',
 		'app.contacts',
-		'app.zips',
+		'app.contacts_name_translation',
+		'app.contacts_contactname_translation',
+		'app.contacts_address_translation',
+		'app.contacts_phone_translation',
+		'app.contacts_birth_translation',
+		'app.contacts_active_translation',
+		'app.contacts_comment_translation',
+		'app.i18n',
 		'app.countries',
+		'app.zips',
 		'app.contactsources',
 		'app.groups',
+		'app.grouptypes',
+		'app.contacts_groups',
+		'app.linkups',
 		'app.users',
-		'app.events',
 		'app.notifications',
 		'app.contacts_users',
-		'app.linkups',
-		'app.contacts_linkups',
 		'app.linkups_users',
-		'app.contacts_groups',
-		'app.units'
+		'app.contacts_linkups',
+		'app.events',
+		'app.eventgroups'
 	];
 
 /**

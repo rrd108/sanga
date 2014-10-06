@@ -28,8 +28,14 @@ class HistoriesTable extends Table {
 		$this->belongsTo('Users', [
 			'foreignKey' => 'user_id',
 		]);
+		$this->belongsTo('Linkups', [
+			'foreignKey' => 'linkup_id',
+		]);
 		$this->belongsTo('Events', [
 			'foreignKey' => 'event_id',
+		]);
+		$this->belongsTo('Units', [
+			'foreignKey' => 'unit_id',
 		]);
 		$this->belongsTo('Groups', [
 			'foreignKey' => 'group_id',
@@ -46,23 +52,28 @@ class HistoriesTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
-			->add('date', 'valid', ['rule' => 'date'])
-			->allowEmpty('date')
 			->add('contact_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('contact_id', 'create')
 			->notEmpty('contact_id')
+			->add('date', 'valid', ['rule' => 'date'])
+			->notEmpty('date')
 			->add('user_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('user_id', 'create')
 			->notEmpty('user_id')
-			->allowEmpty('detail')
-			->add('amount', 'valid', ['rule' => 'decimal'])
-			->allowEmpty('amount')
+			->add('linkup_id', 'valid', ['rule' => 'numeric'])
+			->validatePresence('linkup_id', 'create')
+			->notEmpty('linkup_id')
 			->add('event_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('event_id', 'create')
 			->notEmpty('event_id')
+			->allowEmpty('detail')
+			->add('quantity', 'valid', ['rule' => 'decimal'])
+			->allowEmpty('quantity')
+			->add('unit_id', 'valid', ['rule' => 'numeric'])
+			->validatePresence('unit_id', 'create')
+			->allowEmpty('unit_id')
 			->add('group_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('group_id', 'create')
-			->notEmpty('group_id');
+			->allowEmpty('group_id');
 
 		return $validator;
 	}

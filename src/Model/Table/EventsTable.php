@@ -21,8 +21,8 @@ class EventsTable extends Table {
 		$this->displayField('name');
 		$this->primaryKey('id');
 
-		$this->belongsTo('Eventgroups', [
-			'foreignKey' => 'eventgroup_id',
+		$this->belongsTo('Users', [
+			'foreignKey' => 'user_id',
 		]);
 		$this->hasMany('Histories', [
 			'foreignKey' => 'event_id',
@@ -40,9 +40,9 @@ class EventsTable extends Table {
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
 			->allowEmpty('name')
-			->add('eventgroup_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('eventgroup_id', 'create')
-			->notEmpty('eventgroup_id');
+			->add('user_id', 'valid', ['rule' => 'numeric'])
+			->validatePresence('user_id', 'create')
+			->allowEmpty('user_id');
 
 		return $validator;
 	}

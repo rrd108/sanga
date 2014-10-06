@@ -11,6 +11,37 @@ use Cake\TestSuite\TestCase;
 class LinkupsTableTest extends TestCase {
 
 /**
+ * Fixtures
+ *
+ * @var array
+ */
+	public $fixtures = [
+		'app.linkups',
+		'app.users',
+		'app.events',
+		'app.eventgroups',
+		'app.histories',
+		'app.contacts',
+		'app.contacts_name_translation',
+		'app.contacts_contactname_translation',
+		'app.contacts_address_translation',
+		'app.contacts_phone_translation',
+		'app.contacts_birth_translation',
+		'app.contacts_active_translation',
+		'app.contacts_comment_translation',
+		'app.i18n',
+		'app.countries',
+		'app.zips',
+		'app.contactsources',
+		'app.groups',
+		'app.contacts_groups',
+		'app.contacts_linkups',
+		'app.contacts_users',
+		'app.notifications',
+		'app.linkups_users'
+	];
+
+/**
  * setUp method
  *
  * @return void

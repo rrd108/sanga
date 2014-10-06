@@ -17,7 +17,7 @@ class HistoriesController extends AppController {
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Contacts', 'Users', 'Events', 'Groups']
+			'contain' => ['Contacts', 'Users', 'Linkups', 'Events', 'Units', 'Groups']
 		];
 		$this->set('histories', $this->paginate($this->Histories));
 	}
@@ -31,7 +31,7 @@ class HistoriesController extends AppController {
  */
 	public function view($id = null) {
 		$history = $this->Histories->get($id, [
-			'contain' => ['Contacts', 'Users', 'Events', 'Groups']
+			'contain' => ['Contacts', 'Users', 'Linkups', 'Events', 'Units', 'Groups']
 		]);
 		$this->set('history', $history);
 	}
@@ -53,9 +53,11 @@ class HistoriesController extends AppController {
 		}
 		$contacts = $this->Histories->Contacts->find('list');
 		$users = $this->Histories->Users->find('list');
+		$linkups = $this->Histories->Linkups->find('list');
 		$events = $this->Histories->Events->find('list');
+		$units = $this->Histories->Units->find('list');
 		$groups = $this->Histories->Groups->find('list');
-		$this->set(compact('history', 'contacts', 'users', 'events', 'groups'));
+		$this->set(compact('history', 'contacts', 'users', 'linkups', 'events', 'units', 'groups'));
 	}
 
 /**
@@ -80,9 +82,11 @@ class HistoriesController extends AppController {
 		}
 		$contacts = $this->Histories->Contacts->find('list');
 		$users = $this->Histories->Users->find('list');
+		$linkups = $this->Histories->Linkups->find('list');
 		$events = $this->Histories->Events->find('list');
+		$units = $this->Histories->Units->find('list');
 		$groups = $this->Histories->Groups->find('list');
-		$this->set(compact('history', 'contacts', 'users', 'events', 'groups'));
+		$this->set(compact('history', 'contacts', 'users', 'linkups', 'events', 'units', 'groups'));
 	}
 
 /**

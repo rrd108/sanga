@@ -1,35 +1,31 @@
 <div class="actions columns large-2 medium-3">
 	<h3><?= __('Actions'); ?></h3>
 	<ul class="side-nav">
-		<li><?= $this->Html->link(__('Edit Event'), ['action' => 'edit', $event->id]) ?> </li>
-		<li><?= $this->Form->postLink(__('Delete Event'), ['action' => 'delete', $event->id], ['confirm' => __('Are you sure you want to delete # %s?', $event->id)]) ?> </li>
-		<li><?= $this->Html->link(__('List Events'), ['action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Event'), ['action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('Edit Unit'), ['action' => 'edit', $unit->id]) ?> </li>
+		<li><?= $this->Form->postLink(__('Delete Unit'), ['action' => 'delete', $unit->id], ['confirm' => __('Are you sure you want to delete # %s?', $unit->id)]) ?> </li>
+		<li><?= $this->Html->link(__('List Units'), ['action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Unit'), ['action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Histories'), ['controller' => 'Histories', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New History'), ['controller' => 'Histories', 'action' => 'add']) ?> </li>
 	</ul>
 </div>
-<div class="events view large-10 medium-9 columns">
-	<h2><?= h($event->name) ?></h2>
+<div class="units view large-10 medium-9 columns">
+	<h2><?= h($unit->name) ?></h2>
 	<div class="row">
 		<div class="large-5 columns strings">
 			<h6 class="subheader"><?= __('Name') ?></h6>
-			<p><?= h($event->name) ?></p>
-			<h6 class="subheader"><?= __('User') ?></h6>
-			<p><?= $event->has('user') ? $this->Html->link($event->user->username, ['controller' => 'Users', 'action' => 'view', $event->user->id]) : '' ?></p>
+			<p><?= h($unit->name) ?></p>
 		</div>
 		<div class="large-2 large-offset-1 columns numbers end">
 			<h6 class="subheader"><?= __('Id') ?></h6>
-			<p><?= $this->Number->format($event->id) ?></p>
+			<p><?= $this->Number->format($unit->id) ?></p>
 		</div>
 	</div>
 </div>
 <div class="related row">
 	<div class="column large-12">
 	<h4 class="subheader"><?= __('Related Histories') ?></h4>
-	<?php if (!empty($event->histories)): ?>
+	<?php if (!empty($unit->histories)): ?>
 	<table cellpadding="0" cellspacing="0">
 		<tr>
 			<th><?= __('Id') ?></th>
@@ -46,7 +42,7 @@
 			<th><?= __('Modified') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
-		<?php foreach ($event->histories as $histories): ?>
+		<?php foreach ($unit->histories as $histories): ?>
 		<tr>
 			<td><?= h($histories->id) ?></td>
 			<td><?= h($histories->contact_id) ?></td>

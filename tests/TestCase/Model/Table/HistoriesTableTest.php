@@ -18,19 +18,18 @@ class HistoriesTableTest extends TestCase {
 	public $fixtures = [
 		'app.histories',
 		'app.contacts',
-		'app.countries',
 		'app.zips',
+		'app.countries',
 		'app.contactsources',
 		'app.groups',
-		'app.grouptypes',
-		'app.contacts_groups',
 		'app.users',
+		'app.events',
 		'app.notifications',
 		'app.contacts_users',
 		'app.linkups',
+		'app.contacts_linkups',
 		'app.linkups_users',
-		'app.events',
-		'app.eventgroups'
+		'app.contacts_groups'
 	];
 
 /**

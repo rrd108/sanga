@@ -17,20 +17,27 @@ class ContactsTableTest extends TestCase {
  */
 	public $fixtures = [
 		'app.contacts',
+		'app.contacts_name_translation',
+		'app.contacts_contactname_translation',
+		'app.contacts_address_translation',
+		'app.contacts_phone_translation',
+		'app.contacts_birth_translation',
+		'app.contacts_active_translation',
+		'app.contacts_comment_translation',
+		'app.i18n',
 		'app.countries',
 		'app.zips',
 		'app.contactsources',
 		'app.histories',
 		'app.users',
+		'app.events',
+		'app.groups',
+		'app.contacts_groups',
 		'app.notifications',
 		'app.contacts_users',
 		'app.linkups',
-		'app.linkups_users',
-		'app.events',
-		'app.eventgroups',
-		'app.groups',
-		'app.grouptypes',
-		'app.contacts_groups'
+		'app.contacts_linkups',
+		'app.linkups_users'
 	];
 
 /**

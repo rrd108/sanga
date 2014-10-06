@@ -17,7 +17,7 @@ class DbRefineShell extends Shell {
 	
 	public function getContactsGeo(){
 		$result = $this->Contacts->find()
-				->contain(['Zips', 'Countries'])
+				->contain(['Zips' => ['Countries']])
 				->select(['Contacts.id', 'Contacts.address', 'Zips.zip', 'Zips.name', 'Countries.name'])
 				->where('Contacts.lat = 0')
 				->toArray();

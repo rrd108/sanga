@@ -21,8 +21,8 @@ class GroupsTable extends Table {
 		$this->displayField('name');
 		$this->primaryKey('id');
 
-		$this->belongsTo('Grouptypes', [
-			'foreignKey' => 'grouptype_id',
+		$this->belongsTo('Users', [
+			'foreignKey' => 'user_id',
 		]);
 		$this->hasMany('Histories', [
 			'foreignKey' => 'group_id',
@@ -45,9 +45,8 @@ class GroupsTable extends Table {
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
 			->allowEmpty('name')
-			->add('grouptype_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('grouptype_id', 'create')
-			->notEmpty('grouptype_id');
+			->add('user_id', 'valid', ['rule' => 'numeric'])
+			->allowEmpty('user_id');
 
 		return $validator;
 	}

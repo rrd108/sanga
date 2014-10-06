@@ -17,7 +17,7 @@ class EventsController extends AppController {
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Eventgroups']
+			'contain' => ['Users']
 		];
 		$this->set('events', $this->paginate($this->Events));
 	}
@@ -31,7 +31,7 @@ class EventsController extends AppController {
  */
 	public function view($id = null) {
 		$event = $this->Events->get($id, [
-			'contain' => ['Eventgroups', 'Histories']
+			'contain' => ['Users', 'Histories']
 		]);
 		$this->set('event', $event);
 	}
@@ -51,8 +51,8 @@ class EventsController extends AppController {
 				$this->Flash->error('The event could not be saved. Please, try again.');
 			}
 		}
-		$eventgroups = $this->Events->Eventgroups->find('list');
-		$this->set(compact('event', 'eventgroups'));
+		$users = $this->Events->Users->find('list');
+		$this->set(compact('event', 'users'));
 	}
 
 /**
@@ -75,8 +75,8 @@ class EventsController extends AppController {
 				$this->Flash->error('The event could not be saved. Please, try again.');
 			}
 		}
-		$eventgroups = $this->Events->Eventgroups->find('list');
-		$this->set(compact('event', 'eventgroups'));
+		$users = $this->Events->Users->find('list');
+		$this->set(compact('event', 'users'));
 	}
 
 /**

@@ -5,6 +5,10 @@
 		<li><?= $this->Form->postLink(__('Delete User'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # %s?', $user->id)]) ?> </li>
 		<li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Events'), ['controller' => 'Events', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Event'), ['controller' => 'Events', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Groups'), ['controller' => 'Groups', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Group'), ['controller' => 'Groups', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Histories'), ['controller' => 'Histories', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New History'), ['controller' => 'Histories', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Notifications'), ['controller' => 'Notifications', 'action' => 'index']) ?> </li>
@@ -16,7 +20,7 @@
 	</ul>
 </div>
 <div class="users view large-10 medium-9 columns">
-	<h2><?= h($user->id) ?></h2>
+	<h2><?= h($user->username) ?></h2>
 	<div class="row">
 		<div class="large-5 columns strings">
 			<h6 class="subheader"><?= __('Username') ?></h6>
@@ -29,12 +33,12 @@
 			<p><?= h($user->email) ?></p>
 			<h6 class="subheader"><?= __('Phone') ?></h6>
 			<p><?= h($user->phone) ?></p>
-			<h6 class="subheader"><?= __('Role') ?></h6>
-			<p><?= h($user->role) ?></p>
 		</div>
-		<div class="large-2 larege-offset-1 columns numbers end">
+		<div class="large-2 large-offset-1 columns numbers end">
 			<h6 class="subheader"><?= __('Id') ?></h6>
 			<p><?= $this->Number->format($user->id) ?></p>
+			<h6 class="subheader"><?= __('Role') ?></h6>
+			<p><?= $this->Number->format($user->role) ?></p>
 		</div>
 		<div class="large-2 columns dates end">
 			<h6 class="subheader"><?= __('Created') ?></h6>
@@ -50,17 +54,73 @@
 </div>
 <div class="related row">
 	<div class="column large-12">
+	<h4 class="subheader"><?= __('Related Events') ?></h4>
+	<?php if (!empty($user->events)): ?>
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<th><?= __('Id') ?></th>
+			<th><?= __('Name') ?></th>
+			<th><?= __('User Id') ?></th>
+			<th class="actions"><?= __('Actions') ?></th>
+		</tr>
+		<?php foreach ($user->events as $events): ?>
+		<tr>
+			<td><?= h($events->id) ?></td>
+			<td><?= h($events->name) ?></td>
+			<td><?= h($events->user_id) ?></td>
+			<td class="actions">
+				<?= $this->Html->link(__('View'), ['controller' => 'Events', 'action' => 'view', $events->id]) ?>
+				<?= $this->Html->link(__('Edit'), ['controller' => 'Events', 'action' => 'edit', $events->id]) ?>
+				<?= $this->Form->postLink(__('Delete'), ['controller' => 'Events', 'action' => 'delete', $events->id], ['confirm' => __('Are you sure you want to delete # %s?', $events->id)]) ?>
+			</td>
+		</tr>
+		<?php endforeach; ?>
+	</table>
+	<?php endif; ?>
+	</div>
+</div>
+<div class="related row">
+	<div class="column large-12">
+	<h4 class="subheader"><?= __('Related Groups') ?></h4>
+	<?php if (!empty($user->groups)): ?>
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<th><?= __('Id') ?></th>
+			<th><?= __('Name') ?></th>
+			<th><?= __('User Id') ?></th>
+			<th class="actions"><?= __('Actions') ?></th>
+		</tr>
+		<?php foreach ($user->groups as $groups): ?>
+		<tr>
+			<td><?= h($groups->id) ?></td>
+			<td><?= h($groups->name) ?></td>
+			<td><?= h($groups->user_id) ?></td>
+			<td class="actions">
+				<?= $this->Html->link(__('View'), ['controller' => 'Groups', 'action' => 'view', $groups->id]) ?>
+				<?= $this->Html->link(__('Edit'), ['controller' => 'Groups', 'action' => 'edit', $groups->id]) ?>
+				<?= $this->Form->postLink(__('Delete'), ['controller' => 'Groups', 'action' => 'delete', $groups->id], ['confirm' => __('Are you sure you want to delete # %s?', $groups->id)]) ?>
+			</td>
+		</tr>
+		<?php endforeach; ?>
+	</table>
+	<?php endif; ?>
+	</div>
+</div>
+<div class="related row">
+	<div class="column large-12">
 	<h4 class="subheader"><?= __('Related Histories') ?></h4>
 	<?php if (!empty($user->histories)): ?>
 	<table cellpadding="0" cellspacing="0">
 		<tr>
 			<th><?= __('Id') ?></th>
-			<th><?= __('Date') ?></th>
 			<th><?= __('Contact Id') ?></th>
+			<th><?= __('Date') ?></th>
 			<th><?= __('User Id') ?></th>
-			<th><?= __('Detail') ?></th>
-			<th><?= __('Amount') ?></th>
+			<th><?= __('Linkup Id') ?></th>
 			<th><?= __('Event Id') ?></th>
+			<th><?= __('Detail') ?></th>
+			<th><?= __('Quantity') ?></th>
+			<th><?= __('Unit Id') ?></th>
 			<th><?= __('Group Id') ?></th>
 			<th><?= __('Created') ?></th>
 			<th><?= __('Modified') ?></th>
@@ -69,12 +129,14 @@
 		<?php foreach ($user->histories as $histories): ?>
 		<tr>
 			<td><?= h($histories->id) ?></td>
-			<td><?= h($histories->date) ?></td>
 			<td><?= h($histories->contact_id) ?></td>
+			<td><?= h($histories->date) ?></td>
 			<td><?= h($histories->user_id) ?></td>
-			<td><?= h($histories->detail) ?></td>
-			<td><?= h($histories->amount) ?></td>
+			<td><?= h($histories->linkup_id) ?></td>
 			<td><?= h($histories->event_id) ?></td>
+			<td><?= h($histories->detail) ?></td>
+			<td><?= h($histories->quantity) ?></td>
+			<td><?= h($histories->unit_id) ?></td>
 			<td><?= h($histories->group_id) ?></td>
 			<td><?= h($histories->created) ?></td>
 			<td><?= h($histories->modified) ?></td>
@@ -129,9 +191,10 @@
 			<th><?= __('Id') ?></th>
 			<th><?= __('Name') ?></th>
 			<th><?= __('Contactname') ?></th>
-			<th><?= __('Country Id') ?></th>
 			<th><?= __('Zip Id') ?></th>
 			<th><?= __('Address') ?></th>
+			<th><?= __('Lat') ?></th>
+			<th><?= __('Lng') ?></th>
 			<th><?= __('Phone') ?></th>
 			<th><?= __('Email') ?></th>
 			<th><?= __('Birth') ?></th>
@@ -147,9 +210,10 @@
 			<td><?= h($contacts->id) ?></td>
 			<td><?= h($contacts->name) ?></td>
 			<td><?= h($contacts->contactname) ?></td>
-			<td><?= h($contacts->country_id) ?></td>
 			<td><?= h($contacts->zip_id) ?></td>
 			<td><?= h($contacts->address) ?></td>
+			<td><?= h($contacts->lat) ?></td>
+			<td><?= h($contacts->lng) ?></td>
 			<td><?= h($contacts->phone) ?></td>
 			<td><?= h($contacts->email) ?></td>
 			<td><?= h($contacts->birth) ?></td>
@@ -177,12 +241,14 @@
 		<tr>
 			<th><?= __('Id') ?></th>
 			<th><?= __('Name') ?></th>
+			<th><?= __('Switched') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 		<?php foreach ($user->linkups as $linkups): ?>
 		<tr>
 			<td><?= h($linkups->id) ?></td>
 			<td><?= h($linkups->name) ?></td>
+			<td><?= h($linkups->switched) ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['controller' => 'Linkups', 'action' => 'view', $linkups->id]) ?>
 				<?= $this->Html->link(__('Edit'), ['controller' => 'Linkups', 'action' => 'edit', $linkups->id]) ?>

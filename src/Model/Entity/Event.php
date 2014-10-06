@@ -15,7 +15,7 @@ class Event extends Entity {
  */
 	protected $_accessible = [
 		'name' => true,
-		'eventgroup_id' => true,
+		'user_id' => true,
 		'eventgroup' => true,
 		'histories' => true,
 	];

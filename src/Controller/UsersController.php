@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Event\Event;
+
 /**
  * Users Controller
  *
@@ -11,6 +12,11 @@ use Cake\Event\Event;
  */
 class UsersController extends AppController {
 
+/**
+ * Index method
+ *
+ * @return void
+ */
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         // Allow users to logout.
@@ -43,7 +49,7 @@ class UsersController extends AppController {
  */
 	public function view() {
 		$user = $this->Users->get($this->Auth->user('id'), [
-			'contain' => ['Contacts', 'Linkups', 'Histories', 'Notifications']
+			'contain' => ['Contacts', 'Linkups', 'Events', 'Groups', 'Histories', 'Notifications']
 		]);
 		$this->set('user', $user);
 	}

@@ -21,6 +21,9 @@ class ZipsTable extends Table {
 		$this->displayField('zip');
 		$this->primaryKey('id');
 
+		$this->belongsTo('Countries', [
+			'foreignKey' => 'country_id',
+		]);
 		$this->hasMany('Contacts', [
 			'foreignKey' => 'zip_id',
 		]);
@@ -36,8 +39,16 @@ class ZipsTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
+			->add('country_id', 'valid', ['rule' => 'numeric'])
+			->allowEmpty('country_id', 'create')
 			->allowEmpty('zip')
-			->allowEmpty('name');
+			->allowEmpty('name')
+			->add('lat', 'valid', ['rule' => 'numeric'])
+			->validatePresence('lat', 'create')
+			->notEmpty('lat')
+			->add('lng', 'valid', ['rule' => 'numeric'])
+			->validatePresence('lng', 'create')
+			->notEmpty('lng');
 
 		return $validator;
 	}

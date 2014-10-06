@@ -16,9 +16,29 @@ class ZipsControllerTest extends IntegrationTestCase {
  */
 	public $fixtures = [
 		'app.zips',
-		'app.contacts',
 		'app.countries',
-		'app.contactsources'
+		'app.contacts',
+		'app.contacts_name_translation',
+		'app.contacts_contactname_translation',
+		'app.contacts_address_translation',
+		'app.contacts_phone_translation',
+		'app.contacts_birth_translation',
+		'app.contacts_active_translation',
+		'app.contacts_comment_translation',
+		'app.i18n',
+		'app.contactsources',
+		'app.histories',
+		'app.users',
+		'app.notifications',
+		'app.contacts_users',
+		'app.linkups',
+		'app.linkups_users',
+		'app.events',
+		'app.eventgroups',
+		'app.groups',
+		'app.grouptypes',
+		'app.contacts_groups',
+		'app.contacts_linkups'
 	];
 
 /**

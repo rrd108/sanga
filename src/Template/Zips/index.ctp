@@ -2,6 +2,8 @@
 	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
 		<li><?= $this->Html->link(__('New Zip'), ['action' => 'add']) ?></li>
+		<li><?= $this->Html->link(__('List Countries'), ['controller' => 'Countries', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Country'), ['controller' => 'Countries', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Contacts'), ['controller' => 'Contacts', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?> </li>
 	</ul>
@@ -11,8 +13,11 @@
 	<thead>
 		<tr>
 			<th><?= $this->Paginator->sort('id') ?></th>
+			<th><?= $this->Paginator->sort('country_id') ?></th>
 			<th><?= $this->Paginator->sort('zip') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
+			<th><?= $this->Paginator->sort('lat') ?></th>
+			<th><?= $this->Paginator->sort('lng') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
@@ -20,8 +25,13 @@
 	<?php foreach ($zips as $zip): ?>
 		<tr>
 			<td><?= $this->Number->format($zip->id) ?></td>
+			<td>
+				<?= $zip->has('country') ? $this->Html->link($zip->country->name, ['controller' => 'Countries', 'action' => 'view', $zip->country->id]) : '' ?>
+			</td>
 			<td><?= h($zip->zip) ?></td>
 			<td><?= h($zip->name) ?></td>
+			<td><?= $this->Number->format($zip->lat) ?></td>
+			<td><?= $this->Number->format($zip->lng) ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $zip->id]) ?>
 				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $zip->id]) ?>

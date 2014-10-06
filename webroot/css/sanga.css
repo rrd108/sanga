@@ -166,3 +166,13 @@ td.actions a{
   width: 80%;
   margin: 1px auto;
 }
+
+.tag{
+  background: #8d6e65;
+  color: white;
+  width: 10em;
+  border-radius: 3px;
+  padding: 2px 10px;
+  font-weight: bold;
+  font-style: italic;
+}

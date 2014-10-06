@@ -55,6 +55,7 @@
 						<?php
 							print '<li>' . $this->Html->link('❶ Irányítószámok', '/zips') . '</li>';
 							print '<li>' . $this->Html->link('☢ Országok', '/countries') . '</li>';
+							print '<li>' . $this->Html->link('❖ ' . __('Units'), '/units') . '</li>';
 							print '<li>' . $this->Html->link('☻ Felhasználók', ['prefix' => 'admin', 'controller' => 'Users', 'action' => 'index']) . '</li>';
 						?>
 					</ul>
@@ -64,10 +65,8 @@
 					<ul>
 						<?php
 							print '<li>' . $this->Html->link('⚓ Kapcsolat források', '/contactsources') . '</li>';
-							print '<li>' . $this->Html->link('✪ Csoport típusok', '/grouptypes') . '</li>';
 							print '<li>' . $this->Html->link('⁂ Csoportok', '/groups') . '</li>';
 							print '<li>' . $this->Html->link('♼ Kapcsolódási pontok', '/linkups') . '</li>';
-							print '<li>' . $this->Html->link('♣ Esemény csoportok', '/eventgroups') . '</li>';
 							print '<li>' . $this->Html->link('✿ Esemény típusok', '/events') . '</li>';
 						?>
 					</ul>
@@ -75,6 +74,7 @@
 				<li>
 					★ Adataim
 					<?php
+						$nc = '';
 						if($notification_count)
 							print $nc = '<span class="notice">'.$notification_count.'</span>';
 					?>

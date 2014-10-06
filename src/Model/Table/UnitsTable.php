@@ -6,9 +6,9 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Linkups Model
+ * Units Model
  */
-class LinkupsTable extends Table {
+class UnitsTable extends Table {
 
 /**
  * Initialize method
@@ -17,22 +17,12 @@ class LinkupsTable extends Table {
  * @return void
  */
 	public function initialize(array $config) {
-		$this->table('linkups');
+		$this->table('units');
 		$this->displayField('name');
 		$this->primaryKey('id');
 
 		$this->hasMany('Histories', [
-			'foreignKey' => 'linkup_id',
-		]);
-		$this->belongsToMany('Contacts', [
-			'foreignKey' => 'linkup_id',
-			'targetForeignKey' => 'contact_id',
-			'joinTable' => 'contacts_linkups',
-		]);
-		$this->belongsToMany('Users', [
-			'foreignKey' => 'linkup_id',
-			'targetForeignKey' => 'user_id',
-			'joinTable' => 'linkups_users',
+			'foreignKey' => 'unit_id',
 		]);
 	}
 
@@ -46,9 +36,7 @@ class LinkupsTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
-			->allowEmpty('name')
-			->add('switched', 'valid', ['rule' => 'boolean'])
-			->allowEmpty('switched');
+			->allowEmpty('name');
 
 		return $validator;
 	}

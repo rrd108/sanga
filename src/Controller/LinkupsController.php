@@ -28,7 +28,7 @@ class LinkupsController extends AppController {
  */
 	public function view($id = null) {
 		$linkup = $this->Linkups->get($id, [
-			'contain' => ['Users']
+			'contain' => ['Contacts', 'Users', 'Histories']
 		]);
 		$this->set('linkup', $linkup);
 	}
@@ -48,8 +48,9 @@ class LinkupsController extends AppController {
 				$this->Flash->error('The linkup could not be saved. Please, try again.');
 			}
 		}
+		$contacts = $this->Linkups->Contacts->find('list');
 		$users = $this->Linkups->Users->find('list');
-		$this->set(compact('linkup', 'users'));
+		$this->set(compact('linkup', 'contacts', 'users'));
 	}
 
 /**
@@ -61,7 +62,7 @@ class LinkupsController extends AppController {
  */
 	public function edit($id = null) {
 		$linkup = $this->Linkups->get($id, [
-			'contain' => ['Users']
+			'contain' => ['Contacts', 'Users']
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$linkup = $this->Linkups->patchEntity($linkup, $this->request->data);
@@ -72,8 +73,9 @@ class LinkupsController extends AppController {
 				$this->Flash->error('The linkup could not be saved. Please, try again.');
 			}
 		}
+		$contacts = $this->Linkups->Contacts->find('list');
 		$users = $this->Linkups->Users->find('list');
-		$this->set(compact('linkup', 'users'));
+		$this->set(compact('linkup', 'contacts', 'users'));
 	}
 
 /**

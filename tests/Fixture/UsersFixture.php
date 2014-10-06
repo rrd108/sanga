@@ -22,7 +22,10 @@ class UsersFixture extends TestFixture {
 		'email' => ['type' => 'string', 'length' => 45, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
 		'phone' => ['type' => 'string', 'length' => 45, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
 		'active' => ['type' => 'boolean', 'length' => null, 'null' => true, 'default' => '1', 'comment' => '', 'precision' => null],
-		'role' => ['type' => 'string', 'length' => 45, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+		'role' => ['type' => 'integer', 'length' => 3, 'unsigned' => true, 'null' => false, 'default' => '1', 'comment' => '0: nincs joga
+1: user (linkup jogok a linkups_users táblában
+9: CRM admin
+10: admin', 'precision' => null, 'autoIncrement' => null],
 		'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
 		'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
 		'_constraints' => [
@@ -47,9 +50,9 @@ class UsersFixture extends TestFixture {
 			'email' => 'Lorem ipsum dolor sit amet',
 			'phone' => 'Lorem ipsum dolor sit amet',
 			'active' => 1,
-			'role' => 'Lorem ipsum dolor sit amet',
-			'created' => '2014-09-27 09:29:07',
-			'modified' => '2014-09-27 09:29:07'
+			'role' => 1,
+			'created' => '2014-10-06 17:29:20',
+			'modified' => '2014-10-06 17:29:20'
 		],
 	];
 

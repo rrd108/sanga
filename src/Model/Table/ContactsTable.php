@@ -21,11 +21,7 @@ class ContactsTable extends Table {
 		$this->displayField('name');
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
-		$this->addBehavior('Translate', ['fields' => ['name', 'contactname', 'address', 'phone', 'birth', 'active', 'comment']]);
 
-		$this->belongsTo('Countries', [
-			'foreignKey' => 'country_id',
-		]);
 		$this->belongsTo('Zips', [
 			'foreignKey' => 'zip_id',
 		]);
@@ -64,9 +60,6 @@ class ContactsTable extends Table {
 			->allowEmpty('id', 'create')
 			->notEmpty('name')
 			->allowEmpty('contactname')
-			->add('country_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('country_id', 'create')
-			->notEmpty('country_id')
 			->add('zip_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('zip_id', 'create')
 			->notEmpty('zip_id')
@@ -86,4 +79,5 @@ class ContactsTable extends Table {
 
 		return $validator;
 	}
+
 }

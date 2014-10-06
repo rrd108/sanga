@@ -1,4 +1,4 @@
-<?php $this->assign('title', 'Belépés'); ?>
+<?php $this->assign('title', __('Log in')); ?>
 <div class="users form" id="loginform">
 <?= $this->Flash->render('auth') ?>
 <?php

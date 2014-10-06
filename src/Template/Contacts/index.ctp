@@ -2,8 +2,6 @@
 	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
 		<li><?= $this->Html->link(__('New Contact'), ['action' => 'add']) ?></li>
-		<li><?= $this->Html->link(__('List Countries'), ['controller' => 'Countries', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Country'), ['controller' => 'Countries', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Zips'), ['controller' => 'Zips', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Zip'), ['controller' => 'Zips', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Contactsources'), ['controller' => 'Contactsources', 'action' => 'index']) ?> </li>
@@ -22,22 +20,28 @@
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
+			<th><?= $this->Paginator->sort('id') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
 			<th><?= $this->Paginator->sort('contactname') ?></th>
+			<th><?= $this->Paginator->sort('zip_id') ?></th>
 			<th><?= $this->Paginator->sort('address') ?></th>
-			<th><?= $this->Paginator->sort('phone') ?></th>
-			<th><?= $this->Paginator->sort('email') ?></th>
+			<th><?= $this->Paginator->sort('lat') ?></th>
+			<th><?= $this->Paginator->sort('lng') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
 	<tbody>
 	<?php foreach ($contacts as $contact): ?>
 		<tr>
+			<td><?= $this->Number->format($contact->id) ?></td>
 			<td><?= h($contact->name) ?></td>
 			<td><?= h($contact->contactname) ?></td>
-			<td><?= h($contact->zip->zip . ' ' . $contact->zip->name . ' ' . $contact->address) ?></td>
-			<td><?= h($contact->phone) ?></td>
-			<td><?= h($contact->email) ?></td>
+			<td>
+				<?= $contact->has('zip') ? $this->Html->link($contact->zip->zip, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?>
+			</td>
+			<td><?= h($contact->address) ?></td>
+			<td><?= $this->Number->format($contact->lat) ?></td>
+			<td><?= $this->Number->format($contact->lng) ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $contact->id]) ?>
 				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id]) ?>

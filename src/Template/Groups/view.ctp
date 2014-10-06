@@ -5,8 +5,8 @@
 		<li><?= $this->Form->postLink(__('Delete Group'), ['action' => 'delete', $group->id], ['confirm' => __('Are you sure you want to delete # %s?', $group->id)]) ?> </li>
 		<li><?= $this->Html->link(__('List Groups'), ['action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Group'), ['action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Grouptypes'), ['controller' => 'Grouptypes', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Grouptype'), ['controller' => 'Grouptypes', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Histories'), ['controller' => 'Histories', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New History'), ['controller' => 'Histories', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Contacts'), ['controller' => 'Contacts', 'action' => 'index']) ?> </li>
@@ -19,10 +19,10 @@
 		<div class="large-5 columns strings">
 			<h6 class="subheader"><?= __('Name') ?></h6>
 			<p><?= h($group->name) ?></p>
-			<h6 class="subheader"><?= __('Grouptype') ?></h6>
-			<p><?= $group->has('grouptype') ? $this->Html->link($group->grouptype->name, ['controller' => 'Grouptypes', 'action' => 'view', $group->grouptype->id]) : '' ?></p>
+			<h6 class="subheader"><?= __('User') ?></h6>
+			<p><?= $group->has('user') ? $this->Html->link($group->user->username, ['controller' => 'Users', 'action' => 'view', $group->user->id]) : '' ?></p>
 		</div>
-		<div class="large-2 larege-offset-1 columns numbers end">
+		<div class="large-2 large-offset-1 columns numbers end">
 			<h6 class="subheader"><?= __('Id') ?></h6>
 			<p><?= $this->Number->format($group->id) ?></p>
 		</div>
@@ -35,12 +35,14 @@
 	<table cellpadding="0" cellspacing="0">
 		<tr>
 			<th><?= __('Id') ?></th>
-			<th><?= __('Date') ?></th>
 			<th><?= __('Contact Id') ?></th>
+			<th><?= __('Date') ?></th>
 			<th><?= __('User Id') ?></th>
-			<th><?= __('Detail') ?></th>
-			<th><?= __('Amount') ?></th>
+			<th><?= __('Linkup Id') ?></th>
 			<th><?= __('Event Id') ?></th>
+			<th><?= __('Detail') ?></th>
+			<th><?= __('Quantity') ?></th>
+			<th><?= __('Unit Id') ?></th>
 			<th><?= __('Group Id') ?></th>
 			<th><?= __('Created') ?></th>
 			<th><?= __('Modified') ?></th>
@@ -49,12 +51,14 @@
 		<?php foreach ($group->histories as $histories): ?>
 		<tr>
 			<td><?= h($histories->id) ?></td>
-			<td><?= h($histories->date) ?></td>
 			<td><?= h($histories->contact_id) ?></td>
+			<td><?= h($histories->date) ?></td>
 			<td><?= h($histories->user_id) ?></td>
-			<td><?= h($histories->detail) ?></td>
-			<td><?= h($histories->amount) ?></td>
+			<td><?= h($histories->linkup_id) ?></td>
 			<td><?= h($histories->event_id) ?></td>
+			<td><?= h($histories->detail) ?></td>
+			<td><?= h($histories->quantity) ?></td>
+			<td><?= h($histories->unit_id) ?></td>
 			<td><?= h($histories->group_id) ?></td>
 			<td><?= h($histories->created) ?></td>
 			<td><?= h($histories->modified) ?></td>
@@ -78,9 +82,10 @@
 			<th><?= __('Id') ?></th>
 			<th><?= __('Name') ?></th>
 			<th><?= __('Contactname') ?></th>
-			<th><?= __('Country Id') ?></th>
 			<th><?= __('Zip Id') ?></th>
 			<th><?= __('Address') ?></th>
+			<th><?= __('Lat') ?></th>
+			<th><?= __('Lng') ?></th>
 			<th><?= __('Phone') ?></th>
 			<th><?= __('Email') ?></th>
 			<th><?= __('Birth') ?></th>
@@ -96,9 +101,10 @@
 			<td><?= h($contacts->id) ?></td>
 			<td><?= h($contacts->name) ?></td>
 			<td><?= h($contacts->contactname) ?></td>
-			<td><?= h($contacts->country_id) ?></td>
 			<td><?= h($contacts->zip_id) ?></td>
 			<td><?= h($contacts->address) ?></td>
+			<td><?= h($contacts->lat) ?></td>
+			<td><?= h($contacts->lng) ?></td>
 			<td><?= h($contacts->phone) ?></td>
 			<td><?= h($contacts->email) ?></td>
 			<td><?= h($contacts->birth) ?></td>

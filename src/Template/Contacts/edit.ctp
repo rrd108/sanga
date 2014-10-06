@@ -3,8 +3,6 @@
 	<ul class="side-nav">
 		<li><?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $contact->id], ['confirm' => __('Are you sure you want to delete # %s?', $contact->id)]) ?></li>
 		<li><?= $this->Html->link(__('List Contacts'), ['action' => 'index']) ?></li>
-		<li><?= $this->Html->link(__('List Countries'), ['controller' => 'Countries', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Country'), ['controller' => 'Countries', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Zips'), ['controller' => 'Zips', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Zip'), ['controller' => 'Zips', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Contactsources'), ['controller' => 'Contactsources', 'action' => 'index']) ?> </li>
@@ -26,9 +24,10 @@
 	<?php
 		echo $this->Form->input('name');
 		echo $this->Form->input('contactname');
-		echo $this->Form->input('country_id', ['options' => $countries]);
 		echo $this->Form->input('zip_id', ['options' => $zips]);
 		echo $this->Form->input('address');
+		echo $this->Form->input('lat');
+		echo $this->Form->input('lng');
 		echo $this->Form->input('phone');
 		echo $this->Form->input('email');
 		echo $this->Form->input('birth');
