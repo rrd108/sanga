@@ -19,7 +19,6 @@
 		<li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
 	</ul>
 </div>
-
 <div class="contacts view large-10 medium-9 columns">
 	<h2><?= h($contact->name) ?></h2>
 	<div class="row">
@@ -27,7 +26,7 @@
 		<h4 class="subheader"><?= __('Contact person') ?></h4>
 		<?php if (!empty($contact->users)): ?>
 			<?php foreach ($contact->users as $users): ?>
-				<span class="tag"><?= h($users->username) ?><span class="tag">
+				<span class="tag tag-danger"><?= h($users->username) ?></span>
 			<?php endforeach; ?>
 		<?php endif; ?>
 		</div>
@@ -37,7 +36,7 @@
 		<h4 class="subheader"><?= __('Linkups') ?></h4>
 		<?php if (!empty($contact->linkups)): ?>
 			<?php foreach ($contact->linkups as $linkups): ?>
-				<span class="tag"><?= h($linkups->name) ?></span>
+				<span class="tag tag-success"><?= h($linkups->name) ?></span>
 			<?php endforeach; ?>
 		<?php endif; ?>
 		</div>

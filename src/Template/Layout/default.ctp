@@ -11,8 +11,8 @@
 
 	print $this->Html->css('base.css');
 	print $this->Html->css('cake.css');
-	
-	print $this->Html->css('superfish.css');
+		
+	print $this->Html->css('superfish.css');	//dropdown menu
 	
 	print $this->Html->css('jquery-ui.min.css');
 	print $this->Html->css('jquery-ui.structure.min.css');
@@ -21,11 +21,15 @@
 	print $this->Html->css('sanga.css');
 	
 	print $this->Html->script('jquery.js');
+	
+	//dropdown menu
 	print $this->Html->script('superfish.js');
 	print $this->Html->script('hoverIntent.js');
+		
 	print $this->Html->script('jquery-ui.min.js');
 	print $this->Html->script('jquery.ui.autocomplete.html.js');
 	print $this->Html->script('ui.datepicker-hu.js');
+	
 	print $this->Html->script('gmap3.min.js');
 	print $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
 	
@@ -92,6 +96,7 @@
 						<?php
 							print '<li>' . $this->Html->link('♥ Kapcsolatok', '/contacts') . '</li>';
 							print '<li>' . $this->Html->link('⚑ Történések', '/histories') . '</li>';
+							print '<li>' . $this->Html->link('♛ Lekérdezések', '/contacts/search') . '</li>';
 							print '<li>' . $this->Html->link('✈ Térkép', '/contacts/showmap') . '</li>';
 						?>
 					</ul>
