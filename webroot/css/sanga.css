@@ -75,6 +75,9 @@ select[multiple]{
 .i{
   font-style: italic;
 }
+.r{
+  text-align: right;
+}
 
 #map{
   width: 800px;
@@ -197,4 +200,50 @@ td.actions a{
 
 .tag-danger{
   background: #D9534F;
+}
+
+#tabs{
+  margin: 0;
+  padding: 0;
+}
+.ui-tabs-vertical { width: 61em; }
+.ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; }
+.ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+.ui-tabs-vertical .ui-tabs-nav li a { display:block; }
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; border-right-width: 1px; }
+.ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 48em;}
+#tabs .ui-widget-content,
+#tabs .ui-state-active,
+#tabs .ui-widget-content .ui-state-active,
+#tabs .ui-widget-header,
+#tabs .ui-widget-header .ui-state-active,
+#tabs .ui-state-default,
+#tabs .ui-widget-content .ui-state-default,
+#tabs .ui-widget-header .ui-state-default,
+#tabs .ui-state-hover,
+#tabs .ui-widget-content .ui-state-hover,
+#tabs .ui-widget-header .ui-state-hover,
+#tabs .ui-state-focus,
+#tabs .ui-widget-content .ui-state-focus,
+#tabs .ui-widget-header .ui-state-focus {
+  background: none;
+  border: none;
+  font-weight: normal;
+  line-height: inherit;
+}
+#tabs .ui-state-active,
+#tabs .ui-widget-content .ui-state-active,
+#tabs .ui-widget-header .ui-state-active{
+  border: 1px solid #15848F;
+}
+a.ui-tabs-anchor{width: 100%}
+
+.subheader{
+  width: 45%;
+  float: left;
+}
+
+.actions.columns{
+  border-right: 5px solid #15848f;
+  border-left: none;
 }

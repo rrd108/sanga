@@ -9,6 +9,8 @@ use App\Controller\AppController;
  * @property App\Model\Table\ContactsTable $Contacts
  */
 class ContactsController extends AppController {
+	
+	public $helpers = ['Number'];
 
 	//ajax keresések a név mezőkben
 	public function searchname(){
@@ -108,7 +110,10 @@ class ContactsController extends AppController {
  */
 	public function view($id = null) {
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['Zips', 'Contactsources', 'Groups', 'Linkups', 'Users', 'Histories']
+			'contain' => ['Zips', 'Contactsources', 'Groups', 'Linkups', 'Users', 'Histories' => [
+																						'Events', 'Users',
+																						'Linkups', 'Units'
+																						]]
 		]);
 		$this->set('contact', $contact);
 	}
