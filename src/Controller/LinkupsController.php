@@ -10,6 +10,20 @@ use App\Controller\AppController;
  */
 class LinkupsController extends AppController {
 
+	public function searchlinkup(){
+		$query = $this->Linkups->find()
+				->select(['id', 'name'])
+				->where(['name LIKE "'.$this->request->query('term').'%"']);
+		//debug($query);
+		foreach($query as $row){
+			$result[] = array('value' => $row->id,
+							  'label' => $row->zip . ' ' . $row['name']
+							  );
+		}
+		//debug($result);die();
+		$this->set('result', $result);
+	}
+
 /**
  * Index method
  *
