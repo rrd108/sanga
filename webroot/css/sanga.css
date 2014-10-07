@@ -58,7 +58,7 @@ header img{
 }
 
 .header-help span.notice{
-  background: #fc0;
+  background: #F0AD4E;
 }
 
 .actions{
@@ -78,7 +78,7 @@ select[multiple]{
 
 #map{
   width: 800px;
-  height: 400px;
+  height: 600px;
   margin: 0 auto;
 }
 
@@ -168,11 +168,33 @@ td.actions a{
 }
 
 .tag{
-  background: #8d6e65;
   color: white;
   width: 10em;
   border-radius: 3px;
   padding: 2px 10px;
   font-weight: bold;
-  font-style: italic;
+}
+
+.tag-default{
+  background: #777777
+}
+
+.tag-primary{
+  background: #428BCA;
+}
+
+.tag-success{
+  background: #5CB85C;
+}
+
+.tag-info{
+  background: #5BC0DE;
+}
+
+.tag-warning{
+  background: #F0AD4E;
+}
+
+.tag-danger{
+  background: #D9534F;
 }

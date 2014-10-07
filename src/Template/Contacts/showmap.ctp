@@ -29,7 +29,7 @@ $("#map").gmap3({
   marker: {
     values: contacts,
     cluster:{
-      radius:100,
+      radius:25,
       // This style will be used for clusters with more than 0 markers
       0: {
         content: "<div class='cluster cluster-1'>CLUSTER_COUNT</div>",
