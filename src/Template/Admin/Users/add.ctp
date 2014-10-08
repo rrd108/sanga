@@ -26,7 +26,7 @@
 		echo $this->Form->input('realname');
 		echo $this->Form->input('email');
 		echo $this->Form->input('phone');
-		echo $this->Form->input('active');
+		echo $this->Form->input('active', ['checked' => true]);
 		echo $this->Form->input('role');
 		echo $this->Form->input('contacts._ids', ['options' => $contacts]);
 		echo $this->Form->input('linkups._ids', ['options' => $linkups]);
