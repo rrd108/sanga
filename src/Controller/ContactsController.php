@@ -82,10 +82,10 @@ class ContactsController extends AppController {
 						return $q->where(['Linkups.id' => $this->request->data['linkup_id']]);
 						})
 					->having(['distance <=' => $this->request->data['area']])
-					->order(['distance' => 'ASC'])
-					->toArray();
+					->order(['distance' => 'ASC']);
+					//->toArray();
 			//debug($result);
-			$this->set('result', $result);
+			$this->set('result', $this->paginate($result));
 		}
 	}
 
@@ -109,6 +109,12 @@ class ContactsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
+		$this->paginate = [
+			'contain' => ['Histories' => [
+										'Events', 'Users',
+										'Linkups', 'Units'
+										]]
+		];
 		$contact = $this->Contacts->get($id, [
 			'contain' => ['Zips', 'Contactsources', 'Groups', 'Linkups', 'Users', 'Histories' => [
 																						'Events', 'Users',
@@ -155,13 +161,14 @@ class ContactsController extends AppController {
  */
 	public function edit($id = null) {
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['Groups', 'Linkups', 'Users']
+			'contain' => ['Groups', 'Linkups', 'Users', 'Zips']
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
 			if ($this->Contacts->save($contact)) {
+				exec(WWW_ROOT . '../bin/cake db_refine set_geo_for_user ' . $id . ' > /dev/null &');
 				$this->Flash->success('The contact has been saved.');
-				return $this->redirect(['action' => 'index']);
+				return $this->redirect(['action' => 'view', $id]);
 			} else {
 				$this->Flash->error('The contact could not be saved. Please, try again.');
 			}

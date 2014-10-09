@@ -62,6 +62,16 @@ class DbRefineShell extends Shell {
 		return(['id' => $data->id,
 				'lat' => $json->results[0]->geometry->location->lat,
 				'lng' => $json->results[0]->geometry->location->lng]);		
+	}
+	
+	public function setGeoForUser($id = null){
+		//ivoking: bin/cake db_refine set_geo_for_user 12
+		if($id = intval($id)){
+			$contact = $this->Contacts->get($id, [
+				'contain' => ['Zips' => ['Countries']]
+			]);
+			$this->saveGeo($this->getGeo($contact));
 		}
+	}
 }
 ?>
