@@ -9,6 +9,8 @@ use App\Controller\AppController;
  * @property App\Model\Table\HistoriesTable $Histories
  */
 class HistoriesController extends AppController {
+	
+	public $helper = ['Time'];
 
 /**
  * Index method

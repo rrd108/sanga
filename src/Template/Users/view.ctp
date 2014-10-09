@@ -20,33 +20,19 @@
 	</ul>
 </div>
 <div class="users view large-10 medium-9 columns">
-	<h2><?= h($user->username) ?></h2>
+	<h2><?= h($user->realname) ?></h2>
 	<div class="row">
 		<div class="large-5 columns strings">
 			<h6 class="subheader"><?= __('Username') ?></h6>
 			<p><?= h($user->username) ?></p>
-			<h6 class="subheader"><?= __('Password') ?></h6>
-			<p><?= h($user->password) ?></p>
 			<h6 class="subheader"><?= __('Realname') ?></h6>
 			<p><?= h($user->realname) ?></p>
 			<h6 class="subheader"><?= __('Email') ?></h6>
 			<p><?= h($user->email) ?></p>
 			<h6 class="subheader"><?= __('Phone') ?></h6>
 			<p><?= h($user->phone) ?></p>
-		</div>
-		<div class="large-2 large-offset-1 columns numbers end">
-			<h6 class="subheader"><?= __('Id') ?></h6>
-			<p><?= $this->Number->format($user->id) ?></p>
 			<h6 class="subheader"><?= __('Role') ?></h6>
 			<p><?= $this->Number->format($user->role) ?></p>
-		</div>
-		<div class="large-2 columns dates end">
-			<h6 class="subheader"><?= __('Created') ?></h6>
-			<p><?= h($user->created) ?></p>
-			<h6 class="subheader"><?= __('Modified') ?></h6>
-			<p><?= h($user->modified) ?></p>
-		</div>
-		<div class="large-2 columns booleans end">
 			<h6 class="subheader"><?= __('Active') ?></h6>
 			<p><?= $user->active ? __('Yes') : __('No'); ?></p>
 		</div>

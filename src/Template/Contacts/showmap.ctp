@@ -12,7 +12,7 @@ foreach($result as $r){
 			},';
 }
 ?>
-<div id="map" class="row">
+<div id="map" class="row"></div>
 <?php
 $this->Html->scriptStart(['block' => true]);
 ?>
@@ -83,4 +83,3 @@ $("#map").gmap3({
 <?php
 $this->Html->scriptEnd();
 ?>
-</div>

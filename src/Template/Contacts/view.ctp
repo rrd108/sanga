@@ -16,9 +16,11 @@ $this->Html->scriptEnd();
 			<li><a href="#tabs-2">Történések</a></li>
 			<li><a href="#tabs-3">Kapcsolati területek</a></li>
 			<li><a href="#tabs-4">Csoportok</a></li>
+			<li><a href="#tabs-5"><?= __('Map') ?></a></li>
 		</ul>
 	</div>
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
+		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
 			<div class="large-11 columns strings">
@@ -28,9 +30,11 @@ $this->Html->scriptEnd();
 				<p>&nbsp;<?= h($contact->contactname) ?></p>
 				<h6 class="subheader"><?= __('Contact person') ?></h6>
 				<?php if (!empty($contact->users)): ?>
+					<p>
 					<?php foreach ($contact->users as $users): ?>
-						<p>&nbsp;<?= h($users->realname) ?></p>
+						&nbsp;<?= h($users->realname) ?>
 					<?php endforeach; ?>
+					</p>
 				<?php endif; ?>
 				<h6 class="subheader"><?= __('Zip') ?></h6>
 				<p>&nbsp;<?= $contact->has('zip') ? $this->Html->link($contact->zip->zip . ' ' . $contact->zip->name, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?></p>
@@ -52,17 +56,18 @@ $this->Html->scriptEnd();
 		</div>
 	</div>
 	<div id="tabs-2" class="contacts view large-10 medium-9 columns">
+		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
 		<?php if (!empty($contact->histories)): ?>
 		<table cellpadding="0" cellspacing="0">
 			<tr>
-				<th><?= __('Date') ?></th>
-				<th><?= __('User') ?></th>
-				<th><?= __('Linkup') ?></th>
-				<th><?= __('Event') ?></th>
-				<th><?= __('Detail') ?></th>
-				<th><?= __('Quantity') ?></th>
+				<th><?= $this->Paginator->sort('date') ?></th>
+				<th><?= $this->Paginator->sort('user') ?></th>
+				<th><?= $this->Paginator->sort('linkup') ?></th>
+				<th><?= $this->Paginator->sort('event') ?></th>
+				<th><?= $this->Paginator->sort('detail') ?></th>
+				<th><?= $this->Paginator->sort('quantity') ?></th>
 			</tr>
 			<?php foreach ($contact->histories as $histories): ?>
 			<tr>
@@ -84,10 +89,21 @@ $this->Html->scriptEnd();
 			</tr>
 			<?php endforeach; ?>
 		</table>
+		<div class="paginator">
+			<ul class="pagination">
+			<?php
+				echo $this->Paginator->prev('< ' . __('previous'));
+				echo $this->Paginator->numbers();
+				echo $this->Paginator->next(__('next') . ' >');
+			?>
+			</ul>
+			<p><?= $this->Paginator->counter() ?></p>
+		</div>
 		<?php endif; ?>
 		</div>
 	</div>
 	<div id="tabs-3" class="contacts view large-10 medium-9 columns">
+		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
 			<div class="column large-12">
@@ -100,6 +116,7 @@ $this->Html->scriptEnd();
 		</div>
 	</div>
 	<div id="tabs-4" class="contacts view large-10 medium-9 columns">
+		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
 		<?php if (!empty($contact->groups)): ?>
@@ -126,4 +143,32 @@ $this->Html->scriptEnd();
 		<?php endif; ?>
 		</div>
 	</div>
+	<div id="tabs-5" class="contacts view large-10 medium-9 columns">
+		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
+		<h2><?= h($contact->name) ?></h2>
+		<div class="column large-12">
+			<h4 class="subheader"><?= __('Map') ?></h4>
+			<div id="mapsmall"></div>
+		</div>
+	</div>
+	<?php
+	$this->Html->scriptStart(['block' => true]);
+	?>
+	$(function(){
+		$("#mapsmall").gmap3({
+		  map:{
+			options: {
+			  center:[<?= $contact->lat ?>,<?= $contact->lng ?>],
+			  zoom: 8,
+			  mapTypeId: google.maps.MapTypeId.TERRAIN
+			}
+		  },
+		 marker:{
+			latLng:[<?= $contact->lat ?>,<?= $contact->lng ?>]
+		 }
+		});
+	});
+	<?php
+	$this->Html->scriptEnd();
+	?>
 </div>
