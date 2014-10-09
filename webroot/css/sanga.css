@@ -79,6 +79,10 @@ select[multiple]{
   text-align: right;
 }
 
+.fr{
+  float: right;
+}
+
 #map{
   width: 800px;
   height: 600px;
@@ -172,7 +176,6 @@ td.actions a{
 
 .tag{
   color: white;
-  width: 10em;
   border-radius: 3px;
   padding: 2px 10px;
   font-weight: bold;
@@ -208,7 +211,7 @@ td.actions a{
 }
 .ui-tabs-vertical { width: 61em; }
 .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; }
-.ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+.ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 101%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
 .ui-tabs-vertical .ui-tabs-nav li a { display:block; }
 .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; border-right-width: 1px; }
 .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 48em;}
@@ -227,16 +230,21 @@ td.actions a{
 #tabs .ui-widget-content .ui-state-focus,
 #tabs .ui-widget-header .ui-state-focus {
   background: none;
-  border: none;
+  border: 1px solid #fff;
   font-weight: normal;
   line-height: inherit;
+  margin-bottom: 2px;
 }
 #tabs .ui-state-active,
 #tabs .ui-widget-content .ui-state-active,
-#tabs .ui-widget-header .ui-state-active{
-  border: 1px solid #15848F;
+#tabs .ui-widget-header .ui-state-active,
+#tabs .ui-state-hover,
+#tabs .ui-widget-content .ui-state-hover,
+#tabs .ui-widget-header .ui-state-hover{
+  border-color: #15848F;
 }
 a.ui-tabs-anchor{width: 100%}
+.ui-widget-content a.tag{color: white;}
 
 .subheader{
   width: 45%;
@@ -246,4 +254,36 @@ a.ui-tabs-anchor{width: 100%}
 .actions.columns{
   border-right: 5px solid #15848f;
   border-left: none;
+}
+
+.ui-tabs-vertical .actions{
+	overflow: hidden;
+	padding-right: 0;
+}
+.ui-tabs-vertical .actions h3{
+	padding: 0 .55em;
+}
+.ui-tabs-vertical .actions .side-nav{
+	padding-right: 0;
+	margin-right: -1px;
+	width: 100%;
+}
+
+#tabs .side-nav li.ui-state-hover a:hover{
+  color:#15848F;
+}
+
+#tabs .ui-widget-header .ui-state-active,
+#tabs .ui-state-default{
+	background: #15848f;
+}
+#tabs .side-nav li.ui-state-active a, #tabs .side-nav li.ui-state-active a:hover{
+  color: #fff;
+}
+
+#tabs .ui-widget-header .ui-state-hover{
+    border-color: #15848f;
+	border-right: none;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
 }
