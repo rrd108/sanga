@@ -109,19 +109,17 @@ class ContactsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
-		$this->paginate = [
-			'contain' => ['Histories' => [
-										'Events', 'Users',
-										'Linkups', 'Units'
-										]]
-		];
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['Zips', 'Contactsources', 'Groups', 'Linkups', 'Users', 'Histories' => [
-																						'Events', 'Users',
-																						'Linkups', 'Units'
-																						]]
+			'contain' => ['Zips', 'Contactsources', 'Groups', 'Linkups', 'Users']
 		]);
 		$this->set('contact', $contact);
+		
+		$this->paginate = [
+			'contain' => ['Contacts', 'Users', 'Linkups', 'Events', 'Units', 'Groups']
+		];
+		$histories = $this->Contacts->Histories->find()
+				->where(['contact_id' => $id]);
+		$this->set('histories', $this->paginate($histories));
 	}
 
 /**

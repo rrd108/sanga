@@ -59,30 +59,30 @@ $this->Html->scriptEnd();
 		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
-		<?php if (!empty($contact->histories)): ?>
+		<?php if (!empty($histories)): ?>
 		<table cellpadding="0" cellspacing="0">
 			<tr>
-				<th><?= $this->Paginator->sort('date') ?></th>
-				<th><?= $this->Paginator->sort('user') ?></th>
-				<th><?= $this->Paginator->sort('linkup') ?></th>
-				<th><?= $this->Paginator->sort('event') ?></th>
-				<th><?= $this->Paginator->sort('detail') ?></th>
-				<th><?= $this->Paginator->sort('quantity') ?></th>
+				<th><?= $this->Paginator->sort('Histories.date') ?></th>
+				<th><?= $this->Paginator->sort('Histories.User.realname') ?></th>
+				<th><?= $this->Paginator->sort('Histories.Linkup.name') ?></th>
+				<th><?= $this->Paginator->sort('Histories.Event.name') ?></th>
+				<th><?= $this->Paginator->sort('Histories.detail') ?></th>
+				<th><?= $this->Paginator->sort('Histories.quantity') ?></th>
 			</tr>
-			<?php foreach ($contact->histories as $histories): ?>
+			<?php foreach ($histories as $history): ?>
 			<tr>
-				<td><?php print substr($histories->date,0,13); ?></td>
-				<td><?= h($histories->user->realname) ?></td>
-				<td><?= h($histories->linkup->name) ?></td>
-				<td><?= h($histories->event->name) ?></td>
-				<td><?= h($histories->detail) ?></td>
+				<td><?php print substr($history->date,0,13); ?></td>
+				<td><?= h($history->user->realname) ?></td>
+				<td><?= h($history->linkup->name) ?></td>
+				<td><?= h($history->event->name) ?></td>
+				<td><?= h($history->detail) ?></td>
 				<td class="r">
 					<?php
-						if(isset($histories->unit->name)){
-							print h($this->Number->currency($histories->quantity, $histories->unit->name));
+						if(isset($history->unit->name)){
+							print h($this->Number->currency($history->quantity, $history->unit->name));
 						}
 						else{
-							print h($histories->quantity);
+							print h($history->quantity);
 						}
 					?>
 				</td>

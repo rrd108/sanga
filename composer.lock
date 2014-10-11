@@ -131,12 +131,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "b2f9bbf43e76da7968374147787764eb8341c0bb"
+                "reference": "060a41c0f76584f85e32b389f57af618605da5e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/b2f9bbf43e76da7968374147787764eb8341c0bb",
-                "reference": "b2f9bbf43e76da7968374147787764eb8341c0bb",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/060a41c0f76584f85e32b389f57af618605da5e0",
+                "reference": "060a41c0f76584f85e32b389f57af618605da5e0",
                 "shasum": ""
             },
             "require": {
@@ -188,7 +188,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-10-09 02:40:59"
+            "time": "2014-10-10 18:51:02"
         },
         {
             "name": "cakephp/debug_kit",
