@@ -61,18 +61,12 @@ class ContactsController extends AppController {
 			$cent = $center->toArray();
 			//debug($cent[0]->lat);
 			
-			$expr = $center->newExpr()->add('3956 *2 * ASIN( SQRT( POWER( SIN( ( '.$cent[0]->lat.
+			$expr = $center->newExpr()->add('(3956 *2 * ASIN( SQRT( POWER( SIN( ( '.$cent[0]->lat.
 											' - abs( Contacts.lat ) ) * pi( ) /180 /2 ) , 2 ) + COS( '.$cent[0]->lat.
 											' * pi( ) /180 ) * COS( abs( Contacts.lat ) * pi( ) /180 ) * POWER( SIN( ( '.
-											$cent[0]->lng.' - Contacts.lng ) * pi( ) /180 /2 ) , 2 ) ) )');
+											$cent[0]->lng.' - Contacts.lng ) * pi( ) /180 /2 ) , 2 ) ) ))');
 			//debug($expr);
 			
-			/*
-			SELECT * , 3956 *2 * ASIN( SQRT( POWER( SIN( ( 47.174664 - abs( dest.lat ) ) * pi( ) /180 /2 ) , 2 ) + COS( 47.174664 * pi( ) /180 ) * COS( abs( dest.lat ) * pi( ) /180 ) * POWER( SIN( ( 20.176279 - dest.lng ) * pi( ) /180 /2 ) , 2 ) ) ) AS distance
-				FROM zips AS dest
-				HAVING distance <30
-				ORDER BY distance
-			*/
 			$result = $this->Contacts->find()
 					->contain(['Zips', 'Linkups'])
 					->select(['name', 'Zips.zip', 'Zips.name', 'distance' => $expr])
@@ -85,7 +79,7 @@ class ContactsController extends AppController {
 					->order(['distance' => 'ASC']);
 					//->toArray();
 			//debug($result);
-			$this->set('result', $this->paginate($result));
+			$this->set('result', $result);
 		}
 	}
 
