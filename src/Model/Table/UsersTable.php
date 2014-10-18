@@ -44,6 +44,9 @@ class UsersTable extends Table {
 			'targetForeignKey' => 'linkup_id',
 			'joinTable' => 'linkups_users',
 		]);
+		$this->belongsToMany('Usergroups', [
+			'through' => 'users_usergroups',
+		]);
 	}
 
 /**
