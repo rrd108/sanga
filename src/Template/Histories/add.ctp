@@ -23,7 +23,7 @@
 	<?php
 		echo $this->Form->input('contact_id', ['options' => $contacts, 'empty' => __('-- Choose --')]);
 		echo $this->Form->input('date');
-		echo $this->Form->input('user_id', ['options' => $users]);
+		echo $this->Form->input('user_id', ['options' => $users, 'empty' => __('-- Choose --')]);
 		echo $this->Form->input('linkup_id', ['options' => $linkups]);
 		echo $this->Form->input('event_id', ['options' => $events]);
 		echo $this->Form->input('detail');

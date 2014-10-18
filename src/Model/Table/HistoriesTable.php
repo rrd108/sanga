@@ -59,7 +59,7 @@ class HistoriesTable extends Table {
 			->notEmpty('date')
 			->add('user_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('user_id', 'create')
-			->notEmpty('user_id')
+			->allowEmpty('user_id')
 			->add('linkup_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('linkup_id', 'create')
 			->notEmpty('linkup_id')

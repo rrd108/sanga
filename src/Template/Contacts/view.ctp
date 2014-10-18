@@ -36,10 +36,11 @@ $this->Html->scriptEnd();
 					<?php endforeach; ?>
 					</p>
 				<?php endif; ?>
-				<h6 class="subheader"><?= __('Zip') ?></h6>
-				<p>&nbsp;<?= $contact->has('zip') ? $this->Html->link($contact->zip->zip . ' ' . $contact->zip->name, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?></p>
 				<h6 class="subheader"><?= __('Address') ?></h6>
-				<p>&nbsp;<?= h($contact->address) ?></p>
+				<p>
+					&nbsp;<?= $contact->has('zip') ? $this->Html->link($contact->zip->zip . ' ' . $contact->zip->name, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?>
+					&nbsp;<?= h($contact->address) ?>
+				</p>
 				<h6 class="subheader"><?= __('Phone') ?></h6>
 				<p>&nbsp;<?= h($contact->phone) ?></p>
 				<h6 class="subheader"><?= __('Email') ?></h6>
@@ -53,6 +54,27 @@ $this->Html->scriptEnd();
 				<h6 class="subheader"><?= __('Comment') ?></h6>
 				<?= $this->Text->autoParagraph(h($contact->comment)); ?>
 			</div>
+			<div id="mapsmall"></div>
+				<?php
+				$this->Html->scriptStart(['block' => true]);
+				?>
+				$(function(){
+					$("#mapsmall").gmap3({
+					  map:{
+						options: {
+						  center:[<?= $contact->lat ?>,<?= $contact->lng ?>],
+						  zoom: 8,
+						  mapTypeId: google.maps.MapTypeId.TERRAIN
+						}
+					  },
+					 marker:{
+						latLng:[<?= $contact->lat ?>,<?= $contact->lng ?>]
+					 }
+					});
+				});
+				<?php
+				$this->Html->scriptEnd();
+				?>
 		</div>
 	</div>
 	<div id="tabs-2" class="contacts view large-10 medium-9 columns">
@@ -62,17 +84,23 @@ $this->Html->scriptEnd();
 		<?php if (!empty($histories)): ?>
 		<table cellpadding="0" cellspacing="0">
 			<tr>
-				<th><?= $this->Paginator->sort('Histories.date') ?></th>
-				<th><?= $this->Paginator->sort('Histories.User.realname') ?></th>
-				<th><?= $this->Paginator->sort('Histories.Linkup.name') ?></th>
-				<th><?= $this->Paginator->sort('Histories.Event.name') ?></th>
-				<th><?= $this->Paginator->sort('Histories.detail') ?></th>
-				<th><?= $this->Paginator->sort('Histories.quantity') ?></th>
+				<th><?= $this->Paginator->sort('date') ?></th>
+				<th><?= $this->Paginator->sort('User.realname') ?></th>
+				<th><?= $this->Paginator->sort('Linkup.name') ?></th>
+				<th><?= $this->Paginator->sort('Event.name') ?></th>
+				<th><?= $this->Paginator->sort('detail') ?></th>
+				<th><?= $this->Paginator->sort('quantity') ?></th>
 			</tr>
 			<?php foreach ($histories as $history): ?>
 			<tr>
 				<td><?php print substr($history->date,0,13); ?></td>
-				<td><?= h($history->user->realname) ?></td>
+				<td>
+					<?php
+					if(isset($history->user->realname)){
+						print $history->user->realname;
+					}
+					?>
+				</td>
 				<td><?= h($history->linkup->name) ?></td>
 				<td><?= h($history->event->name) ?></td>
 				<td><?= h($history->detail) ?></td>
@@ -143,32 +171,4 @@ $this->Html->scriptEnd();
 		<?php endif; ?>
 		</div>
 	</div>
-	<div id="tabs-5" class="contacts view large-10 medium-9 columns">
-		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
-		<h2><?= h($contact->name) ?></h2>
-		<div class="column large-12">
-			<h4 class="subheader"><?= __('Map') ?></h4>
-			<div id="mapsmall"></div>
-		</div>
-	</div>
-	<?php
-	$this->Html->scriptStart(['block' => true]);
-	?>
-	$(function(){
-		$("#mapsmall").gmap3({
-		  map:{
-			options: {
-			  center:[<?= $contact->lat ?>,<?= $contact->lng ?>],
-			  zoom: 8,
-			  mapTypeId: google.maps.MapTypeId.TERRAIN
-			}
-		  },
-		 marker:{
-			latLng:[<?= $contact->lat ?>,<?= $contact->lng ?>]
-		 }
-		});
-	});
-	<?php
-	$this->Html->scriptEnd();
-	?>
 </div>
