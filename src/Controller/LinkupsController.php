@@ -30,6 +30,9 @@ class LinkupsController extends AppController {
  * @return void
  */
 	public function index() {
+		$this->paginate = [
+			'contain' => ['Users']
+		];
 		$this->set('linkups', $this->paginate($this->Linkups));
 	}
 

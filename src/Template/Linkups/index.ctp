@@ -17,6 +17,7 @@
 			<th><?= $this->Paginator->sort('id') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
 			<th><?= $this->Paginator->sort('switched') ?></th>
+			<th><?= $this->Paginator->sort('User.username') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
@@ -26,6 +27,11 @@
 			<td><?= $this->Number->format($linkup->id) ?></td>
 			<td><?= h($linkup->name) ?></td>
 			<td><?= h($linkup->switched) ?></td>
+			<td>
+				<?php
+				if($linkup->users) print $linkup->users[0]->username;
+				?>
+			</td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $linkup->id]) ?>
 				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $linkup->id]) ?>
