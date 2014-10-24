@@ -296,6 +296,11 @@ a.ui-tabs-anchor{width: 100%}
 	border-bottom-left-radius: 5px;
 }
 
-label{
+div:not(.radio) > label{
 	clear: left;
+}
+
+div.radio > label{
+  display: inline;
+  margin-right: 1em;
 }
