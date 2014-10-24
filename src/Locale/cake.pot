@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2014-10-06 10:30+0000\n"
+"POT-Creation-Date: 2014-10-23 12:02+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "An Internal Error Has Occurred"
 msgstr ""
 
-#: Controller/Component/AuthComponent.php:434
+#: Controller/Component/AuthComponent.php:422
 msgid "You are not authorized to access that location."
 msgstr ""
 
@@ -77,91 +77,91 @@ msgstr ""
 msgid "just now"
 msgstr ""
 
-#: I18n/Time.php:394
+#: I18n/Time.php:393
 msgid "about a second ago"
 msgstr ""
 
-#: I18n/Time.php:395
+#: I18n/Time.php:394
 msgid "about a minute ago"
 msgstr ""
 
-#: I18n/Time.php:396
+#: I18n/Time.php:395
 msgid "about an hour ago"
 msgstr ""
 
-#: I18n/Time.php:397
+#: I18n/Time.php:396
 msgid "about a day ago"
 msgstr ""
 
-#: I18n/Time.php:398
+#: I18n/Time.php:397
 msgid "about a week ago"
 msgstr ""
 
-#: I18n/Time.php:399
+#: I18n/Time.php:398
 msgid "about a year ago"
 msgstr ""
 
-#: I18n/Time.php:408
+#: I18n/Time.php:407
 msgid "in about a second"
 msgstr ""
 
-#: I18n/Time.php:409
+#: I18n/Time.php:408
 msgid "in about a minute"
 msgstr ""
 
-#: I18n/Time.php:410
+#: I18n/Time.php:409
 msgid "in about an hour"
 msgstr ""
 
-#: I18n/Time.php:411
+#: I18n/Time.php:410
 msgid "in about a day"
 msgstr ""
 
-#: I18n/Time.php:412
+#: I18n/Time.php:411
 msgid "in about a week"
 msgstr ""
 
-#: I18n/Time.php:413
+#: I18n/Time.php:412
 msgid "in about a year"
 msgstr ""
 
-#: I18n/Time.php:367
+#: I18n/Time.php:366
 msgid "{0} year"
 msgid_plural "{0} years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: I18n/Time.php:370
+#: I18n/Time.php:369
 msgid "{0} month"
 msgid_plural "{0} months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: I18n/Time.php:373
+#: I18n/Time.php:372
 msgid "{0} week"
 msgid_plural "{0} weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: I18n/Time.php:376
+#: I18n/Time.php:375
 msgid "{0} day"
 msgid_plural "{0} days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: I18n/Time.php:379
+#: I18n/Time.php:378
 msgid "{0} hour"
 msgid_plural "{0} hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: I18n/Time.php:382
+#: I18n/Time.php:381
 msgid "{0} minute"
 msgid_plural "{0} minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: I18n/Time.php:385
+#: I18n/Time.php:384
 msgid "{0} second"
 msgid_plural "{0} seconds"
 msgstr[0] ""
@@ -199,7 +199,7 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: View/Helper/HtmlHelper.php:729
+#: View/Helper/HtmlHelper.php:735
 msgid "Home"
 msgstr ""
 
