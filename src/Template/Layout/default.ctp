@@ -73,6 +73,7 @@
 							print '<li>' . $this->Html->link('♼ Kapcsolódási pontok', '/linkups') . '</li>';
 							print '<li>' . $this->Html->link('✿ Esemény típusok', '/events') . '</li>';
 							print '<li>' . $this->Html->link('✋ ' . __('User groups'), '/usergroups') . '</li>';
+							print '<li>' . $this->Html->link('✄ ' . __('Skills'), '/skills') . '</li>';
 						?>
 					</ul>
 				</li>

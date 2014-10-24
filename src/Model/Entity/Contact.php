@@ -23,17 +23,11 @@ class Contact extends Entity {
 		'phone' => true,
 		'email' => true,
 		'birth' => true,
+		'sex' => true,
+		'workplace' => true,
 		'active' => true,
 		'comment' => true,
 		'contactsource_id' => true,
-		'name_translation' => true,
-		'contactname_translation' => true,
-		'address_translation' => true,
-		'phone_translation' => true,
-		'birth_translation' => true,
-		'active_translation' => true,
-		'comment_translation' => true,
-		'_i18n' => true,
 		'country' => true,
 		'zip' => true,
 		'contactsource' => true,
@@ -41,6 +35,7 @@ class Contact extends Entity {
 		'groups' => true,
 		'linkups' => true,
 		'users' => true,
+		'skills' => true,
 	];
 
 }

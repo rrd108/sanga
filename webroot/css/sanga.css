@@ -295,3 +295,7 @@ a.ui-tabs-anchor{width: 100%}
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
 }
+
+label{
+	clear: left;
+}

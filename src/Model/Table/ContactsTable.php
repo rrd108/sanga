@@ -1,8 +1,10 @@
 <?php
 namespace App\Model\Table;
 
+use ArrayObject;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use Cake\ORM\Entity;
 use Cake\Validation\Validator;
 
 /**
@@ -46,6 +48,11 @@ class ContactsTable extends Table {
 			'targetForeignKey' => 'user_id',
 			'joinTable' => 'contacts_users',
 		]);
+		$this->belongsToMany('Skills', [
+			'foreignKey' => 'contact_id',
+			'targetForeignKey' => 'skill_id',
+			'joinTable' => 'contacts_skills',
+		]);
 	}
 
 /**
@@ -58,11 +65,11 @@ class ContactsTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
-			->notEmpty('name')
+			->allowEmpty('name')
 			->allowEmpty('contactname')
 			->add('zip_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('zip_id', 'create')
-			->notEmpty('zip_id')
+			->allowEmpty('zip_id')
 			->allowEmpty('address')
 			->allowEmpty('phone')
 			->add('email', 'valid', ['rule' => 'email'])
@@ -70,6 +77,8 @@ class ContactsTable extends Table {
 			->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
 			->add('birth', 'valid', ['rule' => 'date'])
 			->allowEmpty('birth')
+			->allowEmpty('workplace')
+			->allowEmpty('sex')
 			->add('active', 'valid', ['rule' => 'boolean'])
 			->allowEmpty('active')
 			->allowEmpty('comment')
@@ -80,4 +89,15 @@ class ContactsTable extends Table {
 		return $validator;
 	}
 
+	public function beforeSave(Event $event, Entity $entity, ArrayObject $options){
+		if((!empty($entity->name) + !empty($entity->contactname) + !empty($entity->zip_id)
+				+ !empty($entity->address) + !empty($entity->phone) + !empty($entity->email)
+				+ !empty($entity->birth->time) + !empty($entity->workplace)) >= 2){
+			return true;
+		}
+		else{
+			//Error: __('At least 3 info should be filled');
+			return false;
+		}
+	}
 }

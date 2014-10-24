@@ -25,8 +25,7 @@
 			<th><?= $this->Paginator->sort('contactname') ?></th>
 			<th><?= $this->Paginator->sort('zip_id') ?></th>
 			<th><?= $this->Paginator->sort('address') ?></th>
-			<th><?= $this->Paginator->sort('lat') ?></th>
-			<th><?= $this->Paginator->sort('lng') ?></th>
+			<th><?= $this->Paginator->sort('workplace') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
@@ -40,8 +39,7 @@
 				<?= $contact->has('zip') ? $this->Html->link($contact->zip->zip, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?>
 			</td>
 			<td><?= h($contact->address) ?></td>
-			<td><?= $this->Number->format($contact->lat) ?></td>
-			<td><?= $this->Number->format($contact->lng) ?></td>
+			<td><?= h($contact->workplace) ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $contact->id]) ?>
 				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id]) ?>

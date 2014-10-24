@@ -104,7 +104,7 @@ class ContactsController extends AppController {
  */
 	public function view($id = null) {
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['Zips', 'Contactsources', 'Groups', 'Linkups', 'Users']
+			'contain' => ['Zips', 'Contactsources', 'Groups', 'Skills', 'Linkups', 'Users']
 		]);
 		$this->set('contact', $contact);
 		
@@ -134,6 +134,7 @@ class ContactsController extends AppController {
 		$zips = $this->Contacts->Zips->find('list', ['idField' => 'id', 'valueField' => 'full_zip']);
 		$contactsources = $this->Contacts->Contactsources->find('list');
 		$groups = $this->Contacts->Groups->find('list');
+		$skills = $this->Contacts->Skills->find('list');
 		$linkups = $this->Contacts->Linkups->find('list');
 		$_linkupsSwitched = $this->Contacts->Linkups->find('list')->select('id')->where('switched = 1')->toArray();
 		foreach($_linkupsSwitched as $i => $l){
@@ -141,7 +142,8 @@ class ContactsController extends AppController {
 		}
 		//debug($linkupsSwitched);
 		$users = $this->Contacts->Users->find('list');
-		$this->set(compact('contact', 'countries', 'zips', 'contactsources', 'groups', 'linkups', 'linkupsSwitched', 'users'));
+		$this->set(compact('contact', 'countries', 'zips', 'contactsources', 'groups', 'skills',
+						   'linkups', 'linkupsSwitched', 'users'));
 	}
 
 /**
@@ -168,9 +170,10 @@ class ContactsController extends AppController {
 		$zips = $this->Contacts->Zips->find('list');
 		$contactsources = $this->Contacts->Contactsources->find('list');
 		$groups = $this->Contacts->Groups->find('list');
+		$skills = $this->Contacts->Skills->find('list');
 		$linkups = $this->Contacts->Linkups->find('list');
 		$users = $this->Contacts->Users->find('list');
-		$this->set(compact('contact', 'zips', 'contactsources', 'groups', 'linkups', 'users'));
+		$this->set(compact('contact', 'zips', 'contactsources', 'groups', 'skills', 'linkups', 'users'));
 	}
 
 /**

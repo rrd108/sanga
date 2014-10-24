@@ -32,8 +32,11 @@
 		echo $this->Form->input('phone');
 		echo $this->Form->input('email');
 		echo $this->Form->input('birth', ['type' => 'text']);
+		echo $this->Form->input('sex', ['type' => 'radio', 'options' => [1 => __('Male'), 2 => __('Female')]]);
 		echo $this->Form->input('active');
 		echo $this->Form->input('comment');
+		echo $this->Form->input('workplace');
+		echo $this->Form->input('skills._ids', ['options' => $skills]);
 		echo $this->Form->input('contactsource_id', ['options' => $contactsources]);
 		echo $this->Form->input('groups._ids', ['options' => $groups]);
 		echo $this->Form->input('linkups._ids', ['options' => $linkups]);

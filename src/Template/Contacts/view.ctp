@@ -13,10 +13,10 @@ $this->Html->scriptEnd();
 		<h3><?= __('Actions') ?></h3>
 		<ul class="side-nav">
 			<li><a href="#tabs-1">Személyi adatok</a></li>
-			<li><a href="#tabs-2">Történések</a></li>
-			<li><a href="#tabs-3">Kapcsolati területek</a></li>
-			<li><a href="#tabs-4">Csoportok</a></li>
-			<li><a href="#tabs-5"><?= __('Map') ?></a></li>
+			<li><a href="#tabs-2"><?= __('Workplace and skills') ?></a></li>
+			<li><a href="#tabs-3">Történések</a></li>
+			<li><a href="#tabs-4">Kapcsolati területek</a></li>
+			<li><a href="#tabs-5">Csoportok</a></li>
 		</ul>
 	</div>
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
@@ -47,6 +47,20 @@ $this->Html->scriptEnd();
 				<p>&nbsp;<?= h($contact->email) ?></p>
 				<h6 class="subheader"><?= __('Birth') ?></h6>
 				<p>&nbsp;<?= h($contact->birth) ?></p>
+				<h6 class="subheader"><?= __('Sex') ?></h6>
+				<p>&nbsp;
+					<?php
+					if($contact->sex == 1){
+						print __('Male');
+					}
+					else if($contact->sex == 2){
+						print __('Female');
+					}
+					else{
+						print __('Unknown');
+					}
+					?>
+				</p>
 				<h6 class="subheader"><?= __('Contactsource') ?></h6>
 				<p>&nbsp;<?= $contact->has('contactsource') ? $this->Html->link($contact->contactsource->name, ['controller' => 'Contactsources', 'action' => 'view', $contact->contactsource->id]) : '' ?></p>
 				<h6 class="subheader"><?= __('Active') ?></h6>
@@ -78,6 +92,26 @@ $this->Html->scriptEnd();
 		</div>
 	</div>
 	<div id="tabs-2" class="contacts view large-10 medium-9 columns">
+		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
+		<h2><?= h($contact->name) ?></h2>
+		<div class="row">
+			<div class="large-11 columns strings">
+				<h6 class="subheader"><?= __('Workplace') ?></h6>
+				<p>&nbsp;<?= h($contact->workplace) ?></p>
+				<h6 class="subheader"><?= __('Skills') ?></h6>
+				<?php if (!empty($contact->skills)): ?>
+					<p>
+					<?php foreach ($contact->skills as $skills): ?>
+						<span class="tag tag-success">
+							<?php print h($skills->name); ?>
+						</span>
+					<?php endforeach; ?>
+					</p>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+	<div id="tabs-3" class="contacts view large-10 medium-9 columns">
 		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
@@ -130,44 +164,25 @@ $this->Html->scriptEnd();
 		<?php endif; ?>
 		</div>
 	</div>
-	<div id="tabs-3" class="contacts view large-10 medium-9 columns">
+	<div id="tabs-4" class="contacts view large-10 medium-9 columns">
 		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
-			<div class="column large-12">
 			<?php if (!empty($contact->linkups)): ?>
 				<?php foreach ($contact->linkups as $linkups): ?>
 					<span class="tag tag-success"><?= h($linkups->name) ?></span>
 				<?php endforeach; ?>
 			<?php endif; ?>
-			</div>
 		</div>
 	</div>
-	<div id="tabs-4" class="contacts view large-10 medium-9 columns">
+	<div id="tabs-5" class="contacts view large-10 medium-9 columns">
 		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
 		<?php if (!empty($contact->groups)): ?>
-		<table cellpadding="0" cellspacing="0">
-			<tr>
-				<th><?= __('Id') ?></th>
-				<th><?= __('Name') ?></th>
-				<th><?= __('User Id') ?></th>
-				<th class="actions"><?= __('Actions') ?></th>
-			</tr>
 			<?php foreach ($contact->groups as $groups): ?>
-			<tr>
-				<td><?= h($groups->id) ?></td>
-				<td><?= h($groups->name) ?></td>
-				<td><?= h($groups->user_id) ?></td>
-				<td class="actions">
-					<?= $this->Html->link(__('View'), ['controller' => 'Groups', 'action' => 'view', $groups->id]) ?>
-					<?= $this->Html->link(__('Edit'), ['controller' => 'Groups', 'action' => 'edit', $groups->id]) ?>
-					<?= $this->Form->postLink(__('Delete'), ['controller' => 'Groups', 'action' => 'delete', $groups->id], ['confirm' => __('Are you sure you want to delete # %s?', $groups->id)]) ?>
-				</td>
-			</tr>
+				<span class="tag tag-success"><?= h($groups->name) ?></span>
 			<?php endforeach; ?>
-		</table>
 		<?php endif; ?>
 		</div>
 	</div>
