@@ -104,7 +104,7 @@ class ContactsController extends AppController {
  */
 	public function view($id = null) {
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['Zips', 'Contactsources', 'Groups', 'Skills', 'Linkups', 'Users']
+			'contain' => ['Zips', 'Contactsources', 'Groups' => ['Users'], 'Skills', 'Linkups' => ['Users'], 'Users']
 		]);
 		$this->set('contact', $contact);
 		

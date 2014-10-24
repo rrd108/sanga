@@ -169,8 +169,11 @@ $this->Html->scriptEnd();
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
 			<?php if (!empty($contact->linkups)): ?>
-				<?php foreach ($contact->linkups as $linkups): ?>
-					<span class="tag tag-success"><?= h($linkups->name) ?></span>
+				<?php
+				foreach ($contact->linkups as $linkups):
+					$cssStyle = ($linkups->users) ? "info" : "success";
+				?>
+					<span class="tag tag-<?= $cssStyle ?>"><?= h($linkups->name) ?></span>
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</div>
@@ -180,8 +183,11 @@ $this->Html->scriptEnd();
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
 		<?php if (!empty($contact->groups)): ?>
-			<?php foreach ($contact->groups as $groups): ?>
-				<span class="tag tag-success"><?= h($groups->name) ?></span>
+			<?php
+			foreach ($contact->groups as $groups):
+				$cssStyle = ($groups->user) ? "info" : "success";
+			?>
+				<span class="tag tag-<?= $cssStyle ?>"><?= h($groups->name) ?></span>
 			<?php endforeach; ?>
 		<?php endif; ?>
 		</div>
