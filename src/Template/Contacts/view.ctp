@@ -46,7 +46,7 @@ $this->Html->scriptEnd();
 				<h6 class="subheader"><?= __('Email') ?></h6>
 				<p>&nbsp;<?= h($contact->email) ?></p>
 				<h6 class="subheader"><?= __('Birth') ?></h6>
-				<p>&nbsp;<?= h($contact->birth) ?></p>
+				<p>&nbsp;<?= h($contact->birth->format('Y-m-d')) ?></p>
 				<h6 class="subheader"><?= __('Sex') ?></h6>
 				<p>&nbsp;
 					<?php
@@ -127,7 +127,7 @@ $this->Html->scriptEnd();
 			</tr>
 			<?php foreach ($histories as $history): ?>
 			<tr>
-				<td><?php print substr($history->date,0,13); ?></td>
+				<td><?php print $history->date->format('Y-m-d'); ?></td>
 				<td>
 					<?php
 					if(isset($history->user->username)){
