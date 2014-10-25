@@ -61,8 +61,7 @@ class HistoriesTable extends Table {
 			->validatePresence('user_id', 'create')
 			->allowEmpty('user_id')
 			->add('linkup_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('linkup_id', 'create')
-			->notEmpty('linkup_id')
+			->allowEmpty('linkup_id')
 			->add('event_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('event_id', 'create')
 			->notEmpty('event_id')
@@ -70,7 +69,6 @@ class HistoriesTable extends Table {
 			->add('quantity', 'valid', ['rule' => 'decimal'])
 			->allowEmpty('quantity')
 			->add('unit_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('unit_id', 'create')
 			->allowEmpty('unit_id')
 			->add('group_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('group_id');

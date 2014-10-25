@@ -2,10 +2,13 @@
 namespace App\Model\Table;
 
 use ArrayObject;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\ORM\Entity;
 use Cake\Validation\Validator;
+use Cake\Log\Log;
 
 /**
  * Contacts Model
@@ -96,8 +99,42 @@ class ContactsTable extends Table {
 			return true;
 		}
 		else{
-			//Error: __('At least 3 info should be filled');
+			$entity->errors('name', __('At least 2 info should be filled'));
 			return false;
+		}
+	}
+	
+	public function afterSave(Event $event, Entity $entity, ArrayObject $options){
+		//debug($entity);
+		if(!$entity->isNew()){
+			$loggedInUser = $entity->loggedInUser;
+			$toLog = ['name', 'contactname', 'zip_id', 'address', 'phone', 'email', 'birth', 'workplace',
+					  'comment', 'linkups', 'groups', 'skills', 'users'];
+			foreach($entity->extractOriginal($entity->visibleProperties()) as $i => $value){
+				if($entity->$i != $value && in_array($i, $toLog)){
+					if(!is_array($value)){
+						//debug($entity->$i);
+						//debug($value);
+						$data = [
+								'id' => null,
+								'contact_id' => $entity->id,
+								'date' => date('Y-m-d'),
+								'create' => date('Y-m-d'),
+								'user_id' => $loggedInUser,
+								'event_id' => 1,
+								'detail' => $i . __(' changed from ') . $value . ' to ' . $entity->$i
+								 ];
+						//debug($data);
+						$history = TableRegistry::get('Histories');
+						$newHistory = $history->newEntity($data);
+						//debug($newHistory);die();
+						$history->save($newHistory);
+					}
+					else{
+						Log::write('debug', 'Contacts/afterSave : change in related data');
+					}
+				}
+			}
 		}
 	}
 }

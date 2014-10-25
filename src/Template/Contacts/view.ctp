@@ -135,7 +135,13 @@ $this->Html->scriptEnd();
 					}
 					?>
 				</td>
-				<td><?= h($history->linkup->name) ?></td>
+				<td>
+					<?php
+					if($history->linkup){
+						print $history->linkup->name;
+					}
+					?>
+				</td>
 				<td><?= h($history->event->name) ?></td>
 				<td><?= h($history->detail) ?></td>
 				<td class="r">

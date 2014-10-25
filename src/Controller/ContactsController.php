@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Contacts Controller
@@ -128,6 +129,7 @@ class ContactsController extends AppController {
 				$this->Flash->success('The contact has been saved.');
 				return $this->redirect(['action' => 'index']);
 			} else {
+				debug($contact->errors());
 				$this->Flash->error('The contact could not be saved. Please, try again.');
 			}
 		}
@@ -159,6 +161,7 @@ class ContactsController extends AppController {
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
+			$contact->loggedInUser = $this->Auth->user('id');
 			if ($this->Contacts->save($contact)) {
 				exec(WWW_ROOT . '../bin/cake db_refine set_geo_for_user ' . $id . ' > /dev/null &');
 				$this->Flash->success('The contact has been saved.');
