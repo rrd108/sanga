@@ -119,7 +119,7 @@ $this->Html->scriptEnd();
 		<table cellpadding="0" cellspacing="0">
 			<tr>
 				<th><?= $this->Paginator->sort('date') ?></th>
-				<th><?= $this->Paginator->sort('User.realname') ?></th>
+				<th><?= $this->Paginator->sort('User.username') ?></th>
 				<th><?= $this->Paginator->sort('Linkup.name') ?></th>
 				<th><?= $this->Paginator->sort('Event.name') ?></th>
 				<th><?= $this->Paginator->sort('detail') ?></th>
@@ -130,8 +130,8 @@ $this->Html->scriptEnd();
 				<td><?php print substr($history->date,0,13); ?></td>
 				<td>
 					<?php
-					if(isset($history->user->realname)){
-						print $history->user->realname;
+					if(isset($history->user->username)){
+						print $history->user->username;
 					}
 					?>
 				</td>
