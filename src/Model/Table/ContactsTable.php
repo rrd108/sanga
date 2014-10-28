@@ -108,32 +108,61 @@ class ContactsTable extends Table {
 		//debug($entity);
 		if(!$entity->isNew()){
 			$loggedInUser = $entity->loggedInUser;
-			$toLog = ['name', 'contactname', 'zip_id', 'address', 'phone', 'email', 'birth', 'workplace',
-					  'comment', 'linkups', 'groups', 'skills', 'users'];
-			foreach($entity->extractOriginal($entity->visibleProperties()) as $i => $value){
-				if($entity->$i != $value && in_array($i, $toLog)){
-					if(!is_array($value)){
-						//debug($entity->$i);
-						//debug($value);
-						$data = [
-								'id' => null,
-								'contact_id' => $entity->id,
-								'date' => date('Y-m-d'),
-								'create' => date('Y-m-d'),
-								'user_id' => $loggedInUser,
-								'event_id' => 1,
-								'detail' => $i . __(' changed from ') . $value . ' to ' . $entity->$i
-								 ];
-						//debug($data);
-						$history = TableRegistry::get('Histories');
-						$newHistory = $history->newEntity($data);
-						//debug($newHistory);die();
-						$history->save($newHistory);
+			$toLog = ['name', 'contactname', 'zip_id', 'address', 'phone', 'email', 'birth', 'workplace', 'comment',
+					  'linkups', 'groups', 'skills', 'users'];
+			
+			$oldEntity = $entity->extractOriginal($entity->visibleProperties());
+			//debug($entity);
+			//debug($oldEntity);
+			
+			foreach($toLog as $prop){
+				if(isset($oldEntity[$prop]) && $entity->$prop != $oldEntity[$prop]){
+					if(!is_array($oldEntity[$prop])){
+						$details[] = $prop . __(' changed from ') . $oldEntity[$prop] . ' to ' . $entity->$prop;
 					}
 					else{
-						Log::write('debug', 'Contacts/afterSave : change in related data');
+						foreach($entity->$prop as $ep){
+							$ep = $ep->toArray();
+							unset($ep['_joinData']);
+							$newEntityProp[] = $ep;
+						}
+						foreach($oldEntity[$prop] as $op){
+							$op = $op->toArray();
+							unset($op['_joinData']);
+							$oldEntityProp[] = $op;
+						}
+						
+						foreach($oldEntityProp as $oep){
+							if(!in_array($oep, $newEntityProp)){
+								$details[] = $oep['name'] . __(' removed from ') . $prop;
+							}
+						}
+						foreach($newEntityProp as $nep){
+							if(!in_array($nep, $oldEntityProp)){
+								$details[] = $oep['name'] . __(' added to ') . $prop;
+							}
+						}
+						
+						unset($newEntityProp, $oldEntityProp);
 					}
 				}
+			}
+
+			$history = TableRegistry::get('Histories');
+			foreach($details as $detail){
+				$data = [
+					'id' => null,
+					'contact_id' => $entity->id,
+					'date' => date('Y-m-d'),
+					'create' => date('Y-m-d'),
+					'user_id' => $loggedInUser,
+					'event_id' => 1,
+					'detail' => $detail
+				 ];
+				//debug($data);
+				$newHistory = $history->newEntity($data);
+				//debug($newHistory);//die();
+				$history->save($newHistory);
 			}
 		}
 	}
