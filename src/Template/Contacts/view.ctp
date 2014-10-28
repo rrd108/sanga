@@ -15,8 +15,7 @@ $this->Html->scriptEnd();
 			<li><a href="#tabs-1">Személyi adatok</a></li>
 			<li><a href="#tabs-2"><?= __('Workplace and skills') ?></a></li>
 			<li><a href="#tabs-3">Történések</a></li>
-			<li><a href="#tabs-4">Kapcsolati területek</a></li>
-			<li><a href="#tabs-5">Csoportok</a></li>
+			<li><a href="#tabs-4"><?= __('Linkups and groups') ?></a></li>
 		</ul>
 	</div>
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
@@ -46,7 +45,13 @@ $this->Html->scriptEnd();
 				<h6 class="subheader"><?= __('Email') ?></h6>
 				<p>&nbsp;<?= h($contact->email) ?></p>
 				<h6 class="subheader"><?= __('Birth') ?></h6>
-				<p>&nbsp;<?= h($contact->birth->format('Y-m-d')) ?></p>
+				<p>&nbsp;
+					<?php
+					if($contact->birth){
+						print h($contact->birth->format('Y-m-d'));
+					}
+					?>
+				</p>
 				<h6 class="subheader"><?= __('Sex') ?></h6>
 				<p>&nbsp;
 					<?php
@@ -119,7 +124,7 @@ $this->Html->scriptEnd();
 		<table cellpadding="0" cellspacing="0">
 			<tr>
 				<th><?= $this->Paginator->sort('date') ?></th>
-				<th><?= $this->Paginator->sort('User.username') ?></th>
+				<th><?= $this->Paginator->sort('User.name') ?></th>
 				<th><?= $this->Paginator->sort('Linkup.name') ?></th>
 				<th><?= $this->Paginator->sort('Event.name') ?></th>
 				<th><?= $this->Paginator->sort('detail') ?></th>
@@ -130,8 +135,8 @@ $this->Html->scriptEnd();
 				<td><?php print $history->date->format('Y-m-d'); ?></td>
 				<td>
 					<?php
-					if(isset($history->user->username)){
-						print $history->user->username;
+					if(isset($history->user->name)){
+						print $history->user->name;
 					}
 					?>
 				</td>
@@ -182,20 +187,14 @@ $this->Html->scriptEnd();
 					<span class="tag tag-<?= $cssStyle ?>"><?= h($linkups->name) ?></span>
 				<?php endforeach; ?>
 			<?php endif; ?>
-		</div>
-	</div>
-	<div id="tabs-5" class="contacts view large-10 medium-9 columns">
-		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
-		<h2><?= h($contact->name) ?></h2>
-		<div class="column large-12">
-		<?php if (!empty($contact->groups)): ?>
-			<?php
-			foreach ($contact->groups as $groups):
-				$cssStyle = ($groups->user) ? "info" : "success";
-			?>
-				<span class="tag tag-<?= $cssStyle ?>"><?= h($groups->name) ?></span>
-			<?php endforeach; ?>
-		<?php endif; ?>
+			<?php if (!empty($contact->groups)): ?>
+				<?php
+				foreach ($contact->groups as $groups):
+					$cssStyle = ($groups->user) ? "info" : "success";
+				?>
+					<span class="tag tag-<?= $cssStyle ?>"><?= h($groups->name) ?></span>
+				<?php endforeach; ?>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

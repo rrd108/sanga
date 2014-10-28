@@ -39,6 +39,13 @@ class AppController extends Controller {
         'Flash',
         'RequestHandler',
         'Auth' => [
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'name'
+                        ]
+                    ]
+                ],
             'loginRedirect' => [
                 'controller' => 'users',
                 'action' => 'view'

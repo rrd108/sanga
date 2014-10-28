@@ -21,7 +21,7 @@
 	<fieldset>
 		<legend><?= __('Add User'); ?></legend>
 	<?php
-		echo $this->Form->input('username');
+		echo $this->Form->input('name');
 		echo $this->Form->input('password');
 		echo $this->Form->input('realname');
 		echo $this->Form->input('email');

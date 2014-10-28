@@ -26,7 +26,7 @@
 			<td><?= $this->Number->format($group->id) ?></td>
 			<td><?= h($group->name) ?></td>
 			<td>
-				<?= $group->has('user') ? $this->Html->link($group->user->username, ['controller' => 'Users', 'action' => 'view', $group->user->id]) : '' ?>
+				<?= $group->has('user') ? $this->Html->link($group->user->name, ['controller' => 'Users', 'action' => 'view', $group->user->id]) : '' ?>
 			</td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $group->id]) ?>

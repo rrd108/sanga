@@ -17,7 +17,7 @@
 			<th><?= $this->Paginator->sort('id') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
 			<th><?= $this->Paginator->sort('switched') ?></th>
-			<th><?= $this->Paginator->sort('User.username') ?></th>
+			<th><?= $this->Paginator->sort('User.name') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
@@ -29,7 +29,7 @@
 			<td><?= h($linkup->switched) ?></td>
 			<td>
 				<?php
-				if($linkup->users) print $linkup->users[0]->username;
+				if($linkup->users) print $linkup->users[0]->name;
 				?>
 			</td>
 			<td class="actions">

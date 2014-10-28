@@ -20,11 +20,11 @@
 	</ul>
 </div>
 <div class="users view large-10 medium-9 columns">
-	<h2><?= h($user->username) ?></h2>
+	<h2><?= h($user->name) ?></h2>
 	<div class="row">
 		<div class="large-5 columns strings">
-			<h6 class="subheader"><?= __('Username') ?></h6>
-			<p><?= h($user->username) ?></p>
+			<h6 class="subheader"><?= __('Name') ?></h6>
+			<p><?= h($user->name) ?></p>
 			<h6 class="subheader"><?= __('Password') ?></h6>
 			<p><?= h($user->password) ?></p>
 			<h6 class="subheader"><?= __('Realname') ?></h6>

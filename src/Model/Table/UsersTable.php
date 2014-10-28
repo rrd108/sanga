@@ -18,7 +18,7 @@ class UsersTable extends Table {
  */
 	public function initialize(array $config) {
 		$this->table('users');
-		$this->displayField('username');
+		$this->displayField('name');
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
 
@@ -59,9 +59,9 @@ class UsersTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
-			->allowEmpty('username')
-			->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-			->allowEmpty('password')
+			->notEmpty('name')
+			->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
+			->notEmpty('password')
 			->allowEmpty('realname')
 			->add('email', 'valid', ['rule' => 'email'])
 			->allowEmpty('email')

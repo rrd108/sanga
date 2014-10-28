@@ -22,14 +22,14 @@
 	<?php if (!empty($usergroup->users)): ?>
 	<table cellpadding="0" cellspacing="0">
 		<tr>
-			<th><?= __('Username') ?></th>
+			<th><?= __('Name') ?></th>
 			<th><?= __('Realname') ?></th>
 			<th><?= __('Email') ?></th>
 			<th><?= __('Admin') ?></th>
 		</tr>
 		<?php foreach ($usergroup->users as $users): ?>
 		<tr>
-			<td><?= h($users->username) ?></td>
+			<td><?= h($users->name) ?></td>
 			<td><?= h($users->realname) ?></td>
 			<td><?= h($users->email) ?></td>
 			<td><?= h($users->_joinData->admin) ?></td>

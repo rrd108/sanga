@@ -23,8 +23,8 @@
 	<h2><?= h($user->realname) ?></h2>
 	<div class="row">
 		<div class="large-5 columns strings">
-			<h6 class="subheader"><?= __('Username') ?></h6>
-			<p><?= h($user->username) ?></p>
+			<h6 class="subheader"><?= __('Name') ?></h6>
+			<p><?= h($user->name) ?></p>
 			<h6 class="subheader"><?= __('Realname') ?></h6>
 			<p><?= h($user->realname) ?></p>
 			<h6 class="subheader"><?= __('Email') ?></h6>

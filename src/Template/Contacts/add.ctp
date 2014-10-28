@@ -44,7 +44,7 @@ $this->Html->addCrumb('Új', '/contacts/add');
 		echo $this->Form->input('linkups._ids', ['type' => 'select', 'multiple' => 'checkbox',
 		'options' => $linkups,
 		'value' => $linkupsSwitched,
-		'label' => 'Kapcsolati területek',
+		'label' => __('Linkups'),
 		'title' => 'Mely témákban vagyunk kapcsolatban']);
 		print '</div>';
 		echo $this->Form->input('users._ids', ['options' => $users, 'default' => $this->Session->read('Auth.User.id'), 'empty' => '---Válassz---', 'label' => 'Kapcsolattartók']);

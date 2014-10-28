@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Utility\String;
 
 /**
  * Contacts Controller
@@ -137,7 +138,7 @@ class ContactsController extends AppController {
 		$contactsources = $this->Contacts->Contactsources->find('list');
 		$groups = $this->Contacts->Groups->find('list');
 		$skills = $this->Contacts->Skills->find('list');
-		$linkups = $this->Contacts->Linkups->find('list');
+		$linkups = $this->Contacts->Linkups->find('list')->order('name');
 		$_linkupsSwitched = $this->Contacts->Linkups->find('list')->select('id')->where('switched = 1')->toArray();
 		foreach($_linkupsSwitched as $i => $l){
 			$linkupsSwitched[] = $i;
@@ -157,7 +158,7 @@ class ContactsController extends AppController {
  */
 	public function edit($id = null) {
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['Groups', 'Linkups', 'Users', 'Zips']
+			'contain' => ['Groups', 'Linkups', 'Users', 'Zips', 'Skills']
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);

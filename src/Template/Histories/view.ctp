@@ -26,7 +26,7 @@
 			<h6 class="subheader"><?= __('Contact') ?></h6>
 			<p><?= $history->has('contact') ? $this->Html->link($history->contact->name, ['controller' => 'Contacts', 'action' => 'view', $history->contact->id]) : '' ?></p>
 			<h6 class="subheader"><?= __('User') ?></h6>
-			<p><?= $history->has('user') ? $this->Html->link($history->user->username, ['controller' => 'Users', 'action' => 'view', $history->user->id]) : '' ?></p>
+			<p><?= $history->has('user') ? $this->Html->link($history->user->name, ['controller' => 'Users', 'action' => 'view', $history->user->id]) : '' ?></p>
 			<h6 class="subheader"><?= __('Linkup') ?></h6>
 			<p><?= $history->has('linkup') ? $this->Html->link($history->linkup->name, ['controller' => 'Linkups', 'action' => 'view', $history->linkup->id]) : '' ?></p>
 			<h6 class="subheader"><?= __('Event') ?></h6>

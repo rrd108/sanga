@@ -18,8 +18,8 @@
 	<?php
 		echo $this->Form->input('name');
 		echo $this->Form->input('switched');
-		echo $this->Form->input('contacts._ids', ['options' => $contacts]);
-		echo $this->Form->input('users._ids', ['options' => $users]);
+		echo $this->Form->input('contacts._ids', ['options' => $contacts, 'empty' => __('-- Choose --')]);
+		echo $this->Form->input('users._ids', ['options' => $users, 'empty' => __('-- Choose --')]);
 	?>
 	</fieldset>
 <?= $this->Form->button(__('Submit')) ?>

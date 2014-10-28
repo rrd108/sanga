@@ -20,7 +20,7 @@
 			<h6 class="subheader"><?= __('Name') ?></h6>
 			<p><?= h($group->name) ?></p>
 			<h6 class="subheader"><?= __('User') ?></h6>
-			<p><?= $group->has('user') ? $this->Html->link($group->user->username, ['controller' => 'Users', 'action' => 'view', $group->user->id]) : '' ?></p>
+			<p><?= $group->has('user') ? $this->Html->link($group->user->name, ['controller' => 'Users', 'action' => 'view', $group->user->id]) : '' ?></p>
 		</div>
 		<div class="large-2 large-offset-1 columns numbers end">
 			<h6 class="subheader"><?= __('Id') ?></h6>

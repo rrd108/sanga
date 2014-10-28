@@ -39,7 +39,7 @@
 			</td>
 			<td><?= h($history->date) ?></td>
 			<td>
-				<?= $history->has('user') ? $this->Html->link($history->user->username, ['controller' => 'Users', 'action' => 'view', $history->user->id]) : '' ?>
+				<?= $history->has('user') ? $this->Html->link($history->user->name, ['controller' => 'Users', 'action' => 'view', $history->user->id]) : '' ?>
 			</td>
 			<td>
 				<?= $history->has('linkup') ? $this->Html->link($history->linkup->name, ['controller' => 'Linkups', 'action' => 'view', $history->linkup->id]) : '' ?>

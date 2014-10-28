@@ -7,7 +7,7 @@
 <?= $this->Form->create() ?>
     <fieldset>
         <legend>Bejelentkezés</legend>
-        <?= $this->Form->input('username') ?>
+        <?= $this->Form->input('name') ?>
         <?= $this->Form->input('password') ?>
     </fieldset>
 <?= $this->Form->button(__('Login')); ?>

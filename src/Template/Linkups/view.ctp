@@ -133,7 +133,7 @@
 	<table cellpadding="0" cellspacing="0">
 		<tr>
 			<th><?= __('Id') ?></th>
-			<th><?= __('Username') ?></th>
+			<th><?= __('Name') ?></th>
 			<th><?= __('Password') ?></th>
 			<th><?= __('Realname') ?></th>
 			<th><?= __('Email') ?></th>
@@ -147,7 +147,7 @@
 		<?php foreach ($linkup->users as $users): ?>
 		<tr>
 			<td><?= h($users->id) ?></td>
-			<td><?= h($users->username) ?></td>
+			<td><?= h($users->name) ?></td>
 			<td><?= h($users->password) ?></td>
 			<td><?= h($users->realname) ?></td>
 			<td><?= h($users->email) ?></td>

@@ -24,7 +24,7 @@
 			<td><?= $this->Number->format($event->id) ?></td>
 			<td><?= h($event->name) ?></td>
 			<td>
-				<?= $event->has('user') ? $this->Html->link($event->user->username, ['controller' => 'Users', 'action' => 'view', $event->user->id]) : '' ?>
+				<?= $event->has('user') ? $this->Html->link($event->user->name, ['controller' => 'Users', 'action' => 'view', $event->user->id]) : '' ?>
 			</td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $event->id]) ?>
