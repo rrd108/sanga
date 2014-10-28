@@ -22,11 +22,13 @@ header img{
 .sf-menu > li{
   padding: .8em 2em;
   background: #15848f;
+  border-top: 1px solid #15848F;
+  border-left: 1px solid #15848F;
 }
 
 .sf-menu > li:hover{
   border-top: 1px solid #fff;
-  border-left: 1px solid #fff
+  border-left: 1px solid #fff;
 }
 
 .sf-menu ul li{
