@@ -114,7 +114,8 @@ class ContactsController extends AppController {
 			'contain' => ['Contacts', 'Users', 'Linkups', 'Events', 'Units', 'Groups']
 		];
 		$histories = $this->Contacts->Histories->find()
-				->where(['contact_id' => $id]);
+				->where(['contact_id' => $id])
+				->order('date');
 		$this->set('histories', $this->paginate($histories));
 	}
 

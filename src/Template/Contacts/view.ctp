@@ -28,13 +28,13 @@ $this->Html->scriptEnd();
 				<h6 class="subheader"><?= __('Contactname') ?></h6>
 				<p>&nbsp;<?= h($contact->contactname) ?></p>
 				<h6 class="subheader"><?= __('Contact person') ?></h6>
+				<p>&nbsp;
 				<?php if (!empty($contact->users)): ?>
-					<p>
 					<?php foreach ($contact->users as $users): ?>
-						&nbsp;<?= h($users->realname) ?>
+						<?= h($users->realname) ?>
 					<?php endforeach; ?>
-					</p>
 				<?php endif; ?>
+				</p>
 				<h6 class="subheader"><?= __('Address') ?></h6>
 				<p>
 					&nbsp;<?= $contact->has('zip') ? $this->Html->link($contact->zip->zip . ' ' . $contact->zip->name, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?>
@@ -75,24 +75,26 @@ $this->Html->scriptEnd();
 			</div>
 			<div id="mapsmall"></div>
 				<?php
-				$this->Html->scriptStart(['block' => true]);
-				?>
-				$(function(){
-					$("#mapsmall").gmap3({
-					  map:{
-						options: {
-						  center:[<?= $contact->lat ?>,<?= $contact->lng ?>],
-						  zoom: 8,
-						  mapTypeId: google.maps.MapTypeId.TERRAIN
-						}
-					  },
-					 marker:{
-						latLng:[<?= $contact->lat ?>,<?= $contact->lng ?>]
-					 }
+				if($contact->lat):
+					$this->Html->scriptStart(['block' => true]);
+					?>
+					$(function(){
+						$("#mapsmall").gmap3({
+						  map:{
+							options: {
+							  center:[<?= $contact->lat ?>,<?= $contact->lng ?>],
+							  zoom: 8,
+							  mapTypeId: google.maps.MapTypeId.TERRAIN
+							}
+						  },
+						 marker:{
+							latLng:[<?= $contact->lat ?>,<?= $contact->lng ?>]
+						 }
+						});
 					});
-				});
-				<?php
-				$this->Html->scriptEnd();
+					<?php
+					$this->Html->scriptEnd();
+				endif;
 				?>
 		</div>
 	</div>
