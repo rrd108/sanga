@@ -1,8 +1,8 @@
 <div class="actions columns large-2 medium-3">
-	<h3><?= __('Actions'); ?></h3>
+	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
 		<li><?= $this->Html->link(__('Edit Event'), ['action' => 'edit', $event->id]) ?> </li>
-		<li><?= $this->Form->postLink(__('Delete Event'), ['action' => 'delete', $event->id], ['confirm' => __('Are you sure you want to delete # %s?', $event->id)]) ?> </li>
+		<li><?= $this->Form->postLink(__('Delete Event'), ['action' => 'delete', $event->id], ['confirm' => __('Are you sure you want to delete # {0}?', $event->id)]) ?> </li>
 		<li><?= $this->Html->link(__('List Events'), ['action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Event'), ['action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
@@ -36,12 +36,12 @@
 			<th><?= __('Contact Id') ?></th>
 			<th><?= __('Date') ?></th>
 			<th><?= __('User Id') ?></th>
-			<th><?= __('Linkup Id') ?></th>
+			<th><?= __('Group Id') ?></th>
 			<th><?= __('Event Id') ?></th>
 			<th><?= __('Detail') ?></th>
 			<th><?= __('Quantity') ?></th>
 			<th><?= __('Unit Id') ?></th>
-			<th><?= __('Group Id') ?></th>
+			<th><?= __('Family') ?></th>
 			<th><?= __('Created') ?></th>
 			<th><?= __('Modified') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
@@ -52,18 +52,18 @@
 			<td><?= h($histories->contact_id) ?></td>
 			<td><?= h($histories->date) ?></td>
 			<td><?= h($histories->user_id) ?></td>
-			<td><?= h($histories->linkup_id) ?></td>
+			<td><?= h($histories->group_id) ?></td>
 			<td><?= h($histories->event_id) ?></td>
 			<td><?= h($histories->detail) ?></td>
 			<td><?= h($histories->quantity) ?></td>
 			<td><?= h($histories->unit_id) ?></td>
-			<td><?= h($histories->group_id) ?></td>
+			<td><?= h($histories->family) ?></td>
 			<td><?= h($histories->created) ?></td>
 			<td><?= h($histories->modified) ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['controller' => 'Histories', 'action' => 'view', $histories->id]) ?>
 				<?= $this->Html->link(__('Edit'), ['controller' => 'Histories', 'action' => 'edit', $histories->id]) ?>
-				<?= $this->Form->postLink(__('Delete'), ['controller' => 'Histories', 'action' => 'delete', $histories->id], ['confirm' => __('Are you sure you want to delete # %s?', $histories->id)]) ?>
+				<?= $this->Form->postLink(__('Delete'), ['controller' => 'Histories', 'action' => 'delete', $histories->id], ['confirm' => __('Are you sure you want to delete # {0}?', $histories->id)]) ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>

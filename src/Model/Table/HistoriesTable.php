@@ -28,17 +28,14 @@ class HistoriesTable extends Table {
 		$this->belongsTo('Users', [
 			'foreignKey' => 'user_id',
 		]);
-		$this->belongsTo('Linkups', [
-			'foreignKey' => 'linkup_id',
+		$this->belongsTo('Groups', [
+			'foreignKey' => 'group_id',
 		]);
 		$this->belongsTo('Events', [
 			'foreignKey' => 'event_id',
 		]);
 		$this->belongsTo('Units', [
 			'foreignKey' => 'unit_id',
-		]);
-		$this->belongsTo('Groups', [
-			'foreignKey' => 'group_id',
 		]);
 	}
 
@@ -58,10 +55,9 @@ class HistoriesTable extends Table {
 			->add('date', 'valid', ['rule' => 'date'])
 			->notEmpty('date')
 			->add('user_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('user_id', 'create')
 			->allowEmpty('user_id')
-			->add('linkup_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('linkup_id')
+			->add('group_id', 'valid', ['rule' => 'numeric'])
+			->allowEmpty('group_id')
 			->add('event_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('event_id', 'create')
 			->notEmpty('event_id')
@@ -70,8 +66,8 @@ class HistoriesTable extends Table {
 			->allowEmpty('quantity')
 			->add('unit_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('unit_id')
-			->add('group_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('group_id');
+			->add('family', 'valid', ['rule' => 'boolean'])
+			->allowEmpty('family');
 
 		return $validator;
 	}

@@ -83,7 +83,7 @@ class ContactsourcesController extends AppController {
  */
 	public function delete($id = null) {
 		$contactsource = $this->Contactsources->get($id);
-		$this->request->allowMethod('post', 'delete');
+		$this->request->allowMethod(['post', 'delete']);
 		if ($this->Contactsources->delete($contactsource)) {
 			$this->Flash->success('The contactsource has been deleted.');
 		} else {

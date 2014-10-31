@@ -19,7 +19,7 @@ class HistoriesController extends AppController {
  */
 	public function index() {
 		$this->paginate = [
-			'contain' => ['Contacts', 'Users', 'Linkups', 'Events', 'Units', 'Groups']
+			'contain' => ['Contacts', 'Users', 'Groups', 'Events', 'Units']
 		];
 		$this->set('histories', $this->paginate($this->Histories));
 	}
@@ -33,7 +33,7 @@ class HistoriesController extends AppController {
  */
 	public function view($id = null) {
 		$history = $this->Histories->get($id, [
-			'contain' => ['Contacts', 'Users', 'Linkups', 'Events', 'Units', 'Groups']
+			'contain' => ['Contacts', 'Users', 'Groups', 'Events', 'Units']
 		]);
 		$this->set('history', $history);
 	}
@@ -55,11 +55,10 @@ class HistoriesController extends AppController {
 		}
 		$contacts = $this->Histories->Contacts->find('list');
 		$users = $this->Histories->Users->find('list');
-		$linkups = $this->Histories->Linkups->find('list');
+		$groups = $this->Histories->Groups->find('list');
 		$events = $this->Histories->Events->find('list');
 		$units = $this->Histories->Units->find('list');
-		$groups = $this->Histories->Groups->find('list');
-		$this->set(compact('history', 'contacts', 'users', 'linkups', 'events', 'units', 'groups'));
+		$this->set(compact('history', 'contacts', 'users', 'groups', 'events', 'units'));
 	}
 
 /**
@@ -84,11 +83,10 @@ class HistoriesController extends AppController {
 		}
 		$contacts = $this->Histories->Contacts->find('list');
 		$users = $this->Histories->Users->find('list');
-		$linkups = $this->Histories->Linkups->find('list');
+		$groups = $this->Histories->Groups->find('list');
 		$events = $this->Histories->Events->find('list');
 		$units = $this->Histories->Units->find('list');
-		$groups = $this->Histories->Groups->find('list');
-		$this->set(compact('history', 'contacts', 'users', 'linkups', 'events', 'units', 'groups'));
+		$this->set(compact('history', 'contacts', 'users', 'groups', 'events', 'units'));
 	}
 
 /**
@@ -100,7 +98,7 @@ class HistoriesController extends AppController {
  */
 	public function delete($id = null) {
 		$history = $this->Histories->get($id);
-		$this->request->allowMethod('post', 'delete');
+		$this->request->allowMethod(['post', 'delete']);
 		if ($this->Histories->delete($history)) {
 			$this->Flash->success('The history has been deleted.');
 		} else {

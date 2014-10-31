@@ -21,7 +21,7 @@ class CountriesTable extends Table {
 		$this->displayField('name');
 		$this->primaryKey('id');
 
-		$this->hasMany('Contacts', [
+		$this->hasMany('Zips', [
 			'foreignKey' => 'country_id',
 		]);
 	}

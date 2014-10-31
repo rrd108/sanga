@@ -1,0 +1,48 @@
+<div class="actions columns large-2 medium-3">
+	<h3><?= __('Actions') ?></h3>
+	<ul class="side-nav">
+		<li><?= $this->Html->link(__('New Contacts Skill'), ['action' => 'add']) ?></li>
+		<li><?= $this->Html->link(__('List Contacts'), ['controller' => 'Contacts', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Skills'), ['controller' => 'Skills', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Skill'), ['controller' => 'Skills', 'action' => 'add']) ?> </li>
+	</ul>
+</div>
+<div class="contactsSkills index large-10 medium-9 columns">
+	<table cellpadding="0" cellspacing="0">
+	<thead>
+		<tr>
+			<th><?= $this->Paginator->sort('contact_id') ?></th>
+			<th><?= $this->Paginator->sort('skill_id') ?></th>
+			<th class="actions"><?= __('Actions') ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($contactsSkills as $contactsSkill): ?>
+		<tr>
+			<td>
+				<?= $contactsSkill->has('contact') ? $this->Html->link($contactsSkill->contact->name, ['controller' => 'Contacts', 'action' => 'view', $contactsSkill->contact->id]) : '' ?>
+			</td>
+			<td>
+				<?= $contactsSkill->has('skill') ? $this->Html->link($contactsSkill->skill->name, ['controller' => 'Skills', 'action' => 'view', $contactsSkill->skill->id]) : '' ?>
+			</td>
+			<td class="actions">
+				<?= $this->Html->link(__('View'), ['action' => 'view', $contactsSkill->contact_id]) ?>
+				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contactsSkill->contact_id]) ?>
+				<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $contactsSkill->contact_id], ['confirm' => __('Are you sure you want to delete # {0}?', $contactsSkill->contact_id)]) ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
+	</table>
+	<div class="paginator">
+		<ul class="pagination">
+		<?php
+			echo $this->Paginator->prev('< ' . __('previous'));
+			echo $this->Paginator->numbers();
+			echo $this->Paginator->next(__('next') . ' >');
+		?>
+		</ul>
+		<p><?= $this->Paginator->counter() ?></p>
+	</div>
+</div>

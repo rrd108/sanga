@@ -18,7 +18,7 @@ class UsersUsergroupsTable extends Table {
  */
 	public function initialize(array $config) {
 		$this->table('users_usergroups');
-		$this->displayField('user_id');
+		$this->displayField('id');
 		$this->primaryKey(['user_id', 'usergroup_id']);
 
 		$this->belongsTo('Users', [
@@ -38,18 +38,10 @@ class UsersUsergroupsTable extends Table {
 	public function validationDefault(Validator $validator) {
 		$validator
 			->add('user_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('user_id', 'create')
+			->allowEmpty('user_id')
 			->add('usergroup_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('usergroup_id', 'create')
-			->add('admin', 'valid', ['rule' => 'boolean'])
-			->allowEmpty('admin');
-
+			->allowEmpty('usergroup_id');
 		return $validator;
 	}
 
-	public function getAdmin($id){
-		return($this->find()
-			->select(['user_id'])
-			->where(['usergroup_id' => $id]));
-	}
 }

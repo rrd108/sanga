@@ -85,7 +85,7 @@ class UsergroupsController extends AppController {
  */
 	public function delete($id = null) {
 		$usergroup = $this->Usergroups->get($id);
-		$this->request->allowMethod('post', 'delete');
+		$this->request->allowMethod(['post', 'delete']);
 		if ($this->Usergroups->delete($usergroup)) {
 			$this->Flash->success('The usergroup has been deleted.');
 		} else {

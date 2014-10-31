@@ -15,7 +15,7 @@ $this->Html->scriptEnd();
 			<li><a href="#tabs-1">Személyi adatok</a></li>
 			<li><a href="#tabs-2"><?= __('Workplace and skills') ?></a></li>
 			<li><a href="#tabs-3">Történések</a></li>
-			<li><a href="#tabs-4"><?= __('Linkups and groups') ?></a></li>
+			<li><a href="#tabs-4"><?= __('Groups') ?></a></li>
 		</ul>
 	</div>
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
@@ -28,13 +28,13 @@ $this->Html->scriptEnd();
 				<h6 class="subheader"><?= __('Contactname') ?></h6>
 				<p>&nbsp;<?= h($contact->contactname) ?></p>
 				<h6 class="subheader"><?= __('Contact person') ?></h6>
-				<p>&nbsp;
 				<?php if (!empty($contact->users)): ?>
+					<p>
 					<?php foreach ($contact->users as $users): ?>
-						<?= h($users->realname) ?>
+						&nbsp;<?= h($users->name) ?>
 					<?php endforeach; ?>
+					</p>
 				<?php endif; ?>
-				</p>
 				<h6 class="subheader"><?= __('Address') ?></h6>
 				<p>
 					&nbsp;<?= $contact->has('zip') ? $this->Html->link($contact->zip->zip . ' ' . $contact->zip->name, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?>
@@ -66,6 +66,8 @@ $this->Html->scriptEnd();
 					}
 					?>
 				</p>
+				<h6 class="subheader"><?= __('Family Id') ?></h6>
+				<p><?= $this->Number->format($contact->family_id) ?></p>
 				<h6 class="subheader"><?= __('Contactsource') ?></h6>
 				<p>&nbsp;<?= $contact->has('contactsource') ? $this->Html->link($contact->contactsource->name, ['controller' => 'Contactsources', 'action' => 'view', $contact->contactsource->id]) : '' ?></p>
 				<h6 class="subheader"><?= __('Active') ?></h6>
@@ -127,10 +129,11 @@ $this->Html->scriptEnd();
 			<tr>
 				<th><?= $this->Paginator->sort('date') ?></th>
 				<th><?= $this->Paginator->sort('User.name') ?></th>
-				<th><?= $this->Paginator->sort('Linkup.name') ?></th>
+				<th><?= $this->Paginator->sort('Group.name') ?></th>
 				<th><?= $this->Paginator->sort('Event.name') ?></th>
 				<th><?= $this->Paginator->sort('detail') ?></th>
 				<th><?= $this->Paginator->sort('quantity') ?></th>
+				<th><?= $this->Paginator->sort('family_id') ?></th>
 			</tr>
 			<?php foreach ($histories as $history): ?>
 			<tr>
@@ -144,8 +147,8 @@ $this->Html->scriptEnd();
 				</td>
 				<td>
 					<?php
-					if($history->linkup){
-						print $history->linkup->name;
+					if($history->group){
+						print $history->group->name;
 					}
 					?>
 				</td>
@@ -161,6 +164,7 @@ $this->Html->scriptEnd();
 						}
 					?>
 				</td>
+				<td><?= h($history->family_id) ?></td>
 			</tr>
 			<?php endforeach; ?>
 		</table>
@@ -181,18 +185,10 @@ $this->Html->scriptEnd();
 		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
-			<?php if (!empty($contact->linkups)): ?>
-				<?php
-				foreach ($contact->linkups as $linkups):
-					$cssStyle = ($linkups->users) ? "info" : "success";
-				?>
-					<span class="tag tag-<?= $cssStyle ?>"><?= h($linkups->name) ?></span>
-				<?php endforeach; ?>
-			<?php endif; ?>
 			<?php if (!empty($contact->groups)): ?>
 				<?php
 				foreach ($contact->groups as $groups):
-					$cssStyle = ($groups->user) ? "info" : "success";
+					$cssStyle = ($groups->admin_user_id) ? "info" : "success";
 				?>
 					<span class="tag tag-<?= $cssStyle ?>"><?= h($groups->name) ?></span>
 				<?php endforeach; ?>

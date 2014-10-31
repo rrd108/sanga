@@ -83,7 +83,7 @@ class SessionsController extends AppController {
  */
 	public function delete($id = null) {
 		$session = $this->Sessions->get($id);
-		$this->request->allowMethod('post', 'delete');
+		$this->request->allowMethod(['post', 'delete']);
 		if ($this->Sessions->delete($session)) {
 			$this->Flash->success('The session has been deleted.');
 		} else {

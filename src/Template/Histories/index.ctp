@@ -6,14 +6,12 @@
 		<li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Linkups'), ['controller' => 'Linkups', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Linkup'), ['controller' => 'Linkups', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Groups'), ['controller' => 'Groups', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Group'), ['controller' => 'Groups', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Events'), ['controller' => 'Events', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Event'), ['controller' => 'Events', 'action' => 'add']) ?> </li>
 		<li><?= $this->Html->link(__('List Units'), ['controller' => 'Units', 'action' => 'index']) ?> </li>
 		<li><?= $this->Html->link(__('New Unit'), ['controller' => 'Units', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Groups'), ['controller' => 'Groups', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Group'), ['controller' => 'Groups', 'action' => 'add']) ?> </li>
 	</ul>
 </div>
 <div class="histories index large-10 medium-9 columns">
@@ -24,7 +22,7 @@
 			<th><?= $this->Paginator->sort('contact_id') ?></th>
 			<th><?= $this->Paginator->sort('date') ?></th>
 			<th><?= $this->Paginator->sort('user_id') ?></th>
-			<th><?= $this->Paginator->sort('linkup_id') ?></th>
+			<th><?= $this->Paginator->sort('group_id') ?></th>
 			<th><?= $this->Paginator->sort('event_id') ?></th>
 			<th><?= $this->Paginator->sort('detail') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
@@ -42,7 +40,7 @@
 				<?= $history->has('user') ? $this->Html->link($history->user->name, ['controller' => 'Users', 'action' => 'view', $history->user->id]) : '' ?>
 			</td>
 			<td>
-				<?= $history->has('linkup') ? $this->Html->link($history->linkup->name, ['controller' => 'Linkups', 'action' => 'view', $history->linkup->id]) : '' ?>
+				<?= $history->has('group') ? $this->Html->link($history->group->name, ['controller' => 'Groups', 'action' => 'view', $history->group->id]) : '' ?>
 			</td>
 			<td>
 				<?= $history->has('event') ? $this->Html->link($history->event->name, ['controller' => 'Events', 'action' => 'view', $history->event->id]) : '' ?>

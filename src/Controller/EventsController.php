@@ -88,7 +88,7 @@ class EventsController extends AppController {
  */
 	public function delete($id = null) {
 		$event = $this->Events->get($id);
-		$this->request->allowMethod('post', 'delete');
+		$this->request->allowMethod(['post', 'delete']);
 		if ($this->Events->delete($event)) {
 			$this->Flash->success('The event has been deleted.');
 		} else {

@@ -25,9 +25,6 @@ class UsersTable extends Table {
 		$this->hasMany('Events', [
 			'foreignKey' => 'user_id',
 		]);
-		$this->hasMany('Groups', [
-			'foreignKey' => 'user_id',
-		]);
 		$this->hasMany('Histories', [
 			'foreignKey' => 'user_id',
 		]);
@@ -39,13 +36,13 @@ class UsersTable extends Table {
 			'targetForeignKey' => 'contact_id',
 			'joinTable' => 'contacts_users',
 		]);
-		$this->belongsToMany('Linkups', [
-			'foreignKey' => 'user_id',
-			'targetForeignKey' => 'linkup_id',
-			'joinTable' => 'linkups_users',
+		$this->belongsToMany('Groups', [
+			'through' => 'groups_users'
 		]);
 		$this->belongsToMany('Usergroups', [
-			'through' => 'users_usergroups',
+			'foreignKey' => 'user_id',
+			'targetForeignKey' => 'usergroup_id',
+			'joinTable' => 'users_usergroups',
 		]);
 	}
 
@@ -59,9 +56,8 @@ class UsersTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
-			->notEmpty('name')
-			->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
-			->notEmpty('password')
+			->allowEmpty('name')
+			->allowEmpty('password')
 			->allowEmpty('realname')
 			->add('email', 'valid', ['rule' => 'email'])
 			->allowEmpty('email')

@@ -28,7 +28,7 @@ class CountriesController extends AppController {
  */
 	public function view($id = null) {
 		$country = $this->Countries->get($id, [
-			'contain' => ['Contacts']
+			'contain' => ['Zips']
 		]);
 		$this->set('country', $country);
 	}
@@ -83,7 +83,7 @@ class CountriesController extends AppController {
  */
 	public function delete($id = null) {
 		$country = $this->Countries->get($id);
-		$this->request->allowMethod('post', 'delete');
+		$this->request->allowMethod(['post', 'delete']);
 		if ($this->Countries->delete($country)) {
 			$this->Flash->success('The country has been deleted.');
 		} else {

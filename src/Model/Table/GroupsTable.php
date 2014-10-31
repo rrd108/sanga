@@ -22,7 +22,7 @@ class GroupsTable extends Table {
 		$this->primaryKey('id');
 
 		$this->belongsTo('Users', [
-			'foreignKey' => 'user_id',
+			'foreignKey' => 'admin_user_id',
 		]);
 		$this->hasMany('Histories', [
 			'foreignKey' => 'group_id',
@@ -31,6 +31,9 @@ class GroupsTable extends Table {
 			'foreignKey' => 'group_id',
 			'targetForeignKey' => 'contact_id',
 			'joinTable' => 'contacts_groups',
+		]);
+		$this->belongsToMany('Users', [
+			'through' => 'groups_users'
 		]);
 	}
 
@@ -44,9 +47,13 @@ class GroupsTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
-			->allowEmpty('name')
-			->add('user_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('user_id');
+			->notEmpty('name')
+			->allowEmpty('description')
+			->add('admin_user_id', 'valid', ['rule' => 'numeric'])
+			->allowEmpty('admin_user_id')
+			->add('public', 'valid', ['rule' => 'boolean'])
+			->validatePresence('public', 'create')
+			->allowEmpty('public');
 
 		return $validator;
 	}

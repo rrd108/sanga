@@ -2,14 +2,14 @@
 	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
 		<li><?= $this->Html->link(__('List Countries'), ['action' => 'index']) ?></li>
-		<li><?= $this->Html->link(__('List Contacts'), ['controller' => 'Contacts', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?> </li>
+		<li><?= $this->Html->link(__('List Zips'), ['controller' => 'Zips', 'action' => 'index']) ?> </li>
+		<li><?= $this->Html->link(__('New Zip'), ['controller' => 'Zips', 'action' => 'add']) ?> </li>
 	</ul>
 </div>
 <div class="countries form large-10 medium-9 columns">
 <?= $this->Form->create($country) ?>
 	<fieldset>
-		<legend><?= __('Add Country'); ?></legend>
+		<legend><?= __('Add Country') ?></legend>
 	<?php
 		echo $this->Form->input('name');
 	?>

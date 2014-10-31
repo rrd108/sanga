@@ -96,7 +96,7 @@ class NotificationsController extends AppController {
  */
 	public function delete($id = null) {
 		$notification = $this->Notifications->get($id);
-		$this->request->allowMethod('post', 'delete');
+		$this->request->allowMethod(['post', 'delete']);
 		if ($this->Notifications->delete($notification)) {
 			$this->Flash->success('The notification has been deleted.');
 		} else {

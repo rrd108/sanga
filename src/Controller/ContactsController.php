@@ -106,12 +106,12 @@ class ContactsController extends AppController {
  */
 	public function view($id = null) {
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['Zips', 'Contactsources', 'Groups' => ['Users'], 'Skills', 'Linkups' => ['Users'], 'Users']
+			'contain' => ['Zips', 'Contactsources', 'Groups' => ['Users'], 'Skills', 'Users', 'Histories']
 		]);
 		$this->set('contact', $contact);
 		
 		$this->paginate = [
-			'contain' => ['Contacts', 'Users', 'Linkups', 'Events', 'Units', 'Groups']
+			'contain' => ['Contacts', 'Users', 'Events', 'Units', 'Groups']
 		];
 		$histories = $this->Contacts->Histories->find()
 				->where(['contact_id' => $id])
@@ -139,15 +139,8 @@ class ContactsController extends AppController {
 		$contactsources = $this->Contacts->Contactsources->find('list');
 		$groups = $this->Contacts->Groups->find('list');
 		$skills = $this->Contacts->Skills->find('list');
-		$linkups = $this->Contacts->Linkups->find('list')->order('name');
-		$_linkupsSwitched = $this->Contacts->Linkups->find('list')->select('id')->where('switched = 1')->toArray();
-		foreach($_linkupsSwitched as $i => $l){
-			$linkupsSwitched[] = $i;
-		}
-		//debug($linkupsSwitched);
 		$users = $this->Contacts->Users->find('list');
-		$this->set(compact('contact', 'countries', 'zips', 'contactsources', 'groups', 'skills',
-						   'linkups', 'linkupsSwitched', 'users'));
+		$this->set(compact('contact', 'zips', 'contactsources', 'groups', 'skills', 'users'));
 	}
 
 /**
@@ -159,7 +152,7 @@ class ContactsController extends AppController {
  */
 	public function edit($id = null) {
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['Groups', 'Linkups', 'Users', 'Zips', 'Skills']
+			'contain' => ['Groups', 'Skills', 'Users', 'Zips']
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
@@ -176,9 +169,8 @@ class ContactsController extends AppController {
 		$contactsources = $this->Contacts->Contactsources->find('list');
 		$groups = $this->Contacts->Groups->find('list');
 		$skills = $this->Contacts->Skills->find('list');
-		$linkups = $this->Contacts->Linkups->find('list');
 		$users = $this->Contacts->Users->find('list');
-		$this->set(compact('contact', 'zips', 'contactsources', 'groups', 'skills', 'linkups', 'users'));
+		$this->set(compact('contact', 'zips', 'contactsources', 'groups', 'skills', 'users'));
 	}
 
 /**
@@ -190,7 +182,7 @@ class ContactsController extends AppController {
  */
 	public function delete($id = null) {
 		$contact = $this->Contacts->get($id);
-		$this->request->allowMethod('post', 'delete');
+		$this->request->allowMethod(['post', 'delete']);
 		if ($this->Contacts->delete($contact)) {
 			$this->Flash->success('The contact has been deleted.');
 		} else {

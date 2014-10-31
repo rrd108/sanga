@@ -83,7 +83,7 @@ class UnitsController extends AppController {
  */
 	public function delete($id = null) {
 		$unit = $this->Units->get($id);
-		$this->request->allowMethod('post', 'delete');
+		$this->request->allowMethod(['post', 'delete']);
 		if ($this->Units->delete($unit)) {
 			$this->Flash->success('The unit has been deleted.');
 		} else {

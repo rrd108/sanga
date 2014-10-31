@@ -12,11 +12,6 @@ use Cake\Event\Event;
  */
 class UsersController extends AppController {
 
-/**
- * Index method
- *
- * @return void
- */
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         // Allow users to logout.
@@ -41,6 +36,15 @@ class UsersController extends AppController {
 	}
 
 /**
+ * Index method
+ *
+ * @return void
+ */
+	public function index() {
+		$this->set('users', $this->paginate($this->Users));
+	}
+
+/**
  * View method
  *
  * @param string $id
@@ -49,9 +53,30 @@ class UsersController extends AppController {
  */
 	public function view() {
 		$user = $this->Users->get($this->Auth->user('id'), [
-			'contain' => ['Contacts', 'Linkups', 'Events', 'Groups', 'Histories', 'Notifications']
+			'contain' => ['Contacts', 'Events', 'Groups', 'Histories', 'Notifications']
 		]);
 		$this->set('user', $user);
+	}
+
+/**
+ * Add method
+ *
+ * @return void
+ */
+	public function add() {
+		$user = $this->Users->newEntity($this->request->data);
+		if ($this->request->is('post')) {
+			if ($this->Users->save($user)) {
+				$this->Flash->success('The user has been saved.');
+				return $this->redirect(['action' => 'index']);
+			} else {
+				$this->Flash->error('The user could not be saved. Please, try again.');
+			}
+		}
+		$contacts = $this->Users->Contacts->find('list');
+		$groups = $this->Users->Groups->find('list');
+		$usergroups = $this->Users->Usergroups->find('list');
+		$this->set(compact('user', 'contacts', 'groups', 'usergroups'));
 	}
 
 /**
@@ -62,8 +87,8 @@ class UsersController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function edit() {
-		$user = $this->Users->get($this->Auth->user('id'), [
-			'contain' => ['Contacts', 'Linkups']
+		$user = $this->Users->get($id, [
+			'contain' => ['Contacts', 'Groups', 'Usergroups']
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$user = $this->Users->patchEntity($user, $this->request->data);
@@ -75,7 +100,26 @@ class UsersController extends AppController {
 			}
 		}
 		$contacts = $this->Users->Contacts->find('list');
-		$linkups = $this->Users->Linkups->find('list');
-		$this->set(compact('user', 'contacts', 'linkups'));
+		$groups = $this->Users->Groups->find('list');
+		$usergroups = $this->Users->Usergroups->find('list');
+		$this->set(compact('user', 'contacts', 'groups', 'usergroups'));
+	}
+
+/**
+ * Delete method
+ *
+ * @param string $id
+ * @return void
+ * @throws \Cake\Network\Exception\NotFoundException
+ */
+	public function delete($id = null) {
+		$user = $this->Users->get($id);
+		$this->request->allowMethod(['post', 'delete']);
+		if ($this->Users->delete($user)) {
+			$this->Flash->success('The user has been deleted.');
+		} else {
+			$this->Flash->error('The user could not be deleted. Please, try again.');
+		}
+		return $this->redirect(['action' => 'index']);
 	}
 }

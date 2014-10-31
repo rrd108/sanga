@@ -14,6 +14,7 @@ class UsersUsergroup extends Entity {
  * @var array
  */
 	protected $_accessible = [
+		'id' => true,
 		'admin' => true,
 		'user' => true,
 		'usergroup' => true,

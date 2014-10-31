@@ -23,7 +23,6 @@ class ZipsController extends AppController {
 		//debug($result);die();
 		$this->set('result', $result);
 	}
-
 /**
  * Index method
  *
@@ -102,7 +101,7 @@ class ZipsController extends AppController {
  */
 	public function delete($id = null) {
 		$zip = $this->Zips->get($id);
-		$this->request->allowMethod('post', 'delete');
+		$this->request->allowMethod(['post', 'delete']);
 		if ($this->Zips->delete($zip)) {
 			$this->Flash->success('The zip has been deleted.');
 		} else {

@@ -22,10 +22,13 @@ class User extends Entity {
 		'phone' => true,
 		'active' => true,
 		'role' => true,
+		'events' => true,
+		'groups' => true,
 		'histories' => true,
 		'notifications' => true,
 		'contacts' => true,
 		'linkups' => true,
+		'usergroups' => true,
 	];
 
     protected function _setPassword($password) {

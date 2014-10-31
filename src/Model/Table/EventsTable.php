@@ -41,7 +41,6 @@ class EventsTable extends Table {
 			->allowEmpty('id', 'create')
 			->allowEmpty('name')
 			->add('user_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('user_id', 'create')
 			->allowEmpty('user_id');
 
 		return $validator;

@@ -21,8 +21,13 @@ class UsergroupsTable extends Table {
 		$this->displayField('name');
 		$this->primaryKey('id');
 
+		$this->belongsTo('Users', [
+			'foreignKey' => 'admin_user_id',
+		]);
 		$this->belongsToMany('Users', [
-			'through' => 'users_usergroups',
+			'foreignKey' => 'usergroup_id',
+			'targetForeignKey' => 'user_id',
+			'joinTable' => 'users_usergroups',
 		]);
 	}
 
@@ -37,7 +42,10 @@ class UsergroupsTable extends Table {
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
 			->validatePresence('name', 'create')
-			->notEmpty('name');
+			->notEmpty('name')
+			->add('admin_user_id', 'valid', ['rule' => 'numeric'])
+			->validatePresence('admin_user_id', 'create')
+			->notEmpty('admin_user_id');
 
 		return $validator;
 	}

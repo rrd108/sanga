@@ -9,7 +9,7 @@
 <div class="contactsources form large-10 medium-9 columns">
 <?= $this->Form->create($contactsource) ?>
 	<fieldset>
-		<legend><?= __('Add Contactsource'); ?></legend>
+		<legend><?= __('Add Contactsource') ?></legend>
 	<?php
 		echo $this->Form->input('name');
 	?>

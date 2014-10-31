@@ -41,20 +41,15 @@ class ContactsTable extends Table {
 			'targetForeignKey' => 'group_id',
 			'joinTable' => 'contacts_groups',
 		]);
-		$this->belongsToMany('Linkups', [
+		$this->belongsToMany('Skills', [
 			'foreignKey' => 'contact_id',
-			'targetForeignKey' => 'linkup_id',
-			'joinTable' => 'contacts_linkups',
+			'targetForeignKey' => 'skill_id',
+			'joinTable' => 'contacts_skills',
 		]);
 		$this->belongsToMany('Users', [
 			'foreignKey' => 'contact_id',
 			'targetForeignKey' => 'user_id',
 			'joinTable' => 'contacts_users',
-		]);
-		$this->belongsToMany('Skills', [
-			'foreignKey' => 'contact_id',
-			'targetForeignKey' => 'skill_id',
-			'joinTable' => 'contacts_skills',
 		]);
 	}
 
@@ -71,23 +66,29 @@ class ContactsTable extends Table {
 			->allowEmpty('name')
 			->allowEmpty('contactname')
 			->add('zip_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('zip_id', 'create')
 			->allowEmpty('zip_id')
 			->allowEmpty('address')
+			->add('lat', 'valid', ['rule' => 'numeric'])
+			->allowEmpty('lat')
+			->add('lng', 'valid', ['rule' => 'numeric'])
+			->allowEmpty('lng')
 			->allowEmpty('phone')
 			->add('email', 'valid', ['rule' => 'email'])
 			->allowEmpty('email')
 			->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
 			->add('birth', 'valid', ['rule' => 'date'])
 			->allowEmpty('birth')
-			->allowEmpty('workplace')
+			->add('sex', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('sex')
-			->add('active', 'valid', ['rule' => 'boolean'])
-			->allowEmpty('active')
-			->allowEmpty('comment')
+			->allowEmpty('workplace')
+			->add('family_id', 'valid', ['rule' => 'numeric'])
+			->allowEmpty('family_id')
 			->add('contactsource_id', 'valid', ['rule' => 'numeric'])
 			->validatePresence('contactsource_id', 'create')
-			->notEmpty('contactsource_id');
+			->notEmpty('contactsource_id')
+			->add('active', 'valid', ['rule' => 'boolean'])
+			->allowEmpty('active')
+			->allowEmpty('comment');
 
 		return $validator;
 	}

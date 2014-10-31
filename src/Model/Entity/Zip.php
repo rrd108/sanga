@@ -19,6 +19,7 @@ class Zip extends Entity {
 		'name' => true,
 		'lat' => true,
 		'lng' => true,
+		'country' => true,
 		'contacts' => true,
 	];
 

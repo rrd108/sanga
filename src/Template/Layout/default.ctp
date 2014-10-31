@@ -60,7 +60,8 @@
 							print '<li>' . $this->Html->link('❶ ' . __('Zips'), '/zips') . '</li>';
 							print '<li>' . $this->Html->link('☢ ' . __('Countries'), '/countries') . '</li>';
 							print '<li>' . $this->Html->link('❖ ' . __('Units'), '/units') . '</li>';
-							print '<li>' . $this->Html->link('☻ ' . __('Users'), ['prefix' => 'admin', 'controller' => 'Users', 'action' => 'index']) . '</li>';
+							//print '<li>' . $this->Html->link('☻ ' . __('Users'), ['prefix' => 'admin', 'controller' => 'Users', 'action' => 'index']) . '</li>';
+							print '<li>' . $this->Html->link('☻ ' . __('Users'), ['controller' => 'Users', 'action' => 'index']) . '</li>';
 						?>
 					</ul>
 				</li>
@@ -70,7 +71,6 @@
 						<?php
 							print '<li>' . $this->Html->link('⚓ Kapcsolat források', '/contactsources') . '</li>';
 							print '<li>' . $this->Html->link('⁂ ' . __('Groups'), '/groups') . '</li>';
-							print '<li>' . $this->Html->link('♼ Kapcsolódási pontok', '/linkups') . '</li>';
 							print '<li>' . $this->Html->link('✿ Esemény típusok', '/events') . '</li>';
 							print '<li>' . $this->Html->link('✋ ' . __('User groups'), '/usergroups') . '</li>';
 							print '<li>' . $this->Html->link('✄ ' . __('Skills'), '/skills') . '</li>';

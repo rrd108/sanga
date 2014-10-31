@@ -11,7 +11,7 @@
 <div class="events form large-10 medium-9 columns">
 <?= $this->Form->create($event) ?>
 	<fieldset>
-		<legend><?= __('Add Event'); ?></legend>
+		<legend><?= __('Add Event') ?></legend>
 	<?php
 		echo $this->Form->input('name');
 		echo $this->Form->input('user_id', ['options' => $users, 'empty' => __('-- Choose --')]);
