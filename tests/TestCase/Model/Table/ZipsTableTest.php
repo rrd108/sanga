@@ -17,29 +17,24 @@ class ZipsTableTest extends TestCase {
  */
 	public $fixtures = [
 		'app.zips',
-		'app.contacts',
-		'app.contacts_name_translation',
-		'app.contacts_contactname_translation',
-		'app.contacts_address_translation',
-		'app.contacts_phone_translation',
-		'app.contacts_birth_translation',
-		'app.contacts_active_translation',
-		'app.contacts_comment_translation',
-		'app.i18n',
 		'app.countries',
+		'app.contacts',
 		'app.contactsources',
 		'app.histories',
 		'app.users',
+		'app.events',
+		'app.groups',
+		'app.contacts_groups',
 		'app.notifications',
 		'app.contacts_users',
 		'app.linkups',
+		'app.contacts_linkups',
 		'app.linkups_users',
-		'app.events',
-		'app.eventgroups',
-		'app.groups',
-		'app.grouptypes',
-		'app.contacts_groups',
-		'app.contacts_linkups'
+		'app.usergroups',
+		'app.users_usergroups',
+		'app.units',
+		'app.skills',
+		'app.contacts_skills'
 	];
 
 /**
@@ -62,6 +57,24 @@ class ZipsTableTest extends TestCase {
 		unset($this->Zips);
 
 		parent::tearDown();
+	}
+
+/**
+ * Test initialize method
+ *
+ * @return void
+ */
+	public function testInitialize() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test validationDefault method
+ *
+ * @return void
+ */
+	public function testValidationDefault() {
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 }

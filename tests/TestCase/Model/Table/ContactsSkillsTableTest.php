@@ -2,13 +2,13 @@
 namespace App\Test\TestCase\Model\Table;
 
 use Cake\ORM\TableRegistry;
-use App\Model\Table\CountriesTable;
+use App\Model\Table\ContactsSkillsTable;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\CountriesTable Test Case
+ * App\Model\Table\ContactsSkillsTable Test Case
  */
-class CountriesTableTest extends TestCase {
+class ContactsSkillsTableTest extends TestCase {
 
 /**
  * Fixtures
@@ -16,9 +16,10 @@ class CountriesTableTest extends TestCase {
  * @var array
  */
 	public $fixtures = [
-		'app.countries',
+		'app.contacts_skills',
 		'app.contacts',
 		'app.zips',
+		'app.countries',
 		'app.contactsources',
 		'app.histories',
 		'app.users',
@@ -33,8 +34,7 @@ class CountriesTableTest extends TestCase {
 		'app.usergroups',
 		'app.users_usergroups',
 		'app.units',
-		'app.skills',
-		'app.contacts_skills'
+		'app.skills'
 	];
 
 /**
@@ -44,8 +44,8 @@ class CountriesTableTest extends TestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$config = TableRegistry::exists('Countries') ? [] : ['className' => 'App\Model\Table\CountriesTable'];
-		$this->Countries = TableRegistry::get('Countries', $config);
+		$config = TableRegistry::exists('ContactsSkills') ? [] : ['className' => 'App\Model\Table\ContactsSkillsTable'];
+		$this->ContactsSkills = TableRegistry::get('ContactsSkills', $config);
 	}
 
 /**
@@ -54,7 +54,7 @@ class CountriesTableTest extends TestCase {
  * @return void
  */
 	public function tearDown() {
-		unset($this->Countries);
+		unset($this->ContactsSkills);
 
 		parent::tearDown();
 	}

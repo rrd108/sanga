@@ -18,72 +18,68 @@ class ZipsControllerTest extends IntegrationTestCase {
 		'app.zips',
 		'app.countries',
 		'app.contacts',
-		'app.contacts_name_translation',
-		'app.contacts_contactname_translation',
-		'app.contacts_address_translation',
-		'app.contacts_phone_translation',
-		'app.contacts_birth_translation',
-		'app.contacts_active_translation',
-		'app.contacts_comment_translation',
-		'app.i18n',
+		'app.families',
 		'app.contactsources',
 		'app.histories',
 		'app.users',
+		'app.events',
 		'app.notifications',
 		'app.contacts_users',
-		'app.linkups',
-		'app.linkups_users',
-		'app.events',
-		'app.eventgroups',
 		'app.groups',
-		'app.grouptypes',
+		'app.admin_users',
 		'app.contacts_groups',
-		'app.contacts_linkups'
+		'app.groups_users',
+		'app.intersection_groups',
+		'app.usergroups',
+		'app.users_usergroups',
+		'app.units',
+		'app.skills',
+		'app.contacts_skills'
 	];
 
 /**
- * testIndex method
+ * Test index method
  *
  * @return void
  */
 	public function testIndex() {
-		$this->markTestIncomplete('testIndex not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * testView method
+ * Test view method
  *
  * @return void
  */
 	public function testView() {
-		$this->markTestIncomplete('testView not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * testAdd method
+ * Test add method
  *
  * @return void
  */
 	public function testAdd() {
-		$this->markTestIncomplete('testAdd not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * testEdit method
+ * Test edit method
  *
  * @return void
  */
 	public function testEdit() {
-		$this->markTestIncomplete('testEdit not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * testDelete method
+ * Test delete method
  *
  * @return void
  */
 	public function testDelete() {
-		$this->markTestIncomplete('testDelete not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 }

@@ -1,13 +1,13 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\ContactsourcesController;
+use App\Controller\UsersUsergroupsController;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * App\Controller\ContactsourcesController Test Case
+ * App\Controller\UsersUsergroupsController Test Case
  */
-class ContactsourcesControllerTest extends IntegrationTestCase {
+class UsersUsergroupsControllerTest extends IntegrationTestCase {
 
 /**
  * Fixtures
@@ -15,26 +15,26 @@ class ContactsourcesControllerTest extends IntegrationTestCase {
  * @var array
  */
 	public $fixtures = [
-		'app.contactsources',
+		'app.users_usergroups',
+		'app.users',
+		'app.events',
+		'app.histories',
 		'app.contacts',
 		'app.zips',
 		'app.countries',
 		'app.families',
-		'app.histories',
-		'app.users',
-		'app.events',
-		'app.notifications',
-		'app.contacts_users',
+		'app.contactsources',
 		'app.groups',
-		'app.admin_users',
-		'app.contacts_groups',
 		'app.groups_users',
 		'app.intersection_groups',
-		'app.usergroups',
-		'app.users_usergroups',
-		'app.units',
+		'app.contacts_groups',
 		'app.skills',
-		'app.contacts_skills'
+		'app.contacts_skills',
+		'app.contacts_users',
+		'app.units',
+		'app.notifications',
+		'app.usergroups',
+		'app.users_usergroups'
 	];
 
 /**

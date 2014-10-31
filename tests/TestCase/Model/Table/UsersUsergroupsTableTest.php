@@ -11,6 +11,34 @@ use Cake\TestSuite\TestCase;
 class UsersUsergroupsTableTest extends TestCase {
 
 /**
+ * Fixtures
+ *
+ * @var array
+ */
+	public $fixtures = [
+		'app.users_usergroups',
+		'app.users',
+		'app.events',
+		'app.histories',
+		'app.contacts',
+		'app.zips',
+		'app.countries',
+		'app.families',
+		'app.contactsources',
+		'app.groups',
+		'app.groups_users',
+		'app.intersection_groups',
+		'app.contacts_groups',
+		'app.skills',
+		'app.contacts_skills',
+		'app.contacts_users',
+		'app.units',
+		'app.notifications',
+		'app.usergroups',
+		'app.users_usergroups'
+	];
+
+/**
  * setUp method
  *
  * @return void
@@ -30,6 +58,24 @@ class UsersUsergroupsTableTest extends TestCase {
 		unset($this->UsersUsergroups);
 
 		parent::tearDown();
+	}
+
+/**
+ * Test initialize method
+ *
+ * @return void
+ */
+	public function testInitialize() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test validationDefault method
+ *
+ * @return void
+ */
+	public function testValidationDefault() {
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 }

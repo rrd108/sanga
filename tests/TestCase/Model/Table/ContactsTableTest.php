@@ -17,16 +17,8 @@ class ContactsTableTest extends TestCase {
  */
 	public $fixtures = [
 		'app.contacts',
-		'app.contacts_name_translation',
-		'app.contacts_contactname_translation',
-		'app.contacts_address_translation',
-		'app.contacts_phone_translation',
-		'app.contacts_birth_translation',
-		'app.contacts_active_translation',
-		'app.contacts_comment_translation',
-		'app.i18n',
-		'app.countries',
 		'app.zips',
+		'app.countries',
 		'app.contactsources',
 		'app.histories',
 		'app.users',
@@ -37,7 +29,12 @@ class ContactsTableTest extends TestCase {
 		'app.contacts_users',
 		'app.linkups',
 		'app.contacts_linkups',
-		'app.linkups_users'
+		'app.linkups_users',
+		'app.usergroups',
+		'app.users_usergroups',
+		'app.units',
+		'app.skills',
+		'app.contacts_skills'
 	];
 
 /**
@@ -60,6 +57,42 @@ class ContactsTableTest extends TestCase {
 		unset($this->Contacts);
 
 		parent::tearDown();
+	}
+
+/**
+ * Test initialize method
+ *
+ * @return void
+ */
+	public function testInitialize() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test validationDefault method
+ *
+ * @return void
+ */
+	public function testValidationDefault() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test beforeSave method
+ *
+ * @return void
+ */
+	public function testBeforeSave() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test afterSave method
+ *
+ * @return void
+ */
+	public function testAfterSave() {
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 }

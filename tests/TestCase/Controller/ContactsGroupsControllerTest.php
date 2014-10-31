@@ -15,52 +15,71 @@ class ContactsGroupsControllerTest extends IntegrationTestCase {
  * @var array
  */
 	public $fixtures = [
-		'app.contacts_groups'
+		'app.contacts_groups',
+		'app.groups',
+		'app.admin_users',
+		'app.histories',
+		'app.contacts',
+		'app.zips',
+		'app.countries',
+		'app.families',
+		'app.contactsources',
+		'app.skills',
+		'app.contacts_skills',
+		'app.users',
+		'app.events',
+		'app.notifications',
+		'app.contacts_users',
+		'app.groups_users',
+		'app.intersection_groups',
+		'app.usergroups',
+		'app.users_usergroups',
+		'app.units'
 	];
 
 /**
- * testIndex method
+ * Test index method
  *
  * @return void
  */
 	public function testIndex() {
-		$this->markTestIncomplete('testIndex not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * testView method
+ * Test view method
  *
  * @return void
  */
 	public function testView() {
-		$this->markTestIncomplete('testView not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * testAdd method
+ * Test add method
  *
  * @return void
  */
 	public function testAdd() {
-		$this->markTestIncomplete('testAdd not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * testEdit method
+ * Test edit method
  *
  * @return void
  */
 	public function testEdit() {
-		$this->markTestIncomplete('testEdit not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * testDelete method
+ * Test delete method
  *
  * @return void
  */
 	public function testDelete() {
-		$this->markTestIncomplete('testDelete not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 }

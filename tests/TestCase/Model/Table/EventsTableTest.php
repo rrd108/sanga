@@ -17,28 +17,24 @@ class EventsTableTest extends TestCase {
  */
 	public $fixtures = [
 		'app.events',
-		'app.eventgroups',
+		'app.users',
+		'app.groups',
 		'app.histories',
 		'app.contacts',
-		'app.contacts_name_translation',
-		'app.contacts_contactname_translation',
-		'app.contacts_address_translation',
-		'app.contacts_phone_translation',
-		'app.contacts_birth_translation',
-		'app.contacts_active_translation',
-		'app.contacts_comment_translation',
-		'app.i18n',
-		'app.countries',
 		'app.zips',
+		'app.countries',
 		'app.contactsources',
-		'app.groups',
-		'app.users',
-		'app.notifications',
-		'app.contacts_users',
+		'app.contacts_groups',
 		'app.linkups',
 		'app.contacts_linkups',
 		'app.linkups_users',
-		'app.contacts_groups'
+		'app.contacts_users',
+		'app.skills',
+		'app.contacts_skills',
+		'app.units',
+		'app.notifications',
+		'app.usergroups',
+		'app.users_usergroups'
 	];
 
 /**
@@ -61,6 +57,24 @@ class EventsTableTest extends TestCase {
 		unset($this->Events);
 
 		parent::tearDown();
+	}
+
+/**
+ * Test initialize method
+ *
+ * @return void
+ */
+	public function testInitialize() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test validationDefault method
+ *
+ * @return void
+ */
+	public function testValidationDefault() {
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 }

@@ -2,13 +2,13 @@
 namespace App\Test\TestCase\Model\Table;
 
 use Cake\ORM\TableRegistry;
-use App\Model\Table\CountriesTable;
+use App\Model\Table\ContactsGroupsTable;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\CountriesTable Test Case
+ * App\Model\Table\ContactsGroupsTable Test Case
  */
-class CountriesTableTest extends TestCase {
+class ContactsGroupsTableTest extends TestCase {
 
 /**
  * Fixtures
@@ -16,25 +16,25 @@ class CountriesTableTest extends TestCase {
  * @var array
  */
 	public $fixtures = [
-		'app.countries',
-		'app.contacts',
-		'app.zips',
-		'app.contactsources',
-		'app.histories',
+		'app.contacts_groups',
+		'app.groups',
 		'app.users',
 		'app.events',
-		'app.groups',
-		'app.contacts_groups',
-		'app.notifications',
-		'app.contacts_users',
+		'app.histories',
+		'app.contacts',
+		'app.zips',
+		'app.countries',
+		'app.contactsources',
 		'app.linkups',
 		'app.contacts_linkups',
 		'app.linkups_users',
-		'app.usergroups',
-		'app.users_usergroups',
-		'app.units',
+		'app.contacts_users',
 		'app.skills',
-		'app.contacts_skills'
+		'app.contacts_skills',
+		'app.units',
+		'app.notifications',
+		'app.usergroups',
+		'app.users_usergroups'
 	];
 
 /**
@@ -44,8 +44,8 @@ class CountriesTableTest extends TestCase {
  */
 	public function setUp() {
 		parent::setUp();
-		$config = TableRegistry::exists('Countries') ? [] : ['className' => 'App\Model\Table\CountriesTable'];
-		$this->Countries = TableRegistry::get('Countries', $config);
+		$config = TableRegistry::exists('ContactsGroups') ? [] : ['className' => 'App\Model\Table\ContactsGroupsTable'];
+		$this->ContactsGroups = TableRegistry::get('ContactsGroups', $config);
 	}
 
 /**
@@ -54,7 +54,7 @@ class CountriesTableTest extends TestCase {
  * @return void
  */
 	public function tearDown() {
-		unset($this->Countries);
+		unset($this->ContactsGroups);
 
 		parent::tearDown();
 	}

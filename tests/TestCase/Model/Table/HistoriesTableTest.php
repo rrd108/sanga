@@ -29,7 +29,12 @@ class HistoriesTableTest extends TestCase {
 		'app.linkups',
 		'app.contacts_linkups',
 		'app.linkups_users',
-		'app.contacts_groups'
+		'app.usergroups',
+		'app.users_usergroups',
+		'app.contacts_groups',
+		'app.skills',
+		'app.contacts_skills',
+		'app.units'
 	];
 
 /**
@@ -52,6 +57,24 @@ class HistoriesTableTest extends TestCase {
 		unset($this->Histories);
 
 		parent::tearDown();
+	}
+
+/**
+ * Test initialize method
+ *
+ * @return void
+ */
+	public function testInitialize() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test validationDefault method
+ *
+ * @return void
+ */
+	public function testValidationDefault() {
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 }

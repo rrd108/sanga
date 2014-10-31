@@ -19,48 +19,48 @@ class SessionsControllerTest extends IntegrationTestCase {
 	];
 
 /**
- * testIndex method
+ * Test index method
  *
  * @return void
  */
 	public function testIndex() {
-		$this->markTestIncomplete('testIndex not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * testView method
+ * Test view method
  *
  * @return void
  */
 	public function testView() {
-		$this->markTestIncomplete('testView not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * testAdd method
+ * Test add method
  *
  * @return void
  */
 	public function testAdd() {
-		$this->markTestIncomplete('testAdd not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * testEdit method
+ * Test edit method
  *
  * @return void
  */
 	public function testEdit() {
-		$this->markTestIncomplete('testEdit not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
- * testDelete method
+ * Test delete method
  *
  * @return void
  */
 	public function testDelete() {
-		$this->markTestIncomplete('testDelete not implemented.');
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 }

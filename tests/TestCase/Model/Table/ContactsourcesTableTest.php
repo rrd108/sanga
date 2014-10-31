@@ -11,6 +11,33 @@ use Cake\TestSuite\TestCase;
 class ContactsourcesTableTest extends TestCase {
 
 /**
+ * Fixtures
+ *
+ * @var array
+ */
+	public $fixtures = [
+		'app.contactsources',
+		'app.contacts',
+		'app.zips',
+		'app.countries',
+		'app.histories',
+		'app.users',
+		'app.events',
+		'app.groups',
+		'app.contacts_groups',
+		'app.notifications',
+		'app.contacts_users',
+		'app.linkups',
+		'app.contacts_linkups',
+		'app.linkups_users',
+		'app.usergroups',
+		'app.users_usergroups',
+		'app.units',
+		'app.skills',
+		'app.contacts_skills'
+	];
+
+/**
  * setUp method
  *
  * @return void
@@ -30,6 +57,24 @@ class ContactsourcesTableTest extends TestCase {
 		unset($this->Contactsources);
 
 		parent::tearDown();
+	}
+
+/**
+ * Test initialize method
+ *
+ * @return void
+ */
+	public function testInitialize() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test validationDefault method
+ *
+ * @return void
+ */
+	public function testValidationDefault() {
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 }

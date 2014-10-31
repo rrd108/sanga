@@ -18,19 +18,23 @@ class NotificationsTableTest extends TestCase {
 	public $fixtures = [
 		'app.notifications',
 		'app.users',
+		'app.events',
 		'app.histories',
 		'app.contacts',
-		'app.countries',
 		'app.zips',
+		'app.countries',
 		'app.contactsources',
-		'app.events',
-		'app.eventgroups',
 		'app.groups',
-		'app.grouptypes',
 		'app.contacts_groups',
-		'app.contacts_users',
 		'app.linkups',
-		'app.linkups_users'
+		'app.contacts_linkups',
+		'app.linkups_users',
+		'app.contacts_users',
+		'app.skills',
+		'app.contacts_skills',
+		'app.units',
+		'app.usergroups',
+		'app.users_usergroups'
 	];
 
 /**
@@ -53,6 +57,33 @@ class NotificationsTableTest extends TestCase {
 		unset($this->Notifications);
 
 		parent::tearDown();
+	}
+
+/**
+ * Test initialize method
+ *
+ * @return void
+ */
+	public function testInitialize() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test validationDefault method
+ *
+ * @return void
+ */
+	public function testValidationDefault() {
+		$this->markTestIncomplete('Not implemented yet.');
+	}
+
+/**
+ * Test findUnread method
+ *
+ * @return void
+ */
+	public function testFindUnread() {
+		$this->markTestIncomplete('Not implemented yet.');
 	}
 
 }
