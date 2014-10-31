@@ -34,8 +34,12 @@
 		echo $this->Form->input('phone');
 		echo $this->Form->input('email');
 		echo $this->Form->input('birth', ['type' => 'text', 'value' => $contact->birth->format('Y-m-d')]);
-		echo $this->Form->input('active');
-		echo $this->Form->input('comment');
+		echo $this->Form->input('sex', ['type' => 'radio', 'options' => [1 => __('Male'), 2 => __('Female')]]);
+		echo $this->Form->input('active', ['checked' => true, 'title' => 'Az inaktív kapcsolatok az akik eltűntek, eltávoztak, elérhetetlenek, stb.']);
+		echo $this->Form->input('workplace');
+		echo $this->Form->autocomplete('family_id', ['select' => true, 'source' => 'searchname', 'label' => __('Family'), 'title' => __('Choose family member')]);		
+		echo $this->Form->input('contactsource_id', ['options' => $contactsources]);
+		echo $this->Form->input('comment', ['title' => 'Másodlagos elérhetőségek, egyéb megjegyzések']);
 		echo $this->Form->input('groups._ids', ['options' => $groups]);
 		echo $this->Form->input('skills._ids', ['options' => $skills]);
 		echo $this->Form->input('users._ids', ['options' => $users]);

@@ -35,11 +35,13 @@ class ContactsTable extends Table {
 		]);
 		$this->hasMany('Histories', [
 			'foreignKey' => 'contact_id',
+			'sort' => ['Histories.date' => 'DESC']
 		]);
 		$this->belongsToMany('Groups', [
 			'foreignKey' => 'contact_id',
 			'targetForeignKey' => 'group_id',
 			'joinTable' => 'contacts_groups',
+			'sort' => 'Groups.name'
 		]);
 		$this->belongsToMany('Skills', [
 			'foreignKey' => 'contact_id',

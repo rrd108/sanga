@@ -18,7 +18,7 @@
 	<?php
 		echo $this->Form->input('name');
 		echo $this->Form->input('description');
-		echo $this->Form->input('admin_user_id');
+		echo $this->Form->input('admin_user_id', ['options' => $users]);
 		echo $this->Form->input('public');
 		echo $this->Form->input('users._ids', ['options' => $users]);
 		echo $this->Form->input('contacts._ids', ['options' => $contacts]);
