@@ -23,9 +23,18 @@ class ContactsController extends AppController {
 		//debug($query);
 		$highlight = array('format' => '<span class="b i">\1</span>');
 		foreach($query as $row){
+			if($row->name && $row->contactname){
+				$label = String::highlight($row->name, $this->request->query('term'), $highlight)  . ' : ' .
+										String::highlight($row->contactname, $this->request->query('term'), $highlight);
+			}
+			elseif($row->name){
+				$label = String::highlight($row->name, $this->request->query('term'), $highlight);
+			}
+			elseif($row->contactname){
+				$label = String::highlight($row->contactname, $this->request->query('term'), $highlight);
+			}
 			$result[] = array('value' => $row->id,
-							  'label' => String::highlight($row->name, $this->request->query('term'), $highlight)  . ' : ' .
-										String::highlight($row->contactname, $this->request->query('term'), $highlight));
+							  'label' => $label);
 		}
 		//debug($result);die();
 		$this->set('result', $result);
@@ -110,12 +119,15 @@ class ContactsController extends AppController {
 		]);
 		$this->set('contact', $contact);
 		
+		$family = $this->Contacts->find()
+				->where(['family_id' => $contact->family_id]);
+		$this->set('family', $family);
+		
 		$this->paginate = [
 			'contain' => ['Contacts', 'Users', 'Events', 'Units', 'Groups']
 		];
 		$histories = $this->Contacts->Histories->find()
-				->where(['contact_id' => $id])
-				->order('date');
+				->where(['contact_id' => $id]);
 		$this->set('histories', $this->paginate($histories));
 	}
 

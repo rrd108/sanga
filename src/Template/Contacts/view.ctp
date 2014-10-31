@@ -13,9 +13,10 @@ $this->Html->scriptEnd();
 		<h3><?= __('Actions') ?></h3>
 		<ul class="side-nav">
 			<li><a href="#tabs-1">Személyi adatok</a></li>
-			<li><a href="#tabs-2"><?= __('Workplace and skills') ?></a></li>
-			<li><a href="#tabs-3">Történések</a></li>
-			<li><a href="#tabs-4"><?= __('Groups') ?></a></li>
+			<li><a href="#tabs-2"><?= __('Family') ?></a></li>
+			<li><a href="#tabs-3"><?= __('Workplace and skills') ?></a></li>
+			<li><a href="#tabs-4">Történések</a></li>
+			<li><a href="#tabs-5"><?= __('Groups') ?></a></li>
 		</ul>
 	</div>
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
@@ -66,8 +67,6 @@ $this->Html->scriptEnd();
 					}
 					?>
 				</p>
-				<h6 class="subheader"><?= __('Family Id') ?></h6>
-				<p><?= $this->Number->format($contact->family_id) ?></p>
 				<h6 class="subheader"><?= __('Contactsource') ?></h6>
 				<p>&nbsp;<?= $contact->has('contactsource') ? $this->Html->link($contact->contactsource->name, ['controller' => 'Contactsources', 'action' => 'view', $contact->contactsource->id]) : '' ?></p>
 				<h6 class="subheader"><?= __('Active') ?></h6>
@@ -105,6 +104,21 @@ $this->Html->scriptEnd();
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
 			<div class="large-11 columns strings">
+				<h6 class="subheader"><?= __('Family Id') ?></h6>
+				<p><?= $this->Number->format($contact->family_id) ?></p>
+				<?php
+				foreach($family as $familymember){
+					print $familymember->id . ' ' . $familymember->name . ' ' . $familymember->contactname . '<br>';
+				}
+				?>
+			</div>
+		</div>
+	</div>
+	<div id="tabs-3" class="contacts view large-10 medium-9 columns">
+		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
+		<h2><?= h($contact->name) ?></h2>
+		<div class="row">
+			<div class="large-11 columns strings">
 				<h6 class="subheader"><?= __('Workplace') ?></h6>
 				<p>&nbsp;<?= h($contact->workplace) ?></p>
 				<h6 class="subheader"><?= __('Skills') ?></h6>
@@ -118,9 +132,18 @@ $this->Html->scriptEnd();
 					</p>
 				<?php endif; ?>
 			</div>
+			
+			<h6 class="subheader"><?= __('Family Id') ?></h6>
+			<p><?= $this->Number->format($contact->family_id) ?></p>
+			<?php
+			foreach($family as $familymember){
+				print $familymember->id . ' ' . $familymember->name . ' ' . $familymember->contactname . '<br>';
+			}
+			?>
+
 		</div>
 	</div>
-	<div id="tabs-3" class="contacts view large-10 medium-9 columns">
+	<div id="tabs-4" class="contacts view large-10 medium-9 columns">
 		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
@@ -181,14 +204,14 @@ $this->Html->scriptEnd();
 		<?php endif; ?>
 		</div>
 	</div>
-	<div id="tabs-4" class="contacts view large-10 medium-9 columns">
+	<div id="tabs-5" class="contacts view large-10 medium-9 columns">
 		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
 			<?php if (!empty($contact->groups)): ?>
 				<?php
 				foreach ($contact->groups as $groups):
-					$cssStyle = ($groups->admin_user_id) ? "info" : "success";
+					$cssStyle = $groups->public ? 'info' : (($groups->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success');
 				?>
 					<span class="tag tag-<?= $cssStyle ?>"><?= h($groups->name) ?></span>
 				<?php endforeach; ?>
