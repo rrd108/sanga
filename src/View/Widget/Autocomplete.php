@@ -23,7 +23,7 @@ class Autocomplete implements WidgetInterface {
             return $this->_templates->format('autocompleteselect', [
                 'name' => $data['name'],
                 'label' => $data['label'],
-                'source' => $data['source'],
+                'source' => '../' . $data['source'],
                 'attrs' => $this->_templates->formatAttributes($data,
                                                                ['name', 'label', 'source']
                                                                )
@@ -33,7 +33,7 @@ class Autocomplete implements WidgetInterface {
             return $this->_templates->format('autocompletechecker', [
                 'name' => $data['name'],
                 'label' => $data['label'],
-                'source' => $data['source'],
+                'source' => '../' . $data['source'],
                 'attrs' => $this->_templates->formatAttributes($data,
                                                                ['name', 'label', 'source']
                                                                )
