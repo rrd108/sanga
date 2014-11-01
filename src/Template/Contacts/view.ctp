@@ -132,15 +132,6 @@ $this->Html->scriptEnd();
 					</p>
 				<?php endif; ?>
 			</div>
-			
-			<h6 class="subheader"><?= __('Family Id') ?></h6>
-			<p><?= $this->Number->format($contact->family_id) ?></p>
-			<?php
-			foreach($family as $familymember){
-				print $familymember->id . ' ' . $familymember->name . ' ' . $familymember->contactname . '<br>';
-			}
-			?>
-
 		</div>
 	</div>
 	<div id="tabs-4" class="contacts view large-10 medium-9 columns">
