@@ -17,12 +17,12 @@ class ContactsGroupsControllerTest extends IntegrationTestCase {
 	public $fixtures = [
 		'app.contacts_groups',
 		'app.groups',
-		'app.admin_users',
+		
 		'app.histories',
 		'app.contacts',
 		'app.zips',
 		'app.countries',
-		'app.families',
+		
 		'app.contactsources',
 		'app.skills',
 		'app.contacts_skills',
@@ -31,7 +31,7 @@ class ContactsGroupsControllerTest extends IntegrationTestCase {
 		'app.notifications',
 		'app.contacts_users',
 		'app.groups_users',
-		'app.intersection_groups',
+		
 		'app.usergroups',
 		'app.users_usergroups',
 		'app.units'

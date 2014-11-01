@@ -22,13 +22,13 @@ class NotificationsControllerTest extends IntegrationTestCase {
 		'app.contacts',
 		'app.zips',
 		'app.countries',
-		'app.families',
+		
 		'app.contactsources',
 		'app.groups',
-		'app.admin_users',
+		
 		'app.contacts_groups',
 		'app.groups_users',
-		'app.intersection_groups',
+		
 		'app.skills',
 		'app.contacts_skills',
 		'app.contacts_users',

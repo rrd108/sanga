@@ -23,11 +23,11 @@ class UsersUsergroupsTableTest extends TestCase {
 		'app.contacts',
 		'app.zips',
 		'app.countries',
-		'app.families',
+		
 		'app.contactsources',
 		'app.groups',
 		'app.groups_users',
-		'app.intersection_groups',
+		
 		'app.contacts_groups',
 		'app.skills',
 		'app.contacts_skills',

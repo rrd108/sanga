@@ -19,7 +19,7 @@ class SkillsControllerTest extends IntegrationTestCase {
 		'app.contacts',
 		'app.zips',
 		'app.countries',
-		'app.families',
+		
 		'app.contactsources',
 		'app.histories',
 		'app.users',
@@ -27,10 +27,10 @@ class SkillsControllerTest extends IntegrationTestCase {
 		'app.notifications',
 		'app.contacts_users',
 		'app.groups',
-		'app.admin_users',
+		
 		'app.contacts_groups',
 		'app.groups_users',
-		'app.intersection_groups',
+		
 		'app.usergroups',
 		'app.users_usergroups',
 		'app.units',

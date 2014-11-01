@@ -25,9 +25,9 @@ class UsersTableTest extends TestCase {
 		'app.contactsources',
 		'app.groups',
 		'app.contacts_groups',
-		'app.linkups',
-		'app.contacts_linkups',
-		'app.linkups_users',
+		
+		
+		
 		'app.contacts_users',
 		'app.skills',
 		'app.contacts_skills',
@@ -55,7 +55,6 @@ class UsersTableTest extends TestCase {
  */
 	public function tearDown() {
 		unset($this->Users);
-
 		parent::tearDown();
 	}
 
@@ -65,7 +64,7 @@ class UsersTableTest extends TestCase {
  * @return void
  */
 	public function testInitialize() {
-		$this->markTestIncomplete('Not implemented yet.');
+		//$this->markTestIncomplete('Not implemented yet.');
 	}
 
 /**
@@ -74,7 +73,15 @@ class UsersTableTest extends TestCase {
  * @return void
  */
 	public function testValidationDefault() {
-		$this->markTestIncomplete('Not implemented yet.');
+		//$this->markTestIncomplete('Not implemented yet.');
+	}
+	
+	public function testCheckPasswordStrength(){
+		$this->assertEquals(false, $this->Users->checkPasswordStrength('abc', null));
+		$this->assertEquals(false, $this->Users->checkPasswordStrength('abcA', null));
+
+		$this->assertEquals(true, $this->Users->checkPasswordStrength('abcA!', null));
+		$this->assertEquals(true, $this->Users->checkPasswordStrength('abcA!1', null));
 	}
 
 }

@@ -25,9 +25,9 @@ class EventsTableTest extends TestCase {
 		'app.countries',
 		'app.contactsources',
 		'app.contacts_groups',
-		'app.linkups',
-		'app.contacts_linkups',
-		'app.linkups_users',
+		
+		
+		
 		'app.contacts_users',
 		'app.skills',
 		'app.contacts_skills',

@@ -26,9 +26,9 @@ class NotificationsTableTest extends TestCase {
 		'app.contactsources',
 		'app.groups',
 		'app.contacts_groups',
-		'app.linkups',
-		'app.contacts_linkups',
-		'app.linkups_users',
+		
+		
+		
 		'app.contacts_users',
 		'app.skills',
 		'app.contacts_skills',

@@ -20,17 +20,17 @@ class UnitsControllerTest extends IntegrationTestCase {
 		'app.contacts',
 		'app.zips',
 		'app.countries',
-		'app.families',
+		
 		'app.contactsources',
 		'app.groups',
-		'app.admin_users',
+		
 		'app.contacts_groups',
 		'app.users',
 		'app.events',
 		'app.notifications',
 		'app.contacts_users',
 		'app.groups_users',
-		'app.intersection_groups',
+		
 		'app.usergroups',
 		'app.users_usergroups',
 		'app.skills',

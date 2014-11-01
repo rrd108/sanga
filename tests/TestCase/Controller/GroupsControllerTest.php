@@ -30,7 +30,7 @@ class GroupsControllerTest extends IntegrationTestCase {
 		'app.units',
 		'app.notifications',
 		'app.groups_users',
-		'app.intersection_groups',
+		
 		'app.usergroups',
 		'app.users_usergroups'
 	];

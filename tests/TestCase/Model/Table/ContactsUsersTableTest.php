@@ -27,9 +27,9 @@ class ContactsUsersTableTest extends TestCase {
 		'app.groups',
 		'app.contacts_groups',
 		'app.notifications',
-		'app.linkups',
-		'app.contacts_linkups',
-		'app.linkups_users',
+		
+		
+		
 		'app.usergroups',
 		'app.users_usergroups',
 		'app.units',

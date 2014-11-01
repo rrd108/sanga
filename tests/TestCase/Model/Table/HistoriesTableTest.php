@@ -26,9 +26,9 @@ class HistoriesTableTest extends TestCase {
 		'app.events',
 		'app.notifications',
 		'app.contacts_users',
-		'app.linkups',
-		'app.contacts_linkups',
-		'app.linkups_users',
+		
+		
+		
 		'app.usergroups',
 		'app.users_usergroups',
 		'app.contacts_groups',
