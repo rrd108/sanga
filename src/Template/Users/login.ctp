@@ -1,4 +1,6 @@
-<?php $this->assign('title', __('Log in')); ?>
+<?php
+$this->assign('title', __('Login'));
+?>
 <div class="users form" id="loginform">
 <?= $this->Flash->render('auth') ?>
 <?php
@@ -7,7 +9,7 @@
 <?= $this->Form->create() ?>
     <fieldset>
         <legend>Bejelentkezés</legend>
-        <?= $this->Form->input('name') ?>
+        <?= $this->Form->input('name', ['autofocus' => 'autofocus']) ?>
         <?= $this->Form->input('password') ?>
     </fieldset>
 <?= $this->Form->button(__('Login')); ?>
