@@ -56,8 +56,17 @@ class UsersTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
-			->allowEmpty('name')
-			->allowEmpty('password')
+			->notEmpty('name')
+			->notEmpty('password')
+			->add('password', [
+					'length' => [
+							'rule' => ['minLength', 6],
+							'message' => __('At least 6 characters long')
+							],
+					'custom' => [
+							'rule' => 'checkPasswordStrength'
+							]
+					])
 			->allowEmpty('realname')
 			->add('email', 'valid', ['rule' => 'email'])
 			->allowEmpty('email')
@@ -66,10 +75,34 @@ class UsersTable extends Table {
 			->add('active', 'valid', ['rule' => 'boolean'])
 			->allowEmpty('active')
 			->add('role', 'valid', ['rule' => 'numeric'])
-			->validatePresence('role', 'create')
 			->notEmpty('role');
 
 		return $validator;
 	}
 
+/**
+ * Measuring password strength
+ * The password is strong if there are at least 3 of these characters presents in it:
+ *   letter, capital letter, number, special character
+ * @param string $value the given password string
+ * @return true on strong password and false otherwise
+ */
+	static function checkPasswordStrength($value, $context){
+		$minStrength = 3;
+		$strength = 0;
+		$patterns = ['/[a-z]/',
+					 '/[A-Z]/',
+					 '/[0-9]/',
+					 '/[!"£$%^&*()`{}\[\]:@~;\'#<>?,.\/\\-=_+\|]/'];
+		foreach($patterns as $pattern){
+			if(preg_match($pattern, $value, $matches)){
+				$strength++;
+			}
+		}
+		if($strength >= $minStrength){
+			return true;
+		}
+		return false;
+	}
+	
 }
