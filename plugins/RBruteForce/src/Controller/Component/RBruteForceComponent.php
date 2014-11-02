@@ -27,7 +27,7 @@ class RBruteForceComponent extends Component {
 		$this->controller = $this->_registry->getController();
 		$this->request = $this->controller->request;
 		$this->response = $this->controller->response;
-		$this->session = $this->controller->request->session();
+		//$this->session = $this->controller->request->session();
         
         $this->RBruteForce = TableRegistry::get('rbruteforces');
 	}
@@ -73,6 +73,7 @@ class RBruteForceComponent extends Component {
 	private function incrementExpire(){
 		$expire = explode(' ', $this->options['expire']);
 		$this->options['expire'] = $expire[0] + $this->getCount() . ' ' . $expire[1];
+		return $this->options['expire'];
 	}
 
 /**
