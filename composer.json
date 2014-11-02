@@ -21,14 +21,16 @@
     "autoload": {
         "psr-4": {
             "App\\": "src",
-            "Autocomplete\\": "./plugins/Autocomplete/src"
+            "Autocomplete\\": "./plugins/Autocomplete/src",
+            "RBruteForce\\": "./plugins/RBruteForce/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "App\\Test\\": "tests",
             "Cake\\Test\\Fixture\\": "./vendor/cakephp/cakephp/tests/Fixture",
-            "Autocomplete\\Test\\": "./plugins/Autocomplete/tests"
+            "Autocomplete\\Test\\": "./plugins/Autocomplete/tests",
+            "RBruteForce\\Test\\": "./plugins/RBruteForce/tests"
         }
     },
     "scripts": {

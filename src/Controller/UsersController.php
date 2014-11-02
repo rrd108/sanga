@@ -11,6 +11,8 @@ use Cake\Event\Event;
  * @property App\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController {
+	
+	public $components = ['RBruteForce.RBruteForce'];
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
@@ -27,6 +29,7 @@ class UsersController extends AppController {
 				$this->Auth->setUser($user);
 				return $this->redirect($this->Auth->redirectUrl());
 			}
+			$this->RBruteForce->check();
 			$this->Flash->error(__('Invalid username or password, try again'));
 		}
 	}

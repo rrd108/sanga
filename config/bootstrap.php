@@ -166,6 +166,7 @@ Request::addDetector('tablet', function($request) {
  */
 
 Plugin::load('DebugKit', ['bootstrap' => true]);
+Plugin::load('RBruteForce', ['bootstrap' => false, 'routes' => true]);
 
 /**
  * Connect middleware/dispatcher filters.
