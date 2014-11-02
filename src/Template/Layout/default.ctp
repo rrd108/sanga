@@ -78,6 +78,17 @@
 					</ul>
 				</li>
 				<li>
+					✽ CRM
+					<ul>
+						<?php
+							print '<li>' . $this->Html->link('♥ Kapcsolatok', '/contacts') . '</li>';
+							print '<li>' . $this->Html->link('⚑ Történések', '/histories') . '</li>';
+							print '<li>' . $this->Html->link('♛ Lekérdezések', '/contacts/search') . '</li>';
+							print '<li>' . $this->Html->link('✈ Térkép', '/contacts/showmap') . '</li>';
+						?>
+					</ul>
+				</li>
+				<li>
 					★ Adataim
 					<?php
 						$nc = '';
@@ -89,17 +100,6 @@
 							print '<li>' . $this->Html->link('☭ Adatlapom', '/users/view') . '</li>';
 							print '<li>' . $this->Html->link('⚠ Értesítések '.$nc, '/notifications', ['escapeTitle' => false]) . '</li>';
 							print '<li>' . $this->Html->link('⊗ Kijelentkezem', '/users/logout') . '</li>';
-						?>
-					</ul>
-				</li>
-				<li>
-					✽ CRM
-					<ul>
-						<?php
-							print '<li>' . $this->Html->link('♥ Kapcsolatok', '/contacts') . '</li>';
-							print '<li>' . $this->Html->link('⚑ Történések', '/histories') . '</li>';
-							print '<li>' . $this->Html->link('♛ Lekérdezések', '/contacts/search') . '</li>';
-							print '<li>' . $this->Html->link('✈ Térkép', '/contacts/showmap') . '</li>';
 						?>
 					</ul>
 				</li>
