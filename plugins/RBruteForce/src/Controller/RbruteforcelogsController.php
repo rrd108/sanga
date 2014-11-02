@@ -91,4 +91,14 @@ class RbruteforcelogsController extends AppController {
 		}
 		return $this->redirect(['action' => 'index']);
 	}
+
+	public function deleteall() {
+		if ($this->Rbruteforcelogs->deleteAll([])) {
+			$this->Flash->success('All rbruteforcelog has been deleted.');
+		} else {
+			$this->Flash->error('All rbruteforcelog could not be deleted. Please, try again.');
+		}
+		return $this->redirect(['action' => 'index']);
+	}
+
 }

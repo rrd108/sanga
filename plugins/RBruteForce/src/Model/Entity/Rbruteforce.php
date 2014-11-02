@@ -16,6 +16,7 @@ class Rbruteforce extends Entity {
 	protected $_accessible = [
 		'ip' => true,
 		'url' => true,
+        'expire' => true
 	];
 
 }

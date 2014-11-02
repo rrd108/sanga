@@ -8,11 +8,12 @@ use Cake\ORM\TableRegistry;
 class RBruteForceComponent extends Component {
 
 	private $options = [
-                        'maxAttempts' => 5,			//max failed attempts before banning
-                        'expire' => '5 minutes',	//
+                        'maxAttempts' => 4,			//max failed attempts before banning
+                        'expire' => '3 minutes',	//
                         'dataLog' => false,			//log the user submitted data
 						'attemptLog' => 'beforeBan',//all|beforeBan
 						'checkUrl' => true,			//
+						'cleanupAttempt' => 3		//delete all old entries from attempts database if there are more rows that this
                         ];
 	
 	private $isBanned = true;
@@ -29,7 +30,7 @@ class RBruteForceComponent extends Component {
 		$this->response = $this->controller->response;
 		//$this->session = $this->controller->request->session();
         
-        $this->RBruteForce = TableRegistry::get('rbruteforces');
+        $this->RBruteForce = TableRegistry::get('RBruteForce.Rbruteforces');
 	}
 
     //email bekérés
@@ -38,11 +39,10 @@ class RBruteForceComponent extends Component {
     public function check($options = []){
 		$this->options = array_merge($this->options, $options);
 
+		$this->incrementExpire();
+
 		if($this->getCount() < $this->options['maxAttempts']){
 			$this->isBanned = false;
-		}
-		else{
-			$this->incrementExpire();
 		}
 
         if($this->options['attemptLog'] == 'all' ||
@@ -63,6 +63,8 @@ class RBruteForceComponent extends Component {
 			$this->delay();
 			$this->controller->redirect('/r_brute_force/rbruteforces/failed');
 		}
+
+		$this->RBruteForce->cleanupAttempt($this->options['cleanupAttempt']);
     }
 
 /**
@@ -70,10 +72,9 @@ class RBruteForceComponent extends Component {
  *
  * so if expire is set to 5 minutes than after 3 attempts expre will be 8 minutes
  */
-	private function incrementExpire(){
+	public function incrementExpire(){
 		$expire = explode(' ', $this->options['expire']);
 		$this->options['expire'] = $expire[0] + $this->getCount() . ' ' . $expire[1];
-		return $this->options['expire'];
 	}
 
 /**
@@ -82,11 +83,11 @@ class RBruteForceComponent extends Component {
  * Human users will see a few seconds delay on the response from the server
  * but automated brute force attacks could get long server response delays
  */
-	private function delay(){
+	public function delay(){
 		sleep($this->getCount());
 	}
 	
-	private function getCount(){
+	public function getCount(){
 		$count = $this->RBruteForce->find()
 				->where(['ip' => $this->request->env('HTTP_HOST')])
 				->andWhere(['expire >= ' => time()])
@@ -98,7 +99,7 @@ class RBruteForceComponent extends Component {
 		return $count;
 	}
 	
-	private function dataLog($data){
+	public function dataLog($data){
         $dataLog = TableRegistry::get('rbruteforcelogs');
         $data = $dataLog->newEntity(['data' => serialize($data)]);
         if($dataLog->save($data)){

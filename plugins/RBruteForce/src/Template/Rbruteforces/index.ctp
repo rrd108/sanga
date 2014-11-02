@@ -2,6 +2,7 @@
 	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
 		<li><?= $this->Html->link(__('New Rbruteforce'), ['action' => 'add']) ?></li>
+		<li><?= $this->Html->link(__('Delete All'), ['action' => 'deleteall']) ?></li>
 	</ul>
 </div>
 <div class="rbruteforces index large-10 medium-9 columns">

@@ -2,6 +2,7 @@
 	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
 		<li><?= $this->Html->link(__('New Rbruteforcelog'), ['action' => 'add']) ?></li>
+		<li><?= $this->Html->link(__('Delete All'), ['action' => 'deleteall']) ?></li>
 	</ul>
 </div>
 <div class="rbruteforcelogs index large-10 medium-9 columns">
@@ -9,6 +10,7 @@
 	<thead>
 		<tr>
 			<th><?= $this->Paginator->sort('id') ?></th>
+			<th><?= $this->Paginator->sort('data') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
@@ -16,6 +18,7 @@
 	<?php foreach ($rbruteforcelogs as $rbruteforcelog): ?>
 		<tr>
 			<td><?= $this->Number->format($rbruteforcelog->id) ?></td>
+			<td><?php print_r(unserialize($rbruteforcelog->data)); ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $rbruteforcelog->id]) ?>
 				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $rbruteforcelog->id]) ?>

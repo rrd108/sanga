@@ -100,4 +100,13 @@ class RbruteforcesController extends AppController {
 		}
 		return $this->redirect(['action' => 'index']);
 	}
+
+	public function deleteall() {
+		if ($this->Rbruteforces->deleteAll([])) {
+			$this->Flash->success('All rbruteforce has been deleted.');
+		} else {
+			$this->Flash->error('All rbruteforce could not be deleted. Please, try again.');
+		}
+		return $this->redirect(['action' => 'index']);
+	}
 }

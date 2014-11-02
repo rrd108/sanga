@@ -34,9 +34,19 @@ class RbruteforcesTable extends Table {
 			->notEmpty('ip')
 			->validatePresence('url', 'create')
 			->notEmpty('url')
-			->allowEmpty('expire', 'create');
+			->validatePresence('expire', 'create')
+			->notEmpty('expire', 'create');
 
 		return $validator;
 	}
 
+	public function cleanupAttempt($maxRow){
+		$expire = $this->find()
+			->select(['expire'])
+			->order(['expire' => 'DESC'])
+			->limit(3);
+		$expire = $expire->toArray();
+		$expire = array_pop($expire);
+		$this->deleteAll(['expire < ' => $expire->expire]);
+	}
 }
