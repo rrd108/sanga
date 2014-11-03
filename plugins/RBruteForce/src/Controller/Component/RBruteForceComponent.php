@@ -11,9 +11,9 @@ class RBruteForceComponent extends Component {
                         'maxAttempts' => 4,			//max failed attempts before banning
                         'expire' => '3 minutes',	//
                         'dataLog' => false,			//log the user submitted data
-						'attemptLog' => 'beforeBan',//all|beforeBan
-						'checkUrl' => true,			//
-						'cleanupAttempt' => 3		//delete all old entries from attempts database if there are more rows that this
+  						'attemptLog' => 'beforeBan',//all|beforeBan
+  						'checkUrl' => true,			//
+  						'cleanupAttempt' => 3		//delete all old entries from attempts database if there are more rows that this
                         ];
 	
 	private $isBanned = true;
@@ -75,6 +75,7 @@ class RBruteForceComponent extends Component {
 	public function incrementExpire(){
 		$expire = explode(' ', $this->options['expire']);
 		$this->options['expire'] = $expire[0] + $this->getCount() . ' ' . $expire[1];
+		return $this->options['expire'];
 	}
 
 /**

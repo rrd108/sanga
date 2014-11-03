@@ -29,17 +29,30 @@ class RbruteforcesFixture extends TestFixture {
 		],
 	];
 
-/**
- * Records
- *
- * @var array
- */
-	public $records = [
-		[
-			'ip' => 'Lorem ipsum dolor sit amet',
-			'url' => 'Lorem ipsum dolor sit amet',
-			'expire' => 1414908381
-		],
-	];
+	public function init(){
+        $this->records = [
+            [
+             'ip' => '192.193.194.195',
+             'url' => 'users/login',
+             'expire' => strtotime('+5 minutes')
+            ],
+            [
+             'ip' => '188.189.190.191',
+             'url' => 'users/login',
+             'expire' => strtotime('+1 minutes')
+            ],
+            [
+             'ip' => '188.189.190.191',
+             'url' => 'users',
+             'expire' => strtotime('+2 minutes')
+            ],
+            [
+             'ip' => '188.189.190.191',
+             'url' => 'users/login',
+             'expire' => strtotime('+4 minutes')
+            ],
+         ];
+        parent::init();
+   }
 
 }

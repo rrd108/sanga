@@ -33,7 +33,7 @@ class RbruteforcelogsFixture extends TestFixture {
 	public $records = [
 		[
 			'id' => 1,
-			'data' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.'
+			'data' => 'a:2:{s:4:"name";s:3:"123";s:8:"password";s:3:"456";}'
 		],
 	];
 
