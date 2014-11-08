@@ -43,8 +43,7 @@
 			<p>&nbsp;<?= $user->active ? __('Yes') : __('No'); ?></p>
 		</div>
 	</div>
-</div>
-<div class="related row">
+
 	<div class="column large-12">
 	<h4 class="subheader"><?= __('Related Events') ?></h4>
 	<?php if (!empty($user->events)): ?>
@@ -70,8 +69,7 @@
 	</table>
 	<?php endif; ?>
 	</div>
-</div>
-<div class="related row">
+
 	<div class="column large-12">
 	<h4 class="subheader"><?= __('Related Histories') ?></h4>
 	<?php if (!empty($user->histories)): ?>
@@ -115,8 +113,7 @@
 	</table>
 	<?php endif; ?>
 	</div>
-</div>
-<div class="related row">
+
 	<div class="column large-12">
 	<h4 class="subheader"><?= __('Related Notifications') ?></h4>
 	<?php if (!empty($user->notifications)): ?>
@@ -146,8 +143,7 @@
 	</table>
 	<?php endif; ?>
 	</div>
-</div>
-<div class="related row">
+
 	<div class="column large-12">
 	<h4 class="subheader"><?= __('Related Contacts') ?></h4>
 	<?php if (!empty($user->contacts)): ?>
@@ -199,8 +195,7 @@
 	</table>
 	<?php endif; ?>
 	</div>
-</div>
-<div class="related row">
+
 	<div class="column large-12">
 	<h4 class="subheader"><?= __('Related Groups') ?></h4>
 	<?php if (!empty($user->groups)): ?>
@@ -232,8 +227,7 @@
 	</table>
 	<?php endif; ?>
 	</div>
-</div>
-<div class="related row">
+
 	<div class="column large-12">
 	<h4 class="subheader"><?= __('Related Usergroups') ?></h4>
 	<?php if (!empty($user->usergroups)): ?>
