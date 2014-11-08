@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "22ceacd4dfb4a7c7c92659f5e0bab7da",
+    "hash": "0431d46cce867a0b56c93cb95c33456b",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -131,12 +131,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "c6d003b4212b4e42d530be85eb9299cadc21d479"
+                "reference": "c1d7a07deffc2ea35215f6c22ea41edfcdd97cac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/c6d003b4212b4e42d530be85eb9299cadc21d479",
-                "reference": "c6d003b4212b4e42d530be85eb9299cadc21d479",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/c1d7a07deffc2ea35215f6c22ea41edfcdd97cac",
+                "reference": "c1d7a07deffc2ea35215f6c22ea41edfcdd97cac",
                 "shasum": ""
             },
             "require": {
@@ -188,7 +188,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-10-31 21:14:10"
+            "time": "2014-11-07 18:30:21"
         },
         {
             "name": "cakephp/debug_kit",
