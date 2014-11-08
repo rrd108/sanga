@@ -32,8 +32,6 @@ $this->Html->addCrumb('Új', '/contacts/add');
 		echo $this->Form->autocomplete('contactname', ['select' => false, 'source' => 'searchname', 'label' => __('Name'), 'title' => __('Civil name, company name, etc')]);
 		echo $this->Form->autocomplete('zip_id', ['source' => '/zips/searchzip', 'label' => __('Zip')]);
 		echo $this->Form->input('address');
-		echo $this->Form->input('lat');
-		echo $this->Form->input('lng');
 		echo $this->Form->input('phone');
 		echo $this->Form->input('email');
 		echo $this->Form->input('birth', ['type' => 'text']);

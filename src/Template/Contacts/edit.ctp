@@ -26,11 +26,9 @@
 	<?php
 		echo $this->Form->input('name');
 		echo $this->Form->input('contactname');
-		//echo $this->Form->input('zip_id', ['source' => '../zips/searchzip', 'label' => __('Zip'), 'value' => $contact->zip->zip . ' ' . $contact->zip->name]);
-		echo $this->Form->input('zip_id', ['options' => $zips]);
+		echo $this->Form->autocomplete('zip_id', ['source' => '../zips/searchzip', 'label' => __('Zip'), 'value' => $contact->zip->zip . ' ' . $contact->zip->name]);
+		//echo $this->Form->input('zip_id', ['options' => $zips]);
 		echo $this->Form->input('address');
-		echo $this->Form->input('lat');
-		echo $this->Form->input('lng');
 		echo $this->Form->input('phone');
 		echo $this->Form->input('email');
 		echo $this->Form->input('birth', ['type' => 'text', 'value' => $contact->birth ? $contact->birth->format('Y-m-d') : null]);

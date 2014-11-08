@@ -22,7 +22,7 @@
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
-			<th><?= $this->Paginator->sort('id') ?></th>
+			<th><?= __('Contact Person') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
 			<th><?= $this->Paginator->sort('contactname') ?></th>
 			<th><?= $this->Paginator->sort('zip_id') ?></th>
@@ -34,11 +34,19 @@
 	<tbody>
 	<?php foreach ($contacts as $contact): ?>
 		<tr>
-			<td><?= $this->Number->format($contact->id) ?></td>
+			<?php //$this->Number->format($contact->id) ?>
+			<td>
+				<?php
+					foreach($contact->users as $user){
+						$css = ($user->id == $this->Session->read('Auth.User.id')) ? 'success' : 'info';
+						print '<span class="tag tag-'.$css.'">' . $user->name . '</span>' . "\n";
+					}
+				?>
+			</td>
 			<td><?= h($contact->name) ?></td>
 			<td><?= h($contact->contactname) ?></td>
 			<td>
-				<?= $contact->has('zip') ? $this->Html->link($contact->zip->zip, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?>
+				<?= $contact->has('zip') ? $this->Html->link($contact->zip->zip . ' ' . $contact->zip->name, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?>
 			</td>
 			<td><?= h($contact->address) ?></td>
 			<td><?= h($contact->workplace) ?></td>
