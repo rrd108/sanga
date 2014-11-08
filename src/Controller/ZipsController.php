@@ -13,7 +13,8 @@ class ZipsController extends AppController {
 	public function searchzip(){
 		$query = $this->Zips->find()
 				->select(['id', 'zip', 'name'])
-				->where(['zip LIKE "'.$this->request->query('term').'%"']);
+				->where(['zip LIKE "'.$this->request->query('term').'%"'])
+				->orWhere(['name LIKE "'.$this->request->query('term').'%"']);
 		//debug($query);
 		foreach($query as $row){
 			$result[] = array('value' => $row->id,
