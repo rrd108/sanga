@@ -26,6 +26,7 @@ class EventsTable extends Table {
 		]);
 		$this->hasMany('Histories', [
 			'foreignKey' => 'event_id',
+			'sort' => ['Histories.date' => 'DESC']
 		]);
 	}
 

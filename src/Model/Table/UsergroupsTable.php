@@ -28,6 +28,7 @@ class UsergroupsTable extends Table {
 			'foreignKey' => 'usergroup_id',
 			'targetForeignKey' => 'user_id',
 			'joinTable' => 'users_usergroups',
+			'sort' => 'User.name'
 		]);
 	}
 

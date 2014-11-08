@@ -23,6 +23,7 @@ class CountriesTable extends Table {
 
 		$this->hasMany('Zips', [
 			'foreignKey' => 'country_id',
+			'sort' => 'Zips.name'
 		]);
 	}
 

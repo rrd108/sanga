@@ -26,11 +26,13 @@ class GroupsTable extends Table {
 		]);
 		$this->hasMany('Histories', [
 			'foreignKey' => 'group_id',
+			'sort' => ['Histories.date' => 'DESC']
 		]);
 		$this->belongsToMany('Contacts', [
 			'foreignKey' => 'group_id',
 			'targetForeignKey' => 'contact_id',
 			'joinTable' => 'contacts_groups',
+			'sort' => 'Contacts.name'
 		]);
 		$this->belongsToMany('Users', [
 			'through' => 'groups_users'

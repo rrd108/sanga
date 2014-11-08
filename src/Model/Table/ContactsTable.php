@@ -47,11 +47,13 @@ class ContactsTable extends Table {
 			'foreignKey' => 'contact_id',
 			'targetForeignKey' => 'skill_id',
 			'joinTable' => 'contacts_skills',
+			'sort' => 'Skills.name'
 		]);
 		$this->belongsToMany('Users', [
 			'foreignKey' => 'contact_id',
 			'targetForeignKey' => 'user_id',
 			'joinTable' => 'contacts_users',
+			'sort' => 'Users.name'
 		]);
 	}
 
@@ -167,6 +169,12 @@ class ContactsTable extends Table {
 				//debug($newHistory);//die();
 				$history->save($newHistory);
 			}
+			
+			
+			Log::debug('Zip vagy address módosításnál kéne updateelni a lat lng-t is');
+		}
+		else{
+			Log::debug('Új contact adat mentésnél nincs loggolás');
 		}
 	}
 }

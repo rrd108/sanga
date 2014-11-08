@@ -24,25 +24,31 @@ class UsersTable extends Table {
 
 		$this->hasMany('Events', [
 			'foreignKey' => 'user_id',
+			'sort' => 'Events.name'
 		]);
 		$this->hasMany('Histories', [
 			'foreignKey' => 'user_id',
+			'sort' => ['Histories.date' => 'DESC']
 		]);
 		$this->hasMany('Notifications', [
 			'foreignKey' => 'user_id',
+			'sort' => ['Notifications.created' => 'DESC']
 		]);
 		$this->belongsToMany('Contacts', [
 			'foreignKey' => 'user_id',
 			'targetForeignKey' => 'contact_id',
 			'joinTable' => 'contacts_users',
+			'sort' => 'Contacts.name'
 		]);
 		$this->belongsToMany('Groups', [
-			'through' => 'groups_users'
+			'through' => 'groups_users',
+			'sort' => 'Groups.name'
 		]);
 		$this->belongsToMany('Usergroups', [
 			'foreignKey' => 'user_id',
 			'targetForeignKey' => 'usergroup_id',
 			'joinTable' => 'users_usergroups',
+			'sort' => 'Usergroups.name'
 		]);
 	}
 

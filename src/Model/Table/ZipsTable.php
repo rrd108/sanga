@@ -26,6 +26,7 @@ class ZipsTable extends Table {
 		]);
 		$this->hasMany('Contacts', [
 			'foreignKey' => 'zip_id',
+			'sort' => 'Contacts.name'
 		]);
 	}
 

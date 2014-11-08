@@ -23,6 +23,7 @@ class UnitsTable extends Table {
 
 		$this->hasMany('Histories', [
 			'foreignKey' => 'unit_id',
+			'sort' => ['Histories.date' => 'DESC']
 		]);
 	}
 
