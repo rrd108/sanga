@@ -3,6 +3,7 @@ namespace App\Shell;
 
 use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
+use Cake\Log\Log;
 
 class DbRefineShell extends Shell {
 	
@@ -30,7 +31,7 @@ class DbRefineShell extends Shell {
 	}
 	
 	public function saveGeo($latLngContact){
-		$contactsTable = $articles = TableRegistry::get('Contacts');
+		$contactsTable = TableRegistry::get('Contacts');
 		$contact = $this->Contacts->get($latLngContact['id']);
 		$contact->lat = $latLngContact['lat'];
 		$contact->lng = $latLngContact['lng'];
@@ -39,6 +40,8 @@ class DbRefineShell extends Shell {
 		}
 		else{
 			$this->out('<error>Error:</error> ' . $latLngContact['id']);
+			Log::debug('DbRefineShell/saveGeo/id/' . $latLngContact['id']);
+			Log::debug($contact->errors());
 		}
 	}
 	
@@ -46,7 +49,7 @@ class DbRefineShell extends Shell {
 		//debug($data);
 		$googleApiKey = 'AIzaSyCaw8aQw14f-cLB3Li5Aak2huu9Ey5KwP8';
 		$geourl = 'https://maps.googleapis.com/maps/api/geocode/json?key='.$googleApiKey.
-				'&address='.urlencode($data->country->name . '+' . 
+				'&address='.urlencode($data->zip->country->name . '+' . 
 									  $data->zip->zip . '+' . 
 									  $data->zip->name . '+' . 
 									  $data->address);
@@ -58,6 +61,8 @@ class DbRefineShell extends Shell {
 		$json = json_decode(trim(curl_exec($c)));
 		curl_close($c);
 		
+		//debug($geourl);
+		//debug($json->results[0]);
 		$this->out('Status : ' . $json->status);
 		return(['id' => $data->id,
 				'lat' => $json->results[0]->geometry->location->lat,
@@ -70,6 +75,7 @@ class DbRefineShell extends Shell {
 			$contact = $this->Contacts->get($id, [
 				'contain' => ['Zips' => ['Countries']]
 			]);
+			//debug($contact);
 			$this->saveGeo($this->getGeo($contact));
 		}
 	}
