@@ -2,7 +2,7 @@
 $config = [
     'autocompletechecker' => '<div class="input text autocomplete">
                             <label for="{{name}}">{{label}}</label>
-                            <input id="{{name}}" type="text" name="{{name}}" {{attrs}}>
+                            <input id="{{name}}" type="text" name="{{name}}" value="{{value}}" {{attrs}}>
                         <script>
                             $("#{{name}}").autocomplete(
                                             {source : "{{source}}",
@@ -13,7 +13,7 @@ $config = [
                         </div>',
     'autocompleteselect' => '<div class="input text autocomplete">
                             <label for="{{name}}">{{label}}</label>
-                            <input id="_{{name}}" type="text" name="_{{name}}" {{attrs}}>
+                            <input id="_{{name}}" type="text" name="_{{name}}" value="{{value}}" {{attrs}}>
                             <input id="{{name}}" type="hidden" name="{{name}}">
                         <script>
                             $("#_{{name}}").autocomplete(

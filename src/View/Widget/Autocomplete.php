@@ -17,6 +17,7 @@ class Autocomplete implements WidgetInterface {
             'name' => '',
             'label' => '',
             'source' => '',
+            'value' => '',
             'select' => true
         ];
         if($data['select']){
@@ -24,8 +25,9 @@ class Autocomplete implements WidgetInterface {
                 'name' => $data['name'],
                 'label' => $data['label'],
                 'source' => '../' . $data['source'],
+                'value' => $data['val'],
                 'attrs' => $this->_templates->formatAttributes($data,
-                                                               ['name', 'label', 'source']
+                                                               ['name', 'label', 'source', 'value']
                                                                )
             ]);
         }
@@ -34,8 +36,9 @@ class Autocomplete implements WidgetInterface {
                 'name' => $data['name'],
                 'label' => $data['label'],
                 'source' => '../' . $data['source'],
+                'value' => $data['val'],
                 'attrs' => $this->_templates->formatAttributes($data,
-                                                               ['name', 'label', 'source']
+                                                               ['name', 'label', 'source', 'value']
                                                                )
             ]);
         }
