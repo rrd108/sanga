@@ -1,7 +1,6 @@
 <div class="actions columns large-2 medium-3">
 	<h3><?= __('Actions') ?></h3>
 	<ul class="side-nav">
-		<li><?= $this->Html->link(__('New Rbruteforcelog'), ['action' => 'add']) ?></li>
 		<li><?= $this->Html->link(__('Delete All'), ['action' => 'deleteall']) ?></li>
 	</ul>
 </div>
@@ -20,8 +19,6 @@
 			<td><?= $this->Number->format($rbruteforcelog->id) ?></td>
 			<td><?php print_r(unserialize($rbruteforcelog->data)); ?></td>
 			<td class="actions">
-				<?= $this->Html->link(__('View'), ['action' => 'view', $rbruteforcelog->id]) ?>
-				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $rbruteforcelog->id]) ?>
 				<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $rbruteforcelog->id], ['confirm' => __('Are you sure you want to delete # {0}?', $rbruteforcelog->id)]) ?>
 			</td>
 		</tr>

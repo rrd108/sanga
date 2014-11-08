@@ -26,62 +26,14 @@ class RbruteforcesController extends AppController {
  */
 	public function index() {
 		$this->set('rbruteforces', $this->paginate($this->Rbruteforces));
+		$attempts = $this->Rbruteforces->find()
+			->select(['ip', 'attempts' => 'count(*)'])
+			->group(['ip'])
+			->order(['attempts' => 'DESC'])
+			->limit(20);
+		$this->set('attempts', $attempts);
 	}
 
-/**
- * View method
- *
- * @param string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
-	public function view($id = null) {
-		$rbruteforce = $this->Rbruteforces->get($id, [
-			'contain' => []
-		]);
-		$this->set('rbruteforce', $rbruteforce);
-	}
-
-/**
- * Add method
- *
- * @return void
- */
-	public function add() {
-		$rbruteforce = $this->Rbruteforces->newEntity($this->request->data);
-		if ($this->request->is('post')) {
-			if ($this->Rbruteforces->save($rbruteforce)) {
-				$this->Flash->success('The rbruteforce has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The rbruteforce could not be saved. Please, try again.');
-			}
-		}
-		$this->set(compact('rbruteforce'));
-	}
-
-/**
- * Edit method
- *
- * @param string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
-	public function edit($id = null) {
-		$rbruteforce = $this->Rbruteforces->get($id, [
-			'contain' => []
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$rbruteforce = $this->Rbruteforces->patchEntity($rbruteforce, $this->request->data);
-			if ($this->Rbruteforces->save($rbruteforce)) {
-				$this->Flash->success('The rbruteforce has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The rbruteforce could not be saved. Please, try again.');
-			}
-		}
-		$this->set(compact('rbruteforce'));
-	}
 
 /**
  * Delete method
@@ -101,7 +53,7 @@ class RbruteforcesController extends AppController {
 		return $this->redirect(['action' => 'index']);
 	}
 
-	public function deleteall() {
+	public function deleteall($ip) {
 		if ($this->Rbruteforces->deleteAll([])) {
 			$this->Flash->success('All rbruteforce has been deleted.');
 		} else {

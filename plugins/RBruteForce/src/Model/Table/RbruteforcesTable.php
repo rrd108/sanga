@@ -40,11 +40,11 @@ class RbruteforcesTable extends Table {
 		return $validator;
 	}
 
-	public function cleanupAttempt($maxRow){
+	public function cleanupAttempts($maxRow){
 		$expire = $this->find()
 			->select(['expire'])
 			->order(['expire' => 'DESC'])
-			->limit(3);
+			->limit($maxRow);
 		$expire = $expire->toArray();
 		$expire = array_pop($expire);
 		$this->deleteAll(['expire < ' => $expire->expire]);

@@ -20,61 +20,6 @@ class RbruteforcelogsController extends AppController {
 	}
 
 /**
- * View method
- *
- * @param string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
-	public function view($id = null) {
-		$rbruteforcelog = $this->Rbruteforcelogs->get($id, [
-			'contain' => []
-		]);
-		$this->set('rbruteforcelog', $rbruteforcelog);
-	}
-
-/**
- * Add method
- *
- * @return void
- */
-	public function add() {
-		$rbruteforcelog = $this->Rbruteforcelogs->newEntity($this->request->data);
-		if ($this->request->is('post')) {
-			if ($this->Rbruteforcelogs->save($rbruteforcelog)) {
-				$this->Flash->success('The rbruteforcelog has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The rbruteforcelog could not be saved. Please, try again.');
-			}
-		}
-		$this->set(compact('rbruteforcelog'));
-	}
-
-/**
- * Edit method
- *
- * @param string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
-	public function edit($id = null) {
-		$rbruteforcelog = $this->Rbruteforcelogs->get($id, [
-			'contain' => []
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$rbruteforcelog = $this->Rbruteforcelogs->patchEntity($rbruteforcelog, $this->request->data);
-			if ($this->Rbruteforcelogs->save($rbruteforcelog)) {
-				$this->Flash->success('The rbruteforcelog has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The rbruteforcelog could not be saved. Please, try again.');
-			}
-		}
-		$this->set(compact('rbruteforcelog'));
-	}
-
-/**
  * Delete method
  *
  * @param string $id

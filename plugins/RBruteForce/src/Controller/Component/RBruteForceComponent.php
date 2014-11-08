@@ -9,11 +9,11 @@ class RBruteForceComponent extends Component {
 
 	private $options = [
                         'maxAttempts' => 4,			//max failed attempts before banning
-                        'expire' => '3 minutes',	//
+                        'expire' => '3 minutes',	//expiration time
                         'dataLog' => false,			//log the user submitted data
-  						'attemptLog' => 'beforeBan',//all|beforeBan
-  						'checkUrl' => true,			//
-  						'cleanupAttempt' => 3		//delete all old entries from attempts database if there are more rows that this
+  						'attemptLog' => 'all',//all|beforeBan
+  						'checkUrl' => true,			//check url or not
+  						'cleanupAttempts' => 1000	//delete all old entries from attempts database if there are more rows that this. This should be bigger than maxAttempts
                         ];
 	
 	private $isBanned = true;
@@ -64,7 +64,7 @@ class RBruteForceComponent extends Component {
 			$this->controller->redirect('/r_brute_force/rbruteforces/failed');
 		}
 
-		$this->RBruteForce->cleanupAttempt($this->options['cleanupAttempt']);
+		$this->RBruteForce->cleanupAttempts($this->options['cleanupAttempts']);
     }
 
 /**
