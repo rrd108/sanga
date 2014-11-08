@@ -24,7 +24,7 @@ class UsersController extends AppController {
 
 	public function login() {
 		if ($this->request->is('post')) {
-			$this->RBruteForce->check();		//should be here - so banned out user would not able to login with correct password
+			$this->RBruteForce->check(['maxAttempts' => 3, 'dataLog' => true]);		//should be here - so banned out user would not able to login with correct password
 			$user = $this->Auth->identify();
 			if ($user) {
 				$this->Auth->setUser($user);
@@ -54,8 +54,9 @@ class UsersController extends AppController {
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */
-	public function view() {
-		$user = $this->Users->get($this->Auth->user('id'), [
+	public function view($id = null) {
+		$id = $id ? $id : $this->Auth->user('id');
+		$user = $this->Users->get($id, [
 			'contain' => ['Contacts', 'Events', 'Groups', 'Histories', 'Notifications']
 		]);
 		$this->set('user', $user);
@@ -89,7 +90,7 @@ class UsersController extends AppController {
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */
-	public function edit() {
+	public function edit($id) {
 		$user = $this->Users->get($id, [
 			'contain' => ['Contacts', 'Groups', 'Usergroups']
 		]);

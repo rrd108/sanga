@@ -33,7 +33,7 @@
 		echo $this->Form->input('lng');
 		echo $this->Form->input('phone');
 		echo $this->Form->input('email');
-		echo $this->Form->input('birth', ['type' => 'text', 'value' => $contact->birth->format('Y-m-d')]);
+		echo $this->Form->input('birth', ['type' => 'text', 'value' => $contact->birth ? $contact->birth->format('Y-m-d') : null]);
 		echo $this->Form->input('sex', ['type' => 'radio', 'options' => [1 => __('Male'), 2 => __('Female')]]);
 		echo $this->Form->input('active', ['checked' => true, 'title' => 'Az inaktív kapcsolatok az akik eltűntek, eltávoztak, elérhetetlenek, stb.']);
 		echo $this->Form->input('workplace');

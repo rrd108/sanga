@@ -16,11 +16,10 @@ class NotificationsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->paginate = [
-			'contain' => ['Users'],
-			'order' => ['unread' => 'DESC', 'Notifications.created' => 'DESC']
-		];
-		$this->set('notifications', $this->paginate($this->Notifications));
+		$query = $this->Notifications->find()
+			->where(['user_id' => $this->Auth->user('id')])
+			->order(['unread' => 'DESC', 'Notifications.created' => 'DESC']);
+		$this->set('notifications', $this->paginate($query));
 	}
 
 /**

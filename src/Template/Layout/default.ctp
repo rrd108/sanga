@@ -53,6 +53,7 @@
 			if($this->Session->read('Auth.User.id')):
 			?>
 			<ul class="sf-menu">
+				<?php if($this->Session->read('Auth.User.role') == 10): ?>
 				<li>
 					☠ Admin
 					<ul>
@@ -65,6 +66,8 @@
 						?>
 					</ul>
 				</li>
+				<?php endif; ?>
+				<?php if($this->Session->read('Auth.User.role') == 9): ?>
 				<li>
 					⚙ Törzsadatok
 					<ul>
@@ -77,6 +80,7 @@
 						?>
 					</ul>
 				</li>
+				<?php endif; ?>
 				<li>
 					✽ CRM
 					<ul>

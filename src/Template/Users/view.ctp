@@ -22,33 +22,25 @@
 <div class="users view large-10 medium-9 columns">
 	<h2><?= h($user->name) ?></h2>
 	<div class="row">
-		<div class="large-5 columns strings">
+		<div class="large-11 columns strings">
 			<h6 class="subheader"><?= __('Name') ?></h6>
-			<p><?= h($user->name) ?></p>
+			<p>&nbsp;<?= h($user->name) ?></p>
 			<h6 class="subheader"><?= __('Password') ?></h6>
-			<p><?= h($user->password) ?></p>
+			<p>&nbsp;***</p>
 			<h6 class="subheader"><?= __('Realname') ?></h6>
-			<p><?= h($user->realname) ?></p>
+			<p>&nbsp;<?= h($user->realname) ?></p>
 			<h6 class="subheader"><?= __('Email') ?></h6>
-			<p><?= h($user->email) ?></p>
+			<p>&nbsp;<?= h($user->email) ?></p>
 			<h6 class="subheader"><?= __('Phone') ?></h6>
-			<p><?= h($user->phone) ?></p>
-		</div>
-		<div class="large-2 large-offset-1 columns numbers end">
-			<h6 class="subheader"><?= __('Id') ?></h6>
-			<p><?= $this->Number->format($user->id) ?></p>
+			<p>&nbsp;<?= h($user->phone) ?></p>
 			<h6 class="subheader"><?= __('Role') ?></h6>
-			<p><?= $this->Number->format($user->role) ?></p>
-		</div>
-		<div class="large-2 columns dates end">
+			<p>&nbsp;<?= $this->Number->format($user->role) ?></p>
 			<h6 class="subheader"><?= __('Created') ?></h6>
-			<p><?= h($user->created) ?></p>
+			<p>&nbsp;<?= h($user->created) ?></p>
 			<h6 class="subheader"><?= __('Modified') ?></h6>
-			<p><?= h($user->modified) ?></p>
-		</div>
-		<div class="large-2 columns booleans end">
+			<p>&nbsp;<?= h($user->modified) ?></p>
 			<h6 class="subheader"><?= __('Active') ?></h6>
-			<p><?= $user->active ? __('Yes') : __('No'); ?></p>
+			<p>&nbsp;<?= $user->active ? __('Yes') : __('No'); ?></p>
 		</div>
 	</div>
 </div>
@@ -166,8 +158,6 @@
 			<th><?= __('Contactname') ?></th>
 			<th><?= __('Zip Id') ?></th>
 			<th><?= __('Address') ?></th>
-			<th><?= __('Lat') ?></th>
-			<th><?= __('Lng') ?></th>
 			<th><?= __('Phone') ?></th>
 			<th><?= __('Email') ?></th>
 			<th><?= __('Birth') ?></th>
@@ -188,8 +178,6 @@
 			<td><?= h($contacts->contactname) ?></td>
 			<td><?= h($contacts->zip_id) ?></td>
 			<td><?= h($contacts->address) ?></td>
-			<td><?= h($contacts->lat) ?></td>
-			<td><?= h($contacts->lng) ?></td>
 			<td><?= h($contacts->phone) ?></td>
 			<td><?= h($contacts->email) ?></td>
 			<td><?= h($contacts->birth) ?></td>

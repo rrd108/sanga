@@ -100,10 +100,26 @@ class ContactsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->paginate = [
+		$myContacts = $this->Contacts->find()
+				->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address', 'Contacts.workplace', 'Zips.id', 'Zips.zip'])
+				->contain(['Zips'])
+				->matching('Users', function($q) {
+					    return $q->where(['Users.id' => $this->Auth->user('id')]);
+					});
+		$inmygroupsContacts = $this->Contacts->find()
+				->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address', 'Contacts.workplace', 'Zips.id', 'Zips.zip'])
+				->contain(['Zips'])
+				->matching('Groups', function($q){
+						return $q->where(['Groups.id' => 5]);
+					});
+		$contacts = $myContacts->union($inmygroupsContacts);
+		//debug($contacts->toArray());
+		//$contacts = $this->Contacts->find('mycontacts', ['userId' => $this->Auth->user('id')]);
+		/*$this->paginate = [
 			'contain' => ['Zips', 'Contactsources']
-		];
-		$this->set('contacts', $this->paginate($this->Contacts));
+		];*/
+		$this->set('contacts', $this->paginate($contacts));
+		//$this->set('contacts', $contacts);
 	}
 
 /**

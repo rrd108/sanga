@@ -64,7 +64,7 @@ class UsersTable extends Table {
 							'message' => __('At least 6 characters long')
 							],
 					'custom' => [
-							'rule' => 'checkPasswordStrength'
+							'rule' => [$this, 'checkPasswordStrength']
 							]
 					])
 			->allowEmpty('realname')
