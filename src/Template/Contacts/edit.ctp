@@ -26,8 +26,7 @@
 	<?php
 		echo $this->Form->input('name');
 		echo $this->Form->input('contactname');
-		echo $this->Form->autocomplete('zip_id', ['source' => '../zips/searchzip', 'label' => __('Zip'), 'value' => $contact->zip->zip . ' ' . $contact->zip->name]);
-		//echo $this->Form->input('zip_id', ['options' => $zips]);
+		echo $this->Form->autocomplete('zip_id', ['source' => '/zips/searchzip', 'label' => __('Zip'), 'value' => isset($contact->zip) ? $contact->zip->zip . ' ' . $contact->zip->name : '']);
 		echo $this->Form->input('address');
 		echo $this->Form->input('phone');
 		echo $this->Form->input('email');

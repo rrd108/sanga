@@ -16,6 +16,7 @@ class ContactsController extends AppController {
 
 	//ajax keresések a név mezőkben
 	public function searchname(){
+		$contact = $this->Contacts->newEntity($this->request->data);
 		$query = $this->Contacts->find()
 				->select(['id', 'name', 'contactname'])
 				->where(['name LIKE "%'.$this->request->query('term').'%"'])
@@ -38,13 +39,14 @@ class ContactsController extends AppController {
 		}
 		//debug($result);die();
 		$this->set('result', $result);
+		$this->set('contact', $contact);
 	}
 
 	//cím adatok lekérdezése a mapon való megjelenéshez
 	public function showmap(){
 		$result = $this->Contacts->find()
-				->contain(['Zips' => ['Countries']])
-				->select(['Contacts.lat', 'Contacts.lng', 'Zips.zip', 'Zips.name', 'Countries.name'])
+				->contain(['Zips'])
+				->select(['Contacts.lat', 'Contacts.lng', 'Zips.zip', 'Zips.name'])
 				->where('Contacts.lat != 0')
 				->toArray();
 		//debug($result);
@@ -127,6 +129,7 @@ class ContactsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
+		$id = $id ? $id : $this->request->data['name'];
 		$contact = $this->Contacts->get($id, [
 			'contain' => ['Zips', 'Contactsources', 'Groups' => ['Users'], 'Skills', 'Users', 'Histories']
 		]);
@@ -183,7 +186,6 @@ class ContactsController extends AppController {
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
 			$contact->loggedInUser = $this->Auth->user('id');
 			if ($this->Contacts->save($contact)) {
-				exec(WWW_ROOT . '../bin/cake db_refine set_geo_for_user ' . $id . ' > /dev/null &');
 				$this->Flash->success('The contact has been saved.');
 				return $this->redirect(['action' => 'view', $id]);
 			} else {

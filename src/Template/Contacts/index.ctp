@@ -4,7 +4,6 @@
 		<tr>
 			<th><?= __('Contact Person') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
-			<th><?= $this->Paginator->sort('contactname') ?></th>
 			<th><?= $this->Paginator->sort('zip_id') ?></th>
 			<th><?= $this->Paginator->sort('address') ?></th>
 			<th><?= $this->Paginator->sort('groups') ?></th>
@@ -18,13 +17,12 @@
 			<td>
 				<?php
 					foreach($contact->users as $user){
-						$css = ($user->id == $this->Session->read('Auth.User.id')) ? 'success' : 'info';
+						$css = ($user->id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success';
 						print '<span class="tag tag-'.$css.'">' . $user->name . '</span>' . "\n";
 					}
 				?>
 			</td>
 			<td><?= h($contact->name) ?></td>
-			<td><?= h($contact->contactname) ?></td>
 			<td>
 				<?= $contact->has('zip') ? $contact->zip->zip . ' ' . $contact->zip->name : '' ?>
 			</td>
