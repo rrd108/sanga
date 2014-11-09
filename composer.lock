@@ -131,12 +131,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "3ec7fe15b3207e113701a1109f76875770e54996"
+                "reference": "b9355c4e04221bcf9c09ded0ce4f58977f0986f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/3ec7fe15b3207e113701a1109f76875770e54996",
-                "reference": "3ec7fe15b3207e113701a1109f76875770e54996",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/b9355c4e04221bcf9c09ded0ce4f58977f0986f6",
+                "reference": "b9355c4e04221bcf9c09ded0ce4f58977f0986f6",
                 "shasum": ""
             },
             "require": {
@@ -188,7 +188,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-11-09 04:34:18"
+            "time": "2014-11-09 14:49:53"
         },
         {
             "name": "cakephp/debug_kit",
@@ -897,12 +897,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rrd108/rBruteForce.git",
-                "reference": "f4342fe53ae61b54525a79f6f7a719869ce36241"
+                "reference": "3daa130436d81a1e9fa7f932904d46a159ac2d13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rrd108/rBruteForce/zipball/f4342fe53ae61b54525a79f6f7a719869ce36241",
-                "reference": "f4342fe53ae61b54525a79f6f7a719869ce36241",
+                "url": "https://api.github.com/repos/rrd108/rBruteForce/zipball/3daa130436d81a1e9fa7f932904d46a159ac2d13",
+                "reference": "3daa130436d81a1e9fa7f932904d46a159ac2d13",
                 "shasum": ""
             },
             "require": {
@@ -937,7 +937,7 @@
                 "cakephp",
                 "security"
             ],
-            "time": "2014-11-09 08:38:55"
+            "time": "2014-11-09 09:14:07"
         },
         {
             "name": "sebastian/comparator",
