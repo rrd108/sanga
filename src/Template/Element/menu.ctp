@@ -61,6 +61,16 @@
 				?>
 			</ul>
 		</li>
+		<li>
+			<?php
+				print $this->Form->create('contacts', ['action' => 'view']);
+				print $this->Form->autocomplete('name', [
+														'select' => true,
+														'source' => '/contacts/searchname'
+														]);
+				print $this->Form->end();
+			?>
+		</li>
 	</ul>
 	<?php
 	endif;
