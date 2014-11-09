@@ -111,44 +111,59 @@ class ContactsTable extends Table {
 	
 	public function afterSave(Event $event, Entity $entity, ArrayObject $options){
 		//debug($entity);
-		if(!$entity->isNew()){
+		if(!$entity->isNew()){		//update
 			$loggedInUser = $entity->loggedInUser;
-			$toLog = ['name', 'contactname', 'zip_id', 'address', 'phone', 'email', 'birth', 'workplace', 'comment',
-					  'linkups', 'groups', 'skills', 'users'];
+			$addr = ['zip_id', 'address'];
+			$toLog = ['name', 'contactname', 'phone', 'email', 'birth', 'workplace', 'comment',
+					  'groups', 'skills', 'users'];
+			$toLog = array_merge($toLog, $addr);
 			
 			$oldEntity = $entity->extractOriginal($entity->visibleProperties());
-			//debug($entity);
-			//debug($oldEntity);
 			
+			$details = [];
+
 			foreach($toLog as $prop){
-				if(isset($oldEntity[$prop]) && $entity->$prop != $oldEntity[$prop]){
-					if(!is_array($oldEntity[$prop])){
-						$details[] = $prop . __(' changed from ') . $oldEntity[$prop] . ' to ' . $entity->$prop;
-					}
-					else{
-						foreach($entity->$prop as $ep){
-							$ep = $ep->toArray();
-							unset($ep['_joinData']);
-							$newEntityProp[] = $ep;
-						}
-						foreach($oldEntity[$prop] as $op){
-							$op = $op->toArray();
-							unset($op['_joinData']);
-							$oldEntityProp[] = $op;
-						}
-						
-						foreach($oldEntityProp as $oep){
-							if(!in_array($oep, $newEntityProp)){
-								$details[] = $oep['name'] . __(' removed from ') . $prop;
+				if(isset($oldEntity[$prop])){		//we had some data in this property
+					if($entity->$prop != $oldEntity[$prop]){	//and we changed it
+						if(!is_array($oldEntity[$prop])){
+							if($oldEntity[$prop] && $entity->$prop){
+								$details[] = $prop . __(' changed from ') . $oldEntity[$prop] . ' to ' . $entity->$prop;
+							}
+							elseif($oldEntity[$prop]){
+								$details[] = $prop . ': ' . $oldEntity[$prop] . __(' removed');
+							}
+							else{
+								$details[] = $prop . ': ' . $entity->$prop . __(' added');
 							}
 						}
-						foreach($newEntityProp as $nep){
-							if(!in_array($nep, $oldEntityProp)){
-								$details[] = $oep['name'] . __(' added to ') . $prop;
+						else{
+							foreach($entity->$prop as $ep){
+								$ep = $ep->toArray();
+								unset($ep['_joinData']);
+								$newEntityProp[] = $ep;
 							}
+							foreach($oldEntity[$prop] as $op){
+								$op = $op->toArray();
+								unset($op['_joinData']);
+								$oldEntityProp[] = $op;
+							}
+							
+							foreach($oldEntityProp as $oep){
+								if(!in_array($oep, $newEntityProp)){
+									$details[] = $oep['name'] . __(' removed from ') . $prop;
+								}
+							}
+							foreach($newEntityProp as $nep){
+								if(!in_array($nep, $oldEntityProp)){
+									$details[] = $oep['name'] . __(' added to ') . $prop;
+								}
+							}
+							
+							unset($newEntityProp, $oldEntityProp);
 						}
-						
-						unset($newEntityProp, $oldEntityProp);
+						if(in_array($prop, $addr)){	//the address or zip changed or both
+							$this->setGeo($entity->id);
+						}
 					}
 				}
 			}
@@ -169,12 +184,13 @@ class ContactsTable extends Table {
 				//debug($newHistory);//die();
 				$history->save($newHistory);
 			}
-			
-			
-			Log::debug('Zip vagy address módosításnál kéne updateelni a lat lng-t is');
 		}
-		else{
-			Log::debug('Új contact adat mentésnél nincs loggolás');
+		else{	//insert
+			$this->setGeo($entity->id);
 		}
+	}
+	
+	private function setGeo($id){
+		exec(WWW_ROOT . '../bin/cake db_refine set_geo_for_user ' . $id . ' > /dev/null &');
 	}
 }
