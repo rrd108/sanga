@@ -14,7 +14,9 @@ With rBruteForce you could protect your CakePHP applications from Brute Force at
 
 ## Installation
 
-* Create the database tables. The schema could be found in `config/Schema/rBruteForce.sql`.
+### 1. Create the database tables.
+
+The schema could be found in `config/Schema/rBruteForce.sql`.
 
 ```sql
 CREATE TABLE IF NOT EXISTS `rbruteforcelogs` (
@@ -32,12 +34,26 @@ CREATE TABLE IF NOT EXISTS `rbruteforces` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
-* Copy the plugin to your `/plugins` folder
+### Install via composer. 
 
-* Load the plugin
+Add the plugin to your project's `composer.json` - something like this:
+
+````json
+{
+  "require": {
+    "rrd/rbruteforce": "*"
+  }
+}
+````
+
+### Load the plugin
+
 ```php
 Plugin::load('RBruteForce', ['bootstrap' => false, 'routes' => true]);
 ```
+
+### .gitignore
+Because this plugin has the type cakephp-plugin set in it's own composer.json, composer knows to install it inside your /Plugin directory, rather than in the usual vendors file. It is recommended that you add /Plugin/RBruteForce to your .gitignore file.
 
 ## Reporting Issues
 
@@ -62,12 +78,12 @@ Let's see an example for the `UsersController` `login` method with rBruteForce
 ```php
 public function login() {
 	if ($this->request->is('post')) {
-		$this->RBruteForce->check();		//if it is here - banned out user (IP) would not able to login even with correct username/password
 		$user = $this->Auth->identify();
 		if ($user) {
 			$this->Auth->setUser($user);
 			return $this->redirect($this->Auth->redirectUrl());
 		}
+		$this->RBruteForce->check();	//unsuccessful logins will be checked
 		$this->Flash->error(__('Invalid username or password, try again'));
 	}
 }
