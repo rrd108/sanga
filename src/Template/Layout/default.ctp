@@ -30,9 +30,6 @@
 	print $this->Html->script('jquery.ui.autocomplete.html.js');
 	print $this->Html->script('ui.datepicker-hu.js');
 	
-	print $this->Html->script('gmap3.min.js');
-	print $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
-	
 	print $this->Html->script('sanga.js');
 
 	print $this->fetch('meta');
