@@ -2,9 +2,6 @@
 							  ['alt' => 'Sanga logo',
 							   'url' => '/']); ?>
 <div class="header-title">
-	<span>&nbsp;<?php echo $this->Html->getCrumbs(' / ', ''); ?></span>
-</div>
-<div class="header-help">
 	<?php
 	if($this->Session->read('Auth.User.id')):
 	?>
@@ -41,7 +38,8 @@
 			✽ CRM
 			<ul>
 				<?php
-					print '<li>' . $this->Html->link('♥ Kapcsolatok', '/contacts') . '</li>';
+					print '<li>'. $this->Html->link('♥ Kapcsolatok', '/contacts') . '</li>';
+					print '<li>'. $this->Html->link('♥ ' . __('Add Contact'), '/contacts/add') . '</li>';
 					print '<li>' . $this->Html->link('⚑ Történések', '/histories') . '</li>';
 					print '<li>' . $this->Html->link('♛ Lekérdezések', '/contacts/search') . '</li>';
 					print '<li>' . $this->Html->link('✈ Térkép', '/contacts/showmap') . '</li>';
@@ -67,4 +65,7 @@
 	<?php
 	endif;
 	?>
+</div>
+<div class="header-help">
+	<span>&nbsp;<?php echo $this->Html->getCrumbs(' / ', ''); ?></span>
 </div>

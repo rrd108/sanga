@@ -1,24 +1,4 @@
-<div class="actions columns large-2 medium-3">
-	<h3><?= __('Actions') ?></h3>
-	<ul class="side-nav">
-		<li><?= $this->Html->link(__('New Contact'), ['action' => 'add']) ?></li>
-		<li><?= $this->Html->link(__('List Zips'), ['controller' => 'Zips', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Zip'), ['controller' => 'Zips', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Families'), ['controller' => 'Families', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Family'), ['controller' => 'Families', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Contactsources'), ['controller' => 'Contactsources', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Contactsource'), ['controller' => 'Contactsources', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Histories'), ['controller' => 'Histories', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New History'), ['controller' => 'Histories', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Groups'), ['controller' => 'Groups', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Group'), ['controller' => 'Groups', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Skills'), ['controller' => 'Skills', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Skill'), ['controller' => 'Skills', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-	</ul>
-</div>
-<div class="contacts index large-10 medium-9 columns">
+<div class="contacts index columns">
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
@@ -27,7 +7,7 @@
 			<th><?= $this->Paginator->sort('contactname') ?></th>
 			<th><?= $this->Paginator->sort('zip_id') ?></th>
 			<th><?= $this->Paginator->sort('address') ?></th>
-			<th><?= $this->Paginator->sort('workplace') ?></th>
+			<th><?= $this->Paginator->sort('groups') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
@@ -46,10 +26,25 @@
 			<td><?= h($contact->name) ?></td>
 			<td><?= h($contact->contactname) ?></td>
 			<td>
-				<?= $contact->has('zip') ? $this->Html->link($contact->zip->zip . ' ' . $contact->zip->name, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?>
+				<?= $contact->has('zip') ? $contact->zip->zip . ' ' . $contact->zip->name : '' ?>
 			</td>
 			<td><?= h($contact->address) ?></td>
-			<td><?= h($contact->workplace) ?></td>
+			<td>
+				<?php
+					foreach($contact->groups as $group){
+						if($group->public){
+							$css = 'info';
+						}
+						elseif($group->admin_user_id == $this->Session->read('Auth.User.id')){
+							$css = 'primary';
+						}
+						else{
+							$css = 'success';
+						}
+						print '<span class="tag tag-'.$css.'">' . $group->name . '</span>' . "\n";
+					}
+				?>
+			</td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $contact->id]) ?>
 				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id]) ?>

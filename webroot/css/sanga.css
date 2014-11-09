@@ -6,10 +6,10 @@ header{
 }
 
 header img{
-  float: left;
   display: inline;
   z-index: 5;
   position: absolute;
+  right: 0;
 }
 
 #container{
@@ -38,7 +38,6 @@ div.actions{
 
 .sf-menu{
   margin-right: 4em;
-  margin-top: 25px;
 }
 
 .sf-menu > li{
@@ -75,16 +74,23 @@ div.actions{
   background: #15848f;
 }
 
-.header-title{
+header .header-title{
+  padding-left: 0;
   font-size: 1rem;
 }
 
-.header-title a{
+.header-help a{
   color: #fff;
 }
 
-.header-help span.notice{
+.header-title span.notice{
   background: #F0AD4E;
+  display: inline-block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  width: 1.5em;
+  text-align: center;
 }
 
 .actions{
@@ -211,6 +217,7 @@ td.actions a{
   border-radius: 3px;
   padding: 2px 10px;
   font-weight: bold;
+  line-height: 2em;
 }
 
 .tag-default{
