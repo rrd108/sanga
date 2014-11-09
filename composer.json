@@ -9,7 +9,8 @@
         "cakephp/cakephp": "3.0.*-dev",
         "mobiledetect/mobiledetectlib": "2.*",
         "cakephp/debug_kit": "3.0.*-dev",
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "rrd/rbruteforce": "*"       
     },
     "require-dev": {
         "d11wtq/boris": "1.0.*"
@@ -21,16 +22,14 @@
     "autoload": {
         "psr-4": {
             "App\\": "src",
-            "Autocomplete\\": "./plugins/Autocomplete/src",
-            "RBruteForce\\": "./plugins/RBruteForce/src"
+            "Autocomplete\\": "./plugins/Autocomplete/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "App\\Test\\": "tests",
             "Cake\\Test\\Fixture\\": "./vendor/cakephp/cakephp/tests/Fixture",
-            "Autocomplete\\Test\\": "./plugins/Autocomplete/tests",
-            "RBruteForce\\Test\\": "./plugins/RBruteForce/tests"
+            "Autocomplete\\Test\\": "./plugins/Autocomplete/tests"
         }
     },
     "scripts": {

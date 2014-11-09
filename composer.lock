@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0431d46cce867a0b56c93cb95c33456b",
+    "hash": "9c10359858598eaf2dcd11deef0d1520",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -131,12 +131,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "c1d7a07deffc2ea35215f6c22ea41edfcdd97cac"
+                "reference": "3ec7fe15b3207e113701a1109f76875770e54996"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/c1d7a07deffc2ea35215f6c22ea41edfcdd97cac",
-                "reference": "c1d7a07deffc2ea35215f6c22ea41edfcdd97cac",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/3ec7fe15b3207e113701a1109f76875770e54996",
+                "reference": "3ec7fe15b3207e113701a1109f76875770e54996",
                 "shasum": ""
             },
             "require": {
@@ -188,7 +188,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-11-07 18:30:21"
+            "time": "2014-11-09 04:34:18"
         },
         {
             "name": "cakephp/debug_kit",
@@ -890,6 +890,54 @@
                 "psr-3"
             ],
             "time": "2012-12-21 11:40:51"
+        },
+        {
+            "name": "rrd/rbruteforce",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rrd108/rBruteForce.git",
+                "reference": "f4342fe53ae61b54525a79f6f7a719869ce36241"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rrd108/rBruteForce/zipball/f4342fe53ae61b54525a79f6f7a719869ce36241",
+                "reference": "f4342fe53ae61b54525a79f6f7a719869ce36241",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "3.0.*-dev",
+                "cakephp/plugin-installer": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "RBruteForce\\": "src",
+                    "RBruteForce\\Test\\Fixture\\": "tests\\Fixture"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "rrd",
+                    "homepage": "http://webmania.cc",
+                    "role": "Author"
+                }
+            ],
+            "description": "CakePHP 3 Plugin for Protection Against BruteForce Attacks",
+            "homepage": "https://github.com/rrd108/rBruteForce",
+            "keywords": [
+                "brute force",
+                "cakephp",
+                "security"
+            ],
+            "time": "2014-11-09 08:38:55"
         },
         {
             "name": "sebastian/comparator",
