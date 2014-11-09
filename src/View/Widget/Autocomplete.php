@@ -3,6 +3,7 @@ namespace App\View\Widget;
 
 use Cake\View\Widget\WidgetInterface;
 use Cake\View\Form\ContextInterface;
+use Cake\Routing\Router;
 
 class Autocomplete implements WidgetInterface {
 
@@ -20,11 +21,12 @@ class Autocomplete implements WidgetInterface {
             'value' => '',
             'select' => true
         ];
+        $data['source'] = ltrim($data['source'], '/');
         if($data['select']){
             return $this->_templates->format('autocompleteselect', [
                 'name' => $data['name'],
                 'label' => $data['label'],
-                'source' => '../' . $data['source'],
+                'source' => Router::url('/') . $data['source'],
                 'value' => $data['val'],
                 'attrs' => $this->_templates->formatAttributes($data,
                                                                ['name', 'label', 'source', 'value']
@@ -35,7 +37,7 @@ class Autocomplete implements WidgetInterface {
             return $this->_templates->format('autocompletechecker', [
                 'name' => $data['name'],
                 'label' => $data['label'],
-                'source' => '../' . $data['source'],
+                'source' => Router::url('/') . $data['source'],
                 'value' => $data['val'],
                 'attrs' => $this->_templates->formatAttributes($data,
                                                                ['name', 'label', 'source', 'value']
