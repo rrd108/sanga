@@ -191,6 +191,6 @@ class ContactsTable extends Table {
 	}
 	
 	private function setGeo($id){
-		exec(WWW_ROOT . '../bin/cake db_refine set_geo_for_user ' . $id . ' > /dev/null &');
+		exec(WWW_ROOT . '../bin/cake geo set_geo_for_user ' . $id . ' > /dev/null &');
 	}
 }
