@@ -1,8 +1,12 @@
 <?php
+print $this->Html->script('gmap3.min.js');
+print $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
+
 //debug($result);
 $c = '';
 foreach($result as $r){
-	$c .= '{
+	if(isset($r->zip->zip)){
+		$c .= '{
 			lat : '.$r->lat.',
 			lng : '.$r->lng.',
 			data : {
@@ -10,6 +14,7 @@ foreach($result as $r){
 				city : "'.$r->zip->name.'" 
 				}
 			},';
+	}
 }
 ?>
 <div id="map" class="row"></div>

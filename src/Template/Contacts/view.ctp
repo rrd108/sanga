@@ -1,4 +1,7 @@
 <?php
+print $this->Html->script('gmap3.min.js');
+print $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
+
 $this->Html->scriptStart(['block' => true]);
 ?>
 $(function() {
