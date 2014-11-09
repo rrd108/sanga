@@ -101,29 +101,22 @@ class ContactsController extends AppController {
  */
 	public function index() {
 		$myContacts = $this->Contacts->find()
-				->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address', 'Contacts.workplace', 'Zips.id', 'Zips.zip', 'Zips.name'])
-				->contain(['Zips', 'users'])		//ha itten "Users" van akkor nem jó query generálódik, ez egy bug de jól jön. https://github.com/cakephp/cakephp/issues/5109
+				->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address',
+						  'Zips.id', 'Zips.zip', 'Zips.name'])
+				->contain(['Zips', 'users', 'Groups'])		//ha itten "Users" van akkor nem jó query generálódik, ez egy bug de jól jön. https://github.com/cakephp/cakephp/issues/5109
 				->matching('Users', function($q) {
 					    return $q->where(['Users.id' => $this->Auth->user('id')]);
 					});
-		//debug($myContacts->toArray());
+
 		$inmygroupsContacts = $this->Contacts->find()
-				->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address', 'Contacts.workplace', 'Zips.id', 'Zips.zip', 'Zips.name'])
-				->contain(['Zips', 'Users'])
+				->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address',
+						  'Zips.id', 'Zips.zip', 'Zips.name'])
+				->contain(['Zips', 'Users', 'groups'])
 				->matching('Groups', function($q){
 						return $q->where(['Groups.id' => 5]);
 					});
 		$contacts = $myContacts->union($inmygroupsContacts);
-		
-		//ez itten majd megjavul magától https://github.com/cakephp/cakephp/pull/5108
-		
-		//debug($contacts->toArray());
-		//$contacts = $this->Contacts->find('mycontacts', ['userId' => $this->Auth->user('id')]);
-		/*$this->paginate = [
-			'contain' => ['Zips', 'Contactsources']
-		];*/
-//		$this->set('contacts', $this->paginate($contacts));
-		$this->set('contacts', $contacts);
+		$this->set('contacts', $this->paginate($contacts));
 	}
 
 /**
