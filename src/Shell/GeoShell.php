@@ -5,7 +5,7 @@ use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
 use Cake\Log\Log;
 
-class DbRefineShell extends Shell {
+class GeoShell extends Shell {
 	
 	public function initialize() {
         parent::initialize();
@@ -70,7 +70,7 @@ class DbRefineShell extends Shell {
 	}
 	
 	public function setGeoForUser($id = null){
-		//ivoking: bin/cake db_refine set_geo_for_user 12
+		//ivoking: bin/cake geo set_geo_for_user 12
 		if($id = intval($id)){
 			$contact = $this->Contacts->get($id, [
 				'contain' => ['Zips' => ['Countries']]
