@@ -24,12 +24,12 @@ class UsersController extends AppController {
 
 	public function login() {
 		if ($this->request->is('post')) {
-			$this->RBruteForce->check(['maxAttempts' => 3, 'dataLog' => true]);		//should be here - so banned out user would not able to login with correct password
 			$user = $this->Auth->identify();
 			if ($user) {
 				$this->Auth->setUser($user);
 				return $this->redirect($this->Auth->redirectUrl());
 			}
+			$this->RBruteForce->check(['maxAttempts' => 3, 'dataLog' => true]);		//should be here - so banned out user would not able to login with correct password
 			$this->Flash->error(__('Invalid username or password, try again'));
 		}
 	}
