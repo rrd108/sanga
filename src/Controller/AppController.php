@@ -67,7 +67,7 @@ class AppController extends Controller {
                     'label'
                 ]
             ],
-            'templates' => 'app_form.php'
+            'templates' => 'autocompleter.php'
         ]
     ];
 
