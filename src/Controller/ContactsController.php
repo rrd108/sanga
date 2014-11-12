@@ -219,6 +219,12 @@ class ContactsController extends AppController {
 	}
 	
 	public function checkDuplicates(){
-		$this->Contacts->checkDuplicatesOnGeo();
+		//$this->Contacts->checkDuplicatesOnGeo();
+		/*foreach($this->Contacts->checkDuplicatesOnPhone() as $q){
+			debug($q->toArray());
+		}*/
+		//$this->Contacts->checkDuplicatesOnEmail();
+		//$this->Contacts->checkDuplicatesOnBirth();
+		$this->Contacts->checkDuplicatesOnNames();
 	}
 }

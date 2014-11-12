@@ -79,7 +79,6 @@ class ContactsTable extends Table {
 			->allowEmpty('phone')
 			->add('email', 'valid', ['rule' => 'email'])
 			->allowEmpty('email')
-			->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
 			->add('birth', 'valid', ['rule' => 'date'])
 			->allowEmpty('birth')
 			->add('sex', 'valid', ['rule' => 'numeric'])
@@ -199,15 +198,12 @@ class ContactsTable extends Table {
  * Searching for duplicates: checkDuplicatesOn()
  * 
  * name			similar [name, contactname]
- * contactname	similar [name, contactname]
- * zip_id		same
- * address		remove non alphanumeric
+	 * contactname	similar [name, contactname]
+	 * zip_id, address		same, remove non alphanumeric
  * lat, lng		near (SQL float equality)
  * phone		remove non numeric, if not start with 00 or +, suppose it is +36 and add it
  * email		same
  * birth		same
- * sex			same
- * workpace		similar
  * 
  */
 
@@ -224,7 +220,7 @@ class ContactsTable extends Table {
 			if($nearBy->lat){
 				//debug($nearBy->lat);
 				$query = $this->find()
-							->select(['id', 'name', 'contactname']);
+							->select(['id', 'name', 'contactname', 'lat', 'lng']);
 				$exprLat = $query->newExpr()->add('ABS(lat - ' . $nearBy['lat'] . ') < ' . $delta);
 				$exprLng = $query->newExpr()->add('ABS(lng - ' . $nearBy['lng'] . ') < ' . $delta);
 				$duplicates[] = $query
@@ -239,4 +235,125 @@ class ContactsTable extends Table {
 		return $duplicates;
 	}	
 
+
+	public function checkDuplicatesOnPhone(){
+		$removes = 'REPLACE(
+						REPLACE(
+							REPLACE(
+								REPLACE(
+									REPLACE(
+										REPLACE(phone, "+", ""),
+									"-", ""),
+								" ", ""),
+							"/", ""),
+						"(", ""),
+					")", "")';
+
+		$removes = 	'CONCAT(
+						REPLACE(
+							SUBSTRING('.$removes.',	1, 4), "0036", "36"
+						),
+						SUBSTRING('.$removes.', 5)
+					)';
+		
+		$tPhone = 'CONCAT(
+						REPLACE(
+							SUBSTRING('.$removes.',	1, 2), "06", "36"
+						),
+						SUBSTRING('.$removes.', 3)
+					)';
+
+		$query = $this->find()
+				->select(['db' => 'COUNT(id)',
+						  'tPhone' => $tPhone])
+				->where(['phone != ' => ''])
+				->group(['tPhone'])
+				->having(['db > ' => 1])
+				->order(['db' => 'DESC']);
+		
+		$duplicates = [];
+		
+		foreach($query as $q){
+			$query = $this->find()
+					->select(['id', 'name', 'contactname', 'phone']);
+			$duplicates[] = $query->where([$tPhone . ' = ' => $q->tPhone]);
+		}
+		
+		return $duplicates;
+	}
+
+	public function checkDuplicatesOnEmail(){
+		$query = $this->find()
+				->select(['email', 'db' => 'COUNT(*)'])
+				->where(['email != ' => ''])
+				->group(['email'])
+				->having(['db > ' => 1]);
+		
+		$duplicates = [];
+		foreach($query as $q){
+			$duplicates[] = $this->find()
+						->select(['id', 'name', 'contactname', 'email'])
+						->where(['email' => $q->email]);
+		}
+		return $duplicates;
+	}	
+
+	public function checkDuplicatesOnBirth(){
+		$query = $this->find()
+				->select(['birth', 'db' => 'COUNT(*)'])
+				->where(['birth != ' => ''])
+				->group(['birth'])
+				->having(['db > ' => 1]);
+		
+		$duplicates = [];
+		foreach($query as $q){
+			$duplicates[] = $this->find()
+						->select(['id', 'name', 'contactname', 'birth'])
+						->where(['birth' => $q->birth]);
+		}
+		return $duplicates;
+	}	
+
+	public function checkDuplicatesOnNames($distance = 4){
+		$query = $this->find()
+				->select(['id', 'name', 'contactname']);
+		
+		foreach($query as $q){
+
+			$levenshteinNameName = 'LEVENSHTEIN(name, "'. $q->name . '")';
+			$levenshteinNameContactname = 'LEVENSHTEIN(name, "'. $q->contactname . '")';
+			$levenshteinContactnameName = 'LEVENSHTEIN(contactname, "'. $q->name . '")';
+			$levenshteinContactnameContactname = 'LEVENSHTEIN(contactname, "'. $q->contactname . '")';
+			
+			$names = $this->find()
+					->select(['id', 'name', 'contactname',
+							  'levenshteinNameName' => $levenshteinNameName,
+							  'levenshteinContactnameName' => $levenshteinContactnameName,
+							  'levenshteinNameContactname' => $levenshteinNameContactname,
+							  'levenshteinContactnameContactname' => $levenshteinContactnameContactname]);
+			if($q->name){
+				$names->orWhere($levenshteinNameName . ' < ' . $distance)
+						->orWhere($levenshteinContactnameName . ' < ' . $distance);
+			}
+			if($q->contactname){
+				$names->orWhere($levenshteinContactnameContactname . ' < ' . $distance)
+						->orWhere($levenshteinNameContactname . ' < ' . $distance);
+			}
+			$names->toArray();
+			debug($names);
+			
+			if(count($names) > 1){
+				foreach($names as $name){
+					$duplicates[$q->id][] = ['id' => $name->id,
+										 'name' => $name->name,
+										 'contactname' => $name->contactname,
+										 'levenshteinNameName' => $name->levenshteinNameName,
+										 'levenshteinContactnameName' => $name->levenshteinContactnameName,
+										 'levenshteinNameContactname' => $name->levenshteinNameContactname,
+										 'levenshteinContactnameContactname' => $name->levenshteinContactnameContactname];
+				}
+			}
+		}
+		return $duplicates;
+	}
 }

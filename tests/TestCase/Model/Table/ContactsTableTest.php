@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Model\Table;
 use Cake\ORM\TableRegistry;
 use App\Model\Table\ContactsTable;
 use Cake\TestSuite\TestCase;
+use Cake\I18n\Time;
 
 /**
  * App\Model\Table\ContactsTable Test Case
@@ -61,11 +62,79 @@ class ContactsTableTest extends TestCase {
 		foreach($dupliactes as $actual){
 			$actual = $actual->hydrate(false)->toArray();
 			$expected = [
-				['id' => 5, 'name' => 'Filu', 'contactname' => 'Filutás István'],
-				['id' => 7, 'name' => 'Dvaipayan pr', 'contactname' => '']
+				['id' => 5, 'name' => 'Filu', 'contactname' => 'Filutás István', 'lat' => 46.067909, 'lng' => 18.222189],
+				['id' => 7, 'name' => 'Dvaipayan pr', 'contactname' => '', 'lat' => 46.067909, 'lng' => 18.222189]
 			];
 			$this->assertEquals($expected, $actual);
 		}
+	}
+
+	public function testCheckDuplicatesOnPhone(){
+		$dupliactes = $this->Contacts->checkDuplicatesOnPhone();
+		foreach($dupliactes as $actual){
+			$actual = $actual->hydrate(false)->toArray();
+			$expected = [
+				['id' => 1, 'name' => 'Lokanatha dasa', 'contactname' => 'Borsos László', 'phone' => '+36 30 999 5091'],
+				['id' => 2, 'name' => 'Acarya-ratna das', 'contactname' => '', 'phone' => '36/30 99-95-091'],
+				['id' => 3, 'name' => 'Dvaipayana Dasa', 'contactname' => '', 'phone' => '06 (30) 99-95-091']
+			];
+			$this->assertEquals($expected, $actual);
+		}
+	}
+
+	public function testCheckDuplicatesOnEmail(){
+		$dupliactes = $this->Contacts->checkDuplicatesOnEmail();
+		foreach($dupliactes as $dupliacte){
+			$actual[] = $dupliacte->hydrate(false)->toArray();
+		}
+		$expected = [
+			[
+				['id' => 3, 'name' => 'Dvaipayana Dasa', 'contactname' => '', 'email' => 'dvd@1108.cc'],
+				['id' => 4, 'name' => 'Acarya-ratna Dasa', 'contactname' => '', 'email' => 'dvd@1108.cc']
+			],
+			[
+				['id' => 6, 'name' => 'Horváth Zoltán', 'contactname' => '', 'email' => 'senki@sehol.se'],
+				['id' => 7, 'name' => 'Dvaipayan pr', 'contactname' => '', 'email' => 'senki@sehol.se']
+			]
+		];
+		$this->assertEquals($expected, $actual);
+	}
+
+	public function testCheckDuplicatesOnBirth(){
+		$dupliactes = $this->Contacts->checkDuplicatesOnBirth();
+		foreach($dupliactes as $actual){
+			$actual = $actual->hydrate(false)->toArray();
+			$expected = [
+				['id' => 1, 'name' => 'Lokanatha dasa', 'contactname' => 'Borsos László', 'birth' => Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00')],
+				['id' => 6, 'name' => 'Horváth Zoltán', 'contactname' => null, 'birth' =>  Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00')]
+			];
+			$this->assertEquals($expected, $actual);
+		}
+	}
+
+	public function testCheckDuplicatesOnNames(){
+		$actual = $this->Contacts->checkDuplicatesOnNames();
+		$expected = [
+			'Acarya-ratna das' => [
+				[
+					'id' => 4,
+					'name' => 'Acarya-ratna Dasa',
+					'contactname' => '',
+					'levenshteinName' => '1',
+					'levenshteinContactname' => '16'
+				]
+			],
+			'Acarya-ratna Dasa' => [
+				[
+					'id' => 2,
+					'name' => 'Acarya-ratna das',
+					'contactname' => '',
+					'levenshteinName' => '1',
+					'levenshteinContactname' => '17'
+				]
+			]
+		];
+		$this->assertEquals($expected, $actual);
 	}
 
 /**
