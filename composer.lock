@@ -131,12 +131,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "b9355c4e04221bcf9c09ded0ce4f58977f0986f6"
+                "reference": "ddb9eb814a141a0938b5222167692b4dcf165d19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/b9355c4e04221bcf9c09ded0ce4f58977f0986f6",
-                "reference": "b9355c4e04221bcf9c09ded0ce4f58977f0986f6",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/ddb9eb814a141a0938b5222167692b4dcf165d19",
+                "reference": "ddb9eb814a141a0938b5222167692b4dcf165d19",
                 "shasum": ""
             },
             "require": {
@@ -188,7 +188,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-11-09 14:49:53"
+            "time": "2014-11-12 02:47:32"
         },
         {
             "name": "cakephp/debug_kit",
@@ -726,16 +726,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.3.4",
+            "version": "4.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "23e4e0310f037aae873cc81b8658dbbb82878f71"
+                "reference": "2dab9d593997db4abcf58d0daf798eb4e9cecfe1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/23e4e0310f037aae873cc81b8658dbbb82878f71",
-                "reference": "23e4e0310f037aae873cc81b8658dbbb82878f71",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2dab9d593997db4abcf58d0daf798eb4e9cecfe1",
+                "reference": "2dab9d593997db4abcf58d0daf798eb4e9cecfe1",
                 "shasum": ""
             },
             "require": {
@@ -796,7 +796,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-10-22 11:43:12"
+            "time": "2014-11-11 10:11:09"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
