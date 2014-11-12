@@ -27,9 +27,6 @@ class ContactsTableTest extends TestCase {
 		'app.contacts_groups',
 		'app.notifications',
 		'app.contacts_users',
-		
-		
-		
 		'app.usergroups',
 		'app.users_usergroups',
 		'app.units',
@@ -57,6 +54,18 @@ class ContactsTableTest extends TestCase {
 		unset($this->Contacts);
 
 		parent::tearDown();
+	}
+
+	public function testCheckDuplicatesOnGeo(){
+		$dupliactes = $this->Contacts->checkDuplicatesOnGeo();
+		foreach($dupliactes as $actual){
+			$actual = $actual->hydrate(false)->toArray();
+			$expected = [
+				['id' => 5, 'name' => 'Filu', 'contactname' => 'Filutás István'],
+				['id' => 7, 'name' => 'Dvaipayan pr', 'contactname' => '']
+			];
+			$this->assertEquals($expected, $actual);
+		}
 	}
 
 /**

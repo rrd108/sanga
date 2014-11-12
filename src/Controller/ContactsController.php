@@ -217,4 +217,8 @@ class ContactsController extends AppController {
 		}
 		return $this->redirect(['action' => 'index']);
 	}
+	
+	public function checkDuplicates(){
+		$this->Contacts->checkDuplicatesOnGeo();
+	}
 }

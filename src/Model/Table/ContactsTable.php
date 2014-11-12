@@ -193,4 +193,50 @@ class ContactsTable extends Table {
 	private function setGeo($id){
 		exec(WWW_ROOT . '../bin/cake geo set_geo_for_user ' . $id . ' > /dev/null &');
 	}
+	
+
+/*
+ * Searching for duplicates: checkDuplicatesOn()
+ * 
+ * name			similar [name, contactname]
+ * contactname	similar [name, contactname]
+ * zip_id		same
+ * address		remove non alphanumeric
+ * lat, lng		near (SQL float equality)
+ * phone		remove non numeric, if not start with 00 or +, suppose it is +36 and add it
+ * email		same
+ * birth		same
+ * sex			same
+ * workpace		similar
+ * 
+ */
+
+	public function checkDuplicatesOnGeo(){
+		$nearBies = $this->find()
+				->select(['lat', 'lng', 'db' => 'COUNT(*)'])
+				->group(['lat', 'lng'])
+				->having(['db > ' => 1]);
+		//debug($nearBies);
+		
+		$duplicates = [];
+		$delta = 0.000005;
+		foreach($nearBies as $nearBy){
+			if($nearBy->lat){
+				//debug($nearBy->lat);
+				$query = $this->find()
+							->select(['id', 'name', 'contactname']);
+				$exprLat = $query->newExpr()->add('ABS(lat - ' . $nearBy['lat'] . ') < ' . $delta);
+				$exprLng = $query->newExpr()->add('ABS(lng - ' . $nearBy['lng'] . ') < ' . $delta);
+				$duplicates[] = $query
+						->where([
+								 $exprLat,
+								 $exprLng
+								]);
+				//debug($query);
+			}
+		}
+		//debug($duplicates);
+		return $duplicates;
+	}	
+
 }
