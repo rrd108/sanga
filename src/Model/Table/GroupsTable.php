@@ -59,5 +59,15 @@ class GroupsTable extends Table {
 
 		return $validator;
 	}
+	
+	public function findAccessible(Query $query, array $options){
+		return $query
+				->where(['admin_user_id' => $options['User.id']])
+				->orWhere(['public' => true])
+				->matching('Users', function($q) use ($options){
+					return $q->orWhere(['Users.id' => $options['User.id']]);
+				});
+	}
+
 
 }

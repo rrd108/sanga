@@ -27,9 +27,9 @@ class GroupsUsersTable extends Table {
 		$this->belongsTo('Users', [
 			'foreignKey' => 'user_id',
 		]);
-		$this->belongsTo('Groups', [
+		/*$this->belongsTo('Groups', [
 			'foreignKey' => 'intersection_group_id',
-		]);
+		]);*/
 	}
 
 /**
