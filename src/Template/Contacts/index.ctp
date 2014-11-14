@@ -5,8 +5,7 @@
 			<th><?= __('Contact Person') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
 			<th><?= $this->Paginator->sort('zip_id') ?></th>
-			<th><?= $this->Paginator->sort('address') ?></th>
-			<th><?= $this->Paginator->sort('groups') ?></th>
+			<th><?= $this->Paginator->sort('group_id') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
@@ -22,11 +21,18 @@
 					}
 				?>
 			</td>
-			<td><?= h($contact->name) ?></td>
+			<td>
+				<?php
+					print h($contact->name);
+					if($contact->contactname){
+						print '<span class="i"> (' . h($contact->contactname) . ')</span>';
+					}
+				?>
+			</td>
 			<td>
 				<?= $contact->has('zip') ? $contact->zip->zip . ' ' . $contact->zip->name : '' ?>
+				<?= h($contact->address) ?>
 			</td>
-			<td><?= h($contact->address) ?></td>
 			<td>
 				<?php
 					foreach($contact->groups as $group){
