@@ -1,6 +1,7 @@
 <?php
-print $this->Html->script('gmap3.min.js');
-print $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
+//print $this->Html->script('gmap3.min.js');
+//print $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
+print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 
 $this->Html->scriptStart(['block' => true]);
 ?>
@@ -79,6 +80,7 @@ $this->Html->scriptEnd();
 			</div>
 			<div id="mapsmall"></div>
 				<?php
+				/*
 				if($contact->lat):
 					$this->Html->scriptStart(['block' => true]);
 					?>
@@ -99,6 +101,7 @@ $this->Html->scriptEnd();
 					<?php
 					$this->Html->scriptEnd();
 				endif;
+				*/
 				?>
 		</div>
 	</div>
@@ -199,17 +202,35 @@ $this->Html->scriptEnd();
 		</div>
 	</div>
 	<div id="tabs-5" class="contacts view large-10 medium-9 columns">
-		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
-		<div class="column large-12">
+		<div class="column large-12" id="member">
 			<?php if (!empty($contact->groups)): ?>
 				<?php
+				$cGroups = [];
 				foreach ($contact->groups as $groups):
+					$cGroups[] = $groups->id;
 					$cssStyle = $groups->public ? 'info' : (($groups->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success');
 				?>
 					<span class="tag tag-<?= $cssStyle ?>"><?= h($groups->name) ?></span>
 				<?php endforeach; ?>
 			<?php endif; ?>
+		</div>
+		<div class="column large-12" id="notmember">
+			<h3><?= __('Not member') ?></h3>
+			<?php
+				foreach($accessibleGroups as $group){
+					if(!in_array($group->id, $cGroups)){
+						//$cGroups[] = $group->id;
+						$cssStyle = $group->public ? 'info' : (($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success');
+						print "\n" .
+							'<span class="draggable tag tag-default"
+									data-css="tag-'.$cssStyle.'"
+									data-id="' . $group->id . '">' .
+								h($group->name) .
+							'</span>';
+					}
+				}
+			?>
 		</div>
 	</div>
 </div>

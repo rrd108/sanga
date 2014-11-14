@@ -131,7 +131,7 @@ class ContactsController extends AppController {
 	public function view($id = null) {
 		$id = $id ? $id : $this->request->data['name'];
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['Zips', 'Contactsources', 'Groups' => ['Users'], 'Skills', 'Users', 'Histories']
+			'contain' => ['Zips', 'Contactsources', 'Groups', 'Skills', 'Users', 'Histories']
 		]);
 		$this->set('contact', $contact);
 		
@@ -145,6 +145,9 @@ class ContactsController extends AppController {
 		$histories = $this->Contacts->Histories->find()
 				->where(['contact_id' => $id]);
 		$this->set('histories', $this->paginate($histories));
+
+		$accessibleGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id')]);
+		$this->set(compact('accessibleGroups'));
 	}
 
 /**
@@ -226,5 +229,22 @@ class ContactsController extends AppController {
 		//$this->Contacts->checkDuplicatesOnEmail();
 		//$this->Contacts->checkDuplicatesOnBirth();
 		//$this->Contacts->checkDuplicatesOnNames();
+	}
+	
+	public function editGroup($id = null){
+		if ($this->request->is('post') && $this->request->is('ajax')) {
+			$contact = $this->Contacts->get($id, ['contain' => ['Groups']]);
+			foreach($contact->groups as $group){
+				$this->request->data['groups']['_ids'][] = $group->id;
+			}
+			$this->Contacts->patchEntity($contact, $this->request->data);
+			if($this->Contacts->save($contact)){
+				$result = ['saved' => true];
+			}
+			else{
+				$result = ['saved' => false];
+			}
+			$this->set(compact('result'));
+		}
 	}
 }
