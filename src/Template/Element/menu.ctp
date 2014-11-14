@@ -25,9 +25,9 @@
 			⚙ Törzsadatok
 			<ul>
 				<?php
-					print '<li>' . $this->Html->link('⚓ Kapcsolat források', '/contactsources') . '</li>';
+					print '<li>' . $this->Html->link('⚓ ' . __('Contact sources'), '/contactsources') . '</li>';
 					print '<li>' . $this->Html->link('⁂ ' . __('Groups'), '/groups') . '</li>';
-					print '<li>' . $this->Html->link('✿ Esemény típusok', '/events') . '</li>';
+					print '<li>' . $this->Html->link('✿ ' . __('Events'), '/events') . '</li>';
 					print '<li>' . $this->Html->link('✋ ' . __('User groups'), '/usergroups') . '</li>';
 					print '<li>' . $this->Html->link('✄ ' . __('Skills'), '/skills') . '</li>';
 				?>
@@ -38,11 +38,11 @@
 			✽ CRM
 			<ul>
 				<?php
-					print '<li>'. $this->Html->link('♥ Kapcsolatok', '/contacts') . '</li>';
-					print '<li>'. $this->Html->link('♥ ' . __('Add Contact'), '/contacts/add') . '</li>';
-					print '<li>' . $this->Html->link('⚑ Történések', '/histories') . '</li>';
-					print '<li>' . $this->Html->link('♛ Lekérdezések', '/contacts/search') . '</li>';
-					print '<li>' . $this->Html->link('✈ Térkép', '/contacts/showmap') . '</li>';
+					print '<li>'. $this->Html->link('♥ ' . __('Contacts'), '/contacts') . '</li>';
+					print '<li>'. $this->Html->link('⊕ ' . __('Add Contact'), '/contacts/add') . '</li>';
+					print '<li>' . $this->Html->link('⚑ ' . __('Histories'), '/histories') . '</li>';
+					print '<li>' . $this->Html->link('♛ ' . __('Queries'), '/contacts/search') . '</li>';
+					print '<li>' . $this->Html->link('✈ ' . __('Map'), '/contacts/showmap') . '</li>';
 				?>
 			</ul>
 		</li>
@@ -55,9 +55,9 @@
 			?>
 			<ul>
 				<?php
-					print '<li>' . $this->Html->link('☭ Adatlapom', '/users/view') . '</li>';
-					print '<li>' . $this->Html->link('⚠ Értesítések '.$nc, '/notifications', ['escapeTitle' => false]) . '</li>';
-					print '<li>' . $this->Html->link('⊗ Kijelentkezem', '/users/logout') . '</li>';
+					print '<li>' . $this->Html->link('☭ ' . __('Profile'), '/users/view') . '</li>';
+					print '<li>' . $this->Html->link('⚠ ' . __('Notifications') . ' ' . $nc, '/notifications', ['escapeTitle' => false]) . '</li>';
+					print '<li>' . $this->Html->link('⊗ ' . _('Logout'), '/users/logout') . '</li>';
 				?>
 			</ul>
 		</li>
