@@ -58,15 +58,16 @@ class ContactsTableTest extends TestCase {
 	}
 
 	public function testCheckDuplicatesOnGeo(){
-		$dupliactes = $this->Contacts->checkDuplicatesOnGeo();
-		foreach($dupliactes as $actual){
-			$actual = $actual->hydrate(false)->toArray();
-			$expected = [
-				['id' => 5, 'name' => 'Filu', 'contactname' => 'Filutás István', 'lat' => 46.067909, 'lng' => 18.222189],
-				['id' => 7, 'name' => 'Dvaipayan pr', 'contactname' => '', 'lat' => 46.067909, 'lng' => 18.222189]
-			];
-			$this->assertEquals($expected, $actual);
-		}
+		$actual = $this->Contacts->checkDuplicatesOnGeo();
+		$expected = [
+					 5 => [[
+						'id' => 7,
+						'name' => 'Dvaipayan pr',
+						'contactname' => '',
+						'lat' => 46.067917,
+						'lng' => 18.222189
+						]]];
+		$this->assertEquals($expected, $actual);
 	}
 
 	public function testCheckDuplicatesOnPhone(){
@@ -115,22 +116,15 @@ class ContactsTableTest extends TestCase {
 	public function testCheckDuplicatesOnNames(){
 		$actual = $this->Contacts->checkDuplicatesOnNames();
 		$expected = [
-			'Acarya-ratna das' => [
+			2 => [
 				[
 					'id' => 4,
 					'name' => 'Acarya-ratna Dasa',
 					'contactname' => '',
-					'levenshteinName' => '1',
-					'levenshteinContactname' => '16'
-				]
-			],
-			'Acarya-ratna Dasa' => [
-				[
-					'id' => 2,
-					'name' => 'Acarya-ratna das',
-					'contactname' => '',
-					'levenshteinName' => '1',
-					'levenshteinContactname' => '17'
+					'levenshteinNameName' => '1',
+					'levenshteinContactnameName' => '16',
+					'levenshteinNameContactname' => null,
+					'levenshteinContactnameContactname' => null
 				]
 			]
 		];

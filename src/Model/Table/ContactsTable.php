@@ -197,41 +197,50 @@ class ContactsTable extends Table {
 /*
  * Searching for duplicates: checkDuplicatesOn()
  * 
- * name			similar [name, contactname]
-	 * contactname	similar [name, contactname]
-	 * zip_id, address		same, remove non alphanumeric
- * lat, lng		near (SQL float equality)
- * phone		remove non numeric, if not start with 00 or +, suppose it is +36 and add it
- * email		same
- * birth		same
+ * name, contactname	similar [name, contactname]
+ * lat, lng				near (SQL float equality) - handles address
+ * phone				remove non numeric, if not start with 00 or +, suppose it is +36 and add it
+ * email				same
+ * birth				same
  * 
  */
 
 	public function checkDuplicatesOnGeo(){
-		$nearBies = $this->find()
-				->select(['lat', 'lng', 'db' => 'COUNT(*)'])
-				->group(['lat', 'lng'])
-				->having(['db > ' => 1]);
-		//debug($nearBies);
+		$geos = $this->find()
+				->select(['id', 'lat', 'lng']);
 		
-		$duplicates = [];
-		$delta = 0.000005;
-		foreach($nearBies as $nearBy){
-			if($nearBy->lat){
-				//debug($nearBy->lat);
+		$duplicates = $foundPairs = [];
+		$delta = 0.0001;	//10m
+		foreach($geos as $geo){
+			if($geo->lat){
 				$query = $this->find()
 							->select(['id', 'name', 'contactname', 'lat', 'lng']);
-				$exprLat = $query->newExpr()->add('ABS(lat - ' . $nearBy['lat'] . ') < ' . $delta);
-				$exprLng = $query->newExpr()->add('ABS(lng - ' . $nearBy['lng'] . ') < ' . $delta);
-				$duplicates[] = $query
-						->where([
-								 $exprLat,
-								 $exprLng
-								]);
-				//debug($query);
+				$exprLat = $query->newExpr()->add('ABS(lat - ' . $geo['lat'] . ') < ' . $delta);
+				$exprLng = $query->newExpr()->add('ABS(lng - ' . $geo['lng'] . ') < ' . $delta);
+				$query
+					->where([
+							 $exprLat,
+							 $exprLng,
+							 'id !=' => $geo->id
+							]);
+				$contacts = $query->toArray();
+				if(count($contacts)){
+					foreach($contacts as $contact){
+						if(!in_array($contact->id, $foundPairs) && !in_array($geo->id, $foundPairs)){
+							$foundPairs[] = $contact->id;
+							$foundPairs[] = $geo->id;
+							$duplicates[$geo->id][] = [
+									'id' => $contact->id,
+									'name' => $contact->name,
+									'contactname' => $contact->contactname,
+									'lat' => $contact->lat,
+									'lng' => $contact->lng
+									];
+						}
+					}
+				}
 			}
 		}
-		//debug($duplicates);
 		return $duplicates;
 	}	
 
@@ -318,39 +327,55 @@ class ContactsTable extends Table {
 		$query = $this->find()
 				->select(['id', 'name', 'contactname']);
 		
+		$duplicates = $foundPairs = [];
+		
 		foreach($query as $q){
+			$toSelect = [];
+			$toSelect[] = 'id';
+			$toSelect[] = 'name';
+			$toSelect[] = 'contactname';
 
-			$levenshteinNameName = 'LEVENSHTEIN(name, "'. $q->name . '")';
-			$levenshteinNameContactname = 'LEVENSHTEIN(name, "'. $q->contactname . '")';
-			$levenshteinContactnameName = 'LEVENSHTEIN(contactname, "'. $q->name . '")';
-			$levenshteinContactnameContactname = 'LEVENSHTEIN(contactname, "'. $q->contactname . '")';
-			
+			if($q->name){
+				$levenshteinNameName = 'LEVENSHTEIN(name, "'. $q->name . '")';
+				$levenshteinContactnameName = 'LEVENSHTEIN(contactname, "'. $q->name . '")';
+				$toSelect['levenshteinNameName'] = $query->newExpr()->add($levenshteinNameName);
+				$toSelect['levenshteinContactnameName'] = $query->newExpr()->add($levenshteinContactnameName);
+			}
+			if($q->contactname){
+				$levenshteinNameContactname = 'LEVENSHTEIN(name, "'. $q->contactname . '")';
+				$levenshteinContactnameContactname = 'LEVENSHTEIN(contactname, "'. $q->contactname . '")';
+				$toSelect['levenshteinNameContactname'] = $query->newExpr()->add($levenshteinNameContactname);
+				$toSelect['levenshteinContactnameContactname'] = $query->newExpr()->add($levenshteinContactnameContactname);
+			}
+
 			$names = $this->find()
-					->select(['id', 'name', 'contactname',
-							  'levenshteinNameName' => $levenshteinNameName,
-							  'levenshteinContactnameName' => $levenshteinContactnameName,
-							  'levenshteinNameContactname' => $levenshteinNameContactname,
-							  'levenshteinContactnameContactname' => $levenshteinContactnameContactname]);
+					->select($toSelect);
 			if($q->name){
 				$names->orWhere($levenshteinNameName . ' < ' . $distance)
 						->orWhere($levenshteinContactnameName . ' < ' . $distance);
 			}
 			if($q->contactname){
-				$names->orWhere($levenshteinContactnameContactname . ' < ' . $distance)
-						->orWhere($levenshteinNameContactname . ' < ' . $distance);
+				$names->orWhere($levenshteinNameContactname . ' < ' . $distance)
+						->orWhere($levenshteinContactnameContactname . ' < ' . $distance);
 			}
+			$names->andWhere(['id != ' => $q->id]);
 			$names->toArray();
-			debug($names);
-			
-			if(count($names) > 1){
+
+			if(count($names)){
 				foreach($names as $name){
-					$duplicates[$q->id][] = ['id' => $name->id,
-										 'name' => $name->name,
-										 'contactname' => $name->contactname,
-										 'levenshteinNameName' => $name->levenshteinNameName,
-										 'levenshteinContactnameName' => $name->levenshteinContactnameName,
-										 'levenshteinNameContactname' => $name->levenshteinNameContactname,
-										 'levenshteinContactnameContactname' => $name->levenshteinContactnameContactname];
+					if(!in_array($name->id, $foundPairs) && !in_array($q->id, $foundPairs)){
+						$foundPairs[] = $name->id;
+						$foundPairs[] = $q->id;
+						$duplicates[$q->id][] = [
+								'id' => $name->id,
+								'name' => $name->name,
+								'contactname' => $name->contactname,
+								'levenshteinNameName' => $name->levenshteinNameName,
+								'levenshteinContactnameName' => $name->levenshteinContactnameName,
+								'levenshteinNameContactname' => $name->levenshteinNameContactname,
+								'levenshteinContactnameContactname' => $name->levenshteinContactnameContactname
+								];
+					}
 				}
 			}
 		}

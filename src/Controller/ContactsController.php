@@ -81,12 +81,12 @@ class ContactsController extends AppController {
 			//debug($expr);
 			
 			$result = $this->Contacts->find()
-					->contain(['Zips', 'Linkups'])
+					->contain(['Zips', 'Groups'])
 					->select(['name', 'Zips.zip', 'Zips.name', 'distance' => $expr])
 					->where(['active' => true,
 							 'distance' => $expr])
-					->matching('Linkups', function($q){
-						return $q->where(['Linkups.id' => $this->request->data['linkup_id']]);
+					->matching('Groups', function($q){
+						return $q->where(['Groups.id' => $this->request->data['group_id']]);
 						})
 					->having(['distance <=' => $this->request->data['area']])
 					->order(['distance' => 'ASC']);
@@ -219,12 +219,12 @@ class ContactsController extends AppController {
 	}
 	
 	public function checkDuplicates(){
-		//$this->Contacts->checkDuplicatesOnGeo();
+		$this->Contacts->checkDuplicatesOnGeo();
 		/*foreach($this->Contacts->checkDuplicatesOnPhone() as $q){
 			debug($q->toArray());
 		}*/
 		//$this->Contacts->checkDuplicatesOnEmail();
 		//$this->Contacts->checkDuplicatesOnBirth();
-		$this->Contacts->checkDuplicatesOnNames();
+		//$this->Contacts->checkDuplicatesOnNames();
 	}
 }
