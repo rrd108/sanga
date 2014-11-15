@@ -136,6 +136,7 @@ class ContactsTable extends Table {
 							}
 						}
 						else{
+							$newEntityProp = $oldEntityProp = [];
 							foreach($entity->$prop as $ep){
 								$ep = $ep->toArray();
 								unset($ep['_joinData']);
@@ -154,11 +155,9 @@ class ContactsTable extends Table {
 							}
 							foreach($newEntityProp as $nep){
 								if(!in_array($nep, $oldEntityProp)){
-									$details[] = $oep['name'] . __(' added to ') . $prop;
+									$details[] = $nep['name'] . __(' added to ') . $prop;
 								}
 							}
-							
-							unset($newEntityProp, $oldEntityProp);
 						}
 						if(in_array($prop, $addr)){	//the address or zip changed or both
 							$this->setGeo($entity->id);
@@ -191,8 +190,7 @@ class ContactsTable extends Table {
 	
 	private function setGeo($id){
 		exec(WWW_ROOT . '../bin/cake geo set_geo_for_user ' . $id . ' > /dev/null &');
-	}
-	
+	}	
 
 /*
  * Searching for duplicates: checkDuplicatesOn()

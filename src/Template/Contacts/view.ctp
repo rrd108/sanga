@@ -204,16 +204,17 @@ $this->Html->scriptEnd();
 	<div id="tabs-5" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12" id="member">
-			<?php if (!empty($contact->groups)): ?>
-				<?php
-				$cGroups = [];
-				foreach ($contact->groups as $groups):
-					$cGroups[] = $groups->id;
-					$cssStyle = $groups->public ? 'info' : (($groups->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success');
+			<?php
+				$cGroups = [];;
+				if (!empty($contact->groups)):
+
+					foreach ($contact->groups as $groups):
+						$cGroups[] = $groups->id;
+						$cssStyle = $groups->public ? 'info' : (($groups->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success');
 				?>
-					<span class="draggable member tag tag-<?= $cssStyle ?>"
-							data-css="tag-<?= $cssStyle ?>" 
-							data-id="<?= $groups->id ?>"><?= h($groups->name) ?></span>
+						<span class="draggable member tag tag-<?= $cssStyle ?>"
+								data-css="tag-<?= $cssStyle ?>" 
+								data-id="<?= $groups->id ?>"><?= h($groups->name) ?></span>
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</div>
