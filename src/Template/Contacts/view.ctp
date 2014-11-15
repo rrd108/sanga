@@ -211,19 +211,22 @@ $this->Html->scriptEnd();
 					$cGroups[] = $groups->id;
 					$cssStyle = $groups->public ? 'info' : (($groups->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success');
 				?>
-					<span class="tag tag-<?= $cssStyle ?>"><?= h($groups->name) ?></span>
+					<span class="draggable member tag tag-<?= $cssStyle ?>"
+							data-css="tag-<?= $cssStyle ?>" 
+							data-id="<?= $groups->id ?>"><?= h($groups->name) ?></span>
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</div>
+
+		<h3><?= __('Not member') ?></h3>
 		<div class="column large-12" id="notmember">
-			<h3><?= __('Not member') ?></h3>
 			<?php
 				foreach($accessibleGroups as $group){
 					if(!in_array($group->id, $cGroups)){
 						//$cGroups[] = $group->id;
 						$cssStyle = $group->public ? 'info' : (($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success');
 						print "\n" .
-							'<span class="draggable tag tag-default"
+							'<span class="draggable notmember tag tag-default"
 									data-css="tag-'.$cssStyle.'"
 									data-id="' . $group->id . '">' .
 								h($group->name) .

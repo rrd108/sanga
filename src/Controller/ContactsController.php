@@ -247,4 +247,25 @@ class ContactsController extends AppController {
 			$this->set(compact('result'));
 		}
 	}
+
+	public function removeGroup($id = null){
+		if ($this->request->is('post') && $this->request->is('ajax')) {
+			$contact = $this->Contacts->get($id, ['contain' => ['Groups']]);
+			$groups = [];
+			foreach($contact->groups as $group){
+				if($group->id != $this->request->data['groups']['_ids'][0]){
+					$groups[] = $group->id;
+				}
+			}
+			$this->request->data['groups']['_ids'] = $groups;
+			$this->Contacts->patchEntity($contact, $this->request->data);
+			if($this->Contacts->save($contact)){
+				$result = ['saved' => true];
+			}
+			else{
+				$result = ['saved' => false];
+			}
+			$this->set(compact('result'));
+		}
+	}
 }

@@ -253,6 +253,15 @@ td.actions a{
   margin: 0;
   padding: 0;
 }
+
+.draggable{
+  cursor: grab;
+}
+
+.ui-droppable{
+  min-height: 1.7em;
+}
+
 .ui-tabs-vertical { width: 61em; }
 .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; }
 .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 101%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
