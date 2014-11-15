@@ -35,9 +35,15 @@ $this->Html->scriptEnd();
 				<h6 class="subheader"><?= __('Contact person') ?></h6>
 				<?php if (!empty($contact->users)): ?>
 					<p>
-					<?php foreach ($contact->users as $users): ?>
-						&nbsp;<?= h($users->name) ?>
-					<?php endforeach; ?>
+					<?php
+						$myContact = false;
+						foreach ($contact->users as $users){
+							print '&nbsp;' . h($users->name);
+							if($users->id == $this->Session->read('Auth.User.id')){
+								$myContact = true;
+							}
+						}
+					?>
 					</p>
 				<?php endif; ?>
 				<h6 class="subheader"><?= __('Address') ?></h6>
@@ -209,10 +215,20 @@ $this->Html->scriptEnd();
 				if (!empty($contact->groups)):
 
 					foreach ($contact->groups as $groups):
+						$myGroup = false;
 						$cGroups[] = $groups->id;
-						$cssStyle = $groups->public ? 'info' : (($groups->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success');
+						if($groups->admin_user_id == $this->Session->read('Auth.User.id')){
+							$myGroup = true;
+						}
+						$cssStyle = $groups->public ? 'info' : ($myGroup ? 'primary' : 'success');
+						
+						$draggable = '';
+						if($myContact || $myGroup){
+							$draggable = 'draggable';
+						}
+						
 				?>
-						<span class="draggable member tag tag-<?= $cssStyle ?>"
+						<span class="<?= $draggable ?> member tag tag-<?= $cssStyle ?>"
 								data-css="tag-<?= $cssStyle ?>" 
 								data-id="<?= $groups->id ?>"><?= h($groups->name) ?></span>
 				<?php endforeach; ?>
