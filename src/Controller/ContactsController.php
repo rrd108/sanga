@@ -158,6 +158,7 @@ class ContactsController extends AppController {
 	public function add() {
 		$contact = $this->Contacts->newEntity($this->request->data);
 		if ($this->request->is('post')) {
+			$contact->loggedInUser = $this->Auth->user('id');
 			if ($this->Contacts->save($contact)) {
 				$this->Flash->success('The contact has been saved.');
 				return $this->redirect(['action' => 'index']);
@@ -237,6 +238,7 @@ class ContactsController extends AppController {
 			foreach($contact->groups as $group){
 				$this->request->data['groups']['_ids'][] = $group->id;
 			}
+			$contact->loggedInUser = $this->Auth->user('id');
 			$this->Contacts->patchEntity($contact, $this->request->data);
 			if($this->Contacts->save($contact)){
 				$result = ['saved' => true];
@@ -258,6 +260,7 @@ class ContactsController extends AppController {
 				}
 			}
 			$this->request->data['groups']['_ids'] = $groups;
+			$contact->loggedInUser = $this->Auth->user('id');
 			$this->Contacts->patchEntity($contact, $this->request->data);
 			if($this->Contacts->save($contact)){
 				$result = ['saved' => true];
