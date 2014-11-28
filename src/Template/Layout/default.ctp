@@ -29,6 +29,7 @@
 	print $this->Html->script('jquery-ui.min.js');
 	print $this->Html->script('jquery.ui.autocomplete.html.js');
 	print $this->Html->script('ui.datepicker-hu.js');
+	print $this->Html->script('jquery.rStorage.min.js');
 	
 	print $this->Html->script('sanga.js');
 
