@@ -53,21 +53,35 @@ class GroupsTable extends Table {
 			->allowEmpty('description')
 			->add('admin_user_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('admin_user_id')
-			->add('public', 'valid', ['rule' => 'boolean'])
-			->validatePresence('public', 'create')
-			->allowEmpty('public');
+			->add('shared', 'valid', ['rule' => 'boolean'])
+			->validatePresence('shared', 'create')
+			->allowEmpty('shared');
 
 		return $validator;
 	}
 	
 	public function findAccessible(Query $query, array $options){
+		if(isset($options['shared'])){
+			$shared = ['shared' => 1];
+		}
+		else{
+			$shared = null;
+		}
 		return $query
-				->where(['admin_user_id' => $options['User.id']])
-				->orWhere(['public' => true])
-				->matching('Users', function($q) use ($options){
-					return $q->orWhere(['Users.id' => $options['User.id']]);
-				});
+				->orWhere($shared)
+				->orWhere(['admin_user_id' => $options['User.id']])
+				->orWhere(['Groups.id IN' => $this->findWhereMember($query, $options)]);
 	}
-
-
+	
+	private function findWhereMember(Query $query, array $options){
+		$_query = $this->query($query);
+		$memberships = $_query->matching('Users', function($q) use ($options){
+					return $q->where(['Users.id' => $options['User.id']]);
+					});
+		$memberInGroup = [];
+		foreach($memberships as $m){
+			$memberInGroup[] = $m->id;
+		}
+		return $memberInGroup;
+	}
 }

@@ -110,12 +110,16 @@ class ContactsController extends AppController {
 					    return $q->where(['Users.id' => $this->Auth->user('id')]);
 					});
 
+		$_myGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id')])->toArray();
+		foreach($_myGroups as $mg){
+			$myGroups[] = $mg->id;
+		}
 		$inmygroupsContacts = $this->Contacts->find()
 				->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address',
 						  'Zips.id', 'Zips.zip', 'Zips.name'])
 				->contain(['Zips', 'Users', 'groups'])
-				->matching('Groups', function($q){
-						return $q->where(['Groups.id' => 5]);
+				->matching('Groups', function($q) use ($myGroups){
+						return $q->where(['Groups.id IN ' => $myGroups]);
 					});
 		$contacts = $myContacts->union($inmygroupsContacts);
 		$this->set('contacts', $this->paginate($contacts));
@@ -146,7 +150,7 @@ class ContactsController extends AppController {
 				->where(['contact_id' => $id]);
 		$this->set('histories', $this->paginate($histories));
 
-		$accessibleGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id')]);
+		$accessibleGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
 		$this->set(compact('accessibleGroups'));
 	}
 

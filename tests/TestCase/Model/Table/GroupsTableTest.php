@@ -17,6 +17,7 @@ class GroupsTableTest extends TestCase {
  */
 	public $fixtures = [
 		'app.groups',
+		'app.groups_users',
 		'app.users',
 		'app.events',
 		'app.histories',
@@ -25,9 +26,6 @@ class GroupsTableTest extends TestCase {
 		'app.countries',
 		'app.contactsources',
 		'app.contacts_groups',
-		
-		
-		
 		'app.contacts_users',
 		'app.skills',
 		'app.contacts_skills',
@@ -58,7 +56,24 @@ class GroupsTableTest extends TestCase {
 
 		parent::tearDown();
 	}
+	
+	public function testFindAccessible(){
+		$actual = $this->Groups->find('accessible', ['User.id' => 2, 'shared' => true])->hydrate(false)->toArray();
+		$expected = [
+				['id' => 1,'name' => 'NVD','description' => '','admin_user_id' => 1,'shared' => 1],
+				['id' => 2,'name' => 'Budapest','description' => '','admin_user_id' => 2,'shared' => 1],
+				['id' => 3,'name' => 'Seva-puja','description' => 'Seva-puja tagok','admin_user_id' => 2,'shared' => 0]
+			];
+		$this->assertEquals($expected, $actual);
 
+		$actual = $this->Groups->find('accessible', ['User.id' => 2])->hydrate(false)->toArray();
+		$expected = [
+				['id' => 2,'name' => 'Budapest','description' => '','admin_user_id' => 2,'shared' => 1],
+				['id' => 3,'name' => 'Seva-puja','description' => 'Seva-puja tagok','admin_user_id' => 2,'shared' => 0]
+			];
+		$this->assertEquals($expected, $actual);
+	}
+	
 /**
  * Test initialize method
  *
