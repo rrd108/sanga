@@ -41,12 +41,8 @@ class GroupsUsersFixture extends TestFixture {
  * @var array
  */
 	public $records = [
-		[
-			'id' => 1,
-			'group_id' => 1,
-			'user_id' => 1,
-			'intersection_group_id' => 1
-		],
+		['id' => '1','group_id' => '1','user_id' => '3','intersection_group_id' => NULL],
+		['id' => '2','group_id' => '1','user_id' => '2','intersection_group_id' => NULL]
 	];
 
 }
