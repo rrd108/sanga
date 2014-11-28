@@ -2,25 +2,16 @@
 //print $this->Html->script('gmap3.min.js');
 //print $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
 print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
-
-$this->Html->scriptStart(['block' => true]);
-?>
-$(function() {
-	$( "#tabs" ).tabs({active : 0}).addClass( "ui-tabs-vertical ui-helper-clearfix" );
-	$( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
-});
-<?php
-$this->Html->scriptEnd();
 ?>
 <div id="tabs" class="row">
 	<div class="actions columns large-2 medium-3">
 		<h3><?= __('Actions') ?></h3>
 		<ul class="side-nav">
-			<li><a href="#tabs-1">Személyi adatok</a></li>
-			<li><a href="#tabs-2"><?= __('Family') ?></a></li>
-			<li><a href="#tabs-3"><?= __('Workplace and skills') ?></a></li>
-			<li><a href="#tabs-4">Történések</a></li>
-			<li><a href="#tabs-5"><?= __('Groups') ?></a></li>
+			<li id="tabnav-1"><a href="#tabs-1">Személyi adatok</a></li>
+			<li id="tabnav-2"><a href="#tabs-2"><?= __('Family') ?></a></li>
+			<li id="tabnav-3"><a href="#tabs-3"><?= __('Workplace and skills') ?></a></li>
+			<li id="tabnav-4"><a href="#tabs-4">Történések</a></li>
+			<li id="tabnav-5"><a href="#tabs-5"><?= __('Groups') ?></a></li>
 		</ul>
 	</div>
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
@@ -220,7 +211,7 @@ $this->Html->scriptEnd();
 						if($groups->admin_user_id == $this->Session->read('Auth.User.id')){
 							$myGroup = true;
 						}
-						$cssStyle = $groups->public ? 'info' : ($myGroup ? 'primary' : 'success');
+						$cssStyle = $groups->shared ? 'info' : ($myGroup ? 'primary' : 'success');
 						
 						$draggable = '';
 						if($myContact || $myGroup){
@@ -241,7 +232,7 @@ $this->Html->scriptEnd();
 				foreach($accessibleGroups as $group){
 					if(!in_array($group->id, $cGroups)){
 						//$cGroups[] = $group->id;
-						$cssStyle = $group->public ? 'info' : (($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success');
+						$cssStyle = $group->shared ? 'info' : (($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success');
 						print "\n" .
 							'<span class="draggable notmember tag tag-default"
 									data-css="tag-'.$cssStyle.'"

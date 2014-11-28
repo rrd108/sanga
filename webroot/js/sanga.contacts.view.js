@@ -1,4 +1,13 @@
 $(function() {
+	var n = $.localStorage('sanga.userViewActiveTab') ? $.localStorage('sanga.userViewActiveTab') : 0;
+	$("#tabs").tabs({active : n}).addClass("ui-tabs-vertical ui-helper-clearfix");
+	$("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
+
+	$(window).on('beforeunload', function(){
+		var n = $(".ui-tabs-active")[0]["id"].replace(/tabnav-/, '');	//number of active tab
+		$.localStorage('sanga', {userViewActiveTab : parseInt(n) - 1});
+	});
+
 	$(".draggable").draggable({
 		revert : "invalid",
 		opacity : 0.7,

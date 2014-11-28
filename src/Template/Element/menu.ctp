@@ -20,20 +20,20 @@
 			</ul>
 		</li>
 		<?php endif; ?>
-		<?php if(in_array($this->Session->read('Auth.User.role'), [9,10])): ?>
 		<li>
 			⚙ Törzsadatok
 			<ul>
 				<?php
-					print '<li>' . $this->Html->link('⚓ ' . __('Contact sources'), '/contactsources') . '</li>';
+					if(in_array($this->Session->read('Auth.User.role'), [9,10])){
+						print '<li>' . $this->Html->link('⚓ ' . __('Contact sources'), '/contactsources') . '</li>';
+						print '<li>' . $this->Html->link('✋ ' . __('User groups'), '/usergroups') . '</li>';
+						print '<li>' . $this->Html->link('✄ ' . __('Skills'), '/skills') . '</li>';
+					}
 					print '<li>' . $this->Html->link('⁂ ' . __('Groups'), '/groups') . '</li>';
 					print '<li>' . $this->Html->link('✿ ' . __('Events'), '/events') . '</li>';
-					print '<li>' . $this->Html->link('✋ ' . __('User groups'), '/usergroups') . '</li>';
-					print '<li>' . $this->Html->link('✄ ' . __('Skills'), '/skills') . '</li>';
 				?>
 			</ul>
 		</li>
-		<?php endif; ?>
 		<li>
 			✽ CRM
 			<ul>
@@ -47,8 +47,9 @@
 			</ul>
 		</li>
 		<li>
-			★ Adataim
+			★ 
 			<?php
+				print $this->Session->read('Auth.User.realname');
 				$nc = '';
 				if($notification_count)
 					print $nc = '<span class="notice">'.$notification_count.'</span>';
