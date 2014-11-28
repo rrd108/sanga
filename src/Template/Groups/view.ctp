@@ -29,8 +29,8 @@
 			<p><?= $this->Number->format($group->admin_user_id) ?></p>
 		</div>
 		<div class="large-2 columns booleans end">
-			<h6 class="subheader"><?= __('Public') ?></h6>
-			<p><?= $group->public ? __('Yes') : __('No'); ?></p>
+			<h6 class="subheader"><?= __('Shared') ?></h6>
+			<p><?= $group->shared ? __('Yes') : __('No'); ?></p>
 		</div>
 	</div>
 </div>

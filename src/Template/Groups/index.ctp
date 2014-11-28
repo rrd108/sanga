@@ -18,7 +18,7 @@
 			<th><?= $this->Paginator->sort('name') ?></th>
 			<th><?= $this->Paginator->sort('description') ?></th>
 			<th><?= $this->Paginator->sort('admin_user_id') ?></th>
-			<th><?= $this->Paginator->sort('public') ?></th>
+			<th><?= $this->Paginator->sort('shared') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
@@ -29,7 +29,7 @@
 			<td><?= h($group->name) ?></td>
 			<td><?= h($group->description) ?></td>
 			<td><?= $this->Number->format($group->admin_user_id) ?></td>
-			<td><?= h($group->public) ?></td>
+			<td><?= h($group->shared) ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $group->id]) ?>
 				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $group->id]) ?>

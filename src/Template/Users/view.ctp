@@ -205,7 +205,7 @@
 			<th><?= __('Name') ?></th>
 			<th><?= __('Description') ?></th>
 			<th><?= __('Admin User Id') ?></th>
-			<th><?= __('Public') ?></th>
+			<th><?= __('Shared') ?></th>
 			<th><?= __('Intersection Group Id') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
@@ -215,7 +215,7 @@
 			<td><?= h($groups->name) ?></td>
 			<td><?= h($groups->description) ?></td>
 			<td><?= h($groups->admin_user_id) ?></td>
-			<td><?= h($groups->public) ?></td>
+			<td><?= h($groups->shared) ?></td>
 			<td><?= h($groups->_joinData->intersection_group_id) ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['controller' => 'Groups', 'action' => 'view', $groups->id]) ?>

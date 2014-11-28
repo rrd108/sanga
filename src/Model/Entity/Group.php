@@ -17,7 +17,7 @@ class Group extends Entity {
 		'name' => true,
 		'description' => true,
 		'admin_user_id' => true,
-		'public' => true,
+		'shared' => true,
 		'users' => true,
 		'histories' => true,
 		'contacts' => true,

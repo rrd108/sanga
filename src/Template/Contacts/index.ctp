@@ -36,7 +36,7 @@
 			<td>
 				<?php
 					foreach($contact->groups as $group){
-						if($group->public){
+						if($group->shared){
 							$css = 'info';
 						}
 						elseif($group->admin_user_id == $this->Session->read('Auth.User.id')){
