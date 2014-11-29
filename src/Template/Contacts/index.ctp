@@ -5,14 +5,13 @@
 			<th><?= __('Contact Person') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
 			<th><?= $this->Paginator->sort('zip_id') ?></th>
-			<th><?= $this->Paginator->sort('group_id') ?></th>
+			<th><?= __('Groups') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
 	<tbody>
 	<?php foreach ($contacts as $contact): ?>
 		<tr>
-			<?php //$this->Number->format($contact->id) ?>
 			<td>
 				<?php
 					foreach($contact->users as $user){

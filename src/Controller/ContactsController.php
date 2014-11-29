@@ -102,26 +102,22 @@ class ContactsController extends AppController {
  * @return void
  */
 	public function index() {
-		$myContacts = $this->Contacts->find()
-				->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address',
-						  'Zips.id', 'Zips.zip', 'Zips.name'])
-				->contain(['Zips', 'users', 'Groups'])		//ha itten "Users" van akkor nem jó query generálódik, ez egy bug de jól jön. https://github.com/cakephp/cakephp/issues/5109
-				->matching('Users', function($q) {
-					    return $q->where(['Users.id' => $this->Auth->user('id')]);
-					});
-
 		$_myGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id')])->toArray();
 		foreach($_myGroups as $mg){
-			$myGroups[] = $mg->id;
+			$groupIds[] = $mg->id;
 		}
-		$inmygroupsContacts = $this->Contacts->find()
-				->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address',
-						  'Zips.id', 'Zips.zip', 'Zips.name'])
-				->contain(['Zips', 'Users', 'groups'])
-				->matching('Groups', function($q) use ($myGroups){
-						return $q->where(['Groups.id IN ' => $myGroups]);
-					});
-		$contacts = $myContacts->union($inmygroupsContacts);
+
+		$myContacts = $this->Contacts->find('mine', ['User.id' => $this->Auth->user('id')])
+				->select(['Contacts.id']);
+		$inmygroupsContacts = $this->Contacts->find('inGroups', ['groupIds' => $groupIds])
+				->select(['Contacts.id']);
+
+		$contacts = $this->Contacts->find()
+								->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address',
+										  'Zips.id', 'Zips.zip', 'Zips.name'])
+								->contain(['Zips', 'Users', 'Groups'])
+								->orWhere(['Contacts.id IN ' => $inmygroupsContacts])
+								->orWhere(['Contacts.id IN ' => $myContacts]);
 		$this->set('contacts', $this->paginate($contacts));
 	}
 
