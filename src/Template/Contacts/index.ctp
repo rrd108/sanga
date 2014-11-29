@@ -3,7 +3,7 @@
 	<thead>
 		<tr>
 			<th><?= __('Contact Person') ?></th>
-			<th><?= $this->Paginator->sort('name') ?></th>
+			<th><?= $this->Paginator->sort('name') . ' (' . $this->Paginator->sort('contactname') . ')' ?></th>
 			<th><?= $this->Paginator->sort('zip_id') ?></th>
 			<th><?= __('Groups') ?></th>
 		</tr>
