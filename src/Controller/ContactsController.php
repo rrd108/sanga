@@ -140,7 +140,8 @@ class ContactsController extends AppController {
 			'contain' => ['Contacts', 'Users', 'Events', 'Units', 'Groups']
 		];
 		$histories = $this->Contacts->Histories->find()
-				->where(['contact_id' => $id]);
+				->where(['contact_id' => $id])
+				->order(['Histories.date' => 'DESC']);
 		$this->set('histories', $this->paginate($histories));
 
 		$accessibleGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
