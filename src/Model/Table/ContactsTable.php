@@ -382,9 +382,6 @@ class ContactsTable extends Table {
 	
 	public function findMine(Query $query, array $options){
 		return $query
-				/*->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address',
-						  'Zips.id', 'Zips.zip', 'Zips.name'])
-				->contain(['Zips', 'users', 'Groups'])	*/	//ha itten "Users" van akkor nem jó query generálódik, ez egy bug de jól jön. https://github.com/cakephp/cakephp/issues/5109
 				->matching('Users', function($q) use ($options) {
 					    return $q->where(['Users.id IN ' => $options['User.id']]);
 					});
@@ -392,9 +389,6 @@ class ContactsTable extends Table {
 	
 	public function findInGroups(Query $query, array $options){
 		return $query
-				/*->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address',
-						  'Zips.id', 'Zips.zip', 'Zips.name'])
-				->contain(['Zips', 'Users', 'groups'])*/
 				->matching('Groups', function($q) use ($options){
 						return $q->where(['Groups.id IN ' => $options['groupIds']]);
 					});

@@ -62,7 +62,7 @@ class GroupsTable extends Table {
 	
 	public function findAccessible(Query $query, array $options){
 		if(isset($options['shared'])){
-			$shared = ['shared' => 1];
+			$shared = ['shared' => true];
 		}
 		else{
 			$shared = null;
