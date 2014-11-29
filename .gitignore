@@ -4,4 +4,4 @@
 /logs/*
 /plugins/*
 composer.lock
-
+/webroot/coverage/*
