@@ -59,39 +59,36 @@ class ContactsController extends AppController {
 		if($this->request->data){
 			/*
 			 debug($this->request->data);
-			 [
+			[
+				'_zip_id' => '200',
 				'zip_id' => '162',
-				'area' => '50',
-				'active' => '1',
-				'linkup_id' => '5'
+				'area' => '15',
+				'_group_id' => 'Seva-puja',
+				'group_id' => '3'
 			]
 			*/
 			
 			$center = $this->Contacts->Zips->find()
 					->select(['lat', 'lng'])
 					->where(['id' => $this->request->data['zip_id']])
-					;//->toArray();
+					;
 			$cent = $center->toArray();
-			//debug($cent[0]->lat);
 			
 			$expr = $center->newExpr()->add('(3956 *2 * ASIN( SQRT( POWER( SIN( ( '.$cent[0]->lat.
 											' - abs( Contacts.lat ) ) * pi( ) /180 /2 ) , 2 ) + COS( '.$cent[0]->lat.
 											' * pi( ) /180 ) * COS( abs( Contacts.lat ) * pi( ) /180 ) * POWER( SIN( ( '.
 											$cent[0]->lng.' - Contacts.lng ) * pi( ) /180 /2 ) , 2 ) ) ))');
-			//debug($expr);
 			
 			$result = $this->Contacts->find()
 					->contain(['Zips', 'Groups'])
-					->select(['name', 'Zips.zip', 'Zips.name', 'distance' => $expr])
-					->where(['active' => true,
-							 'distance' => $expr])
+					->select(['Contacts.name', 'Zips.zip', 'Zips.name', 'distance' => $expr])
+					->where(['active' => true/*,
+							 'distance' => $expr*/])
 					->matching('Groups', function($q){
 						return $q->where(['Groups.id' => $this->request->data['group_id']]);
 						})
 					->having(['distance <=' => $this->request->data['area']])
 					->order(['distance' => 'ASC']);
-					//->toArray();
-			//debug($result);
 			$this->set('result', $result);
 		}
 	}
