@@ -29,7 +29,13 @@ class GroupsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->set('groups', $this->paginate($this->Groups));
+		$groups = $this->Groups->find('accessible',
+									  [
+									   'User.id' => $this->Auth->user('id'),
+									   'shared' => true
+									   ])
+								->contain(['AdminUsers']);
+		$this->set('groups', $this->paginate($groups));
 	}
 
 /**

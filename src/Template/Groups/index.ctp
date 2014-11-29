@@ -14,7 +14,6 @@
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
-			<th><?= $this->Paginator->sort('id') ?></th>
 			<th><?= $this->Paginator->sort('name') ?></th>
 			<th><?= $this->Paginator->sort('description') ?></th>
 			<th><?= $this->Paginator->sort('admin_user_id') ?></th>
@@ -25,15 +24,36 @@
 	<tbody>
 	<?php foreach ($groups as $group): ?>
 		<tr>
-			<td><?= $this->Number->format($group->id) ?></td>
-			<td><?= h($group->name) ?></td>
+			<td>
+				<?php
+				if($group->shared){
+					$css = 'info';
+				}
+				elseif($group->admin_user_id == $this->Session->read('Auth.User.id')){
+					$css = 'primary';
+				}
+				else{
+					$css = 'success';
+				}
+				echo '<span class="tag tag-'.$css.'">' . $group->name . '</span>';
+				?>
+			</td>
 			<td><?= h($group->description) ?></td>
-			<td><?= $this->Number->format($group->admin_user_id) ?></td>
+			<td>
+				<?php
+				$css = ($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success';
+				print '<span class="tag tag-'.$css.'">' . $group->admin_user->name . '</span>';
+				?>
+			</td>
 			<td><?= h($group->shared) ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $group->id]) ?>
-				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $group->id]) ?>
-				<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $group->id], ['confirm' => __('Are you sure you want to delete # {0}?', $group->id)]) ?>
+				<?php
+				if($group->admin_user_id == $this->Session->read('Auth.User.id')){
+					echo $this->Html->link(__('Edit'), ['action' => 'edit', $group->id]);
+					echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $group->id], ['confirm' => __('Are you sure you want to delete # {0}?', $group->id)]);
+				}
+				?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

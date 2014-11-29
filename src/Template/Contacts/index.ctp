@@ -6,7 +6,6 @@
 			<th><?= $this->Paginator->sort('name') ?></th>
 			<th><?= $this->Paginator->sort('zip_id') ?></th>
 			<th><?= __('Groups') ?></th>
-			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -22,7 +21,7 @@
 			</td>
 			<td>
 				<?php
-					print h($contact->name);
+					print $this->Html->link(h($contact->name), ['action' => 'view', $contact->id]);
 					if($contact->contactname){
 						print '<span class="i"> (' . h($contact->contactname) . ')</span>';
 					}
@@ -45,17 +44,6 @@
 							$css = 'success';
 						}
 						print '<span class="tag tag-'.$css.'">' . $group->name . '</span>' . "\n";
-					}
-				?>
-			</td>
-			<td class="actions">
-				<?= $this->Html->link(__('View'), ['action' => 'view', $contact->id]) ?>
-				<?php
-					foreach($contact->users as $user){
-						if($user->id == $this->Session->read('Auth.User.id')){
-							print $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id]);
-							print $this->Form->postLink(__('Delete'), ['action' => 'delete', $contact->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contact->id)]);
-						}
 					}
 				?>
 			</td>

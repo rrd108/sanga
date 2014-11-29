@@ -21,7 +21,8 @@ class GroupsTable extends Table {
 		$this->displayField('name');
 		$this->primaryKey('id');
 
-		$this->belongsTo('Users', [
+		$this->belongsTo('AdminUsers', [
+			'className' => 'Users',
 			'foreignKey' => 'admin_user_id',
 		]);
 		$this->hasMany('Histories', [
@@ -70,7 +71,8 @@ class GroupsTable extends Table {
 		return $query
 				->orWhere($shared)
 				->orWhere(['admin_user_id' => $options['User.id']])
-				->orWhere(['Groups.id IN' => $this->findWhereMember($query, $options)]);
+				->orWhere(['Groups.id IN' => $this->findWhereMember($query, $options)])
+				->order(['Groups.name']);
 	}
 	
 	private function findWhereMember(Query $query, array $options){
