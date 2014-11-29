@@ -136,8 +136,7 @@ class ContactsTableTest extends TestCase {
 		$expected = [
 				['id' => 2, 'name' => 'Acarya-ratna das', 'contactname' => '', 'address' => 'Rózsakert u. 6. II/9',
 					'users' => [
-						[
-							'id' => (int) 2,
+							'id' => 2,
 							'name' => 'user2',
 							'password' => 'secretpass',
 							'realname' => 'user2 real name',
@@ -151,15 +150,21 @@ class ContactsTableTest extends TestCase {
 								'contact_id' => 2,
 								'user_id' => 2
 							]
-						]
 					],
-					'groups' => [
-								 ['id' => 1,'name' => 'NVD','description' => '',
-								  'admin_user_id' => 1,'shared' => true,
-								  '_joinData' => ['group_id' => 1, 'contact_id' => 2]
-								 ]
-								],
-					'zip' => ['id' => 1, 'zip' => '1011', 'name' => 'Bp I.']
+					'zip_id' => 1,
+					'lat' => 47.660961,
+					'lng' => 19.077259000000002,
+					'phone' => '36/30 99-95-091',
+					'email' => 'halterand@gmail.com',
+					'birth' => null,
+					'sex' => 0,
+					'workplace' => '',
+					'family_id' => null,
+					'contactsource_id' => 4,
+					'active' => true,
+					'comment' => 'kis eü probléma',
+					'created' => null,
+					'modified' => Time::createFromFormat('Y-m-d H:i:s', '2014-10-25 08:09:44')
 				]
 			];
 		$this->assertEquals($expected, $actual);
