@@ -130,6 +130,40 @@ class ContactsTableTest extends TestCase {
 		];
 		$this->assertEquals($expected, $actual);
 	}
+	
+	public function testFindMine(){
+		$actual = $this->Contacts->find('mine', ['User.id' => 2])->hydrate(false)->toArray();
+		$expected = [
+				['id' => 2, 'name' => 'Acarya-ratna das', 'contactname' => '', 'address' => 'Rózsakert u. 6. II/9',
+					'users' => [
+						[
+							'id' => (int) 2,
+							'name' => 'user2',
+							'password' => 'secretpass',
+							'realname' => 'user2 real name',
+							'email' => 'user2@sehol.se',
+							'phone' => '+36123456789',
+							'active' => true,
+							'role' => 1,
+							'created' => Time::createFromFormat('Y-m-d H:i:s', '2014-11-29 10:59:47'),
+							'modified' => Time::createFromFormat('Y-m-d H:i:s', '2014-11-29 10:59:47'),
+							'_joinData' => [
+								'contact_id' => 2,
+								'user_id' => 2
+							]
+						]
+					],
+					'groups' => [
+								 ['id' => 1,'name' => 'NVD','description' => '',
+								  'admin_user_id' => 1,'shared' => true,
+								  '_joinData' => ['group_id' => 1, 'contact_id' => 2]
+								 ]
+								],
+					'zip' => ['id' => 1, 'zip' => '1011', 'name' => 'Bp I.']
+				]
+			];
+		$this->assertEquals($expected, $actual);
+	}
 
 /**
  * Test initialize method

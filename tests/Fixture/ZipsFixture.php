@@ -41,14 +41,8 @@ class ZipsFixture extends TestFixture {
  * @var array
  */
 	public $records = [
-		[
-			'id' => 1,
-			'country_id' => 1,
-			'zip' => 'Lorem ipsum dolor sit amet',
-			'name' => 'Lorem ipsum dolor sit amet',
-			'lat' => 1,
-			'lng' => 1
-		],
+		['id' => 1, 'country_id' => 1, 'zip' => '1011', 'name' => 'Bp I.', 'lat' => 47.5, 'lng' => 19.04],
+		['id' => 2, 'country_id' => 1, 'zip' => '1012', 'name' => 'Bp I.', 'lat' => 47.49, 'lng' => 19.02]
 	];
 
 }

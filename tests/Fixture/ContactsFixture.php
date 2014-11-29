@@ -61,7 +61,7 @@ class ContactsFixture extends TestFixture {
 			'birth' => '1974-09-12','sex' => '1','workplace' => 'MSCI Barra',
 			'family_id' => '1','contactsource_id' => '2','active' => '1',
 			'comment' => '','created' => '2014-10-06 18:23:19','modified' => '2014-10-28 11:46:36'],
-		['id' => 2,'name' => 'Acarya-ratna das','contactname' => '','zip_id' => '162',
+		['id' => 2,'name' => 'Acarya-ratna das','contactname' => '','zip_id' => '1',
 			'address' => 'Rózsakert u. 6. II/9','lat' => '47.660961','lng' => '19.077259',
 			'phone' => '36/30 99-95-091','email' => 'halterand@gmail.com',
 			'birth' => NULL,'sex' => '0','workplace' => '',

@@ -37,10 +37,8 @@ class ContactsGroupsFixture extends TestFixture {
  * @var array
  */
 	public $records = [
-		[
-			'group_id' => 1,
-			'contact_id' => 1
-		],
+		['group_id' => 1, 'contact_id' => 1],
+		['group_id' => 1, 'contact_id' => 2]
 	];
 
 }
