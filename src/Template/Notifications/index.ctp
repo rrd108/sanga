@@ -10,10 +10,7 @@
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
-			<!--th><?= $this->Paginator->sort('id') ?></th>
-			<th><?= $this->Paginator->sort('user_id') ?></th-->
 			<th><?= $this->Paginator->sort('notification') ?></th>
-			<th><?= $this->Paginator->sort('unread') ?></th>
 			<th><?= $this->Paginator->sort('created') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
@@ -21,16 +18,13 @@
 	<tbody>
 	<?php foreach ($notifications as $notification): ?>
 		<tr <?php if($notification->unread) print 'class="b"' ?> >
-			<!--td><?= $this->Number->format($notification->id) ?></td>
 			<td>
-				<?= $notification->has('user') ? $this->Html->link($notification->user->id, ['controller' => 'Users', 'action' => 'view', $notification->user->id]) : '' ?>
-			</td-->
-			<td><?= h($notification->notification) ?></td>
-			<td><?= h($notification->unread) ?></td>
+				<?php
+					echo $this->Html->link($notification->notification, ['action' => 'view', $notification->id]);
+				?>
+			</td>
 			<td><?= h($notification->created) ?></td>
 			<td class="actions">
-				<?= $this->Html->link(__('View'), ['action' => 'view', $notification->id]) ?>
-				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $notification->id]) ?>
 				<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $notification->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notification->id)]) ?>
 			</td>
 		</tr>
