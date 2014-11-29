@@ -52,12 +52,12 @@
 				print $this->Session->read('Auth.User.realname');
 				$nc = '';
 				if($notification_count)
-					print $nc = '<span class="notice">'.$notification_count.'</span>';
+					print $nc = ' <span class="notice">'.$notification_count.'</span>';
 			?>
 			<ul>
 				<?php
 					print '<li>' . $this->Html->link('☭ ' . __('Profile'), '/users/view') . '</li>';
-					print '<li>' . $this->Html->link('⚠ ' . __('Notifications') . ' ' . $nc, '/notifications', ['escapeTitle' => false]) . '</li>';
+					print '<li>' . $this->Html->link('⚠ ' . __('Notifications') . $nc, '/notifications', ['escapeTitle' => false]) . '</li>';
 					print '<li>' . $this->Html->link('⊗ ' . _('Logout'), '/users/logout') . '</li>';
 				?>
 			</ul>
