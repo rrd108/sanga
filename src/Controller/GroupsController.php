@@ -36,6 +36,12 @@ class GroupsController extends AppController {
 									   ])
 								->contain(['AdminUsers']);
 		$this->set('groups', $this->paginate($groups));
+		
+		//for adding new group
+		$this->set('group', $this->Groups->newEntity($this->request->data));
+		$users = $this->Groups->Users->find('list');
+		$contacts = $this->Groups->Contacts->find('list');
+		$this->set(compact('users', 'contacts'));
 	}
 
 /**
@@ -58,6 +64,9 @@ class GroupsController extends AppController {
  * @return void
  */
 	public function add() {
+		if(!isset($this->request->data['admin_user_id'])){
+			$this->request->data['admin_user_id'] = $this->Auth->User('id');
+		}
 		$group = $this->Groups->newEntity($this->request->data);
 		if ($this->request->is('post')) {
 			if ($this->Groups->save($group)) {

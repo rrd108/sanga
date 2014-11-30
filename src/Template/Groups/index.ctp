@@ -1,16 +1,4 @@
-<div class="actions columns large-2 medium-3">
-	<h3><?= __('Actions') ?></h3>
-	<ul class="side-nav">
-		<li><?= $this->Html->link(__('New Group'), ['action' => 'add']) ?></li>
-		<li><?= $this->Html->link(__('List Histories'), ['controller' => 'Histories', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New History'), ['controller' => 'Histories', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Contacts'), ['controller' => 'Contacts', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?> </li>
-	</ul>
-</div>
-<div class="groups index large-10 medium-9 columns">
+<div class="groups index columns">
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
@@ -22,6 +10,38 @@
 		</tr>
 	</thead>
 	<tbody>
+		<tr>
+			<?php
+			echo '<td>';
+				echo $this->Form->create($group, ['action' => 'add']);
+				echo $this->Form->input('name', ['label' => false]);
+			echo '</td>';
+			echo '<td>';
+				echo $this->Form->input('description', ['label' => false]);
+			echo '</td>';
+			echo '<td>';
+				if($this->Session->read('Auth.User.id') >= 9){
+					echo $this->Form->input('admin_user_id',
+										['label' => false,
+										 'options' => $users,
+										 'value' => $this->Session->read('Auth.User.id')
+										 ]);
+				}
+				else{
+					echo '<span class="tag tag-primary">' . $this->Session->read('Auth.User.name') . '</span>';
+				}
+			echo '</td>';
+			echo '<td>';
+				echo $this->Form->input('shared', ['label' => false]);
+			echo '</td>';
+			//echo $this->Form->input('users._ids', ['options' => $users]);
+			//echo $this->Form->input('contacts._ids', ['options' => $contacts]);
+			echo '<td>';
+				echo $this->Form->button(__('Submit'));
+				echo $this->Form->end();
+			echo '</td>';
+			?>
+		</tr>
 	<?php foreach ($groups as $group): ?>
 		<tr>
 			<td>
