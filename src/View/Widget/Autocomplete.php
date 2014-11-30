@@ -19,15 +19,36 @@ class Autocomplete implements WidgetInterface {
             'label' => '',
             'source' => '',
             'value' => '',
-            'select' => true
+            'focus' => 'event.preventDefault();',     //without this when we select something its value will be written into the input
+            'change' => '',
+            'onSelect' => 'value'
         ];
         $data['source'] = ltrim($data['source'], '/');
-        if($data['select']){
-            return $this->_templates->format('autocompleteselect', [
+        
+        /* 
+         * multiple choices gets id like: skills._ids
+         * it rendered as id="#skills[ids]"
+         * jQuery does not find $("#skills[ids]"), because of the "[" spec char
+         * so we should escape it by double "\\"
+         * so the seletor will be $("#_skills\\[_ids\\]")
+         */
+        $safeName = str_replace('[', '\\\\[', $data['name']);
+        $safeName = str_replace(']', '\\\\]', $safeName);
+        
+        $focus = $data['focus'];
+        $change = $data['change'];
+        $onSelect = $data['onSelect'];
+        unset($data['focus'], $data['change'], $data['onSelect']);
+        
+        if($onSelect == 'value'){
+            return $this->_templates->format('autocompleteOnSelectValue', [
                 'name' => $data['name'],
+                'safeName' => $safeName,
                 'label' => $data['label'],
                 'source' => Router::url('/') . $data['source'],
                 'value' => $data['val'],
+                'focus' => $focus,
+                'change' => $change,
                 'attrs' => $this->_templates->formatAttributes($data,
                                                                ['name', 'label', 'source', 'value']
                                                                )
@@ -36,6 +57,7 @@ class Autocomplete implements WidgetInterface {
         else{
             return $this->_templates->format('autocompletechecker', [
                 'name' => $data['name'],
+                'safeName' => $safeName,
                 'label' => $data['label'],
                 'source' => Router::url('/') . $data['source'],
                 'value' => $data['val'],
