@@ -5,6 +5,7 @@
 			<th><?= __('Contact Person') ?></th>
 			<th><?= $this->Paginator->sort('name') . ' (' . $this->Paginator->sort('contactname') . ')' ?></th>
 			<th><?= $this->Paginator->sort('zip_id') ?></th>
+			<th><?= __('Phone') ?></th>
 			<th><?= __('Groups') ?></th>
 		</tr>
 	</thead>
@@ -30,6 +31,9 @@
 			<td>
 				<?= $contact->has('zip') ? $contact->zip->zip . ' ' . $contact->zip->name : '' ?>
 				<?= h($contact->address) ?>
+			</td>
+			<td>
+				<?= h($contact->phone) ?>
 			</td>
 			<td>
 				<?php

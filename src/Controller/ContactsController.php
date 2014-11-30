@@ -110,7 +110,8 @@ class ContactsController extends AppController {
 				->select(['Contacts.id']);
 
 		$contacts = $this->Contacts->find()
-								->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname', 'Contacts.address',
+								->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname',
+										  'Contacts.address', 'Contacts.phone',
 										  'Zips.id', 'Zips.zip', 'Zips.name'])
 								->contain(['Zips', 'Users', 'Groups'])
 								->orWhere(['Contacts.id IN ' => $inmygroupsContacts])
