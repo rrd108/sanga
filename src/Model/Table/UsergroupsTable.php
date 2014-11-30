@@ -21,7 +21,8 @@ class UsergroupsTable extends Table {
 		$this->displayField('name');
 		$this->primaryKey('id');
 
-		$this->belongsTo('Users', [
+		$this->belongsTo('AdminUsers', [
+			'className' => 'Users',
 			'foreignKey' => 'admin_user_id',
 		]);
 		$this->belongsToMany('Users', [
