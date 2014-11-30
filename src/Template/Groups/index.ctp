@@ -65,7 +65,7 @@
 				print '<span class="tag tag-'.$css.'">' . $group->admin_user->name . '</span>';
 				?>
 			</td>
-			<td><?= h($group->shared) ?></td>
+			<td><?= ($group->shared)?'✔':'' ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $group->id]) ?>
 				<?php
