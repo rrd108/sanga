@@ -12,6 +12,7 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 			<li id="tabnav-3"><a href="#tabs-3"><?= __('Workplace and skills') ?></a></li>
 			<li id="tabnav-4"><a href="#tabs-4">Történések</a></li>
 			<li id="tabnav-5"><a href="#tabs-5"><?= __('Groups') ?></a></li>
+			<li id="tabnav-6"><a href="#tabs-6"><?= __('Finances') ?></a></li>
 		</ul>
 	</div>
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
@@ -150,7 +151,6 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 				<th><?= $this->Paginator->sort('Event.name') ?></th>
 				<th><?= $this->Paginator->sort('detail') ?></th>
 				<th><?= $this->Paginator->sort('quantity') ?></th>
-				<th><?= $this->Paginator->sort('family_id') ?></th>
 			</tr>
 			<?php foreach ($histories as $history): ?>
 			<tr>
@@ -181,7 +181,6 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 						}
 					?>
 				</td>
-				<td><?= h($history->family_id) ?></td>
 			</tr>
 			<?php endforeach; ?>
 		</table>
@@ -200,6 +199,7 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 	</div>
 	<div id="tabs-5" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->name) ?></h2>
+		<h3><?= __('Member') ?></h3>
 		<div class="column large-12" id="member">
 			<?php
 				$cGroups = [];;
@@ -243,5 +243,8 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 				}
 			?>
 		</div>
+	</div>
+	<div id="tabs-6" class="contacts view large-10 medium-9 columns">
+		<h2><?= h($contact->name) ?></h2>
 	</div>
 </div>

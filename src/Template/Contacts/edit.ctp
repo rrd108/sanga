@@ -13,7 +13,7 @@
 		echo $this->Form->input('sex', ['type' => 'radio', 'options' => [1 => __('Male'), 2 => __('Female')]]);
 		echo $this->Form->input('active', ['checked' => true, 'title' => 'Az inaktív kapcsolatok az akik eltűntek, eltávoztak, elérhetetlenek, stb.']);
 		echo $this->Form->input('workplace');
-		echo $this->Form->autocomplete('family_id', ['select' => true, 'source' => 'searchname', 'label' => __('Family'), 'title' => __('Choose family member')]);		
+		echo $this->Form->autocomplete('family_id', ['source' => 'searchname', 'label' => __('Family'), 'title' => __('Choose family member')]);		
 		echo $this->Form->input('contactsource_id', ['options' => $contactsources]);
 		echo $this->Form->input('comment', ['title' => 'Másodlagos elérhetőségek, egyéb megjegyzések']);
 		echo $this->Form->input('groups._ids', ['options' => $groups]);
