@@ -2,10 +2,10 @@
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
-			<th><?= $this->Paginator->sort('name') ?></th>
-			<th><?= $this->Paginator->sort('description') ?></th>
 			<th><?= $this->Paginator->sort('admin_user_id') ?></th>
 			<th><?= $this->Paginator->sort('shared') ?></th>
+			<th><?= $this->Paginator->sort('name') ?></th>
+			<th><?= $this->Paginator->sort('description') ?></th>
 			<th class="actions"><?= __('Actions') ?></th>
 		</tr>
 	</thead>
@@ -14,12 +14,6 @@
 			<?php
 			echo '<td>';
 				echo $this->Form->create($group, ['action' => 'add']);
-				echo $this->Form->input('name', ['label' => false]);
-			echo '</td>';
-			echo '<td>';
-				echo $this->Form->input('description', ['label' => false]);
-			echo '</td>';
-			echo '<td>';
 				if($this->Session->read('Auth.User.id') >= 9){
 					echo $this->Form->input('admin_user_id',
 										['label' => false,
@@ -34,6 +28,12 @@
 			echo '<td>';
 				echo $this->Form->input('shared', ['label' => false]);
 			echo '</td>';
+			echo '<td>';
+				echo $this->Form->input('name', ['label' => false]);
+			echo '</td>';
+			echo '<td>';
+				echo $this->Form->input('description', ['label' => false]);
+			echo '</td>';
 			//echo $this->Form->input('users._ids', ['options' => $users]);
 			//echo $this->Form->input('contacts._ids', ['options' => $contacts]);
 			echo '<td>';
@@ -44,6 +44,13 @@
 		</tr>
 	<?php foreach ($groups as $group): ?>
 		<tr>
+			<td>
+				<?php
+				$css = ($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success';
+				print '<span class="tag tag-'.$css.'">' . $group->admin_user->name . '</span>';
+				?>
+			</td>
+			<td><?= ($group->shared)?'✔':'' ?></td>
 			<td>
 				<?php
 				if($group->shared){
@@ -59,13 +66,6 @@
 				?>
 			</td>
 			<td><?= h($group->description) ?></td>
-			<td>
-				<?php
-				$css = ($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success';
-				print '<span class="tag tag-'.$css.'">' . $group->admin_user->name . '</span>';
-				?>
-			</td>
-			<td><?= ($group->shared)?'✔':'' ?></td>
 			<td class="actions">
 				<?= $this->Html->link(__('View'), ['action' => 'view', $group->id]) ?>
 				<?php
