@@ -11,9 +11,9 @@
 			☠ Admin
 			<ul>
 				<?php
-					print '<li>' . $this->Html->link('❶ ' . __('Zips'), '/zips') . '</li>';
-					print '<li>' . $this->Html->link('☢ ' . __('Countries'), '/countries') . '</li>';
-					print '<li>' . $this->Html->link('❖ ' . __('Units'), '/units') . '</li>';
+					print '<li>' . $this->Html->link('❶ ' . __('Zips'), ['controller' => 'Zips']) . '</li>';
+					print '<li>' . $this->Html->link('☢ ' . __('Countries'), ['controller' => 'Countries', 'action' => 'index']) . '</li>';
+					print '<li>' . $this->Html->link('❖ ' . __('Units'), ['controller' => 'Units', 'action' => 'index']) . '</li>';
 					//print '<li>' . $this->Html->link('☻ ' . __('Users'), ['prefix' => 'admin', 'controller' => 'Users', 'action' => 'index']) . '</li>';
 					print '<li>' . $this->Html->link('☻ ' . __('Users'), ['controller' => 'Users', 'action' => 'index']) . '</li>';
 				?>
@@ -25,12 +25,12 @@
 			<ul>
 				<?php
 					if(in_array($this->Session->read('Auth.User.role'), [9,10])){
-						print '<li>' . $this->Html->link('⚓ ' . __('Contact sources'), '/contactsources') . '</li>';
-						print '<li>' . $this->Html->link('✋ ' . __('User groups'), '/usergroups') . '</li>';
-						print '<li>' . $this->Html->link('✄ ' . __('Skills'), '/skills') . '</li>';
+						print '<li>' . $this->Html->link('⚓ ' . __('Contact sources'), ['controller' => 'Contactsources', 'action' => 'index']) . '</li>';
+						print '<li>' . $this->Html->link('✋ ' . __('User groups'), ['controller' => 'Usergroups', 'action' => 'index']) . '</li>';
+						print '<li>' . $this->Html->link('✄ ' . __('Skills'), ['controller' => 'Skills', 'action' => 'index']) . '</li>';
 					}
-					print '<li>' . $this->Html->link('⁂ ' . __('Groups'), '/groups') . '</li>';
-					print '<li>' . $this->Html->link('✿ ' . __('Events'), '/events') . '</li>';
+					print '<li>' . $this->Html->link('⁂ ' . __('Groups'), ['controller' => 'Groups', 'action' => 'index']) . '</li>';
+					print '<li>' . $this->Html->link('✿ ' . __('Events'), ['controller' => 'Events', 'action' => 'index']) . '</li>';
 				?>
 			</ul>
 		</li>
@@ -38,11 +38,11 @@
 			✽ CRM
 			<ul>
 				<?php
-					print '<li>'. $this->Html->link('♥ ' . __('Contacts'), '/contacts') . '</li>';
-					print '<li>'. $this->Html->link('⊕ ' . __('Add Contact'), '/contacts/add') . '</li>';
-					print '<li>' . $this->Html->link('⚑ ' . __('Histories'), '/histories') . '</li>';
-					print '<li>' . $this->Html->link('♛ ' . __('Queries'), '/contacts/search') . '</li>';
-					print '<li>' . $this->Html->link('✈ ' . __('Map'), '/contacts/showmap') . '</li>';
+					print '<li>'. $this->Html->link('♥ ' . __('Contacts'), ['controller' => 'Contacts', 'action' => 'index']) . '</li>';
+					print '<li>'. $this->Html->link('⊕ ' . __('Add Contact'), ['controller' => 'Contacts', 'action' => 'add']) . '</li>';
+					print '<li>' . $this->Html->link('⚑ ' . __('Histories'), ['controller' => 'Histories', 'action' => 'index']) . '</li>';
+					print '<li>' . $this->Html->link('♛ ' . __('Queries'), ['controller' => 'Contacts', 'action' => 'search']) . '</li>';
+					print '<li>' . $this->Html->link('✈ ' . __('Map'), ['controller' => 'Contacts', 'action' => 'showmap']) . '</li>';
 				?>
 			</ul>
 		</li>
@@ -56,9 +56,9 @@
 			?>
 			<ul>
 				<?php
-					print '<li>' . $this->Html->link('☭ ' . __('Profile'), '/users/view') . '</li>';
-					print '<li>' . $this->Html->link('⚠ ' . __('Notifications') . $nc, '/notifications', ['escapeTitle' => false]) . '</li>';
-					print '<li>' . $this->Html->link('⊗ ' . _('Logout'), '/users/logout') . '</li>';
+					print '<li>' . $this->Html->link('☭ ' . __('Profile'), ['controller' => 'Users', 'action' => 'view']) . '</li>';
+					print '<li>' . $this->Html->link('⚠ ' . __('Notifications') . $nc, ['controller' => 'Notifications', 'action' => 'index'], ['escapeTitle' => false]) . '</li>';
+					print '<li>' . $this->Html->link('⊗ ' . _('Logout'), ['controller' => 'Users', 'action' => 'logout']) . '</li>';
 				?>
 			</ul>
 		</li>
