@@ -2,6 +2,7 @@
 //$this->assign('title', 'Kapcsolatok / Új');
 //$this->Html->addCrumb('Kapcsolatok', '/contacts');
 //$this->Html->addCrumb('Új', '/contacts/add');
+print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 ?>
 <div class="contacts form columns">
 <?= $this->Form->create($contact) ?>
@@ -45,16 +46,15 @@
 								 'type' => 'select',
 								 'multiple' => 'checkbox'
 								 ]);
-		echo $this->Form->autocomplete('skills._ids',
+		echo $this->Form->input('skills._ids', ['type' => 'text']);/*,
 									   ['source' => '/skills/search',
 										'label' => __('Skills'),
-//http://jqueryui.com/autocomplete/#multiple
 										'change' => 'var t = $(event.target);
-													t.parent().append("<span class=\"tag tag-primary\">"+t.val()+"</span>\n");
+													t.parent().append("<span class=\"tag tag-mine\">"+t.val()+"</span>\n");
 													t.val(null);
 													t.focus();
 													event.preventDefault();'
-										]);
+										]);*/
 	?>
 	</fieldset>
 <?= $this->Form->button(__('Submit')) ?>
