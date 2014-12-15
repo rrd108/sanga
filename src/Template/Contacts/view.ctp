@@ -16,7 +16,7 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 		</ul>
 	</div>
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
-		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
+		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-shared fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
 			<div class="large-11 columns strings">
@@ -104,7 +104,7 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 		</div>
 	</div>
 	<div id="tabs-2" class="contacts view large-10 medium-9 columns">
-		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
+		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-shared fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
 			<div class="large-11 columns strings">
@@ -119,7 +119,7 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 		</div>
 	</div>
 	<div id="tabs-3" class="contacts view large-10 medium-9 columns">
-		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
+		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-shared fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
 			<div class="large-11 columns strings">
@@ -129,7 +129,7 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 				<?php if (!empty($contact->skills)): ?>
 					<p>
 					<?php foreach ($contact->skills as $skills): ?>
-						<span class="tag tag-success">
+						<span class="tag tag-viewable">
 							<?php print h($skills->name); ?>
 						</span>
 					<?php endforeach; ?>
@@ -139,7 +139,7 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 		</div>
 	</div>
 	<div id="tabs-4" class="contacts view large-10 medium-9 columns">
-		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-info fr']) ?>
+		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-shared fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
 		<?php if (!empty($histories)): ?>
@@ -211,7 +211,7 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 						if($groups->admin_user_id == $this->Session->read('Auth.User.id')){
 							$myGroup = true;
 						}
-						$cssStyle = $groups->shared ? 'info' : ($myGroup ? 'primary' : 'success');
+						$cssStyle = $groups->shared ? 'shared' : ($myGroup ? 'mine' : 'viewable');
 						
 						$draggable = '';
 						if($myContact || $myGroup){

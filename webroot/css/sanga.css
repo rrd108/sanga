@@ -225,26 +225,22 @@ td.actions a{
   line-height: 2em;
 }
 
-.tag-default{
-  background: #777777
-}
 
-.tag-primary{
+.tag-mine{
   background: #428BCA;
 }
 
-.tag-success{
+.tag-viewable{
   background: #5CB85C;
 }
 
-.tag-info{
+.tag-shared{
   background: #5BC0DE;
 }
 
-.tag-warning{
-  background: #F0AD4E;
+.tag-default, .removeable:hover{
+  background: #777777
 }
-
 .tag-danger{
   background: #D9534F;
 }
@@ -260,6 +256,10 @@ td.actions a{
 
 .ui-droppable{
   min-height: 1.7em;
+}
+
+.removeable{
+  cursor: not-allowed;
 }
 
 .ui-tabs-vertical { width: 61em; }

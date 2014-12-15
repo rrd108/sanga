@@ -15,7 +15,7 @@
 			<td>
 				<?php
 					foreach($contact->users as $user){
-						$css = ($user->id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success';
+						$css = ($user->id == $this->Session->read('Auth.User.id')) ? 'mine' : 'viewable';
 						print '<span class="tag tag-'.$css.'">' . $user->name . '</span>' . "\n";
 					}
 				?>
@@ -39,13 +39,13 @@
 				<?php
 					foreach($contact->groups as $group){
 						if($group->shared){
-							$css = 'info';
+							$css = 'viewable';
 						}
 						elseif($group->admin_user_id == $this->Session->read('Auth.User.id')){
-							$css = 'primary';
+							$css = 'mine';
 						}
 						else{
-							$css = 'success';
+							$css = 'shared';
 						}
 						print '<span class="tag tag-'.$css.'">' . $group->name . '</span>' . "\n";
 					}

@@ -22,7 +22,7 @@
 										 ]);
 				}
 				else{
-					echo '<span class="tag tag-primary">' . $this->Session->read('Auth.User.name') . '</span>';
+					echo '<span class="tag tag-mine">' . $this->Session->read('Auth.User.name') . '</span>';
 				}
 			echo '</td>';
 			echo '<td>';
@@ -46,7 +46,7 @@
 		<tr>
 			<td>
 				<?php
-				$css = ($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success';
+				$css = ($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'mine' : 'viewable';
 				print '<span class="tag tag-'.$css.'">' . $group->admin_user->name . '</span>';
 				?>
 			</td>
@@ -54,13 +54,13 @@
 			<td>
 				<?php
 				if($group->shared){
-					$css = 'info';
+					$css = 'shared';
 				}
 				elseif($group->admin_user_id == $this->Session->read('Auth.User.id')){
-					$css = 'primary';
+					$css = 'mine';
 				}
 				else{
-					$css = 'success';
+					$css = 'viewable';
 				}
 				echo '<span class="tag tag-'.$css.'">' . $group->name . '</span>';
 				?>

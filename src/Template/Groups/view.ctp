@@ -1,19 +1,4 @@
-<div class="actions columns large-2 medium-3">
-	<h3><?= __('Actions') ?></h3>
-	<ul class="side-nav">
-		<li><?= $this->Html->link(__('Edit Group'), ['action' => 'edit', $group->id]) ?> </li>
-		<li><?= $this->Form->postLink(__('Delete Group'), ['action' => 'delete', $group->id], ['confirm' => __('Are you sure you want to delete # {0}?', $group->id)]) ?> </li>
-		<li><?= $this->Html->link(__('List Groups'), ['action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Group'), ['action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Histories'), ['controller' => 'Histories', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New History'), ['controller' => 'Histories', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-		<li><?= $this->Html->link(__('List Contacts'), ['controller' => 'Contacts', 'action' => 'index']) ?> </li>
-		<li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?> </li>
-	</ul>
-</div>
-<div class="groups view large-10 medium-9 columns">
+<div class="groups view columns">
 	<h2><?= h($group->name) ?></h2>
 	<div class="row">
 		<div class="large-5 columns strings">
