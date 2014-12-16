@@ -87,8 +87,7 @@ class ContactsTable extends Table {
 			->add('family_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('family_id')
 			->add('contactsource_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('contactsource_id', 'create')
-			->notEmpty('contactsource_id')
+			->allowEmpty('contactsource_id')
 			->add('active', 'valid', ['rule' => 'boolean'])
 			->allowEmpty('active')
 			->allowEmpty('comment');
