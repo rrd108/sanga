@@ -128,11 +128,13 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 				<h6 class="subheader"><?= __('Skills') ?></h6>
 				<?php if (!empty($contact->skills)): ?>
 					<p>
-					<?php foreach ($contact->skills as $skills): ?>
-						<span class="tag tag-viewable">
-							<?php print h($skills->name); ?>
-						</span>
-					<?php endforeach; ?>
+					<?php
+					foreach ($contact->skills as $skills):
+						print '<span class="tag tag-shared">';
+							print h($skills->name);
+						print '</span> ';
+					endforeach;
+					?>
 					</p>
 				<?php endif; ?>
 			</div>
