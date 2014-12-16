@@ -57,19 +57,6 @@ class AppController extends Controller {
             ]
         ]
     ];
-    
-    public $helpers = [
-        'Form' => [
-            'widgets' => [
-                'autocomplete' => [
-                    'App\View\Widget\Autocomplete',
-                    'text',
-                    'label'
-                ]
-            ],
-            'templates' => 'autocompleter.php'
-        ]
-    ];
 
     public function beforeFilter(Event $event) {
 		$this->Auth->config('authorize', ['Controller']);

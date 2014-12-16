@@ -20,14 +20,12 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 									   ['label' => __('Known name'),
 										'title' => __('Like initiated name, nickname, etc')
 										]);
-		echo $this->Form->autocomplete('contactname',
-									   ['source' => 'searchname',
-										'label' => __('Name'),
+		echo $this->Form->input('contactname',
+									   ['label' => __('Name'),
 										'title' => __('Civil name, company name, etc')
 										]);
-		echo $this->Form->autocomplete('zip_id',
-									   ['source' => '/zips/searchzip',
-										'label' => __('Zip')]);
+		echo $this->Form->input('zip_id',
+									   ['label' => __('Zip')]);
 		echo $this->Form->input('address');
 		echo $this->Form->input('phone');
 		echo $this->Form->input('email');

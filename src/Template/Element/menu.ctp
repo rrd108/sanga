@@ -65,9 +65,7 @@
 		<li>
 			<?php
 				print $this->Form->create('contacts', ['action' => 'view']);
-				print $this->Form->autocomplete('name', [
-														'source' => '/contacts/searchname'
-														]);
+				print $this->Form->input('name');
 				print $this->Form->end();
 			?>
 		</li>

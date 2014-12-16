@@ -3,9 +3,9 @@
 	<fieldset>
 		<legend><?= __('Search'); ?></legend>
 	<?php
-		echo $this->Form->autocomplete('zip_id', ['source' => 'zips/searchzip', 'label' => __('Zip')]);
+		echo $this->Form->input('zip_id');
 		echo $this->Form->input('area');
-		echo $this->Form->autocomplete('group_id', ['source' => 'groups/searchgroup', 'label' => __('Group')]);
+		echo $this->Form->input('group_id');
 	?>
 	</fieldset>
 <?= $this->Form->button(__('Search')) ?>
