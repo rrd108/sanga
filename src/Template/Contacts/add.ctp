@@ -16,9 +16,8 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 								 'label' => __('Contact person'),
 								 'value' => $this->Session->read('Auth.User.id')
 								 ]);
-		echo $this->Form->autocomplete('name',
-									   ['source' => 'searchname',
-										'label' => __('Known name'),
+		echo $this->Form->input('name',
+									   ['label' => __('Known name'),
 										'title' => __('Like initiated name, nickname, etc')
 										]);
 		echo $this->Form->autocomplete('contactname',

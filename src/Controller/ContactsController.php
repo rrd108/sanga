@@ -156,6 +156,21 @@ class ContactsController extends AppController {
  */
 	public function add() {
 		$contact = $this->Contacts->newEntity($this->request->data);
+		if($this->request->data){
+			//debug($this->request->data);
+			/*'skills' => [
+				'_ids' => [
+					(int) 0 => '1',			//found in skills, this is the id
+					(int) 1 => '~könyvelő'		//starts with "~" this is a new skill (or fast typer problem)
+				]]
+			*/
+			foreach($this->request->data['skills']['_ids'] as $i => $skill){
+				if(mb_substr($skill, 0,1) == '~'){
+					$skill = ltrim($skill, '~');
+					$contact['skills'][] = $this->Contacts->Skills->newEntity(['name' => $skill]);
+				}
+			}
+		}
 		if ($this->request->is('post')) {
 			$contact->loggedInUser = $this->Auth->user('id');
 			if ($this->Contacts->save($contact)) {

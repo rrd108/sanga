@@ -12,7 +12,7 @@ $(function() {
 			tag = $(event.target).val();
 			id = "~" + tag;	//if the value starts with "~" that is a new skill
 		}
-		t.parent().append('<span class="tag tag-viewable removeable">' + tag + '</span> ');
+		t.parent().append('<span class="tag tag-shared removeable">' + tag + '</span> ');
 		t.parent().append('<input type="hidden" name="skills[_ids][]" value="' + id + '">');
 		t.val("");
 		t.focus();
