@@ -12,6 +12,10 @@ class HistoriesController extends AppController {
 	
 	public $helper = ['Time'];
 
+	public function isAuthorized($user = null) {
+        return true;
+    }
+
 /**
  * Index method
  *

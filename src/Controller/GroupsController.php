@@ -10,6 +10,10 @@ use App\Controller\AppController;
  */
 class GroupsController extends AppController {
 
+	public function isAuthorized($user = null) {
+        return true;
+    }
+
 	public function searchgroup(){
 		$query = $this->Groups->find()
 				->select(['id', 'name'])

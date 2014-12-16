@@ -13,6 +13,10 @@ use Cake\Utility\String;
 class ContactsController extends AppController {
 	
 	public $helpers = ['Number'];
+		
+	public function isAuthorized($user = null) {
+        return true;
+    }
 
 	//ajax keresések a név mezőkben
 	public function searchname(){

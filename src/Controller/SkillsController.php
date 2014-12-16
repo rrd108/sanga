@@ -10,6 +10,10 @@ use App\Controller\AppController;
  */
 class SkillsController extends AppController {
 
+	public function isAuthorized($user = null) {
+        return true;
+    }
+
 	public function search(){
 		$query = $this->Skills->find()
 				->select(['id', 'name'])

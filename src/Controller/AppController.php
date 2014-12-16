@@ -72,6 +72,7 @@ class AppController extends Controller {
     ];
 
     public function beforeFilter(Event $event) {
+		$this->Auth->config('authorize', ['Controller']);
         $this->Auth->deny();
         $this->loadModel('Notifications');
         $nc = $this->Notifications->find('unread', ['user_id' => $this->Auth->user('id')])->count();

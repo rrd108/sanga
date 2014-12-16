@@ -16,10 +16,12 @@ class UsersController extends AppController {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        // Allow users to logout.
-	    // You should not add the "login" action to allow list. Doing so would
-	    // cause problems with normal functioning of AuthComponent.
+        // Allow users to access logout without logged in
 	    $this->Auth->allow(['logout']);
+    }
+
+	public function isAuthorized($user = null) {
+        return true;
     }
 
 	public function login() {

@@ -10,6 +10,10 @@ use App\Controller\AppController;
  */
 class ContactsGroupsController extends AppController {
 
+	public function isAuthorized($user = null) {
+        return true;
+    }
+
 /**
  * Index method
  *

@@ -9,6 +9,10 @@ use App\Controller\AppController;
  * @property App\Model\Table\ZipsTable $Zips
  */
 class ZipsController extends AppController {
+	
+	public function isAuthorized($user = null) {
+        return true;
+    }
 
 	public function searchzip(){
 		$query = $this->Zips->find()
