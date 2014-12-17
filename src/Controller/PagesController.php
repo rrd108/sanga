@@ -28,6 +28,10 @@ use Cake\View\Exception\MissingViewException;
  */
 class PagesController extends AppController {
 
+	public function isAuthorized($user = null) {
+        return true;
+    }
+
 /**
  * Displays a view
  *
