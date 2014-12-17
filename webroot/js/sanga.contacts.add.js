@@ -51,4 +51,18 @@ $(function() {
 				return false;
 			}
 		});
+	
+	$('#zip').autocomplete({
+		minLength : 2,
+		source : '../Zips/search',
+		focus: function() {
+			// prevent value inserted on focus
+			return false;
+		},
+		select : function(event, ui) {	//when we select something from the dropdown
+			this.value = ui.item.label;
+			('#zip-id').val(ui.item.value);
+			return false;
+		}
+	});
 });

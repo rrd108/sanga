@@ -189,7 +189,7 @@ class ContactsController extends AppController {
 		}
 		$zips = $this->Contacts->Zips->find('list', ['idField' => 'id', 'valueField' => 'full_zip']);
 		$contactsources = $this->Contacts->Contactsources->find('list');
-		$groups = $this->Contacts->Groups->find('list');
+		$groups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
 		$skills = $this->Contacts->Skills->find('list');
 		$users = $this->Contacts->Users->find('list');
 		$this->set(compact('contact', 'zips', 'contactsources', 'groups', 'skills', 'users'));

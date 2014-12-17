@@ -24,8 +24,8 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 									   ['label' => __('Name'),
 										'title' => __('Civil name, company name, etc')
 										]);
-		echo $this->Form->input('zip_id',
-									   ['label' => __('Zip')]);
+		echo $this->Form->input('zip', ['type' => 'text']);
+		echo $this->Form->input('zip_id', ['type' => 'hidden']);
 		echo $this->Form->input('address');
 		echo $this->Form->input('phone');
 		echo $this->Form->input('email');
@@ -38,11 +38,46 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 		echo $this->Form->input('contactsource_id',
 								['options' => $contactsources,
 								 'type' => 'radio']);
+		
+		$fGroups = $values = [];
+		foreach($groups as $group){
+			//$fGroups[$group->id] = '<span class="tag tag-default">' . $group->name . '</span>';
+			$fGroups[$group->id] = $group->name;
+			if($group->shared){
+				$values[] = $group->id;
+			}
+		}
+		
 		echo $this->Form->input('groups._ids',
-								['options' => $groups,
+								['options' => $fGroups,
 								 'type' => 'select',
-								 'multiple' => 'checkbox'
+								 'multiple' => 'checkbox',
+								 'value' => $values
 								 ]);
+		/*echo '<div class="input">';
+			echo '<label for="groups-ids">';
+				echo __('Groups');
+			echo '</label>';
+			foreach($groups as $group){
+				echo $this->Form->checkbox('groups._ids', ['multiple' => true]);
+				$myGroup = false;
+				if($group->admin_user_id == $this->Session->read('Auth.User.id')){
+					$myGroup = true;
+				}
+				if($group->shared){
+					$cssDStyle = $cssStyle =  'shared';
+				}
+				else{
+					$cssStyle = ($myGroup ? 'mine' : 'viewable');
+					$cssDStyle = 'default';
+				}
+				echo '<span class="tag tag-' . $cssDStyle . '"
+						data-css="tag-' . $cssStyle . '" 
+						data-id="' . $group->id . '">';
+					echo h($group->name);
+				echo '</span> ';
+			}
+		echo '</div>';*/
 		echo $this->Form->input('skills._ids', ['type' => 'text']);/*,
 									   ['source' => '/skills/search',
 										'label' => __('Skills'),
