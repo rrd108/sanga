@@ -64,8 +64,8 @@
 		</li>
 		<li>
 			<?php
-				print $this->Form->create('contacts', ['action' => 'view']);
-				print $this->Form->input('name');
+				print $this->Form->create(null, ['id' => 'qForm', 'url' => ['controller' => 'Contacts', 'action' => 'quicksearch']]);
+				print $this->Form->input('quickterm', ['label' => false]);
 				print $this->Form->end();
 			?>
 		</li>
