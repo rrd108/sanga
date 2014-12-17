@@ -14,7 +14,7 @@ class ZipsController extends AppController {
         return true;
     }
 
-	public function searchzip(){
+	public function search(){
 		$query = $this->Zips->find()
 				->select(['id', 'zip', 'name'])
 				->where(['zip LIKE "'.$this->request->query('term').'%"'])
