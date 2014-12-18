@@ -18,7 +18,22 @@ class ContactsController extends AppController {
         return true;
     }
 
-	//ajax keresések a név mezőkben
+	public function search(){
+		$contact = $this->Contacts->newEntity($this->request->data);
+		$query = $this->Contacts->find()
+				->select(['id', 'name', 'contactname'])
+				->where(['name LIKE "%'.$this->request->query('term').'%"'])
+				->orWhere(['contactname LIKE "%'.$this->request->query('term').'%"']);
+		foreach($query as $row){
+			$label = $this->createHighlight($row->name) .
+					$this->createHighlight($row->contactname);
+			$result[] = array('value' => $row->id,
+							  'label' => $label);
+		}
+		$this->set('result', $result);
+		$this->set('contact', $contact);
+	}
+
 	public function quicksearch(){
 		$contact = $this->Contacts->newEntity($this->request->data);
 		$query = $this->Contacts->find()
@@ -60,7 +75,7 @@ class ContactsController extends AppController {
 	}
 	
 	//mindenféle lekérdezések
-	public function search(){
+	public function searchquery(){
 		
 		if($this->request->data){
 			/*
@@ -170,12 +185,35 @@ class ContactsController extends AppController {
 					(int) 1 => '~könyvelő'		//starts with "~" this is a new skill (or fast typer problem)
 				]]
 			*/
-			foreach($this->request->data['skills']['_ids'] as $i => $skill){
-				if(mb_substr($skill, 0,1) == '~'){
-					$skill = ltrim($skill, '~');
-					$contact['skills'][] = $this->Contacts->Skills->newEntity(['name' => $skill]);
+			if(is_array($this->request->data['skills']['_ids'])){
+				foreach($this->request->data['skills']['_ids'] as $i => $skill){
+					if(mb_substr($skill, 0,1) == '~'){
+						$skill = ltrim($skill, '~');
+						$contact['skills'][] = $this->Contacts->Skills->newEntity(['name' => $skill]);
+					}
 				}
 			}
+			
+			if($this->request->data['family_id']){
+				//$this->request->data['family_id'] here means the other family member's id, NOT the family id
+				$familyMember = $this->Contacts->find()
+						->select(['family_id'])
+						->where(['id' => $this->request->data['family_id']])
+						->first();
+				//debug($familyMember);
+				if(isset($familyMember->family_id)){
+					//to choosen family member already has a family_id
+					$contact->family_id = $familyMember->family_id;
+				}
+				else{
+					//this is a new family definition
+					//we should save this to the other family member
+					$familyMember = $this->Contacts->get($this->request->data['family_id']);
+					$familyMember->family_id = $contact->family_id = uniqid();
+					$this->Contacts->save($familyMember);
+				}
+			}
+		//die();
 		}
 		if ($this->request->is('post')) {
 			$contact->loggedInUser = $this->Auth->user('id');
@@ -183,7 +221,7 @@ class ContactsController extends AppController {
 				$this->Flash->success('The contact has been saved.');
 				return $this->redirect(['action' => 'index']);
 			} else {
-				debug($contact->errors());
+				//debug($contact->errors());
 				$this->Flash->error('The contact could not be saved. Please, try again.');
 			}
 		}
