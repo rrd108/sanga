@@ -108,13 +108,24 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
 			<div class="large-11 columns strings">
-				<h6 class="subheader"><?= __('Family Id') ?></h6>
-				<p><?= $this->Number->format($contact->family_id) ?></p>
+				<h6 class="subheader"><?= __('Family') ?></h6>
+				<p><?= h($contact->family_id) ?></p>
+				<ul>
 				<?php
 				foreach($family as $familymember){
-					print $familymember->id . ' ' . $familymember->name . ' ' . $familymember->contactname . '<br>';
+					if($familymember->id != $contact->id){
+						echo '<li>';
+							$name = '';
+							$name .= $familymember->name ? $familymember->name : '';
+							$name .= $familymember->contactname ? ' (' . $familymember->contactname . ')' : '';
+							echo $this->Html->link($name,
+											   ['action' => 'view', $familymember->id]);
+						echo '</li>';
+					}
+					//print $familymember->id . ' ' . $familymember->name . ' ' . $familymember->contactname . '<br>';
 				}
 				?>
+				</ul>
 			</div>
 		</div>
 	</div>
