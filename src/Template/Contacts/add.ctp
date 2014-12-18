@@ -24,7 +24,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 									   ['label' => __('Name'),
 										'title' => __('Civil name, company name, etc')
 										]);
-		echo $this->Form->input('zip', ['type' => 'text']);
+		echo $this->Form->input('xzip', ['type' => 'text', 'label' => __('Zip')]);
 		echo $this->Form->input('zip_id', ['type' => 'hidden']);
 		echo $this->Form->input('address');
 		echo $this->Form->input('phone');
@@ -33,7 +33,8 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 		echo $this->Form->input('sex', ['type' => 'radio', 'options' => [1 => __('Male'), 2 => __('Female')]]);
 		echo $this->Form->input('active', ['checked' => true, 'title' => 'Az inaktív kapcsolatok az akik eltűntek, eltávoztak, elérhetetlenek, stb.']);
 		echo $this->Form->input('workplace');
-		echo $this->Form->input('family_id');
+		echo $this->Form->input('xfamily', ['type' => 'text', 'label' => __('Family')]);
+		echo $this->Form->input('family_id', ['type' => 'hidden']);
 		echo $this->Form->input('comment', ['title' => 'Másodlagos elérhetőségek, egyéb megjegyzések']);
 		echo $this->Form->input('contactsource_id',
 								['options' => $contactsources,

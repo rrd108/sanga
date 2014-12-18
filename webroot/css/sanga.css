@@ -370,3 +370,13 @@ table thead {
   float: left;
   margin-left: 1em;
 }
+
+.form .error-message{
+  background-color: #c3232d;
+  color: #fff;
+}
+.form .error-message:before{
+  color: #c3232d;
+  content: "x";
+  padding: 11px 16px 14px 7px;
+}

@@ -52,17 +52,41 @@ $(function() {
 			}
 		});
 	
-	$('#zip').autocomplete({
+	$('#xzip').autocomplete({
 		minLength : 2,
 		source : '../Zips/search',
 		focus: function() {
-			// prevent value inserted on focus
 			return false;
-		},
+		},		
 		select : function(event, ui) {	//when we select something from the dropdown
 			this.value = ui.item.label;
-			('#zip-id').val(ui.item.value);
+			$('#zip-id').val(ui.item.value);
+			return false;
+		},
+		change : function(event, ui) {
+			this.value = ui.item.label;
+			$('#zip-id').val(ui.item.value);
 			return false;
 		}
 	});
+	
+	$('#xfamily').autocomplete({
+		minLength : 2,
+		source : '../Contacts/search',
+		html: true,
+		focus: function() {
+			return false;
+		},		
+		select : function(event, ui) {	//when we select something from the dropdown
+			this.value = ui.item.label.replace(/(<([^>]+)>)/ig,'');		//remove highlight html code;
+			$('#family-id').val(ui.item.value);
+			return false;
+		},
+		change : function(event, ui) {
+			this.value = ui.item.label.replace(/(<([^>]+)>)/ig,'');		//remove highlight html code;
+			$('#family-id').val(ui.item.value);
+			return false;
+		}
+	});
+
 });
