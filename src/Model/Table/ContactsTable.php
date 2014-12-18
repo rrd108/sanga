@@ -84,7 +84,7 @@ class ContactsTable extends Table {
 			->add('sex', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('sex')
 			->allowEmpty('workplace')
-			->add('family_id', 'valid', ['rule' => 'numeric'])
+			->add('family_id', 'valid', ['rule' => 'alphanumeric'])
 			->allowEmpty('family_id')
 			->add('contactsource_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('contactsource_id')
@@ -98,7 +98,8 @@ class ContactsTable extends Table {
 	public function beforeSave(Event $event, Entity $entity, ArrayObject $options){
 		if((!empty($entity->name) + !empty($entity->contactname) + !empty($entity->zip_id)
 				+ !empty($entity->address) + !empty($entity->phone) + !empty($entity->email)
-				+ !empty($entity->birth->time) + !empty($entity->workplace)) >= 2){
+				+ !empty($entity->birth->time) + !empty($entity->workplace)
+				+ !empty($entity->contactsource_id)) >= 2){
 			return true;
 		}
 		else{
