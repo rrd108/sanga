@@ -380,3 +380,18 @@ table thead {
   content: "x";
   padding: 11px 16px 14px 7px;
 }
+
+#editlink{
+  display: none;
+  float: right;
+}
+
+input.editbox{
+  width: 45%;
+  display: none;
+}
+#ajaxloader, #okImg, #errorImg{
+  display: none;
+  float: right;
+}
+/*icons: http://www.iconsdb.com/royal-blue-icons*/

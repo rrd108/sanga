@@ -1,7 +1,18 @@
 <?php
-//print $this->Html->script('gmap3.min.js');
-//print $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
-print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
+//echo $this->Html->script('gmap3.min.js');
+//echo $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
+echo $this->Html->script('sanga.contacts.view.js', ['block' => true]);
+
+//edit link
+echo $this->Html->link($this->Html->image('edit.png'),
+					   ['action' => 'edit', $contact->id],
+					   ['id' => 'editlink', 'escape' => false]);
+//ajax loader, ok and error
+echo $this->Html->image('ajax-loader.gif', ['id' => 'ajaxloader']);
+echo $this->Html->image('ok.png', ['id' => 'okImg']);
+echo $this->Html->image('error.png', ['id' => 'errorImg']);
+
+echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $contact->id]);
 ?>
 <div id="tabs" class="row">
 	<div class="actions columns large-2 medium-3">
@@ -16,21 +27,32 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 		</ul>
 	</div>
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
-		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-shared fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
 			<div class="large-11 columns strings">
-				<h6 class="subheader"><?= __('Name') ?></h6>
-				<p>&nbsp;<?= h($contact->name) ?></p>
+				<h6 class="subheader"><?= __('Known name') ?></h6>
+				<p>
+					&nbsp;
+					<span><?= h($contact->name) ?></span>
+					<?php
+					echo $this->Form->input('name',
+									   ['templates' => ['inputContainer' => '{{content}}'],
+										'class' => 'editbox',
+										'label' => false,
+										'value' => h($contact->name),
+										'title' => __('Like initiated name, nickname, etc')
+										]);
+					?>
+				</p>
 				<h6 class="subheader"><?= __('Contactname') ?></h6>
 				<p>&nbsp;<?= h($contact->contactname) ?></p>
 				<h6 class="subheader"><?= __('Contact person') ?></h6>
 				<?php if (!empty($contact->users)): ?>
-					<p>
+					<p>&nbsp;
 					<?php
 						$myContact = false;
 						foreach ($contact->users as $users){
-							print '&nbsp;' . h($users->name);
+							echo '&nbsp;' . h($users->name);
 							if($users->id == $this->Session->read('Auth.User.id')){
 								$myContact = true;
 							}
@@ -51,7 +73,7 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 				<p>&nbsp;
 					<?php
 					if($contact->birth){
-						print h($contact->birth->format('Y-m-d'));
+						echo h($contact->birth->format('Y-m-d'));
 					}
 					?>
 				</p>
@@ -59,13 +81,13 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 				<p>&nbsp;
 					<?php
 					if($contact->sex == 1){
-						print __('Male');
+						echo __('Male');
 					}
 					else if($contact->sex == 2){
-						print __('Female');
+						echo __('Female');
 					}
 					else{
-						print __('Unknown');
+						echo __('Unknown');
 					}
 					?>
 				</p>
@@ -104,12 +126,11 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 		</div>
 	</div>
 	<div id="tabs-2" class="contacts view large-10 medium-9 columns">
-		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-shared fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
 			<div class="large-11 columns strings">
 				<h6 class="subheader"><?= __('Family') ?></h6>
-				<p><?= h($contact->family_id) ?></p>
+				<p>&nbsp;<?= h($contact->family_id) ?></p>
 				<ul>
 				<?php
 				foreach($family as $familymember){
@@ -122,7 +143,7 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 											   ['action' => 'view', $familymember->id]);
 						echo '</li>';
 					}
-					//print $familymember->id . ' ' . $familymember->name . ' ' . $familymember->contactname . '<br>';
+					//echo $familymember->id . ' ' . $familymember->name . ' ' . $familymember->contactname . '<br>';
 				}
 				?>
 				</ul>
@@ -130,29 +151,27 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 		</div>
 	</div>
 	<div id="tabs-3" class="contacts view large-10 medium-9 columns">
-		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-shared fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
 			<div class="large-11 columns strings">
 				<h6 class="subheader"><?= __('Workplace') ?></h6>
 				<p>&nbsp;<?= h($contact->workplace) ?></p>
 				<h6 class="subheader"><?= __('Skills') ?></h6>
-				<?php if (!empty($contact->skills)): ?>
-					<p>
-					<?php
-					foreach ($contact->skills as $skills):
-						print '<span class="tag tag-shared">';
-							print h($skills->name);
-						print '</span> ';
-					endforeach;
-					?>
-					</p>
-				<?php endif; ?>
+				<p>&nbsp;
+					<?php if (!empty($contact->skills)): ?>
+						<?php
+						foreach ($contact->skills as $skills):
+							echo '<span class="tag tag-shared">';
+								echo h($skills->name);
+							echo '</span> ';
+						endforeach;
+						?>
+					<?php endif; ?>
+				</p>
 			</div>
 		</div>
 	</div>
 	<div id="tabs-4" class="contacts view large-10 medium-9 columns">
-		<?= $this->Html->link(__('Edit'), ['action' => 'edit', $contact->id], ['class' => 'tag tag-shared fr']) ?>
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
 		<?php if (!empty($histories)): ?>
@@ -167,18 +186,18 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 			</tr>
 			<?php foreach ($histories as $history): ?>
 			<tr>
-				<td><?php print $history->date->format('Y-m-d'); ?></td>
+				<td><?php echo $history->date->format('Y-m-d'); ?></td>
 				<td>
 					<?php
 					if(isset($history->user->name)){
-						print $history->user->name;
+						echo $history->user->name;
 					}
 					?>
 				</td>
 				<td>
 					<?php
 					if($history->group){
-						print $history->group->name;
+						echo $history->group->name;
 					}
 					?>
 				</td>
@@ -187,10 +206,10 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 				<td class="r">
 					<?php
 						if(isset($history->unit->name)){
-							print h($this->Number->currency($history->quantity, $history->unit->name));
+							echo h($this->Number->currency($history->quantity, $history->unit->name));
 						}
 						else{
-							print h($history->quantity);
+							echo h($history->quantity);
 						}
 					?>
 				</td>
@@ -246,7 +265,7 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 					if(!in_array($group->id, $cGroups)){
 						//$cGroups[] = $group->id;
 						$cssStyle = $group->shared ? 'info' : (($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success');
-						print "\n" .
+						echo "\n" .
 							'<span class="draggable notmember tag tag-default"
 									data-css="tag-'.$cssStyle.'"
 									data-id="' . $group->id . '">' .
@@ -261,3 +280,6 @@ print $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 		<h2><?= h($contact->name) ?></h2>
 	</div>
 </div>
+<?php
+echo $this->Form->end();
+?>

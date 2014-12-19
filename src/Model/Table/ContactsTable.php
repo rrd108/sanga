@@ -126,13 +126,13 @@ class ContactsTable extends Table {
 					if($entity->$prop != $oldEntity[$prop]){	//and we changed it
 						if(!is_array($oldEntity[$prop])){
 							if($oldEntity[$prop] && $entity->$prop){
-								$details[] = $prop . __(' changed from ') . $oldEntity[$prop] . ' to ' . $entity->$prop;
+								$details[] = $prop . ' ' . __('changed from ') . $oldEntity[$prop] . ' ' . __('to') . ' ' . $entity->$prop;
 							}
 							elseif($oldEntity[$prop]){
-								$details[] = $prop . ': ' . $oldEntity[$prop] . __(' removed');
+								$details[] = $prop . ': ' . $oldEntity[$prop] . ' ' . __('removed');
 							}
 							else{
-								$details[] = $prop . ': ' . $entity->$prop . __(' added');
+								$details[] = $prop . ': ' . $entity->$prop . ' ' . __('added');
 							}
 						}
 						else{
@@ -150,12 +150,12 @@ class ContactsTable extends Table {
 							
 							foreach($oldEntityProp as $oep){
 								if(!in_array($oep, $newEntityProp)){
-									$details[] = $oep['name'] . __(' removed from ') . $prop;
+									$details[] = $oep['name'] . ' ' . __('removed from') . ' ' . $prop;
 								}
 							}
 							foreach($newEntityProp as $nep){
 								if(!in_array($nep, $oldEntityProp)){
-									$details[] = $nep['name'] . __(' added to ') . $prop;
+									$details[] = $nep['name'] . ' ' . __('added to') . ' ' . $prop;
 								}
 							}
 						}

@@ -247,12 +247,29 @@ class ContactsController extends AppController {
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
 			$contact->loggedInUser = $this->Auth->user('id');
-			if ($this->Contacts->save($contact)) {
-				$this->Flash->success('The contact has been saved.');
-				return $this->redirect(['action' => 'view', $id]);
+			$saved = $this->Contacts->save($contact);
+			if ($saved) {
+				$message = __('The contact has been saved.');
+				if($this->request->is('ajax')){
+					$result = ['save' => $message];
+				}
+				else{
+					$this->Flash->success($message);
+					return $this->redirect(['action' => 'view', $id]);
+				}
 			} else {
-				$this->Flash->error('The contact could not be saved. Please, try again.');
+				$message = __('The contact could not be saved. Please, try again.');
+				if($this->request->is('ajax')){
+					$result = ['save' => $message];
+				}
+				else{
+					$this->Flash->error($message);
+				}
 			}
+		}
+		if($this->request->is('ajax')){
+			$this->set(compact('result'));
+			return;
 		}
 		$zips = $this->Contacts->Zips->find('list');
 		$contactsources = $this->Contacts->Contactsources->find('list');

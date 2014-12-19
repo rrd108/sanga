@@ -1,5 +1,7 @@
 $(function() {
 	
+	$('#birth').datepicker();
+	
 	function addSkillSpanAndInput(event, ui){
 		var t = $(event.target);
 		var tag = "";
