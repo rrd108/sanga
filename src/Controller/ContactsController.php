@@ -167,7 +167,8 @@ class ContactsController extends AppController {
 		$this->set('histories', $this->paginate($histories));
 
 		$accessibleGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
-		$this->set(compact('accessibleGroups'));
+		$users = $this->Contacts->Users->find();
+		$this->set(compact('accessibleGroups', 'users'));
 	}
 
 /**
@@ -229,7 +230,7 @@ class ContactsController extends AppController {
 		$contactsources = $this->Contacts->Contactsources->find('list');
 		$groups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
 		$skills = $this->Contacts->Skills->find('list');
-		$users = $this->Contacts->Users->find('list');
+		$users = $this->Contacts->Users->find();
 		$this->set(compact('contact', 'zips', 'contactsources', 'groups', 'skills', 'users'));
 	}
 

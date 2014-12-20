@@ -217,7 +217,7 @@ td.actions a{
   margin: 1px auto;
 }
 
-.tag{
+.tag, .tag label{
   color: white;
   border-radius: 3px;
   padding: 2px 10px;
@@ -386,10 +386,13 @@ table thead {
   float: right;
 }
 
-input.editbox{
-  width: 45%;
+input.editbox, textarea.editbox, span.editbox{
   display: none;
 }
+input.editbox{
+  width: 45%;
+}
+
 #ajaxloader, #okImg, #errorImg{
   display: none;
   float: right;

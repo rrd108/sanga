@@ -9,13 +9,11 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 	<fieldset>
 		<legend><?= __('Add Contact') ?></legend>
 	<?php
-		echo $this->Form->input('users._ids',
-								['options' => $users,
-								 'type' => 'select',
-								 'multiple' => 'checkbox',
-								 'label' => __('Contact person'),
-								 'value' => $this->Session->read('Auth.User.id')
-								 ]);
+		echo '<div class="input text">';
+		echo '<label for="users-ids">'.__('Contact Person').'</label>';
+		echo $this->element('user_checkbox');
+		echo '</div>';
+		
 		echo $this->Form->input('name',
 									   ['label' => __('Known name'),
 										'title' => __('Like initiated name, nickname, etc')
@@ -35,7 +33,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 		echo $this->Form->input('workplace');
 		echo $this->Form->input('xfamily', ['type' => 'text', 'label' => __('Family')]);
 		echo $this->Form->input('family_id', ['type' => 'hidden']);
-		echo $this->Form->input('comment', ['title' => 'Másodlagos elérhetőségek, egyéb megjegyzések']);
+		echo $this->Form->input('comment', ['title' => __('Secondary emails, phones, others')]);
 		echo $this->Form->input('contactsource_id',
 								['options' => $contactsources,
 								 'type' => 'radio']);

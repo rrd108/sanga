@@ -18,10 +18,10 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 	<div class="actions columns large-2 medium-3">
 		<h3><?= __('Actions') ?></h3>
 		<ul class="side-nav">
-			<li id="tabnav-1"><a href="#tabs-1">Személyi adatok</a></li>
+			<li id="tabnav-1"><a href="#tabs-1"><?= __('Personal data') ?></a></li>
 			<li id="tabnav-2"><a href="#tabs-2"><?= __('Family') ?></a></li>
 			<li id="tabnav-3"><a href="#tabs-3"><?= __('Workplace and skills') ?></a></li>
-			<li id="tabnav-4"><a href="#tabs-4">Történések</a></li>
+			<li id="tabnav-4"><a href="#tabs-4"><?= __('Histories') ?></a></li>
 			<li id="tabnav-5"><a href="#tabs-5"><?= __('Groups') ?></a></li>
 			<li id="tabnav-6"><a href="#tabs-6"><?= __('Finances') ?></a></li>
 		</ul>
@@ -30,10 +30,11 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
 			<div class="large-11 columns strings">
+
 				<h6 class="subheader"><?= __('Known name') ?></h6>
 				<p>
 					&nbsp;
-					<span><?= h($contact->name) ?></span>
+					<span class="dta"><?= h($contact->name) ?></span>
 					<?php
 					echo $this->Form->input('name',
 									   ['templates' => ['inputContainer' => '{{content}}'],
@@ -44,59 +45,172 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 										]);
 					?>
 				</p>
+
 				<h6 class="subheader"><?= __('Contactname') ?></h6>
-				<p>&nbsp;<?= h($contact->contactname) ?></p>
-				<h6 class="subheader"><?= __('Contact person') ?></h6>
-				<?php if (!empty($contact->users)): ?>
-					<p>&nbsp;
+				<p>
+					&nbsp;
+					<span class="dta"><?= h($contact->contactname) ?></span>
 					<?php
-						$myContact = false;
-						foreach ($contact->users as $users){
-							echo '&nbsp;' . h($users->name);
-							if($users->id == $this->Session->read('Auth.User.id')){
-								$myContact = true;
+					echo $this->Form->input('contactname',
+									   ['templates' => ['inputContainer' => '{{content}}'],
+										'class' => 'editbox',
+										'label' => false,
+										'value' => h($contact->contactname),
+										'title' => __('Civil name, company name, etc')
+										]);
+					?>
+				</p>
+
+				<h6 class="subheader"><?= __('Contact person') ?></h6>
+				<p>
+					&nbsp;
+					<span class="dta">
+						<?php
+						if (!empty($contact->users)){
+							$myContact = false;
+							foreach ($contact->users as $usr){
+								$css = 'viewable';
+								if($usr->id == $this->Session->read('Auth.User.id')){
+									$myContact = true;
+									$css = 'mine';
+								}
+								echo '<span class="tag tag-' . $css . '">' . h($usr->name) . '</span> ';
 							}
 						}
+						?>
+					</span>
+					<?php
+					echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
+					echo '<span class="editbox">' . $this->element('user_checkbox') . '</span>';
 					?>
-					</p>
-				<?php endif; ?>
+				</p>
+
 				<h6 class="subheader"><?= __('Address') ?></h6>
 				<p>
-					&nbsp;<?= $contact->has('zip') ? $this->Html->link($contact->zip->zip . ' ' . $contact->zip->name, ['controller' => 'Zips', 'action' => 'view', $contact->zip->id]) : '' ?>
-					&nbsp;<?= h($contact->address) ?>
+					&nbsp;
+					<span class="dta"><?= $contact->zip->zip . ' ' . $contact->zip->name . ' ' .  h($contact->address) ?></span>
+					<?php
+					echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
+					/*
+					echo $this->Form->input('xzip', ['type' => 'text', 'label' => __('Zip')]);
+					echo $this->Form->input('zip_id', ['type' => 'hidden']);
+					*/
+					echo $this->Form->input('zip_id',
+											['templates' => ['inputContainer' => '{{content}}'],
+											 'type' => 'text',
+											'class' => 'editbox',
+											'label' => false,
+											 'value' => isset($contact->zip) ? $contact->zip->zip . ' ' . $contact->zip->name : ''
+											 ]);
+					echo $this->Form->input('address',
+											['templates' => ['inputContainer' => '{{content}}'],
+											'class' => 'editbox',
+											'label' => false,
+											 'value' => $contact->address
+											 ]);
+
+					?>
 				</p>
+
 				<h6 class="subheader"><?= __('Phone') ?></h6>
-				<p>&nbsp;<?= h($contact->phone) ?></p>
+				<p>
+					&nbsp;
+					<span class="dta"><?= h($contact->phone) ?></span>
+					<?php
+					echo $this->Form->input('phone',
+											['templates' => ['inputContainer' => '{{content}}'],
+											'class' => 'editbox',
+											'label' => false,
+											'value' => $contact->phone
+											]);
+					?>
+				</p>
+
 				<h6 class="subheader"><?= __('Email') ?></h6>
-				<p>&nbsp;<?= h($contact->email) ?></p>
+				<p>
+					&nbsp;
+					<span class="dta"><?= h($contact->email) ?></span>
+					<?php
+					echo $this->Form->input('email',
+											['templates' => ['inputContainer' => '{{content}}'],
+											'class' => 'editbox',
+											'label' => false,
+											'value' => $contact->email
+											]);
+					?>
+				</p>
+
 				<h6 class="subheader"><?= __('Birth') ?></h6>
-				<p>&nbsp;
+				<p>
+					&nbsp;
+					<span class="dta">
+						<?php
+						if($contact->birth){
+							echo h($contact->birth->format('Y-m-d'));
+						}
+						?>
+					</span>
 					<?php
-					if($contact->birth){
-						echo h($contact->birth->format('Y-m-d'));
-					}
+					echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
 					?>
 				</p>
+
 				<h6 class="subheader"><?= __('Sex') ?></h6>
-				<p>&nbsp;
+				<p>
+					&nbsp;
+					<span class="dta">
+						<?php
+						if($contact->sex == 1){
+							echo __('Male');
+						}
+						else if($contact->sex == 2){
+							echo __('Female');
+						}
+						else{
+							echo __('Unknown');
+						}
+						?>
+					</span>
 					<?php
-					if($contact->sex == 1){
-						echo __('Male');
-					}
-					else if($contact->sex == 2){
-						echo __('Female');
-					}
-					else{
-						echo __('Unknown');
-					}
+					echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
 					?>
 				</p>
+
 				<h6 class="subheader"><?= __('Contactsource') ?></h6>
-				<p>&nbsp;<?= $contact->has('contactsource') ? $this->Html->link($contact->contactsource->name, ['controller' => 'Contactsources', 'action' => 'view', $contact->contactsource->id]) : '' ?></p>
+				<p>
+					&nbsp;
+					<span class="dta">
+						<?= $contact->has('contactsource') ? $this->Html->link($contact->contactsource->name, ['controller' => 'Contactsources', 'action' => 'view', $contact->contactsource->id]) : '' ?>
+					</span>
+					<?php
+					echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
+					?>
+				</p>					
+
 				<h6 class="subheader"><?= __('Active') ?></h6>
-				<p>&nbsp;<?= $contact->active ? __('Yes') : __('No'); ?></p>
+				<p>
+					&nbsp;
+					<span class="dta"><?= $contact->active ? __('Yes') : __('No'); ?></span>
+					<?php
+					echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
+					?>
+				</p>
+
 				<h6 class="subheader"><?= __('Comment') ?></h6>
-				<?= $this->Text->autoParagraph(h($contact->comment)); ?>
+				<p>
+					&nbsp;
+					<span class="dta">
+						<?= h($contact->comment); ?>
+					</span>
+					<?php
+					echo $this->Form->input('comment',
+											['templates' => ['inputContainer' => '{{content}}'],
+											'class' => 'editbox',
+											'label' => false,
+											'title' => __('Secondary emails, phones, others')
+											]);
+					?>
+				</p>
 			</div>
 			<div id="mapsmall"></div>
 				<?php

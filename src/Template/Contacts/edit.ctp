@@ -15,7 +15,7 @@
 		echo $this->Form->input('workplace');
 		echo $this->Form->input('family_id', ['label' => __('Family'), 'title' => __('Choose family member')]);		
 		echo $this->Form->input('contactsource_id', ['options' => $contactsources]);
-		echo $this->Form->input('comment', ['title' => 'Másodlagos elérhetőségek, egyéb megjegyzések']);
+		echo $this->Form->input('comment', ['title' => __('Secondary emails, phones, others')]);
 		echo $this->Form->input('groups._ids', ['options' => $groups]);
 		echo $this->Form->input('skills._ids', ['options' => $skills]);
 		echo $this->Form->input('users._ids', ['options' => $users]);

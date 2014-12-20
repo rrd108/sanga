@@ -116,8 +116,12 @@ $(function() {
 		theSpan.show();
 	});
 	$('#editlink').click(function(event){
-		$(this).parent().find('input').show();
-		$(this).parent().find('span').hide();
+		//if there is any other open input we should close it
+		$('.editbox').hide();
+		$('span.dta').show();
+		//and open exactly this one
+		$(this).parent().find('.editbox').show();
+		$(this).parent().find('span.dta').hide();
 		event.preventDefault();
 	});
 });
