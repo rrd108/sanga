@@ -62,6 +62,7 @@ try {
 } catch (\Exception $e) {
 	die('Unable to load config/app.php. Create it by copying config/app.default.php to config/app.php.');
 }
+Configure::load('google', 'default');
 
 // Load an environment local configuration file.
 // You can use this file to provide local overrides to your

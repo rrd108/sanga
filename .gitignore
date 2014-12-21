@@ -1,5 +1,6 @@
 /vendor/*
 /config/app.php
+/config/google.php
 /tmp/*
 /logs/*
 /plugins/*

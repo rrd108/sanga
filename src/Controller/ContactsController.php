@@ -5,6 +5,11 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Utility\String;
 
+use Cake\Core\Configure;
+
+use Google_Client;
+use Google_Http_Request;
+
 /**
  * Contacts Controller
  *
@@ -346,5 +351,110 @@ class ContactsController extends AppController {
 			}
 			$this->set(compact('result'));
 		}
+	}
+	
+	public function google(){
+		require_once('../vendor/google/apiclient/src/Google/Client.php');
+		$client = new Google_Client();
+		$client->setClientId(Configure::read('Google.clientId'));
+		$client->setClientSecret(Configure::read('Google.clientSecret'));
+		$client->setRedirectUri(Configure::read('Google.redirectUri'));
+
+		$client->setScopes("http://www.google.com/m8/feeds/");
+		
+		//callback: saves access token
+		if (isset($this->request->query['code'])) {
+			$client->authenticate($this->request->query['code']);
+			$this->request->session()->write('access_token', $client->getAccessToken());
+			$this->request->session()->write('refresh_token', $client->getRefreshToken());
+			//redirect
+			$this->redirect(['action' => 'google']);
+		}
+		//callback end
+	
+		if ($this->request->session()->read('access_token')) {
+			$client->setAccessToken($this->request->session()->read('access_token'));
+			//https://developers.google.com/google-apps/contacts/v3/reference#Parameters
+			$req = new Google_Http_Request('https://www.google.com/m8/feeds/contacts/default/full'.
+										   '?alt=json&max-results=100&start-index=1');
+			$val = $client->getAuth()->authenticatedRequest($req);
+			$gContacts = json_decode($val->getResponseBody());
+			if(isset($gContacts->error)){
+				debug($gContacts->error->message);
+			}
+			else{
+				//https://developers.google.com/gdata/docs/2.0/elements?csw=1#gdContactKind
+				foreach($gContacts->feed->entry as $entry){
+					//debug($entry);
+					
+					//$gId = str_replace('http://www.google.com/m8/feeds/contacts/default/base/', '', $entry->id->{'$t'});
+					$gId = substr(strrchr($entry->id->{'$t'}, '/'), 1);
+					//debug($gId);
+					//get photo bytes
+					$req = new Google_Http_Request('https://www.google.com/m8/feeds/photos/media/default/' . $gId);
+					$val = $client->getAuth()->authenticatedRequest($req);
+					$photo = $val->getResponseBody();
+					/*$photoErrors = ['Invalid request URI', 'Photo not found'];
+					$photo = in_array($photoRes, $photoErrors) ? null : $photoRes;*/
+					
+					$contacts[] = ['gId' => $gId,
+								   'name' => isset($entry->title->{'$t'}) ? $entry->title->{'$t'} : '',
+								   'updated' => $entry->updated->{'$t'},
+								   'email' => isset($entry->{'gd$email'}) ? $entry->{'gd$email'} : '',
+								   'phone' => isset($entry->{'gd$phoneNumber'}) ? $entry->{'gd$phoneNumber'} : '',
+								   'address' => isset($entry->{'gd$postalAddress'}) ? $entry->{'gd$postalAddress'} : '',
+								   'photo' =>	$photo	//http://stackoverflow.com/questions/9439076/google-contact-api-picture-data-returns-data-but-i-dont-know-how-to-display-it
+								   ];
+				}
+				/*
+				id => object(stdClass) {
+					$t => 'http://www.google.com/m8/feeds/contacts/rrd%40108.hu/base/223576c8e726539'
+				}
+				
+				title->$t
+				
+				updated => object(stdClass) {
+					$t => '2014-10-08T20:00:19.868Z'
+				}
+		
+				gd$email => [
+					(int) 0 => object(stdClass) {
+						address => 'bosos@gmail.com'
+						primary => 'true'
+						rel => 'http://schemas.google.com/g/2005#home'
+					},
+					(int) 1 => object(stdClass) {
+						address => 'Laszlo.Bosos@msc.com'
+						rel => 'http://schemas.google.com/g/2005#other'
+					}
+				]
+				
+				gd$phoneNumber => [
+					(int) 0 => object(stdClass) {
+						rel => 'http://schemas.google.com/g/2005#mobile'
+						primary => 'true'
+						uri => 'tel:+36-30-999-9999'
+						$t => '+36 30 999 9999'
+					}
+				]
+				gd$postalAddress => [
+					(int) 0 => object(stdClass) {
+						rel => 'http://schemas.google.com/g/2005#home'
+						$t => 'Petneházy u. 1. Budapest 1009'
+					}
+				]
+				
+				gContact$groupMembershipInfo => [
+					(int) 0 => object(stdClass) {
+						deleted => 'false'
+						href => 'http://www.google.com/m8/feeds/groups/rrd%40108.hu/base/12f7abz8f4a01ac'
+					},
+				*/
+				$this->set('contacts', $contacts);
+			}
+		} else {
+			$this->set('authUrl', $client->createAuthUrl());
+		}
+	
 	}
 }
