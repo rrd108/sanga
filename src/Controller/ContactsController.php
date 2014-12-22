@@ -362,7 +362,7 @@ class ContactsController extends AppController {
 
 		$client->setScopes("http://www.google.com/m8/feeds/");
 		
-		//callback: saves access token
+		//callback: saves access token and (at the very first time) refesh token
 		if (isset($this->request->query['code'])) {
 			$client->authenticate($this->request->query['code']);
 			$this->request->session()->write('access_token', $client->getAccessToken());
@@ -376,11 +376,17 @@ class ContactsController extends AppController {
 			$client->setAccessToken($this->request->session()->read('access_token'));
 			//https://developers.google.com/google-apps/contacts/v3/reference#Parameters
 			$req = new Google_Http_Request('https://www.google.com/m8/feeds/contacts/default/full'.
-										   '?alt=json&max-results=100&start-index=1');
+										   '?alt=json&max-results=20&start-index=500');
 			$val = $client->getAuth()->authenticatedRequest($req);
 			$gContacts = json_decode($val->getResponseBody());
 			if(isset($gContacts->error)){
-				debug($gContacts->error->message);
+				$this->Flash->error($gContacts->error->message);
+				if($gContacts->error->code == 401){		//Invalid Credentials The access token expired or invalid
+					//get a new access token with refresh token
+					$client->refreshToken(Configure::read('Google.refreshToken'));
+					$this->request->session()->write('access_token', $client->getAccessToken());
+					$this->redirect(['action' => 'google']);
+				}
 			}
 			else{
 				//https://developers.google.com/gdata/docs/2.0/elements?csw=1#gdContactKind
@@ -453,6 +459,7 @@ class ContactsController extends AppController {
 				$this->set('contacts', $contacts);
 			}
 		} else {
+			$client->setAccessType('offline');		//we want to get refresh token also
 			$this->set('authUrl', $client->createAuthUrl());
 		}
 	
