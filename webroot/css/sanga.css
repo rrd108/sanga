@@ -119,6 +119,9 @@ select[multiple]{
 .fr{
   float: right;
 }
+.fl{
+  float: left;
+}
 
 #map{
   width: 50em;
@@ -398,3 +401,8 @@ input.editbox{
   float: right;
 }
 /*icons: http://www.iconsdb.com/royal-blue-icons*/
+
+.gContact{
+  width: 33%;
+  float: left;
+}
