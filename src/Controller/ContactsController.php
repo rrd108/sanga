@@ -364,44 +364,60 @@ class ContactsController extends AppController {
 		
 		//callback: saves access token and (at the very first time) refesh token
 		if (isset($this->request->query['code'])) {
+			$this->log('Get access token first time', 'debug');
 			$client->authenticate($this->request->query['code']);
-			$this->request->session()->write('access_token', $client->getAccessToken());
-			$this->request->session()->write('refresh_token', $client->getRefreshToken());
+			$this->request->session()->write('Google.access_token', $client->getAccessToken());
+			$this->request->session()->write('Google.refresh_token', $client->getRefreshToken());
 			//redirect
 			$this->redirect(['action' => 'google']);
 		}
 		//callback end
+		
+		if (!$this->request->session()->read('Google.access_token') && Configure::read('Google.refreshToken')) {
+			$client->refreshToken(Configure::read('Google.refreshToken'));
+			$this->request->session()->write('Google.access_token', $client->getAccessToken());
+			$this->redirect(['action' => 'google']);
+		}
 	
-		if ($this->request->session()->read('access_token')) {
-			$client->setAccessToken($this->request->session()->read('access_token'));
+		if ($this->request->session()->read('Google.access_token')) {
+			$client->setAccessToken($this->request->session()->read('Google.access_token'));
 			//https://developers.google.com/google-apps/contacts/v3/reference#Parameters
+			$maxResults = 27;
+			$page = (int) $this->request->session()->read('Google.page');
+			$startIndex = 1 + $maxResults * $page;
+			$this->request->session()->write('Google.page', ++$page);
 			$req = new Google_Http_Request('https://www.google.com/m8/feeds/contacts/default/full'.
-										   '?alt=json&max-results=20&start-index=500');
+										   '?alt=json'.
+										   '&max-results='.$maxResults.
+										   '&start-index='.$startIndex);
+			//$req = new Google_Http_Request('https://www.google.com/m8/feeds/groups/default/full/6?alt=json&v=3');
 			$val = $client->getAuth()->authenticatedRequest($req);
 			$gContacts = json_decode($val->getResponseBody());
+			/*
+			$gContacts->feed->id->{'$t'}	//rrd@108.hu
+			$gContacts->feed->{'openSearch$totalResults'}->{'$t'}	//1067
+			*/
+			$this->request->session()->write('Google.totalResults', $gContacts->feed->{'openSearch$totalResults'}->{'$t'});
 			if(isset($gContacts->error)){
 				$this->Flash->error($gContacts->error->message);
+				$this->log($gContacts->error->code . ': ' . $gContacts->error->message, 'debug');
 				if($gContacts->error->code == 401){		//Invalid Credentials The access token expired or invalid
-					//get a new access token with refresh token
-					$client->refreshToken(Configure::read('Google.refreshToken'));
-					$this->request->session()->write('access_token', $client->getAccessToken());
+					$this->log('Get a new access token with refresh token', 'debug');
+					$this->request->session->delete('Google.access_token');
 					$this->redirect(['action' => 'google']);
 				}
 			}
 			else{
+				$this->log('Get contact data', 'debug');
 				//https://developers.google.com/gdata/docs/2.0/elements?csw=1#gdContactKind
 				foreach($gContacts->feed->entry as $entry){
 					//debug($entry);
 					
-					//$gId = str_replace('http://www.google.com/m8/feeds/contacts/default/base/', '', $entry->id->{'$t'});
 					$gId = substr(strrchr($entry->id->{'$t'}, '/'), 1);
-					//debug($gId);
 					//get photo bytes
 					$req = new Google_Http_Request('https://www.google.com/m8/feeds/photos/media/default/' . $gId);
 					$val = $client->getAuth()->authenticatedRequest($req);
 					$photo = $val->getResponseBody();
-					/*$photoErrors = ['Invalid request URI', 'Photo not found'];
-					$photo = in_array($photoRes, $photoErrors) ? null : $photoRes;*/
 					
 					$contacts[] = ['gId' => $gId,
 								   'name' => isset($entry->title->{'$t'}) ? $entry->title->{'$t'} : '',
@@ -459,6 +475,7 @@ class ContactsController extends AppController {
 				$this->set('contacts', $contacts);
 			}
 		} else {
+			$this->log('Create connect page', 'debug');
 			$client->setAccessType('offline');		//we want to get refresh token also
 			$this->set('authUrl', $client->createAuthUrl());
 		}
