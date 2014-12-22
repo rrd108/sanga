@@ -6,47 +6,45 @@ if(isset($authUrl)){
 if(isset($contacts)){
 	$i = 0;
 	foreach($contacts as $contact){
+		++$i;
 		//echo $contact['gId'];
 		echo '<div class="gContact">';
 			echo '<h4>';
 				echo $contact['name'];
 			echo '</h4>';
-			echo '<div class="fl">';
+			echo '<div class="gimg">';
 				if(strlen($contact['photo']) < 32){
-					echo $contact['photo'];
+					echo $this->Html->image('contacts/noimg.png', ['title' => $contact['photo']]);
 				}
 				else if($contact['photo']){
 					echo '<img src="data:image/jpeg;base64,' . base64_encode($contact['photo']) . '" />';
 				}
 			echo '</div>';
-			echo '<div class="fl">';
-				echo '<span class="fl">';
-					echo ++$i;
-				echo '</span>';
-				echo '<span>';
+			echo '<div class="gdata">';
+				echo '<p>';
 					if($contact['email']){
 						foreach($contact['email'] as $email){
 							echo $email->address . ' ';
 						}
 					}
-				echo '</span>';
-				echo '<span>';
+				echo '</p>';
+				echo '<p>';
 					if($contact['phone']){
 						foreach($contact['phone'] as $phone){
 							echo $phone->uri . ' ';
 						}
 					}
-				echo '</span>';
-				echo '<span>';
+				echo '</p>';
+				echo '<p>';
 					if($contact['address']){
 						foreach($contact['address'] as $address){
 							echo $address->{'$t'};
 						}
 					}
-				echo '</span>';
-				echo '<span>';
+				echo '</p>';
+				echo '<small>';
 					echo $contact['updated'];
-				echo '</span>';
+				echo '</small>';
 			echo '</div>';
 		echo '</div>';
 		if($i % 3 == 0){

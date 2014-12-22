@@ -406,3 +406,11 @@ input.editbox{
   width: 33%;
   float: left;
 }
+.gimg{
+  width: 30%;
+  float: left;
+}
+.gdata{
+  width: 70%;
+  float: left;
+}
