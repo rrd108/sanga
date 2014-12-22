@@ -373,10 +373,12 @@ class ContactsController extends AppController {
 		}
 		//callback end
 		
-		if (!$this->request->session()->read('Google.access_token') && Configure::read('Google.refreshToken')) {
+		if ((!$this->request->session()->read('Google.access_token') || $client->isAccessTokenExpired())
+					&& Configure::read('Google.refreshToken')) {
+			$this->log('Get new access token with refreshToken', 'debug');
 			$client->refreshToken(Configure::read('Google.refreshToken'));
 			$this->request->session()->write('Google.access_token', $client->getAccessToken());
-			$this->redirect(['action' => 'google']);
+			//$this->redirect(['action' => 'google']);
 		}
 	
 		if ($this->request->session()->read('Google.access_token')) {
