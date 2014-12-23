@@ -90,7 +90,8 @@ class ContactsTable extends Table {
 			->allowEmpty('contactsource_id')
 			->add('active', 'valid', ['rule' => 'boolean'])
 			->allowEmpty('active')
-			->allowEmpty('comment');
+			->allowEmpty('comment')
+			->allowEmpty('google_id');
 
 		return $validator;
 	}

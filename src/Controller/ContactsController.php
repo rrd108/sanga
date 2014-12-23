@@ -353,56 +353,65 @@ class ContactsController extends AppController {
 		}
 	}
 	
-	public function google(){
+	public function google($page = 1){
 		require_once('../vendor/google/apiclient/src/Google/Client.php');
 		$client = new Google_Client();
 		$client->setClientId(Configure::read('Google.clientId'));
 		$client->setClientSecret(Configure::read('Google.clientSecret'));
 		$client->setRedirectUri(Configure::read('Google.redirectUri'));
 
-		$client->setScopes("http://www.google.com/m8/feeds/");
+		$client->setScopes(['http://www.google.com/m8/feeds/', 'https://www.googleapis.com/auth/userinfo.email']);
 		
-		//callback: saves access token and (at the very first time) refesh token
+		$user = $this->Contacts->Users->get($this->Auth->user('id'));
+		
 		if (isset($this->request->query['code'])) {
-			$this->log('Get access token first time', 'debug');
+			//google callback: saves access token and (at the very first time) refesh token
+			$this->log('Get access (and refresh) token first time', 'debug');
 			$client->authenticate($this->request->query['code']);
 			$this->request->session()->write('Google.access_token', $client->getAccessToken());
-			$this->request->session()->write('Google.refresh_token', $client->getRefreshToken());
-			//redirect
-			$this->redirect(['action' => 'google']);
+			
+			$user->google_contacts_refresh_token = $client->getRefreshToken();
+			if ($this->Contacts->Users->save($user)) {
+				$this->log('Refresh token saved for the user', 'debug');
+			} else {
+				$this->log('Refresh token not saved for user: ' . $this->Auth->user('name'), 'debug');
+			}
 		}
-		//callback end
-		
-		if ((!$this->request->session()->read('Google.access_token') || $client->isAccessTokenExpired())
-					&& Configure::read('Google.refreshToken')) {
-			$this->log('Get new access token with refreshToken', 'debug');
-			$client->refreshToken(Configure::read('Google.refreshToken'));
-			$this->request->session()->write('Google.access_token', $client->getAccessToken());
-			//$this->redirect(['action' => 'google']);
-		}
-	
+
 		if ($this->request->session()->read('Google.access_token')) {
 			$client->setAccessToken($this->request->session()->read('Google.access_token'));
-			//https://developers.google.com/google-apps/contacts/v3/reference#Parameters
-			$maxResults = 27;
-			$page = (int) $this->request->session()->read('Google.page');
+		}
+		
+		if ($client->isAccessTokenExpired() && $user->google_contacts_refresh_token) {
+			$this->log('Get new access token with refreshToken as it is expired or not available', 'debug');
+			$client->refreshToken($user->google_contacts_refresh_token);
+			$this->request->session()->write('Google.access_token', $client->getAccessToken());
+		}
+	
+		if ($client->getAccessToken()) {
+			//https://developers.google.com/google-apps/contacts/v3/reference#Parameters - currently no support for alphabetical order
+			
+			//in groups url we can not use default, we should give the email address
+			$req = new Google_Http_Request('https://www.googleapis.com/userinfo/email?alt=json');
+			$val = $client->getAuth()->authenticatedRequest($req);
+			$googleUser = json_decode($val->getResponseBody());
+			
+			$maxResults = 51;
 			$startIndex = 1 + $maxResults * $page;
-			$this->request->session()->write('Google.page', ++$page);
 			$req = new Google_Http_Request('https://www.google.com/m8/feeds/contacts/default/full'.
 										   '?alt=json'.
+										   '&group=http://www.google.com/m8/feeds/groups/'.$googleUser->data->email.'/base/6'.
 										   '&max-results='.$maxResults.
 										   '&start-index='.$startIndex);
-			//$req = new Google_Http_Request('https://www.google.com/m8/feeds/groups/default/full/6?alt=json&v=3');
 			$val = $client->getAuth()->authenticatedRequest($req);
 			$gContacts = json_decode($val->getResponseBody());
-			/*
-			$gContacts->feed->id->{'$t'}	//rrd@108.hu
-			$gContacts->feed->{'openSearch$totalResults'}->{'$t'}	//1067
-			*/
+			//debug($gContacts);
+			$contactsTotal = $gContacts->feed->{'openSearch$totalResults'}->{'$t'};
+
 			$this->request->session()->write('Google.totalResults', $gContacts->feed->{'openSearch$totalResults'}->{'$t'});
 			if(isset($gContacts->error)){
 				$this->Flash->error($gContacts->error->message);
-				$this->log($gContacts->error->code . ': ' . $gContacts->error->message, 'debug');
+				$this->log('ERROR: ' . $gContacts->error->code . ': ' . $gContacts->error->message, 'debug');
 				if($gContacts->error->code == 401){		//Invalid Credentials The access token expired or invalid
 					$this->log('Get a new access token with refresh token', 'debug');
 					$this->request->session->delete('Google.access_token');
@@ -416,6 +425,7 @@ class ContactsController extends AppController {
 					//debug($entry);
 					
 					$gId = substr(strrchr($entry->id->{'$t'}, '/'), 1);
+					
 					//get photo bytes
 					$req = new Google_Http_Request('https://www.google.com/m8/feeds/photos/media/default/' . $gId);
 					$val = $client->getAuth()->authenticatedRequest($req);
@@ -425,56 +435,12 @@ class ContactsController extends AppController {
 								   'name' => isset($entry->title->{'$t'}) ? $entry->title->{'$t'} : '',
 								   'updated' => $entry->updated->{'$t'},
 								   'email' => isset($entry->{'gd$email'}) ? $entry->{'gd$email'} : '',
-								   'phone' => isset($entry->{'gd$phoneNumber'}) ? $entry->{'gd$phoneNumber'} : '',
+								   'phone' => isset($entry->{'gd$phoneNumber'}) ? str_replace('tel:', '', $entry->{'gd$phoneNumber'}) : '',
 								   'address' => isset($entry->{'gd$postalAddress'}) ? $entry->{'gd$postalAddress'} : '',
 								   'photo' =>	$photo	//http://stackoverflow.com/questions/9439076/google-contact-api-picture-data-returns-data-but-i-dont-know-how-to-display-it
 								   ];
 				}
-				/*
-				id => object(stdClass) {
-					$t => 'http://www.google.com/m8/feeds/contacts/rrd%40108.hu/base/223576c8e726539'
-				}
-				
-				title->$t
-				
-				updated => object(stdClass) {
-					$t => '2014-10-08T20:00:19.868Z'
-				}
-		
-				gd$email => [
-					(int) 0 => object(stdClass) {
-						address => 'bosos@gmail.com'
-						primary => 'true'
-						rel => 'http://schemas.google.com/g/2005#home'
-					},
-					(int) 1 => object(stdClass) {
-						address => 'Laszlo.Bosos@msc.com'
-						rel => 'http://schemas.google.com/g/2005#other'
-					}
-				]
-				
-				gd$phoneNumber => [
-					(int) 0 => object(stdClass) {
-						rel => 'http://schemas.google.com/g/2005#mobile'
-						primary => 'true'
-						uri => 'tel:+36-30-999-9999'
-						$t => '+36 30 999 9999'
-					}
-				]
-				gd$postalAddress => [
-					(int) 0 => object(stdClass) {
-						rel => 'http://schemas.google.com/g/2005#home'
-						$t => 'Petneházy u. 1. Budapest 1009'
-					}
-				]
-				
-				gContact$groupMembershipInfo => [
-					(int) 0 => object(stdClass) {
-						deleted => 'false'
-						href => 'http://www.google.com/m8/feeds/groups/rrd%40108.hu/base/12f7abz8f4a01ac'
-					},
-				*/
-				$this->set('contacts', $contacts);
+				$this->set(compact('contacts', 'contactsTotal', 'maxResults', 'page'));
 			}
 		} else {
 			$this->log('Create connect page', 'debug');
@@ -482,5 +448,21 @@ class ContactsController extends AppController {
 			$this->set('authUrl', $client->createAuthUrl());
 		}
 	
+	}
+	
+	public function google_import(){
+		//does not saves to contacts_users
+		//the address is saved to address with zip and zip name
+		if ($this->request->data && $this->request->is('post') && $this->request->is('ajax')) {
+			$this->request->data['users'] = ['_ids' => $this->Auth->user('id')];
+			$contact = $this->Contacts->newEntity($this->request->data);
+			$contact->loggedInUser = $this->Auth->user('id');
+			if ($this->Contacts->save($contact)) {
+				$result = ['save' => __('The contact has been saved.')];
+			} else {
+				$result = ['save' => __('The contact could not be saved. Please, try again.')];
+			}
+			$this->set(compact('result'));
+		}
 	}
 }

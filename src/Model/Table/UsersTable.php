@@ -81,7 +81,8 @@ class UsersTable extends Table {
 			->add('active', 'valid', ['rule' => 'boolean'])
 			->allowEmpty('active')
 			->add('role', 'valid', ['rule' => 'numeric'])
-			->notEmpty('role');
+			->notEmpty('role')
+			->allowEmpty('google_contacts_refresh_token');
 
 		return $validator;
 	}

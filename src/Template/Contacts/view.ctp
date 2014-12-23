@@ -7,10 +7,8 @@ echo $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 echo $this->Html->link($this->Html->image('edit.png'),
 					   ['action' => 'edit', $contact->id],
 					   ['id' => 'editlink', 'escape' => false]);
-//ajax loader, ok and error
-echo $this->Html->image('ajax-loader.gif', ['id' => 'ajaxloader']);
-echo $this->Html->image('ok.png', ['id' => 'okImg']);
-echo $this->Html->image('error.png', ['id' => 'errorImg']);
+
+echo $this->element('ajax-images');
 
 echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $contact->id]);
 ?>

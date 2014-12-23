@@ -25,6 +25,7 @@ class Contact extends Entity {
 		'birth' => true,
 		'sex' => true,
 		'workplace' => true,
+		'google_id' => true,
 		'family_id' => true,
 		'contactsource_id' => true,
 		'active' => true,

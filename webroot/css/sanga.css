@@ -123,6 +123,14 @@ select[multiple]{
   float: left;
 }
 
+.cl{
+  clear: left;
+}
+
+.dn{
+  display: none;
+}
+
 #map{
   width: 50em;
   height: 30em;
@@ -413,4 +421,7 @@ input.editbox{
 .gdata{
   width: 70%;
   float: left;
+}
+.gSelected{
+  background-color: #dfd;
 }
