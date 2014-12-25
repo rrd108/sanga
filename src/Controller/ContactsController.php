@@ -184,7 +184,7 @@ class ContactsController extends AppController {
 	public function add() {
 		$contact = $this->Contacts->newEntity($this->request->data);
 		if($this->request->data){
-			//debug($this->request->data);
+			//debug($this->request->data);die();
 			/*'skills' => [
 				'_ids' => [
 					(int) 0 => '1',			//found in skills, this is the id
@@ -353,13 +353,13 @@ class ContactsController extends AppController {
 		}
 	}
 	
-	public function google($page = 1){
+	private function google_client(){
 		require_once('../vendor/google/apiclient/src/Google/Client.php');
 		$client = new Google_Client();
 		$client->setClientId(Configure::read('Google.clientId'));
 		$client->setClientSecret(Configure::read('Google.clientSecret'));
 		$client->setRedirectUri(Configure::read('Google.redirectUri'));
-
+		
 		$client->setScopes(['http://www.google.com/m8/feeds/', 'https://www.googleapis.com/auth/userinfo.email']);
 		
 		$user = $this->Contacts->Users->get($this->Auth->user('id'));
@@ -387,7 +387,13 @@ class ContactsController extends AppController {
 			$client->refreshToken($user->google_contacts_refresh_token);
 			$this->request->session()->write('Google.access_token', $client->getAccessToken());
 		}
+
+		return $client;
+	}
 	
+	public function google($page = 1){
+		$client = $this->google_client();
+		
 		if ($client->getAccessToken()) {
 			//https://developers.google.com/google-apps/contacts/v3/reference#Parameters - currently no support for alphabetical order
 			
@@ -427,17 +433,15 @@ class ContactsController extends AppController {
 					$gId = substr(strrchr($entry->id->{'$t'}, '/'), 1);
 					
 					//get photo bytes
-					$req = new Google_Http_Request('https://www.google.com/m8/feeds/photos/media/default/' . $gId);
-					$val = $client->getAuth()->authenticatedRequest($req);
-					$photo = $val->getResponseBody();
+					$photo = $this->google_get_photo($gId, $client);
 					
 					$contacts[] = ['gId' => $gId,
 								   'name' => isset($entry->title->{'$t'}) ? $entry->title->{'$t'} : '',
 								   'updated' => $entry->updated->{'$t'},
 								   'email' => isset($entry->{'gd$email'}) ? $entry->{'gd$email'} : '',
-								   'phone' => isset($entry->{'gd$phoneNumber'}) ? str_replace('tel:', '', $entry->{'gd$phoneNumber'}) : '',
+								   'phone' => isset($entry->{'gd$phoneNumber'}) ? $entry->{'gd$phoneNumber'} : '',
 								   'address' => isset($entry->{'gd$postalAddress'}) ? $entry->{'gd$postalAddress'} : '',
-								   'photo' =>	$photo	//http://stackoverflow.com/questions/9439076/google-contact-api-picture-data-returns-data-but-i-dont-know-how-to-display-it
+								   'photo' =>	$photo
 								   ];
 				}
 				$this->set(compact('contacts', 'contactsTotal', 'maxResults', 'page'));
@@ -447,22 +451,65 @@ class ContactsController extends AppController {
 			$client->setAccessType('offline');		//we want to get refresh token also
 			$this->set('authUrl', $client->createAuthUrl());
 		}
-	
 	}
 	
+	private function google_get_photo($gId, $client){
+		$req = new Google_Http_Request('https://www.google.com/m8/feeds/photos/media/default/' . $gId);
+		$val = $client->getAuth()->authenticatedRequest($req);
+		return $val->getResponseBody();
+	}
+
 	public function google_import(){
-		//does not saves to contacts_users
-		//the address is saved to address with zip and zip name
 		if ($this->request->data && $this->request->is('post') && $this->request->is('ajax')) {
-			$this->request->data['users'] = ['_ids' => $this->Auth->user('id')];
+			//add contacts person
+			$this->request->data['users'] = ['_ids' => [$this->Auth->user('id')]];
+			
+			if ($this->request->data['address']) {
+				$address = $this->formatAddress($this->request->data['address']);
+				$this->request->data['zip_id'] = $address['zip_id'];
+				$this->request->data['address'] = $address['address'];
+			}
+			
 			$contact = $this->Contacts->newEntity($this->request->data);
 			$contact->loggedInUser = $this->Auth->user('id');
 			if ($this->Contacts->save($contact)) {
 				$result = ['save' => __('The contact has been saved.')];
+
+				//save photos
+				$client = $this->google_client();
+				$photo = $this->google_get_photo($this->request->data['google_id'], $client);
+				if (strlen($photo) > 32) {
+					$source = imagecreatefromstring($photo);
+					$file = $this->webroot . 'img/contacts/' . $contact->id . '.jpg';
+					$success = imagejpeg($source, $file, 100);
+					imagedestroy($source);
+					$result['photoSave'] = $success ? __('Contact photo saved.') : __('Unable to save contact photo.');
+				}
 			} else {
 				$result = ['save' => __('The contact could not be saved. Please, try again.')];
 			}
 			$this->set(compact('result'));
 		}
+	}
+	
+	private function formatAddress($address){
+		preg_match('/\d{4}/', $address, $zip);
+		$zip = $this->Contacts->Zips->find()
+				->select(['id', 'zip', 'name'])
+				->where(['zip' => $zip[0]])
+				->toArray();
+		$zip = $zip[0];
+		$address = str_replace("\n", ' ', $address);
+		$address = str_replace($zip->zip, '', $address);
+		$address = str_replace($zip->name, '', $address);
+		$zip = [
+				'zip_id' => $zip->id,
+				'address' => $address
+				];
+		return $zip;
+	}
+	
+	public function merge(){
+		//dont forget to rename the pic if neccessarry
 	}
 }

@@ -1,5 +1,6 @@
 <?php
 if(isset($authUrl)){
+	echo '<p>'.__('Please click the "Connect" link here to import your Google contacts. You will be redirected to Google, where you should give access to Sanga.').'</p>';
 	echo $this->Html->link('Connect', $authUrl);
 }
 
@@ -8,7 +9,7 @@ if(isset($contacts)){
 	echo $this->element('ajax-images');
 	
 	echo '<h1>';
-		echo __('Select contacts to import');
+		echo __('Select contacts to import by clicking on them.');
 	echo '</h1>';
 	
 	$i = 0;
@@ -22,12 +23,12 @@ if(isset($contacts)){
 			echo '<h4 class="gName">';
 				echo $contact['name'];
 			echo '</h4>';
-			echo '<div class="gimg">';
+			echo '<div>';
 				if(strlen($contact['photo']) < 32){
 					echo $this->Html->image('contacts/noimg.png', ['title' => $contact['photo']]);
 				}
 				else if($contact['photo']){
-					echo '<img src="data:image/jpeg;base64,' . base64_encode($contact['photo']) . '" />';
+					echo '<img class="gimg" src="data:image/jpeg;base64,' . base64_encode($contact['photo']) . '" />';
 				}
 			echo '</div>';
 			echo '<div class="gdata">';
@@ -47,9 +48,9 @@ if(isset($contacts)){
 					if($contact['phone']){
 						foreach($contact['phone'] as $iP => $phone){
 							if ($iP == 0) {
-								echo '<span class="gPhone">' . $phone->uri . '</span> ';
+								echo '<span class="gPhone">' . str_replace('tel:', '', $phone->uri) . '</span> ';
 							} else {
-								echo '<span class="gComment">' . $phone->uri . '</span> ';
+								echo '<span class="gComment">' . str_replace('tel:', '', $phone->uri) . '</span> ';
 							}
 						}
 					}

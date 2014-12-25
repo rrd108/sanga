@@ -1,17 +1,18 @@
 $(function() {
 	$('.gContact').click(function(event){
-		$(this).addClass('gSelected');
+		var gContact = $(this);
+		gContact.addClass('gSelected');
 		
-		$(this).append($('#ajaxloader').show());
+		gContact.prepend($('#ajaxloader').show());
 		
 		//collect data
 		var gData = {
-			'google_id'	: $(this).find('.gId').text(),
-			'name'		: $(this).find('.gName').text(),
-			'email'		: $(this).find('.gEmail').text(),
-			'phone'		: $(this).find('.gPhone').text(),
-			'address'	: $(this).find('.gAddress').text(),
-			'comment'	: $(this).find('.gComment').map(
+			'google_id'	: gContact.find('.gId').text(),
+			'name'		: gContact.find('.gName').text(),
+			'email'		: gContact.find('.gEmail').text(),
+			'phone'		: gContact.find('.gPhone').text(),
+			'address'	: gContact.find('.gAddress').text(),
+			'comment'	: gContact.find('.gComment').map(
 								//get all text date and separate them by comme
 								function(){
 									return $(this).text(); 
@@ -26,17 +27,13 @@ $(function() {
 			dataType : 'json',
 			error : function(jqXHR, textStatus, errorThrown){
 				$('#ajaxloader').hide();
-				$(this).append($('#errorImg').show());
-				$(this).removeClass('gSelected');
+				gContact.prepend($('#errorImg').show());
+				gContact.removeClass('gSelected');
 			},
 			success : function(data, textStatus, jqXHR){
 				$('#ajaxloader').hide();
-				$(this).append($('#okImg').show().hide(6000));
+				gContact.prepend($('#okImg').show().hide(6000));
 			}
 		});
-
-		
-		//save user photo
-		
 	});
 });

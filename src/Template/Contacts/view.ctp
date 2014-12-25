@@ -25,9 +25,24 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 		</ul>
 	</div>
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
-		<h2><?= h($contact->name) ?></h2>
+		<h2>
+			<?= h($contact->name) ?>
+			<?php
+			if ($contact->google_id) {
+				echo $this->Html->image('google.png');
+			}
+			?>
+		</h2>
 		<div class="row">
-			<div class="large-11 columns strings">
+			<?php
+			if (file_exists(WWW_ROOT . 'img/contacts/' . $contact->id . '.jpg')) {
+				$img = $contact->id . '.jpg';
+			} else {
+				$img = 'noimg.png';
+			}
+			echo $this->Html->image('contacts/' . $img, ['class' => 'fl']);
+			?>
+			<div class="large-9 columns strings">
 
 				<h6 class="subheader"><?= __('Known name') ?></h6>
 				<p>
