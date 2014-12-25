@@ -253,6 +253,7 @@ class ContactsController extends AppController {
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
 			$contact->loggedInUser = $this->Auth->user('id');
+			//debug($contact);die();
 			$saved = $this->Contacts->save($contact);
 			if ($saved) {
 				$message = __('The contact has been saved.');

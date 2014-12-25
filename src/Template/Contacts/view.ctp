@@ -2,6 +2,7 @@
 //echo $this->Html->script('gmap3.min.js');
 //echo $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
 echo $this->Html->script('sanga.contacts.view.js', ['block' => true]);
+echo $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 
 //edit link
 echo $this->Html->link($this->Html->image('edit.png'),
@@ -101,23 +102,31 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 				<h6 class="subheader"><?= __('Address') ?></h6>
 				<p>
 					&nbsp;
-					<span class="dta"><?= $contact->zip->zip . ' ' . $contact->zip->name . ' ' .  h($contact->address) ?></span>
 					<?php
-					echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
-					/*
-					echo $this->Form->input('xzip', ['type' => 'text', 'label' => __('Zip')]);
-					echo $this->Form->input('zip_id', ['type' => 'hidden']);
-					*/
+					echo '<span class="dta zip zip-zip">';
+						echo $contact->zip->zip;
+					echo '</span> ';
+					echo '<span class="dta zip-name">';
+						echo $contact->zip->name;
+					echo '</span> ';
 					echo $this->Form->input('zip_id',
+											['type' => 'hidden',
+											 'value' => isset($contact->zip) ? $contact->zip->id : false]);
+					
+					echo $this->Form->input('xzip',
 											['templates' => ['inputContainer' => '{{content}}'],
 											 'type' => 'text',
-											'class' => 'editbox',
+											'class' => 'editbox zip',
 											'label' => false,
-											 'value' => isset($contact->zip) ? $contact->zip->zip . ' ' . $contact->zip->name : ''
+											 'value' => isset($contact->zip) ? $contact->zip->zip : ''
 											 ]);
+					
+					echo '<span class="dta addr address">';
+						echo h($contact->address);
+					echo '</span>';
 					echo $this->Form->input('address',
 											['templates' => ['inputContainer' => '{{content}}'],
-											'class' => 'editbox',
+											'class' => 'editbox addr',
 											'label' => false,
 											 'value' => $contact->address
 											 ]);

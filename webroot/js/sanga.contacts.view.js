@@ -89,11 +89,19 @@ $(function() {
 		event.preventDefault();
 	});
 	$('.editbox').change(function(event){
-		var theP = $(this).parent();
-		var theSpan = $(this).prev();
-		var oldData = theSpan.text();
+		var theSpan, newData;
 		var editedData = {};
-		var newData = editedData[$(this).attr('id')] = $(this).val();
+		if ($(this).attr('class').search(/zip/) != -1) {
+			theSpan = $(this).parent().find('.zip-zip');
+			newData = $('#xzip').val().split(' ');
+			newData = newData[0];
+			editedData['zip_id'] = $('#zip-id').val();
+		} else {
+			theSpan = $(this).prev();
+			newData = editedData[$(this).attr('id')] = $(this).val();
+		}
+		var theP = $(this).parent();
+		var oldData = theSpan.text();
 		theSpan.text(newData);
 		$('#editlink').hide();
 		theP.append($('#ajaxloader').show());
