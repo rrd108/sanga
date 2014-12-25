@@ -5,6 +5,8 @@ use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
 use Cake\Log\Log;
 
+use Cake\Core\Configure;
+
 class GeoShell extends Shell {
 	
 	public function initialize() {
@@ -47,12 +49,16 @@ class GeoShell extends Shell {
 	
 	public function getGeo($data){
 		//debug($data);
-		$googleApiKey = 'AIzaSyCaw8aQw14f-cLB3Li5Aak2huu9Ey5KwP8';
+		$googleApiKey = Configure::read('Google.apiKey');
+
+		$url = '';
+		$url .= isset($data->zip->country->name) ? $data->zip->country->name . '+' : '';
+		$url .= isset($data->zip->zip) ? $data->zip->zip . '+' : '';
+		$url .= isset($data->zip->name) ? $data->zip->name . '+' : '';
+		$url .= isset($data->address) ? $data->address : '';
+		
 		$geourl = 'https://maps.googleapis.com/maps/api/geocode/json?key='.$googleApiKey.
-				'&address='.urlencode($data->zip->country->name . '+' . 
-									  $data->zip->zip . '+' . 
-									  $data->zip->name . '+' . 
-									  $data->address);
+				'&address='.urlencode($url);
 		//debug($geourl);
 		
 		$c = curl_init();
