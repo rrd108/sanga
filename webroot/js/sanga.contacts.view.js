@@ -100,6 +100,8 @@ $(function() {
 			theSpan = $(this).parent().find('.dta');
 			if ($(this).is(':checkbox')) {
 				newData = + $(this).is(':checked');		// + converts bool to int
+			} else if ($(this).is('span')) {		//sex
+				newData = $(this).parent().find(':checked').val();
 			} else {
 				newData = $(this).val();
 			}

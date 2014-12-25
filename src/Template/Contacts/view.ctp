@@ -194,7 +194,14 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 						?>
 					</span>
 					<?php
-					echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
+					echo $this->Form->input('sex',
+											['type' => 'radio',
+											'options' => [1 => __('Male'), 2 => __('Female')],
+											'templates' => ['inputContainer' => '<span class="editbox" id="sex">{{content}}</span>',
+															'nestingLabel' => '{{input}}{{text}}'],
+											'label' => false,
+											'value' => $contact->sex
+											]);
 					?>
 				</p>
 
