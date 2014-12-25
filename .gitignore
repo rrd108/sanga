@@ -6,3 +6,4 @@
 /plugins/*
 composer.lock
 /webroot/coverage/*
+/webroot/img/contacts/*
