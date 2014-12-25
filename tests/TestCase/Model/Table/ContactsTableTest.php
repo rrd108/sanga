@@ -133,40 +133,46 @@ class ContactsTableTest extends TestCase {
 	
 	public function testFindMine(){
 		$actual = $this->Contacts->find('mine', ['User.id' => 2])->hydrate(false)->toArray();
+		//debug($actual);
 		$expected = [
-				['id' => 2, 'name' => 'Acarya-ratna das', 'contactname' => '', 'address' => 'Rózsakert u. 6. II/9',
-					'users' => [
-							'id' => 2,
-							'name' => 'user2',
-							'password' => 'secretpass',
-							'realname' => 'user2 real name',
-							'email' => 'user2@sehol.se',
-							'phone' => '+36123456789',
-							'active' => true,
-							'role' => 1,
-							'created' => Time::createFromFormat('Y-m-d H:i:s', '2014-11-29 10:59:47'),
-							'modified' => Time::createFromFormat('Y-m-d H:i:s', '2014-11-29 10:59:47'),
-							'_joinData' => [
-								'contact_id' => 2,
-								'user_id' => 2
-							]
+				['id' => 2,
+				'name' => 'Acarya-ratna das',
+				'contactname' => '',
+				'zip_id' => 1,
+				'address' => 'Rózsakert u. 6. II/9',
+				'lat' => 47.660961,
+				'lng' => 19.077259,
+				'phone' => '36/30 99-95-091',
+				'email' => 'halterand@gmail.com',
+				'birth' => null,
+				'sex' => 0,
+				'workplace' => '',
+				'family_id' => null,
+				'contactsource_id' => 4,
+				'active' => true,
+				'comment' => 'kis eü probléma',
+				'created' => null,
+				'modified' => Time::createFromFormat('Y-m-d H:i:s', '2014-10-25 08:09:44'),
+				'_matchingData' => [
+					'Users' => [
+						'id' => 2,
+						'name' => 'user2',
+						'password' => 'secretpass',
+						'realname' => 'user2 real name',
+						'email' => 'user2@sehol.se',
+						'phone' => '+36123456789',
+						'active' => true,
+						'role' => 1,
+						'created' => Time::createFromFormat('Y-m-d H:i:s', '2014-11-29 10:59:47'),
+						'modified' => Time::createFromFormat('Y-m-d H:i:s', '2014-11-29 10:59:47')
 					],
-					'zip_id' => 1,
-					'lat' => 47.660961,
-					'lng' => 19.077259000000002,
-					'phone' => '36/30 99-95-091',
-					'email' => 'halterand@gmail.com',
-					'birth' => null,
-					'sex' => 0,
-					'workplace' => '',
-					'family_id' => null,
-					'contactsource_id' => 4,
-					'active' => true,
-					'comment' => 'kis eü probléma',
-					'created' => null,
-					'modified' => Time::createFromFormat('Y-m-d H:i:s', '2014-10-25 08:09:44')
+					'ContactsUsers' => [
+						'contact_id' => 2,
+						'user_id' => 2
+					]
 				]
-			];
+			]
+		];
 		$this->assertEquals($expected, $actual);
 	}
 
