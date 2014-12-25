@@ -214,7 +214,13 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 					&nbsp;
 					<span class="dta"><?= $contact->active ? __('Yes') : __('No'); ?></span>
 					<?php
-					echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
+					echo $this->Form->input('active',
+											['templates' => ['inputContainer' => '{{content}}'],
+											'class' => 'editbox',
+											'label' => false,
+											'checked' => $contact->active,
+											'value' => $contact->active
+											]);
 					?>
 				</p>
 

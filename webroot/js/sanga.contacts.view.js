@@ -97,8 +97,13 @@ $(function() {
 			newData = newData[0];
 			editedData['zip_id'] = $('#zip-id').val();
 		} else {
-			theSpan = $(this).prev();
-			newData = editedData[$(this).attr('id')] = $(this).val();
+			theSpan = $(this).parent().find('.dta');
+			if ($(this).is(':checkbox')) {
+				newData = + $(this).is(':checked');		// + converts bool to int
+			} else {
+				newData = $(this).val();
+			}
+			editedData[$(this).attr('id')] = newData;
 		}
 		var theP = $(this).parent();
 		var oldData = theSpan.text();
