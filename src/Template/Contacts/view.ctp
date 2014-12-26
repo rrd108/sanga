@@ -46,7 +46,7 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 			<div class="large-9 columns strings">
 
 				<h6 class="subheader"><?= __('Known name') ?></h6>
-				<p>
+				<p class="ed">
 					&nbsp;
 					<span class="dta"><?= h($contact->name) ?></span>
 					<?php
@@ -61,7 +61,7 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 				</p>
 
 				<h6 class="subheader"><?= __('Contactname') ?></h6>
-				<p>
+				<p class="ed">
 					&nbsp;
 					<span class="dta"><?= h($contact->contactname) ?></span>
 					<?php
@@ -78,7 +78,7 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 				<h6 class="subheader"><?= __('Contact person') ?></h6>
 				<p>
 					&nbsp;
-					<span class="dta">
+					<span>
 						<?php
 						if (!empty($contact->users)){
 							$myContact = false;
@@ -94,13 +94,13 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 						?>
 					</span>
 					<?php
-					echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
-					echo '<span class="editbox">' . $this->element('user_checkbox') . '</span>';
+					//contact person can not be changed here
+					//echo '<span>' . $this->element('user_checkbox') . '</span>';
 					?>
 				</p>
 
 				<h6 class="subheader"><?= __('Address') ?></h6>
-				<p>
+				<p class="ed">
 					&nbsp;
 					<?php
 					echo '<span class="dta zip zip-zip">';
@@ -135,7 +135,7 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 				</p>
 
 				<h6 class="subheader"><?= __('Phone') ?></h6>
-				<p>
+				<p class="ed">
 					&nbsp;
 					<span class="dta"><?= h($contact->phone) ?></span>
 					<?php
@@ -149,7 +149,7 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 				</p>
 
 				<h6 class="subheader"><?= __('Email') ?></h6>
-				<p>
+				<p class="ed">
 					&nbsp;
 					<span class="dta"><?= h($contact->email) ?></span>
 					<?php
@@ -163,7 +163,7 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 				</p>
 
 				<h6 class="subheader"><?= __('Birth') ?></h6>
-				<p>
+				<p class="ed">
 					&nbsp;
 					<span class="dta">
 						<?php
@@ -173,12 +173,19 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 						?>
 					</span>
 					<?php
-					echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
+//echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
+					echo $this->Form->input('birth',
+											['templates' => ['inputContainer' => '{{content}}'],
+											'type' => 'text',
+											'class' => 'editbox',
+											'label' => false,
+											'value' => $contact->birth ? h($contact->birth->format('Y-m-d')) : null
+											]);
 					?>
 				</p>
 
 				<h6 class="subheader"><?= __('Sex') ?></h6>
-				<p>
+				<p class="ed">
 					&nbsp;
 					<span class="dta">
 						<?php
@@ -206,7 +213,7 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 				</p>
 
 				<h6 class="subheader"><?= __('Contactsource') ?></h6>
-				<p>
+				<p class="ed">
 					&nbsp;
 					<span class="dta">
 						<?= $contact->has('contactsource') ? $this->Html->link($contact->contactsource->name, ['controller' => 'Contactsources', 'action' => 'view', $contact->contactsource->id]) : '' ?>
@@ -217,7 +224,7 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 				</p>					
 
 				<h6 class="subheader"><?= __('Active') ?></h6>
-				<p>
+				<p class="ed">
 					&nbsp;
 					<span class="dta"><?= $contact->active ? __('Yes') : __('No'); ?></span>
 					<?php
@@ -232,7 +239,7 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 				</p>
 
 				<h6 class="subheader"><?= __('Comment') ?></h6>
-				<p>
+				<p class="ed">
 					&nbsp;
 					<span class="dta">
 						<?= h($contact->comment); ?>
@@ -279,7 +286,7 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 		<div class="row">
 			<div class="large-11 columns strings">
 				<h6 class="subheader"><?= __('Family') ?></h6>
-				<p>&nbsp;<?= h($contact->family_id) ?></p>
+				<p class="ed">&nbsp;<?= h($contact->family_id) ?></p>
 				<ul>
 				<?php
 				foreach($family as $familymember){
@@ -304,9 +311,9 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 		<div class="row">
 			<div class="large-11 columns strings">
 				<h6 class="subheader"><?= __('Workplace') ?></h6>
-				<p>&nbsp;<?= h($contact->workplace) ?></p>
+				<p class="ed">&nbsp;<?= h($contact->workplace) ?></p>
 				<h6 class="subheader"><?= __('Skills') ?></h6>
-				<p>&nbsp;
+				<p class="ed">&nbsp;
 					<?php if (!empty($contact->skills)): ?>
 						<?php
 						foreach ($contact->skills as $skills):

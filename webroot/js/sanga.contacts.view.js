@@ -78,11 +78,12 @@ $(function() {
 		}
 	});
 	
-	$('p').hover(
+	$('p.ed').hover(
 		function(){		//handlerIn
 			$(this).append($('#editlink').show());
 		},
 		function(){		//handlerOut
+			$('#editlink').hide();
 		}
 	);
 	$('#editForm').submit(function(event){
