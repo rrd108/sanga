@@ -40,7 +40,7 @@
 				<?php
 					print '<li>'. $this->Html->link('♥ ' . __('Contacts'), ['controller' => 'Contacts', 'action' => 'index']) . '</li>';
 					print '<li>'. $this->Html->link('⊕ ' . __('Add Contact'), ['controller' => 'Contacts', 'action' => 'add']) . '</li>';
-					print '<li>'. $this->Html->link('G ' . __('Google Contact Import'), ['controller' => 'Contacts', 'action' => 'google']) . '</li>';
+					print '<li>'. $this->Html->link('⇉ ' . __('Google Contact Import'), ['controller' => 'Contacts', 'action' => 'google']) . '</li>';
 					print '<li>' . $this->Html->link('⚑ ' . __('Histories'), ['controller' => 'Histories', 'action' => 'index']) . '</li>';
 					print '<li>' . $this->Html->link('♛ ' . __('Queries'), ['controller' => 'Contacts', 'action' => 'searchquery']) . '</li>';
 					print '<li>' . $this->Html->link('✈ ' . __('Map'), ['controller' => 'Contacts', 'action' => 'showmap']) . '</li>';
