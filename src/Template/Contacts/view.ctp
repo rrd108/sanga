@@ -15,7 +15,6 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 ?>
 <div id="tabs" class="row">
 	<div class="actions columns large-2 medium-3">
-		<h3><?= __('Actions') ?></h3>
 		<ul class="side-nav">
 			<li id="tabnav-1"><a href="#tabs-1"><?= __('Personal data') ?></a></li>
 			<li id="tabnav-2"><a href="#tabs-2"><?= __('Family') ?></a></li>
@@ -31,6 +30,13 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 			<?php
 			if ($contact->google_id) {
 				echo $this->Html->image('google.png');
+			} else {
+				echo $this->Html->link(
+								$this->Html->image('google-inactive.png',
+												   ['title' => __('Save to Google Contacts')]
+												   ),
+								['action' => 'google_save', $contact->id],
+								['id' => 'gSave', 'escape' => false]);
 			}
 			?>
 		</h2>
@@ -94,7 +100,7 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 						?>
 					</span>
 					<?php
-					//contact person can not be changed here
+					//contact person change - dev questions - on hold
 					//echo '<span>' . $this->element('user_checkbox') . '</span>';
 					?>
 				</p>
@@ -173,7 +179,6 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 						?>
 					</span>
 					<?php
-//echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
 					echo $this->Form->input('birth',
 											['templates' => ['inputContainer' => '{{content}}'],
 											'type' => 'text',

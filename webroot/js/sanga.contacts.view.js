@@ -140,4 +140,9 @@ $(function() {
 		$(this).parent().find('span.dta').hide();
 		event.preventDefault();
 	});
+	
+	$('#gSave').click(function(event){
+		
+		event.preventDefault();
+	});
 });

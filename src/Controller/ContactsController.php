@@ -431,7 +431,7 @@ class ContactsController extends AppController {
 				foreach($gContacts->feed->entry as $entry){
 					//debug($entry);
 					
-					$gId = substr(strrchr($entry->id->{'$t'}, '/'), 1);
+					$gId = $this->google_getid($entry);
 					
 					//get photo bytes
 					$photo = $this->google_get_photo($gId, $client);
@@ -448,10 +448,19 @@ class ContactsController extends AppController {
 				$this->set(compact('contacts', 'contactsTotal', 'maxResults', 'page'));
 			}
 		} else {
-			$this->log('Create connect page', 'debug');
-			$client->setAccessType('offline');		//we want to get refresh token also
-			$this->set('authUrl', $client->createAuthUrl());
+			$this->google_connectpage($client);
 		}
+	}
+	
+	private function google_getid($entry){
+		return substr(strrchr($entry->id->{'$t'}, '/'), 1);
+	}
+	
+	private function google_connectpage($client){
+		$this->log('Create connect page', 'debug');
+		$client->setAccessType('offline');		//we want to get refresh token also
+		$this->set('authUrl', $client->createAuthUrl());
+		$this->render('google_connect');
 	}
 	
 	private function google_get_photo($gId, $client){
@@ -493,6 +502,77 @@ class ContactsController extends AppController {
 		}
 	}
 	
+	public function google_save($id){
+		$contact = $this->Contacts->get($id, ['contain' => ['Zips' => ['Countries']]]);
+		
+		$contactEntry = "<atom:entry xmlns:atom='http://www.w3.org/2005/Atom'
+							xmlns:gd='http://schemas.google.com/g/2005'>
+						  <atom:category scheme='http://schemas.google.com/g/2005#kind'
+							term='http://schemas.google.com/contact/2008#contact'/>";
+		
+		$contactEntry .= "<gd:name>".
+							 /*<gd:givenName>Elizabeth</gd:givenName>
+							 <gd:familyName>Bennet</gd:familyName>*/
+							 "<gd:fullName>".$contact->contactname ? $contact->contactname : $contact->name."</gd:fullName>
+						  </gd:name>";
+						  /*<atom:content type='text'>Notes</atom:content>*/
+						  
+		if($contact->email){
+			$contactEntry .= "<gd:email rel='http://schemas.google.com/g/2005#work'
+							primary='true'
+							address='".$contact->email."'/>";
+		}
+		
+		if($contact->phone){
+			$contactEntry .= "<gd:phoneNumber rel='http://schemas.google.com/g/2005#work'
+							primary='true'>
+							".$contact->phone."
+						  </gd:phoneNumber>";
+		}
+	
+		if($contact->address){
+			$contactEntry .= "<gd:structuredPostalAddress
+							  rel='http://schemas.google.com/g/2005#work'
+							  primary='true'>
+							<gd:city>".$contact->zip->name."</gd:city>
+							<gd:street>".$contact->address."</gd:street>
+							<gd:postcode>".$contact->zip->zip."</gd:postcode>
+							<gd:country>".$contact->zip->country->name."</gd:country>".
+							/*<gd:formattedAddress>
+							  1600 Amphitheatre Pkwy Mountain View
+							</gd:formattedAddress>*/
+						  "</gd:structuredPostalAddress>";
+		}
+
+		$contactEntry .= "</atom:entry>";
+		
+		$client = $this->google_client();
+		if ($client->getAccessToken()) {
+			$req = new Google_Http_Request('https://www.google.com/m8/feeds/contacts/default/full?alt=json');
+			$req->setRequestMethod('POST');
+			$req->setRequestHeaders(['content-length' => strlen($contactEntry),
+									 'GData-Version'=> '3.0',
+									 'content-type'=>'application/atom+xml; charset=UTF-8; type=feed']);
+			$req->setPostBody($contactEntry);
+			$val = $client->getAuth()->authenticatedRequest($req);
+			$res = $val->getResponseBody();
+			if (isset($res->entry)) {
+				//save googleId to db
+				$contact->google_id = $this->google_getid($res->entry);
+				if ($this->Contacts->save($contact)) {
+					$result = ['saved' => true];
+				} else {
+					$result = ['saved' => false];
+				}
+				$this->set(compact('result'));
+			} else {
+				$this->log($res, 'debug');
+			}
+		} else {
+			$this->google_connectpage($client);
+		}
+	}
+	
 	private function formatAddress($address){
 		preg_match('/\d{4}/', $address, $zip);
 		$zip = $this->Contacts->Zips->find()
@@ -512,5 +592,9 @@ class ContactsController extends AppController {
 	
 	public function merge(){
 		//dont forget to rename the pic if neccessarry
+	}
+	
+	public function transfer($id){
+		//transfer contact to an other user
 	}
 }

@@ -1,5 +1,5 @@
 $(function() {
-	$( document ).tooltip({position : { my: "right center", at: "right bottom", collision: "flipfit" }});
+	$( document ).tooltip({position : { my: "right center", at: "right-20 bottom", collision: "flipfit" }});
 	$('ul.sf-menu').superfish({
 		pathClass:	'current'
 	});
