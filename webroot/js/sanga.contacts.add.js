@@ -84,12 +84,12 @@ $(function() {
 		},		
 		select : function(event, ui) {	//when we select something from the dropdown
 			this.value = ui.item.label.replace(/(<([^>]+)>)/ig,'');		//remove highlight html code;
-			$('#family-id').val(ui.item.value);
+			$('#family-member-id').val(ui.item.value);
 			return false;
 		},
 		change : function(event, ui) {
 			this.value = ui.item.label.replace(/(<([^>]+)>)/ig,'');		//remove highlight html code;
-			$('#family-id').val(ui.item.value);
+			$('#family-member-id').val(ui.item.value);
 			return false;
 		}
 	});

@@ -14,6 +14,31 @@ $(function() {
 		zIndex : 100
 	});
 	
+	$("#notfamilymember").droppable({
+		over : function(event, ui){
+			$(this).addClass("ui-state-highlight");
+		},
+		out : function(event, ui){
+			$(this).removeClass("ui-state-highlight");
+		},
+		drop : function(event, ui){
+			var aLink = $(ui.draggable).find('a');
+			aLink = $(aLink[0]);
+			$.ajax({
+				url : aLink.attr('href').replace(/view\/(\d+)/, 'remove_family/$1'),
+				type : 'get',
+				dataType : 'json',
+				error : function(jqXHR, textStatus, errorThrown){
+					alert(jqXHR.responseJSON.message);
+				},
+				success : function(data, textStatus, jqXHR){
+					ui.draggable.hide();
+					$(event.target).removeClass("ui-state-highlight");
+				}
+			});
+		}
+	});
+
 	$("#member").droppable({
 		accept: ".notmember",
 		over : function(event, ui){
@@ -86,6 +111,7 @@ $(function() {
 			$('#editlink').hide();
 		}
 	);
+	
 	$('#editForm').submit(function(event){
 		event.preventDefault();
 	});
@@ -97,6 +123,10 @@ $(function() {
 			newData = $('#xzip').val().split(' ');
 			newData = newData[0];
 			editedData['zip_id'] = $('#zip-id').val();
+		} else if ($(this).attr('class').search(/family/) != -1) {
+			theSpan = $(this).parent().find('.dta');
+			editedData['family_member_id'] = $('#family-member-id').val();
+			var addSpan = $('#xfamily').val();
 		} else {
 			theSpan = $(this).parent().find('.dta');
 			if ($(this).is(':checkbox')) {
@@ -113,6 +143,7 @@ $(function() {
 		theSpan.text(newData);
 		$('#editlink').hide();
 		theP.append($('#ajaxloader').show());
+
 		$.ajax({
 			url : $('#editForm').attr('action'),
 			data : editedData,
@@ -126,6 +157,9 @@ $(function() {
 			success : function(data, textStatus, jqXHR){
 				$('#ajaxloader').hide();
 				theP.append($('#okImg').show().hide(12500));
+				if (addSpan) {
+					theP.append('<span class="tag tag-viewable draggable">' + addSpan + '</span> ');
+				}
 			}
 		});
 		$(this).hide();

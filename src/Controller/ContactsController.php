@@ -10,6 +10,8 @@ use Cake\Core\Configure;
 use Google_Client;
 use Google_Http_Request;
 
+use Cake\Network\Exception\NotImplementedException;
+
 /**
  * Contacts Controller
  *
@@ -200,24 +202,8 @@ class ContactsController extends AppController {
 				}
 			}
 			
-			if($this->request->data['family_id']){
-				//$this->request->data['family_id'] here means the other family member's id, NOT the family id
-				$familyMember = $this->Contacts->find()
-						->select(['family_id'])
-						->where(['id' => $this->request->data['family_id']])
-						->first();
-				//debug($familyMember);
-				if(isset($familyMember->family_id)){
-					//to choosen family member already has a family_id
-					$contact->family_id = $familyMember->family_id;
-				}
-				else{
-					//this is a new family definition
-					//we should save this to the other family member
-					$familyMember = $this->Contacts->get($this->request->data['family_id']);
-					$familyMember->family_id = $contact->family_id = uniqid();
-					$this->Contacts->save($familyMember);
-				}
+			if($this->request->data['family_member_id']){
+				$contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
 			}
 		//die();
 		}
@@ -239,6 +225,42 @@ class ContactsController extends AppController {
 		$this->set(compact('contact', 'zips', 'contactsources', 'groups', 'skills', 'users'));
 	}
 
+	private function get_family_id($contact, $family_member_id){
+		$familyId = null;
+		
+		if (isset($contact->id)) {		//we are editing an existing contact
+			if (isset($contact->family_id)) {		//and she has family_id
+				$familyId = $contact->family_id;
+			}
+		}
+		
+		//check if the selected member has a family_id
+		$familyMember = $this->Contacts->find()
+				->select(['id', 'family_id'])
+				->where(['id' => $family_member_id])
+				->first();
+		if(isset($familyMember->family_id)){		//family member already has a family_id
+			if ($familyId && $familyMember->family_id && $familyId != $familyMember->family_id) {
+				$this->log('Family error: $familyId: ' . $familyId . ', $familyMember->family_id: ' . $familyMember->family_id, 'debug');
+				throw new NotImplementedException(__('Two family members are in different families'));
+			} else {
+				$familyId = $familyMember->family_id;
+			}
+		}
+		
+		if(!$familyId) {		//this is a new family definition
+			$familyId = uniqid();
+		}
+
+		if (!isset($familyMember->family_id)) {
+			//we should save the familyid to the other family member also
+			$familyMember->family_id = $familyId;
+			$this->Contacts->save($familyMember);
+		}
+		
+		return $familyId;
+	}
+
 /**
  * Edit method
  *
@@ -252,6 +274,11 @@ class ContactsController extends AppController {
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
+
+			if($this->request->data['family_member_id']){
+				$contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
+			}
+
 			$contact->loggedInUser = $this->Auth->user('id');
 			//debug($contact);die();
 			$saved = $this->Contacts->save($contact);
@@ -284,6 +311,19 @@ class ContactsController extends AppController {
 		$skills = $this->Contacts->Skills->find('list');
 		$users = $this->Contacts->Users->find('list');
 		$this->set(compact('contact', 'zips', 'contactsources', 'groups', 'skills', 'users'));
+	}
+	
+	public function remove_family($id){
+		if ($this->request->is('ajax')) {
+			$contact = $this->Contacts->get($id);
+			$contact->family_id = null;
+			if ($this->Contacts->save($contact)) {
+				$result = ['save' => __('The contact is removed from this family')];
+			} else {
+				$result = ['save' => __('The contact could not be removed from this family')];
+			}
+		$this->set(compact('result'));
+		}
 	}
 
 /**

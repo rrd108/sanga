@@ -32,7 +32,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 		echo $this->Form->input('active', ['checked' => true, 'title' => 'Az inaktív kapcsolatok az akik eltűntek, eltávoztak, elérhetetlenek, stb.']);
 		echo $this->Form->input('workplace');
 		echo $this->Form->input('xfamily', ['type' => 'text', 'label' => __('Family')]);
-		echo $this->Form->input('family_id', ['type' => 'hidden']);
+		echo $this->Form->input('family_member_id', ['type' => 'hidden']);
 		echo $this->Form->input('comment', ['title' => __('Secondary emails, phones, others')]);
 		echo $this->Form->input('contactsource_id',
 								['options' => $contactsources,

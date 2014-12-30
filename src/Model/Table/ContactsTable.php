@@ -97,16 +97,18 @@ class ContactsTable extends Table {
 	}
 
 	public function beforeSave(Event $event, Entity $entity, ArrayObject $options){
-		if((!empty($entity->name) + !empty($entity->contactname) + !empty($entity->zip_id)
-				+ !empty($entity->address) + !empty($entity->phone) + !empty($entity->email)
-				+ !empty($entity->birth->time) + !empty($entity->workplace)
-				+ !empty($entity->contactsource_id)) >= 2){
-			return true;
+		if ($entity->isNew()) {
+			if ((!empty($entity->name) + !empty($entity->contactname) + !empty($entity->zip_id)
+					+ !empty($entity->address) + !empty($entity->phone) + !empty($entity->email)
+					+ !empty($entity->birth->time) + !empty($entity->workplace)
+					+ !empty($entity->contactsource_id) + !empty($entity->family_id)) >= 2) {
+				return true;
+			} else {
+				$entity->errors('name', __('At least 2 info should be filled'));
+				return false;
+			}
 		}
-		else{
-			$entity->errors('name', __('At least 2 info should be filled'));
-			return false;
-		}
+		return true;
 	}
 	
 	public function afterSave(Event $event, Entity $entity, ArrayObject $options){

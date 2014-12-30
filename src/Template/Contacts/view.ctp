@@ -292,23 +292,36 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 		<div class="row">
 			<div class="large-11 columns strings">
 				<h6 class="subheader"><?= __('Family') ?></h6>
-				<p class="ed">&nbsp;<?= h($contact->family_id) ?></p>
-				<ul>
-				<?php
-				foreach($family as $familymember){
-					if($familymember->id != $contact->id){
-						echo '<li>';
-							$name = '';
-							$name .= $familymember->name ? $familymember->name : '';
-							$name .= $familymember->contactname ? ' (' . $familymember->contactname . ')' : '';
-							echo $this->Html->link($name,
-											   ['action' => 'view', $familymember->id]);
-						echo '</li>';
-					}
-					//echo $familymember->id . ' ' . $familymember->name . ' ' . $familymember->contactname . '<br>';
-				}
-				?>
-				</ul>
+				<p class="ed">
+					&nbsp;
+					<?php
+					//echo $contact->family_id;
+					?>
+						<span class="dta"></span>
+						<?php
+						foreach($family as $familymember){
+							if($familymember->id != $contact->id){
+								echo '<span class="tag tag-viewable draggable">';
+									$name = '';
+									$name .= $familymember->name ? $familymember->name : '';
+									$name .= $familymember->contactname ? ' (' . $familymember->contactname . ')' : '';
+									echo $this->Html->link($name,
+													   ['action' => 'view', $familymember->id]);
+								echo '</span> ';
+							}
+						}
+						?>
+					<?php
+					echo $this->Form->input('family_member_id', ['type' => 'hidden']);
+					echo $this->Form->input('xfamily',
+											['templates' => ['inputContainer' => '{{content}}'],
+											 'type' => 'text',
+											 'class' => 'editbox family',
+											 'label' => false
+											 ]);
+					?>
+				</p>
+				<div class="column large-12" id="notfamilymember"></div>
 			</div>
 		</div>
 	</div>
