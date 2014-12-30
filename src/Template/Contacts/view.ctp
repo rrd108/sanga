@@ -330,7 +330,18 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 		<div class="row">
 			<div class="large-11 columns strings">
 				<h6 class="subheader"><?= __('Workplace') ?></h6>
-				<p class="ed">&nbsp;<?= h($contact->workplace) ?></p>
+				<p class="ed">
+					&nbsp;
+					<span class="dta"><?= h($contact->workplace) ?></span>
+					<?php
+					echo $this->Form->input('workplace',
+											['templates' => ['inputContainer' => '{{content}}'],
+											'class' => 'editbox',
+											'label' => false,
+											'value' => $contact->workplace
+											]);
+					?>
+				</p>
 				<h6 class="subheader"><?= __('Skills') ?></h6>
 				<p class="ed">&nbsp;
 					<?php if (!empty($contact->skills)): ?>

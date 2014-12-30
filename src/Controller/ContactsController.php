@@ -275,7 +275,7 @@ class ContactsController extends AppController {
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
 
-			if($this->request->data['family_member_id']){
+			if(isset($this->request->data['family_member_id'])){
 				$contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
 			}
 
