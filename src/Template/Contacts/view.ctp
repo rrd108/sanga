@@ -33,7 +33,8 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 			} else {
 				echo $this->Html->link(
 								$this->Html->image('google-inactive.png',
-												   ['title' => __('Save to Google Contacts')]
+												   ['id' => 'gImg',
+													'title' => __('Save to Google Contacts')]
 												   ),
 								['action' => 'google_save', $contact->id],
 								['id' => 'gSave', 'escape' => false]);

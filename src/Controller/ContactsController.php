@@ -361,7 +361,8 @@ class ContactsController extends AppController {
 		$client->setClientSecret(Configure::read('Google.clientSecret'));
 		$client->setRedirectUri(Configure::read('Google.redirectUri'));
 		
-		$client->setScopes(['http://www.google.com/m8/feeds/', 'https://www.googleapis.com/auth/userinfo.email']);
+		$client->setScopes(['http://www.google.com/m8/feeds/',
+							'https://www.googleapis.com/auth/userinfo.email']);
 		
 		$user = $this->Contacts->Users->get($this->Auth->user('id'));
 		
@@ -392,6 +393,19 @@ class ContactsController extends AppController {
 		return $client;
 	}
 	
+	private function google_getUser($client){
+		$req = new Google_Http_Request('https://www.googleapis.com/userinfo/email?alt=json');
+		$val = $client->getAuth()->authenticatedRequest($req);
+		$googleUser = json_decode($val->getResponseBody());
+		//$this->log($googleUser, 'debug');
+		/*
+		 [data] => stdClass Object(
+            [email] => rrd@1108.cc
+            [isVerified] => 1))
+		*/
+		return $googleUser;
+	}
+	
 	public function google($page = 1){
 		$client = $this->google_client();
 		
@@ -399,9 +413,7 @@ class ContactsController extends AppController {
 			//https://developers.google.com/google-apps/contacts/v3/reference#Parameters - currently no support for alphabetical order
 			
 			//in groups url we can not use default, we should give the email address
-			$req = new Google_Http_Request('https://www.googleapis.com/userinfo/email?alt=json');
-			$val = $client->getAuth()->authenticatedRequest($req);
-			$googleUser = json_decode($val->getResponseBody());
+			$googleUser = $this->google_getUser($client);
 			
 			$maxResults = 51;
 			$startIndex = 1 + $maxResults * $page;
@@ -503,51 +515,53 @@ class ContactsController extends AppController {
 	}
 	
 	public function google_save($id){
-		$contact = $this->Contacts->get($id, ['contain' => ['Zips' => ['Countries']]]);
-		
-		$contactEntry = "<atom:entry xmlns:atom='http://www.w3.org/2005/Atom'
-							xmlns:gd='http://schemas.google.com/g/2005'>
-						  <atom:category scheme='http://schemas.google.com/g/2005#kind'
-							term='http://schemas.google.com/contact/2008#contact'/>";
-		
-		$contactEntry .= "<gd:name>".
-							 /*<gd:givenName>Elizabeth</gd:givenName>
-							 <gd:familyName>Bennet</gd:familyName>*/
-							 "<gd:fullName>".$contact->contactname ? $contact->contactname : $contact->name."</gd:fullName>
-						  </gd:name>";
-						  /*<atom:content type='text'>Notes</atom:content>*/
-						  
-		if($contact->email){
-			$contactEntry .= "<gd:email rel='http://schemas.google.com/g/2005#work'
-							primary='true'
-							address='".$contact->email."'/>";
-		}
-		
-		if($contact->phone){
-			$contactEntry .= "<gd:phoneNumber rel='http://schemas.google.com/g/2005#work'
-							primary='true'>
-							".$contact->phone."
-						  </gd:phoneNumber>";
-		}
-	
-		if($contact->address){
-			$contactEntry .= "<gd:structuredPostalAddress
-							  rel='http://schemas.google.com/g/2005#work'
-							  primary='true'>
-							<gd:city>".$contact->zip->name."</gd:city>
-							<gd:street>".$contact->address."</gd:street>
-							<gd:postcode>".$contact->zip->zip."</gd:postcode>
-							<gd:country>".$contact->zip->country->name."</gd:country>".
-							/*<gd:formattedAddress>
-							  1600 Amphitheatre Pkwy Mountain View
-							</gd:formattedAddress>*/
-						  "</gd:structuredPostalAddress>";
-		}
-
-		$contactEntry .= "</atom:entry>";
-		
 		$client = $this->google_client();
 		if ($client->getAccessToken()) {
+			$googleUser = $this->google_getUser($client);
+
+			$contact = $this->Contacts->get($id, ['contain' => ['Zips' => ['Countries']]]);
+			
+			$contactEntry = "<atom:entry xmlns:atom='http://www.w3.org/2005/Atom' ".
+								"xmlns:gd='http://schemas.google.com/g/2005' ".
+								"xmlns:gContact='http://schemas.google.com/contact/2008'>".
+							  "\n<atom:category scheme='http://schemas.google.com/g/2005#kind' ".
+								"term='http://schemas.google.com/contact/2008#contact'/>";
+			
+			$contactName = $contact->contactname ? $contact->contactname : $contact->name;
+			
+			$contactEntry .= "\n<gd:name>".
+								"<gd:fullName>" . $contactName . "</gd:fullName>".
+							  "</gd:name>";
+							  
+			if($contact->email){
+				$contactEntry .= "\n<gd:email rel='http://schemas.google.com/g/2005#work' ".
+								"primary='true' ".
+								"address='".$contact->email."'/>";
+			}
+			
+			if($contact->phone){
+				$contactEntry .= "\n<gd:phoneNumber rel='http://schemas.google.com/g/2005#work' ".
+								"primary='true'>".$contact->phone.
+								"</gd:phoneNumber>";
+			}
+		
+			if($contact->address){
+				$contactEntry .= "\n<gd:structuredPostalAddress ".
+								  "rel='http://schemas.google.com/g/2005#work' ".
+								  "primary='true'>".
+									"<gd:city>".$contact->zip->name."</gd:city>".
+									"<gd:street>".$contact->address."</gd:street>".
+									"<gd:postcode>".$contact->zip->zip."</gd:postcode>".
+									"<gd:country>".$contact->zip->country->name."</gd:country>".
+								"</gd:structuredPostalAddress>";
+			}
+			
+			$contactEntry .= "\n<gContact:groupMembershipInfo deleted='false' ".
+				"href='http://www.google.com/m8/feeds/groups/".$googleUser->data->email."/base/6' />";	//add to my contacts group
+	
+			$contactEntry .= "\n</atom:entry>";
+			//$this->log($contactEntry, 'debug');
+			
 			$req = new Google_Http_Request('https://www.google.com/m8/feeds/contacts/default/full?alt=json');
 			$req->setRequestMethod('POST');
 			$req->setRequestHeaders(['content-length' => strlen($contactEntry),
@@ -555,7 +569,7 @@ class ContactsController extends AppController {
 									 'content-type'=>'application/atom+xml; charset=UTF-8; type=feed']);
 			$req->setPostBody($contactEntry);
 			$val = $client->getAuth()->authenticatedRequest($req);
-			$res = $val->getResponseBody();
+			$res = json_decode($val->getResponseBody());
 			if (isset($res->entry)) {
 				//save googleId to db
 				$contact->google_id = $this->google_getid($res->entry);
@@ -566,6 +580,7 @@ class ContactsController extends AppController {
 				}
 				$this->set(compact('result'));
 			} else {
+				$this->log('Contact did not saved to google', 'debug');
 				$this->log($res, 'debug');
 			}
 		} else {

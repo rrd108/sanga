@@ -142,7 +142,23 @@ $(function() {
 	});
 	
 	$('#gSave').click(function(event){
-		
+		var container = $(this);
+		container.append($('#ajaxloader').css('float', 'none').show());
+		$.ajax({
+			url : $(this).attr('href'),
+			type : 'get',
+			dataType : 'json',
+			error : function(jqXHR, textStatus, errorThrown){
+				$('#ajaxloader').hide();
+				container.append($('#errorImg').css('float', 'none').show());
+			},
+			success : function(data, textStatus, jqXHR){
+				$('#ajaxloader').hide();
+				container.append($('#okImg').css('float', 'none').show().hide(12500));
+				var imgSrc = $('#gImg').attr('src');
+				$('#gImg').attr('src', imgSrc.replace(/-inactive/, ''));
+			}
+		});
 		event.preventDefault();
 	});
 });
