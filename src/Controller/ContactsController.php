@@ -605,6 +605,29 @@ class ContactsController extends AppController {
 		return $zip;
 	}
 	
+	public function google_sync(){
+		$client = $this->google_client();
+		if ($client->getAccessToken()) {
+			//this will run with cron every 6 hours
+			//collect changed contacts at google
+			$req = new Google_Http_Request('https://www.google.com/m8/feeds/contacts/default/full'.
+										   '?alt=json'.
+										   '&updated-min='.gmdate('Y-m-d\TH:i:s', strtotime('-6 hours')));
+			$val = $client->getAuth()->authenticatedRequest($req);
+			$gContacts = json_decode($val->getResponseBody());
+			//we should loop throught the entry to check what data is changed
+			//ignore name changes
+			//gd$email, gd$phoneNumber, gd$postalAddress
+			//collect changed contacts in our database
+			//check if there is any conflict
+			//save local changes to goole
+			//save google changes to local
+			
+		} else {
+			$this->log('Unsuccessful sync', $debug);
+		}
+	}
+	
 	public function merge(){
 		//dont forget to rename the pic if neccessarry
 	}
