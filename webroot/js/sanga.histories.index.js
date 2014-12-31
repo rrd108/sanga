@@ -3,7 +3,7 @@ $(function() {
 	$('#xcontact-id').autocomplete({
 		minLength : 2,
 		html: true,
-		source : $.baseUrl + '/Contacts/search',
+		source : $.sanga.baseUrl + '/Contacts/search',
 		focus: function() {
 			return false;
 		},		

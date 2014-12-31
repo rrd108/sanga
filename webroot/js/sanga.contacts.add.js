@@ -39,7 +39,7 @@ $(function() {
 		})
 		.autocomplete({
 			minLength : 2,
-			source : $.baseUrl + '/Skills/search',
+			source : $.sanga.baseUrl + '/Skills/search',
 			focus: function() {
 				// prevent value inserted on focus
 				return false;
@@ -57,7 +57,7 @@ $(function() {
 	
 	$('#xzip').autocomplete({
 		minLength : 2,
-		source : $.baseUrl + '/Zips/search',
+		source : $.sanga.baseUrl + '/Zips/search',
 		focus: function() {
 			return false;
 		},		
@@ -75,7 +75,7 @@ $(function() {
 	
 	$('#xfamily').autocomplete({
 		minLength : 2,
-		source : $.baseUrl + '/Contacts/search',
+		source : $.sanga.baseUrl + '/Contacts/search',
 		html: true,
 		focus: function() {
 			return false;

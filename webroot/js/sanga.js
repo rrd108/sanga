@@ -5,10 +5,9 @@ $(function() {
 		pathClass:	'current'
 	});
 	
-	//get base url
-	$.baseUrl = $($('script')[0]).attr('src').replace(/\/js\/jquery\.js/, '');
-
-	$.animation = {
+	$.sanga = {};
+	$.sanga.baseUrl = $($('script')[0]).attr('src').replace(/\/js\/jquery\.js/, '');
+	$.sanga.animation = {
 					open : 'animated bounceInDown', // Animate.css class names
 					close : 'animated bounceOutUp', // Animate.css class names
 					timeout : 2,

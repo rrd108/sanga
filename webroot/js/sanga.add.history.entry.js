@@ -3,7 +3,7 @@ $(function() {
 	
 	$('#xgroup-id').autocomplete({
 		minLength : 2,
-		source : $.baseUrl + '/Groups/search',
+		source : $.sanga.baseUrl + '/Groups/search',
 		focus: function() {
 			return false;
 		},		
@@ -21,7 +21,7 @@ $(function() {
 	
 	$('#xevent-id').autocomplete({
 		minLength : 2,
-		source : $.baseUrl + '/Events/search',
+		source : $.sanga.baseUrl + '/Events/search',
 		focus: function() {
 			return false;
 		},		
@@ -60,7 +60,7 @@ $(function() {
 				noty({
 					text : textStatus,
 					type : 'error',
-					animation : $.animation
+					animation : $.sanga.animation
 				});
 			},
 			success : function(data, textStatus, jqXHR){
@@ -69,7 +69,7 @@ $(function() {
 				noty({
 					text : jqXHR.responseJSON.message,
 					type : jqXHR.responseJSON.save ? 'success' : 'error',
-					animation : $.animation
+					animation : $.sanga.animation
 				});
 				var newRow = $("<tr>");
 				var cols = "";
