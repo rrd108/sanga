@@ -3,6 +3,7 @@
 //echo $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
 echo $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 echo $this->Html->script('sanga.contacts.add.js', ['block' => true]);
+echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
 
 //edit link
 echo $this->Html->link($this->Html->image('edit.png'),
@@ -371,6 +372,15 @@ echo $this->element('ajax-images');
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
 		<?php if (!empty($histories)): ?>
+		<?php
+		echo $this->Form->create(null,
+									['id' => 'hForm',
+									 'url' => [
+											   'controller' => 'Histories',
+											   'action' => 'add'
+											   ]
+									 ]);
+		?>
 		<table id="hTable" cellpadding="0" cellspacing="0">
 			<thead>
 				<tr>
@@ -387,20 +397,15 @@ echo $this->element('ajax-images');
 				<tr>
 					<td>
 						<?php
-						echo $this->Form->create(null,
-												 ['id' => 'hForm',
-												  'url' => [
-															'controller' => 'Histories',
-															'action' => 'add'
-															]
-												  ]);
 						echo $this->Form->input('contact_id',
 													['type' => 'hidden',
-													 'value' => $contact->id
+													 'value' => $contact->id,
+													 'class' => 'dontdel'
 													 ]);
 						echo $this->Form->input('date',
 												['label' => false,
-												 'value' => date('Y-m-d')]);
+												 'value' => date('Y-m-d'),
+												 'class' => 'dontdel']);
 						//echo $this->Form->input('user_id', ['options' => $users]);
 						//echo $this->Form->input('family');
 						?>
@@ -428,9 +433,6 @@ echo $this->element('ajax-images');
 						?>
 					</td>
 					<td id="hInfo">
-						<?php
-						echo $this->Form->end();
-						?>
 					</td>
 				</tr>
 				<?php foreach ($histories as $history): ?>
@@ -467,6 +469,9 @@ echo $this->element('ajax-images');
 				<?php endforeach; ?>
 			</tbody>
 		</table>
+		<?php
+		echo $this->Form->end();
+		?>
 		<div class="paginator">
 			<ul class="pagination">
 			<?php

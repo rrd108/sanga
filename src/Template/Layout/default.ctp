@@ -21,7 +21,7 @@
 	print $this->Html->css('animate.css');
 	print $this->Html->css('sanga.css');
 	
-	print $this->Html->script('jquery.js');
+	print $this->Html->script('jquery.js');	//this should be the very first js file
 	
 	//dropdown menu
 	print $this->Html->script('superfish.js');

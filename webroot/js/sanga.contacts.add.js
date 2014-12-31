@@ -1,7 +1,5 @@
 $(function() {
 	
-	var urlbase = (location.pathname.search(/view/) != -1) ? '../..' : '..';
-	
 	$('#birth').datepicker();
 	
 	function addSkillSpanAndInput(event, ui){
@@ -41,7 +39,7 @@ $(function() {
 		})
 		.autocomplete({
 			minLength : 2,
-			source : urlbase + '/Skills/search',
+			source : $.baseUrl + '/Skills/search',
 			focus: function() {
 				// prevent value inserted on focus
 				return false;
@@ -59,7 +57,7 @@ $(function() {
 	
 	$('#xzip').autocomplete({
 		minLength : 2,
-		source : urlbase + '/Zips/search',
+		source : $.baseUrl + '/Zips/search',
 		focus: function() {
 			return false;
 		},		
@@ -77,7 +75,7 @@ $(function() {
 	
 	$('#xfamily').autocomplete({
 		minLength : 2,
-		source : urlbase + '/Contacts/search',
+		source : $.baseUrl + '/Contacts/search',
 		html: true,
 		focus: function() {
 			return false;

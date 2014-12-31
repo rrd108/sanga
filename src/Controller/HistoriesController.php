@@ -24,7 +24,7 @@ class HistoriesController extends AppController {
 	public function index() {
 		$this->paginate = [
 			'contain' => ['Contacts', 'Users', 'Groups', 'Events', 'Units'],
-			'order' => ['Histories.date' => 'DESC']
+			'order' => ['Histories.date' => 'DESC', 'Histories.id' => 'DESC']
 		];
 		$this->set('histories', $this->paginate($this->Histories));
 	}

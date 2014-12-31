@@ -1,9 +1,13 @@
 $(function() {
 	$( document ).tooltip({position : { my: "right center", at: "right-20 bottom", collision: "flipfit" }});
+
 	$('ul.sf-menu').superfish({
 		pathClass:	'current'
 	});
 	
+	//get base url
+	$.baseUrl = $($('script')[0]).attr('src').replace(/\/js\/jquery\.js/, '');
+
 	$.animation = {
 					open : 'animated bounceInDown', // Animate.css class names
 					close : 'animated bounceOutUp', // Animate.css class names
