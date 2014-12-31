@@ -324,7 +324,9 @@ echo $this->element('ajax-images');
 											 ]);
 					?>
 				</p>
-				<div class="column large-12" id="notfamilymember"></div>
+				<div class="column large-12" id="notfamilymember">
+					<div class="delete-close"></div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -435,3 +435,15 @@ input.editbox.addr, span.addr{
 #hInfo{
   width: 20px;
 }
+
+
+.delete-close{
+  background-image: url("../img/delete-close.png");
+  background-repeat: no-repeat;
+  min-height: 25px;
+}
+.delete-open{
+  background-image: url("../img/delete-open.png");
+  background-repeat: no-repeat;
+  min-height: 25px;
+}

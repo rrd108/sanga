@@ -20,9 +20,11 @@ $(function() {
 	$("#notfamilymember").droppable({
 		over : function(event, ui){
 			$(this).addClass("ui-state-highlight");
+			$(this).children('div').addClass('delete-open').removeClass("delete-close");
 		},
 		out : function(event, ui){
 			$(this).removeClass("ui-state-highlight");
+			$(this).children('div').addClass('delete-close').removeClass("delete-open");
 		},
 		drop : function(event, ui){
 			var aLink = $(ui.draggable).find('a');
