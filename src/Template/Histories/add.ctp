@@ -21,7 +21,6 @@
 	<?php
 		echo $this->Form->input('contact_id', ['options' => $contacts]);
 		echo $this->Form->input('date');
-		echo $this->Form->input('user_id', ['options' => $users]);
 		echo $this->Form->input('group_id', ['options' => $groups]);
 		echo $this->Form->input('event_id', ['options' => $events]);
 		echo $this->Form->input('detail');

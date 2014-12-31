@@ -14,6 +14,19 @@ class EventsController extends AppController {
         return true;
     }
 
+	public function search(){
+		$query = $this->Events->find()
+				->select(['id', 'name'])
+				->where(['name LIKE "'.$this->request->query('term').'%"']);
+		foreach($query as $row){
+			$result[] = array('value' => $row->id,
+							  'label' => $row->name
+							  );
+		}
+		//debug($result);die();
+		$this->set('result', $result);
+	}
+
 /**
  * Index method
  *

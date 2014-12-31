@@ -14,7 +14,7 @@ class GroupsController extends AppController {
         return true;
     }
 
-	public function searchgroup(){
+	public function search(){
 		$query = $this->Groups->find()
 				->select(['id', 'name'])
 				->where(['name LIKE "'.$this->request->query('term').'%"']);

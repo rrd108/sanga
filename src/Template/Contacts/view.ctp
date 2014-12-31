@@ -10,8 +10,6 @@ echo $this->Html->link($this->Html->image('edit.png'),
 					   ['id' => 'editlink', 'escape' => false]);
 
 echo $this->element('ajax-images');
-
-echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $contact->id]);
 ?>
 <div id="tabs" class="row">
 	<div class="actions columns large-2 medium-3">
@@ -24,6 +22,11 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 			<li id="tabnav-6"><a href="#tabs-6"><?= __('Finances') ?></a></li>
 		</ul>
 	</div>
+	
+	<?php
+	echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $contact->id]);
+	?>
+	
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
 		<h2>
 			<?= h($contact->name) ?>
@@ -357,50 +360,110 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 			</div>
 		</div>
 	</div>
+	
+	<?php
+	echo $this->Form->end();
+	?>
+	
 	<div id="tabs-4" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->name) ?></h2>
 		<div class="column large-12">
 		<?php if (!empty($histories)): ?>
-		<table cellpadding="0" cellspacing="0">
-			<tr>
-				<th><?= $this->Paginator->sort('date') ?></th>
-				<th><?= $this->Paginator->sort('User.name') ?></th>
-				<th><?= $this->Paginator->sort('Group.name') ?></th>
-				<th><?= $this->Paginator->sort('Event.name') ?></th>
-				<th><?= $this->Paginator->sort('detail') ?></th>
-				<th><?= $this->Paginator->sort('quantity') ?></th>
-			</tr>
-			<?php foreach ($histories as $history): ?>
-			<tr>
-				<td><?php echo $history->date->format('Y-m-d'); ?></td>
-				<td>
-					<?php
-					if(isset($history->user->name)){
-						echo $history->user->name;
-					}
-					?>
-				</td>
-				<td>
-					<?php
-					if($history->group){
-						echo $history->group->name;
-					}
-					?>
-				</td>
-				<td><?= h($history->event->name) ?></td>
-				<td><?= h($history->detail) ?></td>
-				<td class="r">
-					<?php
-						if(isset($history->unit->name)){
-							echo h($this->Number->currency($history->quantity, $history->unit->name));
+		<table id="hTable" cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<th><?= $this->Paginator->sort('date') ?></th>
+					<th><?= $this->Paginator->sort('User.name') ?></th>
+					<th><?= $this->Paginator->sort('Group.name') ?></th>
+					<th><?= $this->Paginator->sort('Event.name') ?></th>
+					<th><?= $this->Paginator->sort('detail') ?></th>
+					<th><?= $this->Paginator->sort('quantity') ?></th>
+					<th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<?php
+						echo $this->Form->create(null,
+												 ['id' => 'hForm',
+												  'url' => [
+															'controller' => 'Histories',
+															'action' => 'add'
+															]
+												  ]);
+						echo $this->Form->input('contact_id',
+													['type' => 'hidden',
+													 'value' => $contact->id
+													 ]);
+						echo $this->Form->input('date',
+												['label' => false,
+												 'value' => date('Y-m-d')]);
+						//echo $this->Form->input('user_id', ['options' => $users]);
+						//echo $this->Form->input('family');
+						?>
+					</td>
+					<td id="uName"><?= $this->Session->read('Auth.User.name') ?></td>
+					<td>
+						<?php
+						echo $this->Form->input('group_id', ['type' => 'hidden']);
+						echo $this->Form->input('xgroup_id', ['label' => false, 'type' => 'text']);
+						?>
+					</td>
+					<td>
+						<?php
+						echo $this->Form->input('event_id', ['type' => 'hidden']);
+						echo $this->Form->input('xevent_id', ['label' => false, 'type' => 'text']);
+						?>
+					</td>
+					<td><?= $this->Form->input('detail', ['label' => false]) ?></td>
+					<td>
+						<?php
+						/*echo $this->Form->input('quantity', ['label' => false]);
+						echo $this->Form->input('unit_id', ['label' => false,
+															'class' => 'thin',
+															'type' => 'text']);*/
+						?>
+					</td>
+					<td id="hInfo">
+						<?php
+						echo $this->Form->end();
+						?>
+					</td>
+				</tr>
+				<?php foreach ($histories as $history): ?>
+				<tr>
+					<td><?php echo $history->date->format('Y-m-d'); ?></td>
+					<td>
+						<?php
+						if(isset($history->user->name)){
+							echo $history->user->name;
 						}
-						else{
-							echo h($history->quantity);
+						?>
+					</td>
+					<td>
+						<?php
+						if($history->group){
+							echo $history->group->name;
 						}
-					?>
-				</td>
-			</tr>
-			<?php endforeach; ?>
+						?>
+					</td>
+					<td><?= h($history->event->name) ?></td>
+					<td><?= h($history->detail) ?></td>
+					<td class="r">
+						<?php
+							if(isset($history->unit->name)){
+								echo h($this->Number->currency($history->quantity, $history->unit->name));
+							}
+							else{
+								echo h($history->quantity);
+							}
+						?>
+					</td>
+					<td></td>
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
 		</table>
 		<div class="paginator">
 			<ul class="pagination">
@@ -466,6 +529,3 @@ echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $cont
 		<h2><?= h($contact->name) ?></h2>
 	</div>
 </div>
-<?php
-echo $this->Form->end();
-?>

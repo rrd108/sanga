@@ -50,20 +50,40 @@ class HistoriesController extends AppController {
  */
 	public function add() {
 		$history = $this->Histories->newEntity($this->request->data);
+		$history->user_id = $this->Auth->user('id');
 		if ($this->request->is('post')) {
-			if ($this->Histories->save($history)) {
-				$this->Flash->success('The history has been saved.');
-				return $this->redirect(['action' => 'index']);
+			//debug($this->request->data);die();
+			$saved = $this->Histories->save($history);
+			if ($saved) {
+				$message = __('The history has been saved.');
+				if ($this->request->is('ajax')) {
+					$result = ['save' => true,
+							   'message' => $message];
+				} else {
+					$this->Flash->success($message);
+					return $this->redirect(['action' => 'index']);
+				}
 			} else {
-				$this->Flash->error('The history could not be saved. Please, try again.');
+				$message = __('The history could not be saved. Please, try again.');
+				if ($this->request->is('ajax')) {
+					$result = ['save' => false,
+							   'message' => $message];
+				} else {
+					$this->Flash->error($message);
+				}
 			}
 		}
+		
+		if ($this->request->is('ajax')) {
+			$this->set(compact('result'));
+			return;
+		}
+	
 		$contacts = $this->Histories->Contacts->find('list');
-		$users = $this->Histories->Users->find('list');
 		$groups = $this->Histories->Groups->find('list');
 		$events = $this->Histories->Events->find('list');
 		$units = $this->Histories->Units->find('list');
-		$this->set(compact('history', 'contacts', 'users', 'groups', 'events', 'units'));
+		$this->set(compact('history', 'contacts', 'groups', 'events', 'units'));
 	}
 
 /**

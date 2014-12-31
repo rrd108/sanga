@@ -35,7 +35,7 @@ class ContactsTable extends Table {
 		]);
 		$this->hasMany('Histories', [
 			'foreignKey' => 'contact_id',
-			'sort' => ['Histories.date' => 'DESC']
+			'sort' => ['Histories.date' => 'DESC', 'Histories.id' => 'DESC']
 		]);
 		$this->belongsToMany('Groups', [
 			'foreignKey' => 'contact_id',

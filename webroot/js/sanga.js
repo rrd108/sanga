@@ -4,6 +4,14 @@ $(function() {
 		pathClass:	'current'
 	});
 	
+	$.animation = {
+					open : 'animated bounceInDown', // Animate.css class names
+					close : 'animated bounceOutUp', // Animate.css class names
+					timeout : 2,
+					easing : 'swing', // unavailable - no need
+					speed: 500 // unavailable - no need
+					};
+	
 	$('#quickterm').autocomplete({
 			minLength : 2,
 			html: true,

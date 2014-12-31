@@ -403,7 +403,7 @@ input.editbox, textarea.editbox, span.editbox{
 input.editbox{
   width: 45%;
 }
-input.editbox.zip, span.zip{
+input.editbox.zip, span.zip, input.thin{
   width: 10%;
 }
 input.editbox.addr, span.addr{
@@ -431,4 +431,7 @@ input.editbox.addr, span.addr{
 }
 .gSelected{
   background-color: #dfd;
+}
+#hInfo{
+  width: 20px;
 }
