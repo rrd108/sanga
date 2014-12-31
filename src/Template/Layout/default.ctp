@@ -18,6 +18,7 @@
 	print $this->Html->css('jquery-ui.structure.min.css');
 	print $this->Html->css('jquery-ui.theme.min.css');
 	
+	print $this->Html->css('animate.css');
 	print $this->Html->css('sanga.css');
 	
 	print $this->Html->script('jquery.js');
@@ -30,6 +31,8 @@
 	print $this->Html->script('jquery.ui.autocomplete.html.js');
 	print $this->Html->script('ui.datepicker-hu.js');
 	print $this->Html->script('jquery.rStorage.min.js');
+	
+	print $this->Html->script('jquery.noty.packaged.min.js');
 	
 	print $this->Html->script('sanga.js');
 
