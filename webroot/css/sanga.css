@@ -436,7 +436,6 @@ input.editbox.addr, span.addr{
   width: 20px;
 }
 
-
 .delete-close{
   background-image: url("../img/delete-close.png");
   background-repeat: no-repeat;
@@ -446,4 +445,8 @@ input.editbox.addr, span.addr{
   background-image: url("../img/delete-open.png");
   background-repeat: no-repeat;
   min-height: 25px;
+}
+
+#qForm input[type="text"]{
+  width: 40%;
 }

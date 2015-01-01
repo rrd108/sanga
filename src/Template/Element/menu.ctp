@@ -63,18 +63,15 @@
 				?>
 			</ul>
 		</li>
-		<li>
-			<?php
-				print $this->Form->create(null, ['id' => 'qForm', 'url' => ['controller' => 'Contacts', 'action' => 'quicksearch']]);
-				print $this->Form->input('quickterm', ['label' => false]);
-				print $this->Form->end();
-			?>
-		</li>
 	</ul>
 	<?php
+		print $this->Form->create(null, ['id' => 'qForm', 'url' => ['controller' => 'Contacts', 'action' => 'quicksearch']]);
+		print $this->Form->input('quickterm',
+								 ['label' => false,
+								  'placeholder' => __('Search')]);
+		print $this->Form->end();
 	endif;
 	?>
 </div>
 <div class="header-help">
-	<span>&nbsp;<?php echo $this->Html->getCrumbs(' / ', ''); ?></span>
 </div>
