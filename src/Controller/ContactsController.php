@@ -41,32 +41,12 @@ class ContactsController extends AppController {
 		$this->set('contact', $contact);
 	}
 
-	public function quicksearch(){
-		$contact = $this->Contacts->newEntity($this->request->data);
-		$query = $this->Contacts->find()
-				->select(['id', 'name', 'contactname', 'email', 'phone'])
-				->where(['name LIKE "%'.$this->request->query('term').'%"'])
-				->orWhere(['contactname LIKE "%'.$this->request->query('term').'%"'])
-				->orWhere(['email LIKE "%'.$this->request->query('term').'%"'])
-				->orWhere(['phone LIKE "%'.$this->request->query('term').'%"']);
-		//debug($query);
-		foreach($query as $row){
-			$label = $this->createHighlight($row->name) .
-					$this->createHighlight($row->contactname) .
-					$this->createHighlight($row->email) .
-					$this->createHighlight($row->phone);
-			$result[] = array('value' => $row->id,
-							  'label' => $label);
-		}
-		//debug($result);die();
-		$this->set('result', $result);
-		$this->set('contact', $contact);
-	}
-
 	private function createHighlight($value = null){
 		if($value && strpos(strtolower($value), $this->request->query('term')) !== false){
 			$highlight = array('format' => '<span class="b i">\1</span>');
 			return String::highlight($value, $this->request->query('term'), $highlight) . ' ';
+		} else {
+			return $value;
 		}
 	}
 
