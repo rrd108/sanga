@@ -55,7 +55,6 @@ class GroupsTable extends Table {
 			->add('admin_user_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('admin_user_id')
 			->add('shared', 'valid', ['rule' => 'boolean'])
-			->requirePresence('shared', 'create')
 			->allowEmpty('shared');
 
 		return $validator;

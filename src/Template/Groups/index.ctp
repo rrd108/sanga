@@ -1,4 +1,7 @@
 <div class="groups index columns">
+	<?php
+	echo $this->Form->create($group, ['action' => 'add']);
+	?>
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
@@ -13,7 +16,6 @@
 		<tr>
 			<?php
 			echo '<td>';
-				echo $this->Form->create($group, ['action' => 'add']);
 				if($this->Session->read('Auth.User.id') >= 9){
 					echo $this->Form->input('admin_user_id',
 										['label' => false,
@@ -26,7 +28,10 @@
 				}
 			echo '</td>';
 			echo '<td>';
-				echo $this->Form->input('shared', ['label' => false]);
+				echo $this->Form->input('shared',
+										[
+										 'label' => false
+										 ]);
 			echo '</td>';
 			echo '<td>';
 				echo $this->Form->input('name', ['label' => false]);
@@ -38,7 +43,6 @@
 			//echo $this->Form->input('contacts._ids', ['options' => $contacts]);
 			echo '<td>';
 				echo $this->Form->button(__('Submit'));
-				echo $this->Form->end();
 			echo '</td>';
 			?>
 		</tr>
@@ -79,6 +83,9 @@
 	<?php endforeach; ?>
 	</tbody>
 	</table>
+	<?php
+	echo $this->Form->end();
+	?>
 	<div class="paginator">
 		<ul class="pagination">
 		<?php
