@@ -13,7 +13,6 @@ class SearchController extends AppController {
 
 	public function quicksearch(){
 		$this->Contacts = TableRegistry::get('Contacts');
-		$contact = $this->Contacts->newEntity($this->request->data);
 		$query = $this->Contacts->find()
 				->select(['id', 'name', 'contactname', 'email', 'phone'])
 				->where(['name LIKE "%'.$this->request->query('term').'%"'])
@@ -21,19 +20,39 @@ class SearchController extends AppController {
 				->orWhere(['email LIKE "%'.$this->request->query('term').'%"'])
 				->orWhere(['phone LIKE "%'.$this->request->query('term').'%"']);
 		//debug($query->toArray());
-		foreach($query as $row){
-			$label = $this->createHighlight($row->name) . ' ' .
+		foreach($query as $row) {
+			$label = '♥ ' . $this->createHighlight($row->name) . ' ' .
 					$this->createHighlight($row->contactname) . ' ' .
 					$this->createHighlight($row->email) . ' ' .
-					$this->createHighlight($row->phone);
+					$this->createHighlight($row->phone) . ' ';
 			$result[] = array('value' => $row->id,
 							  'label' => $label);
 		}
 		//debug($result);die();
 		
 		//groups
+		$this->Groups = TableRegistry::get('Groups');
+		$query = $this->Groups->find('accessible',
+									 ['User.id' => $this->Auth->user('id'),
+									  'shared' => true])
+				->where(['name LIKE "%'.$this->request->query('term').'%"']);
+		foreach($query as $row) {
+			$label = '⁂ ' . $this->createHighlight($row->name);
+			$result[] = array('value' => $row->id,
+							  'label' => $label);
+		}
 		
 		//histories
+		//to many entries
+		/*$this->Histories = TableRegistry::get('Histories');
+		$query = $this->Histories->find()
+				->select(['id', 'detail'])
+				->where(['detail LIKE "%'.$this->request->query('term').'%"']);
+		foreach($query as $row) {
+			$label = '⚑ ' . $this->createHighlight($row->detail);
+			$result[] = array('value' => $row->id,
+							  'label' => $label);
+		}*/
 		
 		$this->set('result', $result);
 	}
