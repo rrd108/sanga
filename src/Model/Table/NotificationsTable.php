@@ -38,7 +38,7 @@ class NotificationsTable extends Table {
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
 			->add('user_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('user_id', 'create')
+			->requirePresence('user_id', 'create')
 			->notEmpty('user_id')
 			->allowEmpty('notification')
 			->add('unread', 'valid', ['rule' => 'boolean'])

@@ -45,10 +45,10 @@ class ZipsTable extends Table {
 			->allowEmpty('zip')
 			->allowEmpty('name')
 			->add('lat', 'valid', ['rule' => 'numeric'])
-			->validatePresence('lat', 'create')
+			->requirePresence('lat', 'create')
 			->notEmpty('lat')
 			->add('lng', 'valid', ['rule' => 'numeric'])
-			->validatePresence('lng', 'create')
+			->requirePresence('lng', 'create')
 			->notEmpty('lng');
 
 		return $validator;

@@ -55,12 +55,21 @@ class GroupsTable extends Table {
 			->add('admin_user_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('admin_user_id')
 			->add('shared', 'valid', ['rule' => 'boolean'])
-			->validatePresence('shared', 'create')
+			->requirePresence('shared', 'create')
 			->allowEmpty('shared');
 
 		return $validator;
 	}
 	
+/**
+ * Find acessible groups for the user
+ *
+ * @param Cake\ORM\Query $query
+ * @param array $options
+ * 					User.id	-	we seraching the accessible groups for this user
+ * 					shared	-	if set the result will include shared groups
+ * @return \Cake\Validation\Validator
+ */
 	public function findAccessible(Query $query, array $options){
 		if(isset($options['shared'])){
 			$shared = ['shared' => true];

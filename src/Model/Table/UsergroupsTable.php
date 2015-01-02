@@ -43,10 +43,10 @@ class UsergroupsTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
-			->validatePresence('name', 'create')
+			->requirePresence('name', 'create')
 			->notEmpty('name')
 			->add('admin_user_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('admin_user_id', 'create')
+			->requirePresence('admin_user_id', 'create')
 			->notEmpty('admin_user_id');
 
 		return $validator;

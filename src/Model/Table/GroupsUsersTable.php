@@ -43,10 +43,10 @@ class GroupsUsersTable extends Table {
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
 			->add('group_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('group_id', 'create')
+			->requirePresence('group_id', 'create')
 			->notEmpty('group_id')
 			->add('user_id', 'valid', ['rule' => 'numeric'])
-			->validatePresence('user_id', 'create')
+			->requirePresence('user_id', 'create')
 			->notEmpty('user_id')
 			->add('intersection_group_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('intersection_group_id');
