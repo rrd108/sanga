@@ -19,8 +19,8 @@ use Cake\Network\Exception\NotImplementedException;
  */
 class ContactsController extends AppController {
 	
-	public $helpers = ['Number'];
-		
+	public $helpers = ['Number'];	
+
 	public function isAuthorized($user = null) {
         return true;
     }
@@ -112,7 +112,7 @@ class ContactsController extends AppController {
 			$groupIds[] = $mg->id;
 		}
 
-		$myContacts = $this->Contacts->find('mine', ['User.id' => $this->Auth->user('id')])
+		$myContacts = $this->Contacts->find('ownedBy', ['User.id' => $this->Auth->user('id')])
 				->select(['Contacts.id']);
 		$inmygroupsContacts = $this->Contacts->find('inGroups', ['groupIds' => $groupIds])
 				->select(['Contacts.id']);
@@ -154,8 +154,7 @@ class ContactsController extends AppController {
 		$this->set('histories', $this->paginate($histories));
 
 		$accessibleGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
-		$users = $this->Contacts->Users->find();
-		$this->set(compact('accessibleGroups', 'users'));
+		$this->set(compact('accessibleGroups'));
 	}
 
 /**

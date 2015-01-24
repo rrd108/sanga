@@ -383,18 +383,24 @@ class ContactsTable extends Table {
 		return $duplicates;
 	}
 	
-	public function findMine(Query $query, array $options){
+/**
+ * Find contacts owned by given user(s)
+ * The given users are the contact persons for the contact
+ */
+	public function findOwnedBy(Query $query, array $options){
 		return $query
 				->matching('Users', function($q) use ($options) {
 					    return $q->where(['Users.id IN ' => $options['User.id']]);
 					});
 	}
 	
+/**
+ * Find contacts who are members of the given groups
+ */
 	public function findInGroups(Query $query, array $options){
 		return $query
 				->matching('Groups', function($q) use ($options){
 						return $q->where(['Groups.id IN ' => $options['groupIds']]);
 					});
 	}
-
 }
