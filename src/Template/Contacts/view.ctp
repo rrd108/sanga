@@ -21,6 +21,7 @@ echo $this->element('ajax-images');
 			<li id="tabnav-4"><a href="#tabs-4"><?= __('Histories') ?></a></li>
 			<li id="tabnav-5"><a href="#tabs-5"><?= __('Groups') ?></a></li>
 			<li id="tabnav-6"><a href="#tabs-6"><?= __('Finances') ?></a></li>
+			<li id="tabnav-7"><a href="#tabs-7"><?= __('Access') ?></a></li>
 		</ul>
 	</div>
 	
@@ -115,10 +116,14 @@ echo $this->element('ajax-images');
 					&nbsp;
 					<?php
 					echo '<span class="dta zip zip-zip">';
-						echo $contact->zip->zip;
+						if(isset($contact->zip)){
+							echo $contact->zip->zip;
+						}
 					echo '</span> ';
 					echo '<span class="dta zip-name">';
-						echo $contact->zip->name;
+						if(isset($contact->zip)){
+							echo $contact->zip->name;
+						}
 					echo '</span> ';
 					echo $this->Form->input('zip_id',
 											['type' => 'hidden',
@@ -534,5 +539,11 @@ echo $this->element('ajax-images');
 	</div>
 	<div id="tabs-6" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->name) ?></h2>
+	</div>
+	<div id="tabs-7" class="contacts view large-10 medium-9 columns">
+		<h2><?= h($contact->name) ?></h2>
+		<div class="row">
+			
+		</div>
 	</div>
 </div>

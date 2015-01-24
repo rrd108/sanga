@@ -111,5 +111,39 @@ class UsersTable extends Table {
 		}
 		return false;
 	}
+
+
+/**
+ * Find users who has access to the contact
+ */
+	public function findAccess(Query $query, array $options){
+		return $query;
+	}
 	
+/**
+ * Find users who has access to the contact, because the user owns
+ * (are the contact persons for) the contact
+ */
+	public function findOwners(Query $query, array $options){
+		return $query
+				->matching('Contacts', function($q) use ($options) {
+					    return $q->where(['Contacts.id IN ' => $options['Contact.id']]);
+					});
+	}
+
+/**
+ * Find users who has access to the contact because the user has access to a group
+ * where the contact is a member
+ */
+	public function findGroupOwners(Query $query, array $options){
+		return $query;
+	}
+
+/**
+ * Find users who has access to the contact because the user is the owner of a usergroup
+ * where there is user who has access to the user
+ */
+	public function findUsergroupOwners(Query $query, array $options){
+		return $query;
+	}
 }
