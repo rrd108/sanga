@@ -403,4 +403,25 @@ class ContactsTable extends Table {
 						return $q->where(['Groups.id IN ' => $options['groupIds']]);
 					});
 	}
+	
+/**
+ * Is the contacts accessible for the user because
+ * 		the user is a contact person for the contact, or
+ * 		the contact is in a group what is accessible by the user, or
+ * 		the contact person of the contact is a member of a usergroup what is created by the user
+ */
+	public function isAccessible($contactId, $userId){
+		$contact = $this->find()
+			->select('id')
+			->where(['Contacts.id' => $contactId])
+			->matching('Users', function($q) use ($userId) {
+					    return $q->where(['Users.id' => $userId]);
+					})
+			->toArray();
+		//debug($contact);
+		if (isset($contact[0]) && $contact[0]['id'] == $contactId){
+			return true;
+		}
+		return false;
+	}
 }
