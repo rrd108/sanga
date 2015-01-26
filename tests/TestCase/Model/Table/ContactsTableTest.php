@@ -131,48 +131,35 @@ class ContactsTableTest extends TestCase {
 		$this->assertEquals($expected, $actual);
 	}
 	
-	public function testFindMine(){
-		$actual = $this->Contacts->find('mine', ['User.id' => 2])->hydrate(false)->toArray();
+	public function testFindOwnedBy(){
+		$_actual = $this->Contacts->find('ownedBy', ['User.id' => 2])->hydrate(false)->toArray();
 		//debug($actual);
+		foreach($_actual as $a) {
+			$actual[] = ['id' => $a['id'], 'name' => $a['name']];
+		}
 		$expected = [
-				['id' => 2,
-				'name' => 'Acarya-ratna das',
-				'contactname' => '',
-				'zip_id' => 1,
-				'address' => 'Rózsakert u. 6. II/9',
-				'lat' => 47.660961,
-				'lng' => 19.077259,
-				'phone' => '36/30 99-95-091',
-				'email' => 'halterand@gmail.com',
-				'birth' => null,
-				'sex' => 0,
-				'workplace' => '',
-				'family_id' => null,
-				'contactsource_id' => 4,
-				'active' => true,
-				'comment' => 'kis eü probléma',
-				'created' => null,
-				'modified' => Time::createFromFormat('Y-m-d H:i:s', '2014-10-25 08:09:44'),
-				'_matchingData' => [
-					'Users' => [
-						'id' => 2,
-						'name' => 'user2',
-						'password' => 'secretpass',
-						'realname' => 'user2 real name',
-						'email' => 'user2@sehol.se',
-						'phone' => '+36123456789',
-						'active' => true,
-						'role' => 1,
-						'created' => Time::createFromFormat('Y-m-d H:i:s', '2014-11-29 10:59:47'),
-						'modified' => Time::createFromFormat('Y-m-d H:i:s', '2014-11-29 10:59:47')
-					],
-					'ContactsUsers' => [
-						'contact_id' => 2,
-						'user_id' => 2
-					]
-				]
-			]
-		];
+				['id' => 2, 'name' => 'Acarya-ratna das'],
+				['id' => 3, 'name' => 'Dvaipayana Dasa'],
+				['id' => 4, 'name' => 'Acarya-ratna Dasa']
+			];
+		$this->assertEquals($expected, $actual);
+	}
+	
+	public function testIsAccessible(){
+		$actual = $this->Contacts->isAccessible(1, 1);
+		$expected = true;
+		$this->assertEquals($expected, $actual);
+
+		$actual = $this->Contacts->isAccessible(1, 2);
+		$expected = false;
+		$this->assertEquals($expected, $actual);
+
+		$actual = $this->Contacts->isAccessible(6, 1);
+		$expected = true;
+		$this->assertEquals($expected, $actual);
+
+		$actual = $this->Contacts->isAccessible(6, 2);
+		$expected = true;
 		$this->assertEquals($expected, $actual);
 	}
 
