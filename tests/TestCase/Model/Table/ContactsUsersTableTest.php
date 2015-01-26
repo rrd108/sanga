@@ -27,9 +27,6 @@ class ContactsUsersTableTest extends TestCase {
 		'app.groups',
 		'app.contacts_groups',
 		'app.notifications',
-		
-		
-		
 		'app.usergroups',
 		'app.users_usergroups',
 		'app.units',
