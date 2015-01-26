@@ -18,7 +18,6 @@ class UsersUsergroupsFixture extends TestFixture {
 		'id' => ['type' => 'integer', 'length' => 6, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
 		'user_id' => ['type' => 'integer', 'length' => 5, 'unsigned' => true, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
 		'usergroup_id' => ['type' => 'integer', 'length' => 6, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-		'admin' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '0', 'comment' => 'admin could add and remove members', 'precision' => null],
 		'_indexes' => [
 			'fk_usergroups_has_users_users1_idx' => ['type' => 'index', 'columns' => ['user_id'], 'length' => []],
 			'fk_usergroups_has_users_usergroups1_idx' => ['type' => 'index', 'columns' => ['usergroup_id'], 'length' => []],
@@ -41,9 +40,8 @@ class UsersUsergroupsFixture extends TestFixture {
 	public $records = [
 		[
 			'id' => 1,
-			'user_id' => 1,
-			'usergroup_id' => 1,
-			'admin' => 1
+			'user_id' => 3,
+			'usergroup_id' => 1
 		],
 	];
 

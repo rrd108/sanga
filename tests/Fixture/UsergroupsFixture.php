@@ -38,7 +38,7 @@ class UsergroupsFixture extends TestFixture {
 	public $records = [
 		[
 			'id' => 1,
-			'name' => 'Lorem ipsum dolor sit amet',
+			'name' => 'usergroup1',
 			'admin_user_id' => 1
 		],
 	];

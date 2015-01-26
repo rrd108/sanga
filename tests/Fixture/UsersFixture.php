@@ -65,6 +65,18 @@ class UsersFixture extends TestFixture {
 			'role' => 1,
 			'created' => '2014-11-29 10:59:47',
 			'modified' => '2014-11-29 10:59:47'
+		],
+		[
+			'id' => 3,
+			'name' => 'user3',
+			'password' => 'secretpass',
+			'realname' => 'user3 real name',
+			'email' => 'user3@sehol.se',
+			'phone' => '',
+			'active' => 1,
+			'role' => 1,
+			'created' => '2014-11-29 10:59:47',
+			'modified' => '2014-11-29 10:59:47'
 		]
 	];
 
