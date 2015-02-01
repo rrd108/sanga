@@ -25,6 +25,7 @@ class ContactsTableTest extends TestCase {
 		'app.users',
 		'app.events',
 		'app.groups',
+		'app.groups_users',
 		'app.contacts_groups',
 		'app.notifications',
 		'app.contacts_users',
@@ -154,11 +155,17 @@ class ContactsTableTest extends TestCase {
 		$expected = false;
 		$this->assertEquals($expected, $actual);
 
-		$actual = $this->Contacts->isAccessible(6, 1);
+		//as a group member or group admin
+		$actual = $this->Contacts->isAccessible(6, 2);
 		$expected = true;
 		$this->assertEquals($expected, $actual);
 
-		$actual = $this->Contacts->isAccessible(6, 2);
+		$actual = $this->Contacts->isAccessible(5, 2);
+		$expected = false;
+		$this->assertEquals($expected, $actual);
+
+		//as a usergroup member
+		$actual = $this->Contacts->isAccessible(6, 1);
 		$expected = true;
 		$this->assertEquals($expected, $actual);
 	}
