@@ -405,12 +405,29 @@ class ContactsTable extends Table {
 	}
 	
 /**
- * Is the contacts accessible for the user because
+ * Is the contact accessible for the user because
  * 		the user is a contact person for the contact, or
  * 		the contact is in a group what is accessible by the user, or
  * 		the contact person of the contact is a member of a usergroup what is created by the user
  */
 	public function isAccessible($contactId, $userId){
+		if ($this->isAccessibleAsContactPerson($contactId, $userId)) {
+			return true;
+		}
+		if ($this->isAccessibleAsGroupMember($contactId, $userId)) {
+			return true;
+		}
+		if ($this->isAccessibleAsUsergroupMember($contactId, $userId)) {
+			return true;
+		}
+		return false;
+	}
+
+/**
+ * Is the contact accessible for the user because
+ * 		the user is a contact person for the contact
+ */	
+	private function isAccessibleAsContactPerson($contactId, $userId){
 		$contact = $this->find()
 			->select('id')
 			->where(['Contacts.id' => $contactId])
@@ -420,8 +437,70 @@ class ContactsTable extends Table {
 			->toArray();
 		//debug($contact);
 		if (isset($contact[0]) && $contact[0]['id'] == $contactId){
+			//Log::write('debug', 'Accessibel as contact person ' . $contactId . ' :: ' . $userId);
 			return true;
 		}
 		return false;
 	}
+
+/**
+ * Is the contact accessible for the user because
+ * 		the contact is in a group what is accessible by the user
+ */
+	private function isAccessibleAsGroupMember($contactId, $userId){
+		$groupIds = $this->getGroupMemberships($contactId);
+		if (count($groupIds)) {
+			//user has access for the group as a member or admin
+			$userAsMember = $this->Users->find()
+						->where(['Users.id' => $userId])
+						->matching('Groups', function($q) use ($groupIds) {
+									return $q->where(['Groups.id IN ' => $groupIds]);
+								})
+						->toArray();
+			if (count($userAsMember)) {
+				//Log::write('debug', 'Accessibel as group member ' . $contactId . ' :: ' . $userId);
+				return true;
+			}
+
+			$userAsAdmin = $this->Users->find()
+						->where(['Users.id' => $userId])
+						->matching('AdminGroups', function($q) use ($userId, $groupIds) {
+									return $q->where(['AdminGroups.admin_user_id' => $userId,
+													  'AdminGroups.id IN' => $groupIds]);
+								})
+						->toArray();
+			if (count($userAsAdmin)) {
+				//Log::write('debug', 'Accessibel as group admin ' . $contactId . ' :: ' . $userId);
+				return true;
+			}
+		}
+		return false;
+	}
+
+/**
+ * Is the contact accessible for the user because
+ * 		the contact person of the contact is a member of a usergroup what is created by the user
+ */	
+	private function isAccessibleAsUsergroupMember($contactId, $userId){
+		//get contact persons
+		//get their usergroup memberships
+		//get admin of these
+		//check if $userId is there
+		return false;
+	}
+
+//group memberships of the contact
+	private function getGroupMemberships($contactId) {
+		$contactGroups = $this->find()
+			->contain(['Groups'])
+			->where(['Contacts.id' => $contactId]);
+		$groupIds = [];
+		foreach ($contactGroups as $c) {
+			foreach ($c->groups as $g) {
+				$groupIds[] = $g->id;
+			}
+		}
+		return $groupIds;
+	}
+
 }
