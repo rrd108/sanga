@@ -30,6 +30,10 @@ class UsersTable extends Table {
 			'foreignKey' => 'user_id',
 			'sort' => ['Histories.date' => 'DESC']
 		]);
+		$this->hasMany('AdminGroups', [
+			'className' => 'Groups',
+			'foreignKey' => 'admin_user_id'
+		]);
 		$this->hasMany('Notifications', [
 			'foreignKey' => 'user_id',
 			'sort' => ['Notifications.created' => 'DESC']
