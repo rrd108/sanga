@@ -483,9 +483,26 @@ class ContactsTable extends Table {
  */	
 	private function isAccessibleAsUsergroupMember($contactId, $userId){
 		//get contact persons
+		$_contactUsers = $this->get($contactId, ['contain' => 'Users']);
+		foreach($_contactUsers->users as $u){
+			$userIds[] = $u->id;
+		}
 		//get their usergroup memberships
-		//get admin of these
-		//check if $userId is there
+		$_usergroupMemberships = $this->Users->find()
+					->matching('Usergroups', function($q) use ($userIds) {
+							return $q->where(['Users.id IN ' => $userIds]);
+						});
+		foreach ($_usergroupMemberships as $uId) {
+			if (isset($uId->_matchingData['Usergroups']->admin_user_id)) {
+				$userIds[] = $uId->_matchingData['Usergroups']->admin_user_id;
+			}
+			if (isset($uId->_matchingData['UserUsergroups']->user_id)) {
+				$userIds[] = $uId->_matchingData['UserUsergroups']->user_id;
+			}
+		}
+		if(in_array($userId, $userIds)) {
+			return true;
+		}
 		return false;
 	}
 

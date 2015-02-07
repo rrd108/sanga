@@ -146,6 +146,45 @@ class ContactsTableTest extends TestCase {
 		$this->assertEquals($expected, $actual);
 	}
 	
+	public function testIsAccessibleAsContactPerson(){
+		//testing private method
+		$class = new \ReflectionClass($this->Contacts);
+		$method = $class->getMethod('isAccessibleAsContactPerson');
+		$method->setAccessible(true);
+		
+		$actual = $method->invoke($this->Contacts, 6, 3);
+		$this->assertTrue($actual);
+
+		$actual = $method->invoke($this->Contacts, 6, 1);
+		$this->assertFalse($actual);
+	}
+
+	public function testIsAccessibleAsGroupMember(){
+		//testing private method
+		$class = new \ReflectionClass($this->Contacts);
+		$method = $class->getMethod('isAccessibleAsGroupMember');
+		$method->setAccessible(true);
+		
+		$actual = $method->invoke($this->Contacts, 6, 2);
+		$this->assertTrue($actual);
+
+		$actual = $method->invoke($this->Contacts, 7,2);
+		$this->assertFalse($actual);
+	}
+
+	public function testIsAccessibleAsUsergroupMember(){
+		//testing private method
+		$class = new \ReflectionClass($this->Contacts);
+		$method = $class->getMethod('isAccessibleAsUsergroupMember');
+		$method->setAccessible(true);
+
+		$actual = $method->invoke($this->Contacts, 6, 1);
+		$this->assertTrue($actual);
+
+		$actual = $method->invoke($this->Contacts, 6, 2);
+		$this->assertFalse($actual);
+	}
+	
 	public function testIsAccessible(){
 		$actual = $this->Contacts->isAccessible(1, 1);
 		$expected = true;
