@@ -136,6 +136,10 @@ class ContactsController extends AppController {
  */
 	public function view($id = null) {
 		$id = $id ? $id : $this->request->data['name'];
+		if ( ! $this->Contacts->isAccessible($id, $this->Auth->user('id'))) {
+			$this->Flash->error(__('Permission deined'));
+			$this->render();
+		}
 		$contact = $this->Contacts->get($id, [
 			'contain' => ['Zips', 'Contactsources', 'Groups', 'Skills', 'Users', 'Histories']
 		]);
