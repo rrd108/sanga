@@ -252,6 +252,11 @@ class ContactsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function edit($id = null) {
+		if ( ! $this->Contacts->isAccessible($id, $this->Auth->user('id'))) {
+			$this->Flash->error(__('Permission deined'));
+			$this->render();
+		}
+
 		$contact = $this->Contacts->get($id, [
 			'contain' => ['Groups', 'Skills', 'Users', 'Zips']
 		]);

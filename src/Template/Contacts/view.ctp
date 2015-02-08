@@ -5,7 +5,7 @@ echo $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 echo $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
 
-if(isset($contact)){
+if(isset($contact)) :
 
 //edit link
 echo $this->Html->link($this->Html->image('edit.png'),
@@ -550,5 +550,5 @@ echo $this->element('ajax-images');
 	</div>
 </div>
 <?php
-}
+endif;
 ?>

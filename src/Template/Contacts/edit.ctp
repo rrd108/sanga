@@ -1,3 +1,6 @@
+<?php
+if(isset($contact)) :
+?>
 <div class="contacts form columns">
 <?= $this->Form->create($contact) ?>
 	<fieldset>
@@ -24,3 +27,6 @@
 <?= $this->Form->button(__('Submit')) ?>
 <?= $this->Form->end() ?>
 </div>
+<?php
+endif;
+?>
