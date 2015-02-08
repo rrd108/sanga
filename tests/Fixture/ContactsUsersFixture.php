@@ -42,6 +42,7 @@ class ContactsUsersFixture extends TestFixture {
 		['contact_id' => 3, 'user_id' => 2],
 		['contact_id' => 4, 'user_id' => 2],
 		['contact_id' => 5, 'user_id' => 3],
+		['contact_id' => 5, 'user_id' => 2],
 		['contact_id' => 6, 'user_id' => 3],
 		['contact_id' => 7, 'user_id' => 3],
 	];

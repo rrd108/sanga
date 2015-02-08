@@ -545,7 +545,36 @@ echo $this->element('ajax-images');
 	<div id="tabs-7" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
-			
+			<h3><?= __('Has access as contact persons') ?></h3>
+			<ul>
+			<?php
+			foreach ($hasAccess['contactPersons'] as $user) {
+				print '<li>' . $user->name . '</li>';
+			}
+			?>
+			</ul>
+			<h3><?= __('Has access via groups') ?></h3>
+			<ul>
+			<?php
+			foreach ($hasAccess['groupMembers'] as $user) {
+				print '<li>';
+					print $user->name;
+					if (isset($user->_matchingData['Groups']->name)) print ' / ' . $user->_matchingData['Groups']->name;
+				print '</li>';
+			}
+			?>
+			</ul>
+			<h3><?= __('Has access via user groups') ?></h3>
+			<ul>
+			<?php
+			foreach ($hasAccess['usergroupMembers'] as $user) {
+				print '<li>';
+					print $user->name;
+					if (isset($user->_matchingData['Usergroups']->name)) print ' / ' . $user->_matchingData['Usergroups']->name;
+				print '</li>';
+			}
+			?>
+			</ul>
 		</div>
 	</div>
 </div>

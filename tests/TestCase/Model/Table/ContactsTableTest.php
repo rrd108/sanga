@@ -207,6 +207,43 @@ class ContactsTableTest extends TestCase {
 		$actual = $this->Contacts->isAccessible(6, 4);
 		$this->assertTrue($actual);
 	}
+	
+	public function testHasAccess() {
+		$actual = $this->filterHasAccess($this->Contacts->hasAccess(3));		
+		$expected = ['contactPersons' => [2],
+					'groupMembers' => [],
+					'usergroupMembers' => []];
+		$this->assertEquals($expected, $actual);
+		
+		$actual = $this->filterHasAccess($this->Contacts->hasAccess(5));		
+		$expected = ['contactPersons' => [2, 3],
+					'groupMembers' => [],
+					'usergroupMembers' => [1, 3]];
+		$this->assertEquals($expected, $actual);
+
+		$actual = $this->filterHasAccess($this->Contacts->hasAccess(2));
+		//debug($actual);
+		$expected = ['contactPersons' => [2],
+					'groupMembers' => [1],
+					'usergroupMembers' => []];
+		$this->assertEquals($expected, $actual);
+		
+		$actual = $this->filterHasAccess($this->Contacts->hasAccess(6));
+		$expected = ['contactPersons' => [3],
+					'groupMembers' => [2],
+					'usergroupMembers' => [1, 3]];
+		$this->assertEquals($expected, $actual);
+	}
+	
+	private function filterHasAccess($actual){
+		foreach($actual as $type => $a) {
+			foreach ($a as $i => $user) {
+				$actual[$type][$i] = $user->id;
+			}
+		}
+		//debug($actual);
+		return $actual;
+	}
 
 /**
  * Test initialize method

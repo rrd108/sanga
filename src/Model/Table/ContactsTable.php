@@ -522,5 +522,59 @@ class ContactsTable extends Table {
 		}
 		return $groupIds;
 	}
+	
+/*
+ * Which users has acess to this contact
+ */
+	public function hasAccess($contactId) {
+		$access = ['contactPersons' => [], 'groupMembers' => [], 'usergroupMembers' => []];
+
+		//has access as contact person
+		$contact = $this->get($contactId, ['contain' => ['Users']]);
+		$access['contactPersons'] = $contact->users;
+
+		//has access as group member
+		$groupIds = $this->getGroupMemberships($contactId);
+		if (count($groupIds)) {
+			//user has access for the group as a member or admin
+			$userAsMember = $this->Users->find()
+						->matching('Groups', function($q) use ($groupIds) {
+									return $q->where(['Groups.id IN ' => $groupIds]);
+								})
+						->toArray();
+			//debug($userAsMember);
+			$access['groupMembers'] = $userAsMember;
+
+			$userAsAdmin = $this->Users->find()
+						->matching('AdminGroups', function($q) use ($groupIds) {
+									return $q->where(['AdminGroups.id IN' => $groupIds]);
+								})
+						->toArray();
+			//debug($userAsAdmin);
+			$access['groupMembers'][] = $userAsAdmin[0];		//only 1 user could be the admin fro a group
+			//debug($access);
+		}
+
+		//has access as usergroup member
+		//get contact persons ids
+		foreach($contact->users as $u){
+			$userIds[] = $u->id;
+		}
+		//debug($userIds);
+		//get their usergroup memberships
+		$usergroupMemberships = $this->Users->find()
+					->matching('Usergroups', function($q) use ($userIds) {
+							return $q->where(['Users.id IN ' => $userIds]);
+						})
+					->toArray();
+		foreach ($usergroupMemberships as $u) {
+			//get the usergroup admin
+			$usergroupAdmin = $this->Users->get($u->_matchingData['Usergroups']->admin_user_id);
+			array_unshift($usergroupMemberships, $usergroupAdmin);
+		}
+		$access['usergroupMembers'] = $usergroupMemberships;
+		
+		return $access;
+	}
 
 }

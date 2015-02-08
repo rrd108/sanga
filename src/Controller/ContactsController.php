@@ -122,8 +122,9 @@ class ContactsController extends AppController {
 										  'Contacts.address', 'Contacts.phone',
 										  'Zips.id', 'Zips.zip', 'Zips.name'])
 								->contain(['Zips', 'Users', 'Groups'])
+								->where(['Contacts.id IN ' => $myContacts])
 								->orWhere(['Contacts.id IN ' => $inmygroupsContacts])
-								->orWhere(['Contacts.id IN ' => $myContacts]);
+								->order(['Contacts.contactname' => 'ASC']);
 		$this->set('contacts', $this->paginate($contacts));
 	}
 
@@ -159,6 +160,9 @@ class ContactsController extends AppController {
 
 		$accessibleGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
 		$this->set(compact('accessibleGroups'));
+		
+		$hasAccess = $this->Contacts->hasAccess($id);
+		$this->set(compact('hasAccess'));
 	}
 
 /**
