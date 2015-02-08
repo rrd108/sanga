@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sanga 1.0\n"
-"POT-Creation-Date: 2014-12-18 12:50+0000\n"
-"PO-Revision-Date: 2014-12-19 16:30+0100\n"
+"POT-Creation-Date: 2015-02-08 15:55+0000\n"
+"PO-Revision-Date: 2015-02-08 16:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: Hungarian\n"
@@ -16,90 +16,143 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
+#: Controller/ContactsController.php:141;257
+msgid "Permission deined"
+msgstr "Hozzáférés megtagadva"
+
+#: Controller/ContactsController.php:229
+msgid "Two family members are in different families"
+msgstr "A családtagok más családokhoz tartoznak"
+
+#: Controller/ContactsController.php:275;527
+msgid "The contact has been saved."
+msgstr "A kapcsolat mentve"
+
+#: Controller/ContactsController.php:284;540
+msgid "The contact could not be saved. Please, try again."
+msgstr "Nem tudtam elmenteni a kapsolatot. Kérlek próbáld meg újra."
+
+#: Controller/ContactsController.php:310
+msgid "The contact is removed from this family"
+msgstr "A kapcsolat kikerült ebből a családból."
+
+#: Controller/ContactsController.php:312
+msgid "The contact could not be removed from this family"
+msgstr "A kapcsolatot nem tudtam kivenni a családból."
+
+#: Controller/ContactsController.php:537
+msgid "Contact photo saved."
+msgstr "A kapcsolat fényképe mentve."
+
+#: Controller/ContactsController.php:537
+msgid "Unable to save contact photo."
+msgstr "A kapcsolat fényképét nem sikerült menteni."
+
+#: Controller/HistoriesController.php:58
+msgid "The history has been saved."
+msgstr "A történés mente."
+
+#: Controller/HistoriesController.php:67
+msgid "The history could not be saved. Please, try again."
+msgstr "A történést nem sikerült menteni. Kérlek próbáld meg újra."
+
 #: Controller/UsersController.php:35
 msgid "Invalid username or password, try again"
 msgstr "Téves felhasznlónév vagy jelszó, próbáld meg újra!"
 
-#: Model/Table/ContactsTable.php:106
+#: Model/Table/ContactsTable.php:107
 msgid "At least 2 info should be filled"
 msgstr "Legalább 2 mezőt ki kell tölteni"
 
-#: Model/Table/ContactsTable.php:129
-msgid " changed from "
+#: Model/Table/ContactsTable.php:132
+#, fuzzy
+msgid "changed from "
 msgstr "megváltoztatva"
 
 #: Model/Table/ContactsTable.php:132
-msgid " removed"
-msgstr "törölve"
+msgid "to"
+msgstr ""
 
 #: Model/Table/ContactsTable.php:135
-msgid " added"
+#, fuzzy
+msgid "removed"
+msgstr "törölve"
+
+#: Model/Table/ContactsTable.php:138
+#, fuzzy
+msgid "added"
 msgstr "hozzáadva"
 
-#: Model/Table/ContactsTable.php:153
-msgid " removed from "
+#: Model/Table/ContactsTable.php:156
+#, fuzzy
+msgid "removed from"
 msgstr "eltávolítva"
 
-#: Model/Table/ContactsTable.php:158
-msgid " added to "
+#: Model/Table/ContactsTable.php:161
+#, fuzzy
+msgid "added to"
 msgstr "hozzáadva"
 
-#: Model/Table/UsersTable.php:70
+#: Model/Table/UsersTable.php:74
 msgid "At least 6 characters long"
-msgstr ""
+msgstr "Legalább 6 karakter hosszúnak kell lennie"
 
 #: Template/Contacts/add.ctp:10 Template/Element/menu.ctp:42
 msgid "Add Contact"
 msgstr "Új kapcsolat"
 
-#: Template/Contacts/add.ctp:16 Template/Contacts/view.ctp:27
-msgid "Contact person"
+#: Template/Contacts/add.ctp:13 Template/Contacts/index.ctp:5
+msgid "Contact Person"
 msgstr "Kapcsolattartó"
 
-#: Template/Contacts/add.ctp:20
+#: Template/Contacts/add.ctp:18 Template/Contacts/view.ctp:62
 msgid "Known name"
 msgstr "Ismert név"
 
-#: Template/Contacts/add.ctp:21
+#: Template/Contacts/add.ctp:19 Template/Contacts/view.ctp:72
 msgid "Like initiated name, nickname, etc"
 msgstr "Avatott név, becenév, stb"
 
-#: Template/Contacts/add.ctp:24 Template/Contacts/view.ctp:23
-#: Template/Contactsources/view.ctp:16;32 Template/Countries/view.ctp:16;34
-#: Template/Events/view.ctp:18 Template/Groups/view.ctp:5;74;115
-#: Template/Skills/view.ctp:16;32 Template/Units/view.ctp:16
-#: Template/Usergroups/view.ctp:16;34
+#: Template/Contacts/add.ctp:22 Template/Contactsources/view.ctp:16;32
+#: Template/Countries/view.ctp:16;34 Template/Events/view.ctp:18
+#: Template/Groups/view.ctp:5;74;115 Template/Skills/view.ctp:16;32
+#: Template/Units/view.ctp:16 Template/Usergroups/view.ctp:16;34
 #: Template/Users/view.ctp:26;53;153;205;237 Template/Zips/view.ctp:22;42
 msgid "Name"
 msgstr "Név"
 
-#: Template/Contacts/add.ctp:25
+#: Template/Contacts/add.ctp:23 Template/Contacts/view.ctp:87
 msgid "Civil name, company name, etc"
 msgstr "Polgári név, cégnév, stb"
 
-#: Template/Contacts/add.ctp:27 Template/Contacts/edit.ctp:8
+#: Template/Contacts/add.ctp:25 Template/Contacts/edit.ctp:11
 #: Template/Countries/view.ctp:33 Template/Zips/view.ctp:20
 msgid "Zip"
 msgstr "Irányítószám"
 
-#: Template/Contacts/add.ctp:33 Template/Contacts/edit.ctp:13
-#: Template/Contacts/view.ctp:62
+#: Template/Contacts/add.ctp:31 Template/Contacts/edit.ctp:16
+#: Template/Contacts/view.ctp:210;223
 msgid "Male"
 msgstr "Férfi"
 
-#: Template/Contacts/add.ctp:33 Template/Contacts/edit.ctp:13
-#: Template/Contacts/view.ctp:65
+#: Template/Contacts/add.ctp:31 Template/Contacts/edit.ctp:16
+#: Template/Contacts/view.ctp:213;223
 msgid "Female"
 msgstr "Nő"
 
-#: Template/Contacts/add.ctp:36 Template/Contacts/edit.ctp:16
-#: Template/Contacts/view.ctp:11;111 Template/Events/view.ctp:44
+#: Template/Contacts/add.ctp:34 Template/Contacts/edit.ctp:19
+#: Template/Contacts/view.ctp:21;305 Template/Events/view.ctp:44
 #: Template/Groups/view.ctp:37 Template/Histories/view.ctp:52
 #: Template/Users/view.ctp:87
 msgid "Family"
 msgstr "Család"
 
-#: Template/Contacts/add.ctp:93 Template/Contacts/edit.ctp:24
+#: Template/Contacts/add.ctp:36 Template/Contacts/edit.ctp:21
+#: Template/Contacts/view.ctp:269
+msgid "Secondary emails, phones, others"
+msgstr ""
+
+#: Template/Contacts/add.ctp:91 Template/Contacts/edit.ctp:27
 #: Template/ContactsGroups/add.ctp:18 Template/ContactsGroups/edit.ctp:19
 #: Template/ContactsSkills/add.ctp:18 Template/ContactsSkills/edit.ctp:19
 #: Template/ContactsUsers/add.ctp:18 Template/ContactsUsers/edit.ctp:19
@@ -108,8 +161,8 @@ msgstr "Család"
 #: Template/Events/add.ctp:20 Template/Events/edit.ctp:21
 #: Template/Families/add.ctp:14 Template/Families/edit.ctp:15
 #: Template/Groups/add.ctp:15 Template/Groups/edit.ctp:27
-#: Template/Groups/index.ctp:40 Template/GroupsUsers/add.ctp:20
-#: Template/GroupsUsers/edit.ctp:21 Template/Histories/add.ctp:33
+#: Template/Groups/index.ctp:45 Template/GroupsUsers/add.ctp:20
+#: Template/GroupsUsers/edit.ctp:21 Template/Histories/add.ctp:32
 #: Template/Histories/edit.ctp:34 Template/Notifications/add.ctp:19
 #: Template/Notifications/edit.ctp:20 Template/Sessions/add.ctp:16
 #: Template/Sessions/edit.ctp:17 Template/Skills/add.ctp:18
@@ -122,36 +175,42 @@ msgstr "Család"
 msgid "Submit"
 msgstr "Mehet"
 
-#: Template/Contacts/edit.ctp:4
+#: Template/Contacts/edit.ctp:7
 msgid "Edit Contact"
 msgstr ""
 
-#: Template/Contacts/edit.ctp:16
+#: Template/Contacts/edit.ctp:19
 msgid "Choose family member"
 msgstr ""
 
-#: Template/Contacts/index.ctp:5
-msgid "Contact Person"
-msgstr "Kapcsolattartó"
+#: Template/Contacts/google.ctp:7
+msgid "Select contacts to import by clicking on them."
+msgstr ""
 
-#: Template/Contacts/index.ctp:8 Template/Contacts/view.ctp:46
+#: Template/Contacts/google_connect.ctp:3
+msgid ""
+"Please click the \"Connect\" link here to import your Google contacts. You "
+"will be redirected to Google, where you should give access to Sanga."
+msgstr ""
+
+#: Template/Contacts/index.ctp:8 Template/Contacts/view.ctp:155
 #: Template/Contactsources/view.ctp:38 Template/Groups/view.ctp:78;121
 #: Template/Skills/view.ctp:38 Template/Usergroups/view.ctp:38
 #: Template/Users/view.ctp:34;157 Template/Zips/view.ctp:48
 msgid "Phone"
 msgstr "Telefon"
 
-#: Template/Contacts/index.ctp:9 Template/Contacts/view.ctp:14
+#: Template/Contacts/index.ctp:9 Template/Contacts/view.ctp:24
 #: Template/Element/menu.ctp:32
 msgid "Groups"
 msgstr "Csoportok"
 
-#: Template/Contacts/index.ctp:61 Template/Contacts/view.ctp:203
+#: Template/Contacts/index.ctp:61 Template/Contacts/view.ctp:485
 #: Template/ContactsGroups/index.ctp:41 Template/ContactsSkills/index.ctp:41
 #: Template/ContactsUsers/index.ctp:41 Template/Contactsources/index.ctp:35
 #: Template/Countries/index.ctp:35 Template/Events/index.ctp:41
-#: Template/Families/index.ctp:31 Template/Groups/index.ctp:85
-#: Template/GroupsUsers/index.ctp:45 Template/Histories/index.ctp:61
+#: Template/Families/index.ctp:31 Template/Groups/index.ctp:92
+#: Template/GroupsUsers/index.ctp:45 Template/Histories/index.ctp:111
 #: Template/Notifications/index.ctp:37 Template/Sessions/index.ctp:33
 #: Template/Skills/index.ctp:35 Template/Units/index.ctp:35
 #: Template/Usergroups/index.ctp:37 Template/Users/index.ctp:53
@@ -159,12 +218,12 @@ msgstr "Csoportok"
 msgid "previous"
 msgstr "előző"
 
-#: Template/Contacts/index.ctp:63 Template/Contacts/view.ctp:205
+#: Template/Contacts/index.ctp:63 Template/Contacts/view.ctp:487
 #: Template/ContactsGroups/index.ctp:43 Template/ContactsSkills/index.ctp:43
 #: Template/ContactsUsers/index.ctp:43 Template/Contactsources/index.ctp:37
 #: Template/Countries/index.ctp:37 Template/Events/index.ctp:43
-#: Template/Families/index.ctp:33 Template/Groups/index.ctp:87
-#: Template/GroupsUsers/index.ctp:47 Template/Histories/index.ctp:63
+#: Template/Families/index.ctp:33 Template/Groups/index.ctp:94
+#: Template/GroupsUsers/index.ctp:47 Template/Histories/index.ctp:113
 #: Template/Notifications/index.ctp:39 Template/Sessions/index.ctp:35
 #: Template/Skills/index.ctp:37 Template/Units/index.ctp:37
 #: Template/Usergroups/index.ctp:39 Template/Users/index.ctp:55
@@ -172,18 +231,128 @@ msgstr "előző"
 msgid "next"
 msgstr "következő"
 
-#: Template/Contacts/searchquery.ctp:4;11
+#: Template/Contacts/searchquery.ctp:4;11 Template/Element/menu.ctp:72
 msgid "Search"
 msgstr "Keresés"
 
-#: Template/Contacts/view.ctp:8 Template/ContactsGroups/add.ctp:2
-#: Template/ContactsGroups/edit.ctp:2 Template/ContactsGroups/index.ctp:2;17
-#: Template/ContactsGroups/view.ctp:2 Template/ContactsSkills/add.ctp:2
-#: Template/ContactsSkills/edit.ctp:2 Template/ContactsSkills/index.ctp:2;17
-#: Template/ContactsSkills/view.ctp:2 Template/ContactsUsers/add.ctp:2
-#: Template/ContactsUsers/edit.ctp:2 Template/ContactsUsers/index.ctp:2;17
-#: Template/ContactsUsers/view.ctp:2 Template/Contactsources/add.ctp:2
-#: Template/Contactsources/edit.ctp:2 Template/Contactsources/index.ctp:2;15
+#: Template/Contacts/view.ctp:20
+msgid "Personal data"
+msgstr ""
+
+#: Template/Contacts/view.ctp:22
+msgid "Workplace and skills"
+msgstr "Munkahely, szakértelem"
+
+#: Template/Contacts/view.ctp:23 Template/Element/menu.ctp:44
+msgid "Histories"
+msgstr "Történések"
+
+#: Template/Contacts/view.ctp:25
+msgid "Finances"
+msgstr "Pénzügyek"
+
+#: Template/Contacts/view.ctp:26
+msgid "Access"
+msgstr "Hozzáférés"
+
+#: Template/Contacts/view.ctp:44
+msgid "Save to Google Contacts"
+msgstr ""
+
+#: Template/Contacts/view.ctp:77 Template/Contactsources/view.ctp:33
+#: Template/Groups/view.ctp:116 Template/Skills/view.ctp:33
+#: Template/Users/view.ctp:154 Template/Zips/view.ctp:43
+msgid "Contactname"
+msgstr "Név"
+
+#: Template/Contacts/view.ctp:92
+msgid "Contact person"
+msgstr "Kapcsolattartó"
+
+#: Template/Contacts/view.ctp:116 Template/Contactsources/view.ctp:35
+#: Template/Groups/view.ctp:118 Template/Skills/view.ctp:35
+#: Template/Users/view.ctp:156 Template/Zips/view.ctp:45
+msgid "Address"
+msgstr "Cím"
+
+#: Template/Contacts/view.ctp:169 Template/Contactsources/view.ctp:39
+#: Template/Groups/view.ctp:77;122 Template/Skills/view.ctp:39
+#: Template/Usergroups/view.ctp:37 Template/Users/view.ctp:32;158
+#: Template/Zips/view.ctp:49
+msgid "Email"
+msgstr ""
+
+#: Template/Contacts/view.ctp:183 Template/Contactsources/view.ctp:40
+#: Template/Groups/view.ctp:123 Template/Skills/view.ctp:40
+#: Template/Users/view.ctp:159 Template/Zips/view.ctp:50
+msgid "Birth"
+msgstr "Születési idő"
+
+#: Template/Contacts/view.ctp:204 Template/Contactsources/view.ctp:41
+#: Template/Groups/view.ctp:124 Template/Skills/view.ctp:41
+#: Template/Users/view.ctp:160
+msgid "Sex"
+msgstr "Neme"
+
+#: Template/Contacts/view.ctp:216
+msgid "Unknown"
+msgstr ""
+
+#: Template/Contacts/view.ctp:232
+msgid "Contactsource"
+msgstr "Kapcsolat forrása"
+
+#: Template/Contacts/view.ctp:243 Template/Contactsources/view.ctp:45
+#: Template/Groups/view.ctp:79;128 Template/Skills/view.ctp:43
+#: Template/Usergroups/view.ctp:39 Template/Users/view.ctp:42;164
+#: Template/Zips/view.ctp:51
+msgid "Active"
+msgstr "Aktív"
+
+#: Template/Contacts/view.ctp:246 Template/Groups/view.ctp:18
+#: Template/Histories/view.ctp:53 Template/Notifications/view.ctp:31
+#: Template/Users/view.ctp:43 Template/UsersUsergroups/view.ctp:29
+msgid "Yes"
+msgstr "Igen"
+
+#: Template/Contacts/view.ctp:246 Template/Groups/view.ctp:18
+#: Template/Histories/view.ctp:53 Template/Notifications/view.ctp:31
+#: Template/Users/view.ctp:43 Template/UsersUsergroups/view.ctp:29
+msgid "No"
+msgstr "Nem"
+
+#: Template/Contacts/view.ctp:258 Template/Contactsources/view.ctp:46
+#: Template/Groups/view.ctp:129 Template/Skills/view.ctp:44
+#: Template/Users/view.ctp:165 Template/Zips/view.ctp:52
+msgid "Comment"
+msgstr "Megjegyzés"
+
+#: Template/Contacts/view.ctp:345 Template/Contactsources/view.ctp:42
+#: Template/Groups/view.ctp:125 Template/Skills/view.ctp:42
+#: Template/Users/view.ctp:161
+msgid "Workplace"
+msgstr "Munkahely"
+
+#: Template/Contacts/view.ctp:358 Template/Element/menu.ctp:30
+msgid "Skills"
+msgstr "Szakértelem"
+
+#: Template/Contacts/view.ctp:497
+msgid "Member"
+msgstr "Tag"
+
+#: Template/Contacts/view.ctp:524
+msgid "Not member"
+msgstr "Nem tag"
+
+#: Template/ContactsGroups/add.ctp:2 Template/ContactsGroups/edit.ctp:2
+#: Template/ContactsGroups/index.ctp:2;17 Template/ContactsGroups/view.ctp:2
+#: Template/ContactsSkills/add.ctp:2 Template/ContactsSkills/edit.ctp:2
+#: Template/ContactsSkills/index.ctp:2;17 Template/ContactsSkills/view.ctp:2
+#: Template/ContactsUsers/add.ctp:2 Template/ContactsUsers/edit.ctp:2
+#: Template/ContactsUsers/index.ctp:2;17 Template/ContactsUsers/view.ctp:2
+#: Template/Contactsources/add.ctp:2 Template/Contactsources/edit.ctp:2
+#: Template/Contactsources/index.ctp:2;15
 #: Template/Contactsources/view.ctp:2;49 Template/Countries/add.ctp:2
 #: Template/Countries/edit.ctp:2 Template/Countries/index.ctp:2;15
 #: Template/Countries/view.ctp:2;37 Template/Events/add.ctp:2
@@ -191,11 +360,11 @@ msgstr "Keresés"
 #: Template/Events/view.ctp:2;47 Template/Families/add.ctp:2
 #: Template/Families/edit.ctp:2 Template/Families/index.ctp:2;12
 #: Template/Families/view.ctp:2 Template/Groups/edit.ctp:2
-#: Template/Groups/index.ctp:9 Template/Groups/view.ctp:40;83;132
+#: Template/Groups/index.ctp:12 Template/Groups/view.ctp:40;83;132
 #: Template/GroupsUsers/add.ctp:2 Template/GroupsUsers/edit.ctp:2
 #: Template/GroupsUsers/index.ctp:2;19 Template/GroupsUsers/view.ctp:2
 #: Template/Histories/add.ctp:2 Template/Histories/edit.ctp:2
-#: Template/Histories/index.ctp:2;28 Template/Histories/view.ctp:2
+#: Template/Histories/index.ctp:27 Template/Histories/view.ctp:2
 #: Template/Notifications/add.ctp:2 Template/Notifications/edit.ctp:2
 #: Template/Notifications/index.ctp:2;15 Template/Notifications/view.ctp:2
 #: Template/Sessions/add.ctp:2 Template/Sessions/edit.ctp:2
@@ -216,114 +385,6 @@ msgstr "Keresés"
 msgid "Actions"
 msgstr ""
 
-#: Template/Contacts/view.ctp:12
-msgid "Workplace and skills"
-msgstr "Munkahely, szakértelem"
-
-#: Template/Contacts/view.ctp:15
-msgid "Finances"
-msgstr "Pénzügyek"
-
-#: Template/Contacts/view.ctp:19;107;133;155
-#: Template/ContactsGroups/index.ctp:31 Template/ContactsSkills/index.ctp:31
-#: Template/ContactsUsers/index.ctp:31 Template/Contactsources/index.ctp:25
-#: Template/Contactsources/view.ctp:73 Template/Countries/index.ctp:25
-#: Template/Countries/view.ctp:49 Template/Events/index.ctp:31
-#: Template/Events/view.ctp:65 Template/Families/index.ctp:21
-#: Template/Groups/index.ctp:73 Template/Groups/view.ctp:58;99;156
-#: Template/GroupsUsers/index.ctp:35 Template/Histories/index.ctp:51
-#: Template/Sessions/index.ctp:23 Template/Skills/index.ctp:25
-#: Template/Skills/view.ctp:71 Template/Units/index.ctp:25
-#: Template/Units/view.ctp:61 Template/Usergroups/index.ctp:27
-#: Template/Usergroups/view.ctp:59 Template/Users/index.ctp:43
-#: Template/Users/view.ctp:64;108;138;190;222;246
-#: Template/UsersUsergroups/index.ctp:35 Template/Zips/index.ctp:37
-#: Template/Zips/view.ctp:77
-msgid "Edit"
-msgstr "Szerkeszt"
-
-#: Template/Contacts/view.ctp:25 Template/Contactsources/view.ctp:33
-#: Template/Groups/view.ctp:116 Template/Skills/view.ctp:33
-#: Template/Users/view.ctp:154 Template/Zips/view.ctp:43
-msgid "Contactname"
-msgstr "Név"
-
-#: Template/Contacts/view.ctp:41 Template/Contactsources/view.ctp:35
-#: Template/Groups/view.ctp:118 Template/Skills/view.ctp:35
-#: Template/Users/view.ctp:156 Template/Zips/view.ctp:45
-msgid "Address"
-msgstr "Cím"
-
-#: Template/Contacts/view.ctp:48 Template/Contactsources/view.ctp:39
-#: Template/Groups/view.ctp:77;122 Template/Skills/view.ctp:39
-#: Template/Usergroups/view.ctp:37 Template/Users/view.ctp:32;158
-#: Template/Zips/view.ctp:49
-msgid "Email"
-msgstr ""
-
-#: Template/Contacts/view.ctp:50 Template/Contactsources/view.ctp:40
-#: Template/Groups/view.ctp:123 Template/Skills/view.ctp:40
-#: Template/Users/view.ctp:159 Template/Zips/view.ctp:50
-msgid "Birth"
-msgstr "Születési idő"
-
-#: Template/Contacts/view.ctp:58 Template/Contactsources/view.ctp:41
-#: Template/Groups/view.ctp:124 Template/Skills/view.ctp:41
-#: Template/Users/view.ctp:160
-msgid "Sex"
-msgstr "Neme"
-
-#: Template/Contacts/view.ctp:68
-msgid "Unknown"
-msgstr ""
-
-#: Template/Contacts/view.ctp:72
-msgid "Contactsource"
-msgstr "Kapcsolat forrása"
-
-#: Template/Contacts/view.ctp:74 Template/Contactsources/view.ctp:45
-#: Template/Groups/view.ctp:79;128 Template/Skills/view.ctp:43
-#: Template/Usergroups/view.ctp:39 Template/Users/view.ctp:42;164
-#: Template/Zips/view.ctp:51
-msgid "Active"
-msgstr "Aktív"
-
-#: Template/Contacts/view.ctp:75 Template/Groups/view.ctp:18
-#: Template/Histories/view.ctp:53 Template/Notifications/view.ctp:31
-#: Template/Users/view.ctp:43 Template/UsersUsergroups/view.ctp:29
-msgid "Yes"
-msgstr "Igen"
-
-#: Template/Contacts/view.ctp:75 Template/Groups/view.ctp:18
-#: Template/Histories/view.ctp:53 Template/Notifications/view.ctp:31
-#: Template/Users/view.ctp:43 Template/UsersUsergroups/view.ctp:29
-msgid "No"
-msgstr "Nem"
-
-#: Template/Contacts/view.ctp:76 Template/Contactsources/view.ctp:46
-#: Template/Groups/view.ctp:129 Template/Skills/view.ctp:44
-#: Template/Users/view.ctp:165 Template/Zips/view.ctp:52
-msgid "Comment"
-msgstr "Megjegyzés"
-
-#: Template/Contacts/view.ctp:137 Template/Contactsources/view.ctp:42
-#: Template/Groups/view.ctp:125 Template/Skills/view.ctp:42
-#: Template/Users/view.ctp:161
-msgid "Workplace"
-msgstr "Munkahely"
-
-#: Template/Contacts/view.ctp:139 Template/Element/menu.ctp:30
-msgid "Skills"
-msgstr "Szakértelem"
-
-#: Template/Contacts/view.ctp:215
-msgid "Member"
-msgstr "Tag"
-
-#: Template/Contacts/view.ctp:242
-msgid "Not member"
-msgstr "Nem tag"
-
 #: Template/ContactsGroups/add.ctp:4 Template/ContactsGroups/edit.ctp:5
 #: Template/ContactsGroups/view.ctp:6
 msgid "List Contacts Groups"
@@ -334,10 +395,9 @@ msgstr ""
 #: Template/Groups/edit.ctp:5 Template/GroupsUsers/add.ctp:5
 #: Template/GroupsUsers/edit.ctp:6 Template/GroupsUsers/index.ctp:5
 #: Template/GroupsUsers/view.ctp:8 Template/Histories/add.ctp:9
-#: Template/Histories/edit.ctp:10 Template/Histories/index.ctp:9
-#: Template/Histories/view.ctp:12 Template/Users/add.ctp:13
-#: Template/Users/edit.ctp:14 Template/Users/index.ctp:13
-#: Template/Users/view.ctp:16
+#: Template/Histories/edit.ctp:10 Template/Histories/view.ctp:12
+#: Template/Users/add.ctp:13 Template/Users/edit.ctp:14
+#: Template/Users/index.ctp:13 Template/Users/view.ctp:16
 msgid "List Groups"
 msgstr ""
 
@@ -346,9 +406,9 @@ msgstr ""
 #: Template/GroupsUsers/add.ctp:6 Template/GroupsUsers/edit.ctp:7
 #: Template/GroupsUsers/index.ctp:6 Template/GroupsUsers/view.ctp:9
 #: Template/Histories/add.ctp:10 Template/Histories/edit.ctp:11
-#: Template/Histories/index.ctp:10 Template/Histories/view.ctp:13
-#: Template/Users/add.ctp:14 Template/Users/edit.ctp:15
-#: Template/Users/index.ctp:14 Template/Users/view.ctp:17
+#: Template/Histories/view.ctp:13 Template/Users/add.ctp:14
+#: Template/Users/edit.ctp:15 Template/Users/index.ctp:14
+#: Template/Users/view.ctp:17
 msgid "New Group"
 msgstr ""
 
@@ -361,13 +421,13 @@ msgstr ""
 #: Template/Contactsources/add.ctp:5 Template/Contactsources/edit.ctp:6
 #: Template/Contactsources/index.ctp:5 Template/Contactsources/view.ctp:8
 #: Template/Groups/edit.ctp:10 Template/Histories/add.ctp:5
-#: Template/Histories/edit.ctp:6 Template/Histories/index.ctp:5
-#: Template/Histories/view.ctp:8 Template/Skills/add.ctp:5
-#: Template/Skills/edit.ctp:6 Template/Skills/index.ctp:5
-#: Template/Skills/view.ctp:8 Template/Users/add.ctp:11
-#: Template/Users/edit.ctp:12 Template/Users/index.ctp:11
-#: Template/Users/view.ctp:14 Template/Zips/add.ctp:7 Template/Zips/edit.ctp:8
-#: Template/Zips/index.ctp:7 Template/Zips/view.ctp:10
+#: Template/Histories/edit.ctp:6 Template/Histories/view.ctp:8
+#: Template/Skills/add.ctp:5 Template/Skills/edit.ctp:6
+#: Template/Skills/index.ctp:5 Template/Skills/view.ctp:8
+#: Template/Users/add.ctp:11 Template/Users/edit.ctp:12
+#: Template/Users/index.ctp:11 Template/Users/view.ctp:14
+#: Template/Zips/add.ctp:7 Template/Zips/edit.ctp:8 Template/Zips/index.ctp:7
+#: Template/Zips/view.ctp:10
 msgid "List Contacts"
 msgstr ""
 
@@ -380,13 +440,13 @@ msgstr ""
 #: Template/Contactsources/add.ctp:6 Template/Contactsources/edit.ctp:7
 #: Template/Contactsources/index.ctp:6 Template/Contactsources/view.ctp:9
 #: Template/Groups/edit.ctp:11 Template/Histories/add.ctp:6
-#: Template/Histories/edit.ctp:7 Template/Histories/index.ctp:6
-#: Template/Histories/view.ctp:9 Template/Skills/add.ctp:6
-#: Template/Skills/edit.ctp:7 Template/Skills/index.ctp:6
-#: Template/Skills/view.ctp:9 Template/Users/add.ctp:12
-#: Template/Users/edit.ctp:13 Template/Users/index.ctp:12
-#: Template/Users/view.ctp:15 Template/Zips/add.ctp:8 Template/Zips/edit.ctp:9
-#: Template/Zips/index.ctp:8 Template/Zips/view.ctp:11
+#: Template/Histories/edit.ctp:7 Template/Histories/view.ctp:9
+#: Template/Skills/add.ctp:6 Template/Skills/edit.ctp:7
+#: Template/Skills/index.ctp:6 Template/Skills/view.ctp:9
+#: Template/Users/add.ctp:12 Template/Users/edit.ctp:13
+#: Template/Users/index.ctp:12 Template/Users/view.ctp:15
+#: Template/Zips/add.ctp:8 Template/Zips/edit.ctp:9 Template/Zips/index.ctp:8
+#: Template/Zips/view.ctp:11
 msgid "New Contact"
 msgstr ""
 
@@ -403,17 +463,17 @@ msgstr ""
 #: Template/Events/edit.ctp:4 Template/Events/index.ctp:32
 #: Template/Events/view.ctp:66 Template/Families/edit.ctp:4
 #: Template/Families/index.ctp:22 Template/Groups/edit.ctp:4
-#: Template/Groups/index.ctp:74 Template/Groups/view.ctp:59;100;157
+#: Template/Groups/index.ctp:78 Template/Groups/view.ctp:59;100;157
 #: Template/GroupsUsers/edit.ctp:4 Template/GroupsUsers/index.ctp:36
-#: Template/Histories/edit.ctp:4 Template/Histories/index.ctp:52
-#: Template/Notifications/edit.ctp:4 Template/Notifications/index.ctp:28
-#: Template/Sessions/edit.ctp:4 Template/Sessions/index.ctp:24
-#: Template/Skills/edit.ctp:4 Template/Skills/index.ctp:26
-#: Template/Skills/view.ctp:72 Template/Units/edit.ctp:4
-#: Template/Units/index.ctp:26 Template/Units/view.ctp:62
-#: Template/Usergroups/edit.ctp:4 Template/Usergroups/index.ctp:28
-#: Template/Usergroups/view.ctp:60 Template/Users/edit.ctp:4
-#: Template/Users/index.ctp:44 Template/Users/view.ctp:65;109;139;191;223;247
+#: Template/Histories/edit.ctp:4 Template/Notifications/edit.ctp:4
+#: Template/Notifications/index.ctp:28 Template/Sessions/edit.ctp:4
+#: Template/Sessions/index.ctp:24 Template/Skills/edit.ctp:4
+#: Template/Skills/index.ctp:26 Template/Skills/view.ctp:72
+#: Template/Units/edit.ctp:4 Template/Units/index.ctp:26
+#: Template/Units/view.ctp:62 Template/Usergroups/edit.ctp:4
+#: Template/Usergroups/index.ctp:28 Template/Usergroups/view.ctp:60
+#: Template/Users/edit.ctp:4 Template/Users/index.ctp:44
+#: Template/Users/view.ctp:65;109;139;191;223;247
 #: Template/UsersUsergroups/edit.ctp:4 Template/UsersUsergroups/index.ctp:36
 #: Template/Zips/edit.ctp:4 Template/Zips/index.ctp:38
 #: Template/Zips/view.ctp:78
@@ -431,16 +491,15 @@ msgstr "Törlés"
 #: Template/Events/index.ctp:32 Template/Events/view.ctp:5;66
 #: Template/Families/edit.ctp:4 Template/Families/index.ctp:22
 #: Template/Families/view.ctp:5 Template/Groups/edit.ctp:4
-#: Template/Groups/index.ctp:74 Template/Groups/view.ctp:59;100;157
+#: Template/Groups/index.ctp:78 Template/Groups/view.ctp:59;100;157
 #: Template/GroupsUsers/edit.ctp:4 Template/GroupsUsers/index.ctp:36
 #: Template/GroupsUsers/view.ctp:5 Template/Histories/edit.ctp:4
-#: Template/Histories/index.ctp:52 Template/Histories/view.ctp:5
-#: Template/Notifications/index.ctp:28 Template/Sessions/index.ctp:24
-#: Template/Skills/edit.ctp:4 Template/Skills/index.ctp:26
-#: Template/Skills/view.ctp:5;72 Template/Units/index.ctp:26
-#: Template/Usergroups/edit.ctp:4 Template/Usergroups/index.ctp:28
-#: Template/Usergroups/view.ctp:5;60 Template/Users/edit.ctp:4
-#: Template/Users/index.ctp:44
+#: Template/Histories/view.ctp:5 Template/Notifications/index.ctp:28
+#: Template/Sessions/index.ctp:24 Template/Skills/edit.ctp:4
+#: Template/Skills/index.ctp:26 Template/Skills/view.ctp:5;72
+#: Template/Units/index.ctp:26 Template/Usergroups/edit.ctp:4
+#: Template/Usergroups/index.ctp:28 Template/Usergroups/view.ctp:5;60
+#: Template/Users/edit.ctp:4 Template/Users/index.ctp:44
 #: Template/Users/view.ctp:5;65;109;139;191;223;247
 #: Template/UsersUsergroups/edit.ctp:4 Template/UsersUsergroups/index.ctp:36
 #: Template/UsersUsergroups/view.ctp:5 Template/Zips/index.ctp:38
@@ -460,17 +519,33 @@ msgstr ""
 #: Template/Contactsources/view.ctp:72 Template/Countries/index.ctp:24
 #: Template/Countries/view.ctp:48 Template/Events/index.ctp:30
 #: Template/Events/view.ctp:64 Template/Families/index.ctp:20
-#: Template/Groups/index.ctp:70 Template/Groups/view.ctp:57;98;155
-#: Template/GroupsUsers/index.ctp:34 Template/Histories/index.ctp:50
-#: Template/Sessions/index.ctp:22 Template/Skills/index.ctp:24
-#: Template/Skills/view.ctp:70 Template/Units/index.ctp:24
-#: Template/Units/view.ctp:60 Template/Usergroups/index.ctp:26
-#: Template/Usergroups/view.ctp:58 Template/Users/index.ctp:42
-#: Template/Users/view.ctp:63;107;137;189;221;245
+#: Template/Groups/index.ctp:74 Template/Groups/view.ctp:57;98;155
+#: Template/GroupsUsers/index.ctp:34 Template/Sessions/index.ctp:22
+#: Template/Skills/index.ctp:24 Template/Skills/view.ctp:70
+#: Template/Units/index.ctp:24 Template/Units/view.ctp:60
+#: Template/Usergroups/index.ctp:26 Template/Usergroups/view.ctp:58
+#: Template/Users/index.ctp:42 Template/Users/view.ctp:63;107;137;189;221;245
 #: Template/UsersUsergroups/index.ctp:34 Template/Zips/index.ctp:36
 #: Template/Zips/view.ctp:76
 msgid "View"
 msgstr "Mutat"
+
+#: Template/ContactsGroups/index.ctp:31 Template/ContactsSkills/index.ctp:31
+#: Template/ContactsUsers/index.ctp:31 Template/Contactsources/index.ctp:25
+#: Template/Contactsources/view.ctp:73 Template/Countries/index.ctp:25
+#: Template/Countries/view.ctp:49 Template/Events/index.ctp:31
+#: Template/Events/view.ctp:65 Template/Families/index.ctp:21
+#: Template/Groups/index.ctp:77 Template/Groups/view.ctp:58;99;156
+#: Template/GroupsUsers/index.ctp:35 Template/Histories/index.ctp:99
+#: Template/Sessions/index.ctp:23 Template/Skills/index.ctp:25
+#: Template/Skills/view.ctp:71 Template/Units/index.ctp:25
+#: Template/Units/view.ctp:61 Template/Usergroups/index.ctp:27
+#: Template/Usergroups/view.ctp:59 Template/Users/index.ctp:43
+#: Template/Users/view.ctp:64;108;138;190;222;246
+#: Template/UsersUsergroups/index.ctp:35 Template/Zips/index.ctp:37
+#: Template/Zips/view.ctp:77
+msgid "Edit"
+msgstr "Szerkeszt"
 
 #: Template/ContactsGroups/view.ctp:5
 msgid "Delete Contacts Group"
@@ -536,15 +611,15 @@ msgstr ""
 #: Template/Groups/edit.ctp:8 Template/GroupsUsers/add.ctp:7
 #: Template/GroupsUsers/edit.ctp:8 Template/GroupsUsers/index.ctp:7
 #: Template/GroupsUsers/view.ctp:10 Template/Histories/add.ctp:7
-#: Template/Histories/edit.ctp:8 Template/Histories/index.ctp:7
-#: Template/Histories/view.ctp:10 Template/Notifications/add.ctp:5
-#: Template/Notifications/edit.ctp:6 Template/Notifications/index.ctp:5
-#: Template/Notifications/view.ctp:8 Template/Usergroups/add.ctp:5
-#: Template/Usergroups/edit.ctp:6 Template/Usergroups/index.ctp:5
-#: Template/Usergroups/view.ctp:8 Template/Users/add.ctp:4
-#: Template/Users/edit.ctp:5 Template/Users/view.ctp:6
-#: Template/UsersUsergroups/add.ctp:5 Template/UsersUsergroups/edit.ctp:6
-#: Template/UsersUsergroups/index.ctp:5 Template/UsersUsergroups/view.ctp:8
+#: Template/Histories/edit.ctp:8 Template/Histories/view.ctp:10
+#: Template/Notifications/add.ctp:5 Template/Notifications/edit.ctp:6
+#: Template/Notifications/index.ctp:5 Template/Notifications/view.ctp:8
+#: Template/Usergroups/add.ctp:5 Template/Usergroups/edit.ctp:6
+#: Template/Usergroups/index.ctp:5 Template/Usergroups/view.ctp:8
+#: Template/Users/add.ctp:4 Template/Users/edit.ctp:5
+#: Template/Users/view.ctp:6 Template/UsersUsergroups/add.ctp:5
+#: Template/UsersUsergroups/edit.ctp:6 Template/UsersUsergroups/index.ctp:5
+#: Template/UsersUsergroups/view.ctp:8
 msgid "List Users"
 msgstr ""
 
@@ -555,15 +630,14 @@ msgstr ""
 #: Template/Groups/edit.ctp:9 Template/GroupsUsers/add.ctp:8
 #: Template/GroupsUsers/edit.ctp:9 Template/GroupsUsers/index.ctp:8
 #: Template/GroupsUsers/view.ctp:11 Template/Histories/add.ctp:8
-#: Template/Histories/edit.ctp:9 Template/Histories/index.ctp:8
-#: Template/Histories/view.ctp:11 Template/Notifications/add.ctp:6
-#: Template/Notifications/edit.ctp:7 Template/Notifications/index.ctp:6
-#: Template/Notifications/view.ctp:9 Template/Usergroups/add.ctp:6
-#: Template/Usergroups/edit.ctp:7 Template/Usergroups/index.ctp:6
-#: Template/Usergroups/view.ctp:9 Template/Users/index.ctp:4
-#: Template/Users/view.ctp:7 Template/UsersUsergroups/add.ctp:6
-#: Template/UsersUsergroups/edit.ctp:7 Template/UsersUsergroups/index.ctp:6
-#: Template/UsersUsergroups/view.ctp:9
+#: Template/Histories/edit.ctp:9 Template/Histories/view.ctp:11
+#: Template/Notifications/add.ctp:6 Template/Notifications/edit.ctp:7
+#: Template/Notifications/index.ctp:6 Template/Notifications/view.ctp:9
+#: Template/Usergroups/add.ctp:6 Template/Usergroups/edit.ctp:7
+#: Template/Usergroups/index.ctp:6 Template/Usergroups/view.ctp:9
+#: Template/Users/index.ctp:4 Template/Users/view.ctp:7
+#: Template/UsersUsergroups/add.ctp:6 Template/UsersUsergroups/edit.ctp:7
+#: Template/UsersUsergroups/index.ctp:6 Template/UsersUsergroups/view.ctp:9
 msgid "New User"
 msgstr ""
 
@@ -749,31 +823,30 @@ msgid "Contacts"
 msgstr "Kapcsolatok"
 
 #: Template/Element/menu.ctp:43
-msgid "Histories"
-msgstr "Történések"
+msgid "Google Contact Import"
+msgstr ""
 
-#: Template/Element/menu.ctp:44
+#: Template/Element/menu.ctp:45
 msgid "Queries"
 msgstr "Lekérdezés"
 
-#: Template/Element/menu.ctp:45
+#: Template/Element/menu.ctp:46
 msgid "Map"
 msgstr "Térkép"
 
-#: Template/Element/menu.ctp:59
+#: Template/Element/menu.ctp:60
 msgid "Profile"
 msgstr "Adatlap"
 
-#: Template/Element/menu.ctp:60
+#: Template/Element/menu.ctp:61
 msgid "Notifications"
 msgstr "Értesítés"
 
 #: Template/Events/add.ctp:4 Template/Events/edit.ctp:5
 #: Template/Events/view.ctp:6 Template/Histories/add.ctp:11
-#: Template/Histories/edit.ctp:12 Template/Histories/index.ctp:11
-#: Template/Histories/view.ctp:14 Template/Users/add.ctp:5
-#: Template/Users/edit.ctp:6 Template/Users/index.ctp:5
-#: Template/Users/view.ctp:8
+#: Template/Histories/edit.ctp:12 Template/Histories/view.ctp:14
+#: Template/Users/add.ctp:5 Template/Users/edit.ctp:6
+#: Template/Users/index.ctp:5 Template/Users/view.ctp:8
 msgid "List Events"
 msgstr ""
 
@@ -790,12 +863,11 @@ msgstr ""
 
 #: Template/Events/add.ctp:8 Template/Events/edit.ctp:9
 #: Template/Events/index.ctp:8 Template/Events/view.ctp:11
-#: Template/Groups/edit.ctp:7 Template/Histories/index.ctp:4
-#: Template/Histories/view.ctp:7 Template/Units/add.ctp:6
-#: Template/Units/edit.ctp:7 Template/Units/index.ctp:6
-#: Template/Units/view.ctp:9 Template/Users/add.ctp:8
-#: Template/Users/edit.ctp:9 Template/Users/index.ctp:8
-#: Template/Users/view.ctp:11
+#: Template/Groups/edit.ctp:7 Template/Histories/view.ctp:7
+#: Template/Units/add.ctp:6 Template/Units/edit.ctp:7
+#: Template/Units/index.ctp:6 Template/Units/view.ctp:9
+#: Template/Users/add.ctp:8 Template/Users/edit.ctp:9
+#: Template/Users/index.ctp:8 Template/Users/view.ctp:11
 msgid "New History"
 msgstr ""
 
@@ -813,9 +885,9 @@ msgstr ""
 
 #: Template/Events/index.ctp:4 Template/Events/view.ctp:7
 #: Template/Histories/add.ctp:12 Template/Histories/edit.ctp:13
-#: Template/Histories/index.ctp:12 Template/Histories/view.ctp:15
-#: Template/Users/add.ctp:6 Template/Users/edit.ctp:7
-#: Template/Users/index.ctp:6 Template/Users/view.ctp:9
+#: Template/Histories/view.ctp:15 Template/Users/add.ctp:6
+#: Template/Users/edit.ctp:7 Template/Users/index.ctp:6
+#: Template/Users/view.ctp:9
 msgid "New Event"
 msgstr ""
 
@@ -955,15 +1027,14 @@ msgid "Delete Groups User"
 msgstr ""
 
 #: Template/Histories/add.ctp:13 Template/Histories/edit.ctp:14
-#: Template/Histories/index.ctp:13 Template/Histories/view.ctp:16
-#: Template/Units/add.ctp:4 Template/Units/edit.ctp:5
-#: Template/Units/view.ctp:6
+#: Template/Histories/view.ctp:16 Template/Units/add.ctp:4
+#: Template/Units/edit.ctp:5 Template/Units/view.ctp:6
 msgid "List Units"
 msgstr ""
 
 #: Template/Histories/add.ctp:14 Template/Histories/edit.ctp:15
-#: Template/Histories/index.ctp:14 Template/Histories/view.ctp:17
-#: Template/Units/index.ctp:4 Template/Units/view.ctp:7
+#: Template/Histories/view.ctp:17 Template/Units/index.ctp:4
+#: Template/Units/view.ctp:7
 msgid "New Unit"
 msgstr ""
 
