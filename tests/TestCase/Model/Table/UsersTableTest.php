@@ -25,9 +25,6 @@ class UsersTableTest extends TestCase {
 		'app.contactsources',
 		'app.groups',
 		'app.contacts_groups',
-		
-		
-		
 		'app.contacts_users',
 		'app.skills',
 		'app.contacts_skills',
@@ -82,6 +79,17 @@ class UsersTableTest extends TestCase {
 
 		$this->assertEquals(true, $this->Users->checkPasswordStrength('abcA!', null));
 		$this->assertEquals(true, $this->Users->checkPasswordStrength('abcA!1', null));
+	}
+
+	public function testIsAdminUser(){		
+		$actual = $this->Users->isAdminUser(1);
+		$this->assertTrue($actual);
+
+		$actual = $this->Users->isAdminUser(4);
+		$this->assertTrue($actual);
+		
+		$actual = $this->Users->isAdminUser(2);
+		$this->assertFalse($actual);
 	}
 
 }

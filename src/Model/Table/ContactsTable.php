@@ -411,6 +411,9 @@ class ContactsTable extends Table {
  * 		the contact person of the contact is a member of a usergroup what is created by the user
  */
 	public function isAccessible($contactId, $userId){
+		if ($this->Users->isAdminUser ($userId)) {
+			return true;
+		}
 		if ($this->isAccessibleAsContactPerson($contactId, $userId)) {
 			return true;
 		}

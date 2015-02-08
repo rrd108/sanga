@@ -116,6 +116,14 @@ class UsersTable extends Table {
 		return false;
 	}
 
+	public function isAdminUser($userId){
+		$user = $this->get($userId);
+		if ($user->role >= 9) {
+			return true;
+		}
+		return false;
+	}
+
 
 /**
  * Find users who has access to the contact

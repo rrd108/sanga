@@ -77,6 +77,18 @@ class UsersFixture extends TestFixture {
 			'role' => 1,
 			'created' => '2014-11-29 10:59:47',
 			'modified' => '2014-11-29 10:59:47'
+		],
+		[
+			'id' => 4,
+			'name' => 'CRMAdmin',
+			'password' => 'secretpass',
+			'realname' => 'CRM Admin',
+			'email' => 'user4@sehol.se',
+			'phone' => '',
+			'active' => 1,
+			'role' => 9,
+			'created' => '2014-11-29 10:59:47',
+			'modified' => '2014-11-29 10:59:47'
 		]
 	];
 
