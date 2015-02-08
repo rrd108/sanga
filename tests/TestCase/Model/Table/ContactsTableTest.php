@@ -187,26 +187,25 @@ class ContactsTableTest extends TestCase {
 	
 	public function testIsAccessible(){
 		$actual = $this->Contacts->isAccessible(1, 1);
-		$expected = true;
-		$this->assertEquals($expected, $actual);
+		$this->assertTrue($actual);
 
 		$actual = $this->Contacts->isAccessible(1, 2);
-		$expected = false;
-		$this->assertEquals($expected, $actual);
+		$this->assertFalse($actual);
 
 		//as a group member or group admin
 		$actual = $this->Contacts->isAccessible(6, 2);
-		$expected = true;
-		$this->assertEquals($expected, $actual);
+		$this->assertTrue($actual);
 
 		$actual = $this->Contacts->isAccessible(5, 2);
-		$expected = false;
-		$this->assertEquals($expected, $actual);
+		$this->assertFalse($actual);
 
 		//as a usergroup member
 		$actual = $this->Contacts->isAccessible(6, 1);
-		$expected = true;
-		$this->assertEquals($expected, $actual);
+		$this->assertTrue($actual);
+		
+		//admin user
+		$actual = $this->Contacts->isAccessible(6, 4);
+		$this->assertTrue($actual);
 	}
 
 /**
