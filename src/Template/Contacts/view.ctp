@@ -59,217 +59,239 @@ echo $this->element('ajax-images');
 			?>
 			<div class="large-9 columns strings">
 
-				<h6 class="subheader"><?= __('Known name') ?></h6>
-				<p class="ed">
-					&nbsp;
-					<span class="dta"><?= h($contact->name) ?></span>
-					<?php
-					echo $this->Form->input('name',
-									   ['templates' => ['inputContainer' => '{{content}}'],
-										'class' => 'editbox',
-										'label' => false,
-										'value' => h($contact->name),
-										'title' => __('Like initiated name, nickname, etc')
-										]);
-					?>
-				</p>
-
-				<h6 class="subheader"><?= __('Contactname') ?></h6>
-				<p class="ed">
-					&nbsp;
-					<span class="dta"><?= h($contact->contactname) ?></span>
-					<?php
-					echo $this->Form->input('contactname',
-									   ['templates' => ['inputContainer' => '{{content}}'],
-										'class' => 'editbox',
-										'label' => false,
-										'value' => h($contact->contactname),
-										'title' => __('Civil name, company name, etc')
-										]);
-					?>
-				</p>
-
-				<h6 class="subheader"><?= __('Contact person') ?></h6>
-				<p>
-					&nbsp;
-					<span>
+				<div class="row"><div class="panel info">
+					<h6 class="subheader"><?= __('Known name') ?></h6>
+					<p class="ed">
+						&nbsp;
+						<span class="dta"><?= h($contact->name) ?></span>
 						<?php
-						if (!empty($contact->users)){
-							$myContact = false;
-							foreach ($contact->users as $usr){
-								$css = 'viewable';
-								if($usr->id == $this->Session->read('Auth.User.id')){
-									$myContact = true;
-									$css = 'mine';
+						echo $this->Form->input('name',
+										   ['templates' => ['inputContainer' => '{{content}}'],
+											'class' => 'editbox',
+											'label' => false,
+											'value' => h($contact->name),
+											'title' => __('Like initiated name, nickname, etc')
+											]);
+						?>
+					</p>
+				</div></div>
+
+				<div class="row"><div class="panel info">
+					<h6 class="subheader"><?= __('Contactname') ?></h6>
+					<p class="ed">
+						&nbsp;
+						<span class="dta"><?= h($contact->contactname) ?></span>
+						<?php
+						echo $this->Form->input('contactname',
+										   ['templates' => ['inputContainer' => '{{content}}'],
+											'class' => 'editbox',
+											'label' => false,
+											'value' => h($contact->contactname),
+											'title' => __('Civil name, company name, etc')
+											]);
+						?>
+					</p>
+				</div></div>
+
+				<div class="row"><div class="panel info">
+					<h6 class="subheader"><?= __('Contact person') ?></h6>
+					<p>
+						&nbsp;
+						<span>
+							<?php
+							if (!empty($contact->users)){
+								$myContact = false;
+								foreach ($contact->users as $usr){
+									$css = 'viewable';
+									if($usr->id == $this->Session->read('Auth.User.id')){
+										$myContact = true;
+										$css = 'mine';
+									}
+									echo '<span class="tag tag-' . $css . '">' . h($usr->name) . '</span> ';
 								}
-								echo '<span class="tag tag-' . $css . '">' . h($usr->name) . '</span> ';
 							}
-						}
-						?>
-					</span>
-					<?php
-					//contact person change - dev questions - on hold
-					//echo '<span>' . $this->element('user_checkbox') . '</span>';
-					?>
-				</p>
-
-				<h6 class="subheader"><?= __('Address') ?></h6>
-				<p class="ed">
-					&nbsp;
-					<?php
-					echo '<span class="dta zip zip-zip">';
-						if(isset($contact->zip)){
-							echo $contact->zip->zip;
-						}
-					echo '</span> ';
-					echo '<span class="dta zip-name">';
-						if(isset($contact->zip)){
-							echo $contact->zip->name;
-						}
-					echo '</span> ';
-					echo $this->Form->input('zip_id',
-											['type' => 'hidden',
-											 'value' => isset($contact->zip) ? $contact->zip->id : false]);
-					
-					echo $this->Form->input('xzip',
-											['templates' => ['inputContainer' => '{{content}}'],
-											 'type' => 'text',
-											'class' => 'editbox zip',
-											'label' => false,
-											 'value' => isset($contact->zip) ? $contact->zip->zip : ''
-											 ]);
-					
-					echo '<span class="dta addr address">';
-						echo h($contact->address);
-					echo '</span>';
-					echo $this->Form->input('address',
-											['templates' => ['inputContainer' => '{{content}}'],
-											'class' => 'editbox addr',
-											'label' => false,
-											 'value' => $contact->address
-											 ]);
-
-					?>
-				</p>
-
-				<h6 class="subheader"><?= __('Phone') ?></h6>
-				<p class="ed">
-					&nbsp;
-					<span class="dta"><?= h($contact->phone) ?></span>
-					<?php
-					echo $this->Form->input('phone',
-											['templates' => ['inputContainer' => '{{content}}'],
-											'class' => 'editbox',
-											'label' => false,
-											'value' => $contact->phone
-											]);
-					?>
-				</p>
-
-				<h6 class="subheader"><?= __('Email') ?></h6>
-				<p class="ed">
-					&nbsp;
-					<span class="dta"><?= h($contact->email) ?></span>
-					<?php
-					echo $this->Form->input('email',
-											['templates' => ['inputContainer' => '{{content}}'],
-											'class' => 'editbox',
-											'label' => false,
-											'value' => $contact->email
-											]);
-					?>
-				</p>
-
-				<h6 class="subheader"><?= __('Birth') ?></h6>
-				<p class="ed">
-					&nbsp;
-					<span class="dta">
+							?>
+						</span>
 						<?php
-						if($contact->birth){
-							echo h($contact->birth->format('Y-m-d'));
-						}
+						//contact person change - dev questions - on hold
+						//echo '<span>' . $this->element('user_checkbox') . '</span>';
 						?>
-					</span>
-					<?php
-					echo $this->Form->input('birth',
-											['templates' => ['inputContainer' => '{{content}}'],
-											'type' => 'text',
-											'class' => 'editbox',
-											'label' => false,
-											'value' => $contact->birth ? h($contact->birth->format('Y-m-d')) : null
-											]);
-					?>
-				</p>
+					</p>
+				</div></div>
 
-				<h6 class="subheader"><?= __('Sex') ?></h6>
-				<p class="ed">
-					&nbsp;
-					<span class="dta">
+				<div class="row"><div class="panel info">
+					<h6 class="subheader"><?= __('Address') ?></h6>
+					<p class="ed">
+						&nbsp;
 						<?php
-						if($contact->sex == 1){
-							echo __('Male');
-						}
-						else if($contact->sex == 2){
-							echo __('Female');
-						}
-						else{
-							echo __('Unknown');
-						}
+						echo '<span class="dta zip zip-zip">';
+							if(isset($contact->zip)){
+								echo $contact->zip->zip;
+							}
+						echo '</span> ';
+						echo '<span class="dta zip-name">';
+							if(isset($contact->zip)){
+								echo $contact->zip->name;
+							}
+						echo '</span> ';
+						echo $this->Form->input('zip_id',
+												['type' => 'hidden',
+												 'value' => isset($contact->zip) ? $contact->zip->id : false]);
+						
+						echo $this->Form->input('xzip',
+												['templates' => ['inputContainer' => '{{content}}'],
+												 'type' => 'text',
+												'class' => 'editbox zip',
+												'label' => false,
+												 'value' => isset($contact->zip) ? $contact->zip->zip : ''
+												 ]);
+						
+						echo '<span class="dta addr address">';
+							echo h($contact->address);
+						echo '</span>';
+						echo $this->Form->input('address',
+												['templates' => ['inputContainer' => '{{content}}'],
+												'class' => 'editbox addr',
+												'label' => false,
+												 'value' => $contact->address
+												 ]);
+	
 						?>
-					</span>
-					<?php
-					echo $this->Form->input('sex',
-											['type' => 'radio',
-											'options' => [1 => __('Male'), 2 => __('Female')],
-											'templates' => ['inputContainer' => '<span class="editbox" id="sex">{{content}}</span>',
-															'nestingLabel' => '{{input}}{{text}}'],
-											'label' => false,
-											'value' => $contact->sex
-											]);
-					?>
-				</p>
+					</p>
+				</div></div>
 
-				<h6 class="subheader"><?= __('Contactsource') ?></h6>
-				<p class="ed">
-					&nbsp;
-					<span class="dta">
-						<?= $contact->has('contactsource') ? $this->Html->link($contact->contactsource->name, ['controller' => 'Contactsources', 'action' => 'view', $contact->contactsource->id]) : '' ?>
-					</span>
-					<?php
-					echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
-					?>
-				</p>					
+				<div class="row"><div class="panel info">
+					<h6 class="subheader"><?= __('Phone') ?></h6>
+					<p class="ed">
+						&nbsp;
+						<span class="dta"><?= h($contact->phone) ?></span>
+						<?php
+						echo $this->Form->input('phone',
+												['templates' => ['inputContainer' => '{{content}}'],
+												'class' => 'editbox',
+												'label' => false,
+												'value' => $contact->phone
+												]);
+						?>
+					</p>
+				</div></div>
 
-				<h6 class="subheader"><?= __('Active') ?></h6>
-				<p class="ed">
-					&nbsp;
-					<span class="dta"><?= $contact->active ? __('Yes') : __('No'); ?></span>
-					<?php
-					echo $this->Form->input('active',
-											['templates' => ['inputContainer' => '{{content}}'],
-											'class' => 'editbox',
-											'label' => false,
-											'checked' => $contact->active,
-											'value' => $contact->active
-											]);
-					?>
-				</p>
+				<div class="row"><div class="panel info">
+					<h6 class="subheader"><?= __('Email') ?></h6>
+					<p class="ed">
+						&nbsp;
+						<span class="dta"><?= h($contact->email) ?></span>
+						<?php
+						echo $this->Form->input('email',
+												['templates' => ['inputContainer' => '{{content}}'],
+												'class' => 'editbox',
+												'label' => false,
+												'value' => $contact->email
+												]);
+						?>
+					</p>
+				</div></div>
 
-				<h6 class="subheader"><?= __('Comment') ?></h6>
-				<p class="ed">
-					&nbsp;
-					<span class="dta">
-						<?= h($contact->comment); ?>
-					</span>
-					<?php
-					echo $this->Form->input('comment',
-											['templates' => ['inputContainer' => '{{content}}'],
-											'class' => 'editbox',
-											'label' => false,
-											'title' => __('Secondary emails, phones, others')
-											]);
-					?>
-				</p>
+				<div class="row"><div class="panel info">
+					<h6 class="subheader"><?= __('Birth') ?></h6>
+					<p class="ed">
+						&nbsp;
+						<span class="dta">
+							<?php
+							if($contact->birth){
+								echo h($contact->birth->format('Y-m-d'));
+							}
+							?>
+						</span>
+						<?php
+						echo $this->Form->input('birth',
+												['templates' => ['inputContainer' => '{{content}}'],
+												'type' => 'text',
+												'class' => 'editbox',
+												'label' => false,
+												'value' => $contact->birth ? h($contact->birth->format('Y-m-d')) : null
+												]);
+						?>
+					</p>
+				</div></div>
+
+				<div class="row"><div class="panel info">
+					<h6 class="subheader"><?= __('Sex') ?></h6>
+					<p class="ed">
+						&nbsp;
+						<span class="dta">
+							<?php
+							if($contact->sex == 1){
+								echo __('Male');
+							}
+							else if($contact->sex == 2){
+								echo __('Female');
+							}
+							else{
+								echo __('Unknown');
+							}
+							?>
+						</span>
+						<?php
+						echo $this->Form->input('sex',
+												['type' => 'radio',
+												'options' => [1 => __('Male'), 2 => __('Female')],
+												'templates' => ['inputContainer' => '<span class="editbox" id="sex">{{content}}</span>',
+																'nestingLabel' => '{{input}}{{text}}'],
+												'label' => false,
+												'value' => $contact->sex
+												]);
+						?>
+					</p>
+				</div></div>
+
+				<div class="row"><div class="panel info">
+					<h6 class="subheader"><?= __('Contactsource') ?></h6>
+					<p class="ed">
+						&nbsp;
+						<span class="dta">
+							<?= $contact->has('contactsource') ? $this->Html->link($contact->contactsource->name, ['controller' => 'Contactsources', 'action' => 'view', $contact->contactsource->id]) : '' ?>
+						</span>
+						<?php
+						echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
+						?>
+					</p>
+				</div></div>
+
+				<div class="row"><div class="panel info">
+					<h6 class="subheader"><?= __('Active') ?></h6>
+					<p class="ed">
+						&nbsp;
+						<span class="dta"><?= $contact->active ? __('Yes') : __('No'); ?></span>
+						<?php
+						echo $this->Form->input('active',
+												['templates' => ['inputContainer' => '{{content}}'],
+												'class' => 'editbox',
+												'label' => false,
+												'checked' => $contact->active,
+												'value' => $contact->active
+												]);
+						?>
+					</p>
+				</div></div>
+
+				<div class="row"><div class="panel info">
+					<h6 class="subheader"><?= __('Comment') ?></h6>
+					<p class="ed">
+						&nbsp;
+						<span class="dta">
+							<?= h($contact->comment); ?>
+						</span>
+						<?php
+						echo $this->Form->input('comment',
+												['templates' => ['inputContainer' => '{{content}}'],
+												'class' => 'editbox',
+												'label' => false,
+												'title' => __('Secondary emails, phones, others')
+												]);
+						?>
+					</p>
+				</div></div>
 			</div>
 			<div id="mapsmall"></div>
 				<?php

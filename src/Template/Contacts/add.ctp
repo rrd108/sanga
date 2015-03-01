@@ -4,40 +4,105 @@
 //$this->Html->addCrumb('Új', '/contacts/add');
 print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 ?>
-<div class="contacts form columns">
+<div class="column large-6 medium-10 small-centered">
 <?= $this->Form->create($contact) ?>
 	<fieldset>
 		<legend><?= __('Add Contact') ?></legend>
 	<?php
-		echo '<div class="input text">';
-		echo '<label for="users-ids">'.__('Contact Person').'</label>';
-		echo $this->element('user_checkbox');
+		echo '<div class="row">';
+			echo '<label for="users-ids">'.__('Contact Person').'</label>';
+			echo $this->element('user_checkbox');
 		echo '</div>';
+
+		echo '<div class="row">';
+			echo $this->Form->input('active',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+									   'checked' => true,
+									   'title' => __('Inactive means the connection is lost')
+									   ]);
+		echo '</div>';
+
 		
-		echo $this->Form->input('name',
-									   ['label' => __('Known name'),
+		echo '<div class="row">';
+			echo $this->Form->input('name',
+									   ['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										'class' => 'radius',
+										'label' => __('Known name'),
 										'title' => __('Like initiated name, nickname, etc')
 										]);
-		echo $this->Form->input('contactname',
-									   ['label' => __('Name'),
+			echo $this->Form->input('contactname',
+									   ['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										'class' => 'radius',
+										'label' => __('Name'),
 										'title' => __('Civil name, company name, etc')
 										]);
-		echo $this->Form->input('xzip', ['type' => 'text', 'label' => __('Zip')]);
-		echo $this->Form->input('zip_id', ['type' => 'hidden']);
-		echo $this->Form->input('address');
-		echo $this->Form->input('phone');
-		echo $this->Form->input('email');
-		echo $this->Form->input('birth', ['type' => 'text']);
-		echo $this->Form->input('sex', ['type' => 'radio', 'options' => [1 => __('Male'), 2 => __('Female')]]);
-		echo $this->Form->input('active', ['checked' => true, 'title' => 'Az inaktív kapcsolatok az akik eltűntek, eltávoztak, elérhetetlenek, stb.']);
-		echo $this->Form->input('workplace');
-		echo $this->Form->input('xfamily', ['type' => 'text', 'label' => __('Family')]);
-		echo $this->Form->input('family_member_id', ['type' => 'hidden']);
-		echo $this->Form->input('comment', ['title' => __('Secondary emails, phones, others')]);
-		echo $this->Form->input('contactsource_id',
-								['options' => $contactsources,
-								 'type' => 'radio']);
+		echo '</div>';
+
+		echo '<div class="row">';
+			echo $this->Form->input('xzip',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius',
+										'type' => 'text',
+										'label' => __('Zip')]);
+			echo $this->Form->input('zip_id',
+										['type' => 'hidden']);
+			echo $this->Form->input('address',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius']);
+		echo '</div>';
+			
+		echo '<div class="row">';
+			echo $this->Form->input('phone',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius']);
+			echo $this->Form->input('email',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius']);
+		echo '</div>';
+
+		echo '<div class="row">';
+			echo $this->Form->input('birth',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius',
+										'type' => 'text']);
+			echo $this->Form->input('sex',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius',
+										'type' => 'radio',
+										'class' => 'radius',
+										'options' => [1 => __('Male'), 2 => __('Female')]]);
+		echo '</div>';
+
+		echo '<div class="row">';
+			echo $this->Form->input('workplace',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius']);
+			echo $this->Form->input('skills._ids',
+									['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+									 'class' => 'radius',
+									 'type' => 'text']);
+		echo '</div>';
 		
+		echo '<div class="row">';
+			echo $this->Form->input('xfamily',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius',
+										 'type' => 'text',
+										 'label' => __('Family')]);
+			echo $this->Form->input('family_member_id', ['type' => 'hidden']);
+			echo $this->Form->input('contactsource_id',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius',
+										 'options' => $contactsources,
+										 'type' => 'radio']);
+		echo '</div>';
+		
+		echo '<div class="row">';
+			echo $this->Form->input('comment',
+										['class' => 'radius',
+										 'title' => __('Secondary emails, phones, others')]);
+		echo '</div>';
+
 		$fGroups = $values = [];
 		foreach($groups as $group){
 			//$fGroups[$group->id] = '<span class="tag tag-default">' . $group->name . '</span>';
@@ -47,47 +112,21 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 			}
 		}
 		
-		echo $this->Form->input('groups._ids',
-								['options' => $fGroups,
-								 'type' => 'select',
-								 'multiple' => 'checkbox',
-								 'value' => $values
-								 ]);
-		/*echo '<div class="input">';
-			echo '<label for="groups-ids">';
-				echo __('Groups');
-			echo '</label>';
-			foreach($groups as $group){
-				echo $this->Form->checkbox('groups._ids', ['multiple' => true]);
-				$myGroup = false;
-				if($group->admin_user_id == $this->Session->read('Auth.User.id')){
-					$myGroup = true;
-				}
-				if($group->shared){
-					$cssDStyle = $cssStyle =  'shared';
-				}
-				else{
-					$cssStyle = ($myGroup ? 'mine' : 'viewable');
-					$cssDStyle = 'default';
-				}
-				echo '<span class="tag tag-' . $cssDStyle . '"
-						data-css="tag-' . $cssStyle . '" 
-						data-id="' . $group->id . '">';
-					echo h($group->name);
-				echo '</span> ';
-			}
-		echo '</div>';*/
-		echo $this->Form->input('skills._ids', ['type' => 'text']);/*,
-									   ['source' => '/skills/search',
-										'label' => __('Skills'),
-										'change' => 'var t = $(event.target);
-													t.parent().append("<span class=\"tag tag-mine\">"+t.val()+"</span>\n");
-													t.val(null);
-													t.focus();
-													event.preventDefault();'
-										]);*/
+		echo '<div class="row">';
+			echo $this->Form->input('groups._ids',
+										['class' => 'radius',
+										 'options' => $fGroups,
+										 'type' => 'select',
+										 'multiple' => 'checkbox',
+										 'value' => $values
+										 ]);
+		echo '</div>';
 	?>
 	</fieldset>
-<?= $this->Form->button(__('Submit')) ?>
-<?= $this->Form->end() ?>
+<?php
+	echo '<div class="row">';
+		echo $this->Form->button(__('Submit'), ['class' => 'radius']);
+	echo '</div>';
+	echo $this->Form->end();
+?>
 </div>

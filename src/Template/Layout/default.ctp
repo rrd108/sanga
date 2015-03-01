@@ -45,20 +45,17 @@
 	<header>
 		<?php echo $this->element('menu'); ?>
 	</header>
-	<div id="container">
-		
-		<div id="content">
-			<?= $this->Flash->render() ?>
+	<main id="container">
+		<?= $this->Flash->render() ?>
 
-			<div class="row">
-				<?= $this->fetch('content') ?>
-			</div>
+		<div class="row">
+			<?= $this->fetch('content') ?>
 		</div>
-		<footer>
-			<?php
-				//debug($this->Notifications);
-			?>
-		</footer>
-	</div>
+	</main>
+	<footer>
+		<?php
+			//debug($this->Notifications);
+		?>
+	</footer>
 </body>
 </html>
