@@ -403,13 +403,20 @@ input.editbox, textarea.editbox, span.editbox{
 input.editbox{
   width: 45%;
 }
-input.editbox.zip, span.zip, input.thin{
+input.editbox.zip, span.zip{
   width: 10%;
+}
+input.thin{
+  width: 25%;  
 }
 input.editbox.addr, span.addr{
   width: 35%;
 }
 
+input.quantity{
+  width: 75%;
+  float: left;
+}
 
 #ajaxloader, #okImg, #errorImg{
   display: none;

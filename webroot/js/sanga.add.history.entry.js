@@ -37,7 +37,25 @@ $(function() {
 		}
 	});
 	
-	$('#detail').blur(function(event){
+	$('#xunit-id').autocomplete({
+		minLength : 1,
+		source : $.sanga.baseUrl + '/Units/search',
+		focus: function() {
+			return false;
+		},		
+		select : function(event, ui) {	//when we select something from the dropdown
+			this.value = ui.item.label;
+			$('#unit-id').val(ui.item.value);
+			return false;
+		},
+		change : function(event, ui) {
+			this.value = ui.item.label;
+			$('#unit-id').val(ui.item.value);
+			return false;
+		}
+	});
+
+	var sendForm = function(event){
 		var inf = $('#hInfo');
 		inf.append($('#ajaxloader').show());
 		$.ajax({
@@ -48,8 +66,8 @@ $(function() {
 				group_id : $('#group-id').val(),
 				event_id : $('#event-id').val(),
 				detail : $('#detail').val(),
-				quantity : null,
-				unit_id : null,
+				quantity : $('#quantity').val(),
+				unit_id : $('#unit-id').val(),
 				family : null
 			},
 			type : 'post',
@@ -82,7 +100,10 @@ $(function() {
 				cols += '<td>' + $('#xgroup-id').val() + '</td>';
 				cols += '<td>' + $('#xevent-id').val() + '</td>';
 				cols += '<td>' + $('#detail').val() + '</td>';
-				cols += '<td class="r"></td>';
+				cols += '<td class="r">' +
+							$('#quantity').val() + ' ' +
+							$('#xunit-id').val() +
+						'</td>';
 				cols += '<td></td>';
 				newRow.append(cols);
 				$('#hTable > tbody').children('tr:first').after(newRow);
@@ -90,5 +111,8 @@ $(function() {
 				$(':input', '#hForm').not('.dontdel').val("");
 			}
 		});
-	});
+	}
+	
+	$('#xunit-id').blur(sendForm);
+
 });
