@@ -59,7 +59,7 @@
 				<?php
 					print '<li>' . $this->Html->link('☭ ' . __('Profile'), ['controller' => 'Users', 'action' => 'view']) . '</li>';
 					print '<li>' . $this->Html->link('⚠ ' . __('Notifications') . $nc, ['controller' => 'Notifications', 'action' => 'index'], ['escapeTitle' => false]) . '</li>';
-					print '<li>' . $this->Html->link('⊗ ' . _('Logout'), ['controller' => 'Users', 'action' => 'logout']) . '</li>';
+					print '<li>' . $this->Html->link('⊗ ' . __('Logout'), ['controller' => 'Users', 'action' => 'logout']) . '</li>';
 				?>
 			</ul>
 		</li>
