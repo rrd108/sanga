@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sanga 1.0\n"
-"POT-Creation-Date: 2015-02-08 15:55+0000\n"
-"PO-Revision-Date: 2015-02-08 16:59+0100\n"
+"POT-Creation-Date: 2015-03-09 16:13+0000\n"
+"PO-Revision-Date: 2015-03-09 18:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: Hungarian\n"
@@ -16,35 +16,35 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: Controller/ContactsController.php:141;257
+#: Controller/ContactsController.php:141;260
 msgid "Permission deined"
 msgstr "Hozzáférés megtagadva"
 
-#: Controller/ContactsController.php:229
+#: Controller/ContactsController.php:232
 msgid "Two family members are in different families"
 msgstr "A családtagok más családokhoz tartoznak"
 
-#: Controller/ContactsController.php:275;527
+#: Controller/ContactsController.php:278;530
 msgid "The contact has been saved."
 msgstr "A kapcsolat mentve"
 
-#: Controller/ContactsController.php:284;540
+#: Controller/ContactsController.php:287;543
 msgid "The contact could not be saved. Please, try again."
 msgstr "Nem tudtam elmenteni a kapsolatot. Kérlek próbáld meg újra."
 
-#: Controller/ContactsController.php:310
+#: Controller/ContactsController.php:313
 msgid "The contact is removed from this family"
 msgstr "A kapcsolat kikerült ebből a családból."
 
-#: Controller/ContactsController.php:312
+#: Controller/ContactsController.php:315
 msgid "The contact could not be removed from this family"
 msgstr "A kapcsolatot nem tudtam kivenni a családból."
 
-#: Controller/ContactsController.php:537
+#: Controller/ContactsController.php:540
 msgid "Contact photo saved."
 msgstr "A kapcsolat fényképe mentve."
 
-#: Controller/ContactsController.php:537
+#: Controller/ContactsController.php:540
 msgid "Unable to save contact photo."
 msgstr "A kapcsolat fényképét nem sikerült menteni."
 
@@ -65,7 +65,6 @@ msgid "At least 2 info should be filled"
 msgstr "Legalább 2 mezőt ki kell tölteni"
 
 #: Model/Table/ContactsTable.php:132
-#, fuzzy
 msgid "changed from "
 msgstr "megváltoztatva"
 
@@ -74,22 +73,18 @@ msgid "to"
 msgstr ""
 
 #: Model/Table/ContactsTable.php:135
-#, fuzzy
 msgid "removed"
 msgstr "törölve"
 
 #: Model/Table/ContactsTable.php:138
-#, fuzzy
 msgid "added"
 msgstr "hozzáadva"
 
 #: Model/Table/ContactsTable.php:156
-#, fuzzy
 msgid "removed from"
 msgstr "eltávolítva"
 
 #: Model/Table/ContactsTable.php:161
-#, fuzzy
 msgid "added to"
 msgstr "hozzáadva"
 
@@ -105,15 +100,19 @@ msgstr "Új kapcsolat"
 msgid "Contact Person"
 msgstr "Kapcsolattartó"
 
-#: Template/Contacts/add.ctp:18 Template/Contacts/view.ctp:62
+#: Template/Contacts/add.ctp:21
+msgid "Inactive means the connection is lost"
+msgstr "Inaktív, elvesztett kapcsolat"
+
+#: Template/Contacts/add.ctp:30 Template/Contacts/view.ctp:63
 msgid "Known name"
 msgstr "Ismert név"
 
-#: Template/Contacts/add.ctp:19 Template/Contacts/view.ctp:72
+#: Template/Contacts/add.ctp:31 Template/Contacts/view.ctp:73
 msgid "Like initiated name, nickname, etc"
 msgstr "Avatott név, becenév, stb"
 
-#: Template/Contacts/add.ctp:22 Template/Contactsources/view.ctp:16;32
+#: Template/Contacts/add.ctp:36 Template/Contactsources/view.ctp:16;32
 #: Template/Countries/view.ctp:16;34 Template/Events/view.ctp:18
 #: Template/Groups/view.ctp:5;74;115 Template/Skills/view.ctp:16;32
 #: Template/Units/view.ctp:16 Template/Usergroups/view.ctp:16;34
@@ -121,38 +120,38 @@ msgstr "Avatott név, becenév, stb"
 msgid "Name"
 msgstr "Név"
 
-#: Template/Contacts/add.ctp:23 Template/Contacts/view.ctp:87
+#: Template/Contacts/add.ctp:37 Template/Contacts/view.ctp:90
 msgid "Civil name, company name, etc"
 msgstr "Polgári név, cégnév, stb"
 
-#: Template/Contacts/add.ctp:25 Template/Contacts/edit.ctp:11
+#: Template/Contacts/add.ctp:46 Template/Contacts/edit.ctp:11
 #: Template/Countries/view.ctp:33 Template/Zips/view.ctp:20
 msgid "Zip"
 msgstr "Irányítószám"
 
-#: Template/Contacts/add.ctp:31 Template/Contacts/edit.ctp:16
-#: Template/Contacts/view.ctp:210;223
+#: Template/Contacts/add.ctp:73 Template/Contacts/edit.ctp:16
+#: Template/Contacts/view.ctp:225;238
 msgid "Male"
 msgstr "Férfi"
 
-#: Template/Contacts/add.ctp:31 Template/Contacts/edit.ctp:16
-#: Template/Contacts/view.ctp:213;223
+#: Template/Contacts/add.ctp:73 Template/Contacts/edit.ctp:16
+#: Template/Contacts/view.ctp:228;238
 msgid "Female"
 msgstr "Nő"
 
-#: Template/Contacts/add.ctp:34 Template/Contacts/edit.ctp:19
-#: Template/Contacts/view.ctp:21;305 Template/Events/view.ctp:44
+#: Template/Contacts/add.ctp:91 Template/Contacts/edit.ctp:19
+#: Template/Contacts/view.ctp:21;327 Template/Events/view.ctp:44
 #: Template/Groups/view.ctp:37 Template/Histories/view.ctp:52
 #: Template/Users/view.ctp:87
 msgid "Family"
 msgstr "Család"
 
-#: Template/Contacts/add.ctp:36 Template/Contacts/edit.ctp:21
-#: Template/Contacts/view.ctp:269
+#: Template/Contacts/add.ctp:103 Template/Contacts/edit.ctp:21
+#: Template/Contacts/view.ctp:290
 msgid "Secondary emails, phones, others"
-msgstr ""
+msgstr "Másodlagos email cím, telefon, egyéb"
 
-#: Template/Contacts/add.ctp:91 Template/Contacts/edit.ctp:27
+#: Template/Contacts/add.ctp:128 Template/Contacts/edit.ctp:27
 #: Template/ContactsGroups/add.ctp:18 Template/ContactsGroups/edit.ctp:19
 #: Template/ContactsSkills/add.ctp:18 Template/ContactsSkills/edit.ctp:19
 #: Template/ContactsUsers/add.ctp:18 Template/ContactsUsers/edit.ctp:19
@@ -177,23 +176,25 @@ msgstr "Mehet"
 
 #: Template/Contacts/edit.ctp:7
 msgid "Edit Contact"
-msgstr ""
+msgstr "Kapcsolat szerkesztése"
 
 #: Template/Contacts/edit.ctp:19
 msgid "Choose family member"
-msgstr ""
+msgstr "Válassz családtagot"
 
 #: Template/Contacts/google.ctp:7
 msgid "Select contacts to import by clicking on them."
-msgstr ""
+msgstr "Importáláshoz kattints a kapcsolatra"
 
 #: Template/Contacts/google_connect.ctp:3
 msgid ""
 "Please click the \"Connect\" link here to import your Google contacts. You "
 "will be redirected to Google, where you should give access to Sanga."
 msgstr ""
+"Kattints a \"Connect\" linkre a Google címtár importáláshoz. Átirányítunk a "
+"Google oldalára ahol hozzáférést kell adnod a Sanga számára."
 
-#: Template/Contacts/index.ctp:8 Template/Contacts/view.ctp:155
+#: Template/Contacts/index.ctp:8 Template/Contacts/view.ctp:164
 #: Template/Contactsources/view.ctp:38 Template/Groups/view.ctp:78;121
 #: Template/Skills/view.ctp:38 Template/Usergroups/view.ctp:38
 #: Template/Users/view.ctp:34;157 Template/Zips/view.ctp:48
@@ -205,7 +206,7 @@ msgstr "Telefon"
 msgid "Groups"
 msgstr "Csoportok"
 
-#: Template/Contacts/index.ctp:61 Template/Contacts/view.ctp:485
+#: Template/Contacts/index.ctp:61 Template/Contacts/view.ctp:507
 #: Template/ContactsGroups/index.ctp:41 Template/ContactsSkills/index.ctp:41
 #: Template/ContactsUsers/index.ctp:41 Template/Contactsources/index.ctp:35
 #: Template/Countries/index.ctp:35 Template/Events/index.ctp:41
@@ -218,7 +219,7 @@ msgstr "Csoportok"
 msgid "previous"
 msgstr "előző"
 
-#: Template/Contacts/index.ctp:63 Template/Contacts/view.ctp:487
+#: Template/Contacts/index.ctp:63 Template/Contacts/view.ctp:509
 #: Template/ContactsGroups/index.ctp:43 Template/ContactsSkills/index.ctp:43
 #: Template/ContactsUsers/index.ctp:43 Template/Contactsources/index.ctp:37
 #: Template/Countries/index.ctp:37 Template/Events/index.ctp:43
@@ -237,7 +238,7 @@ msgstr "Keresés"
 
 #: Template/Contacts/view.ctp:20
 msgid "Personal data"
-msgstr ""
+msgstr "Személyes"
 
 #: Template/Contacts/view.ctp:22
 msgid "Workplace and skills"
@@ -257,93 +258,105 @@ msgstr "Hozzáférés"
 
 #: Template/Contacts/view.ctp:44
 msgid "Save to Google Contacts"
-msgstr ""
+msgstr "Mentés Google címtárba"
 
-#: Template/Contacts/view.ctp:77 Template/Contactsources/view.ctp:33
+#: Template/Contacts/view.ctp:80 Template/Contactsources/view.ctp:33
 #: Template/Groups/view.ctp:116 Template/Skills/view.ctp:33
 #: Template/Users/view.ctp:154 Template/Zips/view.ctp:43
 msgid "Contactname"
 msgstr "Név"
 
-#: Template/Contacts/view.ctp:92
+#: Template/Contacts/view.ctp:97
 msgid "Contact person"
 msgstr "Kapcsolattartó"
 
-#: Template/Contacts/view.ctp:116 Template/Contactsources/view.ctp:35
+#: Template/Contacts/view.ctp:123 Template/Contactsources/view.ctp:35
 #: Template/Groups/view.ctp:118 Template/Skills/view.ctp:35
 #: Template/Users/view.ctp:156 Template/Zips/view.ctp:45
 msgid "Address"
 msgstr "Cím"
 
-#: Template/Contacts/view.ctp:169 Template/Contactsources/view.ctp:39
+#: Template/Contacts/view.ctp:180 Template/Contactsources/view.ctp:39
 #: Template/Groups/view.ctp:77;122 Template/Skills/view.ctp:39
 #: Template/Usergroups/view.ctp:37 Template/Users/view.ctp:32;158
 #: Template/Zips/view.ctp:49
 msgid "Email"
 msgstr ""
 
-#: Template/Contacts/view.ctp:183 Template/Contactsources/view.ctp:40
+#: Template/Contacts/view.ctp:196 Template/Contactsources/view.ctp:40
 #: Template/Groups/view.ctp:123 Template/Skills/view.ctp:40
 #: Template/Users/view.ctp:159 Template/Zips/view.ctp:50
 msgid "Birth"
 msgstr "Születési idő"
 
-#: Template/Contacts/view.ctp:204 Template/Contactsources/view.ctp:41
+#: Template/Contacts/view.ctp:219 Template/Contactsources/view.ctp:41
 #: Template/Groups/view.ctp:124 Template/Skills/view.ctp:41
 #: Template/Users/view.ctp:160
 msgid "Sex"
 msgstr "Neme"
 
-#: Template/Contacts/view.ctp:216
+#: Template/Contacts/view.ctp:231
 msgid "Unknown"
-msgstr ""
+msgstr "Ismeretlen"
 
-#: Template/Contacts/view.ctp:232
+#: Template/Contacts/view.ctp:249
 msgid "Contactsource"
 msgstr "Kapcsolat forrása"
 
-#: Template/Contacts/view.ctp:243 Template/Contactsources/view.ctp:45
+#: Template/Contacts/view.ctp:262 Template/Contactsources/view.ctp:45
 #: Template/Groups/view.ctp:79;128 Template/Skills/view.ctp:43
 #: Template/Usergroups/view.ctp:39 Template/Users/view.ctp:42;164
 #: Template/Zips/view.ctp:51
 msgid "Active"
 msgstr "Aktív"
 
-#: Template/Contacts/view.ctp:246 Template/Groups/view.ctp:18
+#: Template/Contacts/view.ctp:265 Template/Groups/view.ctp:18
 #: Template/Histories/view.ctp:53 Template/Notifications/view.ctp:31
 #: Template/Users/view.ctp:43 Template/UsersUsergroups/view.ctp:29
 msgid "Yes"
 msgstr "Igen"
 
-#: Template/Contacts/view.ctp:246 Template/Groups/view.ctp:18
+#: Template/Contacts/view.ctp:265 Template/Groups/view.ctp:18
 #: Template/Histories/view.ctp:53 Template/Notifications/view.ctp:31
 #: Template/Users/view.ctp:43 Template/UsersUsergroups/view.ctp:29
 msgid "No"
 msgstr "Nem"
 
-#: Template/Contacts/view.ctp:258 Template/Contactsources/view.ctp:46
+#: Template/Contacts/view.ctp:279 Template/Contactsources/view.ctp:46
 #: Template/Groups/view.ctp:129 Template/Skills/view.ctp:44
 #: Template/Users/view.ctp:165 Template/Zips/view.ctp:52
 msgid "Comment"
 msgstr "Megjegyzés"
 
-#: Template/Contacts/view.ctp:345 Template/Contactsources/view.ctp:42
+#: Template/Contacts/view.ctp:367 Template/Contactsources/view.ctp:42
 #: Template/Groups/view.ctp:125 Template/Skills/view.ctp:42
 #: Template/Users/view.ctp:161
 msgid "Workplace"
 msgstr "Munkahely"
 
-#: Template/Contacts/view.ctp:358 Template/Element/menu.ctp:30
+#: Template/Contacts/view.ctp:380 Template/Element/menu.ctp:30
 msgid "Skills"
 msgstr "Szakértelem"
 
-#: Template/Contacts/view.ctp:497
+#: Template/Contacts/view.ctp:519
 msgid "Member"
 msgstr "Tag"
 
-#: Template/Contacts/view.ctp:524
+#: Template/Contacts/view.ctp:546
 msgid "Not member"
 msgstr "Nem tag"
+
+#: Template/Contacts/view.ctp:570
+msgid "Has access as contact persons"
+msgstr "Hozzáférés kapcsolattartóként"
+
+#: Template/Contacts/view.ctp:578
+msgid "Has access via groups"
+msgstr "Hozzáférés csoporton keresztül"
+
+#: Template/Contacts/view.ctp:589
+msgid "Has access via user groups"
+msgstr "Hozzáférés felhasználói csoporton keresztül"
 
 #: Template/ContactsGroups/add.ctp:2 Template/ContactsGroups/edit.ctp:2
 #: Template/ContactsGroups/index.ctp:2;17 Template/ContactsGroups/view.ctp:2
@@ -842,6 +855,10 @@ msgstr "Adatlap"
 msgid "Notifications"
 msgstr "Értesítés"
 
+#: Template/Element/menu.ctp:62
+msgid "Logout"
+msgstr ""
+
 #: Template/Events/add.ctp:4 Template/Events/edit.ctp:5
 #: Template/Events/view.ctp:6 Template/Histories/add.ctp:11
 #: Template/Histories/edit.ctp:12 Template/Histories/view.ctp:14
@@ -937,7 +954,7 @@ msgstr "Részletek"
 #: Template/Histories/view.ctp:40 Template/Units/view.ctp:38
 #: Template/Users/view.ctp:85
 msgid "Quantity"
-msgstr ""
+msgstr "Mennyiség"
 
 #: Template/Events/view.ctp:43 Template/Groups/view.ctp:36
 #: Template/Units/view.ctp:39 Template/Users/view.ctp:86
@@ -1265,14 +1282,23 @@ msgstr ""
 msgid "Country"
 msgstr "Ország"
 
+#: Template/Error/error400.ctp:6 Template/Error/error500.ctp:6
+msgid "Error"
+msgstr "Hiba"
+
+#: Template/Error/error400.ctp:8
+msgid "The requested address %s was not found on this server."
+msgstr ""
+
+#: Template/Error/error500.ctp:4
+msgid "An Internal Error Has Occurred"
+msgstr ""
+
 #~ msgid "Username"
 #~ msgstr "Felhasználónév"
 
 #~ msgid "Log in"
 #~ msgstr "Bejelentkezés"
-
-#~ msgid "Error"
-#~ msgstr "Hiba"
 
 #~ msgid "You are not authorized to access that location."
 #~ msgstr "Belépés és megfelelő jogosultság nélkül ez a lap nem elérhető"

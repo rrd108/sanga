@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-02-08 15:55+0000\n"
+"POT-Creation-Date: 2015-03-09 16:13+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,35 +14,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/ContactsController.php:141;257
+#: Controller/ContactsController.php:141;260
 msgid "Permission deined"
 msgstr ""
 
-#: Controller/ContactsController.php:229
+#: Controller/ContactsController.php:232
 msgid "Two family members are in different families"
 msgstr ""
 
-#: Controller/ContactsController.php:275;527
+#: Controller/ContactsController.php:278;530
 msgid "The contact has been saved."
 msgstr ""
 
-#: Controller/ContactsController.php:284;540
+#: Controller/ContactsController.php:287;543
 msgid "The contact could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/ContactsController.php:310
+#: Controller/ContactsController.php:313
 msgid "The contact is removed from this family"
 msgstr ""
 
-#: Controller/ContactsController.php:312
+#: Controller/ContactsController.php:315
 msgid "The contact could not be removed from this family"
 msgstr ""
 
-#: Controller/ContactsController.php:537
+#: Controller/ContactsController.php:540
 msgid "Contact photo saved."
 msgstr ""
 
-#: Controller/ContactsController.php:537
+#: Controller/ContactsController.php:540
 msgid "Unable to save contact photo."
 msgstr ""
 
@@ -100,17 +100,21 @@ msgstr ""
 msgid "Contact Person"
 msgstr ""
 
-#: Template/Contacts/add.ctp:18
-#: Template/Contacts/view.ctp:62
+#: Template/Contacts/add.ctp:21
+msgid "Inactive means the connection is lost"
+msgstr ""
+
+#: Template/Contacts/add.ctp:30
+#: Template/Contacts/view.ctp:63
 msgid "Known name"
 msgstr ""
 
-#: Template/Contacts/add.ctp:19
-#: Template/Contacts/view.ctp:72
+#: Template/Contacts/add.ctp:31
+#: Template/Contacts/view.ctp:73
 msgid "Like initiated name, nickname, etc"
 msgstr ""
 
-#: Template/Contacts/add.ctp:22
+#: Template/Contacts/add.ctp:36
 #: Template/Contactsources/view.ctp:16;32
 #: Template/Countries/view.ctp:16;34
 #: Template/Events/view.ctp:18
@@ -123,33 +127,33 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: Template/Contacts/add.ctp:23
-#: Template/Contacts/view.ctp:87
+#: Template/Contacts/add.ctp:37
+#: Template/Contacts/view.ctp:90
 msgid "Civil name, company name, etc"
 msgstr ""
 
-#: Template/Contacts/add.ctp:25
+#: Template/Contacts/add.ctp:46
 #: Template/Contacts/edit.ctp:11
 #: Template/Countries/view.ctp:33
 #: Template/Zips/view.ctp:20
 msgid "Zip"
 msgstr ""
 
-#: Template/Contacts/add.ctp:31
+#: Template/Contacts/add.ctp:73
 #: Template/Contacts/edit.ctp:16
-#: Template/Contacts/view.ctp:210;223
+#: Template/Contacts/view.ctp:225;238
 msgid "Male"
 msgstr ""
 
-#: Template/Contacts/add.ctp:31
+#: Template/Contacts/add.ctp:73
 #: Template/Contacts/edit.ctp:16
-#: Template/Contacts/view.ctp:213;223
+#: Template/Contacts/view.ctp:228;238
 msgid "Female"
 msgstr ""
 
-#: Template/Contacts/add.ctp:34
+#: Template/Contacts/add.ctp:91
 #: Template/Contacts/edit.ctp:19
-#: Template/Contacts/view.ctp:21;305
+#: Template/Contacts/view.ctp:21;327
 #: Template/Events/view.ctp:44
 #: Template/Groups/view.ctp:37
 #: Template/Histories/view.ctp:52
@@ -157,13 +161,13 @@ msgstr ""
 msgid "Family"
 msgstr ""
 
-#: Template/Contacts/add.ctp:36
+#: Template/Contacts/add.ctp:103
 #: Template/Contacts/edit.ctp:21
-#: Template/Contacts/view.ctp:269
+#: Template/Contacts/view.ctp:290
 msgid "Secondary emails, phones, others"
 msgstr ""
 
-#: Template/Contacts/add.ctp:91
+#: Template/Contacts/add.ctp:128
 #: Template/Contacts/edit.ctp:27
 #: Template/ContactsGroups/add.ctp:18
 #: Template/ContactsGroups/edit.ctp:19
@@ -222,7 +226,7 @@ msgid "Please click the \"Connect\" link here to import your Google contacts. Yo
 msgstr ""
 
 #: Template/Contacts/index.ctp:8
-#: Template/Contacts/view.ctp:155
+#: Template/Contacts/view.ctp:164
 #: Template/Contactsources/view.ctp:38
 #: Template/Groups/view.ctp:78;121
 #: Template/Skills/view.ctp:38
@@ -239,7 +243,7 @@ msgid "Groups"
 msgstr ""
 
 #: Template/Contacts/index.ctp:61
-#: Template/Contacts/view.ctp:485
+#: Template/Contacts/view.ctp:507
 #: Template/ContactsGroups/index.ctp:41
 #: Template/ContactsSkills/index.ctp:41
 #: Template/ContactsUsers/index.ctp:41
@@ -262,7 +266,7 @@ msgid "previous"
 msgstr ""
 
 #: Template/Contacts/index.ctp:63
-#: Template/Contacts/view.ctp:487
+#: Template/Contacts/view.ctp:509
 #: Template/ContactsGroups/index.ctp:43
 #: Template/ContactsSkills/index.ctp:43
 #: Template/ContactsUsers/index.ctp:43
@@ -314,7 +318,7 @@ msgstr ""
 msgid "Save to Google Contacts"
 msgstr ""
 
-#: Template/Contacts/view.ctp:77
+#: Template/Contacts/view.ctp:80
 #: Template/Contactsources/view.ctp:33
 #: Template/Groups/view.ctp:116
 #: Template/Skills/view.ctp:33
@@ -323,11 +327,11 @@ msgstr ""
 msgid "Contactname"
 msgstr ""
 
-#: Template/Contacts/view.ctp:92
+#: Template/Contacts/view.ctp:97
 msgid "Contact person"
 msgstr ""
 
-#: Template/Contacts/view.ctp:116
+#: Template/Contacts/view.ctp:123
 #: Template/Contactsources/view.ctp:35
 #: Template/Groups/view.ctp:118
 #: Template/Skills/view.ctp:35
@@ -336,7 +340,7 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
-#: Template/Contacts/view.ctp:169
+#: Template/Contacts/view.ctp:180
 #: Template/Contactsources/view.ctp:39
 #: Template/Groups/view.ctp:77;122
 #: Template/Skills/view.ctp:39
@@ -346,7 +350,7 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: Template/Contacts/view.ctp:183
+#: Template/Contacts/view.ctp:196
 #: Template/Contactsources/view.ctp:40
 #: Template/Groups/view.ctp:123
 #: Template/Skills/view.ctp:40
@@ -355,7 +359,7 @@ msgstr ""
 msgid "Birth"
 msgstr ""
 
-#: Template/Contacts/view.ctp:204
+#: Template/Contacts/view.ctp:219
 #: Template/Contactsources/view.ctp:41
 #: Template/Groups/view.ctp:124
 #: Template/Skills/view.ctp:41
@@ -363,15 +367,15 @@ msgstr ""
 msgid "Sex"
 msgstr ""
 
-#: Template/Contacts/view.ctp:216
+#: Template/Contacts/view.ctp:231
 msgid "Unknown"
 msgstr ""
 
-#: Template/Contacts/view.ctp:232
+#: Template/Contacts/view.ctp:249
 msgid "Contactsource"
 msgstr ""
 
-#: Template/Contacts/view.ctp:243
+#: Template/Contacts/view.ctp:262
 #: Template/Contactsources/view.ctp:45
 #: Template/Groups/view.ctp:79;128
 #: Template/Skills/view.ctp:43
@@ -381,7 +385,7 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: Template/Contacts/view.ctp:246
+#: Template/Contacts/view.ctp:265
 #: Template/Groups/view.ctp:18
 #: Template/Histories/view.ctp:53
 #: Template/Notifications/view.ctp:31
@@ -390,7 +394,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: Template/Contacts/view.ctp:246
+#: Template/Contacts/view.ctp:265
 #: Template/Groups/view.ctp:18
 #: Template/Histories/view.ctp:53
 #: Template/Notifications/view.ctp:31
@@ -399,7 +403,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: Template/Contacts/view.ctp:258
+#: Template/Contacts/view.ctp:279
 #: Template/Contactsources/view.ctp:46
 #: Template/Groups/view.ctp:129
 #: Template/Skills/view.ctp:44
@@ -408,7 +412,7 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: Template/Contacts/view.ctp:345
+#: Template/Contacts/view.ctp:367
 #: Template/Contactsources/view.ctp:42
 #: Template/Groups/view.ctp:125
 #: Template/Skills/view.ctp:42
@@ -416,17 +420,29 @@ msgstr ""
 msgid "Workplace"
 msgstr ""
 
-#: Template/Contacts/view.ctp:358
+#: Template/Contacts/view.ctp:380
 #: Template/Element/menu.ctp:30
 msgid "Skills"
 msgstr ""
 
-#: Template/Contacts/view.ctp:497
+#: Template/Contacts/view.ctp:519
 msgid "Member"
 msgstr ""
 
-#: Template/Contacts/view.ctp:524
+#: Template/Contacts/view.ctp:546
 msgid "Not member"
+msgstr ""
+
+#: Template/Contacts/view.ctp:570
+msgid "Has access as contact persons"
+msgstr ""
+
+#: Template/Contacts/view.ctp:578
+msgid "Has access via groups"
+msgstr ""
+
+#: Template/Contacts/view.ctp:589
+msgid "Has access via user groups"
 msgstr ""
 
 #: Template/ContactsGroups/add.ctp:2
@@ -1170,6 +1186,10 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
+#: Template/Element/menu.ctp:62
+msgid "Logout"
+msgstr ""
+
 #: Template/Events/add.ctp:4
 #: Template/Events/edit.ctp:5
 #: Template/Events/view.ctp:6
@@ -1688,5 +1708,18 @@ msgstr ""
 
 #: Template/Zips/view.ctp:18
 msgid "Country"
+msgstr ""
+
+#: Template/Error/error400.ctp:6
+#: Template/Error/error500.ctp:6
+msgid "Error"
+msgstr ""
+
+#: Template/Error/error400.ctp:8
+msgid "The requested address %s was not found on this server."
+msgstr ""
+
+#: Template/Error/error500.ctp:4
+msgid "An Internal Error Has Occurred"
 msgstr ""
 
