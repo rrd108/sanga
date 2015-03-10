@@ -25,8 +25,15 @@ $(function() {
 			},
 			select : function(event, ui) {	//when we select something from the dropdown
 				this.value = ui.item.label.replace(/(<([^>]+)>)/ig,'');		//remove highlight html code
-				var userUrl = $('#qForm').attr('action').replace(/quicksearch/, 'view/' + ui.item.value);
-				$(location).attr('href', userUrl);
+				var controller;
+				if (ui.item.value.search(/g/) === 0) {
+					controller = 'Groups'
+				} else {
+					controller = 'Contacts';
+				}
+				var url = $('#qForm').attr('action').replace(/Search\/quicksearch/, controller + '/view/');
+				url = url + ui.item.value.substring(1);
+				$(location).attr('href', url);
 				return false;
 			}
 		});

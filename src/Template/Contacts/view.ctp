@@ -565,6 +565,69 @@ echo $this->element('ajax-images');
 	</div>
 	<div id="tabs-6" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->name) ?></h2>
+		<div class="column large-12">
+		<table id="hTable" cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<th><?= $this->Paginator->sort('date') ?></th>
+					<th><?= $this->Paginator->sort('User.name') ?></th>
+					<th><?= $this->Paginator->sort('Group.name') ?></th>
+					<th><?= $this->Paginator->sort('Event.name') ?></th>
+					<th><?= $this->Paginator->sort('detail') ?></th>
+					<th><?= $this->Paginator->sort('quantity') ?></th>
+					<th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				</tr>
+			</thead>
+				<?php
+				$total = 0;
+				foreach ($finances as $history):
+				?>
+				<tr>
+					<td><?php echo $history->date->format('Y-m-d'); ?></td>
+					<td>
+						<?php
+						if(isset($history->user->name)){
+							echo $history->user->name;
+						}
+						?>
+					</td>
+					<td>
+						<?php
+						if($history->group){
+							echo $history->group->name;
+						}
+						?>
+					</td>
+					<td><?= h($history->event->name) ?></td>
+					<td><?= h($history->detail) ?></td>
+					<td class="r">
+						<?php
+							if(isset($history->unit->name)){
+								$total += $history->quantity;
+								echo h($this->Number->currency($history->quantity, $history->unit->name));
+							}
+							else{
+								echo h($history->quantity);
+							}
+						?>
+					</td>
+					<td></td>
+				</tr>
+				<?php endforeach; ?>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td><?= __('Total') ?></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class="r"><?= h($this->Number->currency($total, $history->unit->name)) ?></td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				</tr>
+			</tfoot>
+		</table>
+		</div>
 	</div>
 	<div id="tabs-7" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->name) ?></h2>
@@ -603,5 +666,13 @@ echo $this->element('ajax-images');
 	</div>
 </div>
 <?php
+else:
+	echo '<h2>' . h($contactPersons->name) . '</h2>';
+	echo '<h3>' . __('Has access as contact persons') . '</h3>';
+	echo '<ul>';
+	foreach ($contactPersons->users as $cp) {
+		echo '<li>' . $cp->realname . '</li>';
+	}
+	echo '</ul>';
 endif;
 ?>

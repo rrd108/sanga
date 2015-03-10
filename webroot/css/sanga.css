@@ -89,13 +89,13 @@ header .header-title{
 }
 
 .header-title span.notice{
-  background: #F0AD4E;
   display: inline-block;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
   width: 1.5em;
   text-align: center;
+  font-size: 0.8em;
 }
 
 .actions{
@@ -456,4 +456,8 @@ input.quantity{
 
 #qForm input[type="text"]{
   width: 40%;
+}
+
+.noaccess {
+  color: #aaa;
 }
