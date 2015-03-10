@@ -435,8 +435,6 @@ echo $this->element('ajax-images');
 												['label' => false,
 												 'value' => date('Y-m-d'),
 												 'class' => 'dontdel']);
-						//echo $this->Form->input('user_id', ['options' => $users]);
-						//echo $this->Form->input('family');
 						?>
 					</td>
 					<td id="uName"><?= $this->Session->read('Auth.User.name') ?></td>
@@ -455,10 +453,14 @@ echo $this->element('ajax-images');
 					<td><?= $this->Form->input('detail', ['label' => false]) ?></td>
 					<td>
 						<?php
-						/*echo $this->Form->input('quantity', ['label' => false]);
-						echo $this->Form->input('unit_id', ['label' => false,
+						echo $this->Form->input('quantity', [
+															 'label' => false,
+															 'class' => 'quantity'
+															 ]);
+						echo $this->Form->input('unit_id', ['type' => 'hidden']);
+						echo $this->Form->input('xunit_id', ['label' => false,
 															'class' => 'thin',
-															'type' => 'text']);*/
+															'type' => 'text']);
 						?>
 					</td>
 					<td id="hInfo">

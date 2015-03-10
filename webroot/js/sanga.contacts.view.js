@@ -108,7 +108,7 @@ $(function() {
 		}
 	});
 	
-	//personal data, workplae
+	//personal data, workplace
 	$('p.ed').hover(
 		function(){		//handlerIn
 			$(this).append($('#editlink').show());

@@ -14,6 +14,18 @@ class UnitsController extends AppController {
         return true;
     }
 
+	public function search(){
+		$query = $this->Units->find()
+				->select(['id', 'name'])
+				->where(['name LIKE "'.$this->request->query('term').'%"']);
+		foreach($query as $row){
+			$result[] = array('value' => $row->id,
+							  'label' => $row->name
+							  );
+		}
+		$this->set('result', $result);
+	}
+
 /**
  * Index method
  *
