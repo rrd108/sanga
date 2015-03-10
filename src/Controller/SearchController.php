@@ -31,21 +31,21 @@ class SearchController extends AppController {
 						$this->createHighlight($row->email) . ' ' .
 						$this->createHighlight($row->phone) . ' ';
 			}
-			$result[] = array('value' => $row->id,
+			$result[] = array('value' => 'c'.$row->id,
 							  'label' => $label);
 		}
 		
 		//groups
-		/*$this->Groups = TableRegistry::get('Groups');
+		$this->Groups = TableRegistry::get('Groups');
 		$query = $this->Groups->find('accessible',
 									 ['User.id' => $this->Auth->user('id'),
 									  'shared' => true])
 				->where(['name LIKE "%'.$this->request->query('term').'%"']);
 		foreach($query as $row) {
 			$label = '⁂ ' . $this->createHighlight($row->name);
-			$result[] = array('value' => $row->id,
+			$result[] = array('value' => 'g'.$row->id,
 							  'label' => $label);
-		}*/
+		}
 		
 		//histories
 		//too many entries
