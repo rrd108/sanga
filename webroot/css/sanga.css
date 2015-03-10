@@ -457,3 +457,7 @@ input.quantity{
 #qForm input[type="text"]{
   width: 40%;
 }
+
+.noaccess {
+  color: #aaa;
+}

@@ -25,7 +25,7 @@ $(function() {
 			},
 			select : function(event, ui) {	//when we select something from the dropdown
 				this.value = ui.item.label.replace(/(<([^>]+)>)/ig,'');		//remove highlight html code
-				var userUrl = $('#qForm').attr('action').replace(/quicksearch/, 'view/' + ui.item.value);
+				var userUrl = $('#qForm').attr('action').replace(/Search\/quicksearch/, 'Contacts/view/' + ui.item.value);
 				$(location).attr('href', userUrl);
 				return false;
 			}

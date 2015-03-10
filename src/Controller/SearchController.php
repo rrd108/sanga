@@ -21,17 +21,22 @@ class SearchController extends AppController {
 				->orWhere(['phone LIKE "%'.$this->request->query('term').'%"']);
 		//debug($query->toArray());
 		foreach($query as $row) {
-			$label = '♥ ' . $this->createHighlight($row->name) . ' ' .
-					$this->createHighlight($row->contactname) . ' ' .
-					$this->createHighlight($row->email) . ' ' .
-					$this->createHighlight($row->phone) . ' ';
+			if ( ! $this->Contacts->isAccessible($row->id, $this->Auth->user('id'))) {
+				$label = '<span class="noaccess">♥ ' . $this->createHighlight($row->name) . '</span>';
+			} else {
+				$label = '♥ ' . $this->createHighlight($row->name);
+			}
+			if ( $this->Contacts->isAccessible($row->id, $this->Auth->user('id'))) {
+				$label .= ' ' . $this->createHighlight($row->contactname) . ' ' .
+						$this->createHighlight($row->email) . ' ' .
+						$this->createHighlight($row->phone) . ' ';
+			}
 			$result[] = array('value' => $row->id,
 							  'label' => $label);
 		}
-		//debug($result);die();
 		
 		//groups
-		$this->Groups = TableRegistry::get('Groups');
+		/*$this->Groups = TableRegistry::get('Groups');
 		$query = $this->Groups->find('accessible',
 									 ['User.id' => $this->Auth->user('id'),
 									  'shared' => true])
@@ -40,10 +45,10 @@ class SearchController extends AppController {
 			$label = '⁂ ' . $this->createHighlight($row->name);
 			$result[] = array('value' => $row->id,
 							  'label' => $label);
-		}
+		}*/
 		
 		//histories
-		//to many entries
+		//too many entries
 		/*$this->Histories = TableRegistry::get('Histories');
 		$query = $this->Histories->find()
 				->select(['id', 'detail'])

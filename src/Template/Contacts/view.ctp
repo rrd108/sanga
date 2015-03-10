@@ -666,5 +666,13 @@ echo $this->element('ajax-images');
 	</div>
 </div>
 <?php
+else:
+	echo '<h2>' . h($contactPersons->name) . '</h2>';
+	echo '<h3>' . __('Has access as contact persons') . '</h3>';
+	echo '<ul>';
+	foreach ($contactPersons->users as $cp) {
+		echo '<li>' . $cp->realname . '</li>';
+	}
+	echo '</ul>';
 endif;
 ?>
