@@ -4,7 +4,7 @@
 //$this->Html->addCrumb('Új', '/contacts/add');
 print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 ?>
-<div class="column large-6 medium-10 small-centered">
+<div class="user-add-form column large-6 medium-10 small-centered">
 <?= $this->Form->create($contact) ?>
 	<?php
 		echo '<div class="row">';
@@ -16,7 +16,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 
 		echo '<div class="row">';
 			echo $this->Form->input('active',
-										['templates' => ['inputContainer' => '<div class="column large-12"><label>Status</label>{{content}}</div>'],
+										['templates' => ['inputContainer' => '<div class="column large-12 radio"><label>Status</label>{{content}}</div>'],
 									   'checked' => true,
 									   'title' => __('Inactive means the connection is lost')
 									   ]);
@@ -66,7 +66,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 										 'class' => 'radius',
 										'type' => 'text']);
 			echo $this->Form->input('sex',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6 radio">{{content}}</div>'],
 										 'class' => 'radius',
 										'type' => 'radio',
 										'class' => 'radius',
@@ -95,7 +95,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 
 		echo '<div class="row">';
 				echo $this->Form->input('contactsource_id',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => ['inputContainer' => '<div class="column large-12 radio">{{content}}</div>'],
 										 'class' => 'radius',
 										 'options' => $contactsources,
 										 'type' => 'radio']);
@@ -118,7 +118,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 		}
 		
 		echo '<div class="row">';
-		echo '<div class="column large-12">';
+		echo '<div class="column large-12 radio">';
 			echo $this->Form->input('groups._ids',
 										['class' => 'radius',
 										 'options' => $fGroups,
