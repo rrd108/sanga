@@ -9,17 +9,19 @@
 	<?php
 	print $this->Html->meta('icon');
 
-	print $this->Html->css('base.css');
-	print $this->Html->css('cake.css');
+	// print $this->Html->css('base.css');
+	// print $this->Html->css('cake.css');
+	print $this->Html->css('default.css');
+	print $this->Html->css('main.css');
 		
-	print $this->Html->css('superfish.css');	//dropdown menu
+	// print $this->Html->css('superfish.css');	//dropdown menu
 	
 	print $this->Html->css('jquery-ui.min.css');
 	print $this->Html->css('jquery-ui.structure.min.css');
 	print $this->Html->css('jquery-ui.theme.min.css');
 	
-	print $this->Html->css('animate.css');
-	print $this->Html->css('sanga.css');
+	// print $this->Html->css('animate.css');
+	// print $this->Html->css('sanga.css');
 	
 	print $this->Html->script('jquery.js');	//this should be the very first js file
 	
@@ -45,7 +47,7 @@
 	<header>
 		<?php echo $this->element('menu'); ?>
 	</header>
-	<main id="container">
+	<main id="container" class="primary-content">
 		<?= $this->Flash->render() ?>
 
 		<div class="row">

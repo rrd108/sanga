@@ -4,19 +4,19 @@
 //$this->Html->addCrumb('Új', '/contacts/add');
 print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 ?>
-<div class="column large-6 medium-10 small-centered">
+<div class="user-add-form column large-6 medium-10 small-centered">
 <?= $this->Form->create($contact) ?>
-	<fieldset>
-		<legend><?= __('Add Contact') ?></legend>
 	<?php
 		echo '<div class="row">';
+		echo '<div class="column large-12">';
 			echo '<label for="users-ids">'.__('Contact Person').'</label>';
 			echo $this->element('user_checkbox');
+		echo '</div>';
 		echo '</div>';
 
 		echo '<div class="row">';
 			echo $this->Form->input('active',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => ['inputContainer' => '<div class="column large-12 radio"><label>Status</label>{{content}}</div>'],
 									   'checked' => true,
 									   'title' => __('Inactive means the connection is lost')
 									   ]);
@@ -66,7 +66,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 										 'class' => 'radius',
 										'type' => 'text']);
 			echo $this->Form->input('sex',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6 radio">{{content}}</div>'],
 										 'class' => 'radius',
 										'type' => 'radio',
 										'class' => 'radius',
@@ -90,8 +90,12 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 										 'type' => 'text',
 										 'label' => __('Family')]);
 			echo $this->Form->input('family_member_id', ['type' => 'hidden']);
-			echo $this->Form->input('contactsource_id',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+			
+		echo '</div>';
+
+		echo '<div class="row">';
+				echo $this->Form->input('contactsource_id',
+										['templates' => ['inputContainer' => '<div class="column large-12 radio">{{content}}</div>'],
 										 'class' => 'radius',
 										 'options' => $contactsources,
 										 'type' => 'radio']);
@@ -99,7 +103,8 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 		
 		echo '<div class="row">';
 			echo $this->Form->input('comment',
-										['class' => 'radius',
+										['templates' => ['inputContainer' => '<div class="column large-12">{{content}}</div>'],
+										'class' => 'radius',
 										 'title' => __('Secondary emails, phones, others')]);
 		echo '</div>';
 
@@ -113,6 +118,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 		}
 		
 		echo '<div class="row">';
+		echo '<div class="column large-12 radio">';
 			echo $this->Form->input('groups._ids',
 										['class' => 'radius',
 										 'options' => $fGroups,
@@ -121,11 +127,13 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 										 'value' => $values
 										 ]);
 		echo '</div>';
+		echo '</div>';
 	?>
-	</fieldset>
 <?php
 	echo '<div class="row">';
+	echo '<div class="column large-12">';
 		echo $this->Form->button(__('Submit'), ['class' => 'radius']);
+	echo '</div>';
 	echo '</div>';
 	echo $this->Form->end();
 ?>
