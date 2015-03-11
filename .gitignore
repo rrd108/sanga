@@ -10,14 +10,18 @@ composer.lock
 /webroot/scss/.sass-cache/*
 /webroot/scss/components/default/.sass-cache/*
 /webroot/config.codekit
+
 *.scss
+
 /webroot/scss/components/css/select.css
 /webroot/scss/components/css/message-box.css
 /webroot/scss/components/css/menu-button.css
 /webroot/scss/components/css/header-search.css
 /webroot/scss/components/css/button-group.css
+
 /webroot/index.php
 /webroot/.htaccess
 /.htaccess
+
 /config/sanga-minta.sql
 
