@@ -7,40 +7,40 @@
 		<?= $this->fetch('title') ?>
 	</title>
 	<?php
-	print $this->Html->meta('icon');
+	echo $this->Html->meta('icon');
 
-	// print $this->Html->css('base.css');
-	// print $this->Html->css('cake.css');
-	print $this->Html->css('default.css');
-	print $this->Html->css('main.css');
+	// echo $this->Html->css('base.css');
+	// echo $this->Html->css('cake.css');
+	echo $this->Html->css('default.css');
+	echo $this->Html->css('main.css');
 		
-	// print $this->Html->css('superfish.css');	//dropdown menu
+	// echo $this->Html->css('superfish.css');	//dropdown menu
 	
-	print $this->Html->css('jquery-ui.min.css');
-	print $this->Html->css('jquery-ui.structure.min.css');
-	print $this->Html->css('jquery-ui.theme.min.css');
+	echo $this->Html->css('jquery-ui.min.css');
+	echo $this->Html->css('jquery-ui.structure.min.css');
+	echo $this->Html->css('jquery-ui.theme.min.css');
 	
-	// print $this->Html->css('animate.css');
-	// print $this->Html->css('sanga.css');
+	// echo $this->Html->css('animate.css');
+	// echo $this->Html->css('sanga.css');
 	
-	print $this->Html->script('jquery.js');	//this should be the very first js file
+	echo $this->Html->script('jquery.js');	//this should be the very first js file
 	
 	//dropdown menu
-	print $this->Html->script('superfish.js');
-	print $this->Html->script('hoverIntent.js');
+	echo $this->Html->script('superfish.js');
+	echo $this->Html->script('hoverIntent.js');
 		
-	print $this->Html->script('jquery-ui.min.js');
-	print $this->Html->script('jquery.ui.autocomplete.html.js');
-	print $this->Html->script('ui.datepicker-hu.js');
-	print $this->Html->script('jquery.rStorage.min.js');
+	echo $this->Html->script('jquery-ui.min.js');
+	echo $this->Html->script('jquery.ui.autocomplete.html.js');
+	echo $this->Html->script('ui.datepicker-hu.js');
+	echo $this->Html->script('jquery.rStorage.min.js');
 	
-	print $this->Html->script('jquery.noty.packaged.min.js');
+	echo $this->Html->script('jquery.noty.packaged.min.js');
 	
-	print $this->Html->script('sanga.js');
+	echo $this->Html->script('sanga.js');
 
-	print $this->fetch('meta');
-	print $this->fetch('css');
-	print $this->fetch('script');
+	echo $this->fetch('meta');
+	echo $this->fetch('css');
+	echo $this->fetch('script');
 	?>
 </head>
 <body>
@@ -49,7 +49,6 @@
 	</header>
 	<main id="container" class="primary-content">
 		<?= $this->Flash->render() ?>
-
 		<div class="row">
 			<?= $this->fetch('content') ?>
 		</div>

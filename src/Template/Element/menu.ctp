@@ -1,5 +1,5 @@
 <div class="main-logo">
-	<?php echo $this->Html->image('logo-main-big.png', ['alt' => 'Sanga logo', 'url' => '/']); ?>
+	<?php echo $this->Html->image('logo-small.png', ['alt' => 'Sanga logo', 'url' => '/']); ?>
 </div>
 
 	<nav class="primary">
