@@ -64,9 +64,14 @@ use Cake\Utility\Security;
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
-	Configure::load('google', 'default');
 } catch (\Exception $e) {
     die($e->getMessage() . "\n");
+}
+
+try {
+	Configure::load('google', 'default', true);
+} catch (\Exception $e) {
+    Log::debug($e->getMessage());
 }
 
 // Load an environment local configuration file.
