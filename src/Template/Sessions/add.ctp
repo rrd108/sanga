@@ -1,18 +1,25 @@
-<div class="actions columns large-2 medium-3">
-	<h3><?= __('Actions') ?></h3>
-	<ul class="side-nav">
-		<li><?= $this->Html->link(__('List Sessions'), ['action' => 'index']) ?></li>
-	</ul>
+<div class="sidebar-wrapper">
+	<nav class="side-nav">
+		<ul>
+			<li><?= $this->Html->link(__('List Sessions'), ['action' => 'index']) ?></li>
+		</ul>
+	</nav>
 </div>
-<div class="sessions form large-10 medium-9 columns">
-<?= $this->Form->create($session) ?>
-	<fieldset>
-		<legend><?= __('Add Session'); ?></legend>
-	<?php
-		echo $this->Form->input('data');
-		echo $this->Form->input('expires');
-	?>
-	</fieldset>
-<?= $this->Form->button(__('Submit')) ?>
-<?= $this->Form->end() ?>
+<!-- sidebar wrapper -->
+
+<div class="content-wrapper">
+	<div class="row">
+		<div class="sessions form large-10 medium-9 columns">
+		<?= $this->Form->create($session) ?>
+			<fieldset>
+				<legend><?= __('Add Session'); ?></legend>
+			<?php
+				echo $this->Form->input('data');
+				echo $this->Form->input('expires');
+			?>
+			</fieldset>
+		<?= $this->Form->button(__('Submit')) ?>
+		<?= $this->Form->end() ?>
+		</div>
+	</div>
 </div>

@@ -21,7 +21,7 @@
 	echo $this->Html->css('jquery-ui.theme.min.css');
 	
 	// echo $this->Html->css('animate.css');
-	echo $this->Html->css('sanga.css');
+	// echo $this->Html->css('sanga.css');
 	
 	echo $this->Html->script('jquery.js');	//this should be the very first js file
 	
@@ -49,9 +49,7 @@
 	</header>
 	<main id="container" class="primary-content">
 		<?= $this->Flash->render() ?>
-		<div class="row">
-			<?= $this->fetch('content') ?>
-		</div>
+		<?= $this->fetch('content') ?>
 	</main>
 	<footer>
 		<?php

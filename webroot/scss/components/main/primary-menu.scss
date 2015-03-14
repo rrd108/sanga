@@ -23,19 +23,18 @@ nav.primary{
 			padding: rem-calc(14 28 14 10);
 			// text-transform: uppercase;
 
-			&:before{
-				display: block;
-				content: " ";
-				width: 0; 
-				height: 0; 
+			&:before{				
 				border-left: 4px solid transparent;
 				border-right: 4px solid transparent;
-				
 				border-top: 4px solid #fff;
-				position: absolute;
-				top: 50%;
-				right: 14px;
+				content: " ";
+				display: block;
+				height: 0; 
 				margin: -1px 0 0 0;
+				position: absolute;
+				right: 14px;
+				top: 50%;
+				width: 0; 
 			}
 
 			&:hover{

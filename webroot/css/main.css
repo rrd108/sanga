@@ -1,4 +1,4 @@
-header { background: #15848f; padding: 0 1rem; width: 100%; }
+header { background: #15848f; padding: 0 1rem; position: relative; width: 100%; z-index: 100; }
 header:before, header:after { content: " "; display: table; }
 header:after { clear: both; }
 
@@ -8,7 +8,7 @@ header:after { clear: both; }
 nav.primary { display: block; float: left; padding: 0 1rem; width: auto; }
 nav.primary ul { list-style: none; margin: 0; padding: 0; }
 nav.primary ul > li { color: #ffffff; cursor: pointer; display: block; float: left; list-style: none; position: relative; padding: 0.875rem 1.75rem 0.875rem 0.625rem; }
-nav.primary ul > li:before { display: block; content: " "; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 4px solid #fff; position: absolute; top: 50%; right: 14px; margin: -1px 0 0 0; }
+nav.primary ul > li:before { border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 4px solid #fff; content: " "; display: block; height: 0; margin: -1px 0 0 0; position: absolute; right: 14px; top: 50%; width: 0; }
 nav.primary ul > li:hover { background: #0e5b63; }
 nav.primary ul > li ul { background: #0e5b63; display: block; left: 0; min-width: 200px; position: absolute; top: 100%; z-index: 100; }
 nav.primary ul > li ul li { display: block; float: none; margin: 0; padding: 0; widows: 100%; }
@@ -21,20 +21,20 @@ header .main-logo { display: block; float: left; margin: 10px 0 0 0; padding: 0 
 header .main-logo a { display: block; height: 30px; line-height: 30px; overflow: hidden; }
 header .main-logo a img { max-width: 135px; }
 
-main.primary-content { display: block; padding: 2.5rem 0; width: 100%; }
-main.primary-content:before, main.primary-content:after { content: " "; display: table; }
-main.primary-content:after { clear: both; }
+.sidebar-wrapper { background: #f2f2f2; display: block; height: 100%; left: 0; padding: 70px 0 0 0; position: fixed; top: 0; width: 180px; z-index: 50; }
+.sidebar-wrapper nav { display: block; width: 100%; }
+.sidebar-wrapper nav ul { list-style: none; margin: 0; padding: 0; width: 100%; }
+.sidebar-wrapper nav ul li a { display: block; color: #15848f; padding: 0.125rem 0.9375rem; width: 100%; }
+.sidebar-wrapper nav ul li a:hover { background: #e5e5e5; }
 
-.user-add-form form .column.radio label:first-child { margin: 0 0 0.3125rem 0; width: 100%; }
-.user-add-form form .column.radio label { display: block; float: left; margin: 0 1.25rem 0 0; width: auto; }
-.user-add-form form .column.radio label input { margin: 0 0.3125rem 0 0; }
+.content-wrapper { display: block; padding: 1.25rem 0 1.25rem 11.25rem; position: relative; width: 100%; }
 
-nav.side-nav { display: block; width: 100%; }
-nav.side-nav h2 { margin: 0 0 1.25rem 0; }
-nav.side-nav ul { list-style: none; margin: 0; width: 100%; }
-nav.side-nav ul li { margin: 0; width: 100%; }
-nav.side-nav ul li a { display: block; padding: 0.4rem 0.75rem .4rem 0; width: 100%; }
-nav.side-nav ul li a:hover { color: #15848f; text-decoration: underline; }
+.user-details-view { background: #fff; border-bottom: solid 1px #e5e5e5; display: block; margin: 0 0 3.75rem 0; padding: 0 0 3.75rem 0; width: 100%; }
+.user-details-view:before, .user-details-view:after { content: " "; display: table; }
+.user-details-view:after { clear: both; }
+.user-details-view .main-title { margin-bottom: 1.25rem; }
+.user-details-view .user-profile-image img { height: auto; max-width: 75%; }
+.user-details-view .user-profile-details .row + .row { border-top: solid 1px #e5e5e5; }
 
 /* VIEWS */
 .users.view { border-left: solid 1px #e5e5e5; }
@@ -43,3 +43,6 @@ nav.side-nav ul li a:hover { color: #15848f; text-decoration: underline; }
 .users.view .user-main-view .row .label { color: #b3b3b3; }
 .users.view .user-main-view .row:first-child + .row { border-top: none; }
 .users.view .user-main-view .row + .row { border-top: solid 1px #e5e5e5; }
+
+.users.edit-view { border-left: solid 1px #e5e5e5; }
+.users.edit-view .user-main-view { display: block; margin: 0 0 3.75rem 0; padding: 0 5rem; }

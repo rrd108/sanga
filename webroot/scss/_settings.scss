@@ -31,7 +31,7 @@ $xxlarge-range: (120.063em, 99999999em);
 
 
 // GRID DEFAULTS
-$row-width: rem-calc(1280);
+$row-width: rem-calc(960);
 $total-columns: 12;
 $column-gutter: rem-calc(40);
 $last-child-float: $default-float;
@@ -245,7 +245,7 @@ $input-focus-border-color: scale-color(#fff, $lightness: -20%);
 $input-disabled-bg: #ccc;
 $input-disabled-cursor: $cursor-default-value;
 
-$label-font-color: $font-primary-color;
+$label-font-color: lighten($font-primary-color, 30%);
 $label-font-family: $font-family-sans;
 $label-font-size: rem-calc(14);
 $label-margin: 0 0 rem-calc(5) 0;
