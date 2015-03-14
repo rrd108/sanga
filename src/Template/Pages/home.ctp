@@ -63,6 +63,7 @@ $cakeDescription = 'Sanga';
 	
 	echo $this->Html->script('jquery.noty.packaged.min.js');
 	
+	echo $this->Html->css('sanga.css');
 	echo $this->Html->script('sanga.js');
 
 	echo $this->fetch('meta');

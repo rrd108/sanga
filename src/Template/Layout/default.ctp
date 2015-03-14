@@ -21,7 +21,7 @@
 	echo $this->Html->css('jquery-ui.theme.min.css');
 	
 	// echo $this->Html->css('animate.css');
-	// echo $this->Html->css('sanga.css');
+	echo $this->Html->css('sanga.css');
 	
 	echo $this->Html->script('jquery.js');	//this should be the very first js file
 	
