@@ -1,0 +1,18 @@
+@import "../_global";
+
+.header-search{
+	display: block;
+	float: right;
+	margin: 9px 0 0 0;
+	max-width: 150px;
+	width: 100%;
+
+	form input{
+		background: darken( $primary-color, 10% );
+		border: none;
+		color: $font-oposit-color;
+		height: 30px;
+		margin: 0;
+		padding: 2 10px;
+	}
+}

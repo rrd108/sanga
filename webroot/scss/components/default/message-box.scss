@@ -1,0 +1,59 @@
+@import "../_global";
+
+
+$include-message-box: false !default;
+
+// MEASSEFE BOX DEFAULTS
+$message-box-border-color: $divider-color !default;
+$message-box-border-style: solid !default;
+$message-box-border-width: 1px !default;
+$message-box-margin-bottom: rem-calc(10) !default;
+$message-box-padding: rem-calc(10) !default;
+
+
+@function message-box-font-color($color) {
+	@if (lightness($color) > 50) {
+		@return $font-primary-color;
+	} @else {
+		@return $font-oposit-color;
+	}
+}
+
+@mixin message-box{
+	border-color: $message-box-border-color;
+	border-style: $message-box-border-style;
+	border-width: $message-box-border-size;
+	display: block;
+	margin: 0 auto $message-box-margin-bottom;
+	padding: $message-box-padding;
+	width: 100%;
+}
+
+
+@if $include-message-box{
+	.message-box{
+		@include message-box;
+
+		&.alert{
+			background: $alert-color;
+			color: message-box-font-color($alert-color);
+		}
+		&.warning{
+			background: $warning-color;
+			color: message-box-font-color($warning-color);
+		}
+		&.success{
+			background: $success-color;
+			color: message-box-font-color($success-color);
+		}
+		&.help{
+			background: $help-color;
+			color: message-box-font-color($help-color);
+		}
+
+		&.radius{
+			border-radius: $global-radius;
+			color: message-box-font-color($global-color);
+		}
+	}
+}

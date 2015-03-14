@@ -1,0 +1,239 @@
+@import "../_global";
+
+
+$include-type: false !default;
+$includ-type-align-classes: false !default;
+
+// HEADING DEFAULTS
+$header-font-color: $font-primary-color !default;
+$header-font-family: $body-font-family !default;
+$header-font-style: $font-weight-normal !default;
+$header-font-weight: $font-weight-normal !default;
+$header-line-height: 1.4 !default;
+$header-margin-bottom: .5rem !default;
+$header-margin-top: .2rem !default;
+$header-text-rendering: optimizeLegibility !default;
+
+$h1-font-size: rem-calc(48) !default;
+$h2-font-size: rem-calc(38) !default;
+$h3-font-size: rem-calc(32) !default;
+$h4-font-size: rem-calc(24) !default;
+$h5-font-size: rem-calc(18) !default;
+$h6-font-size: 1rem !default;
+
+$h1-font-reduction: rem-calc(10) !default;
+$h2-font-reduction: rem-calc(10) !default;
+$h3-font-reduction: rem-calc(5) !default;
+$h4-font-reduction: rem-calc(5) !default;
+$h5-font-reduction: 0 !default;
+$h6-font-reduction: 0 !default;
+
+
+// PARAGRAPH DEFAULTS
+$paragraph-font-size: rem-calc(14) !default;
+$paragraph-font-weight: $font-weight-normal !default;
+$paragraph-line-height: 1.6 !default;
+$paragraph-margin-bottom: rem-calc(20) !default;
+$paragraph-font-family: inherit !default;
+$paragraph-text-rendering: optimizeLegibility !default;
+
+
+// LINK DEFAULTS
+$link-font-color: $primary-color !default;
+$link-font-color-hover: $secondary-color !default;
+$link-font-size: $paragraph-font-size !default;
+$link-text-decoration-hover: none !default;
+$link-text-decoration: none !default;
+
+
+// CODE DEFAULTS
+$code-background-color: scale-color($secondary-color, $lightness: 70%) !default;
+$code-border-color: scale-color($code-background-color, $lightness: -10%) !default;
+$code-border-size: 1px !default;
+$code-border-style: solid !default;
+$code-color: #ccc !default;
+$code-font-family: $font-family-monospace !default;
+$code-font-weight: $font-weight-normal !default;
+$code-padding: rem-calc(2) rem-calc(5) rem-calc(1) !default;
+
+
+// BLOCKQUOTES DEFAULTS
+$blockquote-border: 1px solid #ccc !default;
+$blockquote-font-color: scale-color($header-font-color, $lightness: 35%) !default;
+$blockquote-padding: rem-calc(9 20 0 19) !default;
+$blockquote-cite-font-color: scale-color($header-font-color, $lightness: 23%) !default;
+$blockquote-cite-font-size: rem-calc(13) !default;
+$blockquote-cite-link-color: $blockquote-cite-font-color !default;
+
+
+// <SMALL> DEFAULTS
+$small-font-size: 60% !default;
+
+
+// HR DEFAULTS
+$hr-border-color: $divider-color !default;
+$hr-border-style: solid !default;
+$hr-border-width: 1px !default;
+$hr-margin: rem-calc(20) !default;
+
+
+// TEXT ALIGNMENT CLASS NAMES 
+$align-class-names:
+  small-only,
+  small,
+  medium-only,
+  medium,
+  large-only,
+  large,
+  xlarge-only,
+  xlarge,
+  xxlarge-only,
+  xxlarge;
+
+// TEXT ALIGNMENT BREAKPOINTS
+$align-class-breakpoints:
+  $small-only,
+  $small-up,
+  $medium-only,
+  $medium-up,
+  $large-only,
+  $large-up,
+  $xlarge-only,
+  $xlarge-up,
+  $xxlarge-only,
+  $xxlarge-up;
+
+// GENERATES TEXT ALIGN AND JUSTIFY CLASSES
+@mixin align-classes{
+  .text-left    { text-align: left !important; }
+  .text-right   { text-align: right !important; }
+  .text-center  { text-align: center !important; }
+  .text-justify { text-align: justify !important; }
+
+  @for $i from 1 through length($align-class-names) {
+    @media #{(nth($align-class-breakpoints, $i))} {
+      .#{(nth($align-class-names, $i))}-text-left { text-align: left !important; }
+      .#{(nth($align-class-names, $i))}-text-right   { text-align: right !important; }
+      .#{(nth($align-class-names, $i))}-text-center  { text-align: center !important; }
+      .#{(nth($align-class-names, $i))}-text-justify { text-align: justify !important; }
+    }
+  }
+}
+
+
+@if $include-type {
+
+	// TYPOGRAPHY RESET
+	div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, th, td {
+		margin: 0;
+		padding: 0;
+	}
+	
+	@if $includ-type-align-classes { @include align-classes; }
+	
+	h1, h2, h3, h4, h5, h6 {
+		color: $header-font-color;
+		font-family: $header-font-family;
+		font-style: $header-font-style;
+		font-weight: $header-font-weight;
+		line-height: $header-line-height;
+		margin-bottom: $header-margin-bottom;
+		margin-top: $header-margin-top;
+		text-rendering: $header-text-rendering;
+	}
+
+	h1 { font-size: $h1-font-size - $h1-font-reduction; }
+	h2 { font-size: $h2-font-size - $h2-font-reduction; }
+	h3 { font-size: $h3-font-size - $h3-font-reduction; }
+	h4 { font-size: $h4-font-size - $h4-font-reduction; }
+	h5 { font-size: $h5-font-size - $h5-font-reduction; }
+	h6 { font-size: $h6-font-size - $h6-font-reduction; }
+
+
+	p {
+		font-family: $paragraph-font-family;
+		font-size: $paragraph-font-size;
+		font-weight: $paragraph-font-weight;
+		line-height: $paragraph-line-height;
+		text-rendering: $paragraph-text-rendering;
+		
+		+ p { margin-top: $paragraph-margin-bottom; }
+	}
+
+	a {
+		color: $link-font-color;
+		font-size: $link-font-size;
+		line-height: inherit;
+		text-decoration: $link-text-decoration;
+
+		@include global-transition;
+
+		&:hover,
+		&:focus { color: $link-font-color-hover; }
+	}
+
+	blockquote {
+		border-#{$default-float}: $blockquote-border;
+		margin: 0 0 $paragraph-margin-bottom;
+		padding: $blockquote-padding;
+
+		cite {
+			color: $blockquote-cite-font-color;
+			display: block;
+			font-size: $blockquote-cite-font-size;
+			
+			&:before { content: " "; }
+
+			a, a:visited { color: $blockquote-cite-link-color; }
+		}
+	}
+
+	blockquote, blockquote p {
+		color: $blockquote-font-color;
+		line-height: $paragraph-line-height;
+	}
+
+	code {
+		background-color: $code-background-color;
+		border-color: $code-border-color;
+		border-style: $code-border-style;
+		border-width: $code-border-size;
+		color: $code-color;
+		font-family: $code-font-family;
+		font-weight: $code-font-weight;
+		padding: $code-padding;
+	}
+
+	em, i {
+		font-style: italic;
+		line-height: inherit;
+	}
+
+	strong, b {
+		font-weight: $font-weight-bold;
+		line-height: inherit;
+	}
+
+	small {
+		font-size: $small-font-size;
+		line-height: inherit;
+	}
+
+	hr {
+		border: $hr-border-style $hr-border-color;
+		border-width: $hr-border-width 0 0;
+		clear: both;
+		height: 0;
+		margin: $hr-margin 0 ($hr-margin - rem-calc($hr-border-width));
+	}
+
+	@media #{$medium-up} {
+		h1,h2,h3,h4,h5,h6 { line-height: $header-line-height; }
+		h1 { font-size: $h1-font-size; }
+		h2 { font-size: $h2-font-size; }
+		h3 { font-size: $h3-font-size; }
+		h4 { font-size: $h4-font-size; }
+		h5 { font-size: $h5-font-size; }
+		h6 { font-size: $h6-font-size; }
+	}
+}

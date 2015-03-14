@@ -1,0 +1,46 @@
+@import "../functions";
+@import "../_global";
+
+
+// INCLUDE RESET
+$include-reset: false !default;
+
+
+@if $include-reset {
+
+	*,
+	*:before,
+	*:after {
+		@include box-sizing(border-box);
+	}
+
+	*,
+	*:hover,
+	*:focus,
+	*:active {
+		outline: none;
+	}
+
+	html, body {
+		font-size: $base-font-size;
+		height: 100%;
+	}
+
+	body {
+		background: $body-background;
+		color: $body-font-color;
+		cursor: $cursor-auto-value;
+		font-family: $body-font-family;
+		font-style: $body-font-style;
+		font-weight: $body-font-weight;
+		line-height: $base-line-height;
+		margin: 0;
+		padding: 0;
+		position: relative;
+	}
+
+	img{
+		height: auto;
+		max-width: 100%;
+	}
+}

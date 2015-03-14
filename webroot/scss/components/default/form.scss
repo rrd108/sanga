@@ -1,0 +1,210 @@
+@import "../_global";
+
+
+$include-form: false !default;
+
+
+// FORM DEFAULTS
+$form-margin: 0 !default;
+$form-row-margin: 1em !default;
+
+$input-bg-color: $body-primary-color !default;
+$input-border-color: $divider-color !default;
+$input-border-radius: $global-radius !default;
+$input-border-style: solid !default;
+$input-border-width: 1px !default;
+$input-box-shadow: none !default;
+$input-float-left-margin: rem-calc(10) !default;
+$input-float-right-margin: rem-calc(10) !default;
+$input-font-color: $font-primary-color !default;
+$input-font-family: $font-family-sans !default;
+$input-font-size: rem-calc(14) !default;
+$input-height: auto !default;
+$input-line-height: 1.3 !default;
+$input-margin: 0 0 rem-calc(20) 0 !default;
+$input-padding: rem-calc(8 10) !default;
+$input-width: 100% !default;
+
+$input-focus-bg-color: scale-color(#f8f8f8, $lightness: 80%) !default;
+$input-focus-border-color: scale-color(#fff, $lightness: -20%) !default;
+
+$input-disabled-bg: #ccc !default;
+$input-disabled-cursor: $cursor-default-value !default;
+
+$label-font-color: $font-primary-color !default;
+$label-font-family: $font-family-sans !default;
+$label-font-size: rem-calc(14) !default;
+$label-margin: 0 0 rem-calc(5) 0 !default;
+$label-padding: 0 !default;
+$label-width: 100% !default;
+
+
+$fieldset-border-color: #ccc !default;
+$fieldset-border-style: solid !default;
+$fieldset-border-radius: $global-radius !default;
+$fieldset-border-width: 1px !default;
+$fieldset-margin: rem-calc(18 0) !default;
+$fieldset-padding: rem-calc(20) !default;
+
+$legend-bg: #fff !default;
+$legend-font-weight: $font-weight-bold !default;
+$legend-padding: rem-calc(0 3) !default;
+
+
+@mixin form-element {
+	background-color: $input-bg-color;
+	border: $input-border-style $input-border-width $input-border-color;
+	border-radius: $input-border-radius;
+	@include box-sizing(border-box);
+	box-shadow: $input-box-shadow;
+	color: $input-font-color;
+	display: block;
+	font-family: $input-font-family;
+	font-size: $input-font-size;
+	height: $input-height;
+	line-height: $input-line-height;
+	margin: $input-margin;
+	padding: $input-padding;
+	width: $input-width;
+
+	@include global-transition;
+	
+	&:focus {
+		background: $input-focus-bg-color;
+		border-color: $input-focus-border-color;
+		outline: none;
+	}
+
+	&:disabled {
+		background-color: $input-disabled-bg;
+		cursor: $input-disabled-cursor;
+	}
+
+	&[disabled],
+	&[readonly],
+	fieldset[disabled] & {
+		background-color: $input-disabled-bg;
+		cursor: $input-disabled-cursor;
+	}
+}
+
+@mixin fieldset {
+  border: $fieldset-border-width $fieldset-border-style $fieldset-border-color;
+  border-radius: $fieldset-border-radius;
+  padding: $fieldset-padding;
+  margin: $fieldset-margin;
+
+  legend {
+    font-weight: $legend-font-weight;
+    background: $legend-bg;
+    padding: $legend-padding;
+    margin: 0;
+    margin-#{$default-float}: rem-calc(-3);
+  }
+}
+
+
+@if $include-form {
+	form {
+		margin: $form-margin;
+
+		.row{
+			margin-bottom: $form-row-margin !important;
+		}
+	}
+
+	label{
+		display: block;
+		color: $label-font-color;
+		font-family: $label-font-family;
+		font-size: $label-font-size;
+		margin: $label-margin;
+		padding: $label-padding;
+		width: $label-width;
+
+		&.error{
+			color: $alert-color;
+		}
+	}
+
+	input,
+	textarea{
+		@include form-element;
+
+		&.left{
+			@include float-left;
+
+			+ .left{
+				margin-left: $input-float-left-margin;
+			}
+		}
+		&.right{
+			@include float-right;
+
+			+ .right{
+				margin-right: $input-float-right-margin;
+			}
+		}
+		&.radius {
+			border-radius: $global-radius;
+		}
+		&.error{
+			border-color: $alert-color;
+			margin: 0;
+		}
+	}
+
+	input[type="submit"],
+	input[type="button"]{
+		background: $primary-color;
+		border: none;
+		color: $font-oposit-color;
+		cursor: $cursor-pointer-value;
+		display: block;
+		margin: 0;
+		padding: $input-padding;
+		width: auto;
+
+		&:hover{
+			background-color: $secondary-color;
+		}
+	}
+
+	input[type="radio"],
+	input[type="checkbox"]{
+		display: inline-block;
+		margin: 0;
+		vertical-align: baseline;
+		width: auto;
+
+		+ label{
+			display: inline-block;
+			margin: 0 20px 0 0;
+			padding: $input-padding;
+			width: auto;
+		}
+	}
+
+	textarea{
+		height: 120px;
+		max-width: 100%;
+		resize: none;
+		width: 100%;
+	}
+
+	fieldset{
+		@include fieldset;
+	}
+	
+	.form-error-message{
+		color: $alert-color;
+		display: block;
+		font-family: $input-font-family;
+		font-size: $input-font-size;
+		margin: $input-margin;
+		padding: $input-padding;
+		padding-top: 0;
+		width: 100%;
+	}
+
+}
