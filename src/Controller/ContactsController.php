@@ -65,21 +65,20 @@ class ContactsController extends AppController {
 	public function searchquery(){
 		
 		if($this->request->data){
-			/*
-			 debug($this->request->data);
-			[
-				'_zip_id' => '200',
+			
+			// debug($this->request->data);
+			/*[
+				'name' => '',
+				'xzip' => '2000 Szentendre',
 				'zip_id' => '162',
-				'area' => '15',
-				'_group_id' => 'Seva-puja',
-				'group_id' => '3'
+				'area' => '40',
+				'group_id' => ''
 			]
 			*/
 			
 			$center = $this->Contacts->Zips->find()
 					->select(['lat', 'lng'])
-					->where(['id' => $this->request->data['zip_id']])
-					;
+					->where(['id' => $this->request->data['zip_id']]);
 			$cent = $center->toArray();
 			
 			$expr = $center->newExpr()->add('(3956 *2 * ASIN( SQRT( POWER( SIN( ( '.$cent[0]->lat.
@@ -88,15 +87,17 @@ class ContactsController extends AppController {
 											$cent[0]->lng.' - Contacts.lng ) * pi( ) /180 /2 ) , 2 ) ) ))');
 			
 			$result = $this->Contacts->find()
-					->contain(['Zips', 'Groups'])
+					->contain(['Zips'])
 					->select(['Contacts.name', 'Zips.zip', 'Zips.name', 'distance' => $expr])
-					->where(['active' => true/*,
-							 'distance' => $expr*/])
-					->matching('Groups', function($q){
-						return $q->where(['Groups.id' => $this->request->data['group_id']]);
-						})
+					->where(['active' => true])
 					->having(['distance <=' => $this->request->data['area']])
 					->order(['distance' => 'ASC']);
+			
+			if ($this->request->data['group_id']){
+					$result->matching('Groups', function($q){
+						return $q->where(['Groups.id' => $this->request->data['group_id']]);
+						});
+			}
 			$this->set('result', $result);
 		}
 	}

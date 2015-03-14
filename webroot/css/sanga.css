@@ -3,33 +3,36 @@ header{
   top: 0;
   z-index: 10;
   width: 100%;
+  height: 50px;
+}
+
+.header-search {
+  max-width: 400px;
+}
+
+main {
+  margin-top: 50px;
 }
 
 header img{
   display: inline;
   z-index: 5;
   position: absolute;
-  right: 0;
 }
 
-header input[type="text"]{
+nav.primary {
+  margin-left: 40px;
+}
+
+nav.primary span.notice{
+  display: inline-block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  width: 1.5em;
+  text-align: center;
   font-size: 0.8em;
-  margin: 0;
-}
-
-#container{
-  margin-top: 84px;
-}
-
-div.actions{
-  position: fixed;
-  top: 84px;
-  z-index: 8;
-}
-
-#usersInfo{
-  margin: 84px 0 0 20%;
-  width: 55%;;
+  background: #e5d580;
 }
 
 #loginform form{
@@ -39,71 +42,6 @@ div.actions{
   width: 50%;
   background: rgba(255, 255, 255, 0.6);
   border-radius: 1em;
-}
-
-.sf-menu{
-  margin-right: 4em;
-}
-
-.sf-menu > li{
-  padding: .8em 2em;
-  background: #15848f;
-  border-top: 1px solid #15848F;
-  border-left: 1px solid #15848F;
-}
-
-.sf-menu > li:hover{
-  border-top: 1px solid #fff;
-  border-left: 1px solid #fff;
-}
-
-.sf-menu ul li{
-  background: #15848f;
-}
-
-.sf-menu a{
-  color: #fff;
-}
-
-.sf-menu li {
-	background: #15848f;
-	-webkit-transition: none;
-	transition: none;
-}
-
-.sf-menu ul li:hover {
-  background: #0f459c;
-}
-
-.sf-menu li.sfHover, .sf-menu li.sfHover:hover{
-  background: #15848f;
-}
-
-header .header-title{
-  padding-left: 0;
-  font-size: 1rem;
-}
-
-.header-help a{
-  color: #fff;
-}
-
-.header-title span.notice{
-  display: inline-block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-  width: 1.5em;
-  text-align: center;
-  font-size: 0.8em;
-}
-
-.actions{
-  clear: left;
-}
-
-select[multiple]{
-  height: 300%;
 }
 
 .b{
@@ -131,103 +69,6 @@ select[multiple]{
   display: none;
 }
 
-#map{
-  width: 50em;
-  height: 30em;
-  margin: 0 auto;
-}
-#mapsmall{
-  width: 30em;
-  height: 20em;
-  margin: 0 auto;
-}
-
-
-.cluster {
-    color: #fff;
-    font-family: "Arial,Helvetica";
-    font-size: 11px;
-    font-weight: bold;
-    text-align: center;
-}
-.cluster-1 {
-    background-image: url("../img/m1.png");
-    height: 52px;
-    line-height: 53px;
-    width: 53px;
-}
-.cluster-2 {
-    background-image: url("../img/m2.png");
-    height: 55px;
-    line-height: 53px;
-    width: 56px;
-}
-.cluster-3 {
-    background-image: url("../img/m3.png");
-    height: 65px;
-    line-height: 66px;
-    width: 66px;
-}
-
-.infobulle {
-    background-color: rgb(57, 57, 57);
-    border: 1px solid #2c2c2c;
-    border-radius: 4px;
-    clear: both;
-    cursor: default;
-    height: 34px;
-    overflow: hidden;
-    padding: 0;
-    position: relative;
-}
-.infobulle .bg {
-    background-color: #5e5e5e;
-    border: 0 none;
-    font-size: 1px;
-    height: 16px;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
-.infobulle .text {
-    color: #fff;
-    font-family: Verdana;
-    font-size: 11px;
-    font-weight: bold;
-    line-height: 25px;
-    margin-top: -17px;
-    padding: 4px 20px;
-    text-shadow: 0 -1px 0 #000;
-    white-space: nowrap;
-}
-.infobulle.drive .text {
-    padding: 4px 20px 4px 36px;
-}
-.arrow {
-    border-color: #2c2c2c transparent transparent;
-    border-style: solid;
-    border-width: 10px 10px 0 0;
-    height: 0;
-    left: 45px;
-    margin-left: 0;
-    position: absolute;
-    width: 0;
-}
-
-.addlinkups .checkbox{
-  width: 24%;
-  float: left;
-}
-
-td.actions a{
-  display: block;
-  border: thin solid #15848F;
-  border-radius: 5px;
-  text-align: center;
-  width: 80%;
-  margin: 1px auto;
-}
-
 .tag, .tag label{
   color: white;
   border-radius: 3px;
@@ -235,7 +76,6 @@ td.actions a{
   font-weight: bold;
   line-height: 2em;
 }
-
 
 .tag-mine{
   background: #428BCA;
@@ -256,11 +96,6 @@ td.actions a{
   background: #D9534F;
 }
 
-#tabs{
-  margin: 0;
-  padding: 0;
-}
-
 .draggable{
   cursor: grab;
 }
@@ -271,6 +106,53 @@ td.actions a{
 
 .removeable{
   cursor: not-allowed;
+}
+/*
+div.actions{
+  position: fixed;
+  top: 84px;
+  z-index: 8;
+}
+
+#usersInfo{
+  margin: 84px 0 0 20%;
+  width: 55%;;
+}
+
+header .header-title{
+  padding-left: 0;
+  font-size: 1rem;
+}
+
+.header-help a{
+  color: #fff;
+}
+
+.actions{
+  clear: left;
+}
+
+select[multiple]{
+  height: 300%;
+}
+
+.addlinkups .checkbox{
+  width: 24%;
+  float: left;
+}
+
+td.actions a{
+  display: block;
+  border: thin solid #15848F;
+  border-radius: 5px;
+  text-align: center;
+  width: 80%;
+  margin: 1px auto;
+}
+
+#tabs{
+  margin: 0;
+  padding: 0;
 }
 
 .ui-tabs-vertical { width: 61em; }
@@ -418,12 +300,6 @@ input.quantity{
   float: left;
 }
 
-#ajaxloader, #okImg, #errorImg{
-  display: none;
-  float: right;
-}
-/*icons: http://www.iconsdb.com/royal-blue-icons*/
-
 .gContact{
   width: 33%;
   float: left;
@@ -454,9 +330,12 @@ input.quantity{
   min-height: 25px;
 }
 
-#qForm input[type="text"]{
-  width: 40%;
+*/
+#ajaxloader, #okImg, #errorImg{
+  display: none;
+  float: right;
 }
+/*icons: http://www.iconsdb.com/royal-blue-icons*/
 
 .noaccess {
   color: #aaa;

@@ -1,23 +1,26 @@
 <div class="main-logo">
-	<?php echo $this->Html->image('logo-main-big.png', ['alt' => 'Sanga logo', 'url' => '/']); ?>
+	<?php echo $this->Html->image('logo-small.png', ['alt' => 'Sanga logo', 'url' => '/']); ?>
 </div>
 
 	<nav class="primary">
 		<ul class="sf-menu">
-			<?php if($this->Session->read('Auth.User.role') == 10): ?>
-			<li>
-				Admin
-				<ul>
-					<?php
-						print '<li>' . $this->Html->link('❶ ' . __('Zips'), ['controller' => 'Zips']) . '</li>';
-						print '<li>' . $this->Html->link('☢ ' . __('Countries'), ['controller' => 'Countries', 'action' => 'index']) . '</li>';
-						print '<li>' . $this->Html->link('❖ ' . __('Units'), ['controller' => 'Units', 'action' => 'index']) . '</li>';
-						//print '<li>' . $this->Html->link('☻ ' . __('Users'), ['prefix' => 'admin', 'controller' => 'Users', 'action' => 'index']) . '</li>';
-						print '<li>' . $this->Html->link('☻ ' . __('Users'), ['controller' => 'Users', 'action' => 'index']) . '</li>';
-					?>
-				</ul>
-			</li>
-			<?php endif; ?>
+			<?php
+			if($this->Session->read('Auth.User.id')):
+				if($this->Session->read('Auth.User.role') == 10):
+			?>
+				<li>
+					Admin
+					<ul>
+						<?php
+							print '<li>' . $this->Html->link('❶ ' . __('Zips'), ['controller' => 'Zips']) . '</li>';
+							print '<li>' . $this->Html->link('☢ ' . __('Countries'), ['controller' => 'Countries', 'action' => 'index']) . '</li>';
+							print '<li>' . $this->Html->link('❖ ' . __('Units'), ['controller' => 'Units', 'action' => 'index']) . '</li>';
+							//print '<li>' . $this->Html->link('☻ ' . __('Users'), ['prefix' => 'admin', 'controller' => 'Users', 'action' => 'index']) . '</li>';
+							print '<li>' . $this->Html->link('☻ ' . __('Users'), ['controller' => 'Users', 'action' => 'index']) . '</li>';
+						?>
+					</ul>
+				</li>
+				<?php endif; ?>
 			<li>
 				Törzsadatok
 				<ul>
@@ -61,6 +64,7 @@
 					?>
 				</ul>
 			</li>
+			<?php endif; ?>
 		</ul>
 	</nav>
 

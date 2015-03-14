@@ -1,0 +1,82 @@
+#map{
+  width: 50em;
+  height: 30em;
+  margin: 0 auto;
+}
+#mapsmall{
+  width: 30em;
+  height: 20em;
+  margin: 0 auto;
+}
+
+
+.cluster {
+    color: #fff;
+    font-family: "Arial,Helvetica";
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+}
+.cluster-1 {
+    background-image: url("../img/m1.png");
+    height: 52px;
+    line-height: 53px;
+    width: 53px;
+}
+.cluster-2 {
+    background-image: url("../img/m2.png");
+    height: 55px;
+    line-height: 53px;
+    width: 56px;
+}
+.cluster-3 {
+    background-image: url("../img/m3.png");
+    height: 65px;
+    line-height: 66px;
+    width: 66px;
+}
+
+.infobulle {
+    background-color: rgb(57, 57, 57);
+    border: 1px solid #2c2c2c;
+    border-radius: 4px;
+    clear: both;
+    cursor: default;
+    height: 34px;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+}
+.infobulle .bg {
+    background-color: #5e5e5e;
+    border: 0 none;
+    font-size: 1px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+.infobulle .text {
+    color: #fff;
+    font-family: Verdana;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 25px;
+    margin-top: -17px;
+    padding: 4px 20px;
+    text-shadow: 0 -1px 0 #000;
+    white-space: nowrap;
+}
+.infobulle.drive .text {
+    padding: 4px 20px 4px 36px;
+}
+.arrow {
+    border-color: #2c2c2c transparent transparent;
+    border-style: solid;
+    border-width: 10px 10px 0 0;
+    height: 0;
+    left: 45px;
+    margin-left: 0;
+    position: absolute;
+    width: 0;
+}

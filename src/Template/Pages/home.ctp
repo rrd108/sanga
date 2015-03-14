@@ -37,44 +37,46 @@ $cakeDescription = 'Sanga';
 		<?= $this->fetch('title') ?>
 	</title>
 	<?php
-	print $this->Html->meta('icon');
+	echo $this->Html->meta('icon');
 
-	print $this->Html->css('base.css');
-	print $this->Html->css('cake.css');
-		
-	print $this->Html->css('superfish.css');	//dropdown menu
+	echo $this->Html->css('default.css');
+	echo $this->Html->css('main.css');
 	
-	print $this->Html->css('jquery-ui.min.css');
-	print $this->Html->css('jquery-ui.structure.min.css');
-	print $this->Html->css('jquery-ui.theme.min.css');
+	echo $this->Html->css('jquery-ui.min.css');
+	echo $this->Html->css('jquery-ui.structure.min.css');
+	echo $this->Html->css('jquery-ui.theme.min.css');
+	echo $this->Html->script('jquery.rStorage.min.js');
+
 	
-	print $this->Html->css('sanga.css');
-	
-	print $this->Html->script('jquery.js');
+	echo $this->Html->script('jquery.js');
 	
 	//dropdown menu
-	print $this->Html->script('superfish.js');
-	print $this->Html->script('hoverIntent.js');
+	echo $this->Html->script('superfish.js');
+	echo $this->Html->script('hoverIntent.js');
 		
-	print $this->Html->script('jquery-ui.min.js');
-	print $this->Html->script('jquery.ui.autocomplete.html.js');
-	print $this->Html->script('ui.datepicker-hu.js');
+	echo $this->Html->script('jquery-ui.min.js');
+	echo $this->Html->script('jquery.ui.autocomplete.html.js');
+	echo $this->Html->script('ui.datepicker-hu.js');
 	
-	print $this->Html->script('gmap3.min.js');
-	print $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
+	//echo $this->Html->script('gmap3.min.js');
+	//echo $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
 	
-	print $this->Html->script('sanga.js');
+	echo $this->Html->script('jquery.noty.packaged.min.js');
+	
+	echo $this->Html->css('sanga.css');
+	echo $this->Html->script('sanga.js');
 
-	print $this->fetch('meta');
-	print $this->fetch('css');
-	print $this->fetch('script');
+	echo $this->fetch('meta');
+	echo $this->fetch('css');
+	echo $this->fetch('script');
 	?>
 </head>
 <body>
 	<header>
 		<?php echo $this->element('menu'); ?>
 	</header>
-	<div id="usersInfo">
+	<main id="container" class="primary-content">
+		<div id="usersInfo">
 		<dl>
 			<dt>Admin</dt>
 				<dd>Radharadhya dasa
@@ -91,7 +93,8 @@ $cakeDescription = 'Sanga';
 					</ul>
 				</dd>
 		</dl>
-	</div>
+		</div>
+	</main>
 	<footer></footer>
 </body>
 </html>

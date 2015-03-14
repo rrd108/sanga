@@ -1,6 +1,7 @@
 <?php
-print $this->Html->script('gmap3.min.js');
-print $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu');
+echo $this->Html->script('gmap3.min.js', ['block' => true]);
+echo $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu', ['block' => true]);
+echo $this->Html->css('googleMaps.css', ['block' => true]);
 
 //debug($result);
 $c = '';
@@ -22,7 +23,7 @@ foreach($result as $r){
 $this->Html->scriptStart(['block' => true]);
 ?>
 $(function(){
-var contacts = [<?php print $c; ?>];
+var contacts = [<?php echo $c; ?>];
 $("#map").gmap3({
   map:{
     options: {
