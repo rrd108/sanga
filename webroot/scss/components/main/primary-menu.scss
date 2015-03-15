@@ -1,0 +1,83 @@
+@import "../_global";
+
+nav.primary{
+	display: block;
+	float: left;
+	padding: rem-calc(0 16);
+	width: auto;
+
+	ul{
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		> li{
+			color: $font-oposit-color;
+			cursor: pointer;
+			display: block;
+			float: left;
+			// font-weight: bold;
+			
+			list-style: none;
+			position: relative;
+			padding: rem-calc(14 28 14 10);
+			// text-transform: uppercase;
+
+			&:before{				
+				border-left: 4px solid transparent;
+				border-right: 4px solid transparent;
+				border-top: 4px solid #fff;
+				content: " ";
+				display: block;
+				height: 0; 
+				margin: -1px 0 0 0;
+				position: absolute;
+				right: 14px;
+				top: 50%;
+				width: 0; 
+			}
+
+			&:hover{
+				background: darken( $primary-color, 10% );
+			}
+
+			ul{
+				background: darken( $primary-color, 10% );
+				display: block;
+				left: 0;
+				min-width: 200px;
+				position: absolute;
+				top: 100%;
+				z-index: 100;
+
+				li{
+					display: block;
+					float: none;
+					margin: 0;
+					padding: 0;
+					widows: 100%;
+
+					&:before{
+						display: none;
+					}
+
+					a{
+						color: $font-oposit-color;
+						display: block;
+						padding: rem-calc(5 10);	
+						width: 100%;
+
+						&:hover{
+							background: darken( $primary-color, 15% );
+						}
+					}
+				}
+			}
+
+			a{
+				display: block;
+				
+			}
+		}
+	}
+}

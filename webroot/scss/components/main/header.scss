@@ -1,0 +1,13 @@
+@import "../_global";
+
+header{
+	background: $primary-color;
+	left: 0;
+	padding: rem-calc(0 16);
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 100;
+
+	@include clearfix;
+}

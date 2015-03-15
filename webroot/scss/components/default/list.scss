@@ -1,0 +1,87 @@
+@import "../_global";
+
+
+$include-list: false !default;
+
+
+// LSIT DEFAULT STYLE
+$list-font-family: $paragraph-font-family !default;
+$list-font-size: $paragraph-font-size !default;
+$list-line-height: $paragraph-line-height !default;
+$list-margin-bottom: $paragraph-margin-bottom !default;
+$list-style-position: inside !default;
+$list-side-margin: 1.1rem !default;
+$list-ordered-side-margin: 1.4rem !default;
+$list-side-margin-no-bullet: 0 !default;
+$list-nested-margin: rem-calc(20) !default;
+
+$definition-list-header-weight: $font-weight-bold !default;
+$definition-list-header-margin-bottom: .3rem !default;
+$definition-list-margin-bottom: rem-calc(12) !default;
+
+
+@if $include-list {
+	ul, ol, dl {
+		font-family: $list-font-family;
+		font-size: $list-font-size;
+		line-height: $list-line-height;
+		list-style-position: $list-style-position;
+		margin-bottom: $list-margin-bottom;
+	}
+
+	ul {
+		margin-#{$default-float}: $list-side-margin;
+		&.no-bullet {
+			margin-#{$default-float}: $list-side-margin-no-bullet;
+			
+			li {
+				ul, ol {
+					margin-#{$default-float}: $list-nested-margin;
+					margin-bottom: 0;
+					list-style: none;
+				}
+			}
+		}
+	}
+
+		
+	ul {
+		li {
+			ul, ol {
+				margin-#{$default-float}: $list-nested-margin;
+				margin-bottom: 0;
+			}
+		}
+		&.square,
+		&.circle,
+		&.disc {
+			li ul { list-style: inherit; }
+		}
+
+		&.square { list-style-type: square; margin-#{$default-float}: $list-side-margin;}
+		&.circle { list-style-type: circle; margin-#{$default-float}: $list-side-margin;}
+		&.disc { list-style-type: disc; margin-#{$default-float}: $list-side-margin;}
+		&.no-bullet { list-style: none; }
+	}
+
+
+	ol {
+		margin-#{$default-float}: $list-ordered-side-margin;
+		
+		li {
+			ul, ol {
+				margin-#{$default-float}: $list-nested-margin;
+				margin-bottom: 0;
+			}
+		}
+	}
+
+
+	dl {
+		dt {
+			margin-bottom: $definition-list-header-margin-bottom;
+			font-weight: $definition-list-header-weight;
+		}
+		dd { margin-bottom: $definition-list-margin-bottom; }
+	}
+}

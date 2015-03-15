@@ -1,0 +1,102 @@
+@import "../_global";
+
+
+$include-table: false !default;
+
+
+// TABLE DEFAULTS
+$table-bg: #fff !default;
+$table-even-row-bg: #f8f8f8 !default;
+$table-width: 100% !default;
+
+$table-border-style: solid !default;
+$table-border-size: 0 !default;
+$table-border-color: $divider-color !default;
+$table-border-collapse: separate !default;
+
+$table-head-bg: #e7e7e7 !default;
+$table-head-font-size: rem-calc(14) !default;
+$table-head-font-color: $body-font-color !default;
+$table-head-font-weight: $font-weight-bold !default;
+$table-head-padding: rem-calc(8 10 10) !default;
+
+$table-foot-bg: $table-head-bg !default;
+$table-foot-font-size: $table-head-font-size !default;
+$table-foot-font-color: $table-head-font-color !default;
+$table-foot-font-weight: $table-head-font-weight !default;
+$table-foot-padding: $table-head-padding !default;
+
+$table-caption-bg: transparent !default;
+$table-caption-font-color: $table-head-font-color !default;
+$table-caption-font-size: rem-calc(16) !default;
+$table-caption-font-weight: bold !default;
+
+$table-row-padding: rem-calc(9 10) !default;
+$table-row-font-size: rem-calc(14) !default;
+$table-row-font-color: $body-font-color !default;
+$table-line-height: rem-calc(18) !default;
+
+$table-layout: auto !default;
+$table-display: table-cell !default;
+$table-margin-bottom: rem-calc(20) !default;
+
+
+@if $include-table {
+	table {
+		background: $table-bg;
+		border: $table-border-style $table-border-size $table-border-color;
+		border-collapse: $table-border-collapse;
+		border-spacing: 0;
+		margin-bottom: $table-margin-bottom;
+		table-layout: $table-layout;
+		width: 100%;
+
+		caption {
+			background: $table-caption-bg;
+			color: $table-caption-font-color;
+			font-size: $table-caption-font-size;
+			font-weight: $table-caption-font-weight;
+			padding: $table-head-padding;
+		}
+
+		thead {
+			background: $table-head-bg;
+
+			tr {
+				th, td {
+					color: $table-head-font-color;
+					font-size: $table-head-font-size;
+					font-weight: $table-head-font-weight;
+					padding: $table-head-padding;
+				}
+			}
+		}
+
+		tfoot {
+			background: $table-foot-bg;
+
+			tr {
+				th, td {
+					color: $table-foot-font-color;
+					font-size: $table-foot-font-size;
+					font-weight: $table-foot-font-weight;
+					padding: $table-foot-padding;
+				}
+			}
+		}
+
+		tr {
+			th, td {
+				border: $table-border-style $table-border-size $table-border-color;
+				color: $table-row-font-color;
+				font-size: $table-row-font-size;
+				padding: $table-row-padding;
+				text-align: $default-float;
+			}
+
+			&.even,
+			&.alt,
+			&:nth-of-type(even) { background: $table-even-row-bg; }
+		}
+	}
+}

@@ -1,0 +1,9 @@
+@import "../_global";
+
+main.primary-content{
+	display: block;
+	padding: rem-calc(40 0);
+	width: 100%;
+
+	@include clearfix;
+}

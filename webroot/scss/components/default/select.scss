@@ -1,0 +1,22 @@
+@import "../_global";
+
+
+$include-select: true !default;
+
+
+
+@if $include-select {
+	select{
+		border: solid 1px $divider-color;
+		width: 100%;
+
+		option{
+			font-size: rem-calc(14px);
+			padding: rem-calc(5px 10px);
+		}
+
+		&.radius{
+			border-radius: $global-radius;
+		}
+	}
+}

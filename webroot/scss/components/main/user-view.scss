@@ -1,0 +1,28 @@
+@import "../global";
+
+.users.view{	
+	border-left: solid 1px $divider-color;
+
+	.user-main-view{
+		display: block;
+		margin: rem-calc(0 0 60px 0);
+		padding: rem-calc(0 80px);
+
+		.row{
+			h2{
+				margin: rem-calc(0 0 20px 0);
+			}
+
+			.label{
+				color: #b3b3b3;
+			}
+
+			&:first-child + .row{
+				border-top: none;
+			}
+		}
+		.row + .row{
+			border-top: solid 1px $divider-color;
+		}
+	}
+}
