@@ -1,4 +1,4 @@
-header { background: #15848f; padding: 0 1rem; position: relative; width: 100%; z-index: 100; }
+header { background: #15848f; left: 0; padding: 0 1rem; position: fixed; top: 0; width: 100%; z-index: 100; }
 header:before, header:after { content: " "; display: table; }
 header:after { clear: both; }
 
@@ -21,13 +21,13 @@ header .main-logo { display: block; float: left; margin: 10px 0 0 0; padding: 0 
 header .main-logo a { display: block; height: 30px; line-height: 30px; overflow: hidden; }
 header .main-logo a img { max-width: 135px; }
 
-.sidebar-wrapper { background: #f2f2f2; display: block; height: 100%; left: 0; padding: 70px 0 0 0; position: fixed; top: 0; width: 180px; z-index: 50; }
+.sidebar-wrapper { background: #15848f; display: block; height: 100%; left: 0; padding: 70px 0 0 0; position: fixed; top: 0; width: 180px; z-index: 50; }
 .sidebar-wrapper nav { display: block; width: 100%; }
 .sidebar-wrapper nav ul { list-style: none; margin: 0; padding: 0; width: 100%; }
-.sidebar-wrapper nav ul li a { display: block; color: #15848f; padding: 0.125rem 0.9375rem; width: 100%; }
-.sidebar-wrapper nav ul li a:hover { background: #e5e5e5; }
+.sidebar-wrapper nav ul li a { display: block; color: #ffffff; padding: 0.125rem 0.9375rem; width: 100%; }
+.sidebar-wrapper nav ul li a:hover { background: #0e5b63; }
 
-.content-wrapper { display: block; padding: 1.25rem 0 1.25rem 11.25rem; position: relative; width: 100%; }
+.content-wrapper { display: block; padding: 5rem 0 2.5rem 11.25rem; position: relative; width: 100%; }
 
 .user-details-view { background: #fff; border-bottom: solid 1px #e5e5e5; display: block; margin: 0 0 3.75rem 0; padding: 0 0 3.75rem 0; width: 100%; }
 .user-details-view:before, .user-details-view:after { content: " "; display: table; }
@@ -43,6 +43,3 @@ header .main-logo a img { max-width: 135px; }
 .users.view .user-main-view .row .label { color: #b3b3b3; }
 .users.view .user-main-view .row:first-child + .row { border-top: none; }
 .users.view .user-main-view .row + .row { border-top: solid 1px #e5e5e5; }
-
-.users.edit-view { border-left: solid 1px #e5e5e5; }
-.users.edit-view .user-main-view { display: block; margin: 0 0 3.75rem 0; padding: 0 5rem; }

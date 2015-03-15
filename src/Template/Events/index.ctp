@@ -1,8 +1,8 @@
 <div class="sidebar-wrapper">
 	<nav class="side-nav">
 		<ul>
-		<li><?= $this->Html->link(__('New Event'), ['action' => 'add']) ?></li>
-	</ul>
+			<li><?= $this->Html->link(__('New Event'), ['action' => 'add']) ?></li>
+		</ul>
 	</nav>
 </div>
 <!-- sidebar wrapper -->

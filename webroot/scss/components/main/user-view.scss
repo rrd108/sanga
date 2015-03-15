@@ -26,14 +26,3 @@
 		}
 	}
 }
-
-.users.edit-view{
-	border-left: solid 1px $divider-color;
-
-	.user-main-view{
-		display: block;
-		margin: rem-calc(0 0 60px 0);
-		padding: rem-calc(0 80px);
-	}
-
-}
