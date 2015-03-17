@@ -262,18 +262,17 @@ table thead {
 .select .checkbox{
   float: left;
   margin-left: 1em;
-}
+}*/
 
-.form .error-message{
+.error{
   background-color: #c3232d;
   color: #fff;
 }
-.form .error-message:before{
-  color: #c3232d;
-  content: "x";
+.error:before{
+  content: "✖";
   padding: 11px 16px 14px 7px;
 }
-
+/*
 #editlink{
   display: none;
   float: right;
