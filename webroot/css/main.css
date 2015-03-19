@@ -36,6 +36,12 @@ header .main-logo a img { max-width: 135px; }
 .user-details-view .user-profile-image img { height: auto; max-width: 75%; }
 .user-details-view .user-profile-details .row + .row { border-top: solid 1px #e5e5e5; }
 
+.paginator { display: block; position: relative; width: 100%; }
+.paginator .pagination-counter { font-size: 0.875rem; color: #b3b3b3; display: block; position: absolute; right: 0; top: 50%; transform: translateY(-50%); -moz-transform: translateY(-50%); -o-transform: translateY(-50%); -webkit-transform: translateY(-50%); }
+
+.main-login { padding: 100px 0 0; }
+.main-login .main-login-logo { padding-bottom: 20px; }
+
 /* VIEWS */
 .users.view { border-left: solid 1px #e5e5e5; }
 .users.view .user-main-view { display: block; margin: 0 0 3.75rem 0; padding: 0 5rem; }
