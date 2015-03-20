@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   KEY `fk_contacts_zips1_idx` (`zip_id`),
   KEY `fk_contacts_contactsources1_idx` (`contactsource_id`),
   KEY `families` (`family_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=46 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
 
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `contactsources` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `countries` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `user_id` smallint(5) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_events_users1_idx` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
   PRIMARY KEY (`id`),
   KEY `fk_groups_users1_idx` (`admin_user_id`),
   KEY `publics` (`shared`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `groups_users` (
   KEY `fk_groups_has_users_users1_idx` (`user_id`),
   KEY `fk_groups_has_users_groups1_idx` (`group_id`),
   KEY `fk_groups_users_groups1_idx` (`intersection_group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci COMMENT='What groups'' members or groups intersection are available for rw for the user' AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci COMMENT='What groups'' members or groups intersection are available for rw for the user' ;
 
 -- --------------------------------------------------------
 
@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `histories` (
   KEY `fk_histories_events1_idx` (`event_id`),
   KEY `fk_histories_groups1_idx` (`group_id`),
   KEY `fk_histories_units1_idx` (`unit_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_notifications_users1_idx` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -269,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `rbruteforcelogs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `data` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 -- --------------------------------------------------------
 
@@ -309,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `skills` (
   `name` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -321,7 +321,7 @@ CREATE TABLE IF NOT EXISTS `units` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `usergroups` (
   `admin_user_id` smallint(5) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_usergroups_users1_idx` (`admin_user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -351,12 +351,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `phone` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `active` tinyint(1) DEFAULT '1',
-  `role` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '0: nincs joga\n1: user (linkup jogok a linkups_users táblában\n9: CRM admin\n10: admin',
+  `role` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '0: nincs joga\n1: user \n9: CRM admin\n10: admin',
   `google_contacts_refresh_token` varchar(64) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -389,7 +389,7 @@ CREATE TABLE IF NOT EXISTS `zips` (
   KEY `zip` (`zip`),
   KEY `name` (`name`),
   KEY `fk_zips_countries1_idx` (`country_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=4155 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci  ;
 
 --
 -- Megkötések a kiírt táblákhoz
