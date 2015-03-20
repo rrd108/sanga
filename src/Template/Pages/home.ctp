@@ -50,10 +50,6 @@ $cakeDescription = 'Sanga';
 	
 	echo $this->Html->script('jquery.js');
 	
-	//dropdown menu
-	echo $this->Html->script('superfish.js');
-	echo $this->Html->script('hoverIntent.js');
-		
 	echo $this->Html->script('jquery-ui.min.js');
 	echo $this->Html->script('jquery.ui.autocomplete.html.js');
 	echo $this->Html->script('ui.datepicker-hu.js');
