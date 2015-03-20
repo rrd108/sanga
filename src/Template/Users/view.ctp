@@ -1,7 +1,18 @@
+<?php
+echo $this->Html->script('sanga.users.view.js', ['block' => true]);
+
+echo $this->Html->link($this->Html->image('edit.png'),
+					   ['action' => 'edit', $user->id],
+					   ['id' => 'editlink', 'escape' => false]);
+
+echo $this->element('ajax-images');
+
+echo $this->Form->create($user, ['id'=> 'editForm', 'action' => 'edit', $user->id]);
+?>
 <div class="sidebar-wrapper">
 	<nav class="side-nav">
 		<ul>
-			<li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
+			<li><?php //echo $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
 		</ul>
 	</nav>
 </div>
@@ -25,15 +36,38 @@
 							<p class="label"><?= __('Name') ?></p>
 						</div>
 						<div class="column large-6 panel">
-							<p class="value"><?= h($user->name) ?></p>
+							<p class="ed">
+								&nbsp;
+								<span class="dta"><?= h($user->name) ?></span>
+								<?php
+								echo $this->Form->input('name',
+												   ['templates' => ['inputContainer' => '{{content}}'],
+													'class' => 'editbox',
+													'label' => false,
+													'value' => h($user->name)
+													]);
+								?>
+							</p>
 						</div>
 					</div><!-- row -->
+
 					<div class="row">
 						<div class="column large-6 panel">
 							<p class="label"><?= __('Password') ?></p>
 						</div>
 						<div class="column large-6 panel">
-							<p class="value">***</p>
+							<p class="ed">
+								&nbsp;
+								<span class="dta">***</span>
+								<?php
+								echo $this->Form->input('name',
+												   ['templates' => ['inputContainer' => '{{content}}'],
+													'class' => 'editbox',
+													'label' => false,
+													'value' => null
+													]);
+								?>
+							</p>
 						</div>
 					</div><!-- row -->
 					<div class="row">
@@ -135,3 +169,7 @@
 	<!-- row -->
 </div>
 <!-- contet wrapper -->
+
+<?php
+echo $this->Form->end();
+?>

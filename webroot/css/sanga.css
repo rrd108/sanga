@@ -272,20 +272,21 @@ table thead {
   content: "✖";
   padding: 11px 16px 14px 7px;
 }
-/*
+
 #editlink{
   display: none;
   float: right;
 }
-*/
+
 input.editbox, textarea.editbox, span.editbox{
-  display: none;
+  display: inline;
 }
-/*
+
 input.editbox{
-  width: 45%;
+  width: 85%;
+  padding: 0;
 }
-input.editbox.zip, span.zip{
+/*input.editbox.zip, span.zip{
   width: 10%;
 }
 input.thin{

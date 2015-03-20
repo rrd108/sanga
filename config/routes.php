@@ -21,6 +21,8 @@
 use Cake\Core\Plugin;
 use Cake\Routing\Router;
 
+Router::extensions(['json']);
+
 Router::scope('/', function($routes) {
 /**
  * Here, we are connecting '/' (base path) to a controller called 'Pages',
