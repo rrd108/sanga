@@ -277,10 +277,11 @@ table thead {
   display: none;
   float: right;
 }
-
+*/
 input.editbox, textarea.editbox, span.editbox{
   display: none;
 }
+/*
 input.editbox{
   width: 45%;
 }
