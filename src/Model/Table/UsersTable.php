@@ -67,6 +67,7 @@ class UsersTable extends Table {
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
 			->notEmpty('name')
+			->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
 			->notEmpty('password')
 			->add('password', [
 					'length' => [
