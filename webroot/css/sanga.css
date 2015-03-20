@@ -21,7 +21,7 @@ header img{
 }
 
 nav.primary {
-  margin-left: 40px;
+  margin-left: 110px;
 }
 
 nav.primary span.notice{
@@ -262,15 +262,14 @@ table thead {
 .select .checkbox{
   float: left;
   margin-left: 1em;
-}
+}*/
 
-.form .error-message{
+.error{
   background-color: #c3232d;
   color: #fff;
 }
-.form .error-message:before{
-  color: #c3232d;
-  content: "x";
+.error:before{
+  content: "✖";
   padding: 11px 16px 14px 7px;
 }
 
@@ -280,12 +279,14 @@ table thead {
 }
 
 input.editbox, textarea.editbox, span.editbox{
-  display: none;
+  display: inline;
 }
+
 input.editbox{
-  width: 45%;
+  width: 85%;
+  padding: 0;
 }
-input.editbox.zip, span.zip{
+/*input.editbox.zip, span.zip{
   width: 10%;
 }
 input.thin{

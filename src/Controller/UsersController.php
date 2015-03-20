@@ -9,6 +9,10 @@ use Cake\Event\Event;
  * Users Controller
  *
  * @property App\Model\Table\UsersTable $Users
+ *
+ * user roles: 1 - normal
+ * 				9 - CRM admin
+ * 				10 - admin
  */
 class UsersController extends AppController {
 	
@@ -17,10 +21,16 @@ class UsersController extends AppController {
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         // Allow users to access logout without logged in
-	    $this->Auth->allow(['add', 'logout']);
+	    $this->Auth->allow(['logout']);
     }
 
 	public function isAuthorized($user = null) {
+		if ($this->request['action'] == 'add' || $this->request['action'] == 'index') {
+			if ($user['role'] >= 9) {
+				return true;
+			}
+			return false;
+		}
         return true;
     }
 
@@ -57,7 +67,8 @@ class UsersController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
-		$id = $id ? $id : $this->Auth->user('id');
+		//$id = $id ? $id : $this->Auth->user('id');
+		$id = $this->Auth->user('id');
 		$user = $this->Users->get($id, [
 			'contain' => ['Contacts', 'Events', 'Groups', 'Histories', 'Notifications']
 		]);
@@ -88,27 +99,24 @@ class UsersController extends AppController {
 /**
  * Edit method
  *
- * @param string $id
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */
-	public function edit($id) {
-		$user = $this->Users->get($id, [
+	public function edit() {
+		$user = $this->Users->get($this->Auth->user('id'), [
 			'contain' => ['Contacts', 'Groups', 'Usergroups']
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$user = $this->Users->patchEntity($user, $this->request->data);
-			if ($this->Users->save($user)) {
-				$this->Flash->success('The user has been saved.');
-				return $this->redirect(['action' => 'index']);
+			$saved = $this->Users->save($user);
+			if ($saved) {
+				$json = ['save' => __('The contact has been saved.')];
 			} else {
-				$this->Flash->error('The user could not be saved. Please, try again.');
+				$json = ['save' => __('The contact could not be saved. Please, try again.')];
 			}
 		}
-		$contacts = $this->Users->Contacts->find('list');
-		$groups = $this->Users->Groups->find('list');
-		$usergroups = $this->Users->Usergroups->find('list');
-		$this->set(compact('user', 'contacts', 'groups', 'usergroups'));
+		$this->set(compact('json'));
+		$this->set('_serialize', 'json');
 	}
 
 /**
@@ -118,7 +126,7 @@ class UsersController extends AppController {
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */
-	public function delete($id = null) {
+	/*public function delete($id = null) {
 		$user = $this->Users->get($id);
 		$this->request->allowMethod(['post', 'delete']);
 		if ($this->Users->delete($user)) {
@@ -127,5 +135,5 @@ class UsersController extends AppController {
 			$this->Flash->error('The user could not be deleted. Please, try again.');
 		}
 		return $this->redirect(['action' => 'index']);
-	}
+	}*/
 }

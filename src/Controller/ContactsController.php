@@ -12,6 +12,8 @@ use Google_Http_Request;
 
 use Cake\Network\Exception\NotImplementedException;
 
+use Cake\Network\Email\Email;
+
 /**
  * Contacts Controller
  *
@@ -347,7 +349,7 @@ class ContactsController extends AppController {
 	}
 	
 	public function checkDuplicates(){
-		$this->Contacts->checkDuplicatesOnGeo();
+		$this->Contacts->checkDuplicatesOnPhone();
 		/*foreach($this->Contacts->checkDuplicatesOnPhone() as $q){
 			debug($q->toArray());
 		}*/
@@ -676,5 +678,34 @@ class ContactsController extends AppController {
 	
 	public function transfer($id){
 		//transfer contact to an other user
+	}
+	
+	public function sendmail(){
+		$referer = explode('/', $this->request->referer());
+		$contactId = end($referer);
+		$contact = $this->Contacts->get($contactId);
+
+		$email = new Email('default');
+		$email->from([$this->Auth->user('email') => $this->Auth->user('realname')])
+			->to($contact->email)
+			->subject($this->request->data['subject'])
+			->send($this->request->data['message']);
+
+		//add to history
+		$history = $this->Contacts->Histories->newEntity();
+		$history->contact_id = $contactId;
+		$history->date = date('Y-m-d H:i:s');
+		$history->user_id = $this->Auth->user('id');
+		$history->event_id = 3;	//TODO HC
+		$history->detail = $this->request->data['subject'] . ' : ' . $this->request->data['message'];		
+		$saved = $this->Contacts->Histories->save($history);
+		if ($saved) {
+			$result = ['save' => true,
+						'message' => __('The history has been saved.')];
+		} else {
+			$result = ['save' => false,
+						'message' => __('The history could not be saved.')];
+		}
+		$this->set('result', $result);
 	}
 }
