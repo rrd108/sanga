@@ -355,7 +355,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `google_contacts_refresh_token` varchar(64) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
