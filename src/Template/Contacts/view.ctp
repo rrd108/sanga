@@ -24,6 +24,7 @@ echo $this->element('ajax-images');
 			<li id="tabnav-5"><a href="#tabs-5"><?= __('Groups') ?></a></li>
 			<li id="tabnav-6"><a href="#tabs-6"><?= __('Finances') ?></a></li>
 			<li id="tabnav-7"><a href="#tabs-7"><?= __('Access') ?></a></li>
+			<li id="tabnav-8"><a href="#tabs-8"><?= $this->Html->image('email.png') ?></a></li>
 		</ul>
 	</div>
 	
@@ -629,6 +630,7 @@ echo $this->element('ajax-images');
 		</table>
 		</div>
 	</div>
+
 	<div id="tabs-7" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
@@ -636,7 +638,7 @@ echo $this->element('ajax-images');
 			<ul>
 			<?php
 			foreach ($hasAccess['contactPersons'] as $user) {
-				print '<li>' . $user->name . '</li>';
+				echo '<li>' . $user->name . '</li>';
 			}
 			?>
 			</ul>
@@ -644,10 +646,10 @@ echo $this->element('ajax-images');
 			<ul>
 			<?php
 			foreach ($hasAccess['groupMembers'] as $user) {
-				print '<li>';
-					print $user->name;
-					if (isset($user->_matchingData['Groups']->name)) print ' / ' . $user->_matchingData['Groups']->name;
-				print '</li>';
+				echo '<li>';
+					echo $user->name;
+					if (isset($user->_matchingData['Groups']->name)) echo ' / ' . $user->_matchingData['Groups']->name;
+				echo '</li>';
 			}
 			?>
 			</ul>
@@ -655,15 +657,32 @@ echo $this->element('ajax-images');
 			<ul>
 			<?php
 			foreach ($hasAccess['usergroupMembers'] as $user) {
-				print '<li>';
-					print $user->name;
-					if (isset($user->_matchingData['Usergroups']->name)) print ' / ' . $user->_matchingData['Usergroups']->name;
-				print '</li>';
+				echo '<li>';
+					echo $user->name;
+					if (isset($user->_matchingData['Usergroups']->name)) echo ' / ' . $user->_matchingData['Usergroups']->name;
+				echo '</li>';
 			}
 			?>
 			</ul>
 		</div>
 	</div>
+
+	<div id="tabs-8" class="contacts view large-10 medium-9 columns">
+		<h2><?= h($contact->name) ?></h2>
+		<div class="row">
+			<h6 class="subheader"><?= __('Sender') ?></h6>
+			<?= $this->Session->read('Auth.User.email') ?>
+			<h6 class="subheader"><?= __('To') ?></h6>
+			<?= h($contact->email) ?>
+			<?php
+			echo $this->Form->input('subject');
+			echo $this->Form->input('message',
+									['type' => 'textarea']);
+			echo $this->Form->button(__('Submit'), ['id' => 'sendmail']);
+			?>
+		</div>
+	</div>
+
 </div>
 <?php
 else:

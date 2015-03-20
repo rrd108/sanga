@@ -201,4 +201,29 @@ $(function() {
 		});
 		event.preventDefault();
 	});
+	
+	$('#sendmail').click(function(event){
+		var container = $(this).parent();
+		container.append($('#ajaxloader').css('float', 'none').show());
+		$.ajax({
+			url : $.sanga.baseUrl + '/Contacts/sendmail',
+			type : 'post',
+			data : {
+				subject : $('#subject').val(),
+				message : $('#message').val()
+				},
+			dataType : 'json',
+			error : function(jqXHR, textStatus, errorThrown){
+				$('#ajaxloader').hide();
+				container.append($('#errorImg').css('float', 'none').show());
+			},
+			success : function(data, textStatus, jqXHR){
+				$('#ajaxloader').hide();
+				container.append($('#okImg').css('float', 'none').show().hide(12500));
+				var imgSrc = $('#gImg').attr('src');
+				$('#gImg').attr('src', imgSrc.replace(/-inactive/, ''));
+			}
+		});
+		
+	});
 });
