@@ -50,6 +50,7 @@ $(function() {
 				$('#ajaxloader').hide();
 				theP.append($('#errorImg').show());
 				theSpan.text(oldData);
+				$('.editbox').val(oldData);
 				noty({
 					text: textStatus + ' ' + jqXHR.responseJSON.message,
 					type: 'error',
@@ -61,10 +62,12 @@ $(function() {
 				//theP.append($('#okImg').show().hide(12500));
 				if (jqXHR.responseJSON.error) {
 					var type = 'error',
-						message = jqXHR.responseJSON.error
+						message = jqXHR.responseJSON.error;
+					theSpan.text(oldData);
+					$('.editbox').val(oldData);
 				} else {
 					var type = 'alert',
-						message = jqXHR.responseJSON.save
+						message = jqXHR.responseJSON.save;
 				}
 				noty({
 					text: message,

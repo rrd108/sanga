@@ -75,7 +75,18 @@ echo $this->Form->create($user, ['id'=> 'editForm', 'action' => 'edit', $user->i
 							<p class="label"><?= __('Realname') ?></p>
 						</div>
 						<div class="column large-6 panel">
-							<p class="value"><?= h($user->realname) ?></p>
+							<p class="ed">
+								&nbsp;
+								<span class="dta"><?= h($user->realname) ?></span>
+								<?php
+								echo $this->Form->input('realname',
+												   ['templates' => ['inputContainer' => '{{content}}'],
+													'class' => 'editbox',
+													'label' => false,
+													'value' => h($user->realname)
+													]);
+								?>
+							</p>
 						</div>
 					</div><!-- row -->
 					<div class="row">
@@ -83,7 +94,18 @@ echo $this->Form->create($user, ['id'=> 'editForm', 'action' => 'edit', $user->i
 							<p class="label"><?= __('Email') ?></p>
 						</div>
 						<div class="column large-6 panel">
-							<p class="value"><?= h($user->email) ?></p>
+							<p class="ed">
+								&nbsp;
+								<span class="dta"><?= h($user->email) ?></span>
+								<?php
+								echo $this->Form->input('email',
+												   ['templates' => ['inputContainer' => '{{content}}'],
+													'class' => 'editbox',
+													'label' => false,
+													'value' => h($user->email)
+													]);
+								?>
+							</p>
 						</div>
 					</div><!-- row -->
 					<div class="row">
@@ -91,7 +113,18 @@ echo $this->Form->create($user, ['id'=> 'editForm', 'action' => 'edit', $user->i
 							<p class="label"><?= __('Phone') ?></p>
 						</div>
 						<div class="column large-6 panel">
-							<p class="value"><?= h($user->phone) ?></p>
+							<p class="ed">
+								&nbsp;
+								<span class="dta"><?= h($user->phone) ?></span>
+								<?php
+								echo $this->Form->input('email',
+												   ['templates' => ['inputContainer' => '{{content}}'],
+													'class' => 'editbox',
+													'label' => false,
+													'value' => h($user->phone)
+													]);
+								?>
+							</p>
 						</div>
 					</div><!-- row -->
 					<div class="row">

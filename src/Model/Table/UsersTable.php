@@ -67,7 +67,10 @@ class UsersTable extends Table {
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
 			->notEmpty('name')
-			->add('name', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
+			->add('name', 'unique',
+				  ['rule' => 'validateUnique',
+				   'message' => __('This username is already taken'),
+				   'provider' => 'table'])
 			->notEmpty('password')
 			->add('password', [
 					'length' => [
@@ -80,9 +83,15 @@ class UsersTable extends Table {
 							]
 					])
 			->allowEmpty('realname')
-			->add('email', 'valid', ['rule' => 'email'])
 			->allowEmpty('email')
-			->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table'])
+			->add('email', 'valid',
+				  ['rule' => 'email',
+				   'message' => __('Should be a real email address!')
+				   ])
+			->add('email', 'unique',
+				  ['rule' => 'validateUnique',
+				   'message' => __('There is an other user with this email address!'),
+				   'provider' => 'table'])
 			->allowEmpty('phone')
 			->add('active', 'valid', ['rule' => 'boolean'])
 			->allowEmpty('active')
