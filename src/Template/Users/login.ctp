@@ -11,7 +11,7 @@
 		<?= $this->Form->create() ?>
 		<div class="row">
 			<div class="column large-12">
-				<?= $this->Form->input('name', ['autofocus' => 'autofocus']) ?>
+				<?= $this->Form->input('email', ['autofocus' => 'autofocus']) ?>
 			</div>
 		</div>
 		<div class="row">
