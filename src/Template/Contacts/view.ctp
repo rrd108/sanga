@@ -14,20 +14,23 @@ echo $this->Html->link($this->Html->image('edit.png'),
 
 echo $this->element('ajax-images');
 ?>
-<div id="tabs" class="row">
-	<div class="actions columns large-2 medium-3">
-		<ul class="side-nav">
-			<li id="tabnav-1"><a href="#tabs-1"><?= __('Personal data') ?></a></li>
-			<li id="tabnav-2"><a href="#tabs-2"><?= __('Family') ?></a></li>
-			<li id="tabnav-3"><a href="#tabs-3"><?= __('Workplace and skills') ?></a></li>
-			<li id="tabnav-4"><a href="#tabs-4"><?= __('Histories') ?></a></li>
-			<li id="tabnav-5"><a href="#tabs-5"><?= __('Groups') ?></a></li>
-			<li id="tabnav-6"><a href="#tabs-6"><?= __('Finances') ?></a></li>
-			<li id="tabnav-7"><a href="#tabs-7"><?= __('Access') ?></a></li>
-			<li id="tabnav-8"><a href="#tabs-8"><?= $this->Html->image('email.png') ?></a></li>
-		</ul>
+<div id="tabs">
+	<div class="sidebar-wrapper">
+		<nav class="side-nav">
+			<ul class="side-nav">
+				<li id="tabnav-1"><a href="#tabs-1"><?= __('Personal data') ?></a></li>
+				<li id="tabnav-2"><a href="#tabs-2"><?= __('Family') ?></a></li>
+				<li id="tabnav-3"><a href="#tabs-3"><?= __('Workplace and skills') ?></a></li>
+				<li id="tabnav-4"><a href="#tabs-4"><?= __('Histories') ?></a></li>
+				<li id="tabnav-5"><a href="#tabs-5"><?= __('Groups') ?></a></li>
+				<li id="tabnav-6"><a href="#tabs-6"><?= __('Finances') ?></a></li>
+				<li id="tabnav-7"><a href="#tabs-7"><?= __('Access') ?></a></li>
+				<li id="tabnav-8"><a href="#tabs-8"><?= $this->Html->image('email.png') ?></a></li>
+			</ul>
+		</nav>
 	</div>
-	
+	<div class="content-wrapper">
+	<div class="row">	
 	<?php
 	echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $contact->id]);
 	?>
@@ -60,70 +63,81 @@ echo $this->element('ajax-images');
 			?>
 			<div class="large-9 columns strings">
 
-				<div class="row"><div class="panel info">
-					<h6 class="subheader"><?= __('Known name') ?></h6>
-					<p class="ed">
-						&nbsp;
-						<span class="dta"><?= h($contact->name) ?></span>
-						<?php
-						echo $this->Form->input('name',
-										   ['templates' => ['inputContainer' => '{{content}}'],
-											'class' => 'editbox',
-											'label' => false,
-											'value' => h($contact->name),
-											'title' => __('Like initiated name, nickname, etc')
-											]);
-						?>
-					</p>
-				</div></div>
-
-				<div class="row"><div class="panel info">
-					<h6 class="subheader"><?= __('Contactname') ?></h6>
-					<p class="ed">
-						&nbsp;
-						<span class="dta"><?= h($contact->contactname) ?></span>
-						<?php
-						echo $this->Form->input('contactname',
-										   ['templates' => ['inputContainer' => '{{content}}'],
-											'class' => 'editbox',
-											'label' => false,
-											'value' => h($contact->contactname),
-											'title' => __('Civil name, company name, etc')
-											]);
-						?>
-					</p>
-				</div></div>
-
-				<div class="row"><div class="panel info">
-					<h6 class="subheader"><?= __('Contact person') ?></h6>
-					<p>
-						&nbsp;
-						<span>
+				<div class="row">
+					<div class="column large-4">
+						<label><?= __('Known name') ?></label>
+					</div><!-- column -->
+					<div class="column large-8">					
+						<p class="ed">
+							<span class="dta"><?= h($contact->name) ?></span>
 							<?php
-							if (!empty($contact->users)){
-								$myContact = false;
-								foreach ($contact->users as $usr){
-									$css = 'viewable';
-									if($usr->id == $this->Session->read('Auth.User.id')){
-										$myContact = true;
-										$css = 'mine';
-									}
-									echo '<span class="tag tag-' . $css . '">' . h($usr->name) . '</span> ';
-								}
-							}
+							echo $this->Form->input('name',
+											   ['templates' => ['inputContainer' => '{{content}}'],
+												'class' => 'editbox',
+												'label' => false,
+												'value' => h($contact->name),
+												'title' => __('Like initiated name, nickname, etc')
+												]);
 							?>
-						</span>
-						<?php
-						//contact person change - dev questions - on hold
-						//echo '<span>' . $this->element('user_checkbox') . '</span>';
-						?>
-					</p>
-				</div></div>
+						</p>
+					</div><!-- column -->
+				</div><!-- row -->
 
-				<div class="row"><div class="panel info">
-					<h6 class="subheader"><?= __('Address') ?></h6>
+				<div class="row">
+					<div class="column large-4">
+						<label><?= __('Contactname') ?></label>
+					</div><!-- column -->
+					<div class="column large-8">
+						<p class="ed">
+							<span class="dta"><?= h($contact->contactname) ?></span>
+							<?php
+							echo $this->Form->input('contactname',
+											   ['templates' => ['inputContainer' => '{{content}}'],
+												'class' => 'editbox',
+												'label' => false,
+												'value' => h($contact->contactname),
+												'title' => __('Civil name, company name, etc')
+												]);
+							?>
+						</p>
+					</div><!-- column -->
+				</div><!-- row -->
+
+				<div class="row">
+					<div class="column large-4">
+						<label><?= __('Contact person') ?></label>
+					</div>
+					<div class="column large-8">
+						<p>
+							<span>
+								<?php
+								if (!empty($contact->users)){
+									$myContact = false;
+									foreach ($contact->users as $usr){
+										$css = 'viewable';
+										if($usr->id == $this->Session->read('Auth.User.id')){
+											$myContact = true;
+											$css = 'mine';
+										}
+										echo '<span class="tag tag-' . $css . '">' . h($usr->name) . '</span> ';
+									}
+								}
+								?>
+							</span>
+							<?php
+							//contact person change - dev questions - on hold
+							//echo '<span>' . $this->element('user_checkbox') . '</span>';
+							?>
+						</p>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="column large-4">
+						<label><?= __('Address') ?></label>
+					</div>
+					<div class="column large-8">
 					<p class="ed">
-						&nbsp;
 						<?php
 						echo '<span class="dta zip zip-zip">';
 							if(isset($contact->zip)){
@@ -161,10 +175,12 @@ echo $this->element('ajax-images');
 					</p>
 				</div></div>
 
-				<div class="row"><div class="panel info">
-					<h6 class="subheader"><?= __('Phone') ?></h6>
+				<div class="row">
+				<div class="column large-4">
+					<label><?= __('Phone') ?></label>
+				</div>
+				<div class="column large-8">
 					<p class="ed">
-						&nbsp;
 						<span class="dta"><?= h($contact->phone) ?></span>
 						<?php
 						echo $this->Form->input('phone',
@@ -177,10 +193,12 @@ echo $this->element('ajax-images');
 					</p>
 				</div></div>
 
-				<div class="row"><div class="panel info">
-					<h6 class="subheader"><?= __('Email') ?></h6>
+				<div class="row">
+				<div class="column large-4">
+					<label><?= __('Email') ?></label>
+				</div>
+				<div class="column large-8">
 					<p class="ed">
-						&nbsp;
 						<span class="dta"><?= h($contact->email) ?></span>
 						<?php
 						echo $this->Form->input('email',
@@ -193,10 +211,12 @@ echo $this->element('ajax-images');
 					</p>
 				</div></div>
 
-				<div class="row"><div class="panel info">
-					<h6 class="subheader"><?= __('Birth') ?></h6>
+				<div class="row">
+				<div class="column large-4">
+					<label><?= __('Birth') ?></label>
+				</div>
+				<div class="column large-8">
 					<p class="ed">
-						&nbsp;
 						<span class="dta">
 							<?php
 							if($contact->birth){
@@ -216,10 +236,12 @@ echo $this->element('ajax-images');
 					</p>
 				</div></div>
 
-				<div class="row"><div class="panel info">
-					<h6 class="subheader"><?= __('Sex') ?></h6>
+				<div class="row">
+				<div class="column large-4">
+					<label><?= __('Sex') ?></label>
+					</div>
+					<div class="column large-8">
 					<p class="ed">
-						&nbsp;
 						<span class="dta">
 							<?php
 							if($contact->sex == 1){
@@ -246,10 +268,12 @@ echo $this->element('ajax-images');
 					</p>
 				</div></div>
 
-				<div class="row"><div class="panel info">
-					<h6 class="subheader"><?= __('Contactsource') ?></h6>
+				<div class="row">
+				<div class="column large-4">
+					<label><?= __('Contactsource') ?></label>
+					</div>
+					<div class="column large-8">
 					<p class="ed">
-						&nbsp;
 						<span class="dta">
 							<?= $contact->has('contactsource') ? $this->Html->link($contact->contactsource->name, ['controller' => 'Contactsources', 'action' => 'view', $contact->contactsource->id]) : '' ?>
 						</span>
@@ -259,8 +283,8 @@ echo $this->element('ajax-images');
 					</p>
 				</div></div>
 
-				<div class="row"><div class="panel info">
-					<h6 class="subheader"><?= __('Active') ?></h6>
+				<div class="row"><div class="column large-12">
+					<label><?= __('Active') ?></label>
 					<p class="ed">
 						&nbsp;
 						<span class="dta"><?= $contact->active ? __('Yes') : __('No'); ?></span>
@@ -276,10 +300,9 @@ echo $this->element('ajax-images');
 					</p>
 				</div></div>
 
-				<div class="row"><div class="panel info">
-					<h6 class="subheader"><?= __('Comment') ?></h6>
+				<div class="row"><div class="column large-12">
+					<label><?= __('Comment') ?></label>
 					<p class="ed">
-						&nbsp;
 						<span class="dta">
 							<?= h($contact->comment); ?>
 						</span>
@@ -682,7 +705,8 @@ echo $this->element('ajax-images');
 			?>
 		</div>
 	</div>
-
+</div>
+</div>
 </div>
 <?php
 else:
