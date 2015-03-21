@@ -14,16 +14,24 @@
 
 <div class="content-wrapper">
 	<div class="row">
-		<div class="events form large-10 medium-9 columns">
+		<div class="events form large-4 medium-8 columns">
+		<h2><?= __('Edit Event') ?></h2>
 		<?= $this->Form->create($event) ?>
-			<fieldset>
-				<legend><?= __('Edit Event') ?></legend>
 			<?php
+				echo '<div class="row"><div class="column large-12">';
 				echo $this->Form->input('name');
+				echo '</div></div>';
+
+				echo '<div class="row"><div class="column large-12">';
 				echo $this->Form->input('user_id', ['options' => $users]);
+				echo '</div></div>';
+
 			?>
-			</fieldset>
-		<?= $this->Form->button(__('Submit')) ?>
+			<div class="row">
+				<div class="column large-12">			
+					<?= $this->Form->button(__('Submit'), ['class' => 'radius' ]) ?>
+				</div>
+			</div>
 		<?= $this->Form->end() ?>
 		</div>
 	</div>

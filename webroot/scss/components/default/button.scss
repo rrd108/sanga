@@ -4,10 +4,10 @@ $include-button: false !default;
 
 
 // BUTTON DeFAULT STYLE
-$button-tny: rem-calc(5) !default;
-$button-sml: rem-calc(5) !default;
-$button-med: rem-calc(5) !default;
-$button-lrg: rem-calc(5) !default;
+$button-tny: rem-calc(9) !default;
+$button-sml: rem-calc(9) !default;
+$button-med: rem-calc(9) !default;
+$button-lrg: rem-calc(9) !default;
 
 $button-display: inline-block !default;
 $button-margin-bottom: rem-calc(20) !default;
@@ -55,7 +55,7 @@ $button-disabled-cursor: $cursor-default-value !default;
 		font-family: $button-font-family;
 		font-weight: $button-font-weight;
 		line-height: normal;
-		margin: 0 0 $button-margin-bottom;
+		margin: 0;
 		position: relative;
 		text-align: $button-font-align;
 		text-decoration: none;
@@ -74,7 +74,7 @@ $button-disabled-cursor: $cursor-default-value !default;
 		@else if $padding == $button-sml { font-size: $button-font-sml; }
 		@else if $padding == $button-lrg { font-size: $button-font-lrg; }
 
-		padding-bottom: $padding + rem-calc(1);
+		padding-bottom: $padding;
 		padding-#{$default-float}: $padding * 2;
 		padding-#{$opposite-direction}: $padding * 2;
 		padding-top: $padding;

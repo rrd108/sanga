@@ -1,4 +1,5 @@
-<div class="contacts index columns">
+<div class="row">
+<div class="contacts index columns large-12">
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 		<tr>
@@ -56,13 +57,14 @@
 	</tbody>
 	</table>
 	<div class="paginator">
-		<ul class="pagination">
+		<ul class="pagination centered">
 		<?php
 			echo $this->Paginator->prev('< ' . __('previous'));
 			echo $this->Paginator->numbers();
 			echo $this->Paginator->next(__('next') . ' >');
 		?>
 		</ul>
-		<p><?= $this->Paginator->counter() ?></p>
+		<div class="pagination-counter"><?= $this->Paginator->counter() ?></div>
 	</div>
+</div>
 </div>

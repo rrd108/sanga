@@ -1,4 +1,5 @@
-<div class="groups index columns">
+<div class="row">
+<div class="groups index column large-12">
 	<?php
 	echo $this->Form->create($group, ['action' => 'add']);
 	?>
@@ -42,7 +43,7 @@
 			//echo $this->Form->input('users._ids', ['options' => $users]);
 			//echo $this->Form->input('contacts._ids', ['options' => $contacts]);
 			echo '<td>';
-				echo $this->Form->button(__('Submit'));
+				echo $this->Form->button(__('Submit'),['class' => 'radius']);
 			echo '</td>';
 			?>
 		</tr>
@@ -87,13 +88,14 @@
 	echo $this->Form->end();
 	?>
 	<div class="paginator">
-		<ul class="pagination">
+		<ul class="pagination centered">
 		<?php
 			echo $this->Paginator->prev('< ' . __('previous'));
 			echo $this->Paginator->numbers();
 			echo $this->Paginator->next(__('next') . ' >');
 		?>
 		</ul>
-		<p><?= $this->Paginator->counter() ?></p>
+		<div class="pagination-counter"><?= $this->Paginator->counter() ?></div>
 	</div>
+</div>
 </div>

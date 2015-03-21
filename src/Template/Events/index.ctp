@@ -9,7 +9,8 @@
 
 <div class="content-wrapper">
 	<div class="row">
-		<div class="events index large-10 medium-9 columns">
+		<div class="events index large-12 columns">
+			<h1><?= __('Events') ?></h1>
 			<table cellpadding="0" cellspacing="0">
 			<thead>
 				<tr>
@@ -37,14 +38,14 @@
 			</tbody>
 			</table>
 			<div class="paginator">
-				<ul class="pagination">
+				<ul class="pagination centered">
 				<?php
 					echo $this->Paginator->prev('< ' . __('previous'));
 					echo $this->Paginator->numbers();
 					echo $this->Paginator->next(__('next') . ' >');
 				?>
 				</ul>
-				<p><?= $this->Paginator->counter() ?></p>
+				<div class="pagination-counter"><?= $this->Paginator->counter() ?></div>
 			</div>
 		</div>
 	</div>

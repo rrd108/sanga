@@ -9,12 +9,12 @@ echo $this->Html->meta('icon');
 echo $this->Html->css('default.css');
 echo $this->Html->css('main.css');
 
-echo $this->Html->css('jquery-ui.min.css');
-echo $this->Html->css('jquery-ui.structure.min.css');
-echo $this->Html->css('jquery-ui.theme.min.css');
+// echo $this->Html->css('jquery-ui.min.css');
+// echo $this->Html->css('jquery-ui.structure.min.css');
+// echo $this->Html->css('jquery-ui.theme.min.css');
 
 echo $this->Html->css('animate.css');	//for noty
-echo $this->Html->css('sanga.css');
+// echo $this->Html->css('sanga.css');
 
 
 echo $this->Html->script('jquery.js');	//this should be the very first js file
