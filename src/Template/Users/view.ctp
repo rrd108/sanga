@@ -60,11 +60,11 @@ echo $this->Form->create($user, ['id'=> 'editForm', 'action' => 'edit', $user->i
 								&nbsp;
 								<span class="dta">***</span>
 								<?php
-								echo $this->Form->input('name',
+								echo $this->Form->input('password',
 												   ['templates' => ['inputContainer' => '{{content}}'],
 													'class' => 'editbox',
 													'label' => false,
-													'value' => null
+													'value' => false
 													]);
 								?>
 							</p>

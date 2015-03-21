@@ -72,10 +72,11 @@ class UsersTable extends Table {
 			->add('password', [
 					'length' => [
 							'rule' => ['minLength', 6],
-							'message' => __('At least 6 characters long')
+							'message' => __('Should be at least 6 characters long!')
 							],
 					'custom' => [
-							'rule' => [$this, 'checkPasswordStrength']
+							'rule' => [$this, 'checkPasswordStrength'],
+							'message' => __('Should contain small and capital letters, numbers or special characters!')
 							]
 					])
 			->allowEmpty('realname')

@@ -53,12 +53,24 @@ $(function() {
 				noty({
 					text: textStatus + ' ' + jqXHR.responseJSON.message,
 					type: 'error',
-					timeout: 2500,
+					timeout: 3500,
 					});
 			},
 			success : function(data, textStatus, jqXHR){
 				$('#ajaxloader').hide();
-				theP.append($('#okImg').show().hide(12500));
+				//theP.append($('#okImg').show().hide(12500));
+				if (jqXHR.responseJSON.error) {
+					var type = 'error',
+						message = jqXHR.responseJSON.error
+				} else {
+					var type = 'alert',
+						message = jqXHR.responseJSON.save
+				}
+				noty({
+					text: message,
+					type: type,
+					timeout: 3500,
+					});
 			}
 		});
 		$(this).hide();

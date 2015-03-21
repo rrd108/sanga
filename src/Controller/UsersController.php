@@ -112,7 +112,17 @@ class UsersController extends AppController {
 			if ($saved) {
 				$json = ['save' => __('The contact has been saved.')];
 			} else {
-				$json = ['save' => __('The contact could not be saved. Please, try again.')];
+				$error = '';
+				foreach($user->errors() as $field => $err) {
+					$error .= $field . ': ';
+					foreach($err as $e) {
+						$error .= $e;
+					}
+				}
+				$json = [
+						 'save' => __('The contact could not be saved. Please, try again.'),
+						 'error' => $error
+						 ];
 			}
 		}
 		$this->set(compact('json'));
