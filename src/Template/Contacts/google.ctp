@@ -1,3 +1,5 @@
+<div class="row">
+	<div class="column large-12">
 <?php
 if(isset($contacts)){
 	echo $this->Html->script('sanga.contacts.google.js', ['block' => true]);
@@ -89,3 +91,5 @@ if(isset($contacts)){
 	echo '</div>';
 }
 ?>
+	</div>
+</div>

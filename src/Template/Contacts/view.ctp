@@ -347,10 +347,13 @@ echo $this->element('ajax-images');
 	<div id="tabs-2" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
-			<div class="large-11 columns strings">
-				<h6 class="subheader"><?= __('Family') ?></h6>
+			<div class="column large-9">
+		<div class="row">
+			<div class="large-4 columns strings">
+				<label><?= __('Family') ?></label>
+			</div>
+			<div class="large-8 columns strings">
 				<p class="ed">
-					&nbsp;
 					<?php
 					//echo $contact->family_id;
 					?>
@@ -383,36 +386,44 @@ echo $this->element('ajax-images');
 				</div>
 			</div>
 		</div>
+			</div>
+		</div>
 	</div>
 	<div id="tabs-3" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
-			<div class="large-11 columns strings">
-				<h6 class="subheader"><?= __('Workplace') ?></h6>
-				<p class="ed">
-					&nbsp;
-					<span class="dta"><?= h($contact->workplace) ?></span>
-					<?php
-					echo $this->Form->input('workplace',
-											['templates' => ['inputContainer' => '{{content}}'],
-											'class' => 'editbox',
-											'label' => false,
-											'value' => $contact->workplace
-											]);
-					?>
-				</p>
-				<h6 class="subheader"><?= __('Skills') ?></h6>
-				<p class="ed">&nbsp;
-					<?php if (!empty($contact->skills)): ?>
-						<?php
-						foreach ($contact->skills as $skills):
-							echo '<span class="tag tag-shared">';
-								echo h($skills->name);
-							echo '</span> ';
-						endforeach;
-						?>
-					<?php endif; ?>
-				</p>
+			<div class="large-9 columns strings">
+				<div class="row">
+					<div class="large-4 columns strings">
+						<label><?= __('Workplace') ?></label>
+					</div>
+					<div class="large-8 columns strings">
+						<p class="ed">
+							
+							<span class="dta"><?= h($contact->workplace) ?></span>
+							<?php
+							echo $this->Form->input('workplace',
+													['templates' => ['inputContainer' => '{{content}}'],
+													'class' => 'editbox',
+													'label' => false,
+													'value' => $contact->workplace
+													]);
+							?>
+						</p>
+						<h6 class="subheader"><?= __('Skills') ?></h6>
+						<p class="ed">&nbsp;
+							<?php if (!empty($contact->skills)): ?>
+								<?php
+								foreach ($contact->skills as $skills):
+									echo '<span class="tag tag-shared">';
+										echo h($skills->name);
+									echo '</span> ';
+								endforeach;
+								?>
+							<?php endif; ?>
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -421,8 +432,9 @@ echo $this->element('ajax-images');
 	echo $this->Form->end();
 	?>
 	
-	<div id="tabs-4" class="contacts view large-10 medium-9 columns">
+	<div id="tabs-4" class="contacts view large-12 columns">
 		<h2><?= h($contact->name) ?></h2>
+		<div class="row">
 		<div class="column large-12">
 		<?php if (!empty($histories)): ?>
 		<?php
@@ -528,16 +540,17 @@ echo $this->element('ajax-images');
 		echo $this->Form->end();
 		?>
 		<div class="paginator">
-			<ul class="pagination">
+			<ul class="pagination centered">
 			<?php
 				echo $this->Paginator->prev('< ' . __('previous'));
 				echo $this->Paginator->numbers();
 				echo $this->Paginator->next(__('next') . ' >');
 			?>
 			</ul>
-			<p><?= $this->Paginator->counter() ?></p>
+			<div class="pagination-counter"><?= $this->Paginator->counter() ?></div>
 		</div>
 		<?php endif; ?>
+		</div>
 		</div>
 	</div>
 	<div id="tabs-5" class="contacts view large-10 medium-9 columns">
@@ -587,8 +600,9 @@ echo $this->element('ajax-images');
 			?>
 		</div>
 	</div>
-	<div id="tabs-6" class="contacts view large-10 medium-9 columns">
+	<div id="tabs-6" class="contacts view large-12 columns">
 		<h2><?= h($contact->name) ?></h2>
+		<div class="row">
 		<div class="column large-12">
 		<table id="hTable" cellpadding="0" cellspacing="0">
 			<thead>
@@ -652,57 +666,62 @@ echo $this->element('ajax-images');
 			</tfoot>
 		</table>
 		</div>
+		</div>
 	</div>
 
 	<div id="tabs-7" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
-			<h3><?= __('Has access as contact persons') ?></h3>
-			<ul>
-			<?php
-			foreach ($hasAccess['contactPersons'] as $user) {
-				echo '<li>' . $user->name . '</li>';
-			}
-			?>
-			</ul>
-			<h3><?= __('Has access via groups') ?></h3>
-			<ul>
-			<?php
-			foreach ($hasAccess['groupMembers'] as $user) {
-				echo '<li>';
-					echo $user->name;
-					if (isset($user->_matchingData['Groups']->name)) echo ' / ' . $user->_matchingData['Groups']->name;
-				echo '</li>';
-			}
-			?>
-			</ul>
-			<h3><?= __('Has access via user groups') ?></h3>
-			<ul>
-			<?php
-			foreach ($hasAccess['usergroupMembers'] as $user) {
-				echo '<li>';
-					echo $user->name;
-					if (isset($user->_matchingData['Usergroups']->name)) echo ' / ' . $user->_matchingData['Usergroups']->name;
-				echo '</li>';
-			}
-			?>
-			</ul>
+			<div class="column large-12">
+				<h3><?= __('Has access as contact persons') ?></h3>
+				<ul>
+				<?php
+				foreach ($hasAccess['contactPersons'] as $user) {
+					echo '<li>' . $user->name . '</li>';
+				}
+				?>
+				</ul>
+				<h3><?= __('Has access via groups') ?></h3>
+				<ul>
+				<?php
+				foreach ($hasAccess['groupMembers'] as $user) {
+					echo '<li>';
+						echo $user->name;
+						if (isset($user->_matchingData['Groups']->name)) echo ' / ' . $user->_matchingData['Groups']->name;
+					echo '</li>';
+				}
+				?>
+				</ul>
+				<h3><?= __('Has access via user groups') ?></h3>
+				<ul>
+				<?php
+				foreach ($hasAccess['usergroupMembers'] as $user) {
+					echo '<li>';
+						echo $user->name;
+						if (isset($user->_matchingData['Usergroups']->name)) echo ' / ' . $user->_matchingData['Usergroups']->name;
+					echo '</li>';
+				}
+				?>
+				</ul>
+			</div>
 		</div>
 	</div>
 
 	<div id="tabs-8" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->name) ?></h2>
 		<div class="row">
-			<h6 class="subheader"><?= __('Sender') ?></h6>
-			<?= $this->Session->read('Auth.User.email') ?>
-			<h6 class="subheader"><?= __('To') ?></h6>
-			<?= h($contact->email) ?>
-			<?php
-			echo $this->Form->input('subject');
-			echo $this->Form->input('message',
-									['type' => 'textarea']);
-			echo $this->Form->button(__('Submit'), ['id' => 'sendmail']);
-			?>
+			<div class="column large-12">
+				<h6 class="subheader"><?= __('Sender') ?></h6>
+				<?= $this->Session->read('Auth.User.email') ?>
+				<h6 class="subheader"><?= __('To') ?></h6>
+				<?= h($contact->email) ?>
+				<?php
+				echo $this->Form->input('subject');
+				echo $this->Form->input('message',
+										['type' => 'textarea']);
+				echo $this->Form->button(__('Submit'), ['id' => 'sendmail']);
+				?>
+			</div>
 		</div>
 	</div>
 </div>

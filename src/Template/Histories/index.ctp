@@ -1,3 +1,5 @@
+<div class="row">
+	<div class="column large-12">
 <?php
 echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
 echo $this->Html->script('sanga.histories.index.js', ['block' => true]);
@@ -106,13 +108,15 @@ echo $this->element('ajax-images');
 	echo $this->Form->end();
 	?>
 	<div class="paginator">
-		<ul class="pagination">
+		<ul class="pagination centered">
 		<?php
 			echo $this->Paginator->prev('< ' . __('previous'));
 			echo $this->Paginator->numbers();
 			echo $this->Paginator->next(__('next') . ' >');
 		?>
 		</ul>
-		<p><?= $this->Paginator->counter() ?></p>
+		<div class="pagination-counter"><?= $this->Paginator->counter() ?></div>
+	</div>
+</div>
 	</div>
 </div>
