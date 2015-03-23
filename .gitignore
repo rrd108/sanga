@@ -23,5 +23,3 @@ composer.lock
 /webroot/.htaccess
 /.htaccess
 
-/config/sanga-minta.sql
-
