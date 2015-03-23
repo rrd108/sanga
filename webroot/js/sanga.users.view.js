@@ -37,7 +37,11 @@ $(function() {
 		editedData[$(this).attr('id')] = newData;
 		var theP = $(this).parent();
 		var oldData = theSpan.text();
-		theSpan.text(newData);
+		if (editedData.password) {
+			theSpan.text('***');
+		} else {
+			theSpan.text(newData);
+		}
 		$('#editlink').hide();
 		theP.append($('#ajaxloader').show());
 

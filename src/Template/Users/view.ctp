@@ -1,13 +1,5 @@
 <?php
 echo $this->Html->script('sanga.users.view.js', ['block' => true]);
-
-echo $this->Html->link($this->Html->image('edit.png'),
-					   ['action' => 'edit', $user->id],
-					   ['id' => 'editlink', 'escape' => false]);
-
-echo $this->element('ajax-images');
-
-echo $this->Form->create($user, ['id'=> 'editForm', 'action' => 'edit', $user->id]);
 ?>
 <div class="sidebar-wrapper">
 	<nav class="side-nav">
@@ -19,7 +11,16 @@ echo $this->Form->create($user, ['id'=> 'editForm', 'action' => 'edit', $user->i
 <!-- sidebar wrapper -->
 
 <div class="content-wrapper">
-	<div class="row">
+	<div class="row"><div class="large-10 medium-9 columns">
+		<?php
+		echo $this->Html->link($this->Html->image('edit.png'),
+					   ['action' => 'edit', $user->id],
+					   ['id' => 'editlink', 'escape' => false]);
+
+		echo $this->element('ajax-images');
+
+		echo $this->Form->create($user, ['id'=> 'editForm', 'action' => 'edit', $user->id]);
+		?>
 		<div class="user-details-view">
 			<div class="main-title row">
 				<div class="column large-12">
@@ -197,12 +198,10 @@ echo $this->Form->create($user, ['id'=> 'editForm', 'action' => 'edit', $user->i
 			</div><!-- row -->
 		</div>
 		<!-- user detaisl view -->
-
-	</div>
+	<?php
+	echo $this->Form->end();
+	?>
+	</div></div>
 	<!-- row -->
 </div>
 <!-- contet wrapper -->
-
-<?php
-echo $this->Form->end();
-?>
