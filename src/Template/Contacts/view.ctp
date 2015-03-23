@@ -25,7 +25,7 @@ echo $this->element('ajax-images');
 				<li id="tabnav-5"><a href="#tabs-5"><?= __('Groups') ?></a></li>
 				<li id="tabnav-6"><a href="#tabs-6"><?= __('Finances') ?></a></li>
 				<li id="tabnav-7"><a href="#tabs-7"><?= __('Access') ?></a></li>
-				<li id="tabnav-8"><a href="#tabs-8"><?= $this->Html->image('email.png') ?></a></li>
+				<li id="tabnav-8"><a href="#tabs-8"><?= __('Send a mail') ?></a></li>
 			</ul>
 		</nav>
 	</div>
