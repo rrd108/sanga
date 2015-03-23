@@ -1,6 +1,6 @@
 $(function() {
 	
-	$('input.editbox').hide();
+	$('.editbox').hide();
 	
 	$('#editForm').submit(function(event){
 		event.preventDefault();
