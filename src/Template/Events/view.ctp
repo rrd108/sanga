@@ -32,7 +32,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="related row">
+
+		<div class="related">
 			<div class="column large-12">
 			<h4 class="subheader"><?= __('Related Histories') ?></h4>
 			<?php if (!empty($event->histories)): ?>

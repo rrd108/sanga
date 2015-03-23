@@ -2,7 +2,7 @@ header { background: #15848f; left: 0; padding: 0 1rem; position: fixed; top: 0;
 header:before, header:after { content: " "; display: table; }
 header:after { clear: both; }
 
-.header-search { display: block; float: right; margin: 9px 0 0 0; max-width: 150px; width: 100%; }
+.header-search { display: block; float: right; margin: 9px 0 0 0; max-width: 200px; width: 100%; }
 .header-search form input { background: #0e5b63; border: none; color: #ffffff; height: 30px; margin: 0; padding: 2 10px; }
 
 nav.primary { display: block; float: left; padding: 0 1rem; width: auto; }
@@ -51,9 +51,35 @@ header .main-logo a img { max-width: 135px; }
 
 .main-login .main-login-logo { padding-bottom: 20px; }
 
+.tag { display: block; color: white; border-radius: 5px; padding: 3px 10px 5px; font-weight: bold; width: auto; float: left; margin: 0 10px 0 0; }
+.tag label { line-height: 1; }
+.tag input { line-height: 1; margin: 0 10px 0 0; }
+
+.tag label { color: #fff; margin: 0 !important; padding: 0 !important; }
+
+.tag-mine { background: #428BCA; }
+
+.tag-viewable { background: #5CB85C; }
+
+.tag-shared { background: #5BC0DE; }
+
+.tag-default, .removeable:hover { background: #777777; }
+
+.tag-danger { background: #D9534F; }
+
 main.primary-content { display: block; padding: 7.5rem 0; width: 100%; }
 main.primary-content:before, main.primary-content:after { content: " "; display: table; }
 main.primary-content:after { clear: both; }
+
+.user-add-form form .column.radio label:first-child { margin: 0 0 0.3125rem 0; width: 100%; }
+.user-add-form form .column.radio label { display: block; float: left; margin: 0 1.25rem 0 0; width: auto; }
+.user-add-form form .column.radio label input { margin: 0 0.3125rem 0 0; }
+
+.ui-autocomplete { background: #0e5b63; display: block; left: 0; min-width: 100px; max-height: 250px; overflow-y: auto; position: absolute; top: 100%; z-index: 100; }
+.ui-autocomplete li { display: block; float: none; margin: 0; padding: 0; widows: 100%; }
+.ui-autocomplete li:before { display: none; }
+.ui-autocomplete li a { color: #ffffff; display: block; padding: 0.3125rem 0.625rem; width: 100%; }
+.ui-autocomplete li a:hover { background: #0b464c; }
 
 /* VIEWS */
 .users.view { border-left: solid 1px #e5e5e5; }
