@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-03-09 16:13+0000\n"
+"POT-Creation-Date: 2015-03-24 10:00+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -25,5 +25,237 @@ msgstr ""
 
 #: Template/Error/error500.ctp:4
 msgid "An Internal Error Has Occurred"
+msgstr ""
+
+#: Controller/Component/AuthComponent.php:435
+msgid "You are not authorized to access that location."
+msgstr ""
+
+#: Controller/Component/CsrfComponent.php:148
+msgid "Invalid CSRF token."
+msgstr ""
+
+#: Error/ExceptionRenderer.php:225
+msgid "Not Found"
+msgstr ""
+
+#: Error/ExceptionRenderer.php:227
+msgid "An Internal Error Has Occurred."
+msgstr ""
+
+#: I18n/Number.php:75
+msgid "{0,number,#,###.##} KB"
+msgstr ""
+
+#: I18n/Number.php:77
+msgid "{0,number,#,###.##} MB"
+msgstr ""
+
+#: I18n/Number.php:79
+msgid "{0,number,#,###.##} GB"
+msgstr ""
+
+#: I18n/Number.php:81
+msgid "{0,number,#,###.##} TB"
+msgstr ""
+
+#: I18n/Number.php:73
+msgid "{0,number,integer} Byte"
+msgid_plural "{0,number,integer} Bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: I18n/Time.php:251
+msgid "%s ago"
+msgstr ""
+
+#: I18n/Time.php:252
+msgid "on %s"
+msgstr ""
+
+#: I18n/Time.php:287
+msgid "just now"
+msgstr ""
+
+#: I18n/Time.php:403
+msgid "about a second ago"
+msgstr ""
+
+#: I18n/Time.php:404
+msgid "about a minute ago"
+msgstr ""
+
+#: I18n/Time.php:405
+msgid "about an hour ago"
+msgstr ""
+
+#: I18n/Time.php:406
+msgid "about a day ago"
+msgstr ""
+
+#: I18n/Time.php:407
+msgid "about a week ago"
+msgstr ""
+
+#: I18n/Time.php:408
+msgid "about a year ago"
+msgstr ""
+
+#: I18n/Time.php:417
+msgid "in about a second"
+msgstr ""
+
+#: I18n/Time.php:418
+msgid "in about a minute"
+msgstr ""
+
+#: I18n/Time.php:419
+msgid "in about an hour"
+msgstr ""
+
+#: I18n/Time.php:420
+msgid "in about a day"
+msgstr ""
+
+#: I18n/Time.php:421
+msgid "in about a week"
+msgstr ""
+
+#: I18n/Time.php:422
+msgid "in about a year"
+msgstr ""
+
+#: I18n/Time.php:376
+msgid "{0} year"
+msgid_plural "{0} years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: I18n/Time.php:379
+msgid "{0} month"
+msgid_plural "{0} months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: I18n/Time.php:382
+msgid "{0} week"
+msgid_plural "{0} weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: I18n/Time.php:385
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: I18n/Time.php:388
+msgid "{0} hour"
+msgid_plural "{0} hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: I18n/Time.php:391
+msgid "{0} minute"
+msgid_plural "{0} minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: I18n/Time.php:394
+msgid "{0} second"
+msgid_plural "{0} seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Network/Response.php:1390
+msgid "The requested file was not found"
+msgstr ""
+
+#: ORM/RulesChecker.php:317
+msgid "This value is already in use"
+msgstr ""
+
+#: ORM/RulesChecker.php:351
+msgid "This value does not exist"
+msgstr ""
+
+#: Utility/Text.php:658
+msgid "and"
+msgstr ""
+
+#: Validation/Validator.php:94
+msgid "This field is required"
+msgstr ""
+
+#: Validation/Validator.php:95
+msgid "This field cannot be left empty"
+msgstr ""
+
+#: Validation/Validator.php:560
+msgid "The provided value is invalid"
+msgstr ""
+
+#: View/Helper/FormHelper.php:925
+msgid "New %s"
+msgstr ""
+
+#: View/Helper/FormHelper.php:928
+msgid "Edit %s"
+msgstr ""
+
+#: View/Helper/FormHelper.php:1709
+msgid "Submit"
+msgstr ""
+
+#: View/Helper/HtmlHelper.php:749
+msgid "Home"
+msgstr ""
+
+#: View/Widget/DateTimeWidget.php:496
+msgid "January"
+msgstr ""
+
+#: View/Widget/DateTimeWidget.php:497
+msgid "February"
+msgstr ""
+
+#: View/Widget/DateTimeWidget.php:498
+msgid "March"
+msgstr ""
+
+#: View/Widget/DateTimeWidget.php:499
+msgid "April"
+msgstr ""
+
+#: View/Widget/DateTimeWidget.php:500
+msgid "May"
+msgstr ""
+
+#: View/Widget/DateTimeWidget.php:501
+msgid "June"
+msgstr ""
+
+#: View/Widget/DateTimeWidget.php:502
+msgid "July"
+msgstr ""
+
+#: View/Widget/DateTimeWidget.php:503
+msgid "August"
+msgstr ""
+
+#: View/Widget/DateTimeWidget.php:504
+msgid "September"
+msgstr ""
+
+#: View/Widget/DateTimeWidget.php:505
+msgid "October"
+msgstr ""
+
+#: View/Widget/DateTimeWidget.php:506
+msgid "November"
+msgstr ""
+
+#: View/Widget/DateTimeWidget.php:507
+msgid "December"
 msgstr ""
 
