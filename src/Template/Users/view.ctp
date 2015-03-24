@@ -118,7 +118,7 @@ echo $this->Html->script('sanga.users.view.js', ['block' => true]);
 								&nbsp;
 								<span class="dta"><?= h($user->phone) ?></span>
 								<?php
-								echo $this->Form->input('email',
+								echo $this->Form->input('phone',
 												   ['templates' => ['inputContainer' => '{{content}}'],
 													'class' => 'editbox',
 													'label' => false,
