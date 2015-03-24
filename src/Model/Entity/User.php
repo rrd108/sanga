@@ -22,6 +22,7 @@ class User extends Entity {
 		'phone' => true,
 		'active' => true,
 		'role' => true,
+		'resettoken' => true,
 		'events' => true,
 		'groups' => true,
 		'histories' => true,

@@ -8,7 +8,8 @@
 				<?php echo $this->Html->image('logo-big.png', ['alt' => 'Sanga logo']) ?>
 			</div>
 		</div>
-		<?= $this->Form->create() ?>
+		<?php if ( ! isset($mailsent)) : ?>
+		<?= $this->Form->create('Users', ['action' => 'login']) ?>
 		<div class="row">
 			<div class="column large-12">
 				<?= $this->Form->input('email', ['autofocus' => 'autofocus']) ?>
@@ -21,11 +22,14 @@
 		</div>
 		<div class="row">
 			<div class="column large-12">
-				<?= $this->Form->button(__('Login'), ['class' => 'radius']); ?>	
+				<?= $this->Form->button(__('Login'), ['class' => 'radius']); ?>
+				<?= $this->Form->button(__('Password Reminder'),
+										['class' => 'radius',
+										 'name' => 'passreminder']); ?>	
 			</div>
 		</div>
-			
 		<?= $this->Form->end() ?>
+		<?php endif; ?>
 		</div>
 	</div>
 </div>

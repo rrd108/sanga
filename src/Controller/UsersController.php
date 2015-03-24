@@ -5,6 +5,9 @@ use App\Controller\AppController;
 use Cake\Network\Exception\ForbiddenException;
 use Cake\Event\Event;
 
+use Cake\Routing\Router;
+use Cake\Network\Email\Email;
+
 /**
  * Users Controller
  *
@@ -21,7 +24,7 @@ class UsersController extends AppController {
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         // Allow users to access logout without logged in
-	    $this->Auth->allow(['logout']);
+	    $this->Auth->allow(['logout', 'forgotpass', 'resetpass']);
     }
 
 	public function isAuthorized($user = null) {
@@ -35,10 +38,13 @@ class UsersController extends AppController {
     }
 
 	public function login() {
-		if ($this->request->is('post')) {
+		if (isset($this->request->data['passreminder'])) {
+			$this->forgotpass();
+		} elseif ($this->request->is('post')) {
 			$user = $this->Auth->identify();
 			if ($user) {
 				$this->Auth->setUser($user);
+				$this->removeResetToken();
 				return $this->redirect($this->Auth->redirectUrl());
 			}
 			$this->RBruteForce->check(['maxAttempts' => 3, 'dataLog' => true]);		//should be here - so banned out user would not able to login with correct password
@@ -46,8 +52,77 @@ class UsersController extends AppController {
 		}
 	}
 	
+	private function removeResetToken($user) {
+		//remove reset token on sucessful login (the user find out the pass, and did not used the token)
+		$id = $this->Auth->user('id');
+		$user = $this->Users->get($id);
+		$user->resettoken = '';
+		$this->Users->save($user);
+	}
+	
 	public function logout() {
 		return $this->redirect($this->Auth->logout());
+	}
+	
+	private function forgotpass(){
+		if ($this->request->data['email'] != '') {
+			$user = $this->Users->find()
+				->where(['email' => $this->request->data['email']])
+				->first();
+			if(!empty($user)) {
+				//create and save random token
+				$token = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 32);
+				$user = $this->Users->patchEntity($user, $this->request->data);
+				$user->resettoken = $token;
+				$this->Users->save($user);
+				$token = $user->id . ',' . $token;
+				
+				$baseUrl = Router::url(['_full' => true]);
+				$resetlink = Router::url(['_full' => true,
+										   'controller' => 'Users',
+										   'action' => 'resetpass',
+										   $token
+										   ]);
+				
+				$email = new Email('default');
+				$email->from(['forgotpass@sanga.1108.cc' => __('Password reset request')])
+					->to($user->email)
+					->subject(__('Password reset'))
+					->emailFormat('html')
+					->template('resetpass')
+					->viewVars(['resetlink' => $resetlink, 'baseUrl' => $baseUrl]);
+				
+				if($email->send()) {
+					$this->Flash->success(__('We sent an email to you, describing how to set up a new password.'));
+					$this->set('mailsent', true);
+				} else {
+					$this->Flash->error(__('Something went wrong with the password reminder email. Please try again later.'));
+				}
+			} else {
+				$this->Flash->error(__('We do not have this email address in our database. Are you sure you are registered with this?'));
+			}
+		} else {
+			$this->Flash->error(__('You should provide your registered email address'));
+		}
+	}
+	
+	public function resetpass($token){
+		if(!empty($token)){
+			$u = explode(',', $token);
+			$user = $this->Users->find()
+					->where(['id' => $u[0], 'resettoken' => $u[1]])
+					->first();
+			if(!empty($user)){
+				$tempPass = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
+				
+				$user = $this->Users->patchEntity($user, $this->request->data);
+				$user->password = $tempPass;
+				$user->resettoken = '';
+				$this->Users->save($user);
+				$this->Flash->success(sprintf('Your temporary password is: %s Please log in.', $tempPass));
+				$this->render('login');
+			}
+		}
 	}
 
 /**
