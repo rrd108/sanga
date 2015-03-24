@@ -1,3 +1,7 @@
+header{
+  height: 50px;
+}
+
 .header-search {
   max-width: 400px;
 }
@@ -52,7 +56,7 @@ nav.primary span.notice{
 
 .error:before{
   content: "✖";
-  padding: 11px 16px 14px 7px;
+  padding: 0 1em 0 0;
 }
 
 #editlink{

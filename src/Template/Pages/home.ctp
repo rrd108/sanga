@@ -38,23 +38,37 @@ $cakeDescription = 'Sanga';
 		<?php echo $this->element('menu'); ?>
 	</header>
 	<main id="container" class="primary-content">
-		<div id="usersInfo">
-		<dl>
-			<dt>Admin</dt>
-				<dd>Radharadhya dasa
-					<ul>
-						<li>rrd@krisna.hu</li>
-						<li>+36 30 505 12 66</li>
-					</ul>
-				</dd>
-			<dt>CRM Admin</dt>
-				<dd>Vaidarbhi dd
-					<ul>
-						<li>vbdd@krisna.hu</li>
-						<li>+36 30 </li>
-					</ul>
-				</dd>
-		</dl>
+		<div class="sidebar-wrapper">
+			<nav class="side-nav">
+				<ul>
+					<li><?= $this->Html->link(__('List Contacts'), ['controller' => 'Contacts', 'action' => 'index']) ?> </li>
+					<li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?> </li>
+					<li><?= $this->Html->link(__('List Histories'), ['controller' => 'Histories', 'action' => 'index']) ?> </li>
+					<li><?= $this->Html->link(__('New History'), ['controller' => 'Histories', 'action' => 'add']) ?> </li>
+				</ul>
+			</nav>
+		</div>
+
+		<div class="content-wrapper">
+			<div class="row"><div class="large-10 medium-9 columns">
+				<h1>Ha gond van</h1>
+				<dl>
+					<dt>Admin</dt>
+						<dd>Radharadhya dasa
+							<ul>
+								<li>rrd@krisna.hu</li>
+								<li>+36 30 505 12 66</li>
+							</ul>
+						</dd>
+					<dt>CRM Admin</dt>
+						<dd>Vaidarbhi dd
+							<ul>
+								<li>vbdd@krisna.hu</li>
+								<li>+36 20 415 7311</li>
+							</ul>
+						</dd>
+				</dl>
+			</div></div>
 		</div>
 	</main>
 	<footer></footer>
