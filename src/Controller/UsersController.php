@@ -37,6 +37,20 @@ class UsersController extends AppController {
         return true;
     }
 
+	public function search(){
+		$query = $this->Users->find()
+				->select(['id', 'name'])
+				->where(['name LIKE "'.$this->request->query('term').'%"']);
+		foreach($query as $row){
+			$result[] = array('value' => $row->id,
+							  'label' => $row->name
+							  );
+		}
+		//debug($result);die();
+		$this->set(compact('result'));
+		$this->set('_serialize', 'result');
+	}
+	
 	public function login() {
 		if (isset($this->request->data['passreminder'])) {
 			$this->forgotpass();

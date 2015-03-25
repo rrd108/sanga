@@ -11,7 +11,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($contacts as $contact): ?>
+		<?php foreach ($contacts as $contact): ?>
 		<tr>
 			<td>
 				<?php
@@ -53,7 +53,7 @@
 				?>
 			</td>
 		</tr>
-	<?php endforeach; ?>
+		<?php endforeach; ?>
 	</tbody>
 	</table>
 	<div class="paginator">

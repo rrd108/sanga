@@ -22,11 +22,54 @@ class HistoriesController extends AppController {
  * @return void
  */
 	public function index() {
+		//debug($this->request->data);
+		/*
+		[
+			'fcontact_id' => '18',
+			'xfcontact_id' => 'Bakony Ágnes Agness',
+			'daterange' => '2015-03-01 - 2015-03-25',
+			'fuser_id' => '3',
+			'xfuser_id' => 'ddd',
+			'fgroup_id' => '3',
+			'xfgroup_id' => 'Seva-puja',
+			'fevent_id' => '2',
+			'xfevent_id' => 'telefonhívás',
+			'fdetail' => 'lev'
+		]
+		*/
+		if ( ! empty($this->request->data)) {
+			
+			$where = [];
+			
+			if ( ! empty($this->request->data['fcontact_id'])){
+				$where['Histories.contact_id'] = $this->request->data['fcontact_id'];
+			}
+			if ( ! empty($this->request->data['daterange'])){
+				$dates = split(' - ', $this->request->data['daterange']);
+				$where['Histories.date BETWEEN "' . $dates[0] . '" AND "' . $dates[1] . '"'];
+			}
+			if ( ! empty($this->request->data['fuser_id'])){
+				$where['Histories.user_id'] = $this->request->data['fuser_id'];
+			}
+			if ( ! empty($this->request->data['fgroup_id'])){
+				$where['Histories.group_id'] = $this->request->data['fgroup_id'];
+			}
+			if ( ! empty($this->request->data['fevent_id'])){
+				$where['Histories.event_id'] = $this->request->data['fevent_id'];
+			}
+			if ( ! empty($this->request->data['fdetail'])){
+				$where['Histories.detail LIKE'] = '%' . $this->request->data['fdetail'] . '%';
+			}
+			
+			$histories = $this->Histories->find()->where($where);
+		} else {
+			$histories = $this->Histories;
+		}
 		$this->paginate = [
 			'contain' => ['Contacts', 'Users', 'Groups', 'Events', 'Units'],
 			'order' => ['Histories.date' => 'DESC', 'Histories.id' => 'DESC']
 		];
-		$this->set('histories', $this->paginate($this->Histories));
+		$this->set('histories', $this->paginate($histories));
 	}
 
 /**

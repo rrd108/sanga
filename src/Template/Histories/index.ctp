@@ -1,23 +1,76 @@
-<div class="row">
-	<div class="column large-12">
 <?php
+echo $this->Html->css('daterangepicker.css', ['block' => true]);
+
 echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
 echo $this->Html->script('sanga.histories.index.js', ['block' => true]);
 
+echo $this->Html->script('moment.min.js', ['block' => true]);
+echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
+?>
+<div class="row">
+	<div class="column large-12">
+<?php
 echo $this->element('ajax-images');
 ?>
 <div class="histories index columns">
-	<?php
-	echo $this->Form->create(null,
-								['id' => 'hForm',
-								 'url' => [
-										   'controller' => 'Histories',
-										   'action' => 'add'
-										   ]
-								 ]);
-	?>
 	<table id="hTable" cellpadding="0" cellspacing="0">
 	<thead>
+		<tr>
+			<?php
+			echo $this->Form->create(null,
+										['id' => 'fForm',
+										 'url' => [
+												   'controller' => 'Histories',
+												   'action' => 'index'
+												   ]
+										 ]);
+			?>
+			<td>
+				<?php
+				echo $this->Form->input('fcontact_id', ['type' => 'hidden', 'value' => false]);
+				echo $this->Form->input('xfcontact_id', ['type' => 'text', 'value' => false, 'label' => false]);
+				?>
+			</td>
+			<td>
+				<?php
+				echo $this->Form->input('daterange',
+											['label' => false, 'value' => false]);
+				?>
+
+			</td>
+			<td>
+				<?php
+				echo $this->Form->input('fuser_id', ['type' => 'hidden', 'value' => false]);
+				echo $this->Form->input('xfuser_id', ['type' => 'text', 'value' => false, 'label' => false]);
+				?>
+			</td>
+			<td>
+				<?php
+				echo $this->Form->input('fgroup_id', ['type' => 'hidden', 'value' => false]);
+				echo $this->Form->input('xfgroup_id', ['label' => false, 'value' => false, 'type' => 'text']);
+				?>
+			</td>
+			<td>
+				<?php
+				echo $this->Form->input('fevent_id', ['type' => 'hidden', 'value' => false]);
+				echo $this->Form->input('xfevent_id', ['label' => false, 'value' => false, 'type' => 'text']);
+				?>
+			</td>
+			<td>
+				<?php
+				echo $this->Form->input('fdetail', ['label' => false, 'value' => false]);
+				?>
+			</td>
+			<td>
+				
+			</td>
+			<td>
+				<?= $this->Form->button(__('Filter'), ['class' => 'radius']) ?>
+			</td>
+			<?php
+			echo $this->Form->end();
+			?>
+		</tr>
 		<tr>
 			<th><?= $this->Paginator->sort('contact_id') ?></th>
 			<th><?= $this->Paginator->sort('date') ?></th>
@@ -31,6 +84,15 @@ echo $this->element('ajax-images');
 	</thead>
 	<tbody>
 		<tr>
+			<?php
+			echo $this->Form->create(null,
+										['id' => 'hForm',
+										 'url' => [
+												   'controller' => 'Histories',
+												   'action' => 'add'
+												   ]
+										 ]);
+			?>
 			<td>
 				<?php
 				echo $this->Form->input('contact_id', ['type' => 'hidden']);
@@ -41,8 +103,7 @@ echo $this->element('ajax-images');
 				<?php
 				echo $this->Form->input('date',
 											['label' => false,
-											 'value' => date('Y-m-d'),
-											 'class' => 'dontdel']);
+											 'value' => date('Y-m-d')]);
 				?>
 			</td>
 			<td id="uName">
@@ -78,6 +139,9 @@ echo $this->element('ajax-images');
 				//echo $this->Form->input('family');
 				?>
 			</td>
+			<?php
+			echo $this->Form->end();
+			?>
 		</tr>
 		
 		<?php foreach ($histories as $history): ?>
@@ -104,9 +168,6 @@ echo $this->element('ajax-images');
 		<?php endforeach; ?>
 	</tbody>
 	</table>
-	<?php
-	echo $this->Form->end();
-	?>
 	<div class="paginator">
 		<ul class="pagination centered">
 		<?php
