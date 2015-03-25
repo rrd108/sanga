@@ -59,7 +59,7 @@ echo $this->Html->script('sanga.users.view.js', ['block' => true]);
 						<div class="column large-6 panel">
 							<p class="ed">
 								&nbsp;
-								<span class="dta">***</span>
+								<span class="dta">******</span>
 								<?php
 								echo $this->Form->input('password',
 												   ['templates' => ['inputContainer' => '{{content}}'],
