@@ -46,7 +46,9 @@ class HistoriesController extends AppController {
 			}
 			if ( ! empty($this->request->data['daterange'])){
 				$dates = split(' - ', $this->request->data['daterange']);
-				$where['Histories.date BETWEEN "' . $dates[0] . '" AND "' . $dates[1] . '"'];
+				$between = function($exp) use($dates){
+					return $exp->between('date', $dates[0], $dates[1], 'date');
+				};
 			}
 			if ( ! empty($this->request->data['fuser_id'])){
 				$where['Histories.user_id'] = $this->request->data['fuser_id'];
@@ -62,6 +64,10 @@ class HistoriesController extends AppController {
 			}
 			
 			$histories = $this->Histories->find()->where($where);
+			
+			if (isset($dates)) {
+				$histories->andWhere($between);
+			}
 		} else {
 			$histories = $this->Histories;
 		}
