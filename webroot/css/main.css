@@ -79,7 +79,7 @@ main.primary-content:after { clear: both; }
 .ui-autocomplete li { display: block; float: none; margin: 0; padding: 0; widows: 100%; }
 .ui-autocomplete li:before { display: none; }
 .ui-autocomplete li a { color: #ffffff; display: block; padding: 0.3125rem 0.625rem; width: 100%; }
-.ui-autocomplete li a:hover { background: #0b464c; }
+.ui-autocomplete li a:hover, .ui-autocomplete .ui-state-focus { background: #0b464c; }
 
 /* VIEWS */
 .users.view { border-left: solid 1px #e5e5e5; }
