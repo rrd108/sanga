@@ -127,7 +127,7 @@ class ContactsController extends AppController {
 								->contain(['Zips', 'Users', 'Groups'])
 								->where(['Contacts.id IN ' => $myContacts])
 								->orWhere(['Contacts.id IN ' => $inmygroupsContacts])
-								->order(['Contacts.contactname' => 'ASC']);
+								->order(['Contacts.name' => 'ASC']);
 		$this->set('contacts', $this->paginate($contacts));
 	}
 
