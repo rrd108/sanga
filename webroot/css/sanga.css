@@ -122,6 +122,11 @@ input.editbox{
   position: absolute; left:-999em;
 }
 
+p.ed{
+  min-width: 1em;
+  min-height: 1.2em;
+}
+
 .dashstat {
   width: 25%;
   float: left;

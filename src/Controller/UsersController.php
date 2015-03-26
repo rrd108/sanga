@@ -240,8 +240,8 @@ class UsersController extends AppController {
 		$dash['contacts']['birthdayown'] = $this->Users->Contacts
 				->find('ownedBy', ['User.id' => $this->Auth->user('id')])
 				->where([
-						 'Contacts.birth >=' => $today,
-						 'Contacts.birth >=' => $nextweek
+						 'CONCAT(MONTH(Contacts.birth),"-",DAY(Contacts.birth)) >=' => date('n-j'),
+						 'CONCAT(MONTH(Contacts.birth),"-",DAY(Contacts.birth)) <=' => date('n-j', $nextweek)
 						 ])
 				->count();
 
