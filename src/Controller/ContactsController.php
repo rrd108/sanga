@@ -277,6 +277,7 @@ class ContactsController extends AppController {
 			'contain' => ['Groups', 'Skills', 'Users', 'Zips']
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
+
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
 
 			if(isset($this->request->data['family_member_id'])){

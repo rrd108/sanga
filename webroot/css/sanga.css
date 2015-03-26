@@ -75,7 +75,12 @@ input.editbox{
   width: 85%;
   padding: 0;
 }
-
+input.editbox.zip, span.zip, input.thin{
+  width: 30%;
+}
+input.editbox.addr, span.addr{
+  width: 55%;
+}
 /* Contacts/google */
 .gContact{
   width: 33%;
@@ -137,4 +142,10 @@ p.ed{
   font-size: 450%;
   font-weight: bold;
   margin-bottom: 0;
+}
+
+.cake-error{
+  z-index: 1000;
+  position: absolute;
+  background: yellow;
 }

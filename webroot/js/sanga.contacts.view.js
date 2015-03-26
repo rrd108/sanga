@@ -144,7 +144,7 @@ $(function() {
 			} else {
 				newData = $(this).val();
 			}
-			editedData[$(this).attr('id')] = newData;
+			editedData[$(this).attr('name')] = newData;
 		}
 		var theP = $(this).parent();
 		var oldData = theSpan.text();

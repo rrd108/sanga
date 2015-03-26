@@ -7,6 +7,7 @@ use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Entity;
+use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 use Cake\Log\Log;
 
@@ -31,6 +32,7 @@ class ContactsTable extends Table {
 			'foreignKey' => 'zip_id',
 		]);
         $this->belongsTo('WorkplaceZips', [
+			'className' => 'Zips',
             'foreignKey' => 'workplace_zip_id'
         ]);
 		$this->belongsTo('Contactsources', [
@@ -113,10 +115,8 @@ class ContactsTable extends Table {
     {
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['zip_id'], 'Zips'));
-        $rules->add($rules->existsIn(['workplace_zip_id'], 'WorkplaceZips'));
-        $rules->add($rules->existsIn(['family_id'], 'Families'));
+        $rules->add($rules->existsIn(['workplace_zip_id'], 'Zips'));
         $rules->add($rules->existsIn(['contactsource_id'], 'Contactsources'));
-        $rules->add($rules->existsIn(['google_id'], 'Googles'));
         return $rules;
     }
 

@@ -173,7 +173,8 @@ echo $this->element('ajax-images');
 	
 						?>
 					</p>
-				</div></div>
+					</div>
+				</div>
 
 				<div class="row">
 				<div class="column large-4">
@@ -394,10 +395,10 @@ echo $this->element('ajax-images');
 		<div class="row">
 			<div class="large-9 columns strings">
 				<div class="row">
-					<div class="large-4 columns strings">
+					<div class="large-4 column">
 						<label><?= __('Workplace') ?></label>
 					</div>
-					<div class="large-8 columns strings">
+					<div class="large-8 column">
 						<p class="ed">
 							
 							<span class="dta"><?= h($contact->workplace) ?></span>
@@ -410,7 +411,96 @@ echo $this->element('ajax-images');
 													]);
 							?>
 						</p>
-						<h6 class="subheader"><?= __('Skills') ?></h6>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="column large-4">
+						<label><?= __('Workplace Address') ?></label>
+					</div>
+					<div class="column large-8">
+					<p class="ed">
+						<?php
+						echo '<span class="dta workplace_zip workplace_zip-zip">';
+							if(isset($contact->workplace_zip)){
+								echo $contact->workplace_zip->zip;
+							}
+						echo '</span> ';
+						echo '<span class="dta workplace_zip-name">';
+							if(isset($contact->workplace_zip)){
+								echo $contact->workplace_zip->name;
+							}
+						echo '</span> ';
+						echo $this->Form->input('workplace_zip_id',
+												['type' => 'hidden',
+												 'value' => isset($contact->workplace_zip) ? $contact->workplace_zip->id : false]);
+						
+						echo $this->Form->input('xworkplace_zip',
+												['templates' => ['inputContainer' => '{{content}}'],
+												 'type' => 'text',
+												'class' => 'editbox zip',
+												'label' => false,
+												 'value' => isset($contact->workplace_zip) ? $contact->workplace_zip->zip : ''
+												 ]);
+						
+						echo '<span class="dta addr address">';
+							echo h($contact->workplace_address);
+						echo '</span>';
+						echo $this->Form->input('workplace_address',
+												['templates' => ['inputContainer' => '{{content}}'],
+												'class' => 'editbox addr',
+												'label' => false,
+												 'value' => $contact->workplace_address
+												 ]);
+	
+						?>
+					</p>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="large-4 column">
+						<label><?= __('Workplace Phone') ?></label>
+					</div>
+					<div class="large-8 column">
+						<p class="ed">
+							
+							<span class="dta"><?= h($contact->workplace_phone) ?></span>
+							<?php
+							echo $this->Form->input('workplace_phone',
+													['templates' => ['inputContainer' => '{{content}}'],
+													'class' => 'editbox',
+													'label' => false,
+													'value' => $contact->workplace_phone
+													]);
+							?>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="large-4 column">
+						<label><?= __('Workplace Email') ?></label>
+					</div>
+					<div class="large-8 column">
+						<p class="ed">
+							
+							<span class="dta"><?= h($contact->workplace_email) ?></span>
+							<?php
+							echo $this->Form->input('workplace_email',
+													['templates' => ['inputContainer' => '{{content}}'],
+													'class' => 'editbox',
+													'label' => false,
+													'value' => $contact->workplace_email
+													]);
+							?>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="large-4 column">
+						<label><?= __('Skills') ?></label>
+					</div>
+					<div class="large-8 column">
 						<p class="ed">&nbsp;
 							<?php if (!empty($contact->skills)): ?>
 								<?php
