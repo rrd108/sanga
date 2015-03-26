@@ -50,7 +50,7 @@ class NotificationsTable extends Table {
 		public function findUnread(Query $query, array $options){
 			$query->where([
 					'Notifications.unread' => true,
-					'Notifications.user_id' => $options['user_id']
+					'Notifications.user_id' => $options['User.id']
 					]);
 			return $query;
 		}
