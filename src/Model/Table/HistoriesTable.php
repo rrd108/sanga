@@ -72,4 +72,15 @@ class HistoriesTable extends Table {
 		return $validator;
 	}
 
+/**
+ * Find histories owned by given user(s)
+ * The given users are the contact persons for the contact
+ */
+	public function findOwnedBy(Query $query, array $options){
+		return $query
+				->matching('Users', function($q) use ($options) {
+					    return $q->where(['Users.id IN ' => $options['User.id']]);
+					});
+	}
+
 }

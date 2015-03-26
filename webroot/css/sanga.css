@@ -33,11 +33,11 @@ nav.primary span.notice{
 .fl{
   float: left;
 }
-
+*/
 .cl{
   clear: left;
 }
-*/
+
 .dn{
   display: none;
 }
@@ -120,4 +120,16 @@ input.editbox{
 
 .ui-helper-hidden-accessible{
   position: absolute; left:-999em;
+}
+
+.dashstat {
+  width: 20%;
+  float: left;
+  margin-bottom: 2em;
+}
+
+.dashstat h6{
+  font-size: 450%;
+  font-weight: bold;
+  margin-bottom: 0;
 }

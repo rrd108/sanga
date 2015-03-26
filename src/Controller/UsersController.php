@@ -217,6 +217,44 @@ class UsersController extends AppController {
 		$this->set(compact('json'));
 		$this->set('_serialize', 'json');
 	}
+	
+	public function dashboard(){
+		$lastweek = strtotime('-7 days', strtotime('now'));
+		$dash['contacts']['total'] = $this->Users->Contacts
+				->find()->count();
+		
+		$dash['contacts']['newtotal'] = $this->Users->Contacts
+				->find()
+				->where(['Contacts.created >=' => $lastweek])
+				->count();
+
+		$dash['histories']['total'] = $this->Users->Histories
+				->find()->count();
+		
+		$dash['contacts']['own'] = $this->Users->Contacts
+				->find('ownedBy', ['User.id' => $this->Auth->user('id')])->count();
+		
+		$dash['contacts']['newown'] = $this->Users->Contacts
+				->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+				->where(['Contacts.created >=' => $lastweek])
+				->count();
+
+		$dash['histories']['own'] = $this->Users->Histories
+				->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+				->count();
+		
+		$dash['histories']['week'] = $this->Users->Histories
+				->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+				->where(['Histories.date >= ' => date('Y-m-d', $lastweek)])
+				->count();
+
+		$dash['histories']['last2weeks'] = $this->Users->Histories
+				->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+				->where(['Histories.date >= ' => date('Y-m-d', strtotime('-14 days', strtotime('now')))])
+				->count();
+
+		$this->set(compact('dash'));
+	}
 
 /**
  * Delete method
