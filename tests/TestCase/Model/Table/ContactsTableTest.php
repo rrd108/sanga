@@ -16,25 +16,30 @@ class ContactsTableTest extends TestCase {
  *
  * @var array
  */
-	public $fixtures = [
-		'app.contacts',
-		'app.zips',
-		'app.countries',
-		'app.contactsources',
-		'app.histories',
-		'app.users',
-		'app.events',
-		'app.groups',
-		'app.groups_users',
-		'app.contacts_groups',
-		'app.notifications',
-		'app.contacts_users',
-		'app.usergroups',
-		'app.users_usergroups',
-		'app.units',
-		'app.skills',
-		'app.contacts_skills'
-	];
+    public $fixtures = [
+        'Contacts' => 'app.contacts',
+        'Zips' => 'app.zips',
+        'Countries' => 'app.countries',
+        'WorkplaceZips' => 'app.workplace_zips',
+        'Families' => 'app.families',
+        'Contactsources' => 'app.contactsources',
+        'Googles' => 'app.googles',
+        'Histories' => 'app.histories',
+        'Users' => 'app.users',
+        'Events' => 'app.events',
+        'AdminGroups' => 'app.admin_groups',
+        'AdminUsers' => 'app.admin_users',
+        'Notifications' => 'app.notifications',
+        'ContactsUsers' => 'app.contacts_users',
+        'Groups' => 'app.groups',
+        'ContactsGroups' => 'app.contacts_groups',
+        'groups_users' => 'app.groups_users',
+        'Usergroups' => 'app.usergroups',
+        'UsersUsergroups' => 'app.users_usergroups',
+        'Units' => 'app.units',
+        'Skills' => 'app.skills',
+        'ContactsSkills' => 'app.contacts_skills'
+    ];
 
 /**
  * setUp method

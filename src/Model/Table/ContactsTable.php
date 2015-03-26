@@ -30,6 +30,9 @@ class ContactsTable extends Table {
 		$this->belongsTo('Zips', [
 			'foreignKey' => 'zip_id',
 		]);
+        $this->belongsTo('WorkplaceZips', [
+            'foreignKey' => 'workplace_zip_id'
+        ]);
 		$this->belongsTo('Contactsources', [
 			'foreignKey' => 'contactsource_id',
 		]);
@@ -83,8 +86,11 @@ class ContactsTable extends Table {
 			->allowEmpty('birth')
 			->add('sex', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('sex')
-			->allowEmpty('workplace')
-			->add('family_id', 'valid', ['rule' => 'alphanumeric'])
+            ->allowEmpty('workplace')
+            ->allowEmpty('workplace_address')
+            ->allowEmpty('workplace_phone')
+            ->allowEmpty('workplace_email')
+  			->add('family_id', 'valid', ['rule' => 'alphanumeric'])
 			->allowEmpty('family_id')
 			->add('contactsource_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('contactsource_id')
@@ -95,6 +101,24 @@ class ContactsTable extends Table {
 
 		return $validator;
 	}
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['email']));
+        $rules->add($rules->existsIn(['zip_id'], 'Zips'));
+        $rules->add($rules->existsIn(['workplace_zip_id'], 'WorkplaceZips'));
+        $rules->add($rules->existsIn(['family_id'], 'Families'));
+        $rules->add($rules->existsIn(['contactsource_id'], 'Contactsources'));
+        $rules->add($rules->existsIn(['google_id'], 'Googles'));
+        return $rules;
+    }
 
 	public function beforeSave(Event $event, Entity $entity, ArrayObject $options){
 		if ($entity->isNew()) {
