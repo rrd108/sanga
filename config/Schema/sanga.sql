@@ -485,3 +485,19 @@ ALTER TABLE `zips`
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 ALTER TABLE `users` ADD `resettoken` VARCHAR( 32 ) NOT NULL AFTER `role` ;
+
+ALTER TABLE `sanga`.`contacts` 
+ADD COLUMN `workplace_zip_id` MEDIUMINT(8) UNSIGNED NULL DEFAULT NULL AFTER `workplace`,
+ADD COLUMN `workplace_address` VARCHAR(45) NULL DEFAULT NULL AFTER `workplace_zip_id`,
+ADD COLUMN `workplace_phone` VARCHAR(45) NULL DEFAULT NULL AFTER `workplace_address`,
+ADD COLUMN `workplace_email` VARCHAR(45) NULL DEFAULT NULL AFTER `workplace_phone`,
+ADD INDEX `fk_contacts_zips2_idx` (`workplace_zip_id` ASC);
+
+ALTER TABLE `sanga`.`contacts` 
+ADD CONSTRAINT `fk_contacts_zips2`
+  FOREIGN KEY (`workplace_zip_id`)
+  REFERENCES `sanga`.`zips` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+ 
+ 
