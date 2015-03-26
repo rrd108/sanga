@@ -1,6 +1,25 @@
 $(function() {	
 	$('#date').datepicker();
 	
+	$('#xcontact-id').autocomplete({
+		minLength : 2,
+		html: true,
+		source : $.sanga.baseUrl + '/Contacts/search',
+		focus: function() {
+			return false;
+		},		
+		select : function(event, ui) {	//when we select something from the dropdown
+			this.value = ui.item.label;
+			$('#contact-id').val(ui.item.value);
+			return false;
+		},
+		change : function(event, ui) {
+			this.value = ui.item.label;
+			$('#contact-id').val(ui.item.value);
+			return false;
+		}
+	});
+	
 	$('#xgroup-id').autocomplete({
 		minLength : 2,
 		source : $.sanga.baseUrl + '/Groups/search',
@@ -18,7 +37,7 @@ $(function() {
 			return false;
 		}
 	});
-	
+
 	$('#xevent-id').autocomplete({
 		minLength : 2,
 		source : $.sanga.baseUrl + '/Events/search',
