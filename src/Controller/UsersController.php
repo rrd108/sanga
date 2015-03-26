@@ -219,7 +219,10 @@ class UsersController extends AppController {
 	}
 	
 	public function dashboard(){
+		$today = strtotime('now');
 		$lastweek = strtotime('-7 days', strtotime('now'));
+		$nextweek = strtotime('+7 days', strtotime('now'));
+		
 		$dash['contacts']['total'] = $this->Users->Contacts
 				->find()->count();
 		
@@ -234,6 +237,14 @@ class UsersController extends AppController {
 		$dash['contacts']['own'] = $this->Users->Contacts
 				->find('ownedBy', ['User.id' => $this->Auth->user('id')])->count();
 		
+		$dash['contacts']['birthdayown'] = $this->Users->Contacts
+				->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+				->where([
+						 'Contacts.birth >=' => $today,
+						 'Contacts.birth >=' => $nextweek
+						 ])
+				->count();
+
 		$dash['contacts']['newown'] = $this->Users->Contacts
 				->find('ownedBy', ['User.id' => $this->Auth->user('id')])
 				->where(['Contacts.created >=' => $lastweek])

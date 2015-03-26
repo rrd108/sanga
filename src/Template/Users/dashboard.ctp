@@ -23,6 +23,10 @@
 				<p><?= __('New Contacts this week') ?></p>
 			</div>
 			<div class="dashstat">
+				<h6><?= $dash['contacts']['birthdayown'] ?></h6>
+				<p><?= __('Birthdays this week') ?></p>
+			</div>
+			<div class="dashstat">
 				<h6><?= $dash['histories']['own'] ?></h6>
 				<p><?= __('Histories') ?></p>
 			</div>
