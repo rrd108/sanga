@@ -10,8 +10,8 @@
         "cakephp/migrations": "dev-master",
         "cakephp/plugin-installer": "*",
         "mobiledetect/mobiledetectlib": "2.*",
-        "rrd/rbruteforce": "*",
-        "google/apiclient": "1.0.*@beta"
+        "google/apiclient": "1.0.*@beta",
+        "rrd/rbruteforce": "dev-master"
     },
     "require-dev": {
         "psy/psysh": "@stable",
