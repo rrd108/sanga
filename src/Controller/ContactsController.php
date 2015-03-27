@@ -406,6 +406,32 @@ class ContactsController extends AppController {
 		}
 	}
 	
+	public function removeSkill(){
+		if ($this->request->is('post') && $this->request->is('ajax')) {
+			$contact = $this->Contacts->get($this->request->data['contact_id'], ['contain' => ['Skills']]);
+			
+			$skills = [];
+			foreach($contact->skills as $skill){
+				if($skill->id != $this->request->data['skill_id']){
+					$skills[] = $skill->id;
+				}
+			}
+			$this->request->data['skills']['_ids'] = $skills;
+			$contact->loggedInUser = $this->Auth->user('id');
+			$this->Contacts->patchEntity($contact, $this->request->data);
+			if($this->Contacts->save($contact)){
+				$result = ['saved' => true,
+						   'message' => __('Skill removed')];
+			}
+			else{
+				$result = ['saved' => false,
+						   'message' => __('Skill not removed')];
+			}
+			$this->set(compact('result'));
+			$this->set('_serialize', 'result');
+		}
+	}
+
 	private function google_client(){
 		require_once('../vendor/google/apiclient/src/Google/Client.php');
 		$client = new Google_Client();

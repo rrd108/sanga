@@ -132,19 +132,20 @@ $(function() {
 					skill_id : $(this).data('id')},
 			type : 'post',
 			dataType : 'json',
-
-
 			error : function(jqXHR, textStatus, errorThrown){
-				$('#ajaxloader').hide();
-				theP.append($('#errorImg').show());
+				noty({
+					text: textStatus,
+					type: 'error',
+					timeout: 3500,
+					});
 				theSpan.text(oldData);
 			},
 			success : function(data, textStatus, jqXHR){
-				$('#ajaxloader').hide();
-				theP.append($('#okImg').show().hide(12500));
-				if (addSpan) {
-					theP.append('<span class="tag tag-viewable draggable">' + addSpan + '</span> ');
-				}
+				noty({
+					text: textStatus + ' ' + jqXHR.responseJSON.message,
+					type: 'success',
+					timeout: 3500,
+					});
 			}
 		});
 	});
