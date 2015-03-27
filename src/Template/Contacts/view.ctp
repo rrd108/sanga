@@ -32,7 +32,7 @@ echo $this->element('ajax-images');
 	<div class="content-wrapper">
 	<div class="row">	
 	<?php
-	echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit', $contact->id]);
+	echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit']);
 	?>
 	
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
@@ -504,16 +504,26 @@ echo $this->element('ajax-images');
 						<label><?= __('Skills') ?></label>
 					</div>
 					<div class="large-8 column">
-						<p class="ed">&nbsp;
+						<p class="ed">
+							<span class="dta">
 							<?php if (!empty($contact->skills)): ?>
 								<?php
 								foreach ($contact->skills as $skills):
-									echo '<span class="tag tag-shared">';
+									echo '<span class="tag tag-shared removeable" data-id="' . $skills->id . '">';
 										echo h($skills->name);
 									echo '</span> ';
 								endforeach;
 								?>
 							<?php endif; ?>
+							</span>
+							<?php
+							echo $this->Form->input('skills._ids',
+									['templates' => ['inputContainer' => '{{content}}'],
+									 'class' => 'editbox',
+									 'label' => false,
+									 'value' => false,
+									 'type' => 'text']);
+							?>
 						</p>
 					</div>
 				</div>
@@ -681,7 +691,7 @@ echo $this->element('ajax-images');
 				foreach($accessibleGroups as $group){
 					if(!in_array($group->id, $cGroups)){
 						//$cGroups[] = $group->id;
-						$cssStyle = $group->shared ? 'info' : (($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'primary' : 'success');
+						$cssStyle = $group->shared ? 'shared' : (($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'mine' : 'viewable');
 						echo "\n" .
 							'<span class="draggable notmember tag tag-default"
 									data-css="tag-'.$cssStyle.'"

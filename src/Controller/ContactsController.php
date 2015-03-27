@@ -178,6 +178,25 @@ class ContactsController extends AppController {
 		$this->set(compact('hasAccess'));
 	}
 
+	private function patchSkills($contact){
+		//debug($this->request->data);die();
+			/*'skills' => [
+				'_ids' => [
+					(int) 0 => '1',			//found in skills, this is the id
+					(int) 1 => '~könyvelő'		//starts with "~" this is a new skill (or fast typer problem)
+				]]
+			*/
+		if(is_array($this->request->data['skills']['_ids'])){
+			foreach($this->request->data['skills']['_ids'] as $i => $skill){
+				if(mb_substr($skill, 0,1) == '~'){
+					$skill = ltrim($skill, '~');
+					$contact->skills[] = $this->Contacts->Skills->newEntity(['name' => $skill]);
+				}
+			}
+		}
+		return $contact;
+	}
+
 /**
  * Add method
  *
@@ -186,21 +205,7 @@ class ContactsController extends AppController {
 	public function add() {
 		$contact = $this->Contacts->newEntity($this->request->data);
 		if($this->request->data){
-			//debug($this->request->data);die();
-			/*'skills' => [
-				'_ids' => [
-					(int) 0 => '1',			//found in skills, this is the id
-					(int) 1 => '~könyvelő'		//starts with "~" this is a new skill (or fast typer problem)
-				]]
-			*/
-			if(is_array($this->request->data['skills']['_ids'])){
-				foreach($this->request->data['skills']['_ids'] as $i => $skill){
-					if(mb_substr($skill, 0,1) == '~'){
-						$skill = ltrim($skill, '~');
-						$contact['skills'][] = $this->Contacts->Skills->newEntity(['name' => $skill]);
-					}
-				}
-			}
+			$contact = $this->patchSkills($contact);
 			
 			if($this->request->data['family_member_id']){
 				$contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
@@ -278,8 +283,9 @@ class ContactsController extends AppController {
 			'contain' => ['Groups', 'Skills', 'Users', 'Zips']
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
-
+			
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
+			$contact = $this->patchSkills($contact);
 
 			if(isset($this->request->data['family_member_id'])){
 				$contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
