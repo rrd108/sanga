@@ -140,50 +140,57 @@ $(function() {
 	});
 
 	$('#ajaxsave').click(function(event){
-		var theSpan, newData;
-		var editedData = {};
-		var editbox = $(this).parent().find('.editbox');
-		if (editbox.attr('class').search(/zip/) != -1) {
-			if (editbox.attr('id').search(/workplace/) != -1) {
-				theSpan = editbox.parent().find('.workplace_zip-zip');
-				newData = $('#xworkplace-zip').val().split(' ');
-				newData = newData[0];
-				editedData['workplace_zip_id'] = $('#workplace-zip-id').val();
+		var editboxes = $(this).parent().find('.editbox');
+		var editedData = {}, oldData = {}, theSpan, addSpan;
+		
+		editboxes.each(function(index){
+			var newData;
+			var editbox = $(this);
+			
+			if (editbox.attr('class').search(/zip/) != -1) {
+				if (editbox.attr('id').search(/workplace/) != -1) {
+					theSpan = editbox.parent().find('.workplace_zip-zip');
+					newData = $('#xworkplace-zip').val().split(' ');
+					newData = newData[0];
+					editedData['workplace_zip_id'] = $('#workplace-zip-id').val();
+				} else {
+					theSpan = editbox.parent().find('.zip-zip');
+					newData = $('#xzip').val().split(' ');
+					newData = newData[0];
+					editedData['zip_id'] = $('#zip-id').val();
+				}
+			} else if (editbox.attr('class').search(/family/) != -1) {
+				theSpan = editbox.parent().find('.dta');
+				editedData['family_member_id'] = $('#family-member-id').val();
+				addSpan = $('#xfamily').val();
+			} else if (editbox.attr('class').search(/addr/) != -1) {
+				if (editbox.attr('id').search(/workplace/) != -1) {
+					theSpan = editbox.parent().find('.workplace_address');
+					newData = editedData['workplace_address'] = $('#workplace-address').val();
+				} else {
+					theSpan = editbox.parent().find('.address');
+					newData = editedData['address'] = $('#address').val();
+				}
 			} else {
-				theSpan = editbox.parent().find('.zip-zip');
-				newData = $('#xzip').val().split(' ');
-				newData = newData[0];
-				editedData['zip_id'] = $('#zip-id').val();
+				theSpan = editbox.parent().find('.dta');
+				if (editbox.is(':checkbox')) {
+					newData = + editbox.is(':checked');		// + converts bool to int
+				} else if (editbox.is('span')) {		//sex
+					newData = editbox.parent().find(':checked').val();
+				} else {
+					newData = editbox.val();
+				}
+				editedData[editbox.attr('name')] = newData;
 			}
-		} else if (editbox.attr('class').search(/family/) != -1) {
-			theSpan = editbox.parent().find('.dta');
-			editedData['family_member_id'] = $('#family-member-id').val();
-			var addSpan = $('#xfamily').val();
-		} else if (editbox.attr('class').search(/addr/) != -1) {
-			if (editbox.attr('id').search(/workplace/) != -1) {
-				theSpan = editbox.parent().find('.workplace_address');
-				newData = editedData['workplace_address'] = $('#workplace-address').val();
-			} else {
-				theSpan = editbox.parent().find('.address');
-				newData = editedData['address'] = $('#address').val();
-			}
-		} else {
-			theSpan = editbox.parent().find('.dta');
-			if (editbox.is(':checkbox')) {
-				newData = + editbox.is(':checked');		// + converts bool to int
-			} else if (editbox.is('span')) {		//sex
-				newData = editbox.parent().find(':checked').val();
-			} else {
-				newData = editbox.val();
-			}
-			editedData[editbox.attr('name')] = newData;
-		}
-		var theP = editbox.parent();
-		var oldData = theSpan.text();
-		theSpan.text(newData);
+			oldData[editbox.attr('name')] = theSpan.text();
+			theSpan.text(newData);
+		});
+
 		$('#editlink').hide();
+		var theP = $(editboxes[0]).parent();
 		theP.append($('#ajaxloader').show());
 
+		$('#ajaxsave').hide();
 		$.ajax({
 			url : $('#editForm').attr('action'),
 			data : editedData,
@@ -202,7 +209,7 @@ $(function() {
 				}
 			}
 		});
-		editbox.hide();
+		editboxes.hide();
 		theSpan.show();
 		event.preventDefault();
 	});

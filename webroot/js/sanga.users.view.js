@@ -64,6 +64,7 @@ $(function() {
 		$('#editlink').hide();
 		theP.append($('#ajaxloader').show());
 
+		$('#ajaxsave').hide();
 		$.ajax({
 			url : $('#editForm').attr('action'),
 			data : editedData,
