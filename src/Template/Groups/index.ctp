@@ -75,7 +75,7 @@
 				<?= $this->Html->link(__('View'), ['action' => 'view', $group->id]) ?>
 				<?php
 				if($group->admin_user_id == $this->Session->read('Auth.User.id')){
-					echo $this->Html->link(__('Edit'), ['action' => 'edit', $group->id]);
+					//echo $this->Html->link(__('Edit'), ['action' => 'edit', $group->id]);
 					echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $group->id], ['confirm' => __('Are you sure you want to delete # {0}?', $group->id)]);
 				}
 				?>

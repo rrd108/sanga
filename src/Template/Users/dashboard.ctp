@@ -1,8 +1,8 @@
 <div class="sidebar-wrapper">
 	<nav class="side-nav">
 		<ul>
-			<li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?></li>
-			<li><?= $this->Html->link(__('New History'), ['controller' => 'Histories', 'action' => 'add']) ?></li>
+			<li><?= $this->Html->link(__('Contacts'), ['controller' => 'Contacts']) ?></li>
+			<li><?= $this->Html->link(__('Histories'), ['controller' => 'Histories']) ?></li>
 		</ul>
 	</nav>
 </div>

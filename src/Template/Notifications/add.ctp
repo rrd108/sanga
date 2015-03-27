@@ -16,7 +16,6 @@
 			<?php
 				echo $this->Form->input('user_id', ['options' => $users]);
 				echo $this->Form->input('notification');
-				echo $this->Form->input('unread', ['checked' => true]);
 			?>
 			</fieldset>
 		<?= $this->Form->button(__('Submit')) ?>
