@@ -20,11 +20,11 @@ $(function() {
 	//family
 	$("#notfamilymember").droppable({
 		over : function(event, ui){
-			$(this).addClass("ui-state-highlight");
+			$(this).addClass("highlight");
 			$(this).children('div').addClass('delete-open').removeClass("delete-close");
 		},
 		out : function(event, ui){
-			$(this).removeClass("ui-state-highlight");
+			$(this).removeClass("highlight");
 			$(this).children('div').addClass('delete-close').removeClass("delete-open");
 		},
 		drop : function(event, ui){
@@ -39,7 +39,7 @@ $(function() {
 				},
 				success : function(data, textStatus, jqXHR){
 					ui.draggable.hide();
-					$(event.target).removeClass("ui-state-highlight");
+					$(event.target).removeClass("highlight");
 				}
 			});
 		}
@@ -49,10 +49,10 @@ $(function() {
 	$("#member").droppable({
 		accept: ".notmember",
 		over : function(event, ui){
-			$(this).addClass("ui-state-highlight");
+			$(this).addClass("highlight");
 		},
 		out : function(event, ui){
-			$(this).removeClass("ui-state-highlight");
+			$(this).removeClass("highlight");
 		},
 		drop : function(event, ui) {
 			$.ajax({
@@ -72,7 +72,7 @@ $(function() {
 					d.removeClass("tag-default notmember");
 					d.addClass("member");
 					d.addClass(ui.draggable.data('css'));
-					$(event.target).removeClass("ui-state-highlight");
+					$(event.target).removeClass("highlight");
 				}
 			});
 		}
@@ -81,10 +81,10 @@ $(function() {
 	$("#notmember").droppable({
 		accept: ".member",
 		over : function(event, ui){
-			$(this).addClass("ui-state-highlight");
+			$(this).addClass("highlight");
 		},
 		out : function(event, ui){
-			$(this).removeClass("ui-state-highlight");
+			$(this).removeClass("highlight");
 		},
 		drop : function(event, ui) {
 			$.ajax({
@@ -104,7 +104,7 @@ $(function() {
 					d.removeClass(ui.draggable.data('css'));
 					d.removeClass("member");
 					d.addClass("tag-default notmember");
-					$(event.target).removeClass("ui-state-highlight");
+					$(event.target).removeClass("highlight");
 				}
 			});
 		}
@@ -123,6 +123,32 @@ $(function() {
 			$('#editlink').hide();
 		}
 	);
+
+	$(document).on('click', '.removeable', function(){
+		//remove skills (span removed by sanga.contacts.add.js) but on edit we should do some ajax
+		$.ajax({
+			url : $.sanga.baseUrl + '/Contacts/removeSkill',
+			data : {contact_id : $('#contact-id').val(),
+					skill_id : $(this).data('id')},
+			type : 'post',
+			dataType : 'json',
+
+
+			error : function(jqXHR, textStatus, errorThrown){
+				$('#ajaxloader').hide();
+				theP.append($('#errorImg').show());
+				theSpan.text(oldData);
+			},
+			success : function(data, textStatus, jqXHR){
+				$('#ajaxloader').hide();
+				theP.append($('#okImg').show().hide(12500));
+				if (addSpan) {
+					theP.append('<span class="tag tag-viewable draggable">' + addSpan + '</span> ');
+				}
+			}
+		});
+	});
+
 	
 	$('#editForm').submit(function(event){
 		event.preventDefault();

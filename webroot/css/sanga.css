@@ -42,7 +42,7 @@ nav.primary span.notice{
   display: none;
 }
 
-/*.draggable{
+.draggable{
   cursor: grab;
 }
 
@@ -52,7 +52,14 @@ nav.primary span.notice{
 
 .removeable{
   cursor: not-allowed;
-}*/
+}
+.removeable:hover{
+  background: #777777;
+}
+
+.highlight{
+  background: #DFFFE0;
+}
 
 .error:before{
   content: "✖";
