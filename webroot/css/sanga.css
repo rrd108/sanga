@@ -126,6 +126,9 @@ input.editbox.addr, span.addr{
 .ui-helper-hidden-accessible{
   position: absolute; left:-999em;
 }
+.ui-tabs-active, .ui-state-active{
+  background: #0b464c;
+}
 
 p.ed{
   min-width: 1em;
