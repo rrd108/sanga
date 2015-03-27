@@ -84,6 +84,28 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 		echo '</div>';
 		
 		echo '<div class="row">';
+			echo $this->Form->input('xworkplace_zip',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius',
+										'type' => 'text',
+										'label' => __('Zip')]);
+			echo $this->Form->input('workplace_zip_id',
+										['type' => 'hidden']);
+			echo $this->Form->input('workplace_address',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius']);
+		echo '</div>';
+
+		echo '<div class="row">';
+			echo $this->Form->input('workplace_phone',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius']);
+			echo $this->Form->input('workplace_email',
+										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										 'class' => 'radius']);
+		echo '</div>';
+
+		echo '<div class="row">';
 			echo $this->Form->input('xfamily',
 										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
 										 'class' => 'radius',
