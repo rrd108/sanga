@@ -113,9 +113,16 @@ input.editbox.addr, span.addr{
 }
 
 
-#ajaxloader, #okImg, #errorImg{
+#ajaxloader, #ajaxsave, #okImg, #errorImg{
   display: none;
   float: right;
+}
+#ajaxsave{
+  border: none;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
 }
 /*icons: http://www.iconsdb.com/royal-blue-icons*/
 
