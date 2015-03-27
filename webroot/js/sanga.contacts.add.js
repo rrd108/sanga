@@ -73,6 +73,24 @@ $(function() {
 		}
 	});
 	
+	$('#xworkplace-zip').autocomplete({
+		minLength : 2,
+		source : $.sanga.baseUrl + '/Zips/search',
+		focus: function() {
+			return false;
+		},		
+		select : function(event, ui) {	//when we select something from the dropdown
+			this.value = ui.item.label;
+			$('#workplace-zip-id').val(ui.item.value);
+			return false;
+		},
+		change : function(event, ui) {
+			this.value = ui.item.label;
+			$('#workplace-zip-id').val(ui.item.value);
+			return false;
+		}
+	});
+
 	$('#xfamily').autocomplete({
 		minLength : 2,
 		source : $.sanga.baseUrl + '/Contacts/search',

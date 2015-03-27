@@ -149,8 +149,9 @@ class ContactsController extends AppController {
 			$this->render();
 		}
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['Zips', 'Contactsources', 'Groups', 'Skills', 'Users', 'Histories']
+			'contain' => ['WorkplaceZips', 'Zips', 'Contactsources', 'Groups', 'Skills', 'Users', 'Histories']
 		]);
+		//debug($contact);die();
 		$this->set('contact', $contact);
 		
 		$family = $this->Contacts->find()

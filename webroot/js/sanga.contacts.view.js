@@ -123,18 +123,34 @@ $(function() {
 	$('#editForm').submit(function(event){
 		event.preventDefault();
 	});
+
 	$('.editbox').change(function(event){
 		var theSpan, newData;
 		var editedData = {};
 		if ($(this).attr('class').search(/zip/) != -1) {
-			theSpan = $(this).parent().find('.zip-zip');
-			newData = $('#xzip').val().split(' ');
-			newData = newData[0];
-			editedData['zip_id'] = $('#zip-id').val();
+			if ($(this).attr('id').search(/workplace/) != -1) {
+				theSpan = $(this).parent().find('.workplace_zip-zip');
+				newData = $('#xworkplace-zip').val().split(' ');
+				newData = newData[0];
+				editedData['workplace_zip_id'] = $('#workplace-zip-id').val();
+			} else {
+				theSpan = $(this).parent().find('.zip-zip');
+				newData = $('#xzip').val().split(' ');
+				newData = newData[0];
+				editedData['zip_id'] = $('#zip-id').val();
+			}
 		} else if ($(this).attr('class').search(/family/) != -1) {
 			theSpan = $(this).parent().find('.dta');
 			editedData['family_member_id'] = $('#family-member-id').val();
 			var addSpan = $('#xfamily').val();
+		} else if ($(this).attr('class').search(/addr/) != -1) {
+			if ($(this).attr('id').search(/workplace/) != -1) {
+				theSpan = $(this).parent().find('.workplace_address');
+				newData = editedData['workplace_address'] = $('#workplace-address').val();
+			} else {
+				theSpan = $(this).parent().find('.address');
+				newData = editedData['address'] = $('#address').val();
+			}
 		} else {
 			theSpan = $(this).parent().find('.dta');
 			if ($(this).is(':checkbox')) {

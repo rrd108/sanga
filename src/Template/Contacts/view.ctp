@@ -426,11 +426,13 @@ echo $this->element('ajax-images');
 								echo $contact->workplace_zip->zip;
 							}
 						echo '</span> ';
+
 						echo '<span class="dta workplace_zip-name">';
 							if(isset($contact->workplace_zip)){
 								echo $contact->workplace_zip->name;
 							}
 						echo '</span> ';
+
 						echo $this->Form->input('workplace_zip_id',
 												['type' => 'hidden',
 												 'value' => isset($contact->workplace_zip) ? $contact->workplace_zip->id : false]);
@@ -443,9 +445,10 @@ echo $this->element('ajax-images');
 												 'value' => isset($contact->workplace_zip) ? $contact->workplace_zip->zip : ''
 												 ]);
 						
-						echo '<span class="dta addr address">';
+						echo '<span class="dta addr workplace_address">';
 							echo h($contact->workplace_address);
 						echo '</span>';
+
 						echo $this->Form->input('workplace_address',
 												['templates' => ['inputContainer' => '{{content}}'],
 												'class' => 'editbox addr',
