@@ -8,7 +8,11 @@ $(function() {
 
 	$('p.ed').hover(
 		function(){		//handlerIn
-			$(this).append($('#editlink').show());
+			if ($(this).find('#ajaxsave').length) {	//if ajaxsave is there we do not needmeditlink
+				$('#editlink').hide();
+			} else {
+				$(this).append($('#editlink').show());
+			}
 		}/*,
 		function(){		//handlerOut
 			$('#editlink').hide();
@@ -22,23 +26,38 @@ $(function() {
 		//and open exactly this one
 		$(this).parent().find('.editbox').show();
 		$(this).parent().find('span.dta').hide();
+		$('#ajaxsave').hide();
 		event.preventDefault();
 	});
+	
+	$('.editbox').keypress(function(event){
+		//hide editlink and show ajaxsave
+		$('#editlink').hide();
+		$(this).parent().append($('#ajaxsave').show());
+		if (event.keyCode == 27) {		// escape key maps to keycode `27`
+			$(this).hide();
+			$(this).parent().find('.dta').show();
+			$('#ajaxsave').hide();
+		}   
 
-	$('.editbox').change(function(event){
+	});
+
+
+	$('#ajaxsave').click(function(event){
 		var theSpan, newData;
 		var editedData = {};
-		theSpan = $(this).parent().find('.dta');
-		if ($(this).is(':checkbox')) {
-			newData = + $(this).is(':checked');		// + converts bool to int
+		var editbox = $(this).parent().find('.editbox');
+		theSpan = editbox.parent().find('.dta');
+		if (editbox.is(':checkbox')) {
+			newData = + editbox.is(':checked');		// + converts bool to int
 		} else {
-			newData = $(this).val();
+			newData = editbox.val();
 		}
-		editedData[$(this).attr('id')] = newData;
-		var theP = $(this).parent();
+		editedData[editbox.attr('id')] = newData;
+		var theP = editbox.parent();
 		var oldData = theSpan.text();
 		if (editedData.password) {
-			theSpan.text('***');
+			theSpan.text('******');
 		} else {
 			theSpan.text(newData);
 		}
@@ -80,7 +99,7 @@ $(function() {
 					});
 			}
 		});
-		$(this).hide();
+		editbox.hide();
 		theSpan.show();
 	});
 	

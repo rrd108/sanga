@@ -113,7 +113,11 @@ $(function() {
 	//personal data, workplace
 	$('p.ed').hover(
 		function(){		//handlerIn
-			$(this).append($('#editlink').show());
+			if ($(this).find('#ajaxsave').length) {	//if ajaxsave is there we do not needmeditlink
+				$('#editlink').hide();
+			} else {
+				$(this).append($('#editlink').show());
+			}
 		},
 		function(){		//handlerOut
 			$('#editlink').hide();
@@ -128,6 +132,11 @@ $(function() {
 		//hide editlink and show ajaxsave
 		$('#editlink').hide();
 		$(this).parent().append($('#ajaxsave').show());
+		if (event.keyCode == 27) {		// escape key maps to keycode `27`
+			$(this).hide();
+			$(this).parent().find('.dta').show();
+			$('#ajaxsave').hide();
+		}   
 	});
 
 	$('#ajaxsave').click(function(event){
