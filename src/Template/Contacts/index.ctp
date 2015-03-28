@@ -1,3 +1,7 @@
+<?php
+echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
+?>
+<div id="dialog">Form for column choose</div>
 <div class="row">
 <div class="contacts index columns large-12">
 	<table cellpadding="0" cellspacing="0">
@@ -7,7 +11,14 @@
 			<th><?= $this->Paginator->sort('name') . ' (' . $this->Paginator->sort('contactname') . ')' ?></th>
 			<th><?= $this->Paginator->sort('zip_id') ?></th>
 			<th><?= __('Phone') ?></th>
-			<th><?= __('Groups') ?></th>
+			<th>
+				<?php
+				echo __('Groups');
+				echo $this->Html->image('plus.png',
+										['id' => 'plus',
+										 'title' => _('Choose columns to display')]);
+				?>
+			</th>
 		</tr>
 	</thead>
 	<tbody>

@@ -166,3 +166,12 @@ p.ed{
   position: absolute;
   background: yellow;
 }
+
+#plus{
+  float: right;
+  cursor: pointer;
+}
+
+#dialog{
+  background: yellow;
+}
