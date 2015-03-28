@@ -500,4 +500,18 @@ ADD CONSTRAINT `fk_contacts_zips2`
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
  
- 
+ CREATE TABLE IF NOT EXISTS `sanga`.`settings` (
+  `id` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` SMALLINT(5) UNSIGNED NOT NULL,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
+  `value` TEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_settings_users1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_settings_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `sanga`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
