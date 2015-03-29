@@ -1,0 +1,19 @@
+⊗ - Logout, Close
+❶ - Zips
+☢ - Countries
+❖ - Units
+☻ - Users
+⚓ - Contact sources
+✋  - User groups
+✄ - Skills
+⁂ - Groups
+✿ - Events
+♥ - Contacts
+⊕ - Add Contact
+⇉ - Google Contact Import
+⚑ - Histories
+♛ - Queries
+✈ - Map
+☭ - Profile
+⚠ - Notifications
+↺ - Filter
