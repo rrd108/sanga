@@ -90,7 +90,7 @@ $(function() {
 			$.ajax({
 				url : $(location).attr('href').replace(/view\/(\d+)/, 'removegroup/$1'),
 				data : {
-							'groups[_ids][]' : [ui.draggable.data('id')]
+							'group_id' : [ui.draggable.data('id')]
 						},
 				type : 'post',
 				dataType : 'json',

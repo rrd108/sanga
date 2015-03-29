@@ -387,46 +387,22 @@ class ContactsController extends AppController {
 	public function removeGroup($id = null){
 		if ($this->request->is('post') && $this->request->is('ajax')) {
 			$contact = $this->Contacts->get($id, ['contain' => ['Groups']]);
-			$groups = [];
-			foreach($contact->groups as $group){
-				if($group->id != $this->request->data['groups']['_ids'][0]){
-					$groups[] = $group->id;
-				}
-			}
-			$this->request->data['groups']['_ids'] = $groups;
-			$contact->loggedInUser = $this->Auth->user('id');
-			$this->Contacts->patchEntity($contact, $this->request->data);
-			if($this->Contacts->save($contact)){
-				$result = ['saved' => true];
-			}
-			else{
-				$result = ['saved' => false];
-			}
+			$group = $this->Contacts->Groups->get($this->request->data['group_id']);
+			$this->Contacts->Groups->unlink($contact, [$group]);			
+			$result = ['saved' => true,
+					   'message' => __('Group membership removed')];
 			$this->set(compact('result'));
+			$this->set('_serialize', 'result');
 		}
 	}
 	
 	public function removeSkill(){
 		if ($this->request->is('post') && $this->request->is('ajax')) {
-			$contact = $this->Contacts->get($this->request->data['contact_id'], ['contain' => ['Skills']]);
-			
-			$skills = [];
-			foreach($contact->skills as $skill){
-				if($skill->id != $this->request->data['skill_id']){
-					$skills[] = $skill->id;
-				}
-			}
-			$this->request->data['skills']['_ids'] = $skills;
-			$contact->loggedInUser = $this->Auth->user('id');
-			$this->Contacts->patchEntity($contact, $this->request->data);
-			if($this->Contacts->save($contact)){
-				$result = ['saved' => true,
-						   'message' => __('Skill removed')];
-			}
-			else{
-				$result = ['saved' => false,
-						   'message' => __('Skill not removed')];
-			}
+			$contact = $this->Contacts->get($this->request->data['contact_id']);
+			$skill = $this->Contacts->Skills->get($this->request->data['skill_id']);
+			$this->Contacts->Skills->unlink($contact, [$skill]);			
+			$result = ['saved' => true,
+					   'message' => __('Skill removed')];
 			$this->set(compact('result'));
 			$this->set('_serialize', 'result');
 		}
