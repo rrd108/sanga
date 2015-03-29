@@ -119,8 +119,14 @@ class ContactsController extends AppController {
 			$select = ['Contacts.name', 'Contacts.contactname', 'Contacts.phone', 'Contacts.email'];
 		} else {
 			$select = unserialize($select->value);
+			
+			//set the request->data array for the view to autofill the settings form
+			$selected = [];
+			foreach ($select as $i => $name) {
+				$selected[str_replace('Contacts.', '', $name)] = 1;
+			}
+			$this->request->data = $selected;
 		}
-		
 		$_myGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id')])->toArray();
 		foreach($_myGroups as $mg){
 			$groupIds[] = $mg->id;

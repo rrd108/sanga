@@ -21,6 +21,7 @@ $(function() {
 	});
 	
 	$('#settingsForm').submit(function(event){
+		event.preventDefault();
 		$.ajax({
 			url : $.sanga.baseUrl + '/Settings/edit',
 			data : $('#settingsForm').serialize(),
@@ -42,7 +43,5 @@ $(function() {
 				location.reload();
 			}
 		});
-
-		event.preventDefault();
 	});
 });

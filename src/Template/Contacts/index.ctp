@@ -4,7 +4,7 @@ echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
 <div id="dialog">
 	<h4><?= __('Choose columns to display') ?></h4>
 	<?php
-	echo $this->Form->create(null, ['id' => 'settingsForm']);
+	echo $this->Form->create($contacts, ['id' => 'settingsForm']);
 	echo $this->Form->input('contactname', ['type' => 'checkbox']);
 	echo $this->Form->input('name', ['type' => 'checkbox']);
 	echo $this->Form->input('zip_id', ['type' => 'checkbox']);
