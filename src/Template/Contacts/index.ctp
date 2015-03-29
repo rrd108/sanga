@@ -52,9 +52,11 @@ echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
 		<tr>
 			<td>
 				<?php
-					foreach($contact->users as $user){
-						$css = ($user->id == $this->Session->read('Auth.User.id')) ? 'mine' : 'viewable';
-						print '<span class="tag tag-'.$css.'">' . $user->name . '</span>' . "\n";
+					if (isset($contact->users)){
+						foreach($contact->users as $user){
+							$css = ($user->id == $this->Session->read('Auth.User.id')) ? 'mine' : 'viewable';
+							print '<span class="tag tag-'.$css.'">' . $user->name . '</span>' . "\n";
+						}
 					}
 				?>
 			</td>
@@ -74,17 +76,19 @@ echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
 			</td>
 			<td>
 				<?php
-					foreach($contact->groups as $group){
-						if($group->shared){
-							$css = 'viewable';
+					if (isset($contact->groups)){
+						foreach($contact->groups as $group){
+							if($group->shared){
+								$css = 'viewable';
+							}
+							elseif($group->admin_user_id == $this->Session->read('Auth.User.id')){
+								$css = 'mine';
+							}
+							else{
+								$css = 'shared';
+							}
+							print '<span class="tag tag-'.$css.'">' . $group->name . '</span>' . "\n";
 						}
-						elseif($group->admin_user_id == $this->Session->read('Auth.User.id')){
-							$css = 'mine';
-						}
-						else{
-							$css = 'shared';
-						}
-						print '<span class="tag tag-'.$css.'">' . $group->name . '</span>' . "\n";
 					}
 				?>
 			</td>

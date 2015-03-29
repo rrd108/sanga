@@ -110,6 +110,7 @@ class ContactsController extends AppController {
  * @return void
  */
 	public function index() {
+		$contain = [];
 		$select = $this->Contacts->Users->Settings
 				->find()
 				->where(['user_id' => $this->Auth->user('id'),
@@ -119,11 +120,16 @@ class ContactsController extends AppController {
 			$select = ['Contacts.name', 'Contacts.contactname', 'Contacts.phone', 'Contacts.email'];
 		} else {
 			$select = unserialize($select->value);
-			
 			//set the request->data array for the view to autofill the settings form
 			$selected = [];
 			foreach ($select as $i => $name) {
 				$selected[str_replace('Contacts.', '', $name)] = 1;
+				
+				if ($name == 'Contacts.zip_id') {
+					$select[] = 'Zips.id';
+					$select[] = 'Zips.name';
+					$contain[] = 'Zips';
+				}
 			}
 			$this->request->data = $selected;
 		}
@@ -140,7 +146,8 @@ class ContactsController extends AppController {
 		array_unshift($select, 'Contacts.id');
 		$contacts = $this->Contacts->find()
 								->select($select)
-								->contain(['Users', 'Groups', 'Skills'])
+								//->contain(['Zips', 'Users', 'Groups', 'Skills'])
+								->contain($contain)
 								->where(['Contacts.id IN ' => $myContacts])
 								->orWhere(['Contacts.id IN ' => $inmygroupsContacts])
 								->order(['Contacts.name' => 'ASC']);
