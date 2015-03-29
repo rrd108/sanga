@@ -125,11 +125,18 @@ class ContactsController extends AppController {
 			foreach ($select as $i => $name) {
 				$selected[str_replace('Contacts.', '', $name)] = 1;
 				
-				if ($name == 'Contacts.zip_id') {
+				if (in_array($name, ['Contacts.zip_id', 'Contacts.workplace_zip_id'])) {
 					$select[] = 'Zips.id';
 					$select[] = 'Zips.name';
 					$contain[] = 'Zips';
 				}
+				if ($name == 'Contacts.contactsource_id') {
+					$select[] = 'Contactsources.id';
+					$select[] = 'Contactsources.name';
+					$contain[] = 'Contactsources';
+				}
+				
+				//users, skills, groups
 			}
 			$this->request->data = $selected;
 		}
