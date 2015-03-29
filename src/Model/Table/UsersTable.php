@@ -38,6 +38,9 @@ class UsersTable extends Table {
 			'foreignKey' => 'user_id',
 			'sort' => ['Notifications.created' => 'DESC']
 		]);
+		$this->hasMany('Settings', [
+			'foreignKey' => 'user_id'
+		]);
 		$this->belongsToMany('Contacts', [
 			'foreignKey' => 'user_id',
 			'targetForeignKey' => 'contact_id',

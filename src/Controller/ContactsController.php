@@ -110,6 +110,17 @@ class ContactsController extends AppController {
  * @return void
  */
 	public function index() {
+		$select = $this->Contacts->Users->Settings
+				->find()
+				->where(['user_id' => $this->Auth->user('id'),
+						 'name' => 'Contacts/index'])
+				->first();
+		if ( empty($select)) {
+			$select = ['Contacts.name', 'Contacts.contactname', 'Contacts.phone', 'Contacts.email'];
+		} else {
+			$select = unserialize($select->value);
+		}
+		
 		$_myGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id')])->toArray();
 		foreach($_myGroups as $mg){
 			$groupIds[] = $mg->id;
@@ -120,11 +131,10 @@ class ContactsController extends AppController {
 		$inmygroupsContacts = $this->Contacts->find('inGroups', ['groupIds' => $groupIds])
 				->select(['Contacts.id']);
 
+		array_unshift($select, 'Contacts.id');
 		$contacts = $this->Contacts->find()
-								->select(['Contacts.id', 'Contacts.name', 'Contacts.contactname',
-										  'Contacts.address', 'Contacts.phone',
-										  'Zips.id', 'Zips.zip', 'Zips.name'])
-								->contain(['Zips', 'Users', 'Groups'])
+								->select($select)
+								->contain(['Users', 'Groups', 'Skills'])
 								->where(['Contacts.id IN ' => $myContacts])
 								->orWhere(['Contacts.id IN ' => $inmygroupsContacts])
 								->order(['Contacts.name' => 'ASC']);

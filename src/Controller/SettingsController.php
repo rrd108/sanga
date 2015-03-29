@@ -11,6 +11,10 @@ use App\Controller\AppController;
 class SettingsController extends AppController
 {
 
+	public function isAuthorized($user = null) {
+        return true;
+    }
+
     /**
      * Index method
      *
@@ -66,27 +70,65 @@ class SettingsController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id Setting id.
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit()
     {
-        $setting = $this->Settings->get($id, [
-            'contain' => []
-        ]);
+        $setting = $this->Settings
+            ->find()
+            ->where(['user_id' => $this->Auth->user('id'),
+					'name' => $this->request->data['sName']])
+            ->first();
+        //debug($setting);die();
+        //debug($this->request->data);die();
+        /*
+        [
+            'contactname' => '1',
+            'name' => '0',
+            'zip_id' => '1',
+            'address' => '0',
+            'phone' => '0',
+            'email' => '0',
+            'birth' => '0',
+            'workplace' => '0',
+            'workplace_zip_id' => '0',
+            'workplace_address' => '0',
+            'workplace_phone' => '0',
+            'workplace_email' => '0',
+            'contactsource_id' => '0',
+            'users' => '0',
+            'skills' => '1',
+            'groups' => '0',
+            'sName' => 'Contacts/index'
+        ]
+        */
+        $select = [];
+        foreach($this->request->data as $name => $value) {
+            if (!in_array($name, ['sName', 'users', 'skills', 'groups']) && $value) {
+                $select[] = 'Contacts.' . $name;
+            }
+        }
+        $this->request->data = ['user_id' => $this->Auth->user('id'),
+                                'name' => $this->request->data['sName'],
+                                'value' => serialize($select)
+                                ];
+        
+        if (empty($setting)){
+            $this->add();
+            //return will be done by add
+        }
+        $setting = $this->Settings->get($setting->id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $setting = $this->Settings->patchEntity($setting, $this->request->data);
             if ($this->Settings->save($setting)) {
-                $this->Flash->success('The setting has been saved.');
-                return $this->redirect(['action' => 'index']);
+                $result = ['message' => __('The setting has been saved')];
             } else {
-                $this->Flash->error('The setting could not be saved. Please, try again.');
+                $result = ['message' => __('The setting could not be saved. Please, try again.')];
             }
         }
-        $users = $this->Settings->Users->find('list', ['limit' => 200]);
-        $this->set(compact('setting', 'users'));
-        $this->set('_serialize', ['setting']);
+        $this->set(compact('result'));
+        $this->set('_serialize', 'result');
     }
 
     /**

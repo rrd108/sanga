@@ -167,11 +167,30 @@ p.ed{
   background: yellow;
 }
 
-#plus{
+#settings{
   float: right;
   cursor: pointer;
 }
 
 #dialog{
-  background: yellow;
+  background: #DFEEFF;
+  padding: 1em;
+}
+.ui-dialog-titlebar{
+  float: right;
+}
+.ui-dialog-titlebar button{
+  font-size: 200%;
+  padding: 0;
+  color: #000;
+  background: #DFEEFF;
+}
+#dialog .checkbox{
+  float: left;
+  margin-right: 1em;
+  width: 20%;
+}
+#dialog button{
+  clear: left;
+  display: block;
 }

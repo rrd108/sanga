@@ -1,7 +1,33 @@
 <?php
 echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
 ?>
-<div id="dialog">Form for column choose</div>
+<div id="dialog">
+	<h4><?= __('Choose columns to display') ?></h4>
+	<?php
+	echo $this->Form->create(null, ['id' => 'settingsForm']);
+	echo $this->Form->input('contactname', ['type' => 'checkbox']);
+	echo $this->Form->input('name', ['type' => 'checkbox']);
+	echo $this->Form->input('zip_id', ['type' => 'checkbox']);
+	echo $this->Form->input('address', ['type' => 'checkbox']);
+	echo $this->Form->input('phone', ['type' => 'checkbox']);
+	echo $this->Form->input('email', ['type' => 'checkbox']);
+	echo $this->Form->input('birth', ['type' => 'checkbox']);
+	echo $this->Form->input('workplace', ['type' => 'checkbox']);
+	echo $this->Form->input('workplace_zip_id', ['type' => 'checkbox']);
+	echo $this->Form->input('workplace_address', ['type' => 'checkbox']);
+	echo $this->Form->input('workplace_phone', ['type' => 'checkbox']);
+	echo $this->Form->input('workplace_email', ['type' => 'checkbox']);
+	echo $this->Form->input('contactsource_id', ['type' => 'checkbox']);
+
+	echo $this->Form->input('users', ['type' => 'checkbox']);
+	echo $this->Form->input('skills', ['type' => 'checkbox']);
+	echo $this->Form->input('groups', ['type' => 'checkbox']);
+
+	echo $this->Form->input('sName', ['type' => 'hidden', 'value' => 'Contacts/index']);
+	echo $this->Form->button(__('Submit'), ['id' => 'submitSettings', 'class' => 'radius']);
+	echo $this->Form->end();
+	?>
+</div>
 <div class="row">
 <div class="contacts index columns large-12">
 	<table cellpadding="0" cellspacing="0">
@@ -9,13 +35,13 @@ echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
 		<tr>
 			<th><?= __('Contact Person') ?></th>
 			<th><?= $this->Paginator->sort('name') . ' (' . $this->Paginator->sort('contactname') . ')' ?></th>
-			<th><?= $this->Paginator->sort('zip_id') ?></th>
+			<th><?= __('Email') ?></th>
 			<th><?= __('Phone') ?></th>
 			<th>
 				<?php
 				echo __('Groups');
-				echo $this->Html->image('plus.png',
-										['id' => 'plus',
+				echo $this->Html->image('settings.png',
+										['id' => 'settings',
 										 'title' => _('Choose columns to display')]);
 				?>
 			</th>
@@ -41,8 +67,7 @@ echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
 				?>
 			</td>
 			<td>
-				<?= $contact->has('zip') ? $contact->zip->zip . ' ' . $contact->zip->name : '' ?>
-				<?= h($contact->address) ?>
+				<?= h($contact->email) ?>
 			</td>
 			<td>
 				<?= h($contact->phone) ?>
