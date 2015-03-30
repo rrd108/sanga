@@ -1,9 +1,9 @@
-⊗ - logout, close
-❶ - zips
-☢ - countries
-❖ - units
-☻ - users
-⚓ - contact sources
+⊗ - Logout, close
+❶ - Zips
+☢ - Countries
+❖ - Units
+☻ - Users
+⚓ - Contact sources
 ✋ - User groups
 ✄ - Skills
 ⁂ - Groups
@@ -16,4 +16,4 @@
 ✈ - Map
 ☭ - Profile
 ⚠ - Notifications
-
+↺ - Filter
