@@ -1,10 +1,10 @@
-⊗ - Logout, Close
-❶ - Zips
-☢ - Countries
-❖ - Units
-☻ - Users
-⚓ - Contact sources
-✋  - User groups
+⊗ - logout, close
+❶ - zips
+☢ - countries
+❖ - units
+☻ - users
+⚓ - contact sources
+✋ - User groups
 ✄ - Skills
 ⁂ - Groups
 ✿ - Events
@@ -16,4 +16,4 @@
 ✈ - Map
 ☭ - Profile
 ⚠ - Notifications
-↺ - Filter
+
