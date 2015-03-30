@@ -11,8 +11,6 @@ composer.lock
 /webroot/scss/components/default/.sass-cache/*
 /webroot/config.codekit
 
-*.scss
-
 /webroot/scss/components/css/select.css
 /webroot/scss/components/css/message-box.css
 /webroot/scss/components/css/menu-button.css
