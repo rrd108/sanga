@@ -4,8 +4,8 @@ $(function() {
 		closeText: '⊗',
 		position: {
 			of: $('#settings'),
-			my: 'top',
-			at: 'right-350'
+			my: 'top+20',
+			at: 'right+300'
 		},
 		width: '600',
 		show: {

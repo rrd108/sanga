@@ -105,7 +105,7 @@ class SettingsController extends AppController
         */
         $select = [];
         foreach($this->request->data as $name => $value) {
-            if (!in_array($name, ['sName', 'users', 'skills', 'groups']) && $value) {
+            if ($name != 'sName' && $value) {
                 $select[] = 'Contacts.' . $name;
             }
         }

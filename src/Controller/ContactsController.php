@@ -125,18 +125,35 @@ class ContactsController extends AppController {
 			foreach ($select as $i => $name) {
 				$selected[str_replace('Contacts.', '', $name)] = 1;
 				
-				if (in_array($name, ['Contacts.zip_id', 'Contacts.workplace_zip_id'])) {
+				if ($name == 'Contacts.zip_id') {
 					$select[] = 'Zips.id';
+					$select[] = 'Zips.zip';
 					$select[] = 'Zips.name';
 					$contain[] = 'Zips';
+				}
+				if ($name == 'Contacts.workplace_zip_id') {
+					$select[] = 'WorkplaceZips.id';
+					$select[] = 'WorkplaceZips.zip';
+					$select[] = 'WorkplaceZips.name';
+					$contain[] = 'WorkplaceZips';
 				}
 				if ($name == 'Contacts.contactsource_id') {
 					$select[] = 'Contactsources.id';
 					$select[] = 'Contactsources.name';
 					$contain[] = 'Contactsources';
 				}
-				
-				//users, skills, groups
+				if ($name == 'Contacts.users') {
+					unset($select[$i]);
+					$contain[] = 'Users';
+				}
+				if ($name == 'Contacts.skills') {
+					unset($select[$i]);
+					$contain[] = 'Skills';
+				}
+				if ($name == 'Contacts.groups') {
+					unset($select[$i]);
+					$contain[] = 'Groups';
+				}
 			}
 			$this->request->data = $selected;
 		}
@@ -151,13 +168,16 @@ class ContactsController extends AppController {
 				->select(['Contacts.id']);
 
 		array_unshift($select, 'Contacts.id');
+		//debug($select);
 		$contacts = $this->Contacts->find()
 								->select($select)
-								//->contain(['Zips', 'Users', 'Groups', 'Skills'])
 								->contain($contain)
 								->where(['Contacts.id IN ' => $myContacts])
 								->orWhere(['Contacts.id IN ' => $inmygroupsContacts])
-								->order(['Contacts.name' => 'ASC']);
+								->order(['Contacts.name' => 'ASC']);/*
+								->first()
+								->toArray();
+		debug($contacts); die();*/
 		$this->set('contacts', $this->paginate($contacts));
 	}
 
