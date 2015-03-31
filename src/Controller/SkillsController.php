@@ -26,6 +26,7 @@ class SkillsController extends AppController {
 		}
 		//debug($result);die();
 		$this->set('result', $result);
+		$this->set('_serialize', 'result');
 	}
 
 

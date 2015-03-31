@@ -17,3 +17,7 @@
 ☭ - Profile
 ⚠ - Notifications
 ↺ - Filter
+✉ - Email
+☏ - Phone
+♣ - Workplace
+↫ - Birth

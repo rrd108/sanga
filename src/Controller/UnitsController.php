@@ -24,6 +24,7 @@ class UnitsController extends AppController {
 							  );
 		}
 		$this->set('result', $result);
+		$this->set('_serialize', 'result');
 	}
 
 /**

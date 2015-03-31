@@ -125,6 +125,7 @@ class HistoriesController extends AppController {
 		
 		if ($this->request->is('ajax')) {
 			$this->set(compact('result'));
+			$this->set('_serialize', 'result');
 			return;
 		}
 	

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sanga 1.0\n"
 "POT-Creation-Date: 2015-03-27 17:09+0000\n"
-"PO-Revision-Date: 2015-03-27 18:16+0100\n"
+"PO-Revision-Date: 2015-03-31 19:53+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: Hungarian\n"
@@ -181,7 +181,7 @@ msgstr "Avatott név, becenév, stb"
 #: Template/Units/view.ctp:21 Template/Usergroups/view.ctp:21;39
 #: Template/Users/view.ctp:37 Template/Zips/view.ctp:28;48
 msgid "Name"
-msgstr "Civil név"
+msgstr "Név"
 
 #: Template/Contacts/add.ctp:37 Template/Contacts/view.ctp:99
 msgid "Civil name, company name, etc"

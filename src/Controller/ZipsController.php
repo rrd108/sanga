@@ -27,6 +27,7 @@ class ZipsController extends AppController {
 		}
 		//debug($result);die();
 		$this->set('result', $result);
+		$this->set('_serialize', 'result');
 	}
 /**
  * Index method
