@@ -116,12 +116,13 @@ class ContactsController extends AppController {
 				->where(['user_id' => $this->Auth->user('id'),
 						 'name' => 'Contacts/index'])
 				->first();
+		$selected = [];
 		if ( empty($select)) {
 			$select = ['Contacts.name', 'Contacts.contactname', 'Contacts.phone', 'Contacts.email'];
+			$selected = ['name' => 1, 'contactname' => 1, 'phone' => 1, 'email' => 1];
 		} else {
 			$select = unserialize($select->value);
 			//set the request->data array for the view to autofill the settings form
-			$selected = [];
 			foreach ($select as $i => $name) {
 				$selected[str_replace('Contacts.', '', $name)] = 1;
 				
@@ -155,8 +156,8 @@ class ContactsController extends AppController {
 					$contain[] = 'Groups';
 				}
 			}
-			$this->request->data = $selected;
 		}
+		$this->request->data = $selected;
 		$_myGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id')])->toArray();
 		foreach($_myGroups as $mg){
 			$groupIds[] = $mg->id;

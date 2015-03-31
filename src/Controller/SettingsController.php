@@ -53,18 +53,18 @@ class SettingsController extends AppController
     public function add()
     {
         $setting = $this->Settings->newEntity();
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') || $this->request->is('ajax')) {
             $setting = $this->Settings->patchEntity($setting, $this->request->data);
             if ($this->Settings->save($setting)) {
-                $this->Flash->success('The setting has been saved.');
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('The setting has been saved.'));
+                $setting = ['message' => __('The setting has been saved.')];
             } else {
-                $this->Flash->error('The setting could not be saved. Please, try again.');
+                $this->Flash->error(__('The setting could not be saved. Please, try again.'));
+                $setting = ['message' => __('The setting could not be saved. Please, try again.')];
             }
         }
-        $users = $this->Settings->Users->find('list', ['limit' => 200]);
-        $this->set(compact('setting', 'users'));
-        $this->set('_serialize', ['setting']);
+        $this->set(compact('setting'));
+        $this->set('_serialize', 'setting');
     }
 
     /**
@@ -116,7 +116,7 @@ class SettingsController extends AppController
         
         if (empty($setting)){
             $this->add();
-            //return will be done by add
+            return;
         }
         $setting = $this->Settings->get($setting->id);
         if ($this->request->is(['patch', 'post', 'put'])) {
