@@ -84,5 +84,9 @@ class ZipsTableTest extends TestCase
 		$actual = $this->Zips->getIdForZip('notexists');		
 		$expected = null;
 		$this->assertEquals($expected, $actual);
+
+		$actual = $this->Zips->getIdForZip([1011, 'Bp I.']);
+		$expected = 1;
+		$this->assertEquals($expected, $actual);
 	}
 }

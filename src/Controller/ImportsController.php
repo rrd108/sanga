@@ -28,7 +28,13 @@ class ImportsController extends AppController
                 $fileData = fread(fopen($this->request->data['file']['tmp_name'], "r"), $this->request->data['file']['size']);
                 $fileData = explode("\n", $fileData);
                 
-                //data[0] name;contactname;zip;address;phone;email;birth;sex;workplace;workplace_zip;workplace_address;workplace_phone;workplace_email;contactsource_id;comment;x;szÃ¼letÃ©si nÃ©v;guru;ideiglenes cÃ­m;szÃ¡llÃ¡s;szig;ÃºtlevÃ©l;adÃ³azonosÃ­tÃ³;taj;szÃ¼letÃ©si hely;Ã¡llampolgÃ¡rsÃ¡g;katonasÃ¡g;hÃ¡ziorvos;hÃ¡ziorvos cÃ­m;hÃ¡ziorvos telefon;elsÅ‘ talÃ¡lkozÃ¡s KT-tal;elfogadÃ¡s dÃ¡tuma;elsÅ‘ avatÃ¡s;mÃ¡sodik avatÃ¡s;asram;tb;tagsÃ¡g;vÃ©gzettsÃ©g;szakma;vÃ©gakarat;halÃ¡l esetÃ©n Ã©rtesÃ­tendÅ‘;bhakti sastri ideje;bhakti sastri eredmÃ©nye;nyelvtudÃ¡s;anyja neve;apja neve;csalÃ¡d hozzÃ¡lÃ¡Ã¡sa;india;RS szerzÅ‘dÃ©s;aktÃ­v;Bhakta nyilvÃ¡ntartÃ¡s id',
+                /*data[0]
+                 *name;contactname;zip;address;phone;email;birth;sex;workplace;workplace_zip;
+                 *workplace_address;workplace_phone;workplace_email;
+                 *contactsource_id;comment;skills;
+                 *  groups;
+                 *x;egyebek
+                 */
                 $fields = explode(";", $fileData[0]);
                 $extraField = 'comment';
                 $this->Contacts = TableRegistry::get('Contacts');
@@ -43,7 +49,7 @@ class ImportsController extends AppController
                         if (in_array($field, ['name','contactname','zip','address','phone','email',
                                               'birth','sex','workplace','workplace_zip',
                                               'workplace_address','workplace_phone','workplace_email',
-                                              'contactsource_id','comment'])) {     //if this column exists in the contacts table
+                                              'contactsource_id','comment', 'skills'])) {     //if this is the $field, the column exists in the contacts or its related tables
                             if (isset($data[$j]) && $data[$j]) {
                                 switch ($field) {
                                     case 'birth' : 
@@ -51,8 +57,20 @@ class ImportsController extends AppController
                                         break;
                                     case 'zip' :
                                     case 'workplace_zip' :
-                                        $data[$j] = $this->Zips->getIdForZip($data[$j]);
+                                        if (mb_strpos($data[$j], ' ') === false) {
+                                            $data[$j] = $this->Zips->getIdForZip($data[$j]);
+                                        } else {
+                                            $data[$j] = $this->Zips->getIdForZip(explode(' ', $data[$j]));
+                                        }
                                         $field .= '_id';
+                                        break;
+                                    case 'skills' :
+                                        if (mb_strpos($data[$j], ',') === false) {
+                                            $skill_ids = $data[$j];
+                                        } else {
+                                            $skill_ids = explode(',', $data[$j]);
+                                        }
+                                        $data[$j] = ['_ids' => [$skill_ids]];
                                         break;
                                 }
                                 $dataArray[$field] = $data[$j];

@@ -63,7 +63,12 @@ class ZipsTable extends Table
     
     public function getIdForZip($zip)
 	{
-		$id = $this->find()->select('id')->where(['zip' => $zip])->first();
+		if (is_array($zip)) {
+            $where = ['zip' => $zip[0], 'name' => $zip[1]];
+        } else {
+            $where = ['zip' => $zip];
+        }
+        $id = $this->find()->select('id')->where($where)->first();
         if (isset($id->id)) {
             return $id->id;
         } else {
