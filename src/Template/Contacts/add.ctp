@@ -33,7 +33,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 			echo $this->Form->input('contactname',
 									   ['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
 										'class' => 'radius',
-										'label' => __('Name'),
+										'label' => __('Civil name'),
 										'title' => __('Civil name, company name, etc')
 										]);
 		echo '</div>';

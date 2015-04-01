@@ -41,7 +41,7 @@ echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
 			foreach($this->request->data as $d => $x) {
 				echo '<th>';
 					if (in_array($d, ['contactname', 'name'])) {
-						echo $this->Paginator->sort($d);
+						echo $this->Paginator->sort(__(ucwords($d)));
 					} else {
 						echo __(ucwords($d));
 					}
