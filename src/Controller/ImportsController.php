@@ -66,11 +66,11 @@ class ImportsController extends AppController
                                         break;
                                     case 'skills' :
                                         if (mb_strpos($data[$j], ',') === false) {
-                                            $skill_ids = $data[$j];
+                                            $skill_ids = [$data[$j]];
                                         } else {
                                             $skill_ids = explode(',', $data[$j]);
                                         }
-                                        $data[$j] = ['_ids' => [$skill_ids]];
+                                        $data[$j] = ['_ids' => $skill_ids];
                                         break;
                                 }
                                 $dataArray[$field] = $data[$j];
