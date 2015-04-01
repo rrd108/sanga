@@ -32,6 +32,7 @@ class ImportsController extends AppController
                 $fields = explode(";", $fileData[0]);
                 $extraField = 'comment';
                 $this->Contacts = TableRegistry::get('Contacts');
+                $this->Zips = TableRegistry::get('Zips');
                 
                 array_shift($fileData);     //remove header - field names
                 $dataArray = [];
@@ -44,8 +45,15 @@ class ImportsController extends AppController
                                               'workplace_address','workplace_phone','workplace_email',
                                               'contactsource_id','comment'])) {     //if this column exists in the contacts table
                             if (isset($data[$j]) && $data[$j]) {
-                                if ($field == 'birth') {
-                                    $data[$j] = substr($data[$j], 0, 10);
+                                switch ($field) {
+                                    case 'birth' : 
+                                        $data[$j] = substr($data[$j], 0, 10);
+                                        break;
+                                    case 'zip' :
+                                    case 'workplace_zip' :
+                                        $data[$j] = $this->Zips->getIdForZip($data[$j]);
+                                        $field .= '_id';
+                                        break;
                                 }
                                 $dataArray[$field] = $data[$j];
                             }
@@ -70,11 +78,13 @@ class ImportsController extends AppController
                                 $this->Flash->success(__('The contact (%s) has been saved.', $i));
                             } else {
                                 $this->Flash->error(__('The contact (%s) is not saved.', $i));
+                                $this->log($i . '. ' . $contact->name . ' not saved', 'debug');
                             }
                         } else {
                             foreach ($contact->errors() as $field => $errors) {
                                 foreach ($errors as $rule => $error)
                                 $this->Flash->error($i . ' / ' . $field . ' / ' . $rule . ' / ' . $error);
+                                $this->log($i . '. ' . $contact->name . ' not saved ' . $field . ' / ' . $rule . ' / ' . $error, 'debug');
                             }
                             /*
                             [
