@@ -1,6 +1,6 @@
 <?php
 echo '<p>';
-	echo sprintf('Hi, You asked a password recovery on %s. Click on the link below to reset your password.', $baseUrl);
+	echo sprintf('Hi, You asked a password recovery on {0}. Click on the link below to reset your password.', [$baseUrl]);
 echo '</p>';
 
 echo '<a href="' . $resetlink . '">';

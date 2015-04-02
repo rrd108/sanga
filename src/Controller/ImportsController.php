@@ -41,12 +41,14 @@ class ImportsController extends AppController
                 $this->Zips = TableRegistry::get('Zips');
                 
                 array_shift($fileData);     //remove header - field names
-                $dataArray = [];
+                
+                $errors = $dataArray = [];
+                $imported = $notImported = 0;
                 foreach ($fileData as $i => $row) {
                     $dataArray[$extraField] = '';
                     $data = explode(';', $row);
                     foreach ($fields as $j => $field) {
-                        if (in_array($field, ['name','contactname','zip','address','phone','email',
+                        if (in_array($field, ['contactname','legalname','zip','address','phone','email',
                                               'birth','sex','workplace','workplace_zip',
                                               'workplace_address','workplace_phone','workplace_email',
                                               'contactsource_id','comment', 'skills'])) {     //if this is the $field, the column exists in the contacts or its related tables
@@ -91,30 +93,40 @@ class ImportsController extends AppController
                         $contact = $this->Contacts->newEntity($dataArray);
                         $contact->loggedInUser = $this->Auth->user('id');
                         //debug($contact);
-                        if (empty($contact->errors())) {
+                        /*if (empty($contact->errors())) {
                             if ($this->Contacts->save($contact)) {
-                                $this->Flash->success(__('The contact (%s) has been saved.', $i));
+                                $imported++;
+                                $this->Flash->success(__('The contact ({0}) has been saved.', $i));
                             } else {
-                                $this->Flash->error(__('The contact (%s) is not saved.', $i));
+                                $notImported++;
+                                $this->Flash->error(__('The contact ({0}) is not saved.', $i));
                                 $this->log($i . '. ' . $contact->contactname . ' not saved', 'debug');
                             }
-                        } else {
-                            foreach ($contact->errors() as $field => $errors) {
-                                foreach ($errors as $rule => $error)
-                                $this->Flash->error($i . ' / ' . $field . ' / ' . $rule . ' / ' . $error);
-                                $this->log($i . '. ' . $contact->contactname . ' not saved ' . $field . ' / ' . $rule . ' / ' . $error, 'debug');
+                        } else {*/
+
+
+                        if ( ! empty($contact->errors())) {
+                            $notImported++;
+                            foreach ($contact->errors() as $field => $errs) {
+                                $_errors[$field] = '';
+                                foreach ($errs as $rule => $error){
+                                    //$this->Flash->error($i . ' / ' . $field . ' / ' . $rule . ' / ' . $error);
+                                    //$this->log($i . '. ' . $contact->contactname . ' not saved ' . $field . ' / ' . $rule . ' / ' . $error, 'debug');
+                                    $_errors[$field] .= $error . ' ';
+                                }
                             }
-                            /*
-                            [
-                                'birth' => [
-                                    'valid' => 'The provided value is invalid'
-                                ]
-                            ]
-                            */
+                            $errors[] = ['data' => $dataArray, 'errors' => $_errors];
+                            unset($_errors);
                         }
                         unset($dataArray);
                     }
                 }
+                $this->set('errors', $errors);
+                $this->set('fields', $fields);
+                $this->set('imported', $imported);
+                $this->set('notImported', $notImported);
+            } else {
+                $this->Flash->error(__('The import file was not in the proper format. Download the sample file and save as a csv.'));
             }
         }
     }

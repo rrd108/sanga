@@ -22,3 +22,7 @@
 ♣ - Workplace
 ↫ - Birth
 ✍ - Comment
+✖ - Error
+✔ - Success
+❓ - Help
+❗ - Warning

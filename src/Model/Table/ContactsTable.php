@@ -86,7 +86,8 @@ class ContactsTable extends Table {
 			->allowEmpty('email')
 			->add('birth', 'valid', ['rule' => 'date'])
 			->allowEmpty('birth')
-			->add('sex', 'valid', ['rule' => 'numeric'])
+			->add('sex', 'valid', ['rule' => ['inList', [1, 2]],
+								   'message' => __('Sex is 1 for male and 2 for female or empty')])
 			->allowEmpty('sex')
             ->allowEmpty('workplace')
             ->allowEmpty('workplace_address')

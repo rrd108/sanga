@@ -133,7 +133,7 @@ class UsersController extends AppController {
 				$user->password = $tempPass;
 				$user->resettoken = '';
 				$this->Users->save($user);
-				$this->Flash->success(sprintf('Your temporary password is: %s Please log in.', $tempPass));
+				$this->Flash->success(__('Your temporary password is: {0} Please log in.', [$tempPass]));
 				$this->render('login');
 			}
 		}

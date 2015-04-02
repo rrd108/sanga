@@ -255,6 +255,7 @@ class ContactsController extends AppController {
  * @return void
  */
 	public function add() {
+		$this->request->data['email'] = '123';
 		$contact = $this->Contacts->newEntity($this->request->data);
 		if($this->request->data){
 			$contact = $this->patchSkills($contact);

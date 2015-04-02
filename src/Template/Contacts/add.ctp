@@ -25,13 +25,19 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 		
 		echo '<div class="row">';
 			echo $this->Form->input('contactname',
-									   ['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+									   ['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										'class' => 'radius',
 										'label' => __('Known name'),
 										'title' => __('Like initiated name, nickname, etc')
 										]);
 			echo $this->Form->input('legalname',
-									   ['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+									   ['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										'class' => 'radius',
 										'label' => __('Legal name'),
 										'title' => __('Civil name, official legal name, etc')
@@ -40,29 +46,44 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 
 		echo '<div class="row">';
 			echo $this->Form->input('xzip',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										 'class' => 'radius',
 										'type' => 'text',
 										'label' => __('Zip')]);
 			echo $this->Form->input('zip_id',
 										['type' => 'hidden']);
 			echo $this->Form->input('address',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										 'class' => 'radius']);
 		echo '</div>';
 			
 		echo '<div class="row">';
 			echo $this->Form->input('phone',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										 'class' => 'radius']);
 			echo $this->Form->input('email',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										 'class' => 'radius']);
 		echo '</div>';
 
 		echo '<div class="row">';
 			echo $this->Form->input('birth',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										 'class' => 'radius',
 										'type' => 'text']);
 			echo $this->Form->input('sex',
@@ -75,39 +96,60 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 
 		echo '<div class="row">';
 			echo $this->Form->input('workplace',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										 'class' => 'radius']);
 			echo $this->Form->input('skills._ids',
-									['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+									['templates' => [
+											'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+											'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+											],
 									 'class' => 'radius',
 									 'type' => 'text']);
 		echo '</div>';
 		
 		echo '<div class="row">';
 			echo $this->Form->input('xworkplace_zip',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										 'class' => 'radius',
 										'type' => 'text',
 										'label' => __('Zip')]);
 			echo $this->Form->input('workplace_zip_id',
 										['type' => 'hidden']);
 			echo $this->Form->input('workplace_address',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										 'class' => 'radius']);
 		echo '</div>';
 
 		echo '<div class="row">';
 			echo $this->Form->input('workplace_phone',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										 'class' => 'radius']);
 			echo $this->Form->input('workplace_email',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										 'class' => 'radius']);
 		echo '</div>';
 
 		echo '<div class="row">';
 			echo $this->Form->input('xfamily',
-										['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
+										['templates' => [
+												'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
+												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
+												],
 										 'class' => 'radius',
 										 'type' => 'text',
 										 'label' => __('Family')]);

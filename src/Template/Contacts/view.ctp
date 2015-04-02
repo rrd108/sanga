@@ -765,7 +765,7 @@ echo $this->element('ajax-images');
 					<td></td>
 					<td class="r">
 						<?php
-						if (isset($history)) {
+						if (isset($history->unit)) {
 							echo h($this->Number->currency($total, $history->unit->name));
 						}
 						?>
