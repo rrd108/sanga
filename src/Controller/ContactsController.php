@@ -556,7 +556,7 @@ class ContactsController extends AppController {
 					$photo = $this->google_get_photo($gId, $client);
 					
 					$contacts[] = ['gId' => $gId,
-								   'name' => isset($entry->title->{'$t'}) ? $entry->title->{'$t'} : '',
+								   'contactname' => isset($entry->title->{'$t'}) ? $entry->title->{'$t'} : '',
 								   'updated' => $entry->updated->{'$t'},
 								   'email' => isset($entry->{'gd$email'}) ? $entry->{'gd$email'} : '',
 								   'phone' => isset($entry->{'gd$phoneNumber'}) ? $entry->{'gd$phoneNumber'} : '',
