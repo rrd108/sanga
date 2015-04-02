@@ -191,7 +191,7 @@ class ContactsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
-		$id = $id ? $id : $this->request->data['name'];
+		//$id = $id ? $id : $this->request->data['contactname'];
 		if ( ! $this->Contacts->isAccessible($id, $this->Auth->user('id'))) {
 
 			$contactPersons = $this->Contacts->get($id, ['contain' => ['Users']]);
@@ -213,13 +213,33 @@ class ContactsController extends AppController {
 		$this->paginate = [
 			'contain' => ['Contacts', 'Users', 'Events', 'Units', 'Groups']
 		];
+
+		$setting = $this->Contacts->Users->Settings
+				->find()
+				->where(['user_id' => $this->Auth->user('id'),
+						 'name' => 'Contacts/view/history/system'])
+				->first();
+		//debug($setting);die();		//'value' => 'a:1:{i:0;s:21:"Contacts.systemevents";}'	//'value' => 'a:0:{}'
+		if ( empty($setting) || empty(unserialize($setting->value))) {
+			$where = ['event_id != ' => 1];
+		} else {
+			$select = unserialize($setting->value);
+			$where = [];
+			foreach ($select as $i => $name) {
+				$this->request->data[str_replace('Contacts.', '', $name)] = 1;
+			}
+		}
 		$histories = $this->Contacts->Histories->find()
 				->where(['contact_id' => $id])
+				->andWhere($where)
 				->order(['Histories.date' => 'DESC', 'Histories.id' => 'DESC']);
 		$this->set('histories', $this->paginate($histories));
 		
 		$finances = $this->Contacts->Histories->find()
-				->where(['contact_id' => $id, 'unit_id' => 1])	//TODO: HC id
+				->where([
+						 'contact_id' => $id,
+						 'unit_id' => 1		//TODO: HC id
+						 ])
 				->order(['Histories.date' => 'DESC', 'Histories.id' => 'DESC']);
 		$this->set('finances', $this->paginate($finances));
 

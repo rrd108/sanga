@@ -14,6 +14,20 @@ echo $this->Html->link($this->Html->image('edit.png'),
 
 echo $this->element('ajax-images');
 ?>
+<div id="dialog">
+	<h4><?= __('Show system events') ?></h4>
+	<?php
+	echo $this->Form->create($contact, ['id' => 'settingsForm']);
+	echo $this->Form->input('systemevents',
+							['type' => 'checkbox',
+							 'label' => __('Show system events')]);
+
+	echo $this->Form->input('sName', ['type' => 'hidden', 'value' => 'Contacts/view/history/system']);
+	echo $this->Form->button(__('Submit'), ['id' => 'submitSettings', 'class' => 'radius']);
+	echo $this->Form->end();
+	?>
+</div>
+
 <div id="tabs">
 	<div class="sidebar-wrapper">
 		<nav class="side-nav">
@@ -21,8 +35,8 @@ echo $this->element('ajax-images');
 				<li id="tabnav-1"><a href="#tabs-1"><?= __('Personal data') ?></a></li>
 				<li id="tabnav-2"><a href="#tabs-2"><?= __('Family') ?></a></li>
 				<li id="tabnav-3"><a href="#tabs-3"><?= __('Workplace and skills') ?></a></li>
-				<li id="tabnav-4"><a href="#tabs-4"><?= __('Histories') ?></a></li>
-				<li id="tabnav-5"><a href="#tabs-5"><?= __('Groups') ?></a></li>
+				<li id="tabnav-4"><a href="#tabs-4"><?= __('Groups') ?></a></li>
+				<li id="tabnav-5"><a href="#tabs-5"><?= __('Histories') ?></a></li>
 				<li id="tabnav-6"><a href="#tabs-6"><?= __('Finances') ?></a></li>
 				<li id="tabnav-7"><a href="#tabs-7"><?= __('Access') ?></a></li>
 				<li id="tabnav-8"><a href="#tabs-8"><?= __('Send a mail') ?></a></li>
@@ -345,6 +359,7 @@ echo $this->element('ajax-images');
 				?>
 		</div>
 	</div>
+	
 	<div id="tabs-2" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->contactname) ?></h2>
 		<div class="row">
@@ -390,6 +405,7 @@ echo $this->element('ajax-images');
 			</div>
 		</div>
 	</div>
+	
 	<div id="tabs-3" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->contactname) ?></h2>
 		<div class="row">
@@ -535,128 +551,7 @@ echo $this->element('ajax-images');
 	echo $this->Form->end();
 	?>
 	
-	<div id="tabs-4" class="contacts view large-12 columns">
-		<h2><?= h($contact->contactname) ?></h2>
-		<div class="row">
-		<div class="column large-12">
-		<?php if (!empty($histories)): ?>
-		<?php
-		echo $this->Form->create(null,
-									['id' => 'hForm',
-									 'url' => [
-											   'controller' => 'Histories',
-											   'action' => 'add'
-											   ]
-									 ]);
-		?>
-		<table id="hTable" cellpadding="0" cellspacing="0">
-			<thead>
-				<tr>
-					<th><?= $this->Paginator->sort('date') ?></th>
-					<th><?= $this->Paginator->sort('User.name') ?></th>
-					<th><?= $this->Paginator->sort('Group.name') ?></th>
-					<th><?= $this->Paginator->sort('Event.name') ?></th>
-					<th><?= $this->Paginator->sort('detail') ?></th>
-					<th><?= $this->Paginator->sort('quantity') ?></th>
-					<th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						<?php
-						echo $this->Form->input('contact_id',
-													['type' => 'hidden',
-													 'value' => $contact->id,
-													 'class' => 'dontdel'
-													 ]);
-						echo $this->Form->input('date',
-												['label' => false,
-												 'value' => date('Y-m-d'),
-												 'class' => 'dontdel']);
-						?>
-					</td>
-					<td id="uName"><?= $this->Session->read('Auth.User.name') ?></td>
-					<td>
-						<?php
-						echo $this->Form->input('group_id', ['type' => 'hidden']);
-						echo $this->Form->input('xgroup_id', ['label' => false, 'type' => 'text']);
-						?>
-					</td>
-					<td>
-						<?php
-						echo $this->Form->input('event_id', ['type' => 'hidden']);
-						echo $this->Form->input('xevent_id', ['label' => false, 'type' => 'text']);
-						?>
-					</td>
-					<td><?= $this->Form->input('detail', ['label' => false]) ?></td>
-					<td>
-						<?php
-						echo $this->Form->input('quantity', [
-															 'label' => false,
-															 'class' => 'quantity'
-															 ]);
-						echo $this->Form->input('unit_id', ['type' => 'hidden']);
-						echo $this->Form->input('xunit_id', ['label' => false,
-															'class' => 'thin',
-															'type' => 'text']);
-						?>
-					</td>
-					<td id="hInfo">
-					</td>
-				</tr>
-				<?php foreach ($histories as $history): ?>
-				<tr>
-					<td><?php echo $history->date->format('Y-m-d'); ?></td>
-					<td>
-						<?php
-						if(isset($history->user->name)){
-							echo $history->user->name;
-						}
-						?>
-					</td>
-					<td>
-						<?php
-						if($history->group){
-							echo $history->group->name;
-						}
-						?>
-					</td>
-					<td><?= h($history->event->name) ?></td>
-					<td><?= h($history->detail) ?></td>
-					<td class="r">
-						<?php
-							if(isset($history->unit->name)){
-								echo h($this->Number->currency($history->quantity, $history->unit->name));
-							}
-							else{
-								echo h($history->quantity);
-							}
-						?>
-					</td>
-					<td></td>
-				</tr>
-				<?php endforeach; ?>
-			</tbody>
-		</table>
-		<?php
-		echo $this->Form->end();
-		?>
-		<div class="paginator">
-			<ul class="pagination centered">
-			<?php
-				echo $this->Paginator->prev('< ' . __('previous'));
-				echo $this->Paginator->numbers();
-				echo $this->Paginator->next(__('next') . ' >');
-			?>
-			</ul>
-			<div class="pagination-counter"><?= $this->Paginator->counter() ?></div>
-		</div>
-		<?php endif; ?>
-		</div>
-		</div>
-	</div>
-	<div id="tabs-5" class="contacts view large-10 medium-9 columns">
+	<div id="tabs-4" class="contacts view large-10 medium-9 columns">
 		<h2><?= h($contact->contactname) ?></h2>
 		<h3><?= __('Member') ?></h3>
 		<div class="column large-12" id="member">
@@ -703,6 +598,134 @@ echo $this->element('ajax-images');
 			?>
 		</div>
 	</div>
+
+	<div id="tabs-5" class="contacts view large-12 columns">
+		<h2><?= h($contact->contactname) ?></h2>
+		<div class="row">
+			<div class="column large-12">
+				<?php if (!empty($histories)): ?>
+					<?php
+					echo $this->Form->create(null,
+												['id' => 'hForm',
+												 'url' => [
+														   'controller' => 'Histories',
+														   'action' => 'add'
+														   ]
+												 ]);
+					?>
+					<table id="hTable" cellpadding="0" cellspacing="0">
+						<thead>
+							<tr>
+								<th><?= $this->Html->image('settings.png',
+										['id' => 'settings',
+										 'title' => _('Settings')]) ?></th>
+								<th><?= $this->Paginator->sort('date') ?></th>
+								<th><?= $this->Paginator->sort('User.name') ?></th>
+								<th><?= $this->Paginator->sort('Group.name') ?></th>
+								<th><?= $this->Paginator->sort('Event.name') ?></th>
+								<th><?= $this->Paginator->sort('detail') ?></th>
+								<th><?= $this->Paginator->sort('quantity') ?></th>
+								<th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td></td>
+								<td>
+									<?php
+									echo $this->Form->input('contact_id',
+																['type' => 'hidden',
+																 'value' => $contact->id,
+																 'class' => 'dontdel'
+																 ]);
+									echo $this->Form->input('date',
+															['label' => false,
+															 'value' => date('Y-m-d'),
+															 'class' => 'dontdel']);
+									?>
+								</td>
+								<td id="uName"><?= $this->Session->read('Auth.User.name') ?></td>
+								<td>
+									<?php
+									echo $this->Form->input('group_id', ['type' => 'hidden']);
+									echo $this->Form->input('xgroup_id', ['label' => false, 'type' => 'text']);
+									?>
+								</td>
+								<td>
+									<?php
+									echo $this->Form->input('event_id', ['type' => 'hidden']);
+									echo $this->Form->input('xevent_id', ['label' => false, 'type' => 'text']);
+									?>
+								</td>
+								<td><?= $this->Form->input('detail', ['label' => false]) ?></td>
+								<td>
+									<?php
+									echo $this->Form->input('quantity', [
+																		 'label' => false,
+																		 'class' => 'quantity'
+																		 ]);
+									echo $this->Form->input('unit_id', ['type' => 'hidden']);
+									echo $this->Form->input('xunit_id', ['label' => false,
+																		'class' => 'thin',
+																		'type' => 'text']);
+									?>
+								</td>
+								<td id="hInfo">
+								</td>
+							</tr>
+							<?php foreach ($histories as $history): ?>
+							<tr>
+								<td></td>
+								<td><?php echo $history->date->format('Y-m-d'); ?></td>
+								<td>
+									<?php
+									if(isset($history->user->name)){
+										echo $history->user->name;
+									}
+									?>
+								</td>
+								<td>
+									<?php
+									if($history->group){
+										echo $history->group->name;
+									}
+									?>
+								</td>
+								<td><?= h($history->event->name) ?></td>
+								<td><?= h($history->detail) ?></td>
+								<td class="r">
+									<?php
+										if(isset($history->unit->name)){
+											echo h($this->Number->currency($history->quantity, $history->unit->name));
+										}
+										else{
+											echo h($history->quantity);
+										}
+									?>
+								</td>
+								<td></td>
+							</tr>
+							<?php endforeach; ?>
+						</tbody>
+					</table>
+					<?php
+					echo $this->Form->end();
+					?>
+					<div class="paginator">
+						<ul class="pagination centered">
+						<?php
+							echo $this->Paginator->prev('< ' . __('previous'));
+							echo $this->Paginator->numbers();
+							echo $this->Paginator->next(__('next') . ' >');
+						?>
+						</ul>
+						<div class="pagination-counter"><?= $this->Paginator->counter() ?></div>
+					</div>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+	
 	<div id="tabs-6" class="contacts view large-12 columns">
 		<h2><?= h($contact->contactname) ?></h2>
 		<div class="row">
