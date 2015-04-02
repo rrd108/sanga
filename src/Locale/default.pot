@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-04-02 11:22+0000\n"
+"POT-Creation-Date: 2015-04-02 11:51+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,54 +14,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/ContactsController.php:199;329
+#: Controller/ContactsController.php:200;330
 msgid "Permission deined"
 msgstr ""
 
-#: Controller/ContactsController.php:301
+#: Controller/ContactsController.php:302
 msgid "Two family members are in different families"
 msgstr ""
 
-#: Controller/ContactsController.php:349;603
+#: Controller/ContactsController.php:350;604
 #: Controller/UsersController.php:202
 msgid "The contact has been saved."
 msgstr ""
 
-#: Controller/ContactsController.php:358;616
+#: Controller/ContactsController.php:359;617
 #: Controller/UsersController.php:212
 msgid "The contact could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/ContactsController.php:384
+#: Controller/ContactsController.php:385
 msgid "The contact is removed from this family"
 msgstr ""
 
-#: Controller/ContactsController.php:386
+#: Controller/ContactsController.php:387
 msgid "The contact could not be removed from this family"
 msgstr ""
 
-#: Controller/ContactsController.php:444
+#: Controller/ContactsController.php:445
 msgid "Group membership removed"
 msgstr ""
 
-#: Controller/ContactsController.php:456
+#: Controller/ContactsController.php:457
 msgid "Skill removed"
 msgstr ""
 
-#: Controller/ContactsController.php:613
+#: Controller/ContactsController.php:614
 msgid "Contact photo saved."
 msgstr ""
 
-#: Controller/ContactsController.php:613
+#: Controller/ContactsController.php:614
 msgid "Unable to save contact photo."
 msgstr ""
 
-#: Controller/ContactsController.php:765
+#: Controller/ContactsController.php:766
 #: Controller/HistoriesController.php:107
 msgid "The history has been saved."
 msgstr ""
 
-#: Controller/ContactsController.php:768
+#: Controller/ContactsController.php:769
 msgid "The history could not be saved."
 msgstr ""
 
@@ -278,7 +278,35 @@ msgstr ""
 msgid "Choose columns to display"
 msgstr ""
 
-#: Template/Contacts/index.ctp:117
+#: Template/Contacts/index.ctp:64
+#: Template/ContactsGroups/index.ctp:35
+#: Template/ContactsSkills/index.ctp:35
+#: Template/ContactsUsers/index.ctp:35
+#: Template/Contactsources/index.ctp:29
+#: Template/Contactsources/view.ctp:77
+#: Template/Countries/index.ctp:29
+#: Template/Countries/view.ctp:53
+#: Template/Events/index.ctp:32
+#: Template/Events/view.ctp:67
+#: Template/Families/index.ctp:26
+#: Template/Groups/index.ctp:75
+#: Template/GroupsUsers/index.ctp:40
+#: Template/Sessions/index.ctp:27
+#: Template/Settings/index.ctp:28
+#: Template/Skills/index.ctp:29
+#: Template/Skills/view.ctp:76
+#: Template/Units/index.ctp:29
+#: Template/Units/view.ctp:65
+#: Template/Usergroups/index.ctp:31
+#: Template/Usergroups/view.ctp:63
+#: Template/Users/index.ctp:36
+#: Template/UsersUsergroups/index.ctp:40
+#: Template/Zips/index.ctp:41
+#: Template/Zips/view.ctp:82
+msgid "View"
+msgstr ""
+
+#: Template/Contacts/index.ctp:127
 #: Template/Contacts/view.ctp:648
 #: Template/ContactsGroups/index.ctp:46
 #: Template/ContactsSkills/index.ctp:46
@@ -302,7 +330,7 @@ msgstr ""
 msgid "previous"
 msgstr ""
 
-#: Template/Contacts/index.ctp:119
+#: Template/Contacts/index.ctp:129
 #: Template/Contacts/view.ctp:650
 #: Template/ContactsGroups/index.ctp:48
 #: Template/ContactsSkills/index.ctp:48
@@ -767,33 +795,6 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: Template/ContactsGroups/index.ctp:35
-#: Template/ContactsSkills/index.ctp:35
-#: Template/ContactsUsers/index.ctp:35
-#: Template/Contactsources/index.ctp:29
-#: Template/Contactsources/view.ctp:77
-#: Template/Countries/index.ctp:29
-#: Template/Countries/view.ctp:53
-#: Template/Events/index.ctp:32
-#: Template/Events/view.ctp:67
-#: Template/Families/index.ctp:26
-#: Template/Groups/index.ctp:75
-#: Template/GroupsUsers/index.ctp:40
-#: Template/Sessions/index.ctp:27
-#: Template/Settings/index.ctp:28
-#: Template/Skills/index.ctp:29
-#: Template/Skills/view.ctp:76
-#: Template/Units/index.ctp:29
-#: Template/Units/view.ctp:65
-#: Template/Usergroups/index.ctp:31
-#: Template/Usergroups/view.ctp:63
-#: Template/Users/index.ctp:36
-#: Template/UsersUsergroups/index.ctp:40
-#: Template/Zips/index.ctp:41
-#: Template/Zips/view.ctp:82
-msgid "View"
-msgstr ""
-
 #: Template/ContactsGroups/index.ctp:36
 #: Template/ContactsSkills/index.ctp:36
 #: Template/ContactsUsers/index.ctp:36
@@ -1040,7 +1041,6 @@ msgstr ""
 
 #: Template/Contactsources/view.ctp:38
 #: Template/Groups/view.ctp:50
-#: Template/Zips/view.ctp:49
 msgid "Legal Name"
 msgstr ""
 
@@ -1732,6 +1732,10 @@ msgstr ""
 
 #: Template/Zips/view.ctp:24
 msgid "Country"
+msgstr ""
+
+#: Template/Zips/view.ctp:49
+msgid "Legalname"
 msgstr ""
 
 #: Template/Error/error400.ctp:6
