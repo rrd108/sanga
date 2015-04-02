@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Hoszt: localhost
--- Létrehozás ideje: 2015. Ápr 02. 12:56
+-- Létrehozás ideje: 2015. Már 20. 14:25
 -- Szerver verzió: 5.5.41-0ubuntu0.14.04.1
 -- PHP verzió: 5.5.9-1ubuntu4.7
 
@@ -78,8 +78,8 @@ DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `contacts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `contactname` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `legalname` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `zip_id` mediumint(8) unsigned DEFAULT NULL,
   `address` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `lat` float(10,6) NOT NULL,
@@ -89,10 +89,6 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `birth` date DEFAULT NULL,
   `sex` tinyint(4) DEFAULT NULL COMMENT '1: male\n2: female',
   `workplace` varchar(100) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `workplace_zip_id` mediumint(8) unsigned DEFAULT NULL,
-  `workplace_address` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `workplace_phone` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `workplace_email` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `family_id` char(13) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `contactsource_id` smallint(6) DEFAULT NULL,
   `active` tinyint(1) DEFAULT '1',
@@ -103,9 +99,8 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   PRIMARY KEY (`id`),
   KEY `fk_contacts_zips1_idx` (`zip_id`),
   KEY `fk_contacts_contactsources1_idx` (`contactsource_id`),
-  KEY `families` (`family_id`),
-  KEY `fk_contacts_zips2_idx` (`workplace_zip_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=329 ;
+  KEY `families` (`family_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- --------------------------------------------------------
 
@@ -117,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `contactsources` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -171,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `countries` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -185,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   `user_id` smallint(5) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_events_users1_idx` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -202,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
   PRIMARY KEY (`id`),
   KEY `fk_groups_users1_idx` (`admin_user_id`),
   KEY `publics` (`shared`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -219,7 +214,7 @@ CREATE TABLE IF NOT EXISTS `groups_users` (
   KEY `fk_groups_has_users_users1_idx` (`user_id`),
   KEY `fk_groups_has_users_groups1_idx` (`group_id`),
   KEY `fk_groups_users_groups1_idx` (`intersection_group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci COMMENT='What groups'' members or groups intersection are available for rw for the user' AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci COMMENT='What groups'' members or groups intersection are available for rw for the user' ;
 
 -- --------------------------------------------------------
 
@@ -246,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `histories` (
   KEY `fk_histories_events1_idx` (`event_id`),
   KEY `fk_histories_groups1_idx` (`group_id`),
   KEY `fk_histories_units1_idx` (`unit_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=77 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -262,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_notifications_users1_idx` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -274,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `rbruteforcelogs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `data` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 -- --------------------------------------------------------
 
@@ -306,22 +301,6 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `settings`
---
-
-CREATE TABLE IF NOT EXISTS `settings` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` smallint(5) unsigned NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `value` text,
-  PRIMARY KEY (`id`),
-  KEY `fk_settings_users1_idx` (`user_id`),
-  KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
-
--- --------------------------------------------------------
-
---
 -- Tábla szerkezet ehhez a táblához `skills`
 --
 
@@ -330,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `skills` (
   `name` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -342,7 +321,7 @@ CREATE TABLE IF NOT EXISTS `units` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -356,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `usergroups` (
   `admin_user_id` smallint(5) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_usergroups_users1_idx` (`admin_user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -372,15 +351,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `phone` varchar(45) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `active` tinyint(1) DEFAULT '1',
-  `role` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '0: nincs joga\n1: user (linkup jogok a linkups_users táblában\n9: CRM admin\n10: admin',
-  `resettoken` varchar(32) COLLATE utf8_hungarian_ci NOT NULL,
+  `role` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '0: nincs joga\n1: user \n9: CRM admin\n10: admin',
   `google_contacts_refresh_token` varchar(64) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci ;
 
 -- --------------------------------------------------------
 
@@ -413,7 +391,7 @@ CREATE TABLE IF NOT EXISTS `zips` (
   KEY `zip` (`zip`),
   KEY `name` (`name`),
   KEY `fk_zips_countries1_idx` (`country_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci AUTO_INCREMENT=4155 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci  ;
 
 --
 -- Megkötések a kiírt táblákhoz
@@ -424,8 +402,7 @@ CREATE TABLE IF NOT EXISTS `zips` (
 --
 ALTER TABLE `contacts`
   ADD CONSTRAINT `fk_contacts_contactsources1` FOREIGN KEY (`contactsource_id`) REFERENCES `contactsources` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_contacts_zips1` FOREIGN KEY (`zip_id`) REFERENCES `zips` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_contacts_zips2` FOREIGN KEY (`workplace_zip_id`) REFERENCES `zips` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_contacts_zips1` FOREIGN KEY (`zip_id`) REFERENCES `zips` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Megkötések a táblához `contacts_groups`
@@ -485,12 +462,6 @@ ALTER TABLE `notifications`
   ADD CONSTRAINT `fk_notifications_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Megkötések a táblához `settings`
---
-ALTER TABLE `settings`
-  ADD CONSTRAINT `fk_settings_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
 -- Megkötések a táblához `usergroups`
 --
 ALTER TABLE `usergroups`
@@ -512,3 +483,39 @@ ALTER TABLE `zips`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+ALTER TABLE `users` ADD `resettoken` VARCHAR( 32 ) NOT NULL AFTER `role` ;
+
+ALTER TABLE `sanga`.`contacts` 
+ADD COLUMN `workplace_zip_id` MEDIUMINT(8) UNSIGNED NULL DEFAULT NULL AFTER `workplace`,
+ADD COLUMN `workplace_address` VARCHAR(45) NULL DEFAULT NULL AFTER `workplace_zip_id`,
+ADD COLUMN `workplace_phone` VARCHAR(45) NULL DEFAULT NULL AFTER `workplace_address`,
+ADD COLUMN `workplace_email` VARCHAR(45) NULL DEFAULT NULL AFTER `workplace_phone`,
+ADD INDEX `fk_contacts_zips2_idx` (`workplace_zip_id` ASC);
+
+ALTER TABLE `sanga`.`contacts` 
+ADD CONSTRAINT `fk_contacts_zips2`
+  FOREIGN KEY (`workplace_zip_id`)
+  REFERENCES `sanga`.`zips` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+ 
+ CREATE TABLE IF NOT EXISTS `sanga`.`settings` (
+  `id` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` SMALLINT(5) UNSIGNED NOT NULL,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
+  `value` TEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_settings_users1_idx` (`user_id` ASC),
+  CONSTRAINT `fk_settings_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `sanga`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
+
+ALTER TABLE `sanga`.`contacts` 
+CHANGE COLUMN `name` `legalname` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_hungarian_ci' NULL DEFAULT NULL ;
+

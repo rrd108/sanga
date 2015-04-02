@@ -29,7 +29,7 @@
 						<?= $contactsGroup->has('group') ? $this->Html->link($contactsGroup->group->name, ['controller' => 'Groups', 'action' => 'view', $contactsGroup->group->id]) : '' ?>
 					</td>
 					<td>
-						<?= $contactsGroup->has('contact') ? $this->Html->link($contactsGroup->contact->name, ['controller' => 'Contacts', 'action' => 'view', $contactsGroup->contact->id]) : '' ?>
+						<?= $contactsGroup->has('contact') ? $this->Html->link($contactsGroup->contact->contactname, ['controller' => 'Contacts', 'action' => 'view', $contactsGroup->contact->id]) : '' ?>
 					</td>
 					<td class="actions">
 						<?= $this->Html->link(__('View'), ['action' => 'view', $contactsGroup->group_id]) ?>

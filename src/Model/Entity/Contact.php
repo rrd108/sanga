@@ -15,7 +15,7 @@ class Contact extends Entity
      * @var array
      */
     protected $_accessible = [
-        'name' => true,
+        'legalname' => true,
         'contactname' => true,
         'zip_id' => true,
         'address' => true,

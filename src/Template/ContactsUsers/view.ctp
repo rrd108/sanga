@@ -21,7 +21,7 @@
 			<div class="row">
 				<div class="large-5 columns strings">
 					<h6 class="subheader"><?= __('Contact') ?></h6>
-					<p><?= $contactsUser->has('contact') ? $this->Html->link($contactsUser->contact->name, ['controller' => 'Contacts', 'action' => 'view', $contactsUser->contact->id]) : '' ?></p>
+					<p><?= $contactsUser->has('contact') ? $this->Html->link($contactsUser->contact->contactname, ['controller' => 'Contacts', 'action' => 'view', $contactsUser->contact->id]) : '' ?></p>
 					<h6 class="subheader"><?= __('User') ?></h6>
 					<p><?= $contactsUser->has('user') ? $this->Html->link($contactsUser->user->name, ['controller' => 'Users', 'action' => 'view', $contactsUser->user->id]) : '' ?></p>
 				</div>

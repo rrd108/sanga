@@ -23,7 +23,7 @@
 					<h6 class="subheader"><?= __('Group') ?></h6>
 					<p><?= $contactsGroup->has('group') ? $this->Html->link($contactsGroup->group->name, ['controller' => 'Groups', 'action' => 'view', $contactsGroup->group->id]) : '' ?></p>
 					<h6 class="subheader"><?= __('Contact') ?></h6>
-					<p><?= $contactsGroup->has('contact') ? $this->Html->link($contactsGroup->contact->name, ['controller' => 'Contacts', 'action' => 'view', $contactsGroup->contact->id]) : '' ?></p>
+					<p><?= $contactsGroup->has('contact') ? $this->Html->link($contactsGroup->contact->contactname, ['controller' => 'Contacts', 'action' => 'view', $contactsGroup->contact->id]) : '' ?></p>
 				</div>
 			</div>
 		</div>

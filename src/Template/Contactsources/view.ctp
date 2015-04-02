@@ -34,8 +34,8 @@
 			<table cellpadding="0" cellspacing="0">
 				<tr>
 					<th><?= __('Id') ?></th>
-					<th><?= __('Name') ?></th>
 					<th><?= __('Contactname') ?></th>
+					<th><?= __('Legal Name') ?></th>
 					<th><?= __('Zip Id') ?></th>
 					<th><?= __('Address') ?></th>
 					<th><?= __('Lat') ?></th>
@@ -56,8 +56,8 @@
 				<?php foreach ($contactsource->contacts as $contacts): ?>
 				<tr>
 					<td><?= h($contacts->id) ?></td>
-					<td><?= h($contacts->name) ?></td>
 					<td><?= h($contacts->contactname) ?></td>
+					<td><?= h($contacts->legalname) ?></td>
 					<td><?= h($contacts->zip_id) ?></td>
 					<td><?= h($contacts->address) ?></td>
 					<td><?= h($contacts->lat) ?></td>

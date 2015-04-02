@@ -632,7 +632,7 @@ class ContactsController extends AppController {
 							  "\n<atom:category scheme='http://schemas.google.com/g/2005#kind' ".
 								"term='http://schemas.google.com/contact/2008#contact'/>";
 			
-			$contactName = $contact->contactname ? $contact->contactname : $contact->name;
+			$contactName = $contact->contactname ? $contact->contactname : $contact->legalname;
 			
 			$contactEntry .= "\n<gd:name>".
 								"<gd:fullName>" . $contactName . "</gd:fullName>".

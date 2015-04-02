@@ -68,7 +68,7 @@ class ContactsTableTest extends TestCase {
 		$expected = [
 					 5 => [[
 						'id' => 7,
-						'name' => 'Dvaipayan pr',
+						'legalname' => 'Dvaipayan pr',
 						'contactname' => '',
 						'lat' => 46.067917,
 						'lng' => 18.222189
@@ -81,9 +81,9 @@ class ContactsTableTest extends TestCase {
 		foreach($dupliactes as $actual){
 			$actual = $actual->hydrate(false)->toArray();
 			$expected = [
-				['id' => 1, 'name' => 'Lokanatha dasa', 'contactname' => 'Borsos László', 'phone' => '+36 30 999 5091'],
-				['id' => 2, 'name' => 'Acarya-ratna das', 'contactname' => '', 'phone' => '36/30 99-95-091'],
-				['id' => 3, 'name' => 'Dvaipayana Dasa', 'contactname' => '', 'phone' => '06 (30) 99-95-091']
+				['id' => 1, 'legalname' => 'Lokanatha dasa', 'contactname' => 'Borsos László', 'phone' => '+36 30 999 5091'],
+				['id' => 2, 'legalname' => 'Acarya-ratna das', 'contactname' => '', 'phone' => '36/30 99-95-091'],
+				['id' => 3, 'legalname' => 'Dvaipayana Dasa', 'contactname' => '', 'phone' => '06 (30) 99-95-091']
 			];
 			$this->assertEquals($expected, $actual);
 		}
@@ -96,12 +96,12 @@ class ContactsTableTest extends TestCase {
 		}
 		$expected = [
 			[
-				['id' => 3, 'name' => 'Dvaipayana Dasa', 'contactname' => '', 'email' => 'dvd@1108.cc'],
-				['id' => 4, 'name' => 'Acarya-ratna Dasa', 'contactname' => '', 'email' => 'dvd@1108.cc']
+				['id' => 3, 'legalname' => 'Dvaipayana Dasa', 'contactname' => '', 'email' => 'dvd@1108.cc'],
+				['id' => 4, 'legalname' => 'Acarya-ratna Dasa', 'contactname' => '', 'email' => 'dvd@1108.cc']
 			],
 			[
-				['id' => 6, 'name' => 'Horváth Zoltán', 'contactname' => '', 'email' => 'senki@sehol.se'],
-				['id' => 7, 'name' => 'Dvaipayan pr', 'contactname' => '', 'email' => 'senki@sehol.se']
+				['id' => 6, 'legalname' => 'Horváth Zoltán', 'contactname' => '', 'email' => 'senki@sehol.se'],
+				['id' => 7, 'legalname' => 'Dvaipayan pr', 'contactname' => '', 'email' => 'senki@sehol.se']
 			]
 		];
 		$this->assertEquals($expected, $actual);
@@ -112,8 +112,8 @@ class ContactsTableTest extends TestCase {
 		foreach($dupliactes as $actual){
 			$actual = $actual->hydrate(false)->toArray();
 			$expected = [
-				['id' => 1, 'name' => 'Lokanatha dasa', 'contactname' => 'Borsos László', 'birth' => Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00')],
-				['id' => 6, 'name' => 'Horváth Zoltán', 'contactname' => null, 'birth' =>  Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00')]
+				['id' => 1, 'legalname' => 'Lokanatha dasa', 'contactname' => 'Borsos László', 'birth' => Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00')],
+				['id' => 6, 'legalname' => 'Horváth Zoltán', 'contactname' => null, 'birth' =>  Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00')]
 			];
 			$this->assertEquals($expected, $actual);
 		}
@@ -125,7 +125,7 @@ class ContactsTableTest extends TestCase {
 			2 => [
 				[
 					'id' => 4,
-					'name' => 'Acarya-ratna Dasa',
+					'legalname' => 'Acarya-ratna Dasa',
 					'contactname' => '',
 					'levenshteinNameName' => '1',
 					'levenshteinContactnameName' => '16',
@@ -141,12 +141,12 @@ class ContactsTableTest extends TestCase {
 		$_actual = $this->Contacts->find('ownedBy', ['User.id' => 2])->hydrate(false)->toArray();
 		//debug($actual);
 		foreach($_actual as $a) {
-			$actual[] = ['id' => $a['id'], 'name' => $a['name']];
+			$actual[] = ['id' => $a['id'], 'legalname' => $a['legalname']];
 		}
 		$expected = [
-				['id' => 2, 'name' => 'Acarya-ratna das'],
-				['id' => 3, 'name' => 'Dvaipayana Dasa'],
-				['id' => 4, 'name' => 'Acarya-ratna Dasa']
+				['id' => 2, 'legalname' => 'Acarya-ratna das'],
+				['id' => 3, 'legalname' => 'Dvaipayana Dasa'],
+				['id' => 4, 'legalname' => 'Acarya-ratna Dasa']
 			];
 		$this->assertEquals($expected, $actual);
 	}

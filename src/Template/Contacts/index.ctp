@@ -6,7 +6,7 @@ echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
 	<?php
 	echo $this->Form->create($contacts, ['id' => 'settingsForm']);
 	echo $this->Form->input('contactname', ['type' => 'checkbox']);
-	echo $this->Form->input('name', ['type' => 'checkbox']);
+	echo $this->Form->input('legalname', ['type' => 'checkbox']);
 	echo $this->Form->input('zip_id', ['type' => 'checkbox']);
 	echo $this->Form->input('address', ['type' => 'checkbox']);
 	echo $this->Form->input('phone', ['type' => 'checkbox']);
@@ -40,7 +40,7 @@ echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
 			<?php
 			foreach($this->request->data as $d => $x) {
 				echo '<th>';
-					if (in_array($d, ['contactname', 'name'])) {
+					if (in_array($d, ['contactname', 'legalname'])) {
 						echo $this->Paginator->sort(__(ucwords($d)));
 					} else {
 						echo __(ucwords($d));

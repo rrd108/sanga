@@ -147,7 +147,7 @@ echo $this->element('ajax-images');
 		<?php foreach ($histories as $history): ?>
 		<tr>
 			<td>
-				<?= $history->has('contact') ? $this->Html->link($history->contact->name, ['controller' => 'Contacts', 'action' => 'view', $history->contact->id]) : '' ?>
+				<?= $history->has('contact') ? $this->Html->link($history->contact->contactname, ['controller' => 'Contacts', 'action' => 'view', $history->contact->id]) : '' ?>
 			</td>
 			<td><?= $history->date->format('Y-m-d') ?></td>
 			<td>

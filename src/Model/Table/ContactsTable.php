@@ -24,7 +24,7 @@ class ContactsTable extends Table {
  */
 	public function initialize(array $config) {
 		$this->table('contacts');
-		$this->displayField('name');
+		$this->displayField('contactname');
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
 
@@ -72,7 +72,7 @@ class ContactsTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
-			->allowEmpty('name')
+			->allowEmpty('legalname')
 			->allowEmpty('contactname')
 			->add('zip_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('zip_id')
@@ -140,7 +140,7 @@ class ContactsTable extends Table {
 		if(!$entity->isNew()){		//update
 			$loggedInUser = $entity->loggedInUser;
 			$addr = ['zip_id', 'address'];
-			$toLog = ['name', 'contactname', 'phone', 'email', 'birth', 'workplace', 'comment',
+			$toLog = ['legalname', 'contactname', 'phone', 'email', 'birth', 'workplace', 'comment',
 					  'groups', 'skills', 'users'];
 			$toLog = array_merge($toLog, $addr);
 			
@@ -222,7 +222,7 @@ class ContactsTable extends Table {
 /*
  * Searching for duplicates: checkDuplicatesOn()
  * 
- * name, contactname	similar [name, contactname]
+ * legalname, contactname	similar [legalname, contactname]
  * lat, lng				near (SQL float equality) - handles address
  * phone				remove non numeric, if not start with 00 or +, suppose it is +36 and add it
  * email				same
@@ -239,7 +239,7 @@ class ContactsTable extends Table {
 		foreach($geos as $geo){
 			if($geo->lat){
 				$query = $this->find()
-							->select(['id', 'name', 'contactname', 'lat', 'lng']);
+							->select(['id', 'legalname', 'contactname', 'lat', 'lng']);
 				$exprLat = $query->newExpr()->add('ABS(lat - ' . $geo['lat'] . ') < ' . $delta);
 				$exprLng = $query->newExpr()->add('ABS(lng - ' . $geo['lng'] . ') < ' . $delta);
 				$query
@@ -256,7 +256,7 @@ class ContactsTable extends Table {
 							$foundPairs[] = $geo->id;
 							$duplicates[$geo->id][] = [
 									'id' => $contact->id,
-									'name' => $contact->name,
+									'legalname' => $contact->legalname,
 									'contactname' => $contact->contactname,
 									'lat' => $contact->lat,
 									'lng' => $contact->lng
@@ -309,7 +309,7 @@ class ContactsTable extends Table {
 		
 		foreach($query as $q){
 			$query = $this->find()
-					->select(['id', 'name', 'contactname', 'phone']);
+					->select(['id', 'legalname', 'contactname', 'phone']);
 			$duplicates[] = $query->where([$tPhone . ' = ' => $q->tPhone]);
 		}
 		
@@ -326,7 +326,7 @@ class ContactsTable extends Table {
 		$duplicates = [];
 		foreach($query as $q){
 			$duplicates[] = $this->find()
-						->select(['id', 'name', 'contactname', 'email'])
+						->select(['id', 'legalname', 'contactname', 'email'])
 						->where(['email' => $q->email]);
 		}
 		return $duplicates;
@@ -342,7 +342,7 @@ class ContactsTable extends Table {
 		$duplicates = [];
 		foreach($query as $q){
 			$duplicates[] = $this->find()
-						->select(['id', 'name', 'contactname', 'birth'])
+						->select(['id', 'legalname', 'contactname', 'birth'])
 						->where(['birth' => $q->birth]);
 		}
 		return $duplicates;
@@ -350,19 +350,19 @@ class ContactsTable extends Table {
 
 	public function checkDuplicatesOnNames($distance = 4){
 		$query = $this->find()
-				->select(['id', 'name', 'contactname']);
+				->select(['id', 'legalname', 'contactname']);
 		
 		$duplicates = $foundPairs = [];
 		
 		foreach($query as $q){
 			$toSelect = [];
 			$toSelect[] = 'id';
-			$toSelect[] = 'name';
+			$toSelect[] = 'legalname';
 			$toSelect[] = 'contactname';
 
-			if($q->name){
-				$levenshteinNameName = 'LEVENSHTEIN(name, "'. $q->name . '")';
-				$levenshteinContactnameName = 'LEVENSHTEIN(contactname, "'. $q->name . '")';
+			if($q->legalname){
+				$levenshteinNameName = 'LEVENSHTEIN(name, "'. $q->legalname . '")';
+				$levenshteinContactnameName = 'LEVENSHTEIN(contactname, "'. $q->legalname . '")';
 				$toSelect['levenshteinNameName'] = $query->newExpr()->add($levenshteinNameName);
 				$toSelect['levenshteinContactnameName'] = $query->newExpr()->add($levenshteinContactnameName);
 			}
@@ -375,7 +375,7 @@ class ContactsTable extends Table {
 
 			$names = $this->find()
 					->select($toSelect);
-			if($q->name){
+			if($q->legalname){
 				$names->orWhere($levenshteinNameName . ' < ' . $distance)
 						->orWhere($levenshteinContactnameName . ' < ' . $distance);
 			}
@@ -393,7 +393,7 @@ class ContactsTable extends Table {
 						$foundPairs[] = $q->id;
 						$duplicates[$q->id][] = [
 								'id' => $name->id,
-								'name' => $name->name,
+								'name' => $name->legalname,
 								'contactname' => $name->contactname,
 								'levenshteinNameName' => $name->levenshteinNameName,
 								'levenshteinContactnameName' => $name->levenshteinContactnameName,

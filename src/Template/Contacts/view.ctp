@@ -37,7 +37,7 @@ echo $this->element('ajax-images');
 	
 	<div id="tabs-1" class="contacts view large-10 medium-9 columns">
 		<h2>
-			<?= h($contact->name) ?>
+			<?= h($contact->contactname) ?>
 			<?php
 			if ($contact->google_id) {
 				echo $this->Html->image('google.png');
@@ -69,13 +69,13 @@ echo $this->element('ajax-images');
 					</div><!-- column -->
 					<div class="column large-8">					
 						<p class="ed">
-							<span class="dta"><?= h($contact->name) ?></span>
+							<span class="dta"><?= h($contact->contactname) ?></span>
 							<?php
-							echo $this->Form->input('name',
+							echo $this->Form->input('contactname',
 											   ['templates' => ['inputContainer' => '{{content}}'],
 												'class' => 'editbox',
 												'label' => false,
-												'value' => h($contact->name),
+												'value' => h($contact->contactname),
 												'title' => __('Like initiated name, nickname, etc')
 												]);
 							?>
@@ -85,18 +85,18 @@ echo $this->element('ajax-images');
 
 				<div class="row">
 					<div class="column large-4">
-						<label><?= __('Contactname') ?></label>
+						<label><?= __('Legal name') ?></label>
 					</div><!-- column -->
 					<div class="column large-8">
 						<p class="ed">
-							<span class="dta"><?= h($contact->contactname) ?></span>
+							<span class="dta"><?= h($contact->legalname) ?></span>
 							<?php
-							echo $this->Form->input('contactname',
+							echo $this->Form->input('legalname',
 											   ['templates' => ['inputContainer' => '{{content}}'],
 												'class' => 'editbox',
 												'label' => false,
-												'value' => h($contact->contactname),
-												'title' => __('Civil name, company name, etc')
+												'value' => h($contact->legalname),
+												'title' =>  __('Civil name, official legal name, etc')
 												]);
 							?>
 						</p>
@@ -346,7 +346,7 @@ echo $this->element('ajax-images');
 		</div>
 	</div>
 	<div id="tabs-2" class="contacts view large-10 medium-9 columns">
-		<h2><?= h($contact->name) ?></h2>
+		<h2><?= h($contact->contactname) ?></h2>
 		<div class="row">
 			<div class="column large-9">
 		<div class="row">
@@ -364,8 +364,8 @@ echo $this->element('ajax-images');
 							if($familymember->id != $contact->id){
 								echo '<span class="tag tag-viewable draggable">';
 									$name = '';
-									$name .= $familymember->name ? $familymember->name : '';
-									$name .= $familymember->contactname ? ' (' . $familymember->contactname . ')' : '';
+									$name .= $familymember->contactname ? $familymember->contactname : '';
+									$name .= $familymember->legalname ? ' (' . $familymember->legalname . ')' : '';
 									echo $this->Html->link($name,
 													   ['action' => 'view', $familymember->id]);
 								echo '</span> ';
@@ -391,7 +391,7 @@ echo $this->element('ajax-images');
 		</div>
 	</div>
 	<div id="tabs-3" class="contacts view large-10 medium-9 columns">
-		<h2><?= h($contact->name) ?></h2>
+		<h2><?= h($contact->contactname) ?></h2>
 		<div class="row">
 			<div class="large-9 columns strings">
 				<div class="row">
@@ -536,7 +536,7 @@ echo $this->element('ajax-images');
 	?>
 	
 	<div id="tabs-4" class="contacts view large-12 columns">
-		<h2><?= h($contact->name) ?></h2>
+		<h2><?= h($contact->contactname) ?></h2>
 		<div class="row">
 		<div class="column large-12">
 		<?php if (!empty($histories)): ?>
@@ -657,7 +657,7 @@ echo $this->element('ajax-images');
 		</div>
 	</div>
 	<div id="tabs-5" class="contacts view large-10 medium-9 columns">
-		<h2><?= h($contact->name) ?></h2>
+		<h2><?= h($contact->contactname) ?></h2>
 		<h3><?= __('Member') ?></h3>
 		<div class="column large-12" id="member">
 			<?php
@@ -704,7 +704,7 @@ echo $this->element('ajax-images');
 		</div>
 	</div>
 	<div id="tabs-6" class="contacts view large-12 columns">
-		<h2><?= h($contact->name) ?></h2>
+		<h2><?= h($contact->contactname) ?></h2>
 		<div class="row">
 		<div class="column large-12">
 		<table id="hTable" cellpadding="0" cellspacing="0">
@@ -773,7 +773,7 @@ echo $this->element('ajax-images');
 	</div>
 
 	<div id="tabs-7" class="contacts view large-10 medium-9 columns">
-		<h2><?= h($contact->name) ?></h2>
+		<h2><?= h($contact->contactname) ?></h2>
 		<div class="row">
 			<div class="column large-12">
 				<h3><?= __('Has access as contact persons') ?></h3>
@@ -811,7 +811,7 @@ echo $this->element('ajax-images');
 	</div>
 
 	<div id="tabs-8" class="contacts view large-10 medium-9 columns">
-		<h2><?= h($contact->name) ?></h2>
+		<h2><?= h($contact->contactname) ?></h2>
 		<div class="row">
 			<div class="column large-12">
 				<h6 class="subheader"><?= __('Sender') ?></h6>

@@ -16,7 +16,6 @@ class ImportsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'Imports' => 'app.imports'
     ];
 
     /**

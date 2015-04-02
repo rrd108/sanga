@@ -26,7 +26,7 @@
 			<?php foreach ($contactsSkills as $contactsSkill): ?>
 				<tr>
 					<td>
-						<?= $contactsSkill->has('contact') ? $this->Html->link($contactsSkill->contact->name, ['controller' => 'Contacts', 'action' => 'view', $contactsSkill->contact->id]) : '' ?>
+						<?= $contactsSkill->has('contact') ? $this->Html->link($contactsSkill->contact->contactname, ['controller' => 'Contacts', 'action' => 'view', $contactsSkill->contact->id]) : '' ?>
 					</td>
 					<td>
 						<?= $contactsSkill->has('skill') ? $this->Html->link($contactsSkill->skill->name, ['controller' => 'Skills', 'action' => 'view', $contactsSkill->skill->id]) : '' ?>

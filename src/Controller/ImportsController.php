@@ -96,13 +96,13 @@ class ImportsController extends AppController
                                 $this->Flash->success(__('The contact (%s) has been saved.', $i));
                             } else {
                                 $this->Flash->error(__('The contact (%s) is not saved.', $i));
-                                $this->log($i . '. ' . $contact->name . ' not saved', 'debug');
+                                $this->log($i . '. ' . $contact->contactname . ' not saved', 'debug');
                             }
                         } else {
                             foreach ($contact->errors() as $field => $errors) {
                                 foreach ($errors as $rule => $error)
                                 $this->Flash->error($i . ' / ' . $field . ' / ' . $rule . ' / ' . $error);
-                                $this->log($i . '. ' . $contact->name . ' not saved ' . $field . ' / ' . $rule . ' / ' . $error, 'debug');
+                                $this->log($i . '. ' . $contact->contactname . ' not saved ' . $field . ' / ' . $rule . ' / ' . $error, 'debug');
                             }
                             /*
                             [

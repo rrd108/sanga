@@ -47,14 +47,14 @@
 	<table cellpadding="0" cellspacing="0">
 		<tr>
 			<th><?= __('Id') ?></th>
-			<th><?= __('Name') ?></th>
+			<th><?= __('Legal Name') ?></th>
 			<th><?= __('Contactname') ?></th>
 		</tr>
 		<?php foreach ($group->contacts as $contacts): ?>
 		<tr>
 			<td><?= h($contacts->id) ?></td>
-			<td><?= h($contacts->name) ?></td>
 			<td><?= h($contacts->contactname) ?></td>
+			<td><?= h($contacts->legalname) ?></td>
 		</tr>
 		<?php endforeach; ?>
 	</table>

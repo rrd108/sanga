@@ -24,17 +24,17 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 
 		
 		echo '<div class="row">';
-			echo $this->Form->input('name',
+			echo $this->Form->input('contactname',
 									   ['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
 										'class' => 'radius',
 										'label' => __('Known name'),
 										'title' => __('Like initiated name, nickname, etc')
 										]);
-			echo $this->Form->input('contactname',
+			echo $this->Form->input('legalname',
 									   ['templates' => ['inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>'],
 										'class' => 'radius',
-										'label' => __('Civil name'),
-										'title' => __('Civil name, company name, etc')
+										'label' => __('Legal name'),
+										'title' => __('Civil name, official legal name, etc')
 										]);
 		echo '</div>';
 
