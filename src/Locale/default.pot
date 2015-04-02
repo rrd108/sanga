@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-04-01 09:31+0000\n"
+"POT-Creation-Date: 2015-04-02 11:22+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -69,11 +69,11 @@ msgstr ""
 msgid "The history could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/ImportsController.php:78
+#: Controller/ImportsController.php:96
 msgid "The contact (%s) has been saved."
 msgstr ""
 
-#: Controller/ImportsController.php:80
+#: Controller/ImportsController.php:98
 msgid "The contact (%s) is not saved."
 msgstr ""
 
@@ -184,12 +184,14 @@ msgid "Like initiated name, nickname, etc"
 msgstr ""
 
 #: Template/Contacts/add.ctp:36
-msgid "Civil name"
+#: Template/Contacts/view.ctp:88
+#: Template/Skills/view.ctp:39
+msgid "Legal name"
 msgstr ""
 
 #: Template/Contacts/add.ctp:37
 #: Template/Contacts/view.ctp:99
-msgid "Civil name, company name, etc"
+msgid "Civil name, official legal name, etc"
 msgstr ""
 
 #: Template/Contacts/add.ctp:46;91
@@ -325,7 +327,7 @@ msgid "next"
 msgstr ""
 
 #: Template/Contacts/searchquery.ctp:6
-#: Template/Element/menu.ctp:32
+#: Template/Element/menu.ctp:33
 msgid "Queries"
 msgstr ""
 
@@ -345,7 +347,7 @@ msgid "Group"
 msgstr ""
 
 #: Template/Contacts/searchquery.ctp:35
-#: Template/Element/menu.ctp:80
+#: Template/Element/menu.ctp:81
 msgid "Search"
 msgstr ""
 
@@ -358,13 +360,13 @@ msgid "Workplace and skills"
 msgstr ""
 
 #: Template/Contacts/view.ctp:24
-#: Template/Element/menu.ctp:31
+#: Template/Element/menu.ctp:32
 #: Template/Users/dashboard.ctp:5;31;53
 msgid "Histories"
 msgstr ""
 
 #: Template/Contacts/view.ctp:25
-#: Template/Element/menu.ctp:46
+#: Template/Element/menu.ctp:47
 msgid "Groups"
 msgstr ""
 
@@ -382,14 +384,6 @@ msgstr ""
 
 #: Template/Contacts/view.ctp:48
 msgid "Save to Google Contacts"
-msgstr ""
-
-#: Template/Contacts/view.ctp:88
-#: Template/Contactsources/view.ctp:38
-#: Template/Groups/view.ctp:51
-#: Template/Skills/view.ctp:39
-#: Template/Zips/view.ctp:49
-msgid "Contactname"
 msgstr ""
 
 #: Template/Contacts/view.ctp:108
@@ -498,7 +492,7 @@ msgid "Workplace Email"
 msgstr ""
 
 #: Template/Contacts/view.ctp:504
-#: Template/Element/menu.ctp:44
+#: Template/Element/menu.ctp:45
 msgid "Skills"
 msgstr ""
 
@@ -999,16 +993,16 @@ msgstr ""
 msgid "Delete Contactsource"
 msgstr ""
 
-#: Template/Contactsources/view.ctp:21;37
+#: Template/Contactsources/view.ctp:21
 #: Template/Countries/view.ctp:21;39
 #: Template/Events/view.ctp:20
-#: Template/Groups/view.ctp:21;50
+#: Template/Groups/view.ctp:21
 #: Template/Settings/view.ctp:18
-#: Template/Skills/view.ctp:22;38
+#: Template/Skills/view.ctp:22
 #: Template/Units/view.ctp:21
 #: Template/Usergroups/view.ctp:21;39
 #: Template/Users/view.ctp:37
-#: Template/Zips/view.ctp:28;48
+#: Template/Zips/view.ctp:28
 msgid "Name"
 msgstr ""
 
@@ -1035,6 +1029,19 @@ msgstr ""
 #: Template/Skills/view.ctp:33
 #: Template/Zips/view.ctp:43
 msgid "Related Contacts"
+msgstr ""
+
+#: Template/Contactsources/view.ctp:37
+#: Template/Groups/view.ctp:51
+#: Template/Skills/view.ctp:38
+#: Template/Zips/view.ctp:48
+msgid "Contactname"
+msgstr ""
+
+#: Template/Contactsources/view.ctp:38
+#: Template/Groups/view.ctp:50
+#: Template/Zips/view.ctp:49
+msgid "Legal Name"
 msgstr ""
 
 #: Template/Contactsources/view.ctp:39
@@ -1178,33 +1185,37 @@ msgstr ""
 msgid "Google Contact Import"
 msgstr ""
 
-#: Template/Element/menu.ctp:33
+#: Template/Element/menu.ctp:31
+msgid "Csv Contact Import"
+msgstr ""
+
+#: Template/Element/menu.ctp:34
 msgid "Map"
 msgstr ""
 
-#: Template/Element/menu.ctp:42
+#: Template/Element/menu.ctp:43
 msgid "Contact sources"
 msgstr ""
 
-#: Template/Element/menu.ctp:43
+#: Template/Element/menu.ctp:44
 msgid "User groups"
 msgstr ""
 
-#: Template/Element/menu.ctp:47
+#: Template/Element/menu.ctp:48
 #: Template/Events/index.ctp:13
 #: Template/Users/view.ctp:173
 msgid "Events"
 msgstr ""
 
-#: Template/Element/menu.ctp:61
+#: Template/Element/menu.ctp:62
 msgid "Profile"
 msgstr ""
 
-#: Template/Element/menu.ctp:62
+#: Template/Element/menu.ctp:63
 msgid "Notifications"
 msgstr ""
 
-#: Template/Element/menu.ctp:63
+#: Template/Element/menu.ctp:64
 msgid "Logout"
 msgstr ""
 
@@ -1454,6 +1465,10 @@ msgstr ""
 
 #: Template/Histories/view.ctp:39
 msgid "Unit"
+msgstr ""
+
+#: Template/Imports/index.ctp:4
+msgid "Sample import file"
 msgstr ""
 
 #: Template/Imports/index.ctp:12

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sanga 1.0\n"
-"POT-Creation-Date: 2015-04-01 09:31+0000\n"
-"PO-Revision-Date: 2015-04-01 11:33+0100\n"
+"POT-Creation-Date: 2015-04-02 11:22+0000\n"
+"PO-Revision-Date: 2015-04-02 13:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: Hungarian\n"
@@ -71,11 +71,11 @@ msgstr "A történést nem sikerült menteni."
 msgid "The history could not be saved. Please, try again."
 msgstr "A történést nem sikerült menteni. Kérlek próbáld meg újra."
 
-#: Controller/ImportsController.php:78
+#: Controller/ImportsController.php:96
 msgid "The contact (%s) has been saved."
 msgstr "A kapcsolat mentve"
 
-#: Controller/ImportsController.php:80
+#: Controller/ImportsController.php:98
 msgid "The contact (%s) is not saved."
 msgstr "A kapcsolat nem lett elmentve"
 
@@ -195,13 +195,14 @@ msgstr "Ismert név"
 msgid "Like initiated name, nickname, etc"
 msgstr "Avatott név, becenév, stb"
 
-#: Template/Contacts/add.ctp:36
-msgid "Civil name"
-msgstr "Polgári név"
+#: Template/Contacts/add.ctp:36 Template/Contacts/view.ctp:88
+#: Template/Skills/view.ctp:39
+msgid "Legal name"
+msgstr "Hivatalos név"
 
 #: Template/Contacts/add.ctp:37 Template/Contacts/view.ctp:99
-msgid "Civil name, company name, etc"
-msgstr "Polgári név, cégnév, stb"
+msgid "Civil name, official legal name, etc"
+msgstr "Polgári név, hivatalos nénév, stb"
 
 #: Template/Contacts/add.ctp:46;91 Template/Countries/view.ctp:38
 #: Template/Zips/view.ctp:26
@@ -293,7 +294,7 @@ msgstr "előző"
 msgid "next"
 msgstr "következő"
 
-#: Template/Contacts/searchquery.ctp:6 Template/Element/menu.ctp:32
+#: Template/Contacts/searchquery.ctp:6 Template/Element/menu.ctp:33
 msgid "Queries"
 msgstr "Lekérdezés"
 
@@ -310,7 +311,7 @@ msgstr "Környék"
 msgid "Group"
 msgstr "Csoport"
 
-#: Template/Contacts/searchquery.ctp:35 Template/Element/menu.ctp:80
+#: Template/Contacts/searchquery.ctp:35 Template/Element/menu.ctp:81
 msgid "Search"
 msgstr "Keresés"
 
@@ -322,12 +323,12 @@ msgstr "Személyes"
 msgid "Workplace and skills"
 msgstr "Munkahely, szakértelem"
 
-#: Template/Contacts/view.ctp:24 Template/Element/menu.ctp:31
+#: Template/Contacts/view.ctp:24 Template/Element/menu.ctp:32
 #: Template/Users/dashboard.ctp:5;31;53
 msgid "Histories"
 msgstr "Történések"
 
-#: Template/Contacts/view.ctp:25 Template/Element/menu.ctp:46
+#: Template/Contacts/view.ctp:25 Template/Element/menu.ctp:47
 msgid "Groups"
 msgstr "Csoportok"
 
@@ -346,12 +347,6 @@ msgstr "Levél küldés"
 #: Template/Contacts/view.ctp:48
 msgid "Save to Google Contacts"
 msgstr "Mentés Google címtárba"
-
-#: Template/Contacts/view.ctp:88 Template/Contactsources/view.ctp:38
-#: Template/Groups/view.ctp:51 Template/Skills/view.ctp:39
-#: Template/Zips/view.ctp:49
-msgid "Contactname"
-msgstr "Ismert név"
 
 #: Template/Contacts/view.ctp:108
 msgid "Contact person"
@@ -435,7 +430,7 @@ msgstr "Munkahelyi telefon"
 msgid "Workplace Email"
 msgstr "Munkahelyi email"
 
-#: Template/Contacts/view.ctp:504 Template/Element/menu.ctp:44
+#: Template/Contacts/view.ctp:504 Template/Element/menu.ctp:45
 msgid "Skills"
 msgstr "Szakértelem"
 
@@ -765,11 +760,11 @@ msgstr ""
 msgid "Delete Contactsource"
 msgstr ""
 
-#: Template/Contactsources/view.ctp:21;37 Template/Countries/view.ctp:21;39
-#: Template/Events/view.ctp:20 Template/Groups/view.ctp:21;50
-#: Template/Settings/view.ctp:18 Template/Skills/view.ctp:22;38
+#: Template/Contactsources/view.ctp:21 Template/Countries/view.ctp:21;39
+#: Template/Events/view.ctp:20 Template/Groups/view.ctp:21
+#: Template/Settings/view.ctp:18 Template/Skills/view.ctp:22
 #: Template/Units/view.ctp:21 Template/Usergroups/view.ctp:21;39
-#: Template/Users/view.ctp:37 Template/Zips/view.ctp:28;48
+#: Template/Users/view.ctp:37 Template/Zips/view.ctp:28
 msgid "Name"
 msgstr "Név"
 
@@ -788,6 +783,16 @@ msgstr ""
 #: Template/Skills/view.ctp:33 Template/Zips/view.ctp:43
 msgid "Related Contacts"
 msgstr ""
+
+#: Template/Contactsources/view.ctp:37 Template/Groups/view.ctp:51
+#: Template/Skills/view.ctp:38 Template/Zips/view.ctp:48
+msgid "Contactname"
+msgstr "Ismert név"
+
+#: Template/Contactsources/view.ctp:38 Template/Groups/view.ctp:50
+#: Template/Zips/view.ctp:49
+msgid "Legal Name"
+msgstr "Hivatalos név"
 
 #: Template/Contactsources/view.ctp:39 Template/Skills/view.ctp:40
 #: Template/Zips/view.ctp:50
@@ -900,32 +905,36 @@ msgstr "Új kapcsolat"
 msgid "Google Contact Import"
 msgstr "Google címtár importálás"
 
-#: Template/Element/menu.ctp:33
+#: Template/Element/menu.ctp:31
+msgid "Csv Contact Import"
+msgstr "Csv kapcsolat importálás"
+
+#: Template/Element/menu.ctp:34
 msgid "Map"
 msgstr "Térkép"
 
-#: Template/Element/menu.ctp:42
+#: Template/Element/menu.ctp:43
 msgid "Contact sources"
 msgstr "Kapcsolat forrása"
 
-#: Template/Element/menu.ctp:43
+#: Template/Element/menu.ctp:44
 msgid "User groups"
 msgstr ""
 
-#: Template/Element/menu.ctp:47 Template/Events/index.ctp:13
+#: Template/Element/menu.ctp:48 Template/Events/index.ctp:13
 #: Template/Users/view.ctp:173
 msgid "Events"
 msgstr "Esemény"
 
-#: Template/Element/menu.ctp:61
+#: Template/Element/menu.ctp:62
 msgid "Profile"
 msgstr "Adatlap"
 
-#: Template/Element/menu.ctp:62
+#: Template/Element/menu.ctp:63
 msgid "Notifications"
 msgstr "Értesítés"
 
-#: Template/Element/menu.ctp:63
+#: Template/Element/menu.ctp:64
 msgid "Logout"
 msgstr "Kilép"
 
@@ -1137,6 +1146,10 @@ msgstr "Esemény"
 
 #: Template/Histories/view.ctp:39
 msgid "Unit"
+msgstr ""
+
+#: Template/Imports/index.ctp:4
+msgid "Sample import file"
 msgstr ""
 
 #: Template/Imports/index.ctp:12
@@ -1613,14 +1626,14 @@ msgstr "November"
 msgid "December"
 msgstr "december"
 
+#~ msgid "Civil name"
+#~ msgstr "Polgári név"
+
 #~ msgid "Skill not removed"
 #~ msgstr "A szakértelem eltávolítása sikertelen."
 
 #~ msgid "Contact.name"
 #~ msgstr "Név"
-
-#~ msgid "User Name"
-#~ msgstr "Felhasználónév"
 
 #~ msgid "Event Name"
 #~ msgstr "Esemény"
