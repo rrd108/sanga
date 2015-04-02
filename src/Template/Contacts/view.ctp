@@ -305,7 +305,7 @@ echo $this->element('ajax-images');
 					<label><?= __('Comment') ?></label>
 					<p class="ed">
 						<span class="dta">
-							<?= h($contact->comment); ?>
+							<?= nl2br(h($contact->comment)); ?>
 						</span>
 						<?php
 						echo $this->Form->input('comment',
@@ -763,7 +763,13 @@ echo $this->element('ajax-images');
 					<td></td>
 					<td></td>
 					<td></td>
-					<td class="r"><?= h($this->Number->currency($total, $history->unit->name)) ?></td>
+					<td class="r">
+						<?php
+						if (isset($history)) {
+							echo h($this->Number->currency($total, $history->unit->name));
+						}
+						?>
+					</td>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;</th>
 				</tr>
 			</tfoot>
