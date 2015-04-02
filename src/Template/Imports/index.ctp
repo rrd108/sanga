@@ -1,7 +1,7 @@
 <div class="sidebar-wrapper">
 	<nav class="side-nav">
 		<ul>
-			<li></li>
+        <li><?= $this->Html->link(__('Sample import file'), $this->Html->webroot . '/files/contact_csv-import.xlsx') ?></li>
 		</ul>
 	</nav>
 </div>

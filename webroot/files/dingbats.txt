@@ -10,7 +10,7 @@
 ✿ - Events
 ♥ - Contacts
 ⊕ - Add Contact
-⇉ - Google Contact Import
+⇉ - Import
 ⚑ - Histories
 ♛ - Queries
 ✈ - Map
