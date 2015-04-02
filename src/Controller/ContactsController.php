@@ -30,12 +30,12 @@ class ContactsController extends AppController {
 	public function search(){
 		$contact = $this->Contacts->newEntity($this->request->data);
 		$query = $this->Contacts->find()
-				->select(['id', 'name', 'contactname'])
-				->where(['name LIKE "%'.$this->request->query('term').'%"'])
-				->orWhere(['contactname LIKE "%'.$this->request->query('term').'%"']);
+				->select(['id', 'contactname', 'legalname'])
+				->where(['contactname LIKE "%'.$this->request->query('term').'%"'])
+				->orWhere(['legalname LIKE "%'.$this->request->query('term').'%"']);
 		foreach($query as $row){
-			$label = $this->createHighlight($row->name) .
-					$this->createHighlight($row->contactname);
+			$label = $this->createHighlight($row->contactname) .
+					$this->createHighlight($row->legalname);
 			$result[] = array('value' => $row->id,
 							  'label' => $label);
 		}

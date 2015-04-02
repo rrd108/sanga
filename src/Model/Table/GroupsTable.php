@@ -33,7 +33,7 @@ class GroupsTable extends Table {
 			'foreignKey' => 'group_id',
 			'targetForeignKey' => 'contact_id',
 			'joinTable' => 'contacts_groups',
-			'sort' => 'Contacts.name'
+			'sort' => 'Contacts.contactname'
 		]);
 		$this->belongsToMany('Users', [
 			'through' => 'groups_users'

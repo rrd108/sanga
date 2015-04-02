@@ -25,7 +25,7 @@ class SkillsTable extends Table {
 			'foreignKey' => 'skill_id',
 			'targetForeignKey' => 'contact_id',
 			'joinTable' => 'contacts_skills',
-			'sort' => 'Contacts.name'
+			'sort' => 'Contacts.contactname'
 		]);
 	}
 

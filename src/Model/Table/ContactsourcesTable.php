@@ -23,7 +23,7 @@ class ContactsourcesTable extends Table {
 
 		$this->hasMany('Contacts', [
 			'foreignKey' => 'contactsource_id',
-			'sort' => 'Contacts.name'
+			'sort' => 'Contacts.contactname'
 		]);
 	}
 

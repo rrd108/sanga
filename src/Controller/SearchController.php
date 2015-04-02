@@ -14,9 +14,9 @@ class SearchController extends AppController {
 	public function quicksearch(){
 		$this->Contacts = TableRegistry::get('Contacts');
 		$query = $this->Contacts->find()
-				->select(['id', 'name', 'contactname', 'email', 'phone', 'birth', 'workplace'])
-				->where(['name LIKE "%'.$this->request->query('term').'%"'])
-				->orWhere(['contactname LIKE "%'.$this->request->query('term').'%"'])
+				->select(['id', 'contactname', 'legalname', 'email', 'phone', 'birth', 'workplace'])
+				->where(['contactname LIKE "%'.$this->request->query('term').'%"'])
+				->orWhere(['legalname LIKE "%'.$this->request->query('term').'%"'])
 				->orWhere(['email LIKE "%'.$this->request->query('term').'%"'])
 				->orWhere(['phone LIKE "%'.$this->request->query('term').'%"'])
 				->orWhere(['birth LIKE "%'.$this->request->query('term').'%"'])
@@ -24,13 +24,15 @@ class SearchController extends AppController {
 		//debug($query->toArray());
 		foreach($query as $row) {
 			if ( ! $this->Contacts->isAccessible($row->id, $this->Auth->user('id'))) {
-				$label = '<span class="noaccess">♥ ' . $this->createHighlight($row->name) . '</span>';
+				$label = '<span class="noaccess">';
+					$label .= $this->createHighlight($row->contactname) ? '♥ ' . $this->createHighlight($row->contactname) : '';
+					$label .= $this->createHighlight($row->leaglname) ? '♥ ' . $this->createHighlight($row->legalname) : '';
+				$label .= '</span>';
 			} else {
-				$label = '♥ ' . $this->createHighlight($row->name, false);
+				$label = $this->createHighlight($row->contactname, false) ? '♥ ' . $this->createHighlight($row->contactname, false) : '';
 			}
 			if ( $this->Contacts->isAccessible($row->id, $this->Auth->user('id'))) {
-				$label .= ' ';
-				$label .= $this->createHighlight($row->contactname) ? $this->createHighlight($row->contactname) . ' ' : '';
+				$label .= $this->createHighlight($row->legalname) ? '♥ ' . $this->createHighlight($row->legalname) . ' ' : '';
 				$label .= $this->createHighlight($row->email) ? '✉ ' . $this->createHighlight($row->email) . ' ' : '';
 				$label .= $this->createHighlight($row->phone) ? '☏ ' . $this->createHighlight($row->phone) . ' ' : '';
 				$label .= (isset($row->birth) && $this->createHighlight($row->birth)) ? '↫ ' . $this->createHighlight($row->birth->format('Y-m-d')) . ' ' : '';
