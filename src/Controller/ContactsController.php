@@ -118,8 +118,8 @@ class ContactsController extends AppController {
 				->first();
 		$selected = [];
 		if ( empty($select)) {
-			$select = ['Contacts.name', 'Contacts.contactname', 'Contacts.phone', 'Contacts.email'];
-			$selected = ['name' => 1, 'contactname' => 1, 'phone' => 1, 'email' => 1];
+			$select = ['Contacts.contactname', 'Contacts.legalname', 'Contacts.phone', 'Contacts.email'];
+			$selected = ['contactname' => 1, 'legalname' => 1, 'phone' => 1, 'email' => 1];
 		} else {
 			$select = unserialize($select->value);
 			//set the request->data array for the view to autofill the settings form
@@ -175,7 +175,7 @@ class ContactsController extends AppController {
 								->contain($contain)
 								->where(['Contacts.id IN ' => $myContacts])
 								->orWhere(['Contacts.id IN ' => $inmygroupsContacts])
-								->order(['Contacts.name' => 'ASC']);/*
+								->order(['Contacts.contactname' => 'ASC']);/*
 								->first()
 								->toArray();
 		debug($contacts); die();*/
