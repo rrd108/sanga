@@ -820,15 +820,22 @@ echo $this->element('ajax-images');
 		<h2><?= h($contact->contactname) ?></h2>
 		<div class="row">
 			<div class="column large-12">
-				<h6 class="subheader"><?= __('Sender') ?></h6>
-				<?= $this->Session->read('Auth.User.email') ?>
-				<h6 class="subheader"><?= __('To') ?></h6>
-				<?= h($contact->email) ?>
+				<?php if (h($contact->email)) : ?>
+					<h6 class="subheader"><?= __('Sender') ?></h6>
+					<?= $this->Session->read('Auth.User.email') ?>
+					<h6 class="subheader"><?= __('To') ?></h6>
+					<?= h($contact->email) ?>
+					<?php
+					echo $this->Form->input('subject');
+					echo $this->Form->input('message',
+											['type' => 'textarea']);
+					echo $this->Form->button(__('Submit'), ['id' => 'sendmail']);
+					?>
+				
 				<?php
-				echo $this->Form->input('subject');
-				echo $this->Form->input('message',
-										['type' => 'textarea']);
-				echo $this->Form->button(__('Submit'), ['id' => 'sendmail']);
+				else :
+					echo __('We do not have the contact\'s email address, so we can not send mail');
+				endif;
 				?>
 			</div>
 		</div>
