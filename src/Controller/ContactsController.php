@@ -238,7 +238,7 @@ class ContactsController extends AppController {
 					(int) 1 => '~könyvelő'		//starts with "~" this is a new skill (or fast typer problem)
 				]]
 			*/
-		if(is_array($this->request->data['skills']['_ids'])){
+		if(isset($this->request->data['skills']) && is_array($this->request->data['skills']['_ids'])){
 			foreach($this->request->data['skills']['_ids'] as $i => $skill){
 				if(mb_substr($skill, 0,1) == '~'){
 					$skill = ltrim($skill, '~');

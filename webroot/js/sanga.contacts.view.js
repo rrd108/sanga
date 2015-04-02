@@ -215,7 +215,7 @@ $(function() {
 				}
 				editedData[editbox.attr('name')] = newData;
 			}
-			oldData[editbox.attr('name')] = theSpan.text();
+			oldData[editbox.attr('name')] = theSpan.text();		//editbox.attr('name') = pl legalname
 			theSpan.text(newData);
 		});
 
@@ -232,7 +232,12 @@ $(function() {
 			error : function(jqXHR, textStatus, errorThrown){
 				$('#ajaxloader').hide();
 				theP.append($('#errorImg').show());
-				theSpan.text(oldData);
+				noty({
+					text: textStatus,
+					type: 'error',
+					timeout: 3500,
+					});
+				theSpan.text(oldData[this.data.substr(0, this.data.indexOf('='))]);		//this.data.substr(0, this.data.indexOf('=')) = pl legalname
 			},
 			success : function(data, textStatus, jqXHR){
 				$('#ajaxloader').hide();
