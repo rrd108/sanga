@@ -46,7 +46,7 @@
 				<tr>
 					<th><?= __('Id') ?></th>
 					<th><?= __('Contactname') ?></th>
-					<th><?= __('Legal Name') ?></th>
+					<th><?= __('Legalname') ?></th>
 					<th><?= __('Zip Id') ?></th>
 					<th><?= __('Address') ?></th>
 					<th><?= __('Lat') ?></th>

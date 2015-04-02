@@ -168,6 +168,7 @@ class ContactsController extends AppController {
 		$inmygroupsContacts = $this->Contacts->find('inGroups', ['groupIds' => $groupIds])
 				->select(['Contacts.id']);
 
+		array_unshift($select, 'Contacts.sex');
 		array_unshift($select, 'Contacts.id');
 		//debug($select);
 		$contacts = $this->Contacts->find()

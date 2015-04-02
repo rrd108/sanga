@@ -41,7 +41,7 @@ echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
 			foreach($this->request->data as $d => $x) {
 				echo '<th>';
 					if (in_array($d, ['contactname', 'legalname'])) {
-						echo $this->Paginator->sort(__(ucwords($d)));
+						echo $this->Paginator->sort(__($d));
 					} else {
 						echo __(ucwords($d));
 					}
@@ -53,7 +53,17 @@ echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
 	<tbody>
 		<?php foreach ($contacts as $contact): ?>
 		<tr>
-			<td><?= $this->Html->link('♥', ['action' => 'view', $contact->id]) ?></td>
+			<td>
+				<?php
+				$cs = '';
+				if ($contact->sex) {
+					$cs = $contact->sex;
+				}
+				echo $this->Html->link($this->Html->image('contact'.$cs.'.png'),
+									  ['action' => 'view', $contact->id],
+									  ['escape' => false, 'title' => __('View')]);
+				?>
+			</td>
 			<?php
 			foreach($this->request->data as $d => $x) {
 				echo '<td>';
