@@ -57,13 +57,13 @@ header .main-logo a img { max-width: 135px; }
 
 .tag label { color: #fff; margin: 0 !important; padding: 0 !important; }
 
-.tag-mine { background: #428BCA; }
+.tag-mine { color: #428BCA; }
 
-.tag-viewable { background: #5CB85C; }
+.tag-viewable { color: #5CB85C; }
 
-.tag-shared { background: #5BC0DE; }
+.tag-shared { color: #5BC0DE; }
 
-.tag-default, .removeable:hover { background: #777777; }
+.tag-default, .removeable:hover { color: #777777; }
 
 .tag-danger { background: #D9534F; }
 
