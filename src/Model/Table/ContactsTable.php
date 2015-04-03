@@ -154,7 +154,7 @@ class ContactsTable extends Table {
 					if($entity->$prop != $oldEntity[$prop]){	//and we changed it
 						if(!is_array($oldEntity[$prop])){
 							if($oldEntity[$prop] && $entity->$prop){
-								$details[] = __('{0} changed from {1}  to {2}', [$prop, $oldEntity[$prop], $entity->prop]);
+								$details[] = __('{0} changed from {1}  to {2}', [$prop, $oldEntity[$prop], $entity->$prop]);
 							}
 							elseif($oldEntity[$prop]){
 								$details[] = __('{0}: {1} removed', [$prop, $oldEntity[$prop]]);
