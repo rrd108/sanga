@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sanga 1.0\n"
-"POT-Creation-Date: 2015-04-02 11:51+0000\n"
-"PO-Revision-Date: 2015-04-02 13:52+0100\n"
+"POT-Creation-Date: 2015-04-03 14:01+0000\n"
+"PO-Revision-Date: 2015-04-03 16:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: Hungarian\n"
@@ -16,54 +16,54 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: Controller/ContactsController.php:200;330
+#: Controller/ContactsController.php:200;351
 msgid "Permission deined"
 msgstr "Hozzáférés megtagadva"
 
-#: Controller/ContactsController.php:302
+#: Controller/ContactsController.php:323
 msgid "Two family members are in different families"
 msgstr "A családtagok más családokhoz tartoznak"
 
-#: Controller/ContactsController.php:350;604
+#: Controller/ContactsController.php:371;625
 #: Controller/UsersController.php:202
 msgid "The contact has been saved."
 msgstr "A kapcsolat mentve"
 
-#: Controller/ContactsController.php:359;617
+#: Controller/ContactsController.php:380;638
 #: Controller/UsersController.php:212
 msgid "The contact could not be saved. Please, try again."
 msgstr "Nem tudtam elmenteni a kapsolatot. Kérlek próbáld meg újra."
 
-#: Controller/ContactsController.php:385
+#: Controller/ContactsController.php:406
 msgid "The contact is removed from this family"
 msgstr "A kapcsolat kikerült ebből a családból."
 
-#: Controller/ContactsController.php:387
+#: Controller/ContactsController.php:408
 msgid "The contact could not be removed from this family"
 msgstr "A kapcsolatot nem tudtam kivenni a családból."
 
-#: Controller/ContactsController.php:445
+#: Controller/ContactsController.php:466
 msgid "Group membership removed"
-msgstr ""
+msgstr "Csoporttagság törölve"
 
-#: Controller/ContactsController.php:457
+#: Controller/ContactsController.php:478
 msgid "Skill removed"
 msgstr "A szakértelem törölve"
 
-#: Controller/ContactsController.php:614
+#: Controller/ContactsController.php:635
 msgid "Contact photo saved."
 msgstr "A kapcsolat fényképe mentve."
 
-#: Controller/ContactsController.php:614
+#: Controller/ContactsController.php:635
 msgid "Unable to save contact photo."
 msgstr "A kapcsolat fényképét nem sikerült menteni."
 
-#: Controller/ContactsController.php:766
+#: Controller/ContactsController.php:787
 #: Controller/HistoriesController.php:107
 msgid "The history has been saved."
 msgstr "A történés mente."
 
-#: Controller/ContactsController.php:769
+#: Controller/ContactsController.php:790
 msgid "The history could not be saved."
 msgstr "A történést nem sikerült menteni."
 
@@ -71,13 +71,13 @@ msgstr "A történést nem sikerült menteni."
 msgid "The history could not be saved. Please, try again."
 msgstr "A történést nem sikerült menteni. Kérlek próbáld meg újra."
 
-#: Controller/ImportsController.php:96
-msgid "The contact (%s) has been saved."
-msgstr "A kapcsolat mentve"
-
-#: Controller/ImportsController.php:98
-msgid "The contact (%s) is not saved."
-msgstr "A kapcsolat nem lett elmentve"
+#: Controller/ImportsController.php:129
+msgid ""
+"The import file was not in the proper format. Download the sample file and "
+"save as a csv."
+msgstr ""
+"Az import fájl formátuma nem megfelelő. Töltsd le a minta fájlt és mentsd el "
+"csv-ként."
 
 #: Controller/SettingsController.php:59;60
 msgid "The setting has been saved."
@@ -129,33 +129,37 @@ msgstr ""
 msgid "You should provide your registered email address"
 msgstr "Azt az email címet kell megadni amivel regisztráltál"
 
-#: Model/Table/ContactsTable.php:131
+#: Controller/UsersController.php:136
+msgid "Your temporary password is: {0} Please log in."
+msgstr "Ideiglenes jelszavad: {0} Jelentkezz be."
+
+#: Model/Table/ContactsTable.php:90
+msgid "Sex is 1 for male and 2 for female or empty"
+msgstr "A neme 1 férfiak és 2 nők esetében, vagy üres"
+
+#: Model/Table/ContactsTable.php:132
 msgid "At least 2 info should be filled"
 msgstr "Legalább 2 mezőt ki kell tölteni"
 
-#: Model/Table/ContactsTable.php:156
-msgid "changed from "
-msgstr "megváltoztatva"
+#: Model/Table/ContactsTable.php:157
+msgid "{0} changed from {1}  to {2}"
+msgstr "{0} módosítva {1}-ról {2}-ra"
 
-#: Model/Table/ContactsTable.php:156
-msgid "to"
-msgstr ""
+#: Model/Table/ContactsTable.php:160
+msgid "{0}: {1} removed"
+msgstr "{0}: {1} törölve"
 
-#: Model/Table/ContactsTable.php:159
-msgid "removed"
-msgstr "törölve"
+#: Model/Table/ContactsTable.php:163
+msgid "{0}: {1} added"
+msgstr "{0}: {1} hozzáadva"
 
-#: Model/Table/ContactsTable.php:162
-msgid "added"
-msgstr "hozzáadva"
+#: Model/Table/ContactsTable.php:181
+msgid "{0} removed from {1}"
+msgstr "{0} eltávolítva a(z) {1}-ból"
 
-#: Model/Table/ContactsTable.php:180
-msgid "removed from"
-msgstr "eltávolítva"
-
-#: Model/Table/ContactsTable.php:185
-msgid "added to"
-msgstr "hozzáadva"
+#: Model/Table/ContactsTable.php:186
+msgid "{0} added to {1}"
+msgstr "{0} hozzáadva a(z) {1}-hoz"
 
 #: Model/Table/UsersTable.php:75
 msgid "This username is already taken"
@@ -187,47 +191,47 @@ msgstr "Kapcsolattartó"
 msgid "Inactive means the connection is lost"
 msgstr "Inaktív, elvesztett kapcsolat"
 
-#: Template/Contacts/add.ctp:30 Template/Contacts/view.ctp:68
+#: Template/Contacts/add.ctp:33 Template/Contacts/view.ctp:82
 msgid "Known name"
 msgstr "Ismert név"
 
-#: Template/Contacts/add.ctp:31 Template/Contacts/view.ctp:79
+#: Template/Contacts/add.ctp:34 Template/Contacts/view.ctp:93
 msgid "Like initiated name, nickname, etc"
 msgstr "Avatott név, becenév, stb"
 
-#: Template/Contacts/add.ctp:36 Template/Contacts/view.ctp:88
+#: Template/Contacts/add.ctp:42 Template/Contacts/view.ctp:102
 #: Template/Skills/view.ctp:39
 msgid "Legal name"
 msgstr "Hivatalos név"
 
-#: Template/Contacts/add.ctp:37 Template/Contacts/view.ctp:99
+#: Template/Contacts/add.ctp:43 Template/Contacts/view.ctp:113
 msgid "Civil name, official legal name, etc"
 msgstr "Polgári név, hivatalos nénév, stb"
 
-#: Template/Contacts/add.ctp:46;91 Template/Countries/view.ctp:38
+#: Template/Contacts/add.ctp:55;121 Template/Countries/view.ctp:38
 #: Template/Zips/view.ctp:26
 msgid "Zip"
 msgstr "Irányítószám"
 
-#: Template/Contacts/add.ctp:73 Template/Contacts/view.ctp:249;262
+#: Template/Contacts/add.ctp:94 Template/Contacts/view.ctp:263;276
 msgid "Male"
 msgstr "Férfi"
 
-#: Template/Contacts/add.ctp:73 Template/Contacts/view.ctp:252;262
+#: Template/Contacts/add.ctp:94 Template/Contacts/view.ctp:266;276
 msgid "Female"
 msgstr "Nő"
 
-#: Template/Contacts/add.ctp:113 Template/Contacts/view.ctp:22;354
+#: Template/Contacts/add.ctp:155 Template/Contacts/view.ctp:36;369
 #: Template/Events/view.ctp:47 Template/Histories/view.ctp:57
 msgid "Family"
 msgstr "Család"
 
-#: Template/Contacts/add.ctp:130 Template/Contacts/view.ctp:315
+#: Template/Contacts/add.ctp:172 Template/Contacts/view.ctp:329
 msgid "Secondary emails, phones, others"
 msgstr "Másodlagos email cím, telefon, egyéb"
 
-#: Template/Contacts/add.ctp:157 Template/Contacts/index.ctp:27
-#: Template/Contacts/view.ctp:825 Template/ContactsGroups/add.ctp:23
+#: Template/Contacts/add.ctp:199 Template/Contacts/index.ctp:27
+#: Template/Contacts/view.ctp:26;855 Template/ContactsGroups/add.ctp:23
 #: Template/ContactsGroups/edit.ctp:24 Template/ContactsSkills/add.ctp:23
 #: Template/ContactsSkills/edit.ctp:24 Template/ContactsUsers/add.ctp:23
 #: Template/ContactsUsers/edit.ctp:24 Template/Contactsources/add.ctp:22
@@ -264,7 +268,7 @@ msgstr ""
 
 #: Template/Contacts/index.ctp:5
 msgid "Choose columns to display"
-msgstr ""
+msgstr "Válaszd ki a megjelenítendő oszlopokat"
 
 #: Template/Contacts/index.ctp:64 Template/ContactsGroups/index.ctp:35
 #: Template/ContactsSkills/index.ctp:35 Template/ContactsUsers/index.ctp:35
@@ -282,7 +286,7 @@ msgstr ""
 msgid "View"
 msgstr "Mutat"
 
-#: Template/Contacts/index.ctp:127 Template/Contacts/view.ctp:648
+#: Template/Contacts/index.ctp:127 Template/Contacts/view.ctp:717
 #: Template/ContactsGroups/index.ctp:46 Template/ContactsSkills/index.ctp:46
 #: Template/ContactsUsers/index.ctp:46 Template/Contactsources/index.ctp:40
 #: Template/Countries/index.ctp:40 Template/Events/index.ctp:43
@@ -296,7 +300,7 @@ msgstr "Mutat"
 msgid "previous"
 msgstr "előző"
 
-#: Template/Contacts/index.ctp:129 Template/Contacts/view.ctp:650
+#: Template/Contacts/index.ctp:129 Template/Contacts/view.ctp:719
 #: Template/ContactsGroups/index.ctp:48 Template/ContactsSkills/index.ctp:48
 #: Template/ContactsUsers/index.ctp:48 Template/Contactsources/index.ctp:42
 #: Template/Countries/index.ctp:42 Template/Events/index.ctp:45
@@ -331,156 +335,164 @@ msgstr "Csoport"
 msgid "Search"
 msgstr "Keresés"
 
-#: Template/Contacts/view.ctp:21
+#: Template/Contacts/view.ctp:18;23
+msgid "Show system events"
+msgstr "Rendszer események mutatása"
+
+#: Template/Contacts/view.ctp:35
 msgid "Personal data"
 msgstr "Személyes"
 
-#: Template/Contacts/view.ctp:23
+#: Template/Contacts/view.ctp:37
 msgid "Workplace and skills"
 msgstr "Munkahely, szakértelem"
 
-#: Template/Contacts/view.ctp:24 Template/Element/menu.ctp:32
+#: Template/Contacts/view.ctp:38 Template/Element/menu.ctp:47
+msgid "Groups"
+msgstr "Csoportok"
+
+#: Template/Contacts/view.ctp:39 Template/Element/menu.ctp:32
 #: Template/Users/dashboard.ctp:5;31;53
 msgid "Histories"
 msgstr "Történések"
 
-#: Template/Contacts/view.ctp:25 Template/Element/menu.ctp:47
-msgid "Groups"
-msgstr "Csoportok"
-
-#: Template/Contacts/view.ctp:26
+#: Template/Contacts/view.ctp:40
 msgid "Finances"
 msgstr "Pénzügyek"
 
-#: Template/Contacts/view.ctp:27
+#: Template/Contacts/view.ctp:41
 msgid "Access"
 msgstr "Hozzáférés"
 
-#: Template/Contacts/view.ctp:28
+#: Template/Contacts/view.ctp:42
 msgid "Send a mail"
 msgstr "Levél küldés"
 
-#: Template/Contacts/view.ctp:48
+#: Template/Contacts/view.ctp:62
 msgid "Save to Google Contacts"
 msgstr "Mentés Google címtárba"
 
-#: Template/Contacts/view.ctp:108
+#: Template/Contacts/view.ctp:122
 msgid "Contact person"
 msgstr "Kapcsolattartó"
 
-#: Template/Contacts/view.ctp:137 Template/Contactsources/view.ctp:40
+#: Template/Contacts/view.ctp:151 Template/Contactsources/view.ctp:40
 #: Template/Skills/view.ctp:41 Template/Zips/view.ctp:51
 msgid "Address"
 msgstr "Cím"
 
-#: Template/Contacts/view.ctp:181 Template/Contactsources/view.ctp:43
+#: Template/Contacts/view.ctp:195 Template/Contactsources/view.ctp:43
 #: Template/Groups/view.ctp:24 Template/Skills/view.ctp:44
 #: Template/Usergroups/view.ctp:43 Template/Users/view.ctp:114
 #: Template/Zips/view.ctp:54
 msgid "Phone"
 msgstr "Telefon"
 
-#: Template/Contacts/view.ctp:199 Template/Contactsources/view.ctp:44
+#: Template/Contacts/view.ctp:213 Template/Contactsources/view.ctp:44
 #: Template/Groups/view.ctp:23 Template/Skills/view.ctp:45
 #: Template/Usergroups/view.ctp:42 Template/Users/view.ctp:95
 #: Template/Zips/view.ctp:55
 msgid "Email"
 msgstr ""
 
-#: Template/Contacts/view.ctp:217 Template/Contactsources/view.ctp:45
+#: Template/Contacts/view.ctp:231 Template/Contactsources/view.ctp:45
 #: Template/Skills/view.ctp:46 Template/Zips/view.ctp:56
 msgid "Birth"
 msgstr "Születési idő"
 
-#: Template/Contacts/view.ctp:242 Template/Contactsources/view.ctp:46
+#: Template/Contacts/view.ctp:256 Template/Contactsources/view.ctp:46
 #: Template/Skills/view.ctp:47
 msgid "Sex"
 msgstr "Neme"
 
-#: Template/Contacts/view.ctp:255
+#: Template/Contacts/view.ctp:269
 msgid "Unknown"
 msgstr "Ismeretlen"
 
-#: Template/Contacts/view.ctp:274
+#: Template/Contacts/view.ctp:288
 msgid "Contactsource"
 msgstr "Kapcsolat forrása"
 
-#: Template/Contacts/view.ctp:288 Template/Contactsources/view.ctp:50
+#: Template/Contacts/view.ctp:302 Template/Contactsources/view.ctp:50
 #: Template/Groups/view.ctp:25 Template/Skills/view.ctp:49
 #: Template/Usergroups/view.ctp:44 Template/Users/view.ctp:157
 #: Template/Zips/view.ctp:57
 msgid "Active"
 msgstr "Aktív"
 
-#: Template/Contacts/view.ctp:291 Template/Groups/view.ctp:10
+#: Template/Contacts/view.ctp:305 Template/Groups/view.ctp:10
 #: Template/Histories/view.ctp:58 Template/Notifications/view.ctp:36
 #: Template/Users/view.ctp:160 Template/UsersUsergroups/view.ctp:34
 msgid "Yes"
 msgstr "Igen"
 
-#: Template/Contacts/view.ctp:291 Template/Groups/view.ctp:10
+#: Template/Contacts/view.ctp:305 Template/Groups/view.ctp:10
 #: Template/Histories/view.ctp:58 Template/Notifications/view.ctp:36
 #: Template/Users/view.ctp:160 Template/UsersUsergroups/view.ctp:34
 msgid "No"
 msgstr "Nem"
 
-#: Template/Contacts/view.ctp:305 Template/Contactsources/view.ctp:51
+#: Template/Contacts/view.ctp:319 Template/Contactsources/view.ctp:51
 #: Template/Skills/view.ctp:50 Template/Zips/view.ctp:58
 msgid "Comment"
 msgstr "Megjegyzés"
 
-#: Template/Contacts/view.ctp:399 Template/Contactsources/view.ctp:47
+#: Template/Contacts/view.ctp:415 Template/Contactsources/view.ctp:47
 #: Template/Skills/view.ctp:48
 msgid "Workplace"
 msgstr "Munkahely"
 
-#: Template/Contacts/view.ctp:419
+#: Template/Contacts/view.ctp:435
 msgid "Workplace Address"
 msgstr "Munkahelyi cím"
 
-#: Template/Contacts/view.ctp:466
+#: Template/Contacts/view.ctp:482
 msgid "Workplace Phone"
 msgstr "Munkahelyi telefon"
 
-#: Template/Contacts/view.ctp:485
+#: Template/Contacts/view.ctp:501
 msgid "Workplace Email"
 msgstr "Munkahelyi email"
 
-#: Template/Contacts/view.ctp:504 Template/Element/menu.ctp:45
+#: Template/Contacts/view.ctp:520 Template/Element/menu.ctp:45
 msgid "Skills"
 msgstr "Szakértelem"
 
-#: Template/Contacts/view.ctp:661
+#: Template/Contacts/view.ctp:556
 msgid "Member"
 msgstr "Tag"
 
-#: Template/Contacts/view.ctp:688
+#: Template/Contacts/view.ctp:583
 msgid "Not member"
 msgstr "Nem tag"
 
-#: Template/Contacts/view.ctp:761 Template/Users/dashboard.ctp:42
+#: Template/Contacts/view.ctp:784 Template/Users/dashboard.ctp:42
 msgid "Total"
 msgstr "Összesen"
 
-#: Template/Contacts/view.ctp:779;836
+#: Template/Contacts/view.ctp:808;872
 msgid "Has access as contact persons"
 msgstr "Hozzáférés kapcsolattartóként"
 
-#: Template/Contacts/view.ctp:787
+#: Template/Contacts/view.ctp:816
 msgid "Has access via groups"
 msgstr "Hozzáférés csoporton keresztül"
 
-#: Template/Contacts/view.ctp:798
+#: Template/Contacts/view.ctp:827
 msgid "Has access via user groups"
 msgstr "Hozzáférés felhasználói csoporton keresztül"
 
-#: Template/Contacts/view.ctp:817
+#: Template/Contacts/view.ctp:847
 msgid "Sender"
 msgstr "Feladó"
 
-#: Template/Contacts/view.ctp:819
+#: Template/Contacts/view.ctp:849
 msgid "To"
 msgstr "Címzett"
+
+#: Template/Contacts/view.ctp:860
+msgid "We do not have the contact's email address, so we can not send mail"
+msgstr "Nincs meg a kapcsolat email címe, így nem tudunk neki emailt küldeni."
 
 #: Template/ContactsGroups/add.ctp:4 Template/ContactsGroups/edit.ctp:5
 #: Template/ContactsGroups/view.ctp:6
@@ -797,7 +809,7 @@ msgstr "Hivatalos név"
 #: Template/Contactsources/view.ctp:39 Template/Skills/view.ctp:40
 #: Template/Zips/view.ctp:50
 msgid "Zip Id"
-msgstr ""
+msgstr "Irányítószám"
 
 #: Template/Contactsources/view.ctp:41 Template/Countries/view.ctp:40
 #: Template/Skills/view.ctp:42 Template/Zips/view.ctp:34;52
@@ -811,7 +823,7 @@ msgstr ""
 
 #: Template/Contactsources/view.ctp:48
 msgid "Family Id"
-msgstr ""
+msgstr "Család"
 
 #: Template/Contactsources/view.ctp:49 Template/Skills/view.ctp:53
 #: Template/Zips/view.ctp:61
@@ -1127,7 +1139,7 @@ msgstr ""
 
 #: Template/Histories/index.ctp:68
 msgid "Filter"
-msgstr ""
+msgstr "Szűrés"
 
 #: Template/Histories/view.ctp:5
 msgid "Delete History"
@@ -1150,11 +1162,27 @@ msgstr ""
 
 #: Template/Imports/index.ctp:4
 msgid "Sample import file"
-msgstr ""
+msgstr "Minta import fájl"
 
 #: Template/Imports/index.ctp:12
 msgid "Contact Import"
 msgstr "Kapcsolat importálás"
+
+#: Template/Imports/index.ctp:24
+msgid "Imported"
+msgstr "Importálva"
+
+#: Template/Imports/index.ctp:27
+msgid "Imported {0} contacts"
+msgstr "{0} kapcsolat beimportálva"
+
+#: Template/Imports/index.ctp:33
+msgid "Errors"
+msgstr "Hibák"
+
+#: Template/Imports/index.ctp:36
+msgid "Not imported {0} contacts"
+msgstr "{0} kapcsolat nem lett importálva"
 
 #: Template/Notifications/add.ctp:4 Template/Notifications/edit.ctp:5
 #: Template/Notifications/view.ctp:6 Template/Users/add.ctp:9
@@ -1564,11 +1592,11 @@ msgstr ""
 
 #: Validation/Validator.php:95
 msgid "This field cannot be left empty"
-msgstr ""
+msgstr "Ez a mező nem lehet üres"
 
 #: Validation/Validator.php:560
 msgid "The provided value is invalid"
-msgstr ""
+msgstr "A megadott érték nem megfelelő"
 
 #: View/Helper/FormHelper.php:925
 msgid "New %s"
@@ -1629,6 +1657,15 @@ msgstr "November"
 #: View/Widget/DateTimeWidget.php:507
 msgid "December"
 msgstr "december"
+
+#~ msgid "The contact (%s) has been saved."
+#~ msgstr "A kapcsolat mentve"
+
+#~ msgid "The contact (%s) is not saved."
+#~ msgstr "A kapcsolat nem lett elmentve"
+
+#~ msgid "added"
+#~ msgstr "hozzáadva"
 
 #~ msgid "Civil name"
 #~ msgstr "Polgári név"

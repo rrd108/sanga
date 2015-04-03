@@ -65,7 +65,7 @@ echo $this->element('ajax-images');
 				
 			</td>
 			<td>
-				<?= $this->Form->button(__('↺'), ['title' => __('Filter'), 'class' => 'radius']) ?>
+				<?= $this->Form->button('↺', ['title' => __('Filter'), 'class' => 'radius']) ?>
 			</td>
 			<?php
 			echo $this->Form->end();
