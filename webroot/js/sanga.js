@@ -33,7 +33,9 @@ $(function() {
 				this.value = ui.item.label.replace(/(<([^>]+)>)/ig,'');		//remove highlight html code
 				var controller;
 				if (ui.item.value.search(/g/) === 0) {
-					controller = 'Groups'
+					controller = 'Groups';
+				} else if (ui.item.value.search(/s/) === 0) {
+					controller = 'Skills';
 				} else {
 					controller = 'Contacts';
 				}

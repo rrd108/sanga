@@ -24,22 +24,26 @@ class SearchController extends AppController {
 		//debug($query->toArray());
 		foreach($query as $row) {
 			if ( ! $this->Contacts->isAccessible($row->id, $this->Auth->user('id'))) {
-				$label = '<span class="noaccess">';
-					$label .= $this->createHighlight($row->contactname) ? '♥ ' . $this->createHighlight($row->contactname) : '';
-					$label .= $this->createHighlight($row->leaglname) ? '♥ ' . $this->createHighlight($row->legalname) : '';
-				$label .= '</span>';
+				if ($this->createHighlight($row->contactname) || $this->createHighlight($row->leaglname)) {
+					$label = '<span class="noaccess">';
+						$label .= $this->createHighlight($row->contactname) ? '♥ ' . $this->createHighlight($row->contactname) . ' ' : '';
+						$label .= $this->createHighlight($row->leaglname) ? '♥ ' . $this->createHighlight($row->legalname) . ' ' : '';
+					$label .= '</span>';
+				}
 			} else {
-				$label = $this->createHighlight($row->contactname, false) ? '♥ ' . $this->createHighlight($row->contactname, false) : '';
+				$label = $this->createHighlight($row->contactname, false) ? '♥ ' . $this->createHighlight($row->contactname, false) . ' ' : '';
 			}
 			if ( $this->Contacts->isAccessible($row->id, $this->Auth->user('id'))) {
 				$label .= $this->createHighlight($row->legalname) ? '♥ ' . $this->createHighlight($row->legalname) . ' ' : '';
 				$label .= $this->createHighlight($row->email) ? '✉ ' . $this->createHighlight($row->email) . ' ' : '';
 				$label .= $this->createHighlight($row->phone) ? '☏ ' . $this->createHighlight($row->phone) . ' ' : '';
-				$label .= (isset($row->birth) && $this->createHighlight($row->birth)) ? '↫ ' . $this->createHighlight($row->birth->format('Y-m-d')) . ' ' : '';
-				$label .= $this->createHighlight($row->workplace) ? '♣ ' . $this->createHighlight($row->workplace) : '';
+				$label .= (isset($row->birth) && $this->createHighlight($row->birth->format('Y-m-d'))) ? '↫ ' . $this->createHighlight($row->birth->format('Y-m-d')) . ' ' : '';
+				$label .= $this->createHighlight($row->workplace) ? '♣ ' . $this->createHighlight($row->workplace) . ' ' : '';
 			}
-			$result[] = array('value' => 'c'.$row->id,
+			if (isset($label)) {
+				$result[] = array('value' => 'c'.$row->id,
 							  'label' => $label);
+			}
 		}
 		
 		//groups
@@ -54,6 +58,17 @@ class SearchController extends AppController {
 							  'label' => $label);
 		}
 		
+		//skills
+		$this->Skills = TableRegistry::get('Skills');
+		$query = $this->Skills
+				->find()
+				->where(['name LIKE "%'.$this->request->query('term').'%"']);
+		foreach($query as $row) {
+			$label = '✄ ' . $this->createHighlight($row->name);
+			$result[] = array('value' => 's'.$row->id,
+							  'label' => $label);
+		}
+
 		//histories
 		//too many entries
 		/*$this->Histories = TableRegistry::get('Histories');
