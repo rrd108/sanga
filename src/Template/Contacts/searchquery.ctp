@@ -1,41 +1,49 @@
-<div class="row">
 <?php
 echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 ?>
-<div class="contacts form large-6 medium-8 small-centered columns">
-<h2><?= __('Queries'); ?></h2>
-<?= $this->Form->create() ?>
-	
-	<?php
-		//echo $this->Form->input('name');
-		echo '<div class="row"><div class="column large-12">';
-		echo $this->Form->input('xzip',
-									['type' => 'text',
-									'label' => __('City')]);
-		echo '</div></div>';
-		echo '<div class="row"><div class="column large-12">';
-		echo $this->Form->input('zip_id',
-									['type' => 'hidden']);
 
-		echo '</div></div>';
-		echo '<div class="row"><div class="column large-12">';
-		echo $this->Form->input('area', ['label' => __('Area')]);
-		echo '</div></div>';
-		echo '<div class="row"><div class="column large-12">';
-		echo $this->Form->input('xgroup',
-									['type' => 'text',
-									 'label' => __('Group')]);
-		echo '</div></div>';
-		echo '<div class="row"><div class="column large-12">';
-		echo $this->Form->input('group_id', ['type' => 'hidden']);
-		echo '</div></div>';
-	?>
+	<div class="contacts index columns large-12">
+		<h2><?= __('Queries'); ?></h2>
+		<?php
+		echo $this->Form->create();
+		$this->Form->templates([
+						'inputContainer' => '<div class="thin">{{content}}</div>'
+						]);
+		?>
+			
+			<?php
+				echo '<div class="row">';
+					echo $this->Form->input('name');
+				echo '</div>';
 
-<div class="row"><div class="column large-12">
-<?= $this->Form->button(__('Search'), ['class' => 'radius']) ?>
-</div></div>
-<?= $this->Form->end() ?>
-</div>
+				echo '<div class="row">';
+					echo $this->Form->input('xzip',
+											['type' => 'text',
+											'label' => __('City'),
+											 'class' => 'radius']);
+					echo $this->Form->input('zip_id',
+											['type' => 'hidden']);
+		
+				echo '</div>';
+		
+				echo '<div class="row">';
+					echo $this->Form->input('area', ['label' => __('Area')]);
+				echo '</div>';
+		
+				echo '<div class="row">';
+					echo $this->Form->input('xgroup',
+											['type' => 'text',
+											 'label' => __('Group')]);
+					echo $this->Form->input('group_id', ['type' => 'hidden']);
+				echo '</div>';
+				
+				
+				//result coloumns
+			?>
+		
+			<?= $this->Form->button(__('Search'), ['class' => 'radius']) ?>
+		<?= $this->Form->end() ?>
+	</div>
 
 <div class="contacts form large-10 medium-9 columns">
 <?php
@@ -50,5 +58,4 @@ if (isset($result)) {
 	}
 }
 ?>
-</div>
 </div>
