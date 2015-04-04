@@ -69,33 +69,41 @@ class ContactsController extends AppController {
 		if($this->request->data){
 			
 			 debug($this->request->data);
-			/*[
-				'name' => '',
-				'xzip' => '2000 Szentendre',
-				'zip_id' => '162',
-				'area' => '40',
-				'group_id' => ''
+			/*
+			[
+				'condition_Contacts_contactname' => [
+					(int) 0 => '&?'
+				],
+				'Contacts_contactname' => [
+					(int) 0 => 'balázs'
+				],
+				'condition_Contacts_zip_name' => [
+					(int) 0 => '&=',
+					(int) 1 => '|?'
+				],
+				'Contacts_zip_name' => [
+					(int) 0 => 'Budapest',
+					(int) 1 => 'so'
+				],
+				'condition_Contacts_phone' => [
+					(int) 0 => '&?',
+					(int) 1 => '|?'
+				],
+				'Contacts_phone' => [
+					(int) 0 => '30',
+					(int) 1 => '20'
+				],
+				'condition_Contacts_birth' => [
+					(int) 0 => '&>'
+				],
+				'Contacts_birth' => [
+					(int) 0 => '2000-01-01'
+				]
 			]
 			*/
 			
-			/*$center = $this->Contacts->Zips->find()
-					->select(['lat', 'lng'])
-					->where(['id' => $this->request->data['zip_id']]);
-			$cent = $center->toArray();
 			
-			$expr = $center->newExpr()->add('(3956 *2 * ASIN( SQRT( POWER( SIN( ( '.$cent[0]->lat.
-											' - abs( Contacts.lat ) ) * pi( ) /180 /2 ) , 2 ) + COS( '.$cent[0]->lat.
-											' * pi( ) /180 ) * COS( abs( Contacts.lat ) * pi( ) /180 ) * POWER( SIN( ( '.
-											$cent[0]->lng.' - Contacts.lng ) * pi( ) /180 /2 ) , 2 ) ) ))');
-			
-			$result = $this->Contacts->find()
-					->contain(['Zips'])
-					->select(['Contacts.name', 'Zips.zip', 'Zips.name', 'distance' => $expr])
-					->where(['active' => true])
-					->having(['distance <=' => $this->request->data['area']])
-					->order(['distance' => 'ASC']);
-			
-			if ($this->request->data['group_id']){
+			/*if ($this->request->data['group_id']){
 					$result->matching('Groups', function($q){
 						return $q->where(['Groups.id' => $this->request->data['group_id']]);
 						});
@@ -103,6 +111,26 @@ class ContactsController extends AppController {
 			$this->set('result', $result);*/
 		}
 	}
+	
+/*
+ *Find area around
+ *$center = $this->Contacts->Zips->find()
+		->select(['lat', 'lng'])
+		->where(['id' => $this->request->data['zip_id']]);
+$cent = $center->toArray();
+
+$expr = $center->newExpr()->add('(3956 *2 * ASIN( SQRT( POWER( SIN( ( '.$cent[0]->lat.
+								' - abs( Contacts.lat ) ) * pi( ) /180 /2 ) , 2 ) + COS( '.$cent[0]->lat.
+								' * pi( ) /180 ) * COS( abs( Contacts.lat ) * pi( ) /180 ) * POWER( SIN( ( '.
+								$cent[0]->lng.' - Contacts.lng ) * pi( ) /180 /2 ) , 2 ) ) ))');
+
+$result = $this->Contacts->find()
+		->contain(['Zips'])
+		->select(['Contacts.name', 'Zips.zip', 'Zips.name', 'distance' => $expr])
+		->where(['active' => true])
+		->having(['distance <=' => $this->request->data['area']])
+		->order(['distance' => 'ASC']);
+*/
 
 /**
  * Index method
