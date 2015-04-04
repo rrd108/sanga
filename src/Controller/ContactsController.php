@@ -68,7 +68,7 @@ class ContactsController extends AppController {
 		
 		if($this->request->data){
 			
-			// debug($this->request->data);
+			 debug($this->request->data);
 			/*[
 				'name' => '',
 				'xzip' => '2000 Szentendre',
@@ -78,7 +78,7 @@ class ContactsController extends AppController {
 			]
 			*/
 			
-			$center = $this->Contacts->Zips->find()
+			/*$center = $this->Contacts->Zips->find()
 					->select(['lat', 'lng'])
 					->where(['id' => $this->request->data['zip_id']]);
 			$cent = $center->toArray();
@@ -100,7 +100,7 @@ class ContactsController extends AppController {
 						return $q->where(['Groups.id' => $this->request->data['group_id']]);
 						});
 			}
-			$this->set('result', $result);
+			$this->set('result', $result);*/
 		}
 	}
 
@@ -275,12 +275,11 @@ class ContactsController extends AppController {
  * @return void
  */
 	public function add() {
-		$this->request->data['email'] = '123';
 		$contact = $this->Contacts->newEntity($this->request->data);
 		if($this->request->data){
 			$contact = $this->patchSkills($contact);
 			
-			if($this->request->data['family_member_id']){
+			if(isset($this->request->data['family_member_id'])){
 				$contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
 			}
 		//die();
@@ -295,7 +294,7 @@ class ContactsController extends AppController {
 				$this->Flash->error('The contact could not be saved. Please, try again.');
 			}
 		}
-		$zips = $this->Contacts->Zips->find('list', ['idField' => 'id', 'valueField' => 'full_zip']);
+		$zips = $this->Contacts->Zips->find('list', ['keyField' => 'id', 'valueField' => 'full_zip']);
 		$contactsources = $this->Contacts->Contactsources->find('list');
 		$groups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
 		$skills = $this->Contacts->Skills->find('list');

@@ -1,11 +1,4 @@
 $(function() {
-	/*$( document ).tooltip(
-					{position : {
-						  my: "right center",
-						  at: "right-20 bottom",
-						  collision: "flipfit"
-						  }
-					  });*/
 
 	$('ul.sf-menu').superfish({
 		pathClass:	'current'
@@ -20,6 +13,21 @@ $(function() {
 					easing : 'swing', // unavailable - no need
 					speed: 500 // unavailable - no need
 					};
+	$.sanga.texts = {
+		en : {
+			and			:	'and',
+			contains	:	'contains',
+			not			:	'not',
+			or			:	'or'
+		},
+		hu : {
+			and			:	'és',
+			contains	:	'tartalmazza',
+			not			:	'nem',
+			or			:	'vagy'
+		}
+	}
+	$.sanga.lang = 'hu';
 	
 	$('#quickterm').autocomplete({
 			minLength : 2,

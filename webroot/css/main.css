@@ -55,7 +55,7 @@ header .main-logo a img { max-width: 135px; }
 .tag label { line-height: 1; }
 .tag input { line-height: 1; margin: 0 10px 0 0; }
 
-.tag label { color: #fff; margin: 0 !important; padding: 0 !important; }
+.tag label { color: #777; margin: 0 !important; padding: 0 !important; }
 
 .tag-mine { color: #428BCA; }
 

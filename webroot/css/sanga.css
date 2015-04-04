@@ -186,3 +186,18 @@ p.ed{
   clear: left;
   display: block;
 }
+
+#query-select-box span{
+  width: 15%;
+  float: left;
+  cursor: pointer;
+}
+#where img {
+  margin-right: 1em;
+  cursor: pointer;
+}
+#where select{
+  width: auto;
+  float: left;
+  background: #fff;
+}
