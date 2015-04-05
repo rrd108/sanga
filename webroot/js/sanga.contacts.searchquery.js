@@ -35,8 +35,7 @@ $(function() {
 	
 	createInput = function(name){
 		var input = '<input type="text" ' +
-						'name="' + name + '[]" ' +
-						//'class="thin" ' +
+						'name="field_' + name + '[]" ' +
 					'>';
 		return input;
 	};
@@ -48,17 +47,19 @@ $(function() {
 			$(this).removeClass('tag-default');
 			$(this).addClass('tag-viewable');
 			
-			var img, label, select, input;
-			img = '';
+			var imgPlus, imgAndOr, connectAndOr, label, select, input;
+			imgAndOr = connectAndOr = '';
 			if (addedDivs) {
-				img = '<img ' + 
+				imgAndOr = '<img ' + 
 						'src="' +  $.sanga.baseUrl + '/img/and.png" ' +
+						'title="' + $.sanga.texts[$.sanga.lang].and + '"' + 
 						'class="fl">';
-				/*img += '<img ' + 
-						'src="' +  $.sanga.baseUrl + '/img/or.png" ' +
-						'class="fl">';*/
+				connectAndOr = '<input type="hidden" ' +
+									'name="connect_' + $(this).data('name') + '" ' +
+									'value="&"' +
+								'>';
 			}
-			img += '<img ' + 
+			imgPlus = '<img ' + 
 						'src="' +  $.sanga.baseUrl + '/img/plus.png" ' +
 						'data-name="' + $(this).data('name') + '"' + 
 						'class="fl">';
@@ -70,7 +71,9 @@ $(function() {
 			select = createSelect($(this).data('name'), false);
 			input = createInput($(this).data('name'));
 			$('#where').append('<div data-name="' + $(this).data('name') + '">' +
-									img +
+									imgAndOr +
+									connectAndOr + 
+									imgPlus + 
 									label +
 									select +
 									input +
@@ -84,10 +87,22 @@ $(function() {
 	});
 	
 	$('#where').on('click', 'img', function(event){
-		var img, selet, input;
-		select = createSelect($(this).data('name'), true);
-		input = createInput($(this).data('name'));
-		$('div[data-name="' + $(this).data('name') + '"]').append(select + input);
+		if ($(this).data('name')) {	//this is the "plus" img
+			var img, selet, input;
+			select = createSelect($(this).data('name'), true);
+			input = createInput($(this).data('name'));
+			$('div[data-name="' + $(this).data('name') + '"]').append(select + input);
+		} else {	//this is the "and" / "or" image
+			if ($(this).attr('src').search(/and\.png/) !== -1) {
+				$(this).attr('src', $(this).attr('src').replace('and.png', 'or.png'));
+				$(this).attr('title', $.sanga.texts[$.sanga.lang].or);
+				$(this).next().val('|');		//change value of the hidden input
+			} else {
+				$(this).attr('src', $(this).attr('src').replace('or.png', 'and.png'));
+				$(this).attr('title', $.sanga.texts[$.sanga.lang].and);
+				$(this).next().val('&');
+			}
+		}
 	});
 	
 });

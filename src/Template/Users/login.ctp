@@ -1,7 +1,7 @@
 <div class="main-login">
 	<div class="row">
 	<div class="users form large-4 medium-6 small-10 small-centered column" id="loginform">
-		<?php $this->assign('title', __('Login')); ?>
+		<?php $this->assign('title',  __('Login')); ?>
 		<?= $this->Flash->render('auth') ?>
 		<div class="row">
 			<div class="main-login-logo column large-6 small-centered">

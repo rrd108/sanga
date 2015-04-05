@@ -68,40 +68,86 @@ class ContactsController extends AppController {
 		
 		if($this->request->data){
 			
-			 debug($this->request->data);
+			debug($this->request->data);
 			/*
 			[
-				'condition_Contacts_contactname' => [
-					(int) 0 => '&?'
+				'Contacts.contactname' => [
+					'condition' => [
+						(int) 0 => '&?',
+						(int) 1 => '|?'
+					],
+					'value' => [
+						(int) 0 => 'sándor',
+						(int) 1 => 'józsef'
+					]
 				],
-				'Contacts_contactname' => [
-					(int) 0 => 'balázs'
+				'Contacts.legalname' => [
+					'connect' => [
+						(int) 0 => '&'
+					],
+					'condition' => [
+						(int) 0 => '&?',
+						(int) 1 => '|?'
+					],
+					'value' => [
+						(int) 0 => 'sándor',
+						(int) 1 => 'józsef'
+					]
 				],
-				'condition_Contacts_zip_name' => [
-					(int) 0 => '&=',
-					(int) 1 => '|?'
-				],
-				'Contacts_zip_name' => [
-					(int) 0 => 'Budapest',
-					(int) 1 => 'so'
-				],
-				'condition_Contacts_phone' => [
-					(int) 0 => '&?',
-					(int) 1 => '|?'
-				],
-				'Contacts_phone' => [
-					(int) 0 => '30',
-					(int) 1 => '20'
-				],
-				'condition_Contacts_birth' => [
-					(int) 0 => '&>'
-				],
-				'Contacts_birth' => [
-					(int) 0 => '2000-01-01'
+				'Contacts.birth' => [
+					'connect' => [
+						(int) 0 => '&'
+					],
+					'condition' => [
+						(int) 0 => '&>'
+					],
+					'value' => [
+						(int) 0 => '2000-01-01'
+					]
 				]
 			]
 			*/
+			$conditions = $select = [];
+			foreach ($this->request->data as $keyName => $values) {
+				if (strpos($keyName, 'field_') === 0) {
+					$field = str_replace('field_', '', $keyName);
+					$field = str_replace('_', '.', $field);
+					$select[] = $field;
+					foreach ($values as $value) {
+						$conditions[$field]['value'][] = $value;
+					}
+				} elseif (strpos($keyName, 'condition_') === 0) {
+					$field = str_replace('_', '.', str_replace('condition_', '', $keyName));
+					foreach ($values as $value) {
+						$conditions[$field]['condition'][] = $value;
+					}
+				} else {
+					$field = str_replace('_', '.', str_replace('connect_', '', $keyName));
+					$conditions[$field]['connect'][] = $values;
+				}
+			}
+			debug($select);
+			debug($conditions);
 			
+			$c = 0;
+			$query = $this->Contacts->find()->select($select);
+			foreach ($conditions as $field => $conval) {
+	//check connect on new field
+				foreach ($conval['condition'] as $i => $condition) {
+					if (strpos($condition, '&')) {
+						if ($c == 0) {
+	//if $condition[1] == "?" "=" "!" "<" ">"
+							$query->where([$field => $conval['value'][$i]]);
+						} else {
+							$query->andWhere([$field => $conval['value'][$i]]);
+							$c++;
+						}
+					} else {
+						$query->orWhere([$field => $conval['value'][$i]]);
+					}
+				}
+			}
+			debug($query);
 			
 			/*if ($this->request->data['group_id']){
 					$result->matching('Groups', function($q){
