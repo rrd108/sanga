@@ -53,7 +53,8 @@ class ContactsController extends AppController {
 	}
 
 	//cím adatok lekérdezése a mapon való megjelenéshez
-	public function showmap(){
+	public function showmap()
+	{
 		$result = $this->Contacts->find()
 				->contain(['Zips'])
 				->select(['Contacts.lat', 'Contacts.lng', 'Zips.zip', 'Zips.name'])
@@ -64,7 +65,8 @@ class ContactsController extends AppController {
 	}
 	
 	//mindenféle lekérdezések
-	public function searchquery(){
+	public function searchquery()
+	{
 		
 		if($this->request->data){
 			
@@ -128,22 +130,20 @@ class ContactsController extends AppController {
 			}
 			debug($select);
 			debug($conditions);
-			
-			$c = 0;
+
 			$query = $this->Contacts->find()->select($select);
 			foreach ($conditions as $field => $conval) {
-	//check connect on new field
+				//check connect on new field
+				if ( isset($conval['connect']) && $conval['connect'] == '&') {	//connect this by AND
+					
+				} else {		//connect this by OR
+					
+				}
 				foreach ($conval['condition'] as $i => $condition) {
-					if (strpos($condition, '&')) {
-						if ($c == 0) {
-	//if $condition[1] == "?" "=" "!" "<" ">"
-							$query->where([$field => $conval['value'][$i]]);
-						} else {
-							$query->andWhere([$field => $conval['value'][$i]]);
-							$c++;
-						}
+					if ($condition[0] == '&') {
+						$query->where($this->translateCode2Sql($condition[1], $field, $conval['value'][$i]));
 					} else {
-						$query->orWhere([$field => $conval['value'][$i]]);
+						$query->orWhere($this->translateCode2Sql($condition[1], $field, $conval['value'][$i]));
 					}
 				}
 			}
@@ -156,6 +156,28 @@ class ContactsController extends AppController {
 			}
 			$this->set('result', $result);*/
 		}
+	}
+	
+	private function translateCode2Sql ($conditionCode, $field, $value)
+	{
+		  switch ($conditionCode) {
+				case "?" :
+					$where = [$field . ' LIKE' =>  '%' . $value . '%'];
+					break;
+				case "=" :
+					$where = [$field => $value];
+					break;
+				case "!" :
+					$where = [$field . ' !=' => $value];
+					break;
+				case "<" :
+					$where = [$field . ' <' => $value];
+					break;
+				case ">" :
+					$where = [$field . ' >' => $value];
+					break;
+		  }
+		  return $where;
 	}
 	
 /*

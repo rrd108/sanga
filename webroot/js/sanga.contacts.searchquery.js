@@ -52,7 +52,7 @@ $(function() {
 			if (addedDivs) {
 				imgAndOr = '<img ' + 
 						'src="' +  $.sanga.baseUrl + '/img/and.png" ' +
-						'title="' + $.sanga.texts[$.sanga.lang].and + '"' + 
+						'title="' + $.sanga.texts[$.sanga.lang].and + ' ' + $.sanga.texts[$.sanga.lang].click2change + '"' + 
 						'class="fl">';
 				connectAndOr = '<input type="hidden" ' +
 									'name="connect_' + $(this).data('name') + '" ' +

@@ -16,12 +16,14 @@ $(function() {
 	$.sanga.texts = {
 		en : {
 			and			:	'and',
+			click2change:	'Click to change!',
 			contains	:	'contains',
 			not			:	'not',
 			or			:	'or'
 		},
 		hu : {
 			and			:	'és',
+			click2change:	'Kattints a módosításhoz!',
 			contains	:	'tartalmazza',
 			not			:	'nem',
 			or			:	'vagy'
