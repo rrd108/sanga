@@ -116,6 +116,11 @@ input.editbox.addr, span.addr{
   display: none;
   float: right;
 }
+#ajaxremove{
+  display: none;
+  position: relative;
+  left: -1.7em;
+}
 #ajaxsave{
   border: none;
   width: auto;
@@ -218,4 +223,8 @@ p.ed{
 #where label{
   color: #4169E1;
   font-weight: bolder;
+}
+
+#members a{
+  padding: 2em;
 }

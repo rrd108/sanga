@@ -1,63 +1,62 @@
+<?php
+echo $this->Html->script('sanga.groups.view.js', ['block' => true]);
+
+echo $this->Html->image('remove.png', ['id' => 'ajaxremove']);
+?>
 <div class="groups view columns">
 	<h2><?= h($group->name) ?></h2>
 	<div class="row">
 		<div class="large-5 columns strings">
-			<h6 class="subheader"><?= __('Description') ?></h6>
-			<p><?= h($group->description) ?></p>
-			<h6 class="subheader"><?= __('Admin User Id') ?></h6>
-			<p><?= $this->Number->format($group->admin_user_id) ?></p>
-			<h6 class="subheader"><?= __('Shared') ?></h6>
-			<p><?= $group->shared ? __('Yes') : __('No'); ?></p>
+			<h6 class="subheader">
+				<?= __('Description') ?> : 
+				<?= h($group->description) ?>
+			</h6>
+			<h6 class="subheader">
+				<?= __('Admin User') ?> : 
+				<?= $group->admin_user->name ?>
+			</h6>
+			<h6 class="subheader">
+				<?= __('Shared') ?> : 
+				<?= $group->shared ? __('Yes') : __('No'); ?>
+			</h6>
 		</div>
 	</div>
 </div>
 <div class="related row">
 	<div class="column large-12">
-	<h4 class="subheader"><?= __('Related Users') ?></h4>
+	<h4 class="subheader"><?= __('Has access as group member') ?></h4>
 	<?php if (!empty($group->users)): ?>
-	<table cellpadding="0" cellspacing="0">
-		<tr>
-			<th><?= __('Id') ?></th>
-			<th><?= __('Name') ?></th>
-			<th><?= __('Realname') ?></th>
-			<th><?= __('Email') ?></th>
-			<th><?= __('Phone') ?></th>
-			<th><?= __('Active') ?></th>
-			<th><?= __('Role') ?></th>
-		</tr>
+		<ul>
 		<?php foreach ($group->users as $users): ?>
-		<tr>
-			<td><?= h($users->id) ?></td>
-			<td><?= h($users->name) ?></td>
-			<td><?= h($users->realname) ?></td>
-			<td><?= h($users->email) ?></td>
-			<td><?= h($users->phone) ?></td>
-			<td><?= h($users->active) ?></td>
-			<td><?= h($users->role) ?></td>
-		</tr>
+		<li>
+			<?= h($users->name) ?>
+		</li>
 		<?php endforeach; ?>
-	</table>
+		</ul>
 	<?php endif; ?>
 	</div>
 </div>
 <div class="related row">
 	<div class="column large-12">
-	<h4 class="subheader"><?= __('Related Contacts') ?></h4>
-	<?php if (!empty($group->contacts)): ?>
-	<table cellpadding="0" cellspacing="0">
-		<tr>
-			<th><?= __('Id') ?></th>
-			<th><?= __('Legal Name') ?></th>
-			<th><?= __('Contactname') ?></th>
-		</tr>
-		<?php foreach ($group->contacts as $contacts): ?>
-		<tr>
-			<td><?= h($contacts->id) ?></td>
-			<td><?= h($contacts->contactname) ?></td>
-			<td><?= h($contacts->legalname) ?></td>
-		</tr>
-		<?php endforeach; ?>
-	</table>
-	<?php endif; ?>
+		<h4 class="subheader"><?= __('Add Contacts to this Group') ?></h4>
+		<?php
+		echo $this->Form->create(null, ['id' => 'addMember']);
+		echo $this->Form->input('name', ['label' => __('Contactname or Legalname')]);
+		echo $this->Form->button(__('Submit'),['class' => 'radius']);
+		echo $this->Form->end();
+		?>
+		
+		<h4 class="subheader"><?= __('Group Members') ?></h4>
+		<p id="members">
+			<?php
+			if (!empty($group->contacts)) {
+				foreach ($group->contacts as $contacts) {
+					echo $this->Html->link(h($contacts->contactname),
+										   ['controller' => 'Contacts',
+											'action' => 'view', $contacts->id]);
+				}
+			}
+			?>
+		</p>
 	</div>
 </div>
