@@ -30,7 +30,7 @@ class ContactsController extends AppController {
 
 	public function search(){
 		$contact = $this->Contacts->newEntity($this->request->data);
-		$query = $this->Contacts->find()
+		$query = $this->Contacts->find('ownedBy', ['User.id' => $this->Auth->user('id')])
 				->select(['id', 'contactname', 'legalname'])
 				->where(['contactname LIKE "%'.$this->request->query('term').'%"'])
 				->orWhere(['legalname LIKE "%'.$this->request->query('term').'%"']);
@@ -41,6 +41,7 @@ class ContactsController extends AppController {
 							  'label' => $label);
 		}
 		$this->set('result', $result);
+		$this->set('_serialize', 'result');
 		$this->set('contact', $contact);
 	}
 
@@ -133,22 +134,60 @@ class ContactsController extends AppController {
 			debug($conditions);
 
 			$query = $this->Contacts->find()->select($select);
+			$c = 0;
 			foreach ($conditions as $field => $conval) {
-				//check connect on new field
-				if ( isset($conval['connect']) && $conval['connect'] == '&') {	//connect this by AND
-					
-				} else {		//connect this by OR
-					
-				}
+				
 				foreach ($conval['condition'] as $i => $condition) {
-					if ($condition[0] == '&') {
-						$query->where($this->translateCode2Sql($condition[1], $field, $conval['value'][$i]));
+					if ($c == 0) {
+						$c++;
+						$kv = $this->translateCode2Array($condition[1], $field, $conval['value'][0]);
+						$where[$kv['key']] = $kv['value'];
 					} else {
-						$query->orWhere($this->translateCode2Sql($condition[1], $field, $conval['value'][$i]));
+						if ($condition[0] == '&') {
+							$where['AND'] = null;
+						} else {
+							$where['OR'] = null;
+						}
 					}
 				}
+				
+				
+				
+				
+				
+				/*if ( isset($conval['connect']) && $conval['connect'] == '&') {	//connect this by AND
+					$query->andWhere(function ($exp) use ($conval, $field){
+						foreach ($conval['condition'] as $i => $condition) {
+							if ($condition[0] == '&') {
+								return $exp->and_($this->translateCode2Sql($condition[1], $field, $conval['value'][$i]));
+							} else {
+								return $exp->or_($this->translateCode2Sql($condition[1], $field, $conval['value'][$i]));
+							}
+						}
+					});
+				} else {		//connect this by OR
+					$query->orWhere(function ($exp) use ($conval, $field){
+						foreach ($conval['condition'] as $i => $condition) {
+							if ($condition[0] == '&') {
+								return $exp->and_($this->translateCode2Sql($condition[1], $field, $conval['value'][$i]));
+							} else {
+								return $exp->or_($this->translateCode2Sql($condition[1], $field, $conval['value'][$i]));
+							}
+						}
+					});
+				}*/
 			}
-			debug($query);
+			debug($where);
+			debug($query
+				  ->where(['Contacts.contacname' => "béla"])
+				  ->orWhere(['Contacts.contacname' => 'józsi'])
+				  ->andWhere(function($exp){
+								return $exp->or_(
+											['Contacts.legalname' => "béla"],
+											['Contacts.legalname' => "józsi"]
+											);
+							})
+				  );
 			
 			/*if ($this->request->data['group_id']){
 					$result->matching('Groups', function($q){
@@ -159,27 +198,32 @@ class ContactsController extends AppController {
 		}
 	}
 	
-	private function translateCode2Sql ($conditionCode, $field, $value)
+	private function translateCode2Array ($conditionCode, $field, $value)
 	{
 		  switch ($conditionCode) {
 				case "%" :
-					$where = [$field . ' LIKE' =>  '%' . $value . '%'];
+					$key = $field . ' LIKE';
+					$val = '%' . $value . '%';
 					break;
 				case "=" :
-					$where = [$field => $value];
+					$key = $field;
+					$val = $value;
 					break;
 				case "!" :
-					$where = [$field . ' !=' => $value];
+					$key = $field . ' !=';
+					$val = $value;
 					break;
 				case "<" :
-					$where = [$field . ' <' => $value];
+					$key = $field . ' <';
+					$val = $value;
 					break;
 				case ">" :
-					$where = [$field . ' >' => $value];
+					$key = $field . ' >';
+					$val = $value;
 					break;
 		  }
-		  return $where;
-	}
+		  return ['key' => $key, 'value' => $val];
+	}	
 	
 /*
  *Find area around
@@ -538,19 +582,24 @@ $result = $this->Contacts->find()
 	
 	public function editGroup($id = null){
 		if ($this->request->is('post') && $this->request->is('ajax')) {
-			$contact = $this->Contacts->get($id, ['contain' => ['Groups']]);
-			foreach($contact->groups as $group){
-				$this->request->data['groups']['_ids'][] = $group->id;
+			if ( $this->Contacts->isAccessible($id, $this->Auth->user('id')) ) {
+				$contact = $this->Contacts->get($id, ['contain' => ['Groups']]);
+				foreach($contact->groups as $group){
+					$this->request->data['groups']['_ids'][] = $group->id;
+				}
+				$contact->loggedInUser = $this->Auth->user('id');
+				$this->Contacts->patchEntity($contact, $this->request->data);
+				if($this->Contacts->save($contact)){
+					$result = ['message' => __('New Group membership saved')];
+				}
+				else{
+					$result = ['message' => __('New Group membership is not saved')];
+					throw new BadRequestException(__('Group membership change did not saved'));
+				}
+				$this->set(compact('result'));
+			} else {
+				throw new BadRequestException(__('You have no access to this contact'));
 			}
-			$contact->loggedInUser = $this->Auth->user('id');
-			$this->Contacts->patchEntity($contact, $this->request->data);
-			if($this->Contacts->save($contact)){
-				$result = ['saved' => true];
-			}
-			else{
-				$result = ['saved' => false];
-			}
-			$this->set(compact('result'));
 		}
 	}
 
