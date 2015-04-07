@@ -161,7 +161,7 @@ class ContactsController extends AppController {
 	private function translateCode2Sql ($conditionCode, $field, $value)
 	{
 		  switch ($conditionCode) {
-				case "?" :
+				case "%" :
 					$where = [$field . ' LIKE' =>  '%' . $value . '%'];
 					break;
 				case "=" :

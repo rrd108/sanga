@@ -11,7 +11,7 @@ $(function() {
 			select += '<optgroup label="---' + $.sanga.texts[$.sanga.lang].and + '---">';
 		}
 		
-		select += '<option value="&?">' + prefix + $.sanga.texts[$.sanga.lang].contains + '</option>' +
+		select += '<option value="&%">' + prefix + $.sanga.texts[$.sanga.lang].contains + '</option>' +
 					'<option value="&=">' + prefix + '=</option>' +
 					'<option value="&!">' + prefix + $.sanga.texts[$.sanga.lang].not + '</option>' +
 					'<option value="&<">' + prefix + '<</option>' +
@@ -21,7 +21,7 @@ $(function() {
 			prefix = $.sanga.texts[$.sanga.lang].or + ' ';
 			select += 	'</optgroup>' + 
 						'<optgroup label="---' + $.sanga.texts[$.sanga.lang].or + '---">' + 
-							'<option value="|?">' + prefix + $.sanga.texts[$.sanga.lang].contains + '</option>' +
+							'<option value="|%">' + prefix + $.sanga.texts[$.sanga.lang].contains + '</option>' +
 							'<option value="|=">' + prefix + '=</option>' +
 							'<option value="|!">' + prefix + $.sanga.texts[$.sanga.lang].not + '</option>' +
 							'<option value="|<">' + prefix + '<</option>' +
@@ -52,7 +52,7 @@ $(function() {
 			if (addedDivs) {
 				imgAndOr = '<img ' + 
 						'src="' +  $.sanga.baseUrl + '/img/and.png" ' +
-						'title="' + $.sanga.texts[$.sanga.lang].and + ' ' + $.sanga.texts[$.sanga.lang].click2change + '"' + 
+						'title="*' + $.sanga.texts[$.sanga.lang].and + '* ' + $.sanga.texts[$.sanga.lang].click2change + '"' + 
 						'class="fl">';
 				connectAndOr = '<input type="hidden" ' +
 									'name="connect_' + $(this).data('name') + '" ' +
@@ -95,11 +95,11 @@ $(function() {
 		} else {	//this is the "and" / "or" image
 			if ($(this).attr('src').search(/and\.png/) !== -1) {
 				$(this).attr('src', $(this).attr('src').replace('and.png', 'or.png'));
-				$(this).attr('title', $.sanga.texts[$.sanga.lang].or);
+				$(this).attr('title', '*' + $.sanga.texts[$.sanga.lang].or + '* ' + $.sanga.texts[$.sanga.lang].click2change);
 				$(this).next().val('|');		//change value of the hidden input
 			} else {
 				$(this).attr('src', $(this).attr('src').replace('or.png', 'and.png'));
-				$(this).attr('title', $.sanga.texts[$.sanga.lang].and);
+				$(this).attr('title', '*' + $.sanga.texts[$.sanga.lang].and + '* ' + $.sanga.texts[$.sanga.lang].click2change);
 				$(this).next().val('&');
 			}
 		}
