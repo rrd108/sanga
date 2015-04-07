@@ -38,21 +38,11 @@ class EventsController extends AppController {
 			'contain' => ['Users']
 		];
 		$this->set('events', $this->paginate($this->Events));
+		
+		//for adding new event
+		$this->set('event', $this->Events->newEntity($this->request->data));
 	}
 
-/**
- * View method
- *
- * @param string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
-	public function view($id = null) {
-		$event = $this->Events->get($id, [
-			'contain' => ['Users', 'Histories']
-		]);
-		$this->set('event', $event);
-	}
 
 /**
  * Add method
@@ -60,6 +50,10 @@ class EventsController extends AppController {
  * @return void
  */
 	public function add() {
+		if(!isset($this->request->data['user_id']) && $this->Auth->User('role') < 9){
+			$this->request->data['user_id'] = $this->Auth->User('id');
+		}
+
 		$event = $this->Events->newEntity($this->request->data);
 		if ($this->request->is('post')) {
 			if ($this->Events->save($event)) {

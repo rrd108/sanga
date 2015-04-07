@@ -1,52 +1,66 @@
-<div class="sidebar-wrapper">
-	<nav class="side-nav">
-		<ul>
-			<li><?= $this->Html->link(__('New Event'), ['action' => 'add']) ?></li>
-		</ul>
-	</nav>
-</div>
-<!-- sidebar wrapper -->
-
-<div class="content-wrapper">
-	<div class="row">
-		<div class="events index large-12 columns">
-			<h1><?= __('Events') ?></h1>
-			<table cellpadding="0" cellspacing="0">
-			<thead>
-				<tr>
-					<th><?= $this->Paginator->sort('id') ?></th>
-					<th><?= $this->Paginator->sort('name') ?></th>
-					<th><?= $this->Paginator->sort('user_id') ?></th>
-					<th class="actions"><?= __('Actions') ?></th>
-				</tr>
-			</thead>
-			<tbody>
-			<?php foreach ($events as $event): ?>
-				<tr>
-					<td><?= $this->Number->format($event->id) ?></td>
-					<td><?= h($event->name) ?></td>
-					<td>
-						<?= $event->has('user') ? $this->Html->link($event->user->name, ['controller' => 'Users', 'action' => 'view', $event->user->id]) : '' ?>
-					</td>
-					<td class="actions">
-						<?= $this->Html->link(__('View'), ['action' => 'view', $event->id]) ?>
-						<?= $this->Html->link(__('Edit'), ['action' => 'edit', $event->id]) ?>
-						<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $event->id], ['confirm' => __('Are you sure you want to delete # {0}?', $event->id)]) ?>
-					</td>
-				</tr>
-			<?php endforeach; ?>
-			</tbody>
-			</table>
-			<div class="paginator">
-				<ul class="pagination centered">
+<div class="row">
+	<div class="events index large-12 columns">
+		<?php
+		echo $this->Form->create($event, ['action' => 'add']);
+		?>
+		<table cellpadding="0" cellspacing="0">
+		<thead>
+			<tr>
+				<th><?= $this->Paginator->sort('name') ?></th>
+				<th><?= $this->Paginator->sort('user_id') ?></th>
+				<th class="actions"><?= __('Actions') ?></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
 				<?php
-					echo $this->Paginator->prev('< ' . __('previous'));
-					echo $this->Paginator->numbers();
-					echo $this->Paginator->next(__('next') . ' >');
+				echo '<td>';
+					echo $this->Form->input('name', ['label' => false]);
+				echo '</td>';
+				echo '<td>';
+					if($this->Session->read('Auth.User.id') >= 9){
+						echo $this->Form->input('admin_user_id',
+											['label' => false,
+											 'options' => $users,
+											 'value' => $this->Session->read('Auth.User.id')
+											 ]);
+					}
+					else{
+						echo '<span class="tag tag-mine">' . $this->Session->read('Auth.User.name') . '</span>';
+					}
+				echo '</td>';
+				echo '<td>';
+					echo $this->Form->button(__('Submit'),['class' => 'radius']);
+				echo '</td>';
 				?>
-				</ul>
-				<div class="pagination-counter"><?= $this->Paginator->counter() ?></div>
-			</div>
+			</tr>
+
+		<?php foreach ($events as $event): ?>
+			<tr>
+				<td><?= h($event->name) ?></td>
+				<td>
+					<?= $event->has('user') ? $this->Html->link($event->user->name, ['controller' => 'Users', 'action' => 'view', $event->user->id]) : '' ?>
+				</td>
+				<td class="actions">
+					<?php
+					if($event->user_id == $this->Session->read('Auth.User.id')){
+						echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $event->id], ['confirm' => __('Are you sure you want to delete # {0}?', $event->id)]);
+					}
+					?>
+				</td>
+			</tr>
+		<?php endforeach; ?>
+		</tbody>
+		</table>
+		<div class="paginator">
+			<ul class="pagination centered">
+			<?php
+				echo $this->Paginator->prev('< ' . __('previous'));
+				echo $this->Paginator->numbers();
+				echo $this->Paginator->next(__('next') . ' >');
+			?>
+			</ul>
+			<div class="pagination-counter"><?= $this->Paginator->counter() ?></div>
 		</div>
 	</div>
 </div>
