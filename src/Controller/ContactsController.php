@@ -11,6 +11,7 @@ use Google_Client;
 use Google_Http_Request;
 
 use Cake\Network\Exception\NotImplementedException;
+use Cake\Network\Exception\BadRequestException;
 
 use Cake\Network\Email\Email;
 
@@ -475,6 +476,7 @@ $result = $this->Contacts->find()
 				$message = __('The contact could not be saved. Please, try again.');
 				if($this->request->is('ajax')){
 					$result = ['save' => $message];
+					throw new BadRequestException($message);
 				}
 				else{
 					$this->Flash->error($message);

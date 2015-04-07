@@ -216,6 +216,12 @@ class ContactsTable extends Table {
 		}
 	}
 	
+	public function beforeFind(Event $event, Query $query)
+	{
+		$query->where(['Contacts.active' => 1]);
+		return $query;
+	}
+
 	private function setGeo($id){
 		exec(WWW_ROOT . '../bin/cake geo set_geo_for_user ' . $id . ' > /dev/null &');
 	}	

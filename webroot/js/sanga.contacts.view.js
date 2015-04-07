@@ -150,20 +150,27 @@ $(function() {
 		});
 	});
 
-	
+	var handleChange = function(event){
+		//hide editlink and show ajaxsave
+		$('#editlink').hide();
+		$(event.target).parent().append($('#ajaxsave').show());
+		if (event.keyCode == $.ui.keyCode.ESCAPE) {
+			$(event.target).hide();
+			$(event.target).parent().find('.dta').show();
+			$('#ajaxsave').hide();
+		} 
+	};
+
 	$('#editForm').submit(function(event){
 		event.preventDefault();
 	});
 	
 	$('.editbox').keypress(function(event){
-		//hide editlink and show ajaxsave
-		$('#editlink').hide();
-		$(this).parent().append($('#ajaxsave').show());
-		if (event.keyCode == 27) {		// escape key maps to keycode `27`
-			$(this).hide();
-			$(this).parent().find('.dta').show();
-			$('#ajaxsave').hide();
-		}   
+		handleChange(event);
+	});
+	
+	$('.chg').change(function(event){
+		handleChange(event);
 	});
 
 	$('#ajaxsave').click(function(event){
@@ -233,7 +240,7 @@ $(function() {
 				$('#ajaxloader').hide();
 				theP.append($('#errorImg').show());
 				noty({
-					text: textStatus,
+					text: textStatus + (jqXHR.responseJSON.message ? ': ' + jqXHR.responseJSON.message : ''),
 					type: 'error',
 					timeout: 3500,
 					});

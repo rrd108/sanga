@@ -306,7 +306,7 @@ echo $this->element('ajax-images');
 						<?php
 						echo $this->Form->input('active',
 												['templates' => ['inputContainer' => '{{content}}'],
-												'class' => 'editbox',
+												'class' => 'editbox chg',
 												'label' => false,
 												'checked' => $contact->active,
 												'value' => $contact->active
