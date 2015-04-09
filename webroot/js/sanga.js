@@ -16,7 +16,8 @@ $(function() {
 	$.sanga.texts = {
 		en : {
 			and			:	'and',
-			click2change:	'Click to change!',
+			click2change:	'Click to change',
+			click2remove:	'Click to remove',
 			contains	:	'contains',
 			not			:	'not',
 			or			:	'or'
@@ -24,6 +25,7 @@ $(function() {
 		hu : {
 			and			:	'és',
 			click2change:	'Kattints a módosításhoz!',
+			click2remove:	'Kattints az eltávolításhoz!',
 			contains	:	'tartalmazza',
 			not			:	'nem',
 			or			:	'vagy'

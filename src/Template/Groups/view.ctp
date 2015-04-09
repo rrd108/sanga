@@ -1,7 +1,5 @@
 <?php
 echo $this->Html->script('sanga.groups.view.js', ['block' => true]);
-
-echo $this->Html->image('remove.png', ['id' => 'ajaxremove']);
 ?>
 <div class="groups view columns">
 	<h2><?= h($group->name) ?></h2>
@@ -47,16 +45,21 @@ echo $this->Html->image('remove.png', ['id' => 'ajaxremove']);
 		?>
 		
 		<h4 class="subheader"><?= __('Group Members') ?></h4>
-		<p id="members">
+		<ul id="members">
 			<?php
 			if (!empty($group->contacts)) {
 				foreach ($group->contacts as $contacts) {
-					echo $this->Html->link(h($contacts->contactname),
-										   ['controller' => 'Contacts',
-											'action' => 'view', $contacts->id]);
+					echo '<li>';
+						echo $this->Html->link($contacts->contactname ? h($contacts->contactname) : h($contacts->legalname),
+													   ['controller' => 'Contacts',
+														'action' => 'view', $contacts->id]);
+						echo $this->Html->image('remove.png',
+														['class' => 'ajaxremove',
+														 'title' => __('Click to remove from group')]);
+					echo '</li>';
 				}
 			}
 			?>
-		</p>
+		</ul>
 	</div>
 </div>

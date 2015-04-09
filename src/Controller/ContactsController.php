@@ -179,14 +179,14 @@ class ContactsController extends AppController {
 			}
 			debug($where);
 			debug($query
-				  ->where(['Contacts.contacname' => "béla"])
+				  ->where(['Contacts.contacname' => 'béla'])
 				  ->orWhere(['Contacts.contacname' => 'józsi'])
-				  ->andWhere(function($exp){
-								return $exp->or_(
-											['Contacts.legalname' => "béla"],
-											['Contacts.legalname' => "józsi"]
-											);
-							})
+				  ->andWhere([
+						'OR' => [
+							['Contacts.legalname' => 'béla'],
+							['Contacts.legalname' => 'józsi']
+						]
+					])
 				  );
 			
 			/*if ($this->request->data['group_id']){

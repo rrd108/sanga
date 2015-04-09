@@ -116,11 +116,6 @@ input.editbox.addr, span.addr{
   display: none;
   float: right;
 }
-#ajaxremove{
-  display: none;
-  position: relative;
-  left: -1.7em;
-}
 #ajaxsave{
   border: none;
   width: auto;
@@ -225,6 +220,14 @@ p.ed{
   font-weight: bolder;
 }
 
-#members a{
-  padding: 2em;
+.ajaxremove{
+}
+#members li{
+  float: left;
+  list-style-type: none;
+  margin-right: 1em;
+}
+#members li img{
+  margin: 0 0 5px 2px;
+  cursor: pointer;
 }
