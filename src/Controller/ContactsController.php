@@ -69,7 +69,7 @@ class ContactsController extends AppController {
 	//mindenféle lekérdezések
 	public function searchquery()
 	{
-		
+		//debug($this->request->data);
 		if($this->request->data){
 			$conditions = $select = $selected = [];
 			foreach ($this->request->data as $keyName => $values) {
@@ -103,7 +103,8 @@ class ContactsController extends AppController {
 					}
 				}
 			}
-			
+			array_unshift($select, 'Contacts.sex');
+			array_unshift($select, 'Contacts.id');
 			$this->set('selected', $selected);
 
 			//debug($select);
@@ -144,7 +145,7 @@ class ContactsController extends AppController {
 			}
 			//debug($where);
 			$expr = $query->newExpr()->add($where);
-			$result = $query->where($expr);
+			$contacts = $query->where($expr);
 			//debug($query);
 			
 			/*if ($this->request->data['group_id']){
@@ -152,7 +153,7 @@ class ContactsController extends AppController {
 						return $q->where(['Groups.id' => $this->request->data['group_id']]);
 						});
 			}*/
-			$this->set('result', $result);
+			$this->set('contacts', $this->paginate($contacts));
 		}
 	}
 	

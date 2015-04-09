@@ -9,30 +9,93 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 	
 		echo '<div class="row" id="query-select-box">';
 			echo '<h2>' . __('I want to see') . '</h2>';
-			echo '<span class="tag tag-default" data-name="Contacts.contactname">' . __('Contactname') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.legalname">' . __('Legalname') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.zip.zip">' . __('Zip') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.zip.name">' . __('City') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.address">' . __('Address') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.phone">' . __('Phone') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.email">' . __('Email') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.birth">' . __('Birth') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.sex">' . __('Sex') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.workplace">' . __('Workplace') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.workplace_zip.zip">' . __('Workplace_zip') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.workplace_zip.name">' . __('Workplace_city') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.workplace_address">' . __('Workplace_address') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.workplace_phone">' . __('Workplace_phone') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.workplace_email">' . __('Workplace_email') . '</span>';
-			//family members
-			echo '<span class="tag tag-default" data-name="Contacts.contactsource">' . __('Contactsource') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.comment">' . __('Comment') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.created">' . __('Created') . '</span>';
-			echo '<span class="tag tag-default" data-name="Contacts.modified">' . __('Modified') . '</span>';
+			$filterFields = [
+				'contactname' => __('Contactname'),
+				'legalname' => __('Legalname'),
+				'zip.zip' => __('Zip'),
+				'zip.name' => __('City'),
+				'address' => __('Address'),
+				'phone' => __('Phone'),
+				'email' => __('Email'),
+				'birth' => __('Birth'),
+				'sex' => __('Sex'),
+				'workplace' => __('Workplace'),
+				'workplace_zip.zip' => __('Workplace_zip'),
+				'workplace_zip.name' => __('Workplace_city'),
+				'workplace_address' => __('Workplace_address'),
+				'workplace_phone' => __('Workplace_phone'),
+				'workplace_email' => __('Workplace_email'),
+				'contactsource' => __('Contactsource'),
+				'comment' => __('Comment'),
+				'created' => __('Created'),
+				'modified' => __('Modified')
+				];
+			foreach($filterFields as $field => $label) {
+				if ( ! empty($selected) && in_array($field, $selected)) {
+					$css = 'tag-viewable';
+				} else {
+					$css = 'tag-default';
+				}
+				echo '<span class="tag ' . $css . '" data-name="Contacts.'.$field.'">';
+					echo $label;
+				echo '</span>';
+			}
 		echo '</div>';
 		
 		echo '<h2>' . __('Where') . '</h2>';
 		echo '<div class="row" id="where">';
+			//debug($this->request->data);
+			$c = 0;
+			foreach ($this->request->data as $name => $value) {
+				if (strpos($name, 'connect_') === 0) {
+					/*$connect = '<img
+									class="fl"
+									title="*és* Kattints a módosításhoz!"
+									src="/~rrd/sanga/img/and.png">';*/
+					if ($value == '&'){
+						$img = 'and.png';
+						$title = '*' . __('and') . '* ' . __('Click to change');
+					} else {
+						$img = 'or.png';
+						$title = '*' . __('or') . '* ' . __('Click to change');
+					}
+					$connect = $this->Html->image($img,
+												['class' => 'fl',
+												 'title' => $title]);
+					$connect .=	 '<input
+									type="hidden"
+									value="'. $value . '"
+									name="connect_' . $dataName . '">';
+				} elseif (strpos($name, 'condition_') === 0) {
+					$dataName = str_replace('_', '.', str_replace('condition_', '', $name));
+					echo '<div data-name="' . $dataName . '">';
+						if ($c) {
+							echo $connect;
+							$connect = '';
+						} else {
+							$c++;
+						}
+						echo $this->Html->image('plus.png',
+												['class' => 'fl',
+												 'data-name' => $dataName]);
+						echo '<label id="l' . str_replace('.', '_', $dataName) . '" for="' . $dataName . '">';
+							echo __(ucwords(substr(strstr($dataName, '.'), 1)));
+						echo '</label>';
+						echo $this->Form->select($name . '[]',
+												 ['&%' => __('contains'),
+												  '&=' => '=',
+												  '&!' => __('not'),
+												  '&<' => '<',
+												  '&>' => '>'],
+												 ['value' => $value]);
+				} elseif (strpos($name, 'field_') === 0) {
+					echo '<input
+							type="text"
+							name="field_' . $dataName . '[]"
+							value="' . $value[0] . '">';
+					echo '</div>';
+				}
+			}
 		echo '</div>';
 
 		echo $this->Form->button(__('Search'), ['class' => 'radius']);
@@ -41,32 +104,17 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 </div>
 
 <div class="contacts form large-10 medium-9 columns">
-	<table cellpadding="0" cellspacing="0">
-	<thead>
-		<tr>
-			<?php
-			foreach ($selected as $field) {
-				echo '<th>';
-					echo __(ucwords($field));
-				echo '</th>';
-			}
-			?>
-		</tr>
-	</thead>
-	<tbody>
-		<?php
-		if (isset($result)) {
-			foreach ($result as $res) {
-				echo '<tr>';
-				foreach ($selected as $field) {
-					echo '<td>';
-						echo $res->$field;
-					echo '</td>';
-				}
-				echo '</tr>';
-			}
-		}
-		?>
-	</tbody>
-	</table>
+	<?php
+	echo '<h2>' . __('Search results') . '</h2>';
+	
+	if (isset($contacts)){
+		echo $this->element('contacts_table',
+							[
+							 'fields' => $selected,
+							 'contacts' => $contacts,
+							 'settings' => false
+							 ]);
+	}
+	?>
+
 </div>
