@@ -39,7 +39,7 @@ class GroupsController extends AppController {
 									   'User.id' => $this->Auth->user('id'),
 									   'shared' => true
 									   ])
-								->contain(['AdminUsers']);
+								->contain(['Contacts', 'AdminUsers']);
 		$this->set('groups', $this->paginate($groups));
 		
 		//for adding new group

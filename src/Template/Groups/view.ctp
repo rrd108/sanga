@@ -17,6 +17,10 @@ echo $this->Html->script('sanga.groups.view.js', ['block' => true]);
 				<?= __('Shared') ?> : 
 				<?= $group->shared ? __('Yes') : __('No'); ?>
 			</h6>
+			<h6 class="subheader">
+				<?= __('Members') ?> : 
+				<?= count($group->contacts); ?>
+			</h6>
 		</div>
 	</div>
 </div>

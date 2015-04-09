@@ -9,6 +9,7 @@
 				<th><?= $this->Paginator->sort('admin_user_id') ?></th>
 				<th><?= $this->Paginator->sort('shared') ?></th>
 				<th><?= $this->Paginator->sort('name') ?></th>
+				<th><?= __('Members') ?></th>
 				<th><?= $this->Paginator->sort('description') ?></th>
 				<th class="actions"><?= __('Actions') ?></th>
 			</tr>
@@ -36,6 +37,8 @@
 				echo '</td>';
 				echo '<td>';
 					echo $this->Form->input('name', ['label' => false]);
+				echo '</td>';
+				echo '<td>';
 				echo '</td>';
 				echo '<td>';
 					echo $this->Form->input('description', ['label' => false]);
@@ -69,6 +72,8 @@
 					}
 					echo '<span class="tag tag-'.$css.'">' . $group->name . '</span>';
 					?>
+				</td>
+				<td><?= count($group->contacts) ?></td>
 				</td>
 				<td><?= h($group->description) ?></td>
 				<td class="actions">
