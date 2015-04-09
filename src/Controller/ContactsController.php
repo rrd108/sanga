@@ -71,52 +71,14 @@ class ContactsController extends AppController {
 	{
 		
 		if($this->request->data){
-			
-			debug($this->request->data);
-			/*
-			[
-				'Contacts.contactname' => [
-					'condition' => [
-						(int) 0 => '&?',
-						(int) 1 => '|?'
-					],
-					'value' => [
-						(int) 0 => 'sándor',
-						(int) 1 => 'józsef'
-					]
-				],
-				'Contacts.legalname' => [
-					'connect' => [
-						(int) 0 => '&'
-					],
-					'condition' => [
-						(int) 0 => '&?',
-						(int) 1 => '|?'
-					],
-					'value' => [
-						(int) 0 => 'sándor',
-						(int) 1 => 'józsef'
-					]
-				],
-				'Contacts.birth' => [
-					'connect' => [
-						(int) 0 => '&'
-					],
-					'condition' => [
-						(int) 0 => '&>'
-					],
-					'value' => [
-						(int) 0 => '2000-01-01'
-					]
-				]
-			]
-			*/
-			$conditions = $select = [];
+			$conditions = $select = $selected = [];
 			foreach ($this->request->data as $keyName => $values) {
+				$remove = [];
 				if (strpos($keyName, 'field_') === 0) {
 					$field = str_replace('field_', '', $keyName);
 					$field = str_replace('_', '.', $field);
 					$select[] = $field;
+					$selected[] = substr(strstr($field, '.'), 1);
 					foreach ($values as $value) {
 						$conditions[$field]['value'][] = $value;
 					}
@@ -127,102 +89,98 @@ class ContactsController extends AppController {
 					}
 				} else {
 					$field = str_replace('_', '.', str_replace('connect_', '', $keyName));
-					$conditions[$field]['connect'][] = $values;
+					$conditions[$field]['connect'] = $values;
 				}
 			}
-			debug($select);
-			debug($conditions);
+			
+			//as we do not know in which order will the above array keys will come
+			//we an not heck and remove empty conditions
+			foreach ($conditions as $field => $conval) {
+				foreach ($conval['value'] as $i => $value) {
+					if ($value == '') {
+						unset($conditions[$field]['condition'][$i]);
+						unset($conditions[$field]['value'][$i]);
+					}
+				}
+			}
+			
+			$this->set('selected', $selected);
+
+			//debug($select);
+			//debug($conditions);
 
 			$query = $this->Contacts->find()->select($select);
-			$c = 0;
+			$where = '';
+			$bracketOpened = false;
 			foreach ($conditions as $field => $conval) {
 				
-				foreach ($conval['condition'] as $i => $condition) {
-					if ($c == 0) {
-						$c++;
-						$kv = $this->translateCode2Array($condition[1], $field, $conval['value'][0]);
-						$where[$kv['key']] = $kv['value'];
-					} else {
-						if ($condition[0] == '&') {
-							$where['AND'] = null;
-						} else {
-							$where['OR'] = null;
+				if ( ! empty($conval['value'])) {
+					if ( ! isset($conval['connect'])) {	//this is the first line of the conditions
+						$where .= '( ';
+						$bracketOpened = true;
+					} elseif ($conval['connect'] == '&' && strlen($where)) {
+						$where .= ' AND ( ';
+						$bracketOpened = true;
+					} elseif ($conval['connect'] == '|' && strlen($where)) {
+						$where .= ' OR ( ';
+						$bracketOpened = true;
+					}
+					
+					$conditionCount = count($conval['condition']) - 1;
+					foreach ($conval['condition'] as $i => $condition) {
+						if ($i > 0) {
+							if ($condition[0] == '&') {
+								$where .= ' AND ';
+							} else {
+								$where .= ' OR ';
+							}
+						}
+						$where .= $this->translateCode2Array($condition[1], $field, $conval['value'][$i]);
+						if ($i == $conditionCount && $bracketOpened) {
+							$where .= ')';
 						}
 					}
 				}
-				
-				
-				
-				
-				
-				/*if ( isset($conval['connect']) && $conval['connect'] == '&') {	//connect this by AND
-					$query->andWhere(function ($exp) use ($conval, $field){
-						foreach ($conval['condition'] as $i => $condition) {
-							if ($condition[0] == '&') {
-								return $exp->and_($this->translateCode2Sql($condition[1], $field, $conval['value'][$i]));
-							} else {
-								return $exp->or_($this->translateCode2Sql($condition[1], $field, $conval['value'][$i]));
-							}
-						}
-					});
-				} else {		//connect this by OR
-					$query->orWhere(function ($exp) use ($conval, $field){
-						foreach ($conval['condition'] as $i => $condition) {
-							if ($condition[0] == '&') {
-								return $exp->and_($this->translateCode2Sql($condition[1], $field, $conval['value'][$i]));
-							} else {
-								return $exp->or_($this->translateCode2Sql($condition[1], $field, $conval['value'][$i]));
-							}
-						}
-					});
-				}*/
 			}
-			debug($where);
-			debug($query
-				  ->where(['Contacts.contacname' => 'béla'])
-				  ->orWhere(['Contacts.contacname' => 'józsi'])
-				  ->andWhere([
-						'OR' => [
-							['Contacts.legalname' => 'béla'],
-							['Contacts.legalname' => 'józsi']
-						]
-					])
-				  );
+			//debug($where);
+			$expr = $query->newExpr()->add($where);
+			$result = $query->where($expr);
+			//debug($query);
 			
 			/*if ($this->request->data['group_id']){
 					$result->matching('Groups', function($q){
 						return $q->where(['Groups.id' => $this->request->data['group_id']]);
 						});
-			}
-			$this->set('result', $result);*/
+			}*/
+			$this->set('result', $result);
 		}
 	}
 	
 	private function translateCode2Array ($conditionCode, $field, $value)
 	{
-		  switch ($conditionCode) {
-				case "%" :
-					$key = $field . ' LIKE';
-					$val = '%' . $value . '%';
-					break;
-				case "=" :
-					$key = $field;
-					$val = $value;
-					break;
-				case "!" :
-					$key = $field . ' !=';
-					$val = $value;
-					break;
-				case "<" :
-					$key = $field . ' <';
-					$val = $value;
-					break;
-				case ">" :
-					$key = $field . ' >';
-					$val = $value;
-					break;
-		  }
-		  return ['key' => $key, 'value' => $val];
+		switch ($conditionCode) {
+			  case "%" :
+				  $key = $field . ' LIKE ';
+				  $val = '"%' . $value . '%"';
+				  break;
+			  case "=" :
+				  $key = $field . ' = ';
+				  $val = is_string($value) ? '"' . $value . '"' : $value;
+				  break;
+			  case "!" :
+				  $key = $field . ' != ';
+				  $val = $val = is_string($value) ? '"' . $value . '"' : $value;
+				  break;
+			  case "<" :
+				  $key = $field . ' < ';
+				  $val = $val = is_string($value) ? '"' . $value . '"' : $value;
+				  break;
+			  case ">" :
+				  $key = $field . ' > ';
+				  $val = $val = is_string($value) ? '"' . $value . '"' : $value;
+				  break;
+		}
+		return $key . $val;
 	}	
 	
 /*
