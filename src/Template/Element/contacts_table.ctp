@@ -71,6 +71,9 @@
 					case 'contactsource_id' :
 						echo $contact->has('contactsource') ? '<span class="tag tag-shared">' . $contact->contactsource->name . '</span>' : '' ;
 						break;
+					case 'Contactsources.name' :
+						echo $contact->has('contactsource') ? '<span class="tag tag-shared">' . $contact->contactsource->name . '</span>' : '' ;
+						break;
 					case 'users' : 
 						if (isset($contact->users)){
 							foreach($contact->users as $user){
