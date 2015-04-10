@@ -54,6 +54,11 @@ class SettingsController extends AppController
     {
         $setting = $this->Settings->newEntity();
         if ($this->request->is('post') || $this->request->is('ajax')) {
+            
+            if ( ! isset( $this->request->data['user_id'])) {
+                 $this->request->data['user_id'] = $this->Auth->user('id');
+            }
+            
             $setting = $this->Settings->patchEntity($setting, $this->request->data);
             if ($this->Settings->save($setting)) {
                 $this->Flash->success(__('The setting has been saved.'));

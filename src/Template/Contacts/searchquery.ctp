@@ -14,6 +14,16 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 			?>
 		</ul>
 	</nav>
+	<div id="dialog">
+		<?php
+		echo $this->Form->create(null, ['id' => 'querySaveForm']);
+		echo $this->Form->input('queryname',
+								['class' => 'radius',
+								 'type' => 'text']);
+		echo $this->Form->button(__('Save'), ['class' => 'radius']);
+		echo $this->Form->end();
+		?>
+	</div>
 </div>
 <!-- sidebar wrapper -->
 

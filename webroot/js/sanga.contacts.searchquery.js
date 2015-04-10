@@ -105,12 +105,47 @@ $(function() {
 		}
 	});
 	
+	$('#dialog').dialog({
+		autoOpen: false,
+		closeText: '⊗',
+		modal: true
+	});
+	
 	$('#savequery').click(function(event){
-		//https://jqueryui.com/dialog/#modal-form
-		
 		//offer an input a save and a canel button in a popup
+		$('#dialog').dialog('open');
 		//save query via ajax
 		//add this to saved queries
+		event.preventDefault();
+	});
+	
+	$('#querySaveForm').submit(function(event){
+		$('#dialog').dialog('close');
+		event.preventDefault();
+		var queryData = {
+			name : 'Contacts/searchquery',
+			value : $('#queryForm').serialize()
+		}
+		$.ajax({
+			url : $.sanga.baseUrl + '/Settings/add',
+			data : queryData,
+			type : 'post',
+			dataType : 'json',
+			error : function(jqXHR, textStatus, errorThrown){
+				noty({
+					text: textStatus,
+					type: 'error',
+					timeout: 3500,
+					});
+			},
+			success : function(data, textStatus, jqXHR){
+				noty({
+					text: jqXHR.responseJSON.message,
+					type: 'success',
+					timeout: 3500,
+					});
+			}
+		});
 	});
 	
 });
