@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2015-04-03 14:01+0000\n"
+"POT-Creation-Date: 2015-04-10 10:52+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,54 +14,70 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: Controller/ContactsController.php:200;351
+#: Controller/ContactsController.php:301;451
 msgid "Permission deined"
 msgstr ""
 
-#: Controller/ContactsController.php:323
+#: Controller/ContactsController.php:423
 msgid "Two family members are in different families"
 msgstr ""
 
-#: Controller/ContactsController.php:371;625
+#: Controller/ContactsController.php:471;731
 #: Controller/UsersController.php:202
 msgid "The contact has been saved."
 msgstr ""
 
-#: Controller/ContactsController.php:380;638
+#: Controller/ContactsController.php:480;744
 #: Controller/UsersController.php:212
 msgid "The contact could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/ContactsController.php:406
+#: Controller/ContactsController.php:507
 msgid "The contact is removed from this family"
 msgstr ""
 
-#: Controller/ContactsController.php:408
+#: Controller/ContactsController.php:509
 msgid "The contact could not be removed from this family"
 msgstr ""
 
-#: Controller/ContactsController.php:466
+#: Controller/ContactsController.php:553
+msgid "New Group membership saved"
+msgstr ""
+
+#: Controller/ContactsController.php:556
+msgid "New Group membership is not saved"
+msgstr ""
+
+#: Controller/ContactsController.php:557
+msgid "Group membership change did not saved"
+msgstr ""
+
+#: Controller/ContactsController.php:561
+msgid "You have no access to this contact"
+msgstr ""
+
+#: Controller/ContactsController.php:572
 msgid "Group membership removed"
 msgstr ""
 
-#: Controller/ContactsController.php:478
+#: Controller/ContactsController.php:584
 msgid "Skill removed"
 msgstr ""
 
-#: Controller/ContactsController.php:635
+#: Controller/ContactsController.php:741
 msgid "Contact photo saved."
 msgstr ""
 
-#: Controller/ContactsController.php:635
+#: Controller/ContactsController.php:741
 msgid "Unable to save contact photo."
 msgstr ""
 
-#: Controller/ContactsController.php:787
+#: Controller/ContactsController.php:893
 #: Controller/HistoriesController.php:107
 msgid "The history has been saved."
 msgstr ""
 
-#: Controller/ContactsController.php:790
+#: Controller/ContactsController.php:896
 msgid "The history could not be saved."
 msgstr ""
 
@@ -195,6 +211,7 @@ msgid "Civil name, official legal name, etc"
 msgstr ""
 
 #: Template/Contacts/add.ctp:55;121
+#: Template/Contacts/searchquery.ctp:15
 #: Template/Countries/view.ctp:38
 #: Template/Zips/view.ctp:26
 msgid "Zip"
@@ -212,7 +229,6 @@ msgstr ""
 
 #: Template/Contacts/add.ctp:155
 #: Template/Contacts/view.ctp:36;369
-#: Template/Events/view.ctp:47
 #: Template/Histories/view.ctp:57
 msgid "Family"
 msgstr ""
@@ -235,12 +251,11 @@ msgstr ""
 #: Template/Contactsources/edit.ctp:23
 #: Template/Countries/add.ctp:22
 #: Template/Countries/edit.ctp:23
-#: Template/Events/add.ctp:26
-#: Template/Events/edit.ctp:28
+#: Template/Events/index.ctp:33
 #: Template/Families/add.ctp:19
 #: Template/Families/edit.ctp:20
-#: Template/Groups/add.ctp:15
-#: Template/Groups/index.ctp:46
+#: Template/Groups/index.ctp:49
+#: Template/Groups/view.ctp:47
 #: Template/GroupsUsers/add.ctp:25
 #: Template/GroupsUsers/edit.ctp:26
 #: Template/Histories/add.ctp:37
@@ -278,105 +293,169 @@ msgstr ""
 msgid "Choose columns to display"
 msgstr ""
 
-#: Template/Contacts/index.ctp:64
-#: Template/ContactsGroups/index.ctp:35
-#: Template/ContactsSkills/index.ctp:35
-#: Template/ContactsUsers/index.ctp:35
-#: Template/Contactsources/index.ctp:29
-#: Template/Contactsources/view.ctp:77
-#: Template/Countries/index.ctp:29
-#: Template/Countries/view.ctp:53
-#: Template/Events/index.ctp:32
-#: Template/Events/view.ctp:67
-#: Template/Families/index.ctp:26
-#: Template/Groups/index.ctp:75
-#: Template/GroupsUsers/index.ctp:40
-#: Template/Sessions/index.ctp:27
-#: Template/Settings/index.ctp:28
-#: Template/Skills/index.ctp:29
-#: Template/Skills/view.ctp:76
-#: Template/Units/index.ctp:29
-#: Template/Units/view.ctp:65
-#: Template/Usergroups/index.ctp:31
-#: Template/Usergroups/view.ctp:63
-#: Template/Users/index.ctp:36
-#: Template/UsersUsergroups/index.ctp:40
-#: Template/Zips/index.ctp:41
-#: Template/Zips/view.ctp:82
-msgid "View"
-msgstr ""
-
-#: Template/Contacts/index.ctp:127
-#: Template/Contacts/view.ctp:717
-#: Template/ContactsGroups/index.ctp:46
-#: Template/ContactsSkills/index.ctp:46
-#: Template/ContactsUsers/index.ctp:46
-#: Template/Contactsources/index.ctp:40
-#: Template/Countries/index.ctp:40
-#: Template/Events/index.ctp:43
-#: Template/Families/index.ctp:37
-#: Template/Groups/index.ctp:93
-#: Template/GroupsUsers/index.ctp:51
-#: Template/Histories/index.ctp:174
-#: Template/Notifications/index.ctp:40
-#: Template/Sessions/index.ctp:38
-#: Template/Settings/index.ctp:39
-#: Template/Skills/index.ctp:40
-#: Template/Units/index.ctp:40
-#: Template/Usergroups/index.ctp:42
-#: Template/Users/index.ctp:47
-#: Template/UsersUsergroups/index.ctp:51
-#: Template/Zips/index.ctp:52
-msgid "previous"
-msgstr ""
-
-#: Template/Contacts/index.ctp:129
-#: Template/Contacts/view.ctp:719
-#: Template/ContactsGroups/index.ctp:48
-#: Template/ContactsSkills/index.ctp:48
-#: Template/ContactsUsers/index.ctp:48
-#: Template/Contactsources/index.ctp:42
-#: Template/Countries/index.ctp:42
-#: Template/Events/index.ctp:45
-#: Template/Families/index.ctp:39
-#: Template/Groups/index.ctp:95
-#: Template/GroupsUsers/index.ctp:53
-#: Template/Histories/index.ctp:176
-#: Template/Notifications/index.ctp:42
-#: Template/Sessions/index.ctp:40
-#: Template/Settings/index.ctp:41
-#: Template/Skills/index.ctp:42
-#: Template/Units/index.ctp:42
-#: Template/Usergroups/index.ctp:44
-#: Template/Users/index.ctp:49
-#: Template/UsersUsergroups/index.ctp:53
-#: Template/Zips/index.ctp:54
-msgid "next"
-msgstr ""
-
 #: Template/Contacts/searchquery.ctp:6
 #: Template/Element/menu.ctp:33
 msgid "Queries"
 msgstr ""
 
+#: Template/Contacts/searchquery.ctp:11
+msgid "I want to see"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:13
+#: Template/Contactsources/view.ctp:37
+#: Template/Skills/view.ctp:38
+#: Template/Zips/view.ctp:48
+msgid "Contactname"
+msgstr ""
+
 #: Template/Contacts/searchquery.ctp:14
+#: Template/Zips/view.ctp:49
+msgid "Legalname"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:16
 msgid "City"
 msgstr ""
 
+#: Template/Contacts/searchquery.ctp:17
+#: Template/Contacts/view.ctp:151
+#: Template/Contactsources/view.ctp:40
+#: Template/Skills/view.ctp:41
+#: Template/Zips/view.ctp:51
+msgid "Address"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:18
+#: Template/Contacts/view.ctp:195
+#: Template/Contactsources/view.ctp:43
+#: Template/Skills/view.ctp:44
+#: Template/Usergroups/view.ctp:43
+#: Template/Users/view.ctp:114
+#: Template/Zips/view.ctp:54
+msgid "Phone"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:19
+#: Template/Contacts/view.ctp:213
+#: Template/Contactsources/view.ctp:44
+#: Template/Skills/view.ctp:45
+#: Template/Usergroups/view.ctp:42
+#: Template/Users/view.ctp:95
+#: Template/Zips/view.ctp:55
+msgid "Email"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:20
+#: Template/Contacts/view.ctp:231
+#: Template/Contactsources/view.ctp:45
+#: Template/Skills/view.ctp:46
+#: Template/Zips/view.ctp:56
+msgid "Birth"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:21
+#: Template/Contacts/view.ctp:256
+#: Template/Contactsources/view.ctp:46
+#: Template/Skills/view.ctp:47
+msgid "Sex"
+msgstr ""
+
 #: Template/Contacts/searchquery.ctp:22
-msgid "Area"
+#: Template/Contacts/view.ctp:415
+#: Template/Contactsources/view.ctp:47
+#: Template/Skills/view.ctp:48
+msgid "Workplace"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:23
+msgid "Workplace_zip"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:24
+msgid "Workplace_city"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:25
+msgid "Workplace_address"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:26
+msgid "Workplace_phone"
 msgstr ""
 
 #: Template/Contacts/searchquery.ctp:27
-#: Template/ContactsGroups/view.ctp:23
-#: Template/GroupsUsers/view.ctp:25
-#: Template/Histories/view.ctp:33
-msgid "Group"
+msgid "Workplace_email"
 msgstr ""
 
-#: Template/Contacts/searchquery.ctp:35
+#: Template/Contacts/searchquery.ctp:28
+#: Template/Contacts/view.ctp:288
+msgid "Contactsource"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:29
+#: Template/Contacts/view.ctp:319
+#: Template/Contactsources/view.ctp:51
+#: Template/Skills/view.ctp:50
+#: Template/Zips/view.ctp:58
+msgid "Comment"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:30
+#: Template/Contactsources/view.ctp:52
+#: Template/Histories/view.ctp:51
+#: Template/Notifications/view.ctp:31
+#: Template/Skills/view.ctp:51
+#: Template/Units/view.ctp:46
+#: Template/Usergroups/view.ctp:46
+#: Template/Users/view.ctp:141
+#: Template/Zips/view.ctp:59
+msgid "Created"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:31
+#: Template/Contactsources/view.ctp:53
+#: Template/Histories/view.ctp:53
+#: Template/Skills/view.ctp:52
+#: Template/Units/view.ctp:47
+#: Template/Usergroups/view.ctp:47
+#: Template/Users/view.ctp:149
+#: Template/Zips/view.ctp:60
+msgid "Modified"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:45
+msgid "Where"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:57
+#: Utility/Text.php:658
+msgid "and"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:57;60
+msgid "Click to change"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:60
+msgid "or"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:85
+msgid "contains"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:87
+msgid "not"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:101
 #: Template/Element/menu.ctp:81
 msgid "Search"
+msgstr ""
+
+#: Template/Contacts/searchquery.ctp:108
+msgid "Search results"
 msgstr ""
 
 #: Template/Contacts/view.ctp:18;23
@@ -422,57 +501,12 @@ msgstr ""
 msgid "Contact person"
 msgstr ""
 
-#: Template/Contacts/view.ctp:151
-#: Template/Contactsources/view.ctp:40
-#: Template/Skills/view.ctp:41
-#: Template/Zips/view.ctp:51
-msgid "Address"
-msgstr ""
-
-#: Template/Contacts/view.ctp:195
-#: Template/Contactsources/view.ctp:43
-#: Template/Groups/view.ctp:24
-#: Template/Skills/view.ctp:44
-#: Template/Usergroups/view.ctp:43
-#: Template/Users/view.ctp:114
-#: Template/Zips/view.ctp:54
-msgid "Phone"
-msgstr ""
-
-#: Template/Contacts/view.ctp:213
-#: Template/Contactsources/view.ctp:44
-#: Template/Groups/view.ctp:23
-#: Template/Skills/view.ctp:45
-#: Template/Usergroups/view.ctp:42
-#: Template/Users/view.ctp:95
-#: Template/Zips/view.ctp:55
-msgid "Email"
-msgstr ""
-
-#: Template/Contacts/view.ctp:231
-#: Template/Contactsources/view.ctp:45
-#: Template/Skills/view.ctp:46
-#: Template/Zips/view.ctp:56
-msgid "Birth"
-msgstr ""
-
-#: Template/Contacts/view.ctp:256
-#: Template/Contactsources/view.ctp:46
-#: Template/Skills/view.ctp:47
-msgid "Sex"
-msgstr ""
-
 #: Template/Contacts/view.ctp:269
 msgid "Unknown"
 msgstr ""
 
-#: Template/Contacts/view.ctp:288
-msgid "Contactsource"
-msgstr ""
-
 #: Template/Contacts/view.ctp:302
 #: Template/Contactsources/view.ctp:50
-#: Template/Groups/view.ctp:25
 #: Template/Skills/view.ctp:49
 #: Template/Usergroups/view.ctp:44
 #: Template/Users/view.ctp:157
@@ -481,7 +515,7 @@ msgid "Active"
 msgstr ""
 
 #: Template/Contacts/view.ctp:305
-#: Template/Groups/view.ctp:10
+#: Template/Groups/view.ctp:18
 #: Template/Histories/view.ctp:58
 #: Template/Notifications/view.ctp:36
 #: Template/Users/view.ctp:160
@@ -490,25 +524,12 @@ msgid "Yes"
 msgstr ""
 
 #: Template/Contacts/view.ctp:305
-#: Template/Groups/view.ctp:10
+#: Template/Groups/view.ctp:18
 #: Template/Histories/view.ctp:58
 #: Template/Notifications/view.ctp:36
 #: Template/Users/view.ctp:160
 #: Template/UsersUsergroups/view.ctp:34
 msgid "No"
-msgstr ""
-
-#: Template/Contacts/view.ctp:319
-#: Template/Contactsources/view.ctp:51
-#: Template/Skills/view.ctp:50
-#: Template/Zips/view.ctp:58
-msgid "Comment"
-msgstr ""
-
-#: Template/Contacts/view.ctp:415
-#: Template/Contactsources/view.ctp:47
-#: Template/Skills/view.ctp:48
-msgid "Workplace"
 msgstr ""
 
 #: Template/Contacts/view.ctp:435
@@ -534,6 +555,54 @@ msgstr ""
 
 #: Template/Contacts/view.ctp:583
 msgid "Not member"
+msgstr ""
+
+#: Template/Contacts/view.ctp:717
+#: Template/ContactsGroups/index.ctp:46
+#: Template/ContactsSkills/index.ctp:46
+#: Template/ContactsUsers/index.ctp:46
+#: Template/Contactsources/index.ctp:40
+#: Template/Countries/index.ctp:40
+#: Template/Element/contacts_table.ctp:101
+#: Template/Events/index.ctp:58
+#: Template/Families/index.ctp:37
+#: Template/Groups/index.ctp:98
+#: Template/GroupsUsers/index.ctp:51
+#: Template/Histories/index.ctp:174
+#: Template/Notifications/index.ctp:40
+#: Template/Sessions/index.ctp:38
+#: Template/Settings/index.ctp:39
+#: Template/Skills/index.ctp:40
+#: Template/Units/index.ctp:40
+#: Template/Usergroups/index.ctp:42
+#: Template/Users/index.ctp:47
+#: Template/UsersUsergroups/index.ctp:51
+#: Template/Zips/index.ctp:52
+msgid "previous"
+msgstr ""
+
+#: Template/Contacts/view.ctp:719
+#: Template/ContactsGroups/index.ctp:48
+#: Template/ContactsSkills/index.ctp:48
+#: Template/ContactsUsers/index.ctp:48
+#: Template/Contactsources/index.ctp:42
+#: Template/Countries/index.ctp:42
+#: Template/Element/contacts_table.ctp:103
+#: Template/Events/index.ctp:60
+#: Template/Families/index.ctp:39
+#: Template/Groups/index.ctp:100
+#: Template/GroupsUsers/index.ctp:53
+#: Template/Histories/index.ctp:176
+#: Template/Notifications/index.ctp:42
+#: Template/Sessions/index.ctp:40
+#: Template/Settings/index.ctp:41
+#: Template/Skills/index.ctp:42
+#: Template/Units/index.ctp:42
+#: Template/Usergroups/index.ctp:44
+#: Template/Users/index.ctp:49
+#: Template/UsersUsergroups/index.ctp:53
+#: Template/Zips/index.ctp:54
+msgid "next"
 msgstr ""
 
 #: Template/Contacts/view.ctp:784
@@ -681,12 +750,10 @@ msgstr ""
 #: Template/Countries/edit.ctp:4
 #: Template/Countries/index.ctp:31
 #: Template/Countries/view.ctp:55
-#: Template/Events/edit.ctp:4
-#: Template/Events/index.ctp:34
-#: Template/Events/view.ctp:69
+#: Template/Events/index.ctp:47
 #: Template/Families/edit.ctp:4
 #: Template/Families/index.ctp:28
-#: Template/Groups/index.ctp:79
+#: Template/Groups/index.ctp:84
 #: Template/GroupsUsers/edit.ctp:4
 #: Template/GroupsUsers/index.ctp:42
 #: Template/Histories/edit.ctp:4
@@ -729,13 +796,11 @@ msgstr ""
 #: Template/Countries/edit.ctp:4
 #: Template/Countries/index.ctp:31
 #: Template/Countries/view.ctp:5;55
-#: Template/Events/edit.ctp:4
-#: Template/Events/index.ctp:34
-#: Template/Events/view.ctp:5;69
+#: Template/Events/index.ctp:47
 #: Template/Families/edit.ctp:4
 #: Template/Families/index.ctp:28
 #: Template/Families/view.ctp:5
-#: Template/Groups/index.ctp:79
+#: Template/Groups/index.ctp:84
 #: Template/GroupsUsers/edit.ctp:4
 #: Template/GroupsUsers/index.ctp:42
 #: Template/GroupsUsers/view.ctp:5
@@ -778,10 +843,9 @@ msgstr ""
 #: Template/Contactsources/view.ctp:54
 #: Template/Countries/index.ctp:20
 #: Template/Countries/view.ctp:42
-#: Template/Events/index.ctp:20
-#: Template/Events/view.ctp:50
+#: Template/Events/index.ctp:11
 #: Template/Families/index.ctp:18
-#: Template/Groups/index.ctp:13
+#: Template/Groups/index.ctp:14
 #: Template/GroupsUsers/index.ctp:25
 #: Template/Histories/index.ctp:82
 #: Template/Notifications/index.ctp:18
@@ -803,6 +867,32 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
+#: Template/ContactsGroups/index.ctp:35
+#: Template/ContactsSkills/index.ctp:35
+#: Template/ContactsUsers/index.ctp:35
+#: Template/Contactsources/index.ctp:29
+#: Template/Contactsources/view.ctp:77
+#: Template/Countries/index.ctp:29
+#: Template/Countries/view.ctp:53
+#: Template/Element/contacts_table.ctp:38
+#: Template/Families/index.ctp:26
+#: Template/Groups/index.ctp:80
+#: Template/GroupsUsers/index.ctp:40
+#: Template/Sessions/index.ctp:27
+#: Template/Settings/index.ctp:28
+#: Template/Skills/index.ctp:29
+#: Template/Skills/view.ctp:76
+#: Template/Units/index.ctp:29
+#: Template/Units/view.ctp:65
+#: Template/Usergroups/index.ctp:31
+#: Template/Usergroups/view.ctp:63
+#: Template/Users/index.ctp:36
+#: Template/UsersUsergroups/index.ctp:40
+#: Template/Zips/index.ctp:41
+#: Template/Zips/view.ctp:82
+msgid "View"
+msgstr ""
+
 #: Template/ContactsGroups/index.ctp:36
 #: Template/ContactsSkills/index.ctp:36
 #: Template/ContactsUsers/index.ctp:36
@@ -810,8 +900,6 @@ msgstr ""
 #: Template/Contactsources/view.ctp:78
 #: Template/Countries/index.ctp:30
 #: Template/Countries/view.ctp:54
-#: Template/Events/index.ctp:33
-#: Template/Events/view.ctp:68
 #: Template/Families/index.ctp:27
 #: Template/GroupsUsers/index.ctp:41
 #: Template/Histories/index.ctp:165
@@ -832,6 +920,12 @@ msgstr ""
 
 #: Template/ContactsGroups/view.ctp:5
 msgid "Delete Contacts Group"
+msgstr ""
+
+#: Template/ContactsGroups/view.ctp:23
+#: Template/GroupsUsers/view.ctp:25
+#: Template/Histories/view.ctp:33
+msgid "Group"
 msgstr ""
 
 #: Template/ContactsGroups/view.ctp:25
@@ -969,7 +1063,6 @@ msgid "Delete Contacts User"
 msgstr ""
 
 #: Template/ContactsUsers/view.ctp:25
-#: Template/Events/view.ctp:22
 #: Template/GroupsUsers/view.ctp:23
 #: Template/Histories/view.ctp:31
 #: Template/Notifications/view.ctp:21
@@ -1004,8 +1097,6 @@ msgstr ""
 
 #: Template/Contactsources/view.ctp:21
 #: Template/Countries/view.ctp:21;39
-#: Template/Events/view.ctp:20
-#: Template/Groups/view.ctp:21
 #: Template/Settings/view.ctp:18
 #: Template/Skills/view.ctp:22
 #: Template/Units/view.ctp:21
@@ -1017,9 +1108,7 @@ msgstr ""
 
 #: Template/Contactsources/view.ctp:25;36
 #: Template/Countries/view.ctp:25;36
-#: Template/Events/view.ctp:26;38
 #: Template/Families/view.ctp:19
-#: Template/Groups/view.ctp:20;49
 #: Template/GroupsUsers/view.ctp:29
 #: Template/Histories/view.ctp:43
 #: Template/Notifications/view.ctp:27
@@ -1034,21 +1123,12 @@ msgid "Id"
 msgstr ""
 
 #: Template/Contactsources/view.ctp:32
-#: Template/Groups/view.ctp:45
 #: Template/Skills/view.ctp:33
 #: Template/Zips/view.ctp:43
 msgid "Related Contacts"
 msgstr ""
 
-#: Template/Contactsources/view.ctp:37
-#: Template/Groups/view.ctp:51
-#: Template/Skills/view.ctp:38
-#: Template/Zips/view.ctp:48
-msgid "Contactname"
-msgstr ""
-
 #: Template/Contactsources/view.ctp:38
-#: Template/Groups/view.ctp:50
 msgid "Legal Name"
 msgstr ""
 
@@ -1080,29 +1160,6 @@ msgstr ""
 #: Template/Skills/view.ctp:53
 #: Template/Zips/view.ctp:61
 msgid "Contactsource Id"
-msgstr ""
-
-#: Template/Contactsources/view.ctp:52
-#: Template/Events/view.ctp:48
-#: Template/Histories/view.ctp:51
-#: Template/Notifications/view.ctp:31
-#: Template/Skills/view.ctp:51
-#: Template/Units/view.ctp:46
-#: Template/Usergroups/view.ctp:46
-#: Template/Users/view.ctp:141
-#: Template/Zips/view.ctp:59
-msgid "Created"
-msgstr ""
-
-#: Template/Contactsources/view.ctp:53
-#: Template/Events/view.ctp:49
-#: Template/Histories/view.ctp:53
-#: Template/Skills/view.ctp:52
-#: Template/Units/view.ctp:47
-#: Template/Usergroups/view.ctp:47
-#: Template/Users/view.ctp:149
-#: Template/Zips/view.ctp:60
-msgid "Modified"
 msgstr ""
 
 #: Template/Countries/add.ctp:4
@@ -1210,7 +1267,6 @@ msgid "User groups"
 msgstr ""
 
 #: Template/Element/menu.ctp:48
-#: Template/Events/index.ctp:13
 #: Template/Users/view.ctp:173
 msgid "Events"
 msgstr ""
@@ -1239,92 +1295,6 @@ msgstr ""
 msgid "If you do not want to change your password just ignore this message."
 msgstr ""
 
-#: Template/Events/add.ctp:4
-#: Template/Events/edit.ctp:5
-#: Template/Events/view.ctp:6
-#: Template/Histories/add.ctp:11
-#: Template/Histories/edit.ctp:12
-#: Template/Histories/view.ctp:14
-#: Template/Users/add.ctp:5
-msgid "List Events"
-msgstr ""
-
-#: Template/Events/add.ctp:13
-msgid "Add Event"
-msgstr ""
-
-#: Template/Events/add.ctp:21
-#: Template/Groups/add.ctp:9
-msgid "-- Choose --"
-msgstr ""
-
-#: Template/Events/edit.ctp:14
-#: Template/Events/view.ctp:4
-msgid "Edit Event"
-msgstr ""
-
-#: Template/Events/index.ctp:4
-#: Template/Events/view.ctp:7
-#: Template/Histories/add.ctp:12
-#: Template/Histories/edit.ctp:13
-#: Template/Histories/view.ctp:15
-#: Template/Users/add.ctp:6
-msgid "New Event"
-msgstr ""
-
-#: Template/Events/view.ctp:5
-msgid "Delete Event"
-msgstr ""
-
-#: Template/Events/view.ctp:34
-#: Template/Units/view.ctp:32
-msgid "Related Histories"
-msgstr ""
-
-#: Template/Events/view.ctp:39
-#: Template/Units/view.ctp:37
-msgid "Contact Id"
-msgstr ""
-
-#: Template/Events/view.ctp:40
-#: Template/Histories/view.ctp:49
-#: Template/Units/view.ctp:38
-msgid "Date"
-msgstr ""
-
-#: Template/Events/view.ctp:41
-#: Template/Units/view.ctp:39
-msgid "User Id"
-msgstr ""
-
-#: Template/Events/view.ctp:42
-#: Template/GroupsUsers/view.ctp:31
-#: Template/Units/view.ctp:45
-msgid "Group Id"
-msgstr ""
-
-#: Template/Events/view.ctp:43
-#: Template/Units/view.ctp:41
-msgid "Event Id"
-msgstr ""
-
-#: Template/Events/view.ctp:44
-#: Template/Histories/view.ctp:37
-#: Template/Units/view.ctp:42
-msgid "Detail"
-msgstr ""
-
-#: Template/Events/view.ctp:45
-#: Template/Histories/view.ctp:45
-#: Template/Units/view.ctp:43
-msgid "Quantity"
-msgstr ""
-
-#: Template/Events/view.ctp:46
-#: Template/Units/view.ctp:44
-msgid "Unit Id"
-msgstr ""
-
 #: Template/Families/add.ctp:4
 #: Template/Families/edit.ctp:5
 #: Template/Families/view.ctp:6
@@ -1349,38 +1319,41 @@ msgstr ""
 msgid "Delete Family"
 msgstr ""
 
-#: Template/Groups/add.ctp:4
-msgid "Add Group"
-msgstr ""
-
-#: Template/Groups/view.ctp:5
-msgid "Description"
-msgstr ""
-
-#: Template/Groups/view.ctp:7
-#: Template/Usergroups/view.ctp:27
-msgid "Admin User Id"
+#: Template/Groups/index.ctp:12
+#: Template/Groups/view.ctp:21
+msgid "Members"
 msgstr ""
 
 #: Template/Groups/view.ctp:9
+msgid "Description"
+msgstr ""
+
+#: Template/Groups/view.ctp:13
+msgid "Admin User"
+msgstr ""
+
+#: Template/Groups/view.ctp:17
 msgid "Shared"
 msgstr ""
 
-#: Template/Groups/view.ctp:16
-#: Template/Usergroups/view.ctp:34
-msgid "Related Users"
+#: Template/Groups/view.ctp:29
+msgid "Has access as group member"
 msgstr ""
 
-#: Template/Groups/view.ctp:22
-#: Template/Usergroups/view.ctp:41
-#: Template/Users/view.ctp:76
-msgid "Realname"
+#: Template/Groups/view.ctp:43
+msgid "Add Contacts to this Group"
 msgstr ""
 
-#: Template/Groups/view.ctp:26
-#: Template/Usergroups/view.ctp:45
-#: Template/Users/view.ctp:133
-msgid "Role"
+#: Template/Groups/view.ctp:46
+msgid "Contactname or Legalname"
+msgstr ""
+
+#: Template/Groups/view.ctp:51
+msgid "Group Members"
+msgstr ""
+
+#: Template/Groups/view.ctp:62
+msgid "Click to remove from group"
 msgstr ""
 
 #: Template/GroupsUsers/add.ctp:4
@@ -1407,6 +1380,11 @@ msgstr ""
 msgid "Delete Groups User"
 msgstr ""
 
+#: Template/GroupsUsers/view.ctp:31
+#: Template/Units/view.ctp:45
+msgid "Group Id"
+msgstr ""
+
 #: Template/Histories/add.ctp:4
 #: Template/Histories/edit.ctp:5
 #: Template/Histories/view.ctp:6
@@ -1417,6 +1395,20 @@ msgstr ""
 #: Template/Units/view.ctp:8
 #: Template/Users/add.ctp:7
 msgid "List Histories"
+msgstr ""
+
+#: Template/Histories/add.ctp:11
+#: Template/Histories/edit.ctp:12
+#: Template/Histories/view.ctp:14
+#: Template/Users/add.ctp:5
+msgid "List Events"
+msgstr ""
+
+#: Template/Histories/add.ctp:12
+#: Template/Histories/edit.ctp:13
+#: Template/Histories/view.ctp:15
+#: Template/Users/add.ctp:6
+msgid "New Event"
 msgstr ""
 
 #: Template/Histories/add.ctp:13
@@ -1446,10 +1438,6 @@ msgid "Edit History"
 msgstr ""
 
 #: Template/Histories/index.ctp:68
-msgid "↺"
-msgstr ""
-
-#: Template/Histories/index.ctp:68
 msgid "Filter"
 msgstr ""
 
@@ -1471,8 +1459,23 @@ msgstr ""
 msgid "Event"
 msgstr ""
 
+#: Template/Histories/view.ctp:37
+#: Template/Units/view.ctp:42
+msgid "Detail"
+msgstr ""
+
 #: Template/Histories/view.ctp:39
 msgid "Unit"
+msgstr ""
+
+#: Template/Histories/view.ctp:45
+#: Template/Units/view.ctp:43
+msgid "Quantity"
+msgstr ""
+
+#: Template/Histories/view.ctp:49
+#: Template/Units/view.ctp:38
+msgid "Date"
 msgstr ""
 
 #: Template/Imports/index.ctp:4
@@ -1630,8 +1633,28 @@ msgstr ""
 msgid "Delete Unit"
 msgstr ""
 
+#: Template/Units/view.ctp:32
+msgid "Related Histories"
+msgstr ""
+
+#: Template/Units/view.ctp:37
+msgid "Contact Id"
+msgstr ""
+
+#: Template/Units/view.ctp:39
+msgid "User Id"
+msgstr ""
+
 #: Template/Units/view.ctp:40
 msgid "Linkup Id"
+msgstr ""
+
+#: Template/Units/view.ctp:41
+msgid "Event Id"
+msgstr ""
+
+#: Template/Units/view.ctp:44
+msgid "Unit Id"
 msgstr ""
 
 #: Template/Usergroups/add.ctp:4
@@ -1668,9 +1691,27 @@ msgstr ""
 msgid "Delete Usergroup"
 msgstr ""
 
+#: Template/Usergroups/view.ctp:27
+msgid "Admin User Id"
+msgstr ""
+
+#: Template/Usergroups/view.ctp:34
+msgid "Related Users"
+msgstr ""
+
 #: Template/Usergroups/view.ctp:40
 #: Template/Users/view.ctp:57
 msgid "Password"
+msgstr ""
+
+#: Template/Usergroups/view.ctp:41
+#: Template/Users/view.ctp:76
+msgid "Realname"
+msgstr ""
+
+#: Template/Usergroups/view.ctp:45
+#: Template/Users/view.ctp:133
+msgid "Role"
 msgstr ""
 
 #: Template/Users/add.ctp:27
@@ -1756,10 +1797,6 @@ msgstr ""
 
 #: Template/Zips/view.ctp:24
 msgid "Country"
-msgstr ""
-
-#: Template/Zips/view.ctp:49
-msgid "Legalname"
 msgstr ""
 
 #: Template/Error/error400.ctp:6
@@ -1925,10 +1962,6 @@ msgstr ""
 
 #: ORM/RulesChecker.php:351
 msgid "This value does not exist"
-msgstr ""
-
-#: Utility/Text.php:658
-msgid "and"
 msgstr ""
 
 #: Validation/Validator.php:94
