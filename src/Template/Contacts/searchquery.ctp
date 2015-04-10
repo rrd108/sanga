@@ -20,8 +20,8 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 				'birth' => __('Birth'),
 				'sex' => __('Sex'),
 				'workplace' => __('Workplace'),
-				'workplace_zip.zip' => __('Workplace_zip'),
-				'workplace_zip.name' => __('Workplace_city'),
+				'WorkplaceZips.zip' => __('Workplace_zip'),
+				'WorkplaceZips.name' => __('Workplace_city'),
 				'workplace_address' => __('Workplace_address'),
 				'workplace_phone' => __('Workplace_phone'),
 				'workplace_email' => __('Workplace_email'),
@@ -36,7 +36,7 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 				} else {
 					$css = 'tag-default';
 				}
-				if ($field == 'Zips.zip' | $field == 'Zips.name') {
+				if (strpos($field, '.')) {
 					$dataName = $field;
 				} else {
 					$dataName = 'Contacts.'.$field;

@@ -59,6 +59,12 @@
 					case 'workplace_zip_id' :
 						echo $contact->has('workplace_zip') ? $contact->workplace_zip->zip . ' ' . $contact->workplace_zip->name : '' ;
 						break;
+					case 'WorkplaceZips.zip' :
+						echo $contact->has('workplace_zip') ? $contact->workplace_zip->zip : '' ;
+						break;
+					case 'WorkplaceZips.name' :
+						echo $contact->has('workplace_zip') ? $contact->workplace_zip->name : '' ;
+						break;
 					case 'birth' : 
 						echo isset($contact->birth) ? h($contact->birth->format('Y-m-d')) : '';
 						break;
