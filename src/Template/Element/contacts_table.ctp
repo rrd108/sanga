@@ -1,3 +1,4 @@
+<?php //debug($contacts->toArray()); ?>
 <table cellpadding="0" cellspacing="0">
 <thead>
 	<tr>
@@ -17,7 +18,11 @@
 				if (in_array($field, ['contactname', 'legalname'])) {
 					echo $this->Paginator->sort(__($field));
 				} else {
-					echo __(ucwords($field));
+					if (isset($fieldNames)) {
+						echo $fieldNames[$field];
+					} else {
+						echo __(ucwords($field));
+					}
 				}
 			echo '</th>';
 		}
@@ -39,11 +44,17 @@
 			?>
 		</td>
 		<?php
-		foreach($fields as $d) {
+		foreach($fields as $field) {
 			echo '<td>';
-				switch ($d) {
+				switch ($field) {
 					case 'zip_id' :
 						echo $contact->has('zip') ? $contact->zip->zip . ' ' . $contact->zip->name : '' ;
+						break;
+					case 'Zips.zip' :
+						echo $contact->has('zip') ? $contact->zip->zip : '' ;
+						break;
+					case 'Zips.name' :
+						echo $contact->has('zip') ? $contact->zip->name : '' ;
 						break;
 					case 'workplace_zip_id' :
 						echo $contact->has('workplace_zip') ? $contact->workplace_zip->zip . ' ' . $contact->workplace_zip->name : '' ;
@@ -86,7 +97,7 @@
 						}
 						break;
 					default : 
-						echo h($contact->$d);
+						echo h($contact->$field);
 				}
 			echo '</td>';
 		}

@@ -70,14 +70,22 @@ class ContactsController extends AppController {
 	public function searchquery()
 	{
 		if($this->request->query){
-			$conditions = $select = $selected = [];
+			$contain = $conditions = $select = $selected = [];
 			foreach ($this->request->query as $keyName => $values) {
 				$remove = [];
 				if (strpos($keyName, 'field_') === 0) {
 					$field = str_replace('field_', '', $keyName);
 					$field = str_replace('_', '.', $field);
 					$select[] = $field;
-					$selected[] = substr(strstr($field, '.'), 1);
+					if (strpos($field, 'Contacts.') === 0) {
+						$selected[] = substr(strstr($field, '.'), 1);
+					} else {
+						$modelName = strstr($field, '.', true);
+						if ( ! in_array($modelName, $contain)) {
+							$contain[] = $modelName;
+						}
+						$selected[] = $field;
+					}
 					foreach ($values as $value) {
 						$conditions[$field]['value'][] = $value;
 					}
@@ -109,7 +117,9 @@ class ContactsController extends AppController {
 			$this->set('selected', $selected);
 
 			//debug($select);
+			//debug($selected);
 			//debug($conditions);
+			//debug($contain);
 
 			$query = $this->Contacts->find()->select($select);
 			$where = '';
@@ -144,10 +154,12 @@ class ContactsController extends AppController {
 					}
 				}
 			}
-			//debug($where);
+			//debug($where);die();
 			$expr = $query->newExpr()->add($where);
 			$contacts = $query->where($expr);
-			//debug($query);
+			if( ! empty($contain)) {
+				$contacts = $query->contain($contain);
+			}
 			
 			/*if ($this->request->data['group_id']){
 					$result->matching('Groups', function($q){

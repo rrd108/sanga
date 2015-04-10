@@ -6,14 +6,14 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 	<h1><?= __('Queries'); ?></h1>
 	<?php
 	echo $this->Form->create(null, ['type' => 'get']);
-	
+
 		echo '<div class="row" id="query-select-box">';
 			echo '<h2>' . __('I want to see') . '</h2>';
 			$filterFields = [
 				'contactname' => __('Contactname'),
 				'legalname' => __('Legalname'),
-				'zip.zip' => __('Zip'),
-				'zip.name' => __('City'),
+				'Zips.zip' => __('Zip'),
+				'Zips.name' => __('City'),
 				'address' => __('Address'),
 				'phone' => __('Phone'),
 				'email' => __('Email'),
@@ -36,7 +36,12 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 				} else {
 					$css = 'tag-default';
 				}
-				echo '<span class="tag ' . $css . '" data-name="Contacts.'.$field.'">';
+				if ($field == 'Zips.zip' | $field == 'Zips.name') {
+					$dataName = $field;
+				} else {
+					$dataName = 'Contacts.'.$field;
+				}
+				echo '<span class="tag ' . $css . '" data-name="' . $dataName . '">';
 					echo $label;
 				echo '</span>';
 			}
@@ -79,7 +84,8 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 												['class' => 'fl',
 												 'data-name' => $dataName]);
 						echo '<label id="l' . str_replace('.', '_', $dataName) . '" for="' . $dataName . '">';
-							echo __(ucwords(substr(strstr($dataName, '.'), 1)));
+							$fName = str_replace('Contacts.', '', $dataName);
+							echo $filterFields[$fName];
 						echo '</label>';
 						echo $this->Form->select($name . '[]',
 												 ['&%' => __('contains'),
@@ -105,14 +111,15 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 
 <div class="contacts form large-10 medium-9 columns">
 	<?php
-	echo '<h2>' . __('Search results') . '</h2>';
-	
 	if (isset($contacts)){
+		echo '<h2>' . __('Search results') . '</h2>';
+		
 		echo $this->element('contacts_table',
 							[
 							 'fields' => $selected,
 							 'contacts' => $contacts,
-							 'settings' => false
+							 'settings' => false,
+							 'fieldNames' => $filterFields
 							 ]);
 	}
 	?>
