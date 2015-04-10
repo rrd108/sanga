@@ -5,7 +5,7 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 <div class="contacts index columns large-12">
 	<h1><?= __('Queries'); ?></h1>
 	<?php
-	echo $this->Form->create();
+	echo $this->Form->create(null, ['type' => 'get']);
 	
 		echo '<div class="row" id="query-select-box">';
 			echo '<h2>' . __('I want to see') . '</h2>';
@@ -46,7 +46,7 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 		echo '<div class="row" id="where">';
 			//debug($this->request->data);
 			$c = 0;
-			foreach ($this->request->data as $name => $value) {
+			foreach ($this->request->query as $name => $value) {
 				if (strpos($name, 'connect_') === 0) {
 					/*$connect = '<img
 									class="fl"

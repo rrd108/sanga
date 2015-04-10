@@ -69,10 +69,9 @@ class ContactsController extends AppController {
 	//mindenféle lekérdezések
 	public function searchquery()
 	{
-		//debug($this->request->data);
-		if($this->request->data){
+		if($this->request->query){
 			$conditions = $select = $selected = [];
-			foreach ($this->request->data as $keyName => $values) {
+			foreach ($this->request->query as $keyName => $values) {
 				$remove = [];
 				if (strpos($keyName, 'field_') === 0) {
 					$field = str_replace('field_', '', $keyName);
@@ -96,10 +95,12 @@ class ContactsController extends AppController {
 			//as we do not know in which order will the above array keys will come
 			//we an not heck and remove empty conditions
 			foreach ($conditions as $field => $conval) {
-				foreach ($conval['value'] as $i => $value) {
-					if ($value == '') {
-						unset($conditions[$field]['condition'][$i]);
-						unset($conditions[$field]['value'][$i]);
+				if (isset($conval['value'])) {
+					foreach ($conval['value'] as $i => $value) {
+						if ($value == '') {
+							unset($conditions[$field]['condition'][$i]);
+							unset($conditions[$field]['value'][$i]);
+						}
 					}
 				}
 			}
