@@ -105,4 +105,12 @@ $(function() {
 		}
 	});
 	
+	$('#savequery').click(function(event){
+		//https://jqueryui.com/dialog/#modal-form
+		
+		//offer an input a save and a canel button in a popup
+		//save query via ajax
+		//add this to saved queries
+	});
+	
 });
