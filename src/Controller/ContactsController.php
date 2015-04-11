@@ -67,11 +67,23 @@ class ContactsController extends AppController {
 	}
 	
 	//mindenféle lekérdezések
-	public function searchquery()
+	public function searchquery($id = null)
 	{
-		if($this->request->query){
+		if ($id) {
+			$query = $this->Contacts->Users->Settings->get($id);
+			if ($query->user_id != $this->Auth->user('id')) {
+				$this->Flash->error(__('Permission deined'));
+				$this->render();
+			}
+			parse_str($query->value, $query);
+		} elseif($this->request->query){
+			$query = $this->request->query;
+		}
+		
+		if (isset($query)){
+			$this->set('query', $query);
 			$contain = $conditions = $select = $selected = [];
-			foreach ($this->request->query as $keyName => $values) {
+			foreach ($query as $keyName => $values) {
 				$remove = [];
 				if (strpos($keyName, 'field_') === 0) {
 					$field = str_replace('field_', '', $keyName);
@@ -168,6 +180,9 @@ class ContactsController extends AppController {
 			}*/
 			$this->set('contacts', $this->paginate($contacts));
 		}
+		
+		$savedQueries = $this->Contacts->Users->Settings->getSavedQueries($this->Auth->user('id'));
+		$this->set('savedQueries', $savedQueries);
 	}
 	
 	private function translateCode2Array ($conditionCode, $field, $value)

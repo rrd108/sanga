@@ -124,7 +124,7 @@ $(function() {
 		event.preventDefault();
 		var queryData = {
 			name : 'Contacts/searchquery',
-			value : $('#queryForm').serialize()
+			value : $.param({qName : $('#queryname').val()}) + '&' + $('#queryForm').serialize()
 		}
 		$.ajax({
 			url : $.sanga.baseUrl + '/Settings/add',
@@ -144,8 +144,43 @@ $(function() {
 					type: 'success',
 					timeout: 3500,
 					});
+				$('#savedqueries').append(
+					'<li>'+
+						'<a href="' + $.sanga.baseUrl + '/Contacts/searchquery/' + jqXHR.responseJSON.id + '">' + $('#queryname').val() + '</a>'+
+					'</li>'
+					);
 			}
 		});
 	});
 	
+	$('.ajaxremove').mouseenter(function(event){
+		var src = $(event.target).attr('src');
+		$(event.target).attr('src', src.replace(/remove.png/, 'remove_r.png'))
+	});
+	$('.ajaxremove').mouseleave(function(event){
+		var src = $(event.target).attr('src');
+		$(event.target).attr('src', src.replace(/remove_r.png/, 'remove.png'))
+	});
+	$('.ajaxremove').click(function(event){
+		$.ajax({
+			url : $.sanga.baseUrl + '/Settings/delete/' + $(location).attr('href').split('/').pop(),
+			type : 'post',
+			dataType : 'json',
+			error : function(jqXHR, textStatus, errorThrown){
+				noty({
+					text: textStatus,
+					type: 'error',
+					timeout: 3500,
+					});
+			},
+			success : function(data, textStatus, jqXHR){
+				noty({
+					text: jqXHR.responseJSON.message,
+					type: 'success',
+					timeout: 3500,
+					});
+			}
+		});
+	});
+
 });

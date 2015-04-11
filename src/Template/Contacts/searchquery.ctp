@@ -8,9 +8,17 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 			<li><?= $this->Html->link(__('Save Query'), [], ['id' => 'savequery']) ?></li>
 		</ul>
 		<h6><?= __('Saved Queries') ?></h6>
-		<ul>
+		<ul id="savedqueries">
 			<?php
-				//echo <li><?= $this->Html->link(__('New Skill'), ['action' => 'add']) </li>
+			if (isset($savedQueries)) {
+				foreach ($savedQueries as $q) {
+					parse_str($q->value, $savedQuery);
+					echo '<li>';
+						echo $this->Html->link($savedQuery['qName'], ['action' => 'searchquery', $q->id]);
+					echo '</li>';
+				}
+			}
+				
 			?>
 		</ul>
 	</nav>
@@ -30,7 +38,19 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 <div class="content-wrapper">
 	<div class="row">
 		<div class="contacts index columns large-12">
-			<h1><?= __('Queries'); ?></h1>
+			<h1>
+				<?php
+				echo __('Queries');
+				if (isset($query['qName'])) {
+					echo ' / ' . $query['qName'];
+					unset($query['qName']);
+					echo $this->Html->image('remove.png',
+								['class' => 'ajaxremove',
+								 'title' => __('Click to delete')]);
+
+				}
+				?>
+			</h1>
 			<?php
 			echo $this->Form->create(null, [
 											'type' => 'get',
@@ -79,90 +99,91 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 				
 				echo '<h2>' . __('Where') . '</h2>';
 				echo '<div class="row" id="where">';
-					//debug($this->request->query);
-					foreach ($this->request->query as $name => $values) {
-						if ( ! is_array($values)) {		//connect
-							if (strpos($name, 'connect_') === 0) {
-								$dataName = str_replace('_', '.', str_replace('connect_', '', $name));
-								if ($values == '&'){
-									$img = 'and.png';
-									$title = '*' . __('and') . '* ' . __('Click to change');
-								} else {
-									$img = 'or.png';
-									$title = '*' . __('or') . '* ' . __('Click to change');
-								}
-								$connect[$dataName] = $this->Html->image($img,
-															['class' => 'fl',
-															 'title' => $title]);
-								$connect[$dataName] .=	 '<input
-												type="hidden"
-												value="'. $value . '"
-												name="connect_' . $dataName . '">';
-							} 
-						} else {
-							foreach ($values as $vi => $value) {
-								if (strpos($name, 'condition_') === 0) {
-									if ($vi == 0) {
-										$dataName = str_replace('_', '.', str_replace('condition_', '', $name));
-										$imgPlus[$dataName] = $this->Html->image('plus.png',
-																['class' => 'fl',
-																 'data-name' => $dataName]);
-										$label[$dataName] = '<label id="l' . str_replace('.', '_', $dataName) . '" for="' . $dataName . '">';
-											$fName = str_replace('Contacts.', '', $dataName);
-											$label[$dataName] .= $filterFields[$fName];
-										$label[$dataName] .= '</label>';
-		
-										$selects[$dataName][] = $this->Form->select($name . '[]',
-																 ['&%' => __('contains'),
-																  '&=' => '=',
-																  '&!' => __('not'),
-																  '&<' => '<',
-																  '&>' => '>'],
-																 ['value' => $value]);
+					if (isset($query)) {
+						foreach ($query as $name => $values) {
+							if ( ! is_array($values)) {		//connect
+								if (strpos($name, 'connect_') === 0) {
+									$dataName = str_replace('_', '.', str_replace('connect_', '', $name));
+									if (substr($values, 0, 1)  == '&' || $values == ''){
+										$img = 'and.png';
+										$title = '*' . __('and') . '* ' . __('Click to change');
 									} else {
-										$selects[$dataName][] = $this->Form->select($name . '[]',
-																['---' . __('and') . '---' =>
-																	['&%' => __('and') . ' ' . __('contains'),
-																	 '&=' => __('and') . ' ' . '=',
-																	 '&!' => __('and') . ' ' . __('not'),
-																	 '&<' => __('and') . ' ' . '<',
-																	 '&>' => __('and') . ' ' . '>'
-																	]
-																,
-																'---' . __('or') . '---' =>
-																	[
-																	'|%' => __('or') . ' ' . __('contains'),
-																	'|=' => __('or') . ' ' . '=',
-																	'|!' => __('or') . ' ' . __('not'),
-																	'|<' => __('or') . ' ' . '<',
-																	'|>' => __('or') . ' ' . '>']
-																],
-																['value' => $value]);
-										
+										$img = 'or.png';
+										$title = '*' . __('or') . '* ' . __('Click to change');
 									}
-								} elseif (strpos($name, 'field_') === 0) {
-									$inputs[$dataName][] = '<input
-											type="text"
-											name="field_' . $dataName . '[]"
-											value="' . $value . '">';
+									$connect[$dataName] = $this->Html->image($img,
+																['class' => 'fl',
+																 'title' => $title]);
+									$connect[$dataName] .=	 '<input
+													type="hidden"
+													value="'. $value . '"
+													name="connect_' . $dataName . '">';
+								} 
+							} else {
+								foreach ($values as $vi => $value) {
+									if (strpos($name, 'condition_') === 0) {
+										if ($vi == 0) {
+											$dataName = str_replace('_', '.', str_replace('condition_', '', $name));
+											$imgPlus[$dataName] = $this->Html->image('plus.png',
+																	['class' => 'fl',
+																	 'data-name' => $dataName]);
+											$label[$dataName] = '<label id="l' . str_replace('.', '_', $dataName) . '" for="' . $dataName . '">';
+												$fName = str_replace('Contacts.', '', $dataName);
+												$label[$dataName] .= $filterFields[$fName];
+											$label[$dataName] .= '</label>';
+			
+											$selects[$dataName][] = $this->Form->select($name . '[]',
+																	 ['&%' => __('contains'),
+																	  '&=' => '=',
+																	  '&!' => __('not'),
+																	  '&<' => '<',
+																	  '&>' => '>'],
+																	 ['value' => $value]);
+										} else {
+											$selects[$dataName][] = $this->Form->select($name . '[]',
+																	['---' . __('and') . '---' =>
+																		['&%' => __('and') . ' ' . __('contains'),
+																		 '&=' => __('and') . ' ' . '=',
+																		 '&!' => __('and') . ' ' . __('not'),
+																		 '&<' => __('and') . ' ' . '<',
+																		 '&>' => __('and') . ' ' . '>'
+																		]
+																	,
+																	'---' . __('or') . '---' =>
+																		[
+																		'|%' => __('or') . ' ' . __('contains'),
+																		'|=' => __('or') . ' ' . '=',
+																		'|!' => __('or') . ' ' . __('not'),
+																		'|<' => __('or') . ' ' . '<',
+																		'|>' => __('or') . ' ' . '>']
+																	],
+																	['value' => $value]);
+											
+										}
+									} elseif (strpos($name, 'field_') === 0) {
+										$inputs[$dataName][] = '<input
+												type="text"
+												name="field_' . $dataName . '[]"
+												value="' . $value . '">';
+									}
 								}
 							}
 						}
-					}
-					
-					if (isset($imgPlus)) {
-						foreach($imgPlus as $dataName => $x) {
-							echo '<div data-name="' . $dataName . '">';
-								if (isset($connect[$dataName])) {
-									echo $connect[$dataName];
-								}
-								echo $imgPlus[$dataName];
-								echo $label[$dataName];
-								foreach ($selects[$dataName] as $i => $select) {
-									echo $select;
-									echo $inputs[$dataName][$i];
-								}
-							echo '</div>';
+						
+						if (isset($imgPlus)) {
+							foreach($imgPlus as $dataName => $x) {
+								echo '<div data-name="' . $dataName . '">';
+									if (isset($connect[$dataName])) {
+										echo $connect[$dataName];
+									}
+									echo $imgPlus[$dataName];
+									echo $label[$dataName];
+									foreach ($selects[$dataName] as $i => $select) {
+										echo $select;
+										echo $inputs[$dataName][$i];
+									}
+								echo '</div>';
+							}
 						}
 					}
 				echo '</div>';

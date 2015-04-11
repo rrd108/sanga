@@ -62,7 +62,8 @@ class SettingsController extends AppController
             $setting = $this->Settings->patchEntity($setting, $this->request->data);
             if ($this->Settings->save($setting)) {
                 $this->Flash->success(__('The setting has been saved.'));
-                $setting = ['message' => __('The setting has been saved.')];
+                $setting = ['message' => __('The setting has been saved.'),
+                            'id' => $setting->id];
             } else {
                 $this->Flash->error(__('The setting could not be saved. Please, try again.'));
                 $setting = ['message' => __('The setting could not be saved. Please, try again.')];
@@ -148,10 +149,11 @@ class SettingsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $setting = $this->Settings->get($id);
         if ($this->Settings->delete($setting)) {
-            $this->Flash->success('The setting has been deleted.');
+            $result = ['message' => __('The setting has been deleted.')];
         } else {
-            $this->Flash->error('The setting could not be deleted. Please, try again.');
+            $result = ['message' => __('The setting could not be deleted. Please, try again.')];
         }
-        return $this->redirect(['action' => 'index']);
+        $this->set(compact('result'));
+        $this->set('_serialize', 'result');
     }
 }

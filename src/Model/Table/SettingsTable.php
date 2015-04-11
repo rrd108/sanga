@@ -58,4 +58,11 @@ class SettingsTable extends Table
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         return $rules;
     }
+    
+    public function getSavedQueries($user_id)
+    {
+        return $this->find()
+            ->where(['user_id' => $user_id, 'name' => 'Contacts/searchquery'])
+            ->order(['value' => 'ASC']);
+    }
 }
