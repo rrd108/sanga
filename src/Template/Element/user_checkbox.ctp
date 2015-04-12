@@ -2,7 +2,7 @@
 foreach($users as $user){
 
 	if ($this->request->params['action'] == 'add') {
-		if ($this->Session->read('Auth.User.id') == $user->id) {
+		if ($this->request->session()->read('Auth.User.id') == $user->id) {
 			$checked = 'checked="checked"';
 			$css = 'mine';
 			$disabled = '';

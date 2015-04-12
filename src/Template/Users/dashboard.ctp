@@ -13,7 +13,7 @@
 		<div class="index large-12 columns">
 			<h1><?= __('Dashboard') ?></h1>
 
-			<h2 class="cl"><?= $this->Session->read('Auth.User.realname') ?></h2>
+			<h2 class="cl"><?= $this->request->session()->read('Auth.User.realname') ?></h2>
 			<div class="dashstat">
 				<h6><?= $dash['contacts']['own'] ?></h6>
 				<p><?= __('Contacts') ?></p>

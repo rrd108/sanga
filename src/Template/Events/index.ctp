@@ -18,15 +18,15 @@
 					echo $this->Form->input('name', ['label' => false]);
 				echo '</td>';
 				echo '<td>';
-					if($this->Session->read('Auth.User.id') >= 9){
+					if($this->request->session()->read('Auth.User.id') >= 9){
 						echo $this->Form->input('admin_user_id',
 											['label' => false,
 											 'options' => $users,
-											 'value' => $this->Session->read('Auth.User.id')
+											 'value' => $this->request->session()->read('Auth.User.id')
 											 ]);
 					}
 					else{
-						echo '<span class="tag tag-mine">' . $this->Session->read('Auth.User.name') . '</span>';
+						echo '<span class="tag tag-mine">' . $this->request->session()->read('Auth.User.name') . '</span>';
 					}
 				echo '</td>';
 				echo '<td>';
@@ -43,7 +43,7 @@
 				</td>
 				<td class="actions">
 					<?php
-					if($event->user_id == $this->Session->read('Auth.User.id')){
+					if($event->user_id == $this->request->session()->read('Auth.User.id')){
 						echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $event->id], ['confirm' => __('Are you sure you want to delete # {0}?', $event->id)]);
 					}
 					?>

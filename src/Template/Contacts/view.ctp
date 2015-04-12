@@ -129,7 +129,7 @@ echo $this->element('ajax-images');
 									$myContact = false;
 									foreach ($contact->users as $usr){
 										$css = 'viewable';
-										if($usr->id == $this->Session->read('Auth.User.id')){
+										if($usr->id == $this->request->session()->read('Auth.User.id')){
 											$myContact = true;
 											$css = 'mine';
 										}
@@ -562,7 +562,7 @@ echo $this->element('ajax-images');
 					foreach ($contact->groups as $groups):
 						$myGroup = false;
 						$cGroups[] = $groups->id;
-						if($groups->admin_user_id == $this->Session->read('Auth.User.id')){
+						if($groups->admin_user_id == $this->request->session()->read('Auth.User.id')){
 							$myGroup = true;
 						}
 						$cssStyle = $groups->shared ? 'shared' : ($myGroup ? 'mine' : 'viewable');
@@ -586,7 +586,7 @@ echo $this->element('ajax-images');
 				foreach($accessibleGroups as $group){
 					if(!in_array($group->id, $cGroups)){
 						//$cGroups[] = $group->id;
-						$cssStyle = $group->shared ? 'shared' : (($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'mine' : 'viewable');
+						$cssStyle = $group->shared ? 'shared' : (($group->admin_user_id == $this->request->session()->read('Auth.User.id')) ? 'mine' : 'viewable');
 						echo "\n" .
 							'<span class="draggable notmember tag tag-default"
 									data-css="tag-'.$cssStyle.'"
@@ -644,7 +644,7 @@ echo $this->element('ajax-images');
 															 'class' => 'dontdel']);
 									?>
 								</td>
-								<td id="uName"><?= $this->Session->read('Auth.User.name') ?></td>
+								<td id="uName"><?= $this->request->session()->read('Auth.User.name') ?></td>
 								<td>
 									<?php
 									echo $this->Form->input('group_id', ['type' => 'hidden']);
@@ -845,7 +845,7 @@ echo $this->element('ajax-images');
 			<div class="column large-12">
 				<?php if (h($contact->email)) : ?>
 					<h6 class="subheader"><?= __('Sender') ?></h6>
-					<?= $this->Session->read('Auth.User.email') ?>
+					<?= $this->request->session()->read('Auth.User.email') ?>
 					<h6 class="subheader"><?= __('To') ?></h6>
 					<?= h($contact->email) ?>
 					<?php

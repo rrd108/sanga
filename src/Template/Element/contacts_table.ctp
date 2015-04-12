@@ -77,7 +77,7 @@
 					case 'users' : 
 						if (isset($contact->users)){
 							foreach($contact->users as $user){
-								$css = ($user->id == $this->Session->read('Auth.User.id')) ? 'mine' : 'viewable';
+								$css = ($user->id == $this->request->session()->read('Auth.User.id')) ? 'mine' : 'viewable';
 								print '<span class="tag tag-'.$css.'">' . $user->name . '</span>' . "\n";
 							}
 						}
@@ -95,7 +95,7 @@
 								if($group->shared){
 									$css = 'viewable';
 								}
-								elseif($group->admin_user_id == $this->Session->read('Auth.User.id')){
+								elseif($group->admin_user_id == $this->request->session()->read('Auth.User.id')){
 									$css = 'mine';
 								}
 								else{

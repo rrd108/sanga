@@ -108,7 +108,7 @@ echo $this->element('ajax-images');
 			</td>
 			<td id="uName">
 				<?php
-				echo $this->Session->read('Auth.User.name');
+				echo $this->request->session()->read('Auth.User.name');
 				?>
 			</td>
 			<td>

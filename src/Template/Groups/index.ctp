@@ -18,15 +18,15 @@
 			<tr>
 				<?php
 				echo '<td>';
-					if($this->Session->read('Auth.User.id') >= 9){
+					if($this->request->session()->read('Auth.User.id') >= 9){
 						echo $this->Form->input('admin_user_id',
 											['label' => false,
 											 'options' => $users,
-											 'value' => $this->Session->read('Auth.User.id')
+											 'value' => $this->request->session()->read('Auth.User.id')
 											 ]);
 					}
 					else{
-						echo '<span class="tag tag-mine">' . $this->Session->read('Auth.User.name') . '</span>';
+						echo '<span class="tag tag-mine">' . $this->request->session()->read('Auth.User.name') . '</span>';
 					}
 				echo '</td>';
 				echo '<td>';
@@ -54,7 +54,7 @@
 			<tr>
 				<td>
 					<?php
-					$css = ($group->admin_user_id == $this->Session->read('Auth.User.id')) ? 'mine' : 'viewable';
+					$css = ($group->admin_user_id == $this->request->session()->read('Auth.User.id')) ? 'mine' : 'viewable';
 					print '<span class="tag tag-'.$css.'">' . $group->admin_user->name . '</span>';
 					?>
 				</td>
@@ -64,7 +64,7 @@
 					if($group->shared){
 						$css = 'shared';
 					}
-					elseif($group->admin_user_id == $this->Session->read('Auth.User.id')){
+					elseif($group->admin_user_id == $this->request->session()->read('Auth.User.id')){
 						$css = 'mine';
 					}
 					else{
@@ -79,7 +79,7 @@
 				<td class="actions">
 					<?= $this->Html->link(__('View'), ['action' => 'view', $group->id]) ?>
 					<?php
-					if($group->admin_user_id == $this->Session->read('Auth.User.id')){
+					if($group->admin_user_id == $this->request->session()->read('Auth.User.id')){
 						//echo $this->Html->link(__('Edit'), ['action' => 'edit', $group->id]);
 						echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $group->id], ['confirm' => __('Are you sure you want to delete # {0}?', $group->id)]);
 					}

@@ -5,8 +5,8 @@
 	<nav class="primary">
 		<ul class="sf-menu">
 			<?php
-			if($this->Session->read('Auth.User.id')):
-				if($this->Session->read('Auth.User.role') == 10):
+			if($this->request->session()->read('Auth.User.id')):
+				if($this->request->session()->read('Auth.User.role') == 10):
 			?>
 				<li>
 					Admin
@@ -39,7 +39,7 @@
 				Törzsadatok
 				<ul>
 					<?php
-						if(in_array($this->Session->read('Auth.User.role'), [9,10])){
+						if(in_array($this->request->session()->read('Auth.User.role'), [9,10])){
 							print '<li>' . $this->Html->link('⚓ ' . __('Contact sources'), ['controller' => 'Contactsources', 'action' => 'index']) . '</li>';
 							print '<li>' . $this->Html->link('✋ ' . __('User groups'), ['controller' => 'Usergroups', 'action' => 'index']) . '</li>';
 							print '<li>' . $this->Html->link('✄ ' . __('Skills'), ['controller' => 'Skills', 'action' => 'index']) . '</li>';
@@ -52,7 +52,7 @@
 			<li>
 				
 				<?php
-					print $this->Session->read('Auth.User.realname');
+					print $this->request->session()->read('Auth.User.realname');
 					$nc = '';
 					if($notification_count)
 						print $nc = ' <span class="notice">'.$notification_count.'</span>';
@@ -70,7 +70,7 @@
 	</nav>
 
 		<?php
-		if($this->Session->read('Auth.User.id')):
+		if($this->request->session()->read('Auth.User.id')):
 		?>
 		<div class="header-search">
 			<?php
