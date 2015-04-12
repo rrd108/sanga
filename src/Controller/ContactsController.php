@@ -403,6 +403,9 @@ $result = $this->Contacts->find()
  * @return void
  */
 	public function add() {
+		if ($this->request->data && ! isset($this->request->data['users']['_ids'])) {
+			$this->request->data['users']['_ids'] = [$this->Auth->user('id')];
+		}
 		$contact = $this->Contacts->newEntity($this->request->data);
 		if($this->request->data){
 			$contact = $this->patchSkills($contact);
@@ -415,11 +418,23 @@ $result = $this->Contacts->find()
 		if ($this->request->is('post')) {
 			$contact->loggedInUser = $this->Auth->user('id');
 			if ($this->Contacts->save($contact)) {
-				$this->Flash->success('The contact has been saved.');
-				return $this->redirect(['action' => 'index']);
+				$message = __('The contact has been saved.');
+				if ($this->request->is('ajax')){
+					$result = ['success' => true,
+							   'message' => $message];
+				} else {
+					$this->Flash->success($message);
+					return $this->redirect(['action' => 'index']);
+				}
 			} else {
-				//debug($contact->errors());
-				$this->Flash->error('The contact could not be saved. Please, try again.');
+				$message = __('The contact could not be saved. Please, try again.');
+				if ($this->request->is('ajax')){
+					$result = ['success' => false,
+							   'message' => $message,
+							   'errors' => implode(', ', $this->getErrors($contact->errors()))];
+				} else {
+					$this->Flash->error($message);
+				}
 			}
 		}
 		$zips = $this->Contacts->Zips->find('list', ['keyField' => 'id', 'valueField' => 'full_zip']);
@@ -427,8 +442,20 @@ $result = $this->Contacts->find()
 		$groups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
 		$skills = $this->Contacts->Skills->find('list');
 		$users = $this->Contacts->Users->find();
-		$this->set(compact('contact', 'zips', 'contactsources', 'groups', 'skills', 'users'));
+		$this->set(compact('result', 'contact', 'zips', 'contactsources', 'groups', 'skills', 'users'));
+		$this->set('_serialize', 'result');
 	}
+	
+    private function getErrors($contactErrors)
+    {
+        foreach ($contactErrors as $field => $errs) {
+            $errors[$field] = '';
+            foreach ($errs as $rule => $error){
+                $errors[$field] .= $error . ' ';
+            }
+        }
+        return $errors;
+    }
 
 	private function get_family_id($contact, $family_member_id){
 		$familyId = null;

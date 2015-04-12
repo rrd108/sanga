@@ -93,30 +93,18 @@ class ImportsController extends AppController
                         $contact = $this->Contacts->newEntity($dataArray);
                         $contact->loggedInUser = $this->Auth->user('id');
                         //debug($contact);
-                        /*if (empty($contact->errors())) {
+                        if (empty($contact->errors())) {
                             if ($this->Contacts->save($contact)) {
                                 $imported++;
-                                $this->Flash->success(__('The contact ({0}) has been saved.', $i));
                             } else {
                                 $notImported++;
-                                $this->Flash->error(__('The contact ({0}) is not saved.', $i));
-                                $this->log($i . '. ' . $contact->contactname . ' not saved', 'debug');
+                                $errors[] = ['errors' => $this->getErrors($contact->errors()),
+                                            'data' => $dataArray];
                             }
-                        } else {*/
-
-
-                        if ( ! empty($contact->errors())) {
+                        } else {
                             $notImported++;
-                            foreach ($contact->errors() as $field => $errs) {
-                                $_errors[$field] = '';
-                                foreach ($errs as $rule => $error){
-                                    //$this->Flash->error($i . ' / ' . $field . ' / ' . $rule . ' / ' . $error);
-                                    //$this->log($i . '. ' . $contact->contactname . ' not saved ' . $field . ' / ' . $rule . ' / ' . $error, 'debug');
-                                    $_errors[$field] .= $error . ' ';
-                                }
-                            }
-                            $errors[] = ['data' => $dataArray, 'errors' => $_errors];
-                            unset($_errors);
+                            $errors[] = ['errors' => $this->getErrors($contact->errors()),
+                                        'data' => $dataArray];
                         }
                         unset($dataArray);
                     }
@@ -129,5 +117,16 @@ class ImportsController extends AppController
                 $this->Flash->error(__('The import file was not in the proper format. Download the sample file and save as a csv.'));
             }
         }
+    }
+    
+    private function getErrors($contactErrors)
+    {
+        foreach ($contactErrors as $field => $errs) {
+            $errors[$field] = '';
+            foreach ($errs as $rule => $error){
+                $errors[$field] .= $error . ' ';
+            }
+        }
+        return $errors;
     }
 }

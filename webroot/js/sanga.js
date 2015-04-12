@@ -20,7 +20,8 @@ $(function() {
 			click2remove:	'Click to remove',
 			contains	:	'contains',
 			not			:	'not',
-			or			:	'or'
+			or			:	'or',
+			save		:	'Save'
 		},
 		hu : {
 			and			:	'és',
@@ -28,7 +29,8 @@ $(function() {
 			click2remove:	'Kattints az eltávolításhoz!',
 			contains	:	'tartalmazza',
 			not			:	'nem',
-			or			:	'vagy'
+			or			:	'vagy',
+			save		:	'Mentés'
 		}
 	}
 	$.sanga.lang = 'hu';

@@ -16,7 +16,7 @@ class SessionsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->set('sessions', $this->paginate($this->Sessions));
+		$this->set('sessions', $this->paginate($this->request->session()s));
 	}
 
 /**
@@ -27,7 +27,7 @@ class SessionsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
-		$session = $this->Sessions->get($id, [
+		$session = $this->request->session()s->get($id, [
 			'contain' => []
 		]);
 		$this->set('session', $session);
@@ -39,9 +39,9 @@ class SessionsController extends AppController {
  * @return void
  */
 	public function add() {
-		$session = $this->Sessions->newEntity($this->request->data);
+		$session = $this->request->session()s->newEntity($this->request->data);
 		if ($this->request->is('post')) {
-			if ($this->Sessions->save($session)) {
+			if ($this->request->session()s->save($session)) {
 				$this->Flash->success('The session has been saved.');
 				return $this->redirect(['action' => 'index']);
 			} else {
@@ -59,12 +59,12 @@ class SessionsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function edit($id = null) {
-		$session = $this->Sessions->get($id, [
+		$session = $this->request->session()s->get($id, [
 			'contain' => []
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
-			$session = $this->Sessions->patchEntity($session, $this->request->data);
-			if ($this->Sessions->save($session)) {
+			$session = $this->request->session()s->patchEntity($session, $this->request->data);
+			if ($this->request->session()s->save($session)) {
 				$this->Flash->success('The session has been saved.');
 				return $this->redirect(['action' => 'index']);
 			} else {
@@ -82,9 +82,9 @@ class SessionsController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function delete($id = null) {
-		$session = $this->Sessions->get($id);
+		$session = $this->request->session()s->get($id);
 		$this->request->allowMethod(['post', 'delete']);
-		if ($this->Sessions->delete($session)) {
+		if ($this->request->session()s->delete($session)) {
 			$this->Flash->success('The session has been deleted.');
 		} else {
 			$this->Flash->error('The session could not be deleted. Please, try again.');

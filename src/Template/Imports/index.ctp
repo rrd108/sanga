@@ -1,3 +1,6 @@
+<?php
+print $this->Html->script('sanga.contacts.import.js', ['block' => true]);
+?>
 <div class="sidebar-wrapper">
 	<nav class="side-nav">
 		<ul>
@@ -20,6 +23,7 @@
 		</div>
 	</div>
 	
+	<?php if ($imported) : ?>
 	<div class="row">
 		<h2><?= __('Imported') ?></h2>
 		<div class="imports index large-10 medium-9 columns">
@@ -28,7 +32,9 @@
 			</p>
 		</div>
 	</div>
+	<?php endif; ?>
 
+	<?php if ($notImported) : ?>
 	<div class="row">
 		<h3><?= __('Errors') ?></h3>
 		<div class="imports index large-10 medium-9 columns">
@@ -38,21 +44,24 @@
 			<?php
 			//debug($fields);
 			//debug($errors);
+			array_push($fields, __('Save'));
 			echo '<table>';
 				echo $this->Html->tableHeaders($fields);
 				foreach ($errors as $e) {
 					echo '<tr>';
 						foreach ($fields as $field) {
-							echo '<td>';
-								if (isset($e['data'][$field])) {
-									if (isset($e['errors'][$field])) {
-										echo '<span class="message error" title="'.$e['errors'][$field].'">';
-											echo $e['data'][$field];
-										echo '</span>';
-									} else{
-										echo $e['data'][$field];
-									}
+							$tdContent = $tdTitle = $tdClass = '';
+							if (isset($e['data'][$field])) {
+								if (isset($e['errors'][$field])) {
+									$tdTitle =  ' title="' . $e['errors'][$field] . ' ' . __('Click to edit') . '"';
+									$tdClass = ' class="message error"';
+									$tdContent = $e['data'][$field];
+								} else{
+									$tdContent = $e['data'][$field];
 								}
+							}
+							echo '<td' . $tdTitle . $tdClass . '>';
+								echo $tdContent;
 							echo '</td>';
 						}
 					echo '</tr>';
@@ -77,4 +86,5 @@
 			?>
 		</div>
 	</div>
+	<?php endif; ?>
 </div>

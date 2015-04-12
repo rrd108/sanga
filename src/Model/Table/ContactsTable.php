@@ -92,13 +92,15 @@ class ContactsTable extends Table {
             ->allowEmpty('workplace')
             ->allowEmpty('workplace_address')
             ->allowEmpty('workplace_phone')
+			->add('workplace_email', 'valid', ['rule' => 'email'])
             ->allowEmpty('workplace_email')
   			->add('family_id', 'valid', ['rule' => 'alphanumeric'])
 			->allowEmpty('family_id')
 			->add('contactsource_id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('contactsource_id')
 			->add('active', 'valid', ['rule' => 'boolean'])
-			->allowEmpty('active')
+			->allowEmpty('active', ['rule' => ['inList', [0, 1]],
+								   'message' => __('Active is 0 for inactive and 1 for active')])
 			->allowEmpty('comment')
 			->allowEmpty('google_id');
 
@@ -114,7 +116,6 @@ class ContactsTable extends Table {
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['zip_id'], 'Zips'));
         $rules->add($rules->existsIn(['workplace_zip_id'], 'Zips'));
         $rules->add($rules->existsIn(['contactsource_id'], 'Contactsources'));
@@ -123,9 +124,11 @@ class ContactsTable extends Table {
 
 	public function beforeSave(Event $event, Entity $entity, ArrayObject $options){
 		if ($entity->isNew()) {
-			if ((!empty($entity->name) + !empty($entity->contactname) + !empty($entity->zip_id)
+			if ((!empty($entity->contactname) + !empty($entity->legalname) + !empty($entity->zip_id)
 					+ !empty($entity->address) + !empty($entity->phone) + !empty($entity->email)
 					+ !empty($entity->birth->time) + !empty($entity->workplace)
+					+ !empty($entity->workplace_address)  + !empty($entity->workplace_phone)
+					+ !empty($entity->workplace_email) + !empty($entity->workplace->zip_id)
 					+ !empty($entity->contactsource_id) + !empty($entity->family_id)) >= 2) {
 				return true;
 			} else {
