@@ -348,10 +348,11 @@ $result = $this->Contacts->find()
 						 'name' => 'Contacts/view/history/system'])
 				->first();
 		//debug($setting);die();		//'value' => 'a:1:{i:0;s:21:"Contacts.systemevents";}'	//'value' => 'a:0:{}'
-		if ( empty($setting) || empty(unserialize($setting->value))) {
+		$unserialized = unserialize($setting->value);
+		if ( empty($setting) || empty($unserialized)) {
 			$where = ['event_id != ' => 1];
 		} else {
-			$select = unserialize($setting->value);
+			$select = $unserialized;
 			$where = [];
 			foreach ($select as $i => $name) {
 				$this->request->data[str_replace('Contacts.', '', $name)] = 1;
