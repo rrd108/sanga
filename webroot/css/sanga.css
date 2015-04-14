@@ -65,14 +65,16 @@ nav.primary span.notice{
   display: none;
   float: right;
 }
-
+span.dta{
+  padding: 0.5rem 0.625rem;
+  display: inline-block;
+}
 input.editbox, textarea.editbox, span.editbox{
   display: inline;
 }
 
 input.editbox{
   width: 85%;
-  padding: 0;
 }
 input.quantity{
   width: 65%;
