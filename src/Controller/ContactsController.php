@@ -432,7 +432,7 @@ $result = $this->Contacts->find()
 				if ($this->request->is('ajax')){
 					$result = ['success' => false,
 							   'message' => $message,
-							   'errors' => implode(', ', $this->getErrors($contact->errors()))];
+							   'errors' => $this->getErrors($contact->errors())];
 				} else {
 					$this->Flash->error($message);
 				}
@@ -446,17 +446,6 @@ $result = $this->Contacts->find()
 		$this->set(compact('result', 'contact', 'zips', 'contactsources', 'groups', 'skills', 'users'));
 		$this->set('_serialize', 'result');
 	}
-	
-/*    private function getErrors($contactErrors)
-    {
-        foreach ($contactErrors as $field => $errs) {
-            $errors[$field] = '';
-            foreach ($errs as $rule => $error){
-                $errors[$field] .= $error . ' ';
-            }
-        }
-        return $errors;
-    }*/
 
 	private function get_family_id($contact, $family_member_id){
 		$familyId = null;

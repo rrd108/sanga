@@ -117,16 +117,5 @@ class ImportsController extends AppController
                 $this->Flash->error(__('The import file was not in the proper format. Download the sample file and save as a csv.'));
             }
         }
-    }
-    
-    private function getErrors($contactErrors)
-    {
-        foreach ($contactErrors as $field => $errs) {
-            $errors[$field] = '';
-            foreach ($errs as $rule => $error){
-                $errors[$field] .= $error . ' ';
-            }
-        }
-        return $errors;
-    }
+    }    
 }
