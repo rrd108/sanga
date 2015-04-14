@@ -60,5 +60,17 @@ class AppController extends Controller {
         $this->loadModel('Notifications');
         $nc = $this->Notifications->find('unread', ['User.id' => $this->Auth->user('id')])->count();
     	$this->set('notification_count', $nc);
-    }    
+    }
+	
+    public function getErrors($errors)
+    {
+        $errorsString = '';
+		foreach ($errors as $field => $errs) {
+            foreach ($errs as $rule => $error){
+                $errorsString .= $field . ': ' . $error . ' ';
+            }
+        }
+        return $errorsString;
+    }
+
 }

@@ -447,7 +447,7 @@ $result = $this->Contacts->find()
 		$this->set('_serialize', 'result');
 	}
 	
-    private function getErrors($contactErrors)
+/*    private function getErrors($contactErrors)
     {
         foreach ($contactErrors as $field => $errs) {
             $errors[$field] = '';
@@ -456,7 +456,7 @@ $result = $this->Contacts->find()
             }
         }
         return $errors;
-    }
+    }*/
 
 	private function get_family_id($contact, $family_member_id){
 		$familyId = null;

@@ -74,6 +74,10 @@ input.editbox{
   width: 85%;
   padding: 0;
 }
+input.quantity{
+  width: 65%;
+  float: left;
+}
 input.editbox.zip, span.zip, input.thin, .thin{
   width: 30%;
 }

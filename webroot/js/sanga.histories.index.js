@@ -1,5 +1,7 @@
 $(function() {
 	
+	//for filter
+	
 	autocompleteBuilder = function(params){
 		$(params.selector).autocomplete({
 			minLength : 2,

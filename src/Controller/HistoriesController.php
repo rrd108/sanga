@@ -116,7 +116,8 @@ class HistoriesController extends AppController {
 				$message = __('The history could not be saved. Please, try again.');
 				if ($this->request->is('ajax')) {
 					$result = ['save' => false,
-							   'message' => $message];
+							   'message' => $message,
+							   'errors' => $this->getErrors($history->errors())];
 				} else {
 					$this->Flash->error($message);
 				}

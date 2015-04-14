@@ -130,8 +130,14 @@ echo $this->element('ajax-images');
 			</td>
 			<td>
 				<?php
-				/*echo $this->Form->input('quantity');
-				echo $this->Form->input('unit_id', ['options' => $units]);*/
+				echo $this->Form->input('quantity', [
+													'label' => false,
+													'class' => 'quantity'
+													]);
+				echo $this->Form->input('unit_id', ['type' => 'hidden']);
+				echo $this->Form->input('xunit_id', ['label' => false,
+												   'class' => 'thin',
+												   'type' => 'text'])
 				?>
 			</td>
 			<td id="hInfo">			
