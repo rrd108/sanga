@@ -140,15 +140,6 @@ class UsersController extends AppController {
 	}
 
 /**
- * Index method
- *
- * @return void
- */
-	public function index() {
-		$this->set('users', $this->paginate($this->Users));
-	}
-
-/**
  * View method
  *
  * @param string $id
@@ -156,7 +147,6 @@ class UsersController extends AppController {
  * @throws \Cake\Network\Exception\NotFoundException
  */
 	public function view($id = null) {
-		//$id = $id ? $id : $this->Auth->user('id');
 		$id = $this->Auth->user('id');
 		$user = $this->Users->get($id, [
 			'contain' => ['Contacts', 'Events', 'Groups', 'Histories', 'Notifications']
@@ -164,26 +154,6 @@ class UsersController extends AppController {
 		$this->set('user', $user);
 	}
 
-/**
- * Add method
- *
- * @return void
- */
-	public function add() {
-		$user = $this->Users->newEntity($this->request->data);
-		if ($this->request->is('post')) {
-			if ($this->Users->save($user)) {
-				$this->Flash->success('The user has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The user could not be saved. Please, try again.');
-			}
-		}
-		$contacts = $this->Users->Contacts->find('list');
-		$groups = $this->Users->Groups->find('list');
-		$usergroups = $this->Users->Usergroups->find('list');
-		$this->set(compact('user', 'contacts', 'groups', 'usergroups'));
-	}
 
 /**
  * Edit method
@@ -266,22 +236,4 @@ class UsersController extends AppController {
 
 		$this->set(compact('dash'));
 	}
-
-/**
- * Delete method
- *
- * @param string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
-	/*public function delete($id = null) {
-		$user = $this->Users->get($id);
-		$this->request->allowMethod(['post', 'delete']);
-		if ($this->Users->delete($user)) {
-			$this->Flash->success('The user has been deleted.');
-		} else {
-			$this->Flash->error('The user could not be deleted. Please, try again.');
-		}
-		return $this->redirect(['action' => 'index']);
-	}*/
 }
