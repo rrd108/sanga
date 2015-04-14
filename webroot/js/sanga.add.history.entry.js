@@ -110,12 +110,12 @@ $(function() {
 				$('#ajaxloader').hide();
 				inf.append($('#okImg').show().hide(12500));
 				noty({
-					text : jqXHR.responseJSON.message + ' ' + jqXHR.responseJSON.errors,
+					text : jqXHR.responseJSON.errors ? (jqXHR.responseJSON.message + ' ' + jqXHR.responseJSON.errors) : jqXHR.responseJSON.message,
 					type : jqXHR.responseJSON.save ? 'success' : 'error',
 					animation : $.sanga.animation
 				});
 				var newRow = $("<tr>");
-				var cols = "";
+				var cols = "<td></td>";	//settings placeholder
 				
 				if(location.pathname.search(/Histories/) != -1){	//if we are at History index we have an extra coloumn
 					cols += '<td>' + $('#xcontact-id').val() + '</td>';
