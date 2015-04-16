@@ -17,3 +17,5 @@ composer.lock
 /webroot/scss/components/css/header-search.css
 /webroot/scss/components/css/button-group.css
 
+.htaccess
+/webroot/.htaccess
