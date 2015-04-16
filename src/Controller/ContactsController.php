@@ -79,7 +79,7 @@ class ContactsController extends AppController {
 		} elseif($this->request->query){
 			$query = $this->request->query;
 		}
-		
+
 		if (isset($query)){
 			$this->set('query', $query);
 			$contain = $conditions = $select = $selected = [];
@@ -114,12 +114,16 @@ class ContactsController extends AppController {
 			
 			//as we do not know in which order will the above array keys will come
 			//we an not heck and remove empty conditions
+			$conditionCount = 0;
 			foreach ($conditions as $field => $conval) {
 				if (isset($conval['value'])) {
 					foreach ($conval['value'] as $i => $value) {
 						if ($value == '') {
 							unset($conditions[$field]['condition'][$i]);
 							unset($conditions[$field]['value'][$i]);
+						}
+						else {
+							$conditionCount++;
 						}
 					}
 				}
@@ -128,47 +132,50 @@ class ContactsController extends AppController {
 			array_unshift($select, 'Contacts.id');
 			$this->set('selected', $selected);
 
-			//debug($select);
-			//debug($selected);
-			//debug($conditions);
-			//debug($contain);
+			/*debug($select);
+			debug($selected);
+			debug($conditions);
+			debug($contain);*/
 
-			$query = $this->Contacts->find()->select($select);
+			$contacts = $query = $this->Contacts->find()->select($select);
 			$where = '';
-			$bracketOpened = false;
-			foreach ($conditions as $field => $conval) {
-				
-				if ( ! empty($conval['value'])) {
-					if ( ! isset($conval['connect'])) {	//this is the first line of the conditions
-						$where .= '( ';
-						$bracketOpened = true;
-					} elseif ($conval['connect'] == '&' && strlen($where)) {
-						$where .= ' AND ( ';
-						$bracketOpened = true;
-					} elseif ($conval['connect'] == '|' && strlen($where)) {
-						$where .= ' OR ( ';
-						$bracketOpened = true;
-					}
+			if ($conditionCount > 0) {
+				$bracketOpened = false;
+				foreach ($conditions as $field => $conval) {
 					
-					$conditionCount = count($conval['condition']) - 1;
-					foreach ($conval['condition'] as $i => $condition) {
-						if ($i > 0) {
-							if ($condition[0] == '&') {
-								$where .= ' AND ';
-							} else {
-								$where .= ' OR ';
-							}
+					if ( ! empty($conval['value'])) {
+						if ( ! isset($conval['connect'])) {	//this is the first line of the conditions
+							$where .= '( ';
+							$bracketOpened = true;
+						} elseif ($conval['connect'] == '&' && strlen($where)) {
+							$where .= ' AND ( ';
+							$bracketOpened = true;
+						} elseif ($conval['connect'] == '|' && strlen($where)) {
+							$where .= ' OR ( ';
+							$bracketOpened = true;
 						}
-						$where .= $this->translateCode2Array($condition[1], $field, $conval['value'][$i]);
-						if ($i == $conditionCount && $bracketOpened) {
-							$where .= ')';
+						
+						$conditionCount = count($conval['condition']) - 1;
+						foreach ($conval['condition'] as $i => $condition) {
+							if ($i > 0) {
+								if ($condition[0] == '&') {
+									$where .= ' AND ';
+								} else {
+									$where .= ' OR ';
+								}
+							}
+							$where .= $this->translateCode2Array($condition[1], $field, $conval['value'][$i]);
+							if ($i == $conditionCount && $bracketOpened) {
+								$where .= ')';
+							}
 						}
 					}
 				}
+				//debug($where);die();
+				$expr = $query->newExpr()->add($where);
+				$contacts = $query->where($expr);
 			}
-			//debug($where);die();
-			$expr = $query->newExpr()->add($where);
-			$contacts = $query->where($expr);
+
 			if( ! empty($contain)) {
 				$contacts = $query->contain($contain);
 			}
