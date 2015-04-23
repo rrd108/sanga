@@ -25,6 +25,10 @@ class NotificationsTable extends Table {
 		$this->belongsTo('Users', [
 			'foreignKey' => 'user_id',
 		]);
+		$this->belongsTo('Senders', [
+			'className' => 'Users',
+			'foreignKey' => 'sender_id',
+		]);
 	}
 
 /**
@@ -37,6 +41,7 @@ class NotificationsTable extends Table {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
 			->allowEmpty('id', 'create')
+			->allowEmpty('sender_id')
 			->add('user_id', 'valid', ['rule' => 'numeric'])
 			->requirePresence('user_id', 'create')
 			->notEmpty('user_id')

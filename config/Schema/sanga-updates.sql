@@ -519,3 +519,15 @@ COLLATE = utf8_general_ci;
 ALTER TABLE `sanga`.`contacts` 
 CHANGE COLUMN `name` `legalname` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_hungarian_ci' NULL DEFAULT NULL ;
 
+LTER TABLE `sanga`.`notifications` 
+DROP COLUMN `sender_id`,
+ADD COLUMN `sender_id` SMALLINT(5) UNSIGNED NOT NULL DEFAULT 1 AFTER `id`,
+ADD INDEX `fk_notifications_users2_idx` (`sender_id` ASC),
+DROP INDEX `fk_notifications_users2_idx` ;
+
+ALTER TABLE `sanga`.`notifications` 
+ADD CONSTRAINT `fk_notifications_users2`
+  FOREIGN KEY (`sender_id`)
+  REFERENCES `sanga`.`users` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;

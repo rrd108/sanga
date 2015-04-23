@@ -21,9 +21,16 @@ class NotificationsController extends AppController {
  */
 	public function index() {
 		$query = $this->Notifications->find()
-			->where(['user_id' => $this->Auth->user('id')])
-			->order(['unread' => 'DESC', 'Notifications.created' => 'DESC']);
-		$this->set('notifications', $this->paginate($query));
+			->where(['user_id' => $this->Auth->user('id'), 'unread' => true])
+			->order(['Notifications.created' => 'DESC'])
+			->contain(['Senders']);
+		$this->set('newNotifications', $this->paginate($query));
+
+		$query = $this->Notifications->find()
+			->where(['user_id' => $this->Auth->user('id'), 'unread' => false])
+			->order(['Notifications.created' => 'DESC'])
+			->contain(['Senders']);
+		$this->set('readNotifications', $this->paginate($query));
 	}
 
 /**
@@ -52,9 +59,15 @@ class NotificationsController extends AppController {
  *
  * @return void
  */
-	public function add() {
+	public function add($user_id = null) {
 		$notification = $this->Notifications->newEntity($this->request->data);
+		if ($user_id) {
+			$notification->user_id = $user_id;
+		} else {
+			$notification->user_id = $notification->user_id ? $notification->user_id : $this->Auth->user('id');
+		}
 		if ($this->request->is('post')) {
+			$notification->sender_id = $this->Auth->user('id');
 			if ($this->Notifications->save($notification)) {
 				$this->Flash->success('The notification has been saved.');
 				return $this->redirect(['action' => 'index']);

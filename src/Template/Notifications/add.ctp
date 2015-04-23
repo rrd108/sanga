@@ -12,9 +12,9 @@
 		<div class="notifications form large-10 medium-9 columns">
 		<?= $this->Form->create($notification) ?>
 			<fieldset>
-				<legend><?= __('Add Notification'); ?></legend>
+				<legend><?= __('New Notification'); ?></legend>
 			<?php
-				echo $this->Form->input('user_id', ['options' => $users]);
+				echo $this->Form->input('user_id', ['options' => $users, 'label' => __('To')]);
 				echo $this->Form->input('notification');
 			?>
 			</fieldset>
