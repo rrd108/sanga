@@ -418,7 +418,7 @@ $result = $this->Contacts->find()
 		if($this->request->data){
 			$contact = $this->patchSkills($contact);
 			
-			if(isset($this->request->data['family_member_id'])){
+			if($this->request->data['family_member_id']){
 				$contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
 			}
 		//die();
