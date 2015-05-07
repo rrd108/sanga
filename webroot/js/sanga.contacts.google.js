@@ -8,7 +8,7 @@ $(function() {
 		//collect data
 		var gData = {
 			'google_id'	: gContact.find('.gId').text(),
-			'name'		: gContact.find('.gName').text(),
+			'contactname': gContact.find('.gName').text(),
 			'email'		: gContact.find('.gEmail').text(),
 			'phone'		: gContact.find('.gPhone').text(),
 			'address'	: gContact.find('.gAddress').text(),
