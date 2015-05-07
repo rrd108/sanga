@@ -18,7 +18,7 @@ if(isset($contacts)){
 									['class' => 'dn link']);
 			echo '<span class="dn gId">' . $contact['gId'] . '</span>';
 			echo '<h4 class="gName">';
-				echo $contact['name'];
+				echo $contact['contactname'];
 			echo '</h4>';
 			echo '<div>';
 				if(strlen($contact['photo']) < 32){
