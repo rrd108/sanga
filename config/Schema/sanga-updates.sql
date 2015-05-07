@@ -519,7 +519,7 @@ COLLATE = utf8_general_ci;
 ALTER TABLE `sanga`.`contacts` 
 CHANGE COLUMN `name` `legalname` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_hungarian_ci' NULL DEFAULT NULL ;
 
-LTER TABLE `sanga`.`notifications` 
+ALTER TABLE `sanga`.`notifications` 
 DROP COLUMN `sender_id`,
 ADD COLUMN `sender_id` SMALLINT(5) UNSIGNED NOT NULL DEFAULT 1 AFTER `id`,
 ADD INDEX `fk_notifications_users2_idx` (`sender_id` ASC),
