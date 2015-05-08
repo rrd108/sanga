@@ -137,7 +137,8 @@ class ContactsController extends AppController {
 			debug($conditions);
 			debug($contain);*/
 
-			$contacts = $query = $this->Contacts->find()->select($select);
+			$contacts = $query = $this->Contacts->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+					->select($select);
 			$where = '';
 			if ($conditionCount > 0) {
 				$bracketOpened = false;
