@@ -93,7 +93,8 @@ class ImportsController extends AppController
                         $contact = $this->Contacts->newEntity($dataArray);
                         $contact->loggedInUser = $this->Auth->user('id');
                         //debug($contact);
-                        if (empty($contact->errors())) {
+                        $e = $contact->errors();
+                        if (empty($e)) {
                             if ($this->Contacts->save($contact)) {
                                 $imported++;
                             } else {
