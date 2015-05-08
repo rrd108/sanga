@@ -46,11 +46,7 @@ class AppController extends Controller {
                         ]
                     ]
                 ],
-            'logoutRedirect' => [
-                'controller' => 'Pages',
-                'action' => 'display',
-                'home'
-            ]
+            'logoutRedirect' => '/'
         ]
     ];
 
