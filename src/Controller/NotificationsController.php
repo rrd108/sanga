@@ -31,6 +31,12 @@ class NotificationsController extends AppController {
 			->order(['Notifications.created' => 'DESC'])
 			->contain(['Senders']);
 		$this->set('readNotifications', $this->paginate($query));
+
+		$query = $this->Notifications->find()
+			->where(['sender_id' => $this->Auth->user('id')])
+			->order(['Notifications.created' => 'DESC'])
+			->contain(['Users']);
+		$this->set('sentNotifications', $this->paginate($query));
 	}
 
 /**
