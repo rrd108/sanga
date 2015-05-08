@@ -32,7 +32,6 @@
 					<td><?= h($notification->created) ?></td>
 					<td class="actions">
 						<?= $this->Html->link(__('Reply'), ['action' => 'add', $notification->sender->id]) ?>
-						<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $notification->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notification->id)]) ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
@@ -75,7 +74,6 @@
 					<td><?= h($notification->created) ?></td>
 					<td class="actions">
 						<?= $this->Html->link(__('Reply'), ['action' => 'add', $notification->sender->id]) ?>
-						<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $notification->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notification->id)]) ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
@@ -117,7 +115,6 @@
 					</td>
 					<td><?= h($notification->created) ?></td>
 					<td class="actions">
-						<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $notification->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notification->id)]) ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
