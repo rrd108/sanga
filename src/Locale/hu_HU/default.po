@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sanga 1.0\n"
 "POT-Creation-Date: 2015-04-10 10:52+0000\n"
-"PO-Revision-Date: 2015-04-10 13:50+0100\n"
+"PO-Revision-Date: 2015-05-08 11:49+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: Hungarian\n"
@@ -1051,7 +1051,7 @@ msgstr "Tagok"
 
 #: Template/Groups/view.ctp:9
 msgid "Description"
-msgstr ""
+msgstr "Leírás"
 
 #: Template/Groups/view.ctp:13
 msgid "Admin User"
@@ -1079,7 +1079,7 @@ msgstr "Csoport tagok"
 
 #: Template/Groups/view.ctp:62
 msgid "Click to remove from group"
-msgstr ""
+msgstr "Kattints ide a csoportból való eltévolításhoz"
 
 #: Template/GroupsUsers/add.ctp:4 Template/GroupsUsers/edit.ctp:5
 #: Template/GroupsUsers/view.ctp:6
@@ -1226,7 +1226,7 @@ msgstr ""
 #: Template/Notifications/index.ctp:4 Template/Notifications/view.ctp:7
 #: Template/Users/add.ctp:10
 msgid "New Notification"
-msgstr ""
+msgstr "Új értesítés"
 
 #: Template/Notifications/view.ctp:5
 msgid "Delete Notification"
