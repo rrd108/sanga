@@ -75,6 +75,8 @@ class HistoriesController extends AppController {
 			'contain' => ['Contacts', 'Users', 'Groups', 'Events', 'Units'],
 			'order' => ['Histories.date' => 'DESC', 'Histories.id' => 'DESC']
 		];
+
+
 		$this->set('histories', $this->paginate($histories));
 	}
 
@@ -148,21 +150,28 @@ class HistoriesController extends AppController {
 		$history = $this->Histories->get($id, [
 			'contain' => []
 		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$history = $this->Histories->patchEntity($history, $this->request->data);
-			if ($this->Histories->save($history)) {
-				$this->Flash->success('The history has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The history could not be saved. Please, try again.');
-			}
-		}
-		$contacts = $this->Histories->Contacts->find('list');
-		$users = $this->Histories->Users->find('list');
-		$groups = $this->Histories->Groups->find('list');
-		$events = $this->Histories->Events->find('list');
-		$units = $this->Histories->Units->find('list');
-		$this->set(compact('history', 'contacts', 'users', 'groups', 'events', 'units'));
+
+        if($_SESSION['Auth']['User']['id'] ==  $history->user_id)
+        {
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $history = $this->Histories->patchEntity($history, $this->request->data);
+                if ($this->Histories->save($history)) {
+                    $this->Flash->success('The history has been saved.');
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                    $this->Flash->error('The history could not be saved. Please, try again.');
+                }
+            }
+            $contacts = $this->Histories->Contacts->find('list');
+            $users = $this->Histories->Users->find('list');
+            $groups = $this->Histories->Groups->find('list');
+            $events = $this->Histories->Events->find('list');
+            $units = $this->Histories->Units->find('list');
+            $this->set(compact('history', 'contacts', 'users', 'groups', 'events', 'units'));
+        } else {
+            $this->Flash->error('You do not have permission to edit.');
+            return $this->redirect(['action' => 'index']);
+        }
 	}
 
 /**
