@@ -168,7 +168,12 @@ echo $this->element('ajax-images');
 			<td><?= h($history->detail) ?></td>
 			<td><?= h($history->quantity) ?></td>
 			<td class="actions">
-				<?= $this->Html->link(__('Edit'), ['action' => 'edit', $history->id]) ?>
+				<?php
+				    if ($this->request->session()->read('Auth.User.id') ==  $history->user->id)
+				    {
+				        echo $this->Html->link(__('Edit'), ['action' => 'edit', $history->id]);
+				    }
+				?>
 			</td>
 		</tr>
 		<?php endforeach; ?>
