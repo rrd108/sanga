@@ -63,7 +63,8 @@ header .main-logo a img { max-width: 135px; }
 
 .tag-shared { color: #5BC0DE; }
 
-.tag-default, .removeable:hover { color: #777777; }
+.tag-default { color: #777777; }
+.removeable:hover { color: #fff; }
 
 .tag-danger { background: #D9534F; }
 
