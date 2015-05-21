@@ -149,40 +149,35 @@ echo $this->element('ajax-images');
 			echo $this->Form->end();
 			?>
 		</tr>
-		
-		<?php foreach ($histories as $history):
-		    //a felhasználó csak a saját history-kat láthatja
-            if ($this->request->session()->read('Auth.User.id') ==  $history->user->id)
-            { ?>
-                <tr>
-                    <td>
-                        <?= $history->has('contact') ? $this->Html->link($history->contact->contactname, ['controller' => 'Contacts', 'action' => 'view', $history->contact->id]) : '' ?>
-                    </td>
-                    <td><?= $history->date->format('Y-m-d') ?></td>
-                    <td>
-                        <?= $history->has('user') ? $this->Html->link($history->user->name, ['controller' => 'Users', 'action' => 'view', $history->user->id]) : '' ?>
-                    </td>
-                    <td>
-                        <?= $history->has('group') ? $this->Html->link($history->group->name, ['controller' => 'Groups', 'action' => 'view', $history->group->id]) : '' ?>
-                    </td>
-                    <td>
-                        <?= $history->has('event') ? $this->Html->link($history->event->name, ['controller' => 'Events', 'action' => 'view', $history->event->id]) : '' ?>
-                    </td>
-                    <td><?= h($history->detail) ?></td>
-                    <td><?= h($history->quantity) ?></td>
-                    <td class="actions">
-                        <?php
-                            //csak akkor szerkeszthető az esemény, ha nem system eseményről van szó
-                            if ( $history->event->id != 1)
-                            {
-                                echo $this->Html->link(__('Edit'), ['action' => 'edit', $history->id]);
-                            }
-                        ?>
-                    </td>
-                </tr>
-            <?php
-            }
-		endforeach; ?>
+
+		<?php foreach ($histories as $history): ?>
+            <tr>
+                <td>
+                    <?= $history->has('contact') ? $this->Html->link($history->contact->contactname, ['controller' => 'Contacts', 'action' => 'view', $history->contact->id]) : '' ?>
+                </td>
+                <td><?= $history->date->format('Y-m-d') ?></td>
+                <td>
+                    <?= $history->has('user') ? $this->Html->link($history->user->name, ['controller' => 'Users', 'action' => 'view', $history->user->id]) : '' ?>
+                </td>
+                <td>
+                    <?= $history->has('group') ? $this->Html->link($history->group->name, ['controller' => 'Groups', 'action' => 'view', $history->group->id]) : '' ?>
+                </td>
+                <td>
+                    <?= $history->has('event') ? $this->Html->link($history->event->name, ['controller' => 'Events', 'action' => 'view', $history->event->id]) : '' ?>
+                </td>
+                <td><?= h($history->detail) ?></td>
+                <td><?= h($history->quantity) ?></td>
+                <td class="actions">
+                    <?php
+                        //csak akkor szerkeszthető az esemény, ha nem system eseményről van szó
+                        if ( $history->event->id != 1)
+                        {
+                            echo $this->Html->link(__('Edit'), ['action' => 'edit', $history->id]);
+                        }
+                    ?>
+                </td>
+            </tr>
+		<?php endforeach; ?>
 	</tbody>
 	</table>
 	<div class="paginator">
