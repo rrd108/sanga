@@ -72,6 +72,7 @@ class HistoriesController extends AppController {
 			$histories = $this->Histories;
 		}
 		$this->paginate = [
+            'conditions' => ['Histories.user_id =' => $this->Auth->user('id')],
 			'contain' => ['Contacts', 'Users', 'Groups', 'Events', 'Units'],
 			'order' => ['Histories.date' => 'DESC', 'Histories.id' => 'DESC']
 		];
