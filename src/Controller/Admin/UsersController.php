@@ -41,7 +41,7 @@ class UsersController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->set('users', $this->paginate($this->Users));
+		$this->set('users', $this->paginate($this->Users->find()->contain('Contacts')));
 	}
 
 /**
