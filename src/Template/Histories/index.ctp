@@ -157,13 +157,13 @@ echo $this->element('ajax-images');
                 </td>
                 <td><?= $history->date->format('Y-m-d') ?></td>
                 <td>
-                    <?= $history->has('user') ? $this->Html->link($history->user->name, ['controller' => 'Users', 'action' => 'view', $history->user->id]) : '' ?>
+                    <?= $history->has('user') ? $history->user->name : '' ?>
                 </td>
                 <td>
-                    <?= $history->has('group') ? $this->Html->link($history->group->name, ['controller' => 'Groups', 'action' => 'view', $history->group->id]) : '' ?>
+                    <?= $history->has('group') ? $history->group->name : '' ?>
                 </td>
                 <td>
-                    <?= $history->has('event') ? $this->Html->link($history->event->name, ['controller' => 'Events', 'action' => 'view', $history->event->id]) : '' ?>
+                    <?= $history->has('event') ? $history->event->name : '' ?>
                 </td>
                 <td><?= h($history->detail) ?></td>
                 <td><?= h($history->quantity) ?></td>
