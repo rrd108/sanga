@@ -115,10 +115,12 @@ $(function() {
 					animation : $.sanga.animation
 				});
 				var newRow = $("<tr>");
-				var cols = "<td></td>";	//settings placeholder
+				var cols = '';
 				
 				if(location.pathname.search(/Histories/) != -1){	//if we are at History index we have an extra coloumn
 					cols += '<td>' + $('#xcontact-id').val() + '</td>';
+				} else {
+					cols += '<td></td>';	//settings placeholder
 				}
 				cols += '<td>' + $('#date').val() + '</td>';
 				cols += '<td>' + $('#uName').text() + '</td>';
