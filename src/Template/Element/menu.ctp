@@ -60,6 +60,7 @@
 				<ul>
 					<?php
 						print '<li>' . $this->Html->link('☭ ' . __('Profile'), ['prefix' => false, 'controller' => 'Users', 'action' => 'view']) . '</li>';
+						print '<li>' . $this->Html->link('❓ ' . __('Help'), ['prefix' => false, 'controller' => 'pages', 'action' => 'home']) . '</li>';
 						print '<li>' . $this->Html->link('⚠ ' . __('Notifications') . $nc, ['prefix' => false, 'controller' => 'Notifications', 'action' => 'index'], ['escapeTitle' => false]) . '</li>';
 						print '<li>' . $this->Html->link('⊗ ' . __('Logout'), ['prefix' => false, 'controller' => 'Users', 'action' => 'logout']) . '</li>';
 					?>

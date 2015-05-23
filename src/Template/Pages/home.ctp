@@ -28,8 +28,6 @@ $cakeDescription = 'Sanga';
 ?>
 <!DOCTYPE html>
 <html>
-<!DOCTYPE html>
-<html>
 <head>
 	<?php echo $this->element('head'); ?>
 </head>
@@ -51,23 +49,16 @@ $cakeDescription = 'Sanga';
 
 		<div class="content-wrapper">
 			<div class="row"><div class="large-10 medium-9 columns">
-				<h1>Ha gond van</h1>
+				<h1>Gyakori kérdések</h1>
 				<dl>
-					<dt>Admin</dt>
-						<dd>Radharadhya dasa
-							<ul>
-								<li>rrd@krisna.hu</li>
-								<li>+36 30 505 12 66</li>
-							</ul>
-						</dd>
-					<dt>CRM Admin</dt>
-						<dd>Vaidarbhi dd
-							<ul>
-								<li>vbdd@krisna.hu</li>
-								<li>+36 20 415 7311</li>
-							</ul>
+					<dt>Hogyan tudom módosítani a kapcsolat adatait?</dt>
+						<dd>
+							Ha az egérrel rámutatsz az adatra (pl a kapcsolat nevére) akkor jobb oldalon megjelenik egy kis ceruza ikon.
+							Erre kattintva az adat szerkeszthetővé válik. Ha átírtad akkor a beviteli mező mellett megjelenik egy kis pipa, a mentéshez erre kell rákattintani.
 						</dd>
 				</dl>
+				
+				<p>Ha bármi kérdésed van írj egy értesítést rrd-nek!</p>
 			</div></div>
 		</div>
 	</main>
