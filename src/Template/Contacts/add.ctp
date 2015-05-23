@@ -10,7 +10,17 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 		echo '<div class="row">';
 		echo '<div class="column large-12">';
 			echo '<label for="users-ids">'.__('Contact Person').'</label>';
-			echo $this->element('user_checkbox');
+			//echo $this->element('user_checkbox');
+			echo '<span class="tag tag-mine">';
+				echo '<input type="checkbox"
+							id="users-ids-'.$this->request->session()->read('Auth.User.id').'"
+							checked="checked"
+							value="'.$this->request->session()->read('Auth.User.id').'"
+							name="users[_ids][]">';
+				echo '<label for="users-ids-'.$this->request->session()->read('Auth.User.id').'">'.
+						$this->request->session()->read('Auth.User.name').
+					'</label>';
+			echo '</span> ';
 		echo '</div>';
 		echo '</div>';
 
