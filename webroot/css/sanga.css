@@ -242,3 +242,7 @@ p.ed{
 h1 > img.ajaxremove{
   margin-bottom: 0.65em;
 }
+
+.ui-datepicker-title select{
+  width: 45%;
+}

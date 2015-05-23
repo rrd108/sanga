@@ -1,8 +1,10 @@
 $(function() {
 	
 	$('#birth').datepicker({
-      changeMonth: true,
-      changeYear: true
+		showMonthAfterYear: true,
+		yearRange: '1900:' + new Date().getFullYear(),
+		changeMonth: true,
+		changeYear: true
     });
 	
 	function addSkillSpanAndInput(event, ui){
