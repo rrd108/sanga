@@ -59,6 +59,11 @@ class UsersController extends AppController {
 			if ($user) {
 				$this->Auth->setUser($user);
 				$this->removeResetToken($user);
+				
+				$user = $this->Users->get($this->Auth->user('id'));
+				$user->last_login = date('Y-m-d H:i:s');
+				$this->Users->save($user);
+				
 				return $this->redirect($this->Auth->redirectUrl());
 			}
 			$this->RBruteForce->check(['maxAttempts' => 3, 'dataLog' => true]);		//should be here - so banned out user would not able to login with correct password

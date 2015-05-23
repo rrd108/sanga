@@ -28,6 +28,7 @@ class User extends Entity {
 		'histories' => true,
 		'notifications' => true,
 		'google_contacts_refresh_token' => true,
+		'last_login' => true,
 		'contacts' => true,
 		'usergroups' => true,
 	];

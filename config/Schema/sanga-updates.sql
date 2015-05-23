@@ -531,3 +531,7 @@ ADD CONSTRAINT `fk_notifications_users2`
   REFERENCES `sanga`.`users` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+  
+ALTER TABLE `sanga`.`users` ADD COLUMN `last_login` DATETIME NULL DEFAULT NULL AFTER `modified`;
+
+
