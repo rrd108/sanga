@@ -1,6 +1,9 @@
 $(function() {
 	
-	$('#birth').datepicker();
+	$('#birth').datepicker({
+      changeMonth: true,
+      changeYear: true
+    });
 	
 	function addSkillSpanAndInput(event, ui){
 		var t = $(event.target);
