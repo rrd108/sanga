@@ -24,14 +24,6 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 		echo '</div>';
 		echo '</div>';
 
-		echo '<div class="row">';
-			echo $this->Form->input('active',
-										['templates' => ['inputContainer' => '<div class="column large-12 radio"><label>Status</label>{{content}}</div>'],
-									   'checked' => true,
-									   'title' => __('Inactive means the connection is lost')
-									   ]);
-		echo '</div>';
-
 		
 		echo '<div class="row">';
 			echo $this->Form->input('contactname',
