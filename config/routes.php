@@ -21,7 +21,33 @@
 use Cake\Core\Plugin;
 use Cake\Routing\Router;
 
+/**
+ * The default class to use for all routes
+ *
+ * The following route classes are supplied with CakePHP and are appropriate
+ * to set as the default:
+ *
+ * - Route
+ * - InflectedRoute
+ * - DashedRoute
+ *
+ * If no call is made to `Router::defaultRouteClass`, the class used is
+ * `Route` (`Cake\Routing\Route\Route`)
+ *
+ * Note that `Route` does not do any inflections on URLs which will result in
+ * inconsistently cased URLs when used with `:plugin`, `:controller` and
+ * `:action` markers.
+ *
+ */
+Router::defaultRouteClass('Route');
+
 Router::extensions(['json']);
+
+Router::prefix('admin', function ($routes) {
+    // All routes here will be prefixed with `/admin`
+    // And have the prefix => admin route element added.
+    $routes->fallbacks('InflectedRoute');
+});
 
 Router::scope('/', function($routes) {
 /**
@@ -35,7 +61,7 @@ Router::scope('/', function($routes) {
  * ...and connect the rest of 'Pages' controller's URLs.
  */
 	$routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-
+	
 /**
  * Connect a route for the index action of any controller.
  * And a more general catch all route for any action.
@@ -47,18 +73,11 @@ Router::scope('/', function($routes) {
  * You can remove these routes once you've connected the
  * routes you want in your application.
  */
-	$routes->fallbacks();
-});
-
-Router::prefix('admin', function($routes) {
-    // All routes here will be prefixed with `/admin`
-    // And have the prefix => admin route element added.
-    $routes->connect('/:controller', ['action' => 'index'], ['routeClass' => 'Cake\Routing\Route\InflectedRoute']);
-    $routes->connect('/:controller/:action/*', [], ['routeClass' => 'Cake\Routing\Route\InflectedRoute']);
+	$routes->fallbacks('InflectedRoute');
 });
 
 /**
  * Load all plugin routes.  See the Plugin documentation on
  * how to customize the loading of plugin routes.
  */
-	Plugin::routes();
+Plugin::routes();

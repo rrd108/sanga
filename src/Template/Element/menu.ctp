@@ -15,8 +15,8 @@
 							print '<li>' . $this->Html->link('❶ ' . __('Zips'), ['prefix' => false, 'controller' => 'Zips']) . '</li>';
 							print '<li>' . $this->Html->link('☢ ' . __('Countries'), ['prefix' => false, 'controller' => 'Countries', 'action' => 'index']) . '</li>';
 							print '<li>' . $this->Html->link('❖ ' . __('Units'), ['prefix' => false, 'controller' => 'Units', 'action' => 'index']) . '</li>';
-							print '<li>' . $this->Html->link('☻ ' . __('Users'), ['prefix' => 'admin', 'controller' => 'Users', 'action' => 'index']) . '</li>';
-							print '<li>' . $this->Html->link('⁂ ' . __('Groups'), ['prefix' => 'admin', 'controller' => 'Groups', 'action' => 'index']) . '</li>';
+							print '<li>' . $this->Html->link('☻ ' . __('Users'), ['plugin' => null, 'prefix' => 'admin', 'controller' => 'Users', 'action' => 'index']) . '</li>';
+							print '<li>' . $this->Html->link('⁂ ' . __('Groups'), ['plugin' => null, 'prefix' => 'admin', 'controller' => 'Groups', 'action' => 'index']) . '</li>';
 						?>
 					</ul>
 				</li>
