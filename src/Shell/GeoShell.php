@@ -22,7 +22,8 @@ class GeoShell extends Shell {
 		$result = $this->Contacts->find()
 				->contain(['Zips' => ['Countries']])
 				->select(['Contacts.id', 'Contacts.address', 'Zips.zip', 'Zips.name', 'Countries.name'])
-				->where('Contacts.lat = 0')
+				->where(['Contacts.lat' => 0])
+				->andWhere(['Contacts.address !=' => ''])
 				->toArray();
 		
 		foreach($result as $r){
@@ -70,9 +71,15 @@ class GeoShell extends Shell {
 		//debug($geourl);
 		//debug($json->results[0]);
 		$this->out('Status : ' . $json->status);
-		return(['id' => $data->id,
+		if(isset($json->results[0])){
+			return(['id' => $data->id,
 				'lat' => $json->results[0]->geometry->location->lat,
-				'lng' => $json->results[0]->geometry->location->lng]);		
+				'lng' => $json->results[0]->geometry->location->lng]);
+		} else {
+			return(['id' => $data->id,
+				'lat' => null,
+				'lng' => null]);
+		}
 	}
 	
 	public function setGeoForUser($id = null){
