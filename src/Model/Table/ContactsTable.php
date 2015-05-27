@@ -307,7 +307,7 @@ class ContactsTable extends Table {
 						SUBSTRING('.$removes.', 3)
 					)';
 
-		$query = $this->find()
+		$phones = $this->find()
 				->select(['db' => 'COUNT(id)',
 						  'tPhone' => $tPhone])
 				->where(['phone != ' => ''])
@@ -317,10 +317,10 @@ class ContactsTable extends Table {
 		
 		$duplicates = [];
 		
-		foreach($query as $q){
+		foreach($phones as $p){
 			$query = $this->find()
 					->select(['id', 'legalname', 'contactname', 'phone']);
-			$duplicates[] = $query->where([$tPhone . ' = ' => $q->tPhone]);
+			$duplicates[] = $query->where([$tPhone . ' = ' => $p->tPhone]);	//we need "=" because of the literal sql function call
 		}
 		
 		return $duplicates;
@@ -371,13 +371,13 @@ class ContactsTable extends Table {
 			$toSelect[] = 'contactname';
 
 			if($q->legalname){
-				$levenshteinNameName = 'LEVENSHTEIN(name, "'. $q->legalname . '")';
+				$levenshteinNameName = 'LEVENSHTEIN(legalname, "'. $q->legalname . '")';
 				$levenshteinContactnameName = 'LEVENSHTEIN(contactname, "'. $q->legalname . '")';
 				$toSelect['levenshteinNameName'] = $query->newExpr()->add($levenshteinNameName);
 				$toSelect['levenshteinContactnameName'] = $query->newExpr()->add($levenshteinContactnameName);
 			}
 			if($q->contactname){
-				$levenshteinNameContactname = 'LEVENSHTEIN(name, "'. $q->contactname . '")';
+				$levenshteinNameContactname = 'LEVENSHTEIN(legalname, "'. $q->contactname . '")';
 				$levenshteinContactnameContactname = 'LEVENSHTEIN(contactname, "'. $q->contactname . '")';
 				$toSelect['levenshteinNameContactname'] = $query->newExpr()->add($levenshteinNameContactname);
 				$toSelect['levenshteinContactnameContactname'] = $query->newExpr()->add($levenshteinContactnameContactname);
@@ -403,7 +403,7 @@ class ContactsTable extends Table {
 						$foundPairs[] = $q->id;
 						$duplicates[$q->id][] = [
 								'id' => $name->id,
-								'name' => $name->legalname,
+								'legalname' => $name->legalname,
 								'contactname' => $name->contactname,
 								'levenshteinNameName' => $name->levenshteinNameName,
 								'levenshteinContactnameName' => $name->levenshteinContactnameName,

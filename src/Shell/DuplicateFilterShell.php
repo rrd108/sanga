@@ -13,7 +13,7 @@ class DuplicateFilterShell extends Shell {
     }
 	
     public function main() {
-		$this->Contacts->checkDuplicatesOnGeo();
+		$this->Contacts->checkDuplicatesOnPhone();
     }
 	
 	//TODO search and delete families with one member family_id is only for one contact

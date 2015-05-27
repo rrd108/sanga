@@ -20,15 +20,13 @@ class ContactsTableTest extends TestCase {
         'Contacts' => 'app.contacts',
         'Zips' => 'app.zips',
         'Countries' => 'app.countries',
-        'WorkplaceZips' => 'app.workplace_zips',
-        'Families' => 'app.families',
+        'WorkplaceZips' => 'app.zips',
         'Contactsources' => 'app.contactsources',
-        'Googles' => 'app.googles',
         'Histories' => 'app.histories',
         'Users' => 'app.users',
         'Events' => 'app.events',
-        'AdminGroups' => 'app.admin_groups',
-        'AdminUsers' => 'app.admin_users',
+        'AdminGroups' => 'app.groups',
+        'AdminUsers' => 'app.users',
         'Notifications' => 'app.notifications',
         'ContactsUsers' => 'app.contacts_users',
         'Groups' => 'app.groups',
@@ -77,8 +75,8 @@ class ContactsTableTest extends TestCase {
 	}
 
 	public function testCheckDuplicatesOnPhone(){
-		$dupliactes = $this->Contacts->checkDuplicatesOnPhone();
-		foreach($dupliactes as $actual){
+		$duplicates = $this->Contacts->checkDuplicatesOnPhone();
+		foreach($duplicates as $actual){
 			$actual = $actual->hydrate(false)->toArray();
 			$expected = [
 				['id' => 1, 'legalname' => 'Lokanatha dasa', 'contactname' => 'Borsos László', 'phone' => '+36 30 999 5091'],
@@ -90,8 +88,8 @@ class ContactsTableTest extends TestCase {
 	}
 
 	public function testCheckDuplicatesOnEmail(){
-		$dupliactes = $this->Contacts->checkDuplicatesOnEmail();
-		foreach($dupliactes as $dupliacte){
+		$duplicates = $this->Contacts->checkDuplicatesOnEmail();
+		foreach($duplicates as $dupliacte){
 			$actual[] = $dupliacte->hydrate(false)->toArray();
 		}
 		$expected = [
@@ -108,8 +106,8 @@ class ContactsTableTest extends TestCase {
 	}
 
 	public function testCheckDuplicatesOnBirth(){
-		$dupliactes = $this->Contacts->checkDuplicatesOnBirth();
-		foreach($dupliactes as $actual){
+		$duplicates = $this->Contacts->checkDuplicatesOnBirth();
+		foreach($duplicates as $actual){
 			$actual = $actual->hydrate(false)->toArray();
 			$expected = [
 				['id' => 1, 'legalname' => 'Lokanatha dasa', 'contactname' => 'Borsos László', 'birth' => Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00')],
@@ -146,7 +144,8 @@ class ContactsTableTest extends TestCase {
 		$expected = [
 				['id' => 2, 'legalname' => 'Acarya-ratna das'],
 				['id' => 3, 'legalname' => 'Dvaipayana Dasa'],
-				['id' => 4, 'legalname' => 'Acarya-ratna Dasa']
+				['id' => 4, 'legalname' => 'Acarya-ratna Dasa'],
+				['id' => 5, 'legalname' => 'Filu']
 			];
 		$this->assertEquals($expected, $actual);
 	}
@@ -201,7 +200,7 @@ class ContactsTableTest extends TestCase {
 		$actual = $this->Contacts->isAccessible(6, 2);
 		$this->assertTrue($actual);
 
-		$actual = $this->Contacts->isAccessible(5, 2);
+		$actual = $this->Contacts->isAccessible(7, 2);
 		$this->assertFalse($actual);
 
 		//as a usergroup member

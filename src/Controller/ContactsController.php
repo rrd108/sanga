@@ -583,7 +583,8 @@ $result = $this->Contacts->find()
 	}
 	
 	public function checkDuplicates(){
-		$this->Contacts->checkDuplicatesOnPhone();
+		$duplicates = $this->Contacts->checkDuplicatesOnPhone();
+		//debug($duplicates);
 		/*foreach($this->Contacts->checkDuplicatesOnPhone() as $q){
 			debug($q->toArray());
 		}*/
