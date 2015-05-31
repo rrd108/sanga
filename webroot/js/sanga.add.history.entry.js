@@ -112,12 +112,14 @@ $(function() {
 				noty({
 					text : jqXHR.responseJSON.errors ? (jqXHR.responseJSON.message + ' ' + jqXHR.responseJSON.errors) : jqXHR.responseJSON.message,
 					type : jqXHR.responseJSON.save ? 'success' : 'error',
-					animation : $.sanga.animation
+					animation : $.sanga.animation,
+					buttons: false,
+					timeout: 2
 				});
 				var newRow = $("<tr>");
 				var cols = '';
 				
-				if(location.pathname.search(/Histories/) != -1){	//if we are at History index we have an extra coloumn
+				if(location.pathname.search(/histories/i) != -1){	//if we are at History index we have an extra coloumn
 					cols += '<td>' + $('#xcontact-id').val() + '</td>';
 				} else {
 					cols += '<td></td>';	//settings placeholder
