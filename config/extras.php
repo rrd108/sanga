@@ -15,6 +15,11 @@ $config = [
     'Mailjet' => [
         'apiKey' => 'MailjetAPI-key',
         'secretKey' => 'MailjetSecretKey'
+        ],
+    
+    'ElasticEmail' => [
+        'userName' => 'ElasticEmailUserName',
+        'apiKey' => 'ElasticEmailAPI-key'
         ]
 	];
 ?>
