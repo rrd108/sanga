@@ -10,6 +10,11 @@ $config = [
     
     'SendGrid' => [
         'apiKey' => 'SendGridAPI-key'
+        ],
+    
+    'Mailjet' => [
+        'apiKey' => 'MailjetAPI-key',
+        'secretKey' => 'MailjetSecretKey'
         ]
 	];
 ?>
