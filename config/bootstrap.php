@@ -69,7 +69,7 @@ try {
 }
 
 try {
-	Configure::load('google', 'default', true);
+	Configure::load('extras', 'default', true);
 } catch (\Exception $e) {
     Log::debug($e->getMessage());
 }
