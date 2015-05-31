@@ -311,6 +311,8 @@ $(function() {
 				container.append($('#okImg').css('float', 'none').show().hide(12500));
 				var imgSrc = $('#gImg').attr('src');
 				$('#gImg').attr('src', imgSrc.replace(/-inactive/, ''));
+				$('#subject').val('');
+				$('#message').val('');
 			}
 		});
 		
