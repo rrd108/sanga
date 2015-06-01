@@ -1763,6 +1763,19 @@ msgstr "November"
 msgid "December"
 msgstr "december"
 
+#: Template/Contacts/view.ctp:43
+msgid "Documents"
+msgstr "Dokumentumok"
+
+#: Template/Contacts/view.ctp:876
+msgid "Document title"
+msgstr "Dokumentum címe"
+
+#: Template/Contacts/view.ctp:871
+msgid "Upload new documents"
+msgstr "Új dokumentum feltöltése"
+
+
 #~ msgid "Area"
 #~ msgstr "Környék"
 

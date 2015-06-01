@@ -535,3 +535,21 @@ ADD CONSTRAINT `fk_notifications_users2`
 ALTER TABLE `sanga`.`users` ADD COLUMN `last_login` DATETIME NULL DEFAULT NULL AFTER `modified`;
 
 
+
+--
+-- Tábla szerkezet ehhez a táblához `documents`
+--
+
+CREATE TABLE `documents` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `contact_id` int(11) NOT NULL,
+ `document_name` varchar(255) NOT NULL,
+ `file_type` varchar(50) NOT NULL,
+ `document_size` bigint(20) NOT NULL,
+ `document_data` mediumblob NOT NULL,
+ `created` datetime NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+
