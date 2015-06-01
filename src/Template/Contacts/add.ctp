@@ -7,7 +7,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 <div class="user-add-form column large-6 medium-10 small-centered">
 <?= $this->Form->create($contact) ?>
 	<?php
-		echo '<div class="row">';
+		/*echo '<div class="row">';
 		echo '<div class="column large-12">';
 			echo '<label for="users-ids">'.__('Contact Person').'</label>';
 			//echo $this->element('user_checkbox');
@@ -22,7 +22,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 					'</label>';
 			echo '</span> ';
 		echo '</div>';
-		echo '</div>';
+		echo '</div>';*/
 
 		
 		echo '<div class="row">';
