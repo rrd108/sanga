@@ -421,14 +421,14 @@ $result = $this->Contacts->find()
  * @return void
  */
 	public function add() {
-		if ($this->request->data && ! isset($this->request->data['users']['_ids'])) {
+		//if ($this->request->data && ! isset($this->request->data['users']['_ids'])) {
 			$this->request->data['users']['_ids'] = [$this->Auth->user('id')];
-		}
+		//}
 		$contact = $this->Contacts->newEntity($this->request->data);
 		if($this->request->data){
 			$contact = $this->patchSkills($contact);
 			
-			if($this->request->data['family_member_id']){
+			if( ! empty($this->request->data['family_member_id'])){
 				$contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
 			}
 		//die();

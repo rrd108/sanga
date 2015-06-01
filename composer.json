@@ -11,7 +11,8 @@
         "cakephp/plugin-installer": "*",
         "mobiledetect/mobiledetectlib": "2.*",
         "google/apiclient": "1.0.*@beta",
-        "rrd/rbruteforce": "dev-master"
+        "rrd/rbruteforce": "dev-master",
+        "sendgrid/sendgrid": "~3.2"
     },
     "require-dev": {
         "psy/psysh": "@stable",
