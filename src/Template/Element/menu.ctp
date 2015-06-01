@@ -128,9 +128,7 @@
 				
 				<?php
 					print $this->request->session()->read('Auth.User.realname');
-					$nc = '';
-					if($notification_count)
-						print $nc = ' <span class="notice">'.$notification_count.'</span>';
+					print $cell = $this->cell('Notification', [$this->request->session()->read('Auth.User.id')]);
 				?>
 				<ul>
 					<?php
@@ -144,7 +142,7 @@
 														  'prefix' => false,
 														  'controller' => 'pages',
 														  'action' => 'home']) . '</li>';
-						print '<li>' . $this->Html->link('⚠ ' . __('Notifications') . $nc,
+						print '<li>' . $this->Html->link('⚠ ' . __('Notifications') . $cell,
 														 ['plugin' => null,
 														  'prefix' => false,
 														  'controller' => 'Notifications',
