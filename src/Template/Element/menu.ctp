@@ -82,6 +82,11 @@
 														  'prefix' => false,
 														  'controller' => 'Contacts',
 														  'action' => 'searchquery']) . '</li>';
+						print '<li>' . $this->Html->link('⁂ ' . __('Groups'),
+														 ['plugin' => null,
+														  'prefix' => false,
+														  'controller' => 'Groups',
+														  'action' => 'index']) . '</li>';
 						print '<li>' . $this->Html->link('✈ ' . __('Map'),
 														 ['plugin' => null,
 														  'prefix' => false,
@@ -111,11 +116,6 @@
 															  'controller' => 'Skills',
 															  'action' => 'index']) . '</li>';
 						}
-						print '<li>' . $this->Html->link('⁂ ' . __('Groups'),
-														 ['plugin' => null,
-														  'prefix' => false,
-														  'controller' => 'Groups',
-														  'action' => 'index']) . '</li>';
 						print '<li>' . $this->Html->link('✿ ' . __('Events'),
 														 ['plugin' => null,
 														  'prefix' => false,
