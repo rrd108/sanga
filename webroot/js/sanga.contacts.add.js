@@ -17,10 +17,14 @@ $(function() {
 		}
 		else{
 			tag = $(event.target).val();
-			id = "~" + tag;	//if the value starts with "~" that is a new skill
 		}
 		t.parent().append('<span class="tag tag-shared removeable">' + tag + '</span> ');
-		t.parent().append('<input type="hidden" name="skills[_ids][]" value="' + id + '">');
+		if (id) {
+			t.parent().append('<input type="hidden" name="skills[id][]" value="' + id + '">');
+		} else {
+			t.parent().append('<input type="hidden" name="skills[name][]" value="' + tag + '">');
+		}
+		
 		t.val("");
 		t.focus();
 	}
@@ -31,7 +35,7 @@ $(function() {
 		$(this).remove();
 	});
 	
-	$('#skills-ids')
+	$('#skills')
 		.bind("keydown", function(event) {
 			// don't navigate away from the field on tab when selecting an item
 			if ((event.keyCode === $.ui.keyCode.TAB || event.keyCode === $.ui.keyCode.ENTER) && $(this).autocomplete("instance").menu.active) {

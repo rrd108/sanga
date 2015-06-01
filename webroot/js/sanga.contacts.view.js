@@ -205,11 +205,11 @@ $(function() {
 					theSpan = editbox.parent().find('.address');
 					newData = editedData['address'] = $('#address').val();
 				}
-			} else if (editbox.attr('id') == 'skills-ids'){
+			} else if (editbox.attr('id') == 'skills'){
 				theSpan = editbox.parent().find('.dta');
-				editedData['skills[_ids]'] = [];
-				$('[name=skills\\[_ids\\]\\[\\]]').each(function(){
-					(editedData['skills[_ids]']).push($(this).val());
+				editedData['skills[]'] = [];
+				$('[name=skills\\[\\]]').each(function(){
+					(editedData['skills[]']).push($(this).val());
 				});
 			} else {
 				theSpan = editbox.parent().find('.dta');

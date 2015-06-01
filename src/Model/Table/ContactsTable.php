@@ -122,6 +122,23 @@ class ContactsTable extends Table {
         return $rules;
     }
 
+	public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+	{
+	    //change skills[id][] and skills[name][] arrays to the form what save needs
+		if( ! empty($data['skills'])) {
+			$props = ['id', 'name'];
+			foreach($props as $prop){
+				if (is_array($data['skills'][$prop])) {
+					$skills = $data['skills'][$prop];
+					unset($data['skills'][$prop]);
+					foreach($skills as $s){
+						array_push($data['skills'], [$prop => $s]);
+					}
+				}
+			}
+		}
+	}
+
 	public function beforeSave(Event $event, Entity $entity, ArrayObject $options){
 		if ($entity->isNew()) {
 			if ((!empty($entity->contactname) + !empty($entity->legalname) + !empty($entity->zip_id)

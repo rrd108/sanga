@@ -103,7 +103,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 												'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
 												],
 										 'class' => 'radius']);
-			echo $this->Form->input('skills._ids',
+			echo $this->Form->input('skills',
 									['templates' => [
 											'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
 											'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
