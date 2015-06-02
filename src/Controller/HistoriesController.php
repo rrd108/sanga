@@ -103,24 +103,32 @@ class HistoriesController extends AppController {
 		$history->user_id = $this->Auth->user('id');
 		if ($this->request->is('post')) {
 			//debug($this->request->data);die();
-			$saved = $this->Histories->save($history);
-			if ($saved) {
-				$message = __('The history has been saved.');
-				if ($this->request->is('ajax')) {
-					$result = ['save' => true,
-							   'message' => $message];
-				} else {
-					$this->Flash->success($message);
-					return $this->redirect(['action' => 'index']);
-				}
+			
+			if(isset($this->request->data['target_group_id'])){	//add an event to multiple group members
+				$group = $this->Histories->groups->get($this->request->data['target_group_id'], ['contain' => 'Contacts']);
+				exec(WWW_ROOT . '../bin/cake history ' . json_encode(json_encode($history)) . ' ' . json_encode(json_encode($group)) . ' ' . $this->Auth->user('id') . ' > /dev/null &');
+				$result = ['save' => true,
+							'message' => __('Adding history event to all group members started in the background')];
 			} else {
-				$message = __('The history could not be saved. Please, try again.');
-				if ($this->request->is('ajax')) {
-					$result = ['save' => false,
-							   'message' => $message,
-							   'errors' => $this->getErrors($history->errors())];
+				$saved = $this->Histories->save($history);
+				if ($saved) {
+					$message = __('The history has been saved.');
+					if ($this->request->is('ajax')) {
+						$result = ['save' => true,
+								   'message' => $message];
+					} else {
+						$this->Flash->success($message);
+						return $this->redirect(['action' => 'index']);
+					}
 				} else {
-					$this->Flash->error($message);
+					$message = __('The history could not be saved. Please, try again.');
+					if ($this->request->is('ajax')) {
+						$result = ['save' => false,
+								   'message' => $message,
+								   'errors' => $this->getErrors($history->errors())];
+					} else {
+						$this->Flash->error($message);
+					}
 				}
 			}
 		}
