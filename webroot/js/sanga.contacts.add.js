@@ -20,9 +20,9 @@ $(function() {
 		}
 		t.parent().append('<span class="tag tag-shared removeable">' + tag + '</span> ');
 		if (id) {
-			t.parent().append('<input type="hidden" name="skills[id][]" value="' + id + '">');
+			t.parent().append('<input type="hidden" name="skills[][id]" value="' + id + '">');
 		} else {
-			t.parent().append('<input type="hidden" name="skills[name][]" value="' + tag + '">');
+			t.parent().append('<input type="hidden" name="skills[][name]" value="' + tag + '">');
 		}
 		
 		t.val("");
