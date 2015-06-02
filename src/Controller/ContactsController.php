@@ -395,43 +395,19 @@ $result = $this->Contacts->find()
             ->order(['Documents.created' => 'DESC']);
         $this->set('documents', $query);
 	}
-
-	private function patchSkills($contact){
-		//debug($this->request->data);die();
-			/*'skills' => [
-				'_ids' => [
-					(int) 0 => '1',			//found in skills, this is the id
-					(int) 1 => '~könyvelő'		//starts with "~" this is a new skill (or fast typer problem)
-				]]
-			*/
-		if(isset($this->request->data['skills']) && is_array($this->request->data['skills']['_ids'])){
-			foreach($this->request->data['skills']['_ids'] as $i => $skill){
-				if(mb_substr($skill, 0,1) == '~'){
-					$skill = ltrim($skill, '~');
-					$contact->skills[] = $this->Contacts->Skills->newEntity(['name' => $skill]);
-				}
-			}
-		}
-		return $contact;
-	}
-
+	
 /**
  * Add method
  *
  * @return void
  */
 	public function add() {
-		//if ($this->request->data && ! isset($this->request->data['users']['_ids'])) {
-			$this->request->data['users']['_ids'] = [$this->Auth->user('id')];
-		//}
+		$this->request->data['users']['_ids'] = [$this->Auth->user('id')];		//add auth user as contact person
 		$contact = $this->Contacts->newEntity($this->request->data);
 		if($this->request->data){
-			$contact = $this->patchSkills($contact);
-			
 			if( ! empty($this->request->data['family_member_id'])){
 				$contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
 			}
-		//die();
 		}
 		if ($this->request->is('post')) {
 			$contact->loggedInUser = $this->Auth->user('id');
@@ -519,7 +495,6 @@ $result = $this->Contacts->find()
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			
 			$contact = $this->Contacts->patchEntity($contact, $this->request->data);
-			$contact = $this->patchSkills($contact);
 
 			if(isset($this->request->data['family_member_id'])){
 				$contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);

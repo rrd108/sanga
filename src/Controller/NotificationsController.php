@@ -75,10 +75,10 @@ class NotificationsController extends AppController {
 		if ($this->request->is('post')) {
 			$notification->sender_id = $this->Auth->user('id');
 			if ($this->Notifications->save($notification)) {
-				$this->Flash->success('The notification has been saved.');
+				$this->Flash->success(__('The notification has been saved.'));
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error('The notification could not be saved. Please, try again.');
+				$this->Flash->error(__('The notification could not be saved. Please, try again.'));
 			}
 		}
 		$users = $this->Notifications->Users->find('list');
@@ -99,10 +99,10 @@ class NotificationsController extends AppController {
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$notification = $this->Notifications->patchEntity($notification, $this->request->data);
 			if ($this->Notifications->save($notification)) {
-				$this->Flash->success('The notification has been saved.');
+				$this->Flash->success(__('The notification has been saved.'));
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error('The notification could not be saved. Please, try again.');
+				$this->Flash->error(__('The notification could not be saved. Please, try again.'));
 			}
 		}
 		$users = $this->Notifications->Users->find('list');
@@ -120,9 +120,9 @@ class NotificationsController extends AppController {
 		$notification = $this->Notifications->get($id);
 		$this->request->allowMethod(['post', 'delete']);
 		if ($this->Notifications->delete($notification)) {
-			$this->Flash->success('The notification has been deleted.');
+			$this->Flash->success(__('The notification has been deleted.'));
 		} else {
-			$this->Flash->error('The notification could not be deleted. Please, try again.');
+			$this->Flash->error(__('The notification could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(['action' => 'index']);
 	}

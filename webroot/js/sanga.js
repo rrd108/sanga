@@ -52,7 +52,7 @@ $(function() {
 				} else {
 					controller = 'Contacts';
 				}
-				var url = $('#qForm').attr('action').replace(/Search\/quicksearch/, controller + '/view/');
+				var url = $('#qForm').attr('action').replace(/Search\/quicksearch/i, controller + '/view/');
 				url = url + ui.item.value.substring(1);
 				$(location).attr('href', url);
 				return false;

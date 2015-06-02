@@ -534,7 +534,7 @@ echo $this->element('ajax-images');
 							<?php endif; ?>
 							</span>
 							<?php
-							echo $this->Form->input('skills._ids',
+							echo $this->Form->input('skills',
 									['templates' => ['inputContainer' => '{{content}}'],
 									 'class' => 'editbox',
 									 'label' => false,
