@@ -80,9 +80,10 @@ $(function() {
 		}
 	});
 
-	var sendForm = function(event){
+	$('#hsave').click(function(event){
 		var inf = $('#hInfo');
 		inf.append($('#ajaxloader').show());
+		$('#hsave').hide();
 		$.ajax({
 			url : $('#hForm').attr('action'),
 			data : {
@@ -93,22 +94,22 @@ $(function() {
 				detail : $('#detail').val(),
 				quantity : $('#quantity').val(),
 				unit_id : $('#unit-id').val(),
+				target_group_id : $('#target-group-id').val(),
 				family : null
 			},
 			type : 'post',
 			dataType : 'json',
 			error : function(jqXHR, textStatus, errorThrown){
 				$('#ajaxloader').hide();
-				inf.append($('#errorImg').show());
 				noty({
 					text : textStatus,
 					type : 'error',
 					animation : $.sanga.animation
 				});
+				$('#hsave').show();
 			},
 			success : function(data, textStatus, jqXHR){
 				$('#ajaxloader').hide();
-				inf.append($('#okImg').show().hide(12500));
 				noty({
 					text : jqXHR.responseJSON.errors ? (jqXHR.responseJSON.message + ' ' + jqXHR.responseJSON.errors) : jqXHR.responseJSON.message,
 					type : jqXHR.responseJSON.save ? 'success' : 'error',
@@ -120,7 +121,11 @@ $(function() {
 				var cols = '';
 				
 				if(location.pathname.search(/histories/i) != -1){	//if we are at History index we have an extra coloumn
-					cols += '<td>' + $('#xcontact-id').val() + '</td>';
+					cols += '<td>' +
+								'<a href="' + $.sanga.baseUrl + '/contacts/view/' + $('#contact-id').val() + '">' +
+									$('#xcontact-id').val() + 
+								'</a>' +
+							'</td>';
 				} else {
 					cols += '<td></td>';	//settings placeholder
 				}
@@ -137,11 +142,12 @@ $(function() {
 				newRow.append(cols);
 				$('#hTable > tbody').children('tr:first').after(newRow);
 				
-				$(':input', '#hForm').not('.dontdel').val("");
+				$('#hForm :input').not('.dontdel').val('');
+				$('#hsave').show();
 			}
 		});
-	}
+		event.preventDefault();
+		return false;
+	});
 	
-	$('#xunit-id').blur(sendForm);
-
 });
