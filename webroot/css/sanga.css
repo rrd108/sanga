@@ -246,3 +246,13 @@ h1 > img.ajaxremove{
 .ui-datepicker-title select{
   width: 45%;
 }
+
+#hsave{
+  width: auto;
+  border: none;
+}
+
+#hsave:focus{
+  border: 1px solid #e5e5e5;
+  background: #00BF2C;
+}
