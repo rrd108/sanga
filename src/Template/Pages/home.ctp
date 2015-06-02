@@ -49,6 +49,13 @@ $cakeDescription = 'Sanga';
 
 		<div class="content-wrapper">
 			<div class="row"><div class="large-10 medium-9 columns">
+				<h1>Bemutató viedók</h1>
+				<ul>
+					<li><?= $this->Html->link('Új kapcsolat felvitele', $this->Html->webroot . '/files/uj_contact_felvitele.ogv') ?> (12 MB)</li>
+				</ul>
+				
+			</div></div>
+			<div class="row"><div class="large-10 medium-9 columns">
 				<h1>Gyakori kérdések</h1>
 				<dl>
 					<dt>Hogyan tudom módosítani a kapcsolat adatait?</dt>
