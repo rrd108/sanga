@@ -39,10 +39,10 @@ $cakeDescription = 'Sanga';
 		<div class="sidebar-wrapper">
 			<nav class="side-nav">
 				<ul>
-					<li><?= $this->Html->link(__('List Contacts'), ['controller' => 'Contacts', 'action' => 'index']) ?> </li>
-					<li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?> </li>
-					<li><?= $this->Html->link(__('List Histories'), ['controller' => 'Histories', 'action' => 'index']) ?> </li>
-					<li><?= $this->Html->link(__('New History'), ['controller' => 'Histories', 'action' => 'add']) ?> </li>
+					<li><?= $this->Html->link(__('List Contacts'), ['controller' => 'Contacts', 'action' => 'index']) ?></li>
+					<li><?= $this->Html->link(__('New Contact'), ['controller' => 'Contacts', 'action' => 'add']) ?></li>
+					<li><?= $this->Html->link(__('List Histories'), ['controller' => 'Histories', 'action' => 'index']) ?></li>
+					<li><?= $this->Html->link(__('New History'), ['controller' => 'Histories', 'action' => 'add']) ?></li>
 				</ul>
 			</nav>
 		</div>
@@ -65,7 +65,7 @@ $cakeDescription = 'Sanga';
 						</dd>
 				</dl>
 				
-				<p>Ha bármi kérdésed van írj egy értesítést rrd-nek!</p>
+				<p>Ha bármi kérdésed van írj egy értesítést <?= $this->Html->link('rrd', ['controller' => 'Notifications', 'action' => 'add', 2]) ?>-nek!</p>
 			</div></div>
 		</div>
 	</main>
