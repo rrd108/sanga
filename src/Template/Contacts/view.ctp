@@ -903,7 +903,7 @@ echo $this->element('ajax-images');
                         <td>&nbsp;&nbsp;</td>
                         <td><?php echo $document->document_name; ?></td>
                         <td><?php echo $document->created; ?></td>
-                        <td>&nbsp;&nbsp;</td>
+                        <td><?php echo $this->Html->link(__('Download'), ['action' => 'sendDocument', $document->id]); ?></td>
                     </tr>
 				<?php endforeach; ?>
 			</tbody>

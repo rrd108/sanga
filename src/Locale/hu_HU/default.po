@@ -1822,6 +1822,10 @@ msgstr "Dokumentum címe"
 msgid "Upload new documents"
 msgstr "Új dokumentum feltöltése"
 
+#: Template/Contacts/view.ctp:906
+msgid "Download"
+msgstr "Letöltés"
+
 #~ msgid "Contact Person"
 #~ msgstr "Kapcsolattartó"
 

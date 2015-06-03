@@ -940,7 +940,7 @@ $result = $this->Contacts->find()
         if(!empty($this->request->data['contactid'])) {
             $contactid = $this->request->data['contactid'];
 
-            if(!empty($this->request->data['document_title']) && !empty($this->request->data['uploadfile'])) {
+            if(!empty($this->request->data['document_title']) && !empty($this->request->data['uploadfile']['type'])) {
 
 
 
@@ -965,7 +965,19 @@ $result = $this->Contacts->find()
         }
     }
 
+    public function sendDocument($documentId)
+    {
+        $documents = TableRegistry::get('Documents');
+        $query = $documents->find('all')
+            ->where(['Documents.id =' => $documentId]);
 
+        $result = $query->first();
+
+        $this->response->header('Content-type', "$result->file_type");
+        $this->response->body(base64_encode($result->data));
+        $this->response->download('filename_for_download.pdf');
+        return $this->response;
+    }
 
 
 }
