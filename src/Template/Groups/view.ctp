@@ -10,7 +10,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
 
 ?>
 <div class="groups view columns">
-	<h2><?= h($group->name) ?></h2>
+	<h1><?= h($group->name) ?></h1>
 	<div class="row">
 		<div class="large-5 columns strings">
 			<h6 class="subheader">
@@ -35,7 +35,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
 
 <div class="related row">
 	<div class="column large-12">
-	<h4 class="subheader"><?= __('Has access as group member') ?></h4>
+	<h2 class="subheader"><?= __('Has access as group member') ?></h2>
 	<?php if (!empty($group->users)): ?>
 		<ul>
 		<?php foreach ($group->users as $users): ?>
@@ -50,16 +50,17 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
 
 <div class="related row">
 	<div class="column large-12">
-		<h4 class="subheader"><?= __('Add Contacts to this Group') ?></h4>
+		<h2 class="subheader"><?= __('Add Contacts to this Group') ?></h2>
 		<?php
 		echo $this->Form->create(null, ['id' => 'addMember']);
 		echo $this->Form->input('name', ['label' => __('Contactname or Legalname')]);
 		echo $this->Form->end();
 		?>
 		
-		<h4 class="subheader"><?= __('Group Members') ?></h4>
+		<h3 class="subheader"><?= __('Group Members') ?></h3>
 		<ul id="members">
 			<?php
+			$hasEmail = 0;
 			if (!empty($group->contacts)) {
 				foreach ($group->contacts as $contacts) {
 					echo '<li>';
@@ -70,6 +71,10 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
 														['class' => 'ajaxremove',
 														 'title' => __('Click to remove from group')]);
 					echo '</li>';
+					
+					if($contacts->email != '') {
+						$hasEmail++;
+					}
 				}
 			}
 			?>
@@ -80,7 +85,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
 
 <div class="related row">
 	<div class="column large-12">
-		<h4 class="subheader"><?= __('Add History Event to all Group Members') ?></h4>
+		<h2 class="subheader"><?= __('Add History Event to all Group Members') ?></h2>
 		<table id="hTable" cellpadding="0" cellspacing="0">
 			<tr>
 				<th><?= $this->Paginator->sort('date') ?></th>
@@ -92,6 +97,58 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
 				<th class="actions"><?= __('Actions') ?></th>
 			</tr>
 			<?= $this->element('history-add-form', ['e_showContact' => false, 'e_group' => $group]) ?>
+			<?php
+			foreach($group->histories as $history) :
+			?>
+			<tr>
+				<td>
+					<?= h($history->date->format('Y-m-d')) ?>
+				</td>
+				<td>
+					<?= h($history->user->name) ?>
+				</td>
+				<td id="uName">
+					<?= h($group->name) ?>
+				</td>
+				<td>
+					<?= h($history->event->name) ?>
+				</td>
+				<td>
+					<?= h($history->detail) ?>
+				</td>
+				<td>
+					<?= h($history->quantity) ?>
+				</td>
+				<td>
+					<?php
+					if ( isset($history->unit)) {
+						print h($history->unit->name);
+					}
+					?>
+				</td>
+				<td id="hInfo">
+				</td>
+			</tr>
+			<?php
+			endforeach;
+			?>
 		</table>
+	</div>
+</div>
+
+
+<div class="related row">
+	<div class="column large-12">
+		<h2 class="subheader"><?= __('Send Mail to all Group Members') ?></h2>
+		<h6 class="subheader"><?= __('Sender') ?></h6>
+		<?= $this->request->session()->read('Auth.User.email') ?>
+		<h6 class="subheader"><?= __('To') ?></h6>
+		<?php
+		echo h($group->name) . ' (' . $hasEmail . ' ' . __('recepients') . ')';
+		echo $this->Form->input('subject');
+		echo $this->Form->input('message',
+								['type' => 'textarea']);
+		echo $this->Form->button(__('Submit'), ['id' => 'sendmail']);
+		?>
 	</div>
 </div>

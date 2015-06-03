@@ -18,8 +18,6 @@
 		?>
 	</td>
 	<?php
-	else :
-		echo $this->Form->input('target_group_id', ['type' => 'hidden', 'value' => $e_group->id]);
 	endif;
 	?>
 	<td>
@@ -38,9 +36,12 @@
 		<?php
 		if (isset($e_group)) {
 			echo h($e_group->name);
+			echo $this->Form->input('group_id', ['type' => 'hidden', 'value' => $e_group->id]);
+			echo $this->Form->input('target_group_id', ['type' => 'hidden', 'value' => true]);
 		} else {
 			echo $this->Form->input('group_id', ['type' => 'hidden']);
 			echo $this->Form->input('xgroup_id', ['label' => false, 'type' => 'text']);
+			echo $this->Form->input('target_group_id', ['type' => 'hidden', 'value' => false]);
 		}
 		?>
 	</td>

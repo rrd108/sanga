@@ -29,15 +29,15 @@ class HistoryShell extends Shell {
 			//Log::debug($history);
 			$historyEntity = $this->Histories->newEntity($history);
 			//Log::debug($historyEntity);
-			if ( $this->Histories->save($historyEntity)) {
+			if ( ! $this->Histories->save($historyEntity)) {
 				$notification = [
 					'user_id' => $this->args[2],
 					'sender_id' => 1,
-					'notification' => __('History event was not added for {0}', $contact['contactname'])
+					'notification' => __('History event was not added for {0}', h($contact['contactname']))
 					];
 				//Log::debug($historyEntity->errors());
 				$notification = $this->Notifications->newEntity($notification);
-				Log::debug($notification);
+				//Log::debug($notification);
 				$this->Notifications->save($notification);
 			}
 		}
