@@ -884,6 +884,7 @@ echo $this->element('ajax-images');
         <?php
             echo $this->Form->file('uploadfile');
             echo $this->Form->hidden('contactid', ['value' => $contact->id]);
+            echo "<br>";
             echo $this->Form->submit();
             echo $this->Form->end();
         ?>
@@ -900,7 +901,26 @@ echo $this->element('ajax-images');
             <tbody>
                 <?php foreach ($documents as $document): ?>
                     <tr>
-                        <td>&nbsp;&nbsp;</td>
+                        <td>
+                        <?php
+                            switch($document->file_type):
+                                case 'application/pdf':
+                                    echo $this->Html->image('doctype_icon_pdf.png');
+                                    break;
+                                case 'image/jpeg':
+                                    echo $this->Html->image('doctype_icon_jpg.png');
+                                    break;
+                                case 'image/png':
+                                    echo $this->Html->image('doctype_icon_png.png');
+                                    break;
+                                case 'text/plain':
+                                    echo $this->Html->image('doctype_icon_txt.png');
+                                    break;
+                                default:
+                                    echo $this->Html->image('doctype_icon_unk.png');
+                            endswitch;
+                        ?>
+                        </td>
                         <td><?php echo $document->document_name; ?></td>
                         <td><?php echo $document->created; ?></td>
                         <td><?php echo $this->Html->link(__('Download'), ['action' => 'sendDocument', $document->id]); ?></td>

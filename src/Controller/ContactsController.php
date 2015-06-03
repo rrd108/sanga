@@ -938,17 +938,17 @@ $result = $this->Contacts->find()
     public function documentSave()
     {
         if(!empty($this->request->data['contactid'])) {
+
             $contactid = $this->request->data['contactid'];
 
             if(!empty($this->request->data['document_title']) && !empty($this->request->data['uploadfile']['type'])) {
-
-
 
                 $documents = TableRegistry::get('Documents');
                 $document = $documents->newEntity();
 
                 $document->contact_id = $contactid;
                 $document->document_name = $this->request->data['document_title'];
+                $document->file_name = $this->request->data['uploadfile']['name'];
                 $document->file_type = $this->request->data['uploadfile']['type'];
                 $document->size = $this->request->data['uploadfile']['size'];
                 $document->data = file_get_contents($this->request->data['uploadfile']['tmp_name']);
@@ -956,7 +956,7 @@ $result = $this->Contacts->find()
 
                 $documents->save($document);
 
-                $this->Flash->error(__('The document has been saved.'));
+                $this->Flash->success(__('The document has been saved.'));
                 return $this->redirect(['action' => 'view', $contactid]);
             } else {
                 $this->Flash->error(__('The document could not be saved.'));
@@ -973,10 +973,14 @@ $result = $this->Contacts->find()
 
         $result = $query->first();
 
-        $this->response->header('Content-type', "$result->file_type");
-        $this->response->body(base64_encode($result->data));
-        $this->response->download('filename_for_download.pdf');
+        $this->response->header([
+            "Content-type: $result->file_type"
+        ]);
+        $this->response->body(stream_get_contents($result->data));
+        $this->response->download($result->file_name);
+
         return $this->response;
+
     }
 
 

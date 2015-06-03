@@ -551,5 +551,8 @@ CREATE TABLE `documents` (
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
+ALTER TABLE `documents` ADD `file_name` VARCHAR(200) NOT NULL AFTER `document_name`;
+
+
 
 
