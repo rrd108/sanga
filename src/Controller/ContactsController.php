@@ -962,10 +962,7 @@ $result = $this->Contacts->find()
     {
 		//TODO check ownership
 		
-        $query = $this->Contacts->Documents->find()
-            ->where(['Documents.id =' => $documentId]);
-
-        $result = $query->first();
+        $result = $this->Contacts->Documents->get($documentId);
 
         $this->response->header([
             "Content-type: $result->file_type"
