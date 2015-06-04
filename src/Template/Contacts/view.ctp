@@ -40,6 +40,7 @@ echo $this->element('ajax-images');
 				<li id="tabnav-6"><a href="#tabs-6"><?= __('Finances') ?></a></li>
 				<li id="tabnav-7"><a href="#tabs-7"><?= __('Access') ?></a></li>
 				<li id="tabnav-8"><a href="#tabs-8"><?= __('Send a mail') ?></a></li>
+				<li id="tabnav-9"><a href="#tabs-9"><?= __('Documents') ?></a></li>
 			</ul>
 		</nav>
 	</div>
@@ -863,6 +864,73 @@ echo $this->element('ajax-images');
 			</div>
 		</div>
 	</div>
+
+	<div id="tabs-9" class="contacts view large-10 medium-9 columns">
+        <h2><?= h($contact->contactname) ?></h2>
+        <div class="row">
+        <div class="column large-12">
+
+        <!-- Új dokumentum hozzáadása -->
+        <h5><?= __('Upload new documents') ?></h5>
+        <?php
+            echo $this->Form->create(null,
+                [
+                    'url' => ['controller' => 'Contacts', 'action' => 'documentSave' ],
+                    'type' => 'file'
+                ]);
+            echo $this->Form->input('document_title');
+        ?>
+        <label><?= __('File:') ?></label>
+        <?php
+            echo $this->Form->file('uploadfile');
+            echo $this->Form->hidden('contactid', ['value' => $contact->id]);
+            echo "<br>";
+            echo $this->Form->submit();
+            echo $this->Form->end();
+        ?>
+        <br><br>
+		<table id="hTable" cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<th>&nbsp;&nbsp;</th>
+					<th><?= __('Document title') ?></th>
+					<th><?= __('Created') ?></th>
+					<th>&nbsp;&nbsp;</th>
+				</tr>
+			</thead>
+            <tbody>
+                <?php foreach ($documents as $document): ?>
+                    <tr>
+                        <td>
+                        <?php
+                            switch($document->file_type):
+                                case 'application/pdf':
+                                    echo $this->Html->image('doctype_icon_pdf.png');
+                                    break;
+                                case 'image/jpeg':
+                                    echo $this->Html->image('doctype_icon_jpg.png');
+                                    break;
+                                case 'image/png':
+                                    echo $this->Html->image('doctype_icon_png.png');
+                                    break;
+                                case 'text/plain':
+                                    echo $this->Html->image('doctype_icon_txt.png');
+                                    break;
+                                default:
+                                    echo $this->Html->image('doctype_icon_unk.png');
+                            endswitch;
+                        ?>
+                        </td>
+                        <td><?php echo $document->document_name; ?></td>
+                        <td><?php echo $document->created; ?></td>
+                        <td><?php echo $this->Html->link(__('Download'), ['action' => 'sendDocument', $document->id]); ?></td>
+                    </tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+        </div>
+	</div>
+
 </div>
 </div>
 </div>

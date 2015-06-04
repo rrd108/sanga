@@ -1809,11 +1809,29 @@ msgstr "November"
 msgid "December"
 msgstr "december"
 
+
+#: Template/Contacts/view.ctp:43
+msgid "Documents"
+msgstr "Dokumentumok"
+
+#: Template/Contacts/view.ctp:876
+msgid "Document title"
+msgstr "Dokumentum címe"
+
+#: Template/Contacts/view.ctp:871
+msgid "Upload new documents"
+msgstr "Új dokumentum feltöltése"
+
+#: Template/Contacts/view.ctp:906
+msgid "Download"
+msgstr "Letöltés"
+
 #~ msgid "Contact Person"
 #~ msgstr "Kapcsolattartó"
 
 #~ msgid "Inactive means the connection is lost"
 #~ msgstr "Inaktív, elvesztett kapcsolat"
+
 
 #~ msgid "Area"
 #~ msgstr "Környék"

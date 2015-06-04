@@ -3,7 +3,9 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\String;
+use Cake\I18n\Time;
 
 use Cake\Core\Configure;
 
@@ -385,6 +387,13 @@ $result = $this->Contacts->find()
 		
 		$hasAccess = $this->Contacts->hasAccess($id);
 		$this->set(compact('hasAccess'));
+
+        //documents
+        $documents = TableRegistry::get('Documents');
+        $query = $documents->find('all')
+            ->where(['Documents.contact_id =' => $id])
+            ->order(['Documents.created' => 'DESC']);
+        $this->set('documents', $query);
 	}
 	
 /**
@@ -925,4 +934,54 @@ $result = $this->Contacts->find()
 		}
 		$this->set('result', $result);
 	}
+
+    public function documentSave()
+    {
+        if(!empty($this->request->data['contactid'])) {
+
+            $contactid = $this->request->data['contactid'];
+
+            if(!empty($this->request->data['document_title']) && !empty($this->request->data['uploadfile']['type'])) {
+
+                $documents = TableRegistry::get('Documents');
+                $document = $documents->newEntity();
+
+                $document->contact_id = $contactid;
+                $document->document_name = $this->request->data['document_title'];
+                $document->file_name = $this->request->data['uploadfile']['name'];
+                $document->file_type = $this->request->data['uploadfile']['type'];
+                $document->size = $this->request->data['uploadfile']['size'];
+                $document->data = file_get_contents($this->request->data['uploadfile']['tmp_name']);
+                $document->created = Time::now();
+
+                $documents->save($document);
+
+                $this->Flash->success(__('The document has been saved.'));
+                return $this->redirect(['action' => 'view', $contactid]);
+            } else {
+                $this->Flash->error(__('The document could not be saved.'));
+                return $this->redirect(['action' => 'view', $contactid]);
+            }
+        }
+    }
+
+    public function sendDocument($documentId)
+    {
+        $documents = TableRegistry::get('Documents');
+        $query = $documents->find('all')
+            ->where(['Documents.id =' => $documentId]);
+
+        $result = $query->first();
+
+        $this->response->header([
+            "Content-type: $result->file_type"
+        ]);
+        $this->response->body(stream_get_contents($result->data));
+        $this->response->download($result->file_name);
+
+        return $this->response;
+
+    }
+
+
 }
