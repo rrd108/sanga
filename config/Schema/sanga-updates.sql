@@ -553,6 +553,21 @@ CREATE TABLE `documents` (
 
 ALTER TABLE `documents` ADD `file_name` VARCHAR(200) NOT NULL AFTER `document_name`;
 
+ALTER TABLE `sanga`.`documents` 
+DROP COLUMN `contact_id`,
+ADD COLUMN `contact_id` INT(10) UNSIGNED NOT NULL AFTER `id`,
+ADD INDEX `fk_documents_contacts1_idx` (`contact_id` ASC);
 
+ALTER TABLE `sanga`.`documents` 
+ADD CONSTRAINT `fk_documents_contacts1`
+  FOREIGN KEY (`contact_id`)
+  REFERENCES `sanga`.`contacts` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+  
+ALTER TABLE `sanga`.`documents` 
+CHANGE COLUMN `document_name` `name` VARCHAR(255) NOT NULL ,
+CHANGE COLUMN `document_size` `size` BIGINT(20) NOT NULL ,
+CHANGE COLUMN `document_data` `data` MEDIUMBLOB NOT NULL ;
 
 

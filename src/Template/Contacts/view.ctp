@@ -899,7 +899,7 @@ echo $this->element('ajax-images');
 				</tr>
 			</thead>
             <tbody>
-                <?php foreach ($documents as $document): ?>
+                <?php foreach ($contact->documents as $document): ?>
                     <tr>
                         <td>
                         <?php
@@ -921,9 +921,9 @@ echo $this->element('ajax-images');
                             endswitch;
                         ?>
                         </td>
-                        <td><?php echo $document->document_name; ?></td>
+                        <td><?php echo $document->name; ?></td>
                         <td><?php echo $document->created; ?></td>
-                        <td><?php echo $this->Html->link(__('Download'), ['action' => 'sendDocument', $document->id]); ?></td>
+                        <td><?php echo $this->Html->link(__('Download'), ['action' => 'documentGet', $document->id]); ?></td>
                     </tr>
 				<?php endforeach; ?>
 			</tbody>

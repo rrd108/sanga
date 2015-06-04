@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\String;
 use Cake\I18n\Time;
 
@@ -339,8 +338,10 @@ $result = $this->Contacts->find()
 			$this->render();
 		}
 		$contact = $this->Contacts->get($id, [
-			'contain' => ['WorkplaceZips', 'Zips', 'Contactsources', 'Groups', 'Skills', 'Users', 'Histories']
-		]);
+			'contain' => ['WorkplaceZips', 'Zips', 'Contactsources', 'Groups',
+						  'Skills', 'Users', 'Histories', 'Documents'
+						  ]
+			]);
 		//debug($contact);die();
 		$this->set('contact', $contact);
 		
@@ -387,13 +388,6 @@ $result = $this->Contacts->find()
 		
 		$hasAccess = $this->Contacts->hasAccess($id);
 		$this->set(compact('hasAccess'));
-
-        //documents
-        $documents = TableRegistry::get('Documents');
-        $query = $documents->find('all')
-            ->where(['Documents.contact_id =' => $id])
-            ->order(['Documents.created' => 'DESC']);
-        $this->set('documents', $query);
 	}
 	
 /**
@@ -943,18 +937,17 @@ $result = $this->Contacts->find()
 
             if(!empty($this->request->data['document_title']) && !empty($this->request->data['uploadfile']['type'])) {
 
-                $documents = TableRegistry::get('Documents');
-                $document = $documents->newEntity();
+                $document = $this->Contacts->Documents->newEntity();
 
                 $document->contact_id = $contactid;
-                $document->document_name = $this->request->data['document_title'];
+                $document->name = $this->request->data['document_title'];
                 $document->file_name = $this->request->data['uploadfile']['name'];
                 $document->file_type = $this->request->data['uploadfile']['type'];
                 $document->size = $this->request->data['uploadfile']['size'];
                 $document->data = file_get_contents($this->request->data['uploadfile']['tmp_name']);
                 $document->created = Time::now();
 
-                $documents->save($document);
+                $this->Contacts->Documents->save($document);
 
                 $this->Flash->success(__('The document has been saved.'));
                 return $this->redirect(['action' => 'view', $contactid]);
@@ -965,10 +958,11 @@ $result = $this->Contacts->find()
         }
     }
 
-    public function sendDocument($documentId)
+    public function documentGet($documentId)
     {
-        $documents = TableRegistry::get('Documents');
-        $query = $documents->find('all')
+		//TODO check ownership
+		
+        $query = $this->Contacts->Documents->find()
             ->where(['Documents.id =' => $documentId]);
 
         $result = $query->first();
