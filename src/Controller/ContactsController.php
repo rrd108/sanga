@@ -950,6 +950,9 @@ $result = $this->Contacts->find()
                 $this->Contacts->Documents->save($document);
 
                 $this->Flash->success(__('The document has been saved.'));
+				
+				//TODO add history event
+				
                 return $this->redirect(['action' => 'view', $contactid]);
             } else {
                 $this->Flash->error(__('The document could not be saved.'));
@@ -973,6 +976,4 @@ $result = $this->Contacts->find()
         return $this->response;
 
     }
-
-
 }
