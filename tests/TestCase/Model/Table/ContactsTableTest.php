@@ -88,33 +88,20 @@ class ContactsTableTest extends TestCase {
 	}
 
 	public function testCheckDuplicatesOnEmail(){
-		$duplicates = $this->Contacts->checkDuplicatesOnEmail();
-		foreach($duplicates as $dupliacte){
-			$actual[] = $dupliacte->hydrate(false)->toArray();
-		}
+		$actual = $this->Contacts->checkDuplicatesOnEmail();
 		$expected = [
-			[
-				['id' => 3, 'legalname' => 'Dvaipayana Dasa', 'contactname' => '', 'email' => 'dvd@1108.cc'],
-				['id' => 4, 'legalname' => 'Acarya-ratna Dasa', 'contactname' => '', 'email' => 'dvd@1108.cc']
-			],
-			[
-				['id' => 6, 'legalname' => 'Horváth Zoltán', 'contactname' => '', 'email' => 'senki@sehol.se'],
-				['id' => 7, 'legalname' => 'Dvaipayan pr', 'contactname' => '', 'email' => 'senki@sehol.se']
-			]
-		];
+				['id1' => 3, 'id2' => 4, 'data' => 'dvd@1108.cc', 'field' => 'email'],
+				['id1' => 6, 'id2' => 7, 'data' => 'senki@sehol.se', 'field' => 'email']
+			];
 		$this->assertEquals($expected, $actual);
 	}
 
 	public function testCheckDuplicatesOnBirth(){
-		$duplicates = $this->Contacts->checkDuplicatesOnBirth();
-		foreach($duplicates as $actual){
-			$actual = $actual->hydrate(false)->toArray();
-			$expected = [
-				['id' => 1, 'legalname' => 'Lokanatha dasa', 'contactname' => 'Borsos László', 'birth' => Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00')],
-				['id' => 6, 'legalname' => 'Horváth Zoltán', 'contactname' => null, 'birth' =>  Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00')]
+		$actual = $this->Contacts->checkDuplicatesOnBirth();
+		$expected = [
+				['id1' => 1, 'id2' => 6, 'data' => Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00'), 'field' => 'birth']
 			];
-			$this->assertEquals($expected, $actual);
-		}
+		$this->assertEquals($expected, $actual);
 	}
 
 	public function testCheckDuplicatesOnNames(){

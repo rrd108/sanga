@@ -331,33 +331,51 @@ class ContactsTable extends Table {
 	}
 
 	public function checkDuplicatesOnEmail(){
-		$query = $this->find()
-				->select(['email', 'db' => 'COUNT(*)'])
-				->where(['email != ' => ''])
-				->group(['email'])
-				->having(['db > ' => 1]);
-		
 		$duplicates = [];
-		foreach($query as $q){
-			$duplicates[] = $this->find()
-						->select(['id', 'legalname', 'contactname', 'email'])
-						->where(['email' => $q->email]);
+		$_duplicates = $this->find()
+			->innerJoin(
+				['c' => 'contacts'],	//alias
+				[	//conditions
+				   'Contacts.email = c.email',
+				   'Contacts.id < c.id',
+				   'c.id > ' => 0,
+				   'Contacts.email != ' => ''
+				]
+				)
+	        ->select(['Contacts.id', 'Contacts.email', 'c.id'])
+			->toArray();
+		foreach($_duplicates as $d)
+		{
+			$duplicates[] = ['id1' => $d->id,
+							 'id2' => (int) $d->c['id'],
+							 'field' => 'email',
+							 'data' => $d->email
+							 ];
 		}
 		return $duplicates;
 	}	
 
 	public function checkDuplicatesOnBirth(){
-		$query = $this->find()
-				->select(['birth', 'db' => 'COUNT(*)'])
-				->where(['birth != ' => ''])
-				->group(['birth'])
-				->having(['db > ' => 1]);
-		
 		$duplicates = [];
-		foreach($query as $q){
-			$duplicates[] = $this->find()
-						->select(['id', 'legalname', 'contactname', 'birth'])
-						->where(['birth' => $q->birth]);
+		$_duplicates = $this->find()
+			->innerJoin(
+				['c' => 'contacts'],	//alias
+				[	//conditions
+				   'Contacts.birth = c.birth',
+				   'Contacts.id < c.id',
+				   'c.id > ' => 0,
+				   'Contacts.birth != ' => ''
+				]
+				)
+	        ->select(['Contacts.id', 'Contacts.birth', 'c.id'])
+			->toArray();
+		foreach($_duplicates as $d)
+		{
+			$duplicates[] = ['id1' => $d->id,
+							 'id2' => (int) $d->c['id'],
+							 'field' => 'birth',
+							 'data' => $d->birth
+							 ];
 		}
 		return $duplicates;
 	}	

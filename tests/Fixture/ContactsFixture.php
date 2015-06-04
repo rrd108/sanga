@@ -103,7 +103,7 @@ class ContactsFixture extends TestFixture
 			'comment' => '2012ben fizetett utoljára','created' => NULL,'modified' => NULL],
 		['id' => 7,'legalname' => 'Dvaipayan pr','contactname' => '','zip_id' => NULL,
 			'address' => '','lat' => '46.067915','lng' => '18.222189',
-			'phone' => '85/540-002','email' => 'senki@sehol.se',
+			'phone' => '85/540-002','email' => 'SENKI@sehol.se',
 			'birth' => NULL,'sex' => '1','workplace' => '',
 			'family_id' => NULL,'contactsource_id' => '2','active' => '1',
 			'comment' => '','created' => '2014-11-09 14:44:38','modified' => '2014-11-09 14:44:39']
