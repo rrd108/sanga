@@ -136,7 +136,8 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
 	</div>
 </div>
 
-
+<?php
+/*
 <div class="related row">
 	<div class="column large-12">
 		<h2 class="subheader"><?= __('Send Mail to all Group Members') ?></h2>
@@ -152,3 +153,5 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
 		?>
 	</div>
 </div>
+*/
+?>
