@@ -239,9 +239,9 @@ class ContactsTable extends Table {
  * email				same
  * birth				same
  * phone				remove non numeric, if not start with 00 or +, suppose it is +36 and add it
+ * lat, lng				near (SQL float equality) - handles address
 
  * legalname, contactname	similar [legalname, contactname]
- * lat, lng				near (SQL float equality) - handles address
  * 
  */
 
@@ -270,7 +270,8 @@ class ContactsTable extends Table {
 		return $duplicates;
 	}	
 
-	public function checkDuplicatesOnBirth(){
+	public function checkDuplicatesOnBirth()
+	{
 		$duplicates = [];
 		$_duplicates = $this->find()
 			->innerJoin(
@@ -354,41 +355,32 @@ class ContactsTable extends Table {
 		return $duplicates;
 	}
 
-	public function checkDuplicatesOnGeo(){
-		$geos = $this->find()
-				->select(['id', 'lat', 'lng']);
-		
-		$duplicates = $foundPairs = [];
+	public function checkDuplicatesOnGeo()
+	{
+		$duplicates = [];
 		$delta = 0.0001;	//10m
-		foreach($geos as $geo){
-			if($geo->lat){
-				$query = $this->find()
-							->select(['id', 'legalname', 'contactname', 'lat', 'lng']);
-				$exprLat = $query->newExpr()->add('ABS(lat - ' . $geo['lat'] . ') < ' . $delta);
-				$exprLng = $query->newExpr()->add('ABS(lng - ' . $geo['lng'] . ') < ' . $delta);
-				$query
-					->where([
-							 $exprLat,
-							 $exprLng,
-							 'id !=' => $geo->id
-							]);
-				$contacts = $query->toArray();
-				if(count($contacts)){
-					foreach($contacts as $contact){
-						if(!in_array($contact->id, $foundPairs) && !in_array($geo->id, $foundPairs)){
-							$foundPairs[] = $contact->id;
-							$foundPairs[] = $geo->id;
-							$duplicates[$geo->id][] = [
-									'id' => $contact->id,
-									'legalname' => $contact->legalname,
-									'contactname' => $contact->contactname,
-									'lat' => $contact->lat,
-									'lng' => $contact->lng
-									];
-						}
-					}
-				}
-			}
+		$_duplicates = $this->find()
+			->innerJoin(
+				['c' => 'contacts'],	//alias
+				[	//conditions
+				   'ABS(Contacts.lat - c.lat) < ' . $delta,
+				   'ABS(Contacts.lng - c.lng) < ' . $delta,
+				   'Contacts.id < c.id',
+				   'c.id > ' => 0,
+				   'Contacts.lat != ' => 0
+				]
+				)
+	        ->select(['Contacts.id', 'Contacts.zip_id', 'Contacts.address',
+					  'c.id', 'c.zip_id', 'c.address']);
+		$_duplicates->toArray();
+		foreach($_duplicates as $d)
+		{
+			$duplicates[] = ['id1' => $d->id,
+							 'id2' => (int) $d->c['id'],
+							 'field' => 'geo',
+							 'data' => $d->zip_id . ' & ' . $d->address .
+									' : ' . $d->c['zip_id'] . ' & ' . $d->c['address']
+							 ];
 		}
 		return $duplicates;
 	}	

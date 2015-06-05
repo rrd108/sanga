@@ -64,13 +64,13 @@ class ContactsTableTest extends TestCase {
 	public function testCheckDuplicatesOnGeo(){
 		$actual = $this->Contacts->checkDuplicatesOnGeo();
 		$expected = [
-					 5 => [[
-						'id' => 7,
-						'legalname' => 'Dvaipayan pr',
-						'contactname' => '',
-						'lat' => 46.067917,
-						'lng' => 18.222189
-						]]];
+			[
+			'id1' => (int) 5,
+			'id2' => (int) 7,
+			'field' => 'geo',
+			'data' => '3 & Temesvári utca 6. : 3 & Temesvári utca 5.'
+			]
+		];
 		$this->assertEquals($expected, $actual);
 	}
 
