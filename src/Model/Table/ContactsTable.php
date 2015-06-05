@@ -236,99 +236,14 @@ class ContactsTable extends Table {
 /*
  * Searching for duplicates: checkDuplicatesOn()
  * 
- * legalname, contactname	similar [legalname, contactname]
- * lat, lng				near (SQL float equality) - handles address
- * phone				remove non numeric, if not start with 00 or +, suppose it is +36 and add it
  * email				same
  * birth				same
+ * phone				remove non numeric, if not start with 00 or +, suppose it is +36 and add it
+
+ * legalname, contactname	similar [legalname, contactname]
+ * lat, lng				near (SQL float equality) - handles address
  * 
  */
-
-	public function checkDuplicatesOnGeo(){
-		$geos = $this->find()
-				->select(['id', 'lat', 'lng']);
-		
-		$duplicates = $foundPairs = [];
-		$delta = 0.0001;	//10m
-		foreach($geos as $geo){
-			if($geo->lat){
-				$query = $this->find()
-							->select(['id', 'legalname', 'contactname', 'lat', 'lng']);
-				$exprLat = $query->newExpr()->add('ABS(lat - ' . $geo['lat'] . ') < ' . $delta);
-				$exprLng = $query->newExpr()->add('ABS(lng - ' . $geo['lng'] . ') < ' . $delta);
-				$query
-					->where([
-							 $exprLat,
-							 $exprLng,
-							 'id !=' => $geo->id
-							]);
-				$contacts = $query->toArray();
-				if(count($contacts)){
-					foreach($contacts as $contact){
-						if(!in_array($contact->id, $foundPairs) && !in_array($geo->id, $foundPairs)){
-							$foundPairs[] = $contact->id;
-							$foundPairs[] = $geo->id;
-							$duplicates[$geo->id][] = [
-									'id' => $contact->id,
-									'legalname' => $contact->legalname,
-									'contactname' => $contact->contactname,
-									'lat' => $contact->lat,
-									'lng' => $contact->lng
-									];
-						}
-					}
-				}
-			}
-		}
-		return $duplicates;
-	}	
-
-
-	public function checkDuplicatesOnPhone(){
-		$removes = 'REPLACE(
-						REPLACE(
-							REPLACE(
-								REPLACE(
-									REPLACE(
-										REPLACE(phone, "+", ""),
-									"-", ""),
-								" ", ""),
-							"/", ""),
-						"(", ""),
-					")", "")';
-
-		$removes = 	'CONCAT(
-						REPLACE(
-							SUBSTRING('.$removes.',	1, 4), "0036", "36"
-						),
-						SUBSTRING('.$removes.', 5)
-					)';
-		
-		$tPhone = 'CONCAT(
-						REPLACE(
-							SUBSTRING('.$removes.',	1, 2), "06", "36"
-						),
-						SUBSTRING('.$removes.', 3)
-					)';
-
-		$phones = $this->find()
-				->select(['db' => 'COUNT(id)',
-						  'tPhone' => $tPhone])
-				->where(['phone != ' => ''])
-				->group(['tPhone'])
-				->having(['db > ' => 1])
-				->order(['db' => 'DESC']);
-		
-		$duplicates = [];
-		
-		foreach($phones as $p){
-			$query = $this->find()
-					->select(['id', 'legalname', 'contactname', 'phone']);
-			$duplicates[] = $query->where([$tPhone . ' = ' => $p->tPhone]);	//we need "=" because of the literal sql function call
-		}
-		
-		return $duplicates;
-	}
 
 	public function checkDuplicatesOnEmail(){
 		$duplicates = [];
@@ -376,6 +291,104 @@ class ContactsTable extends Table {
 							 'field' => 'birth',
 							 'data' => $d->birth
 							 ];
+		}
+		return $duplicates;
+	}	
+
+	private function huPhoneReformat($table)
+	{
+		$removes = 'REPLACE(
+						REPLACE(
+							REPLACE(
+								REPLACE(
+									REPLACE(
+										REPLACE(' . $table . '.phone, "+", ""),
+									"-", ""),
+								" ", ""),
+							"/", ""),
+						"(", ""),
+					")", "")';
+
+		$removes = 	'CONCAT(
+						REPLACE(
+							SUBSTRING('.$removes.',	1, 4), "0036", "36"
+						),
+						SUBSTRING('.$removes.', 5)
+					)';
+		
+		$tPhone = 'CONCAT(
+						REPLACE(
+							SUBSTRING('.$removes.',	1, 2), "06", "36"
+						),
+						SUBSTRING('.$removes.', 3)
+					)';
+		return $tPhone;
+	}
+	
+	public function checkDuplicatesOnPhone(){
+		$duplicates = [];
+		$_duplicates = $this->find()
+			->innerJoin(
+				['c' => 'contacts'],	//alias
+				[	//conditions
+				   $this->huPhoneReformat('Contacts') . ' = ' . $this->huPhoneReformat('c'),
+				   'Contacts.id < c.id',
+				   'c.id > ' => 0,
+				   'Contacts.phone != ' => ''
+				]
+				)
+	        ->select(['Contacts.id', 'Contacts.phone', 'c.id',
+					  'tCPhone' => $this->huPhoneReformat('Contacts'),
+					  'tcPhone' => $this->huPhoneReformat('c')
+					  ]);
+		$_duplicates->toArray();
+		foreach($_duplicates as $d)
+		{
+			$duplicates[] = ['id1' => $d->id,
+							 'id2' => (int) $d->c['id'],
+							 'field' => 'phone',
+							 'data' => $d->phone
+							 ];
+		}
+		
+		return $duplicates;
+	}
+
+	public function checkDuplicatesOnGeo(){
+		$geos = $this->find()
+				->select(['id', 'lat', 'lng']);
+		
+		$duplicates = $foundPairs = [];
+		$delta = 0.0001;	//10m
+		foreach($geos as $geo){
+			if($geo->lat){
+				$query = $this->find()
+							->select(['id', 'legalname', 'contactname', 'lat', 'lng']);
+				$exprLat = $query->newExpr()->add('ABS(lat - ' . $geo['lat'] . ') < ' . $delta);
+				$exprLng = $query->newExpr()->add('ABS(lng - ' . $geo['lng'] . ') < ' . $delta);
+				$query
+					->where([
+							 $exprLat,
+							 $exprLng,
+							 'id !=' => $geo->id
+							]);
+				$contacts = $query->toArray();
+				if(count($contacts)){
+					foreach($contacts as $contact){
+						if(!in_array($contact->id, $foundPairs) && !in_array($geo->id, $foundPairs)){
+							$foundPairs[] = $contact->id;
+							$foundPairs[] = $geo->id;
+							$duplicates[$geo->id][] = [
+									'id' => $contact->id,
+									'legalname' => $contact->legalname,
+									'contactname' => $contact->contactname,
+									'lat' => $contact->lat,
+									'lng' => $contact->lng
+									];
+						}
+					}
+				}
+			}
 		}
 		return $duplicates;
 	}	

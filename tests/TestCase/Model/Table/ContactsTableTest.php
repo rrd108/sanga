@@ -75,16 +75,13 @@ class ContactsTableTest extends TestCase {
 	}
 
 	public function testCheckDuplicatesOnPhone(){
-		$duplicates = $this->Contacts->checkDuplicatesOnPhone();
-		foreach($duplicates as $actual){
-			$actual = $actual->hydrate(false)->toArray();
-			$expected = [
-				['id' => 1, 'legalname' => 'Lokanatha dasa', 'contactname' => 'Borsos László', 'phone' => '+36 30 999 5091'],
-				['id' => 2, 'legalname' => 'Acarya-ratna das', 'contactname' => '', 'phone' => '36/30 99-95-091'],
-				['id' => 3, 'legalname' => 'Dvaipayana Dasa', 'contactname' => '', 'phone' => '06 (30) 99-95-091']
+		$actual = $this->Contacts->checkDuplicatesOnPhone();
+		$expected = [
+				['id1' => 1, 'id2' => 2, 'data' => '+36 30 999 5091', 'field' => 'phone'],
+				['id1' => 1, 'id2' => 3, 'data' => '+36 30 999 5091', 'field' => 'phone'],
+				['id1' => 2, 'id2' => 3, 'data' => '36/30 99-95-091', 'field' => 'phone']
 			];
-			$this->assertEquals($expected, $actual);
-		}
+		$this->assertEquals($expected, $actual);
 	}
 
 	public function testCheckDuplicatesOnEmail(){
