@@ -104,7 +104,7 @@ class HistoriesController extends AppController {
 		if ($this->request->is('post')) {
 			//debug($this->request->data);die();
 			
-			if(isset($this->request->data['target_group_id'])){	//add an event to multiple group members
+			if(isset($this->request->data['target_group_id']) && ! $this->request->data['contact_id']){	//add an event to multiple group members
 				$group = $this->Histories->groups->get($this->request->data['group_id'], ['contain' => 'Contacts']);
 				exec(WWW_ROOT . '../bin/cake history ' . json_encode(json_encode($history)) . ' ' . json_encode(json_encode($group)) . ' ' . $this->Auth->user('id') . ' > /dev/null &');
 				$result = ['save' => true,
