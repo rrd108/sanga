@@ -240,7 +240,6 @@ class ContactsTable extends Table {
  * birth				same
  * phone				remove non numeric, if not start with 00 or +, suppose it is +36 and add it
  * lat, lng				near (SQL float equality) - handles address
-
  * legalname, contactname	similar [legalname, contactname]
  * 
  */
@@ -385,7 +384,38 @@ class ContactsTable extends Table {
 		return $duplicates;
 	}	
 
-	public function checkDuplicatesOnNames($distance = 4){
+	public function checkDuplicatesOnNames($distance = 5)
+	{
+		$duplicates = [];
+		$_duplicates = $this->find()
+			->innerJoin(
+				['c' => 'contacts'],	//alias
+				[	//conditions
+					'LEVENSHTEIN(Contacts.contactname, c.contactname) <= ' => $distance,
+					'Contacts.contactname != ' => '',
+				    'Contacts.id < c.id',
+				    'c.id > ' => 0,
+				]
+				)
+	        ->select(['Contacts.id', 'Contacts.contactname', 'Contacts.legalname',
+					  'c.id', 'c.contactname', 'c.legalname']);
+		$_duplicates->toArray();
+		foreach($_duplicates as $d)
+		{
+			$duplicates[] = ['id1' => $d->id,
+							 'id2' => (int) $d->c['id'],
+							 'field' => 'name',
+							 'data' => $d->contactname . ' & ' . $d->legalname .
+									' : ' . $d->c['contactname'] . ' & ' . $d->c['legalname']
+							 ];
+		}
+		
+		
+		
+		
+		
+		
+		/*
 		$query = $this->find()
 				->select(['id', 'legalname', 'contactname']);
 		
@@ -440,7 +470,7 @@ class ContactsTable extends Table {
 					}
 				}
 			}
-		}
+		}*/
 		return $duplicates;
 	}
 	

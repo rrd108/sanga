@@ -103,6 +103,7 @@ class ContactsTableTest extends TestCase {
 
 	public function testCheckDuplicatesOnNames(){
 		$actual = $this->Contacts->checkDuplicatesOnNames();
+		debug($actual);
 		$expected = [
 			2 => [
 				[
@@ -123,13 +124,13 @@ class ContactsTableTest extends TestCase {
 		$_actual = $this->Contacts->find('ownedBy', ['User.id' => 2])->hydrate(false)->toArray();
 		//debug($actual);
 		foreach($_actual as $a) {
-			$actual[] = ['id' => $a['id'], 'legalname' => $a['legalname']];
+			$actual[] = ['id' => $a['id'], 'contactname' => $a['contactname']];
 		}
 		$expected = [
-				['id' => 2, 'legalname' => 'Acarya-ratna das'],
-				['id' => 3, 'legalname' => 'Dvaipayana Dasa'],
-				['id' => 4, 'legalname' => 'Acarya-ratna Dasa'],
-				['id' => 5, 'legalname' => 'Filu']
+				['id' => 2, 'contactname' => 'Acarya-ratna das'],
+				['id' => 3, 'contactname' => 'Dvaipayana Dasa'],
+				['id' => 4, 'contactname' => 'Acarya-ratna Dasa'],
+				['id' => 5, 'contactname' => 'Filu']
 			];
 		$this->assertEquals($expected, $actual);
 	}
