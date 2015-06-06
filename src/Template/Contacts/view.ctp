@@ -894,6 +894,7 @@ echo $this->element('ajax-images');
 				<tr>
 					<th>&nbsp;&nbsp;</th>
 					<th><?= __('Document title') ?></th>
+					<th><?= __('Size') ?></th>
 					<th><?= __('Created') ?></th>
 					<th>&nbsp;&nbsp;</th>
 				</tr>
@@ -922,6 +923,11 @@ echo $this->element('ajax-images');
                         ?>
                         </td>
                         <td><?php echo $document->name; ?></td>
+                        <td>
+                            <?php
+                                echo $this->Number->toReadableSize($document->size);
+                            ?>
+                        </td>
                         <td><?php echo $document->created; ?></td>
                         <td><?php echo $this->Html->link(__('Download'), ['action' => 'documentGet', $document->id]); ?></td>
                     </tr>
