@@ -115,3 +115,15 @@ main.primary-content:after { clear: both; }
 .users.view .user-main-view .row .label { color: #b3b3b3; }
 .users.view .user-main-view .row:first-child + .row { border-top: none; }
 .users.view .user-main-view .row + .row { border-top: solid 1px #e5e5e5; }
+
+
+
+/* GROUPS VIEWS*/
+.groups.view .related{border-bottom: solid 1px #e5e5e5; padding-bottom: 40px; margin-bottom: 40px; }
+.groups.view .related:last-child{border: none;margin-bottom: 0;}
+.groups.view .related > .column{padding: 0; }
+.groups.view .related ul#members li{line-height: 20px; margin: 0 30px 10px 0; } 
+.groups.view .related ul#members li .ajaxremove{margin: 0 0 -2px 5px; }
+.groups.view .related.access ul{margin-bottom: 0; list-style: none; }
+.groups.view .related.access ul li{margin-bottom: 10px;}
+.groups.view .related.access ul li:last-child{margin-bottom: 0;}
