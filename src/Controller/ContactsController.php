@@ -388,6 +388,8 @@ $result = $this->Contacts->find()
 		
 		$hasAccess = $this->Contacts->hasAccess($id);
 		$this->set(compact('hasAccess'));
+
+
 	}
 	
 /**
@@ -946,6 +948,7 @@ $result = $this->Contacts->find()
                 $document->size = $this->request->data['uploadfile']['size'];
                 $document->data = file_get_contents($this->request->data['uploadfile']['tmp_name']);
                 $document->created = Time::now();
+                $document->user_id = $this->Auth->user('id');
 
                 $this->Contacts->Documents->save($document);
 

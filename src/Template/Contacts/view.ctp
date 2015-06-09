@@ -894,6 +894,7 @@ echo $this->element('ajax-images');
 				<tr>
 					<th>&nbsp;&nbsp;</th>
 					<th><?= __('Document title') ?></th>
+					<th><?= __('Uploader') ?></th>
 					<th><?= __('Size') ?></th>
 					<th><?= __('Created') ?></th>
 					<th>&nbsp;&nbsp;</th>
@@ -923,6 +924,9 @@ echo $this->element('ajax-images');
                         ?>
                         </td>
                         <td><?php echo $document->name; ?></td>
+                        <td>
+                            <?php print_r($contact->users); ?>
+                        </td>
                         <td>
                             <?php
                                 echo $this->Number->toReadableSize($document->size);

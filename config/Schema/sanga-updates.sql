@@ -570,4 +570,9 @@ CHANGE COLUMN `document_name` `name` VARCHAR(255) NOT NULL ,
 CHANGE COLUMN `document_size` `size` BIGINT(20) NOT NULL ,
 CHANGE COLUMN `document_data` `data` MEDIUMBLOB NOT NULL ;
 
+ALTER TABLE `sanga`.`documents` ADD `user_id` INT(10) NOT NULL AFTER `contact_id`;
+
+ALTER TABLE `sanga`.`documents` ADD INDEX `fk_documents_users1_idx` (`user_id` ASC);
+
+
 
