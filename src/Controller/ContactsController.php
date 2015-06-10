@@ -343,9 +343,6 @@ $result = $this->Contacts->find()
 						  ]
 			]);
 
-        //$this->loadModel('Users');
-        //$res = $this->Users->find('all');
-
         $uploaders = $this->Contacts->Users->find('all');
         $this->set('uploaders', $uploaders);
 
