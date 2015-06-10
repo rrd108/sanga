@@ -342,6 +342,13 @@ $result = $this->Contacts->find()
 						  'Skills', 'Users', 'Histories', 'Documents'
 						  ]
 			]);
+
+        //$this->loadModel('Users');
+        //$res = $this->Users->find('all');
+
+        $uploaders = $this->Contacts->Users->find('all');
+        $this->set('uploaders', $uploaders);
+
 		//debug($contact);die();
 		$this->set('contact', $contact);
 		
@@ -352,7 +359,6 @@ $result = $this->Contacts->find()
 		$this->paginate = [
 			'contain' => ['Contacts', 'Users', 'Events', 'Units', 'Groups']
 		];
-
 		$setting = $this->Contacts->Users->Settings
 				->find()
 				->where(['user_id' => $this->Auth->user('id'),

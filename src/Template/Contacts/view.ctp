@@ -925,7 +925,13 @@ echo $this->element('ajax-images');
                         </td>
                         <td><?php echo $document->name; ?></td>
                         <td>
-                            <?php print_r($contact->users); ?>
+                            <?php
+                                foreach($uploaders as $uploader):
+                                    if($document->user_id == $uploader->id):
+                                        echo $uploader->name;
+                                    endif;
+                                endforeach;
+                            ?>
                         </td>
                         <td>
                             <?php
