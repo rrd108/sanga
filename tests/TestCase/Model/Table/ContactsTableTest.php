@@ -103,18 +103,54 @@ class ContactsTableTest extends TestCase {
 
 	public function testCheckDuplicatesOnNames(){
 		$actual = $this->Contacts->checkDuplicatesOnNames();
-		debug($actual);
 		$expected = [
-			2 => [
-				[
-					'id' => 4,
-					'legalname' => 'Acarya-ratna Dasa',
-					'contactname' => '',
-					'levenshteinNameName' => '1',
-					'levenshteinContactnameName' => '16',
-					'levenshteinNameContactname' => null,
-					'levenshteinContactnameContactname' => null
-				]
+			[
+				'id1' => 2,
+				'id2' => 4,
+				'field' => 'name',
+				'data' => 'Acarya-ratna das & Kovács Árpád : Acarya-ratna Dasa & ',
+				'levenshtein' => [
+				   'lcc' => '1',
+				   'lcl' => '16',
+				   'llc' => '14',
+				   'lll' => '12'
+			   ]
+			],
+			[
+				'id1' => 2,
+				'id2' => 6,
+				'field' => 'name',
+				'data' => 'Acarya-ratna das & Kovács Árpád : Horváth Zoltán & Kovács Árpi',
+				'levenshtein' => [
+				   'lcc' => '13',
+				   'lcl' => '14',
+				   'llc' => '9',
+				   'lll' => '2'
+			   ]
+			],
+			[
+				'id1' => 1,
+				'id2' => 7,
+				'field' => 'name',
+				'data' => 'Lokanatha dasa & Borsos László : Borsos László & Dvaipayan pr',
+				'levenshtein' => [
+				   'lcc' => '12',
+				   'lcl' => '12',
+				   'llc' => '0',
+				   'lll' => '12'
+			   ]
+			],
+			[
+				'id1' => 3,
+				'id2' => 7,
+				'field' => 'name',
+				'data' => 'Dvaipayana Dasa &  : Borsos László & Dvaipayan pr',
+				'levenshtein' => [
+				   'lcc' => '14',
+				   'lcl' => '5',
+				   'llc' => '13',
+				   'lll' => '12'
+			   ]
 			]
 		];
 		$this->assertEquals($expected, $actual);

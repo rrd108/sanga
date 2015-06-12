@@ -101,7 +101,7 @@ class ContactsFixture extends TestFixture
 			'birth' => '1974-09-12','sex' => NULL,'workplace' => NULL,
 			'family_id' => NULL,'contactsource_id' => '4','active' => '1',
 			'comment' => '2012ben fizetett utoljára','created' => NULL,'modified' => NULL],
-		['id' => 7,'contactname' => 'Dvaipayan pr','legalname' => '','zip_id' => 3,
+		['id' => 7,'contactname' => 'Borsos László','legalname' => 'Dvaipayan pr', 'zip_id' => 3,
 			'address' => 'Temesvári utca 5.','lat' => '46.067955','lng' => '18.222181',
 			'phone' => '85/540-002','email' => 'SENKI@sehol.se',
 			'birth' => NULL,'sex' => '1','workplace' => '',

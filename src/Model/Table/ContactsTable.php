@@ -391,14 +391,43 @@ class ContactsTable extends Table {
 			->innerJoin(
 				['c' => 'contacts'],	//alias
 				[	//conditions
-					'LEVENSHTEIN(Contacts.contactname, c.contactname) <= ' => $distance,
-					'Contacts.contactname != ' => '',
+					//'Contacts.contactname != ' => '',
 				    'Contacts.id < c.id',
-				    'c.id > ' => 0,
+					'c.id > ' => 0
 				]
 				)
 	        ->select(['Contacts.id', 'Contacts.contactname', 'Contacts.legalname',
-					  'c.id', 'c.contactname', 'c.legalname']);
+					  'c.id', 'c.contactname', 'c.legalname',
+					  'lcc' => 'LEVENSHTEIN(Contacts.contactname, c.contactname)',
+					  'lcl' => 'LEVENSHTEIN(Contacts.contactname, c.legalname)',
+					  'llc' => 'LEVENSHTEIN(Contacts.legalname, c.contactname)',
+					  'lll' => 'LEVENSHTEIN(Contacts.legalname, c.legalname)'
+					])
+			->where([
+				'OR' => [
+					[
+						'Contacts.contactname != ' => '',
+						'c.contactname != ' => '',
+						'LEVENSHTEIN(Contacts.contactname, c.contactname) <= ' => $distance
+				    ],
+					[
+						'Contacts.contactname != ' => '',
+						'c.legalname != ' => '',
+						'LEVENSHTEIN(Contacts.contactname, c.legalname) <= ' => $distance
+					],
+					[
+						'Contacts.legalname != ' => '',
+						'c.contactname != ' => '',
+						'LEVENSHTEIN(Contacts.legalname, c.contactname) <= ' => $distance
+					],
+					[
+						'Contacts.legalname != ' => '',
+						'c.legalname != ' => '',
+						'LEVENSHTEIN(Contacts.legalname, c.legalname) <= ' => $distance
+					],
+				]
+			]);
+		debug($_duplicates);
 		$_duplicates->toArray();
 		foreach($_duplicates as $d)
 		{
@@ -406,71 +435,14 @@ class ContactsTable extends Table {
 							 'id2' => (int) $d->c['id'],
 							 'field' => 'name',
 							 'data' => $d->contactname . ' & ' . $d->legalname .
-									' : ' . $d->c['contactname'] . ' & ' . $d->c['legalname']
+									' : ' . $d->c['contactname'] . ' & ' . $d->c['legalname'],
+							 'levenshtein' => [
+											   'lcc' => $d['lcc'],
+											   'lcl' => $d['lcl'],
+											   'llc' => $d['llc'],
+											   'lll' => $d['lll']]
 							 ];
 		}
-		
-		
-		
-		
-		
-		
-		/*
-		$query = $this->find()
-				->select(['id', 'legalname', 'contactname']);
-		
-		$duplicates = $foundPairs = [];
-		
-		foreach($query as $q){
-			$toSelect = [];
-			$toSelect[] = 'id';
-			$toSelect[] = 'legalname';
-			$toSelect[] = 'contactname';
-
-			if($q->legalname){
-				$levenshteinNameName = 'LEVENSHTEIN(legalname, "'. $q->legalname . '")';
-				$levenshteinContactnameName = 'LEVENSHTEIN(contactname, "'. $q->legalname . '")';
-				$toSelect['levenshteinNameName'] = $query->newExpr()->add($levenshteinNameName);
-				$toSelect['levenshteinContactnameName'] = $query->newExpr()->add($levenshteinContactnameName);
-			}
-			if($q->contactname){
-				$levenshteinNameContactname = 'LEVENSHTEIN(legalname, "'. $q->contactname . '")';
-				$levenshteinContactnameContactname = 'LEVENSHTEIN(contactname, "'. $q->contactname . '")';
-				$toSelect['levenshteinNameContactname'] = $query->newExpr()->add($levenshteinNameContactname);
-				$toSelect['levenshteinContactnameContactname'] = $query->newExpr()->add($levenshteinContactnameContactname);
-			}
-
-			$names = $this->find()
-					->select($toSelect);
-			if($q->legalname){
-				$names->orWhere($levenshteinNameName . ' < ' . $distance)
-						->orWhere($levenshteinContactnameName . ' < ' . $distance);
-			}
-			if($q->contactname){
-				$names->orWhere($levenshteinNameContactname . ' < ' . $distance)
-						->orWhere($levenshteinContactnameContactname . ' < ' . $distance);
-			}
-			$names->andWhere(['id != ' => $q->id]);
-			$names->toArray();
-
-			if(count($names)){
-				foreach($names as $name){
-					if(!in_array($name->id, $foundPairs) && !in_array($q->id, $foundPairs)){
-						$foundPairs[] = $name->id;
-						$foundPairs[] = $q->id;
-						$duplicates[$q->id][] = [
-								'id' => $name->id,
-								'legalname' => $name->legalname,
-								'contactname' => $name->contactname,
-								'levenshteinNameName' => $name->levenshteinNameName,
-								'levenshteinContactnameName' => $name->levenshteinContactnameName,
-								'levenshteinNameContactname' => $name->levenshteinNameContactname,
-								'levenshteinContactnameContactname' => $name->levenshteinContactnameContactname
-								];
-					}
-				}
-			}
-		}*/
 		return $duplicates;
 	}
 	
