@@ -23,8 +23,8 @@ class DocumentsFixture extends TestFixture
         'file_name' => ['type' => 'string', 'length' => 200, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'file_type' => ['type' => 'string', 'length' => 50, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'size' => ['type' => 'biginteger', 'length' => 20, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'data' => ['type' => 'binary', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
-        'created' => ['type' => 'datetime', 'length' => null, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null],
+        'data' => ['type' => 'binary', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
+        'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         '_indexes' => [
             'fk_documents_contacts1_idx' => ['type' => 'index', 'columns' => ['contact_id'], 'length' => []],
         ],
@@ -51,7 +51,7 @@ class DocumentsFixture extends TestFixture
             'name' => 'Lorem ipsum dolor sit amet',
             'file_name' => 'Lorem ipsum dolor sit amet',
             'file_type' => 'Lorem ipsum dolor sit amet',
-            'size' => '',
+            'size' => '10',
             'data' => 'Lorem ipsum dolor sit amet',
             'created' => '2015-06-04 14:38:06'
         ],

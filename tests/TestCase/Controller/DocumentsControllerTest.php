@@ -25,7 +25,6 @@ class DocumentsControllerTest extends IntegrationTestCase
         'app.users',
         'app.events',
         'app.notifications',
-        'app.senders',
         'app.settings',
         'app.contacts_users',
         'app.groups',
