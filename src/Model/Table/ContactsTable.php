@@ -252,7 +252,6 @@ class ContactsTable extends Table {
 				[	//conditions
 				   'Contacts.email = c.email',
 				   'Contacts.id < c.id',
-				   'c.id > ' => 0,
 				   'Contacts.email != ' => ''
 				]
 				)
@@ -278,7 +277,6 @@ class ContactsTable extends Table {
 				[	//conditions
 				   'Contacts.birth = c.birth',
 				   'Contacts.id < c.id',
-				   'c.id > ' => 0,
 				   'Contacts.birth != ' => ''
 				]
 				)
@@ -333,7 +331,6 @@ class ContactsTable extends Table {
 				[	//conditions
 				   $this->huPhoneReformat('Contacts') . ' = ' . $this->huPhoneReformat('c'),
 				   'Contacts.id < c.id',
-				   'c.id > ' => 0,
 				   'Contacts.phone != ' => ''
 				]
 				)
@@ -365,7 +362,6 @@ class ContactsTable extends Table {
 				   'ABS(Contacts.lat - c.lat) < ' . $delta,
 				   'ABS(Contacts.lng - c.lng) < ' . $delta,
 				   'Contacts.id < c.id',
-				   'c.id > ' => 0,
 				   'Contacts.lat != ' => 0
 				]
 				)
@@ -384,7 +380,7 @@ class ContactsTable extends Table {
 		return $duplicates;
 	}	
 
-	public function checkDuplicatesOnNames($distance = 5)
+	public function checkDuplicatesOnNames($distance = 4)
 	{
 		$duplicates = [];
 		$_duplicates = $this->find()
@@ -392,42 +388,25 @@ class ContactsTable extends Table {
 				['c' => 'contacts'],	//alias
 				[	//conditions
 					//'Contacts.contactname != ' => '',
-				    'Contacts.id < c.id',
-					'c.id > ' => 0
+				    'Contacts.id < c.id'
 				]
 				)
 	        ->select(['Contacts.id', 'Contacts.contactname', 'Contacts.legalname',
 					  'c.id', 'c.contactname', 'c.legalname',
-					  'lcc' => 'LEVENSHTEIN(Contacts.contactname, c.contactname)',
-					  'lcl' => 'LEVENSHTEIN(Contacts.contactname, c.legalname)',
-					  'llc' => 'LEVENSHTEIN(Contacts.legalname, c.contactname)',
-					  'lll' => 'LEVENSHTEIN(Contacts.legalname, c.legalname)'
+					  'lcc' => 'LEVENSHTEIN_EMPTYASNULL(Contacts.contactname, c.contactname)',
+					  'lcl' => 'LEVENSHTEIN_EMPTYASNULL(Contacts.contactname, c.legalname)',
+					  'llc' => 'LEVENSHTEIN_EMPTYASNULL(Contacts.legalname, c.contactname)',
+					  'lll' => 'LEVENSHTEIN_EMPTYASNULL(Contacts.legalname, c.legalname)'
 					])
 			->where([
 				'OR' => [
-					[
-						'Contacts.contactname != ' => '',
-						'c.contactname != ' => '',
-						'LEVENSHTEIN(Contacts.contactname, c.contactname) <= ' => $distance
-				    ],
-					[
-						'Contacts.contactname != ' => '',
-						'c.legalname != ' => '',
-						'LEVENSHTEIN(Contacts.contactname, c.legalname) <= ' => $distance
-					],
-					[
-						'Contacts.legalname != ' => '',
-						'c.contactname != ' => '',
-						'LEVENSHTEIN(Contacts.legalname, c.contactname) <= ' => $distance
-					],
-					[
-						'Contacts.legalname != ' => '',
-						'c.legalname != ' => '',
-						'LEVENSHTEIN(Contacts.legalname, c.legalname) <= ' => $distance
-					],
-				]
-			]);
-		debug($_duplicates);
+						'LEVENSHTEIN_EMPTYASNULL(Contacts.contactname, c.contactname) <= ' => $distance,
+						'LEVENSHTEIN_EMPTYASNULL(Contacts.contactname, c.legalname) <= ' => $distance,
+						'LEVENSHTEIN_EMPTYASNULL(Contacts.legalname, c.contactname) <= ' => $distance,
+						'LEVENSHTEIN_EMPTYASNULL(Contacts.legalname, c.legalname) <= ' => $distance
+					]
+				]);
+		//debug($_duplicates);
 		$_duplicates->toArray();
 		foreach($_duplicates as $d)
 		{
