@@ -380,10 +380,10 @@ class ContactsTable extends Table {
 		return $duplicates;
 	}	
 
-	public function checkDuplicatesOnNames($distance = 4)
+	public function checkDuplicatesOnNames($distance = 3)
 	{
 		$duplicates = [];
-		$_duplicates = $this->find()
+/*		$_duplicates = $this->find()
 			->innerJoin(
 				['c' => 'contacts'],	//alias
 				[	//conditions
@@ -397,8 +397,8 @@ class ContactsTable extends Table {
 					  'lcl' => 'LEVENSHTEIN_EMPTYASNULL(Contacts.contactname, c.legalname)',
 					  'llc' => 'LEVENSHTEIN_EMPTYASNULL(Contacts.legalname, c.contactname)',
 					  'lll' => 'LEVENSHTEIN_EMPTYASNULL(Contacts.legalname, c.legalname)'
-					])
-			->where([
+					]);
+/*			->where([
 				'OR' => [
 						'LEVENSHTEIN_EMPTYASNULL(Contacts.contactname, c.contactname) <= ' => $distance,
 						'LEVENSHTEIN_EMPTYASNULL(Contacts.contactname, c.legalname) <= ' => $distance,
@@ -406,11 +406,78 @@ class ContactsTable extends Table {
 						'LEVENSHTEIN_EMPTYASNULL(Contacts.legalname, c.legalname) <= ' => $distance
 					]
 				]);
+
 		//debug($_duplicates);
 		$_duplicates->toArray();
+*/		
+		/*$x = [];
 		foreach($_duplicates as $d)
 		{
-			$duplicates[] = ['id1' => $d->id,
+			for($i = 0; $i < 400000; $i++)
+			{
+				$x[] = $d;
+			}
+		}
+		$_duplicates = $x;*/
+		
+		
+		$rows = $this->find()
+			->select(['id', 'contactname', 'legalname'])
+			->toArray();
+		
+		for($i = 0; $i < 714; $i++)
+		{
+			foreach($rows as $x)
+			{
+				$_rows[] = $x;
+			}
+		}
+		$rows = $_rows;
+		
+		foreach($rows as $r)
+		{
+			foreach($rows as $r2)
+			{
+
+				if($r->id < $r2->id)
+				{
+					$lcc = levenshtein(utf8_decode($r->contactname), utf8_decode($r2->contactname));
+					$lcl = levenshtein(utf8_decode($r->contactname), utf8_decode($r2->legalname));
+					$llc = levenshtein(utf8_decode($r->legalname), utf8_decode($r2->contactname));
+					$lll = levenshtein(utf8_decode($r->legalname), utf8_decode($r2->legalname));
+										
+					if(($lcc <= $distance && $r->contactname && $r2->contactname) ||
+					   ($lcl <= $distance && $r->contactname && $r2->legalname) ||
+					   ($llc <= $distance && $r->legalname && $r2->contactname) ||
+					   ($lll <= $distance && $r->legalname && $r2->legalname))
+					{
+						$duplicates[] = [
+							'id1' => $r->id,
+							'id2' => $r2->id,
+							'field' => 'name',
+							'data' => $r->contactname . ' & ' . $r->legalname . ' : ' .
+										$r2->contactname . ' & ' . $r2->legalname,
+							'levenshtein' => [
+							   'lcc' => $lcc,
+							   'lcl' => $lcl,
+							   'llc' => $llc,
+							   'lll' => $lll
+							]
+						];
+	
+					}
+				}
+			}
+		}
+		
+/*		foreach($_duplicates as $d)
+		{
+//			if(($d['lcc'] <= $distance && ! is_null($d['lcc'])) ||	//replacing sql where as php is 100 times faster
+//			   ($d['lcl'] <= $distance  && ! is_null($d['lcl'])) ||
+//			   ($d['llc'] <= $distance  && ! is_null($d['llc'])) ||
+//			   ($d['lll'] <= $distance  && ! is_null($d['lll'])))
+//			{
+				$duplicates[] = ['id1' => $d->id,
 							 'id2' => (int) $d->c['id'],
 							 'field' => 'name',
 							 'data' => $d->contactname . ' & ' . $d->legalname .
@@ -421,10 +488,11 @@ class ContactsTable extends Table {
 											   'llc' => $d['llc'],
 											   'lll' => $d['lll']]
 							 ];
-		}
+//			}
+		}*/
 		return $duplicates;
 	}
-	
+		
 /**
  * Find contacts owned by given user(s)
  * The given users are the contact persons for the contact

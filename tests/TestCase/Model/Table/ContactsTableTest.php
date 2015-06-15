@@ -111,10 +111,10 @@ class ContactsTableTest extends TestCase {
 				'field' => 'name',
 				'data' => 'Lokanatha dasa & Borsos László : Borsos László & Dvaipayan pr',
 				'levenshtein' => [
-				   'lcc' => '12',
-				   'lcl' => '12',
-				   'llc' => '0',
-				   'lll' => '12'
+				   'lcc' => 13,
+				   'lcl' => 12,
+				   'llc' => 0,
+				   'lll' => 13
 			   ]
 			],
 			[
@@ -123,10 +123,10 @@ class ContactsTableTest extends TestCase {
 				'field' => 'name',
 				'data' => 'Acarya-ratna das & Kovács Árpád : Acarya-ratna Dasa & ',
 				'levenshtein' => [
-				   'lcc' => '1',
-				   'lcl' => null,
-				   'llc' => '14',
-				   'lll' => null
+				   'lcc' => 2,
+				   'lcl' => 16,
+				   'llc' => 17,
+				   'lll' => 12
 			   ]
 			],
 			[
@@ -135,10 +135,10 @@ class ContactsTableTest extends TestCase {
 				'field' => 'name',
 				'data' => 'Acarya-ratna das & Kovács Árpád : Horváth Zoltán & Kovács Árpi',
 				'levenshtein' => [
-				   'lcc' => '13',
-				   'lcl' => '14',
-				   'llc' => '9',
-				   'lll' => '2'
+				   'lcc' => 15,
+				   'lcl' => 16,
+				   'llc' => 9,
+				   'lll' => 2
 			   ]
 			]
 		];
@@ -198,7 +198,7 @@ class ContactsTableTest extends TestCase {
 		$actual = $method->invoke($this->Contacts, 6, 2);
 		$this->assertFalse($actual);
 	}
-	
+		
 	public function testIsAccessible(){
 		$actual = $this->Contacts->isAccessible(1, 1);
 		$this->assertTrue($actual);
