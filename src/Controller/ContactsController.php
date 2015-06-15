@@ -397,11 +397,17 @@ $result = $this->Contacts->find()
  */
 	public function add() {
 		$this->request->data['users']['_ids'] = [$this->Auth->user('id')];		//add auth user as contact person
+		//debug($this->request->data);
+		if (isset($this->request->data['skills']) && $this->request->data['skills'] == '')
+		{	//no skills added we should remove this key, as if it exists it should be
+			//an array like 'skills' => ['_ids' => []]
+			unset($this->request->data['skills']);
+		}
 		$contact = $this->Contacts->newEntity($this->request->data);
-		if($this->request->data){
-			if( ! empty($this->request->data['family_member_id'])){
-				$contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
-			}
+		//debug($contact);
+		if ( ! empty($this->request->data['family_member_id']))
+		{
+			$contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
 		}
 		if ($this->request->is('post')) {
 			$contact->loggedInUser = $this->Auth->user('id');
@@ -422,6 +428,7 @@ $result = $this->Contacts->find()
 							   'errors' => $this->getErrors($contact->errors())];
 				} else {
 					$this->Flash->error($message);
+					$this->log($this->getErrors($contact->errors()), 'debug');
 				}
 			}
 		}
