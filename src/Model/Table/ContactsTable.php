@@ -1,18 +1,29 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\Contact;
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
+use Cake\ORM\Table;
+use Cake\Validation\Validator;
 use ArrayObject;
 use Cake\Event\Event;
-use Cake\ORM\Query;
-use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Entity;
-use Cake\ORM\RulesChecker;
-use Cake\Validation\Validator;
 use Cake\Log\Log;
 
 /**
  * Contacts Model
+ *
+ * @property \Cake\ORM\Association\BelongsTo $Zips
+ * @property \Cake\ORM\Association\BelongsTo $WorkplaceZips
+ * @property \Cake\ORM\Association\BelongsTo $Families
+ * @property \Cake\ORM\Association\BelongsTo $Contactsources
+ * @property \Cake\ORM\Association\HasMany $Documents
+ * @property \Cake\ORM\Association\HasMany $Histories
+ * @property \Cake\ORM\Association\BelongsToMany $Groups
+ * @property \Cake\ORM\Association\BelongsToMany $Skills
+ * @property \Cake\ORM\Association\BelongsToMany $Users
  */
 class ContactsTable extends Table {
 
@@ -75,37 +86,65 @@ class ContactsTable extends Table {
 	public function validationDefault(Validator $validator) {
 		$validator
 			->add('id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('id', 'create')
-			->allowEmpty('legalname')
-			->allowEmpty('contactname')
-			->add('zip_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('zip_id')
-			->allowEmpty('address')
+			->allowEmpty('id', 'create');
+			
+		$validator
+			->allowEmpty('contactname');
+		
+		$validator
+			->allowEmpty('legalname');
+			
+		$validator
+			->allowEmpty('address');
+			
+		$validator
 			->add('lat', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('lat')
+			->allowEmpty('lat');
+			
+		$validator
 			->add('lng', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('lng')
-			->allowEmpty('phone')
+			->allowEmpty('lng');
+		
+		$validator
+			->allowEmpty('phone');
+			
+		$validator
 			->add('email', 'valid', ['rule' => 'email'])
-			->allowEmpty('email')
+			->allowEmpty('email');
+			
+		$validator
 			->add('birth', 'valid', ['rule' => 'date'])
-			->allowEmpty('birth')
+			->allowEmpty('birth');
+			
+		$validator
 			->add('sex', 'valid', ['rule' => ['inList', [1, 2]],
 								   'message' => __('Sex is 1 for male and 2 for female or empty')])
-			->allowEmpty('sex')
-            ->allowEmpty('workplace')
-            ->allowEmpty('workplace_address')
-            ->allowEmpty('workplace_phone')
+			->allowEmpty('sex');
+		
+		$validator
+            ->allowEmpty('workplace');
+			
+		$validator
+            ->allowEmpty('workplace_address');
+			
+		$validator
+            ->allowEmpty('workplace_phone');
+			
+		$validator
 			->add('workplace_email', 'valid', ['rule' => 'email'])
-            ->allowEmpty('workplace_email')
-  			->add('family_id', 'valid', ['rule' => 'alphanumeric'])
-			->allowEmpty('family_id')
-			->add('contactsource_id', 'valid', ['rule' => 'numeric'])
-			->allowEmpty('contactsource_id')
+            ->allowEmpty('workplace_email');
+		
+		$validator
+			->allowEmpty('family_id');
+
+		$validator		
 			->add('active', 'valid', ['rule' => 'boolean'])
 			->allowEmpty('active', ['rule' => ['inList', [0, 1]],
-								   'message' => __('Active is 0 for inactive and 1 for active')])
-			->allowEmpty('comment')
+								   'message' => __('Active is 0 for inactive and 1 for active')]);
+		$validator
+			->allowEmpty('comment');
+		
+		$validator
 			->allowEmpty('google_id');
 
 		return $validator;
@@ -121,7 +160,7 @@ class ContactsTable extends Table {
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['zip_id'], 'Zips'));
-        $rules->add($rules->existsIn(['workplace_zip_id'], 'Zips'));
+        $rules->add($rules->existsIn(['workplace_zip_id'], 'WorkplaceZips'));
         $rules->add($rules->existsIn(['contactsource_id'], 'Contactsources'));
         return $rules;
     }
@@ -136,7 +175,7 @@ class ContactsTable extends Table {
 					+ !empty($entity->contactsource_id) + !empty($entity->family_id)) >= 2) {
 				return true;
 			} else {
-				$entity->errors('name', __('At least 2 info should be filled'));
+				$entity->errors('contactname', __('At least 2 info should be filled'));
 				return false;
 			}
 		}
@@ -382,71 +421,24 @@ class ContactsTable extends Table {
 
 	public function checkDuplicatesOnNames($distance = 3)
 	{
-		$duplicates = [];
-/*		$_duplicates = $this->find()
-			->innerJoin(
-				['c' => 'contacts'],	//alias
-				[	//conditions
-					//'Contacts.contactname != ' => '',
-				    'Contacts.id < c.id'
-				]
-				)
-	        ->select(['Contacts.id', 'Contacts.contactname', 'Contacts.legalname',
-					  'c.id', 'c.contactname', 'c.legalname',
-					  'lcc' => 'LEVENSHTEIN_EMPTYASNULL(Contacts.contactname, c.contactname)',
-					  'lcl' => 'LEVENSHTEIN_EMPTYASNULL(Contacts.contactname, c.legalname)',
-					  'llc' => 'LEVENSHTEIN_EMPTYASNULL(Contacts.legalname, c.contactname)',
-					  'lll' => 'LEVENSHTEIN_EMPTYASNULL(Contacts.legalname, c.legalname)'
-					]);
-/*			->where([
-				'OR' => [
-						'LEVENSHTEIN_EMPTYASNULL(Contacts.contactname, c.contactname) <= ' => $distance,
-						'LEVENSHTEIN_EMPTYASNULL(Contacts.contactname, c.legalname) <= ' => $distance,
-						'LEVENSHTEIN_EMPTYASNULL(Contacts.legalname, c.contactname) <= ' => $distance,
-						'LEVENSHTEIN_EMPTYASNULL(Contacts.legalname, c.legalname) <= ' => $distance
-					]
-				]);
-
-		//debug($_duplicates);
-		$_duplicates->toArray();
-*/		
-		/*$x = [];
-		foreach($_duplicates as $d)
-		{
-			for($i = 0; $i < 400000; $i++)
-			{
-				$x[] = $d;
-			}
-		}
-		$_duplicates = $x;*/
-		
-		
+		$duplicates = [];		
 		$rows = $this->find()
 			->select(['id', 'contactname', 'legalname'])
 			->toArray();
 		
-		for($i = 0; $i < 714; $i++)
+		foreach ($rows as $r)
 		{
-			foreach($rows as $x)
-			{
-				$_rows[] = $x;
-			}
-		}
-		$rows = $_rows;
-		
-		foreach($rows as $r)
-		{
-			foreach($rows as $r2)
+			foreach ($rows as $r2)
 			{
 
-				if($r->id < $r2->id)
+				if ($r->id < $r2->id)
 				{
 					$lcc = levenshtein(utf8_decode($r->contactname), utf8_decode($r2->contactname));
 					$lcl = levenshtein(utf8_decode($r->contactname), utf8_decode($r2->legalname));
 					$llc = levenshtein(utf8_decode($r->legalname), utf8_decode($r2->contactname));
 					$lll = levenshtein(utf8_decode($r->legalname), utf8_decode($r2->legalname));
 										
-					if(($lcc <= $distance && $r->contactname && $r2->contactname) ||
+					if (($lcc <= $distance && $r->contactname && $r2->contactname) ||
 					   ($lcl <= $distance && $r->contactname && $r2->legalname) ||
 					   ($llc <= $distance && $r->legalname && $r2->contactname) ||
 					   ($lll <= $distance && $r->legalname && $r2->legalname))
@@ -470,26 +462,6 @@ class ContactsTable extends Table {
 			}
 		}
 		
-/*		foreach($_duplicates as $d)
-		{
-//			if(($d['lcc'] <= $distance && ! is_null($d['lcc'])) ||	//replacing sql where as php is 100 times faster
-//			   ($d['lcl'] <= $distance  && ! is_null($d['lcl'])) ||
-//			   ($d['llc'] <= $distance  && ! is_null($d['llc'])) ||
-//			   ($d['lll'] <= $distance  && ! is_null($d['lll'])))
-//			{
-				$duplicates[] = ['id1' => $d->id,
-							 'id2' => (int) $d->c['id'],
-							 'field' => 'name',
-							 'data' => $d->contactname . ' & ' . $d->legalname .
-									' : ' . $d->c['contactname'] . ' & ' . $d->c['legalname'],
-							 'levenshtein' => [
-											   'lcc' => $d['lcc'],
-											   'lcl' => $d['lcl'],
-											   'llc' => $d['llc'],
-											   'lll' => $d['lll']]
-							 ];
-//			}
-		}*/
 		return $duplicates;
 	}
 		
