@@ -256,3 +256,7 @@ h1 > img.ajaxremove{
   border: 1px solid #e5e5e5;
   background: #00BF2C;
 }
+
+input.imp {
+  width: auto;
+}

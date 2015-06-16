@@ -52,8 +52,9 @@ print $this->Html->script('sanga.contacts.import.js', ['block' => true]);
 						foreach ($fields as $field) {
 							$tdContent = $tdTitle = $tdClass = '';
 							if (isset($e['data'][$field])) {
-								if (isset($e['errors'][$field])) {
-									$tdTitle =  ' title="' . $e['errors'][$field] . ' ' . __('Click to edit') . '"';
+								if (isset($e['errors']) && strpos($e['errors'], $field) !== false)
+								{
+									$tdTitle =  ' title="' . $e['errors'] . ' ' . __('Click to edit') . '"';
 									$tdClass = ' class="message error"';
 									$tdContent = $e['data'][$field];
 								} else{
@@ -61,28 +62,17 @@ print $this->Html->script('sanga.contacts.import.js', ['block' => true]);
 								}
 							}
 							echo '<td' . $tdTitle . $tdClass . '>';
-								echo $tdContent;
+								if (is_array($tdContent))
+								{
+									echo implode(',', $tdContent['_ids']);
+								} else {
+									echo $tdContent;
+								}
 							echo '</td>';
 						}
 					echo '</tr>';
 				}
 			echo '</table>';
-			/*
-			echo $this->Form->create(null, ['type' => 'file']);
-			echo $this->Form->input('contactname');
-			echo $this->Form->input('legalname');
-			echo $this->Form->input('zip_id', ['options' => $zips]);
-			echo $this->Form->input('address');
-			echo $this->Form->input('phone');
-			echo $this->Form->input('email');
-			echo $this->Form->input('birth');
-			echo $this->Form->input('comment');
-			echo $this->Form->input('contactsource_id', ['options' => $contactsources, 'empty' => '---Válassz---']);
-			echo $this->Form->input('skills._ids', ['options' => $skills, 'empty' => '---Válassz---']);
-			echo $this->Form->input('groups._ids', ['options' => $groups, 'empty' => '---Válassz---']);
-			echo $this->Form->submit();
-			echo $this->Form->end();
-			*/
 			?>
 		</div>
 	</div>

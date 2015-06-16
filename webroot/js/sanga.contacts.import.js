@@ -26,8 +26,14 @@ $(function() {
 		input2td();		//this should be called here as in the function we remove button, so we loose "this"
 		td.append('<img id="loader" src="' + $.sanga.baseUrl + '/img/ajax-loader.gif">');
 		$.each($('th'), function(index, value){
-			if (lastTd != index && $(tds[index]).text()) {
-				queryData[$(value).text()] = $(tds[index]).text();
+			if (lastTd != index && $(tds[index]).text())
+			{
+				if ($(value).text() == 'groups' || $(value).text() == 'skills')
+				{
+					queryData[$(value).text()] = {'_ids' : $(tds[index]).text()};
+				} else {
+					queryData[$(value).text()] = $(tds[index]).text();
+				}
 			}
 		});
 		

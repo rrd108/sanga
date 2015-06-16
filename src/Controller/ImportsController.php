@@ -15,15 +15,17 @@ class ImportsController extends AppController
     public function index()
     {
         //debug($this->request->data);
-        if (!empty($this->request->data)
-                && is_uploaded_file($this->request->data['file']['tmp_name'])) {	//az is_uploaded_file biztosítja, hogy ne lehessen külső fájlokat feltölteni a webről
+        if (! empty($this->request->data)
+                && is_uploaded_file($this->request->data['file']['tmp_name']))
+		{	//az is_uploaded_file biztosítja, hogy ne lehessen külső fájlokat feltölteni a webről
         	
             
             $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
             $file_mime = finfo_file($finfo, $this->request->data['file']['tmp_name']);
             finfo_close($finfo);
             
-            if (in_array($file_mime, ['application/vnd.ms-excel','text/plain','text/csv'])) {   //csv
+            if (in_array($file_mime, ['application/vnd.ms-excel','text/plain','text/csv']))
+			{   //csv
 
                 $fileData = fread(fopen($this->request->data['file']['tmp_name'], "r"), $this->request->data['file']['size']);
                 $fileData = explode("\n", $fileData);
@@ -44,16 +46,20 @@ class ImportsController extends AppController
                 
                 $errors = $dataArray = [];
                 $imported = $notImported = 0;
-                foreach ($fileData as $i => $row) {
+                foreach ($fileData as $i => $row)
+				{
                     $dataArray[$extraField] = '';
                     $data = explode(';', $row);
-                    foreach ($fields as $j => $field) {
+                    foreach ($fields as $j => $field)
+					{
                         if (in_array($field, ['contactname','legalname','zip','address','phone','email',
                                               'birth','sex','workplace','workplace_zip',
                                               'workplace_address','workplace_phone','workplace_email',
-                                              'contactsource_id','comment', 'skills'])) {     //if this is the $field, the column exists in the contacts or its related tables
+                                              'contactsource_id','comment', 'skills', 'groups']))
+						{     //if this is the $field, the column exists in the contacts or its related tables
                             if (isset($data[$j]) && $data[$j]) {
-                                switch ($field) {
+                                switch ($field)
+								{
                                     case 'birth' : 
                                         $data[$j] = substr($data[$j], 0, 10);
                                         break;
@@ -74,6 +80,14 @@ class ImportsController extends AppController
                                         }
                                         $data[$j] = ['_ids' => $skill_ids];
                                         break;
+                                    case 'groups' :
+                                        if (mb_strpos($data[$j], ',') === false) {
+                                            $group_ids = [$data[$j]];
+                                        } else {
+                                            $group_ids = explode(',', $data[$j]);
+                                        }
+                                        $data[$j] = ['_ids' => $group_ids];
+                                        break;
                                 }
                                 $dataArray[$field] = $data[$j];
                             }
@@ -83,11 +97,13 @@ class ImportsController extends AppController
                             }
                         }
                     }
-                    if (empty($dataArray[$extraField])) {
+                    if (empty($dataArray[$extraField]))
+					{
                         unset($dataArray[$extraField]);
                     }
                     
-                    if ( ! empty($dataArray)){
+                    if ( ! empty($dataArray))
+					{
                         $dataArray['users'] = ['_ids' => [$this->Auth->user('id')]];    //add myself as the contact person
                         //debug($dataArray);
                         $contact = $this->Contacts->newEntity($dataArray);
