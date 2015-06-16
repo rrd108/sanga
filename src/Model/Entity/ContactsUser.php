@@ -6,16 +6,16 @@ use Cake\ORM\Entity;
 /**
  * ContactsUser Entity.
  */
-class ContactsUser extends Entity {
+class ContactsUser extends Entity
+{
 
-/**
+    /**
  * Fields that can be mass assigned using newEntity() or patchEntity().
  *
  * @var array
  */
-	protected $_accessible = [
-		'contact' => true,
-		'user' => true,
-	];
-
+    protected $_accessible = [
+        'contact' => true,
+        'user' => true,
+    ];
 }

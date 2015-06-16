@@ -11,7 +11,8 @@ use App\Controller\AppController;
 class SettingsController extends AppController
 {
 
-	public function isAuthorized($user = null) {
+    public function isAuthorized($user = null)
+    {
         return true;
     }
 
@@ -32,15 +33,18 @@ class SettingsController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Setting id.
+     * @param  string|null $id Setting id.
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $setting = $this->Settings->get($id, [
+        $setting = $this->Settings->get(
+            $id,
+            [
             'contain' => ['Users']
-        ]);
+            ]
+        );
         $this->set('setting', $setting);
         $this->set('_serialize', ['setting']);
     }
@@ -54,8 +58,7 @@ class SettingsController extends AppController
     {
         $setting = $this->Settings->newEntity();
         if ($this->request->is('post') || $this->request->is('ajax')) {
-            
-            if ( ! isset( $this->request->data['user_id'])) {
+            if (! isset( $this->request->data['user_id'])) {
                  $this->request->data['user_id'] = $this->Auth->user('id');
             }
             
@@ -83,8 +86,10 @@ class SettingsController extends AppController
     {
         $setting = $this->Settings
             ->find()
-            ->where(['user_id' => $this->Auth->user('id'),
-					'name' => $this->request->data['sName']])
+            ->where(
+                ['user_id' => $this->Auth->user('id'),
+                    'name' => $this->request->data['sName']]
+            )
             ->first();
         //debug($setting);die();
         //debug($this->request->data);die();
@@ -110,7 +115,7 @@ class SettingsController extends AppController
         ]
         */
         $select = [];
-        foreach($this->request->data as $name => $value) {
+        foreach ($this->request->data as $name => $value) {
             if ($name != 'sName' && $value) {
                 $select[] = 'Contacts.' . $name;
             }
@@ -120,7 +125,7 @@ class SettingsController extends AppController
                                 'value' => serialize($select)
                                 ];
         
-        if (empty($setting)){
+        if (empty($setting)) {
             $this->add();
             return;
         }
@@ -140,7 +145,7 @@ class SettingsController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Setting id.
+     * @param  string|null $id Setting id.
      * @return void Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */

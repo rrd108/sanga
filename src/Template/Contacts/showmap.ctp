@@ -6,16 +6,16 @@ echo $this->Html->css('googleMaps.css', ['block' => true]);
 //debug($result);
 $c = '';
 foreach($result as $r){
-	if(isset($r->zip->zip)){
-		$c .= '{
-			lat : '.$r->lat.',
-			lng : '.$r->lng.',
-			data : {
-				zip : '.$r->zip->zip.',
-				city : "'.$r->zip->name.'" 
-				}
-			},';
-	}
+    if(isset($r->zip->zip)){
+        $c .= '{
+            lat : '.$r->lat.',
+            lng : '.$r->lng.',
+            data : {
+                zip : '.$r->zip->zip.',
+                city : "'.$r->zip->name.'" 
+                }
+            },';
+    }
 }
 ?>
 <div id="map" class="row"></div>

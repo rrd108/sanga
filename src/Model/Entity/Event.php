@@ -6,18 +6,18 @@ use Cake\ORM\Entity;
 /**
  * Event Entity.
  */
-class Event extends Entity {
+class Event extends Entity
+{
 
-/**
+    /**
  * Fields that can be mass assigned using newEntity() or patchEntity().
  *
  * @var array
  */
-	protected $_accessible = [
-		'name' => true,
-		'user_id' => true,
-		'user' => true,
-		'histories' => true,
-	];
-
+    protected $_accessible = [
+        'name' => true,
+        'user_id' => true,
+        'user' => true,
+        'histories' => true,
+    ];
 }

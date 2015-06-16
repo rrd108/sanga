@@ -7,10 +7,10 @@
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         0.2.9
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link      http://cakephp.org CakePHP(tm) Project
+ * @since     0.2.9
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace App\Controller;
 
@@ -25,9 +25,10 @@ use Cake\Event\Event;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller {
+class AppController extends Controller
+{
 
-/**
+    /**
  * Components this controller uses.
  *
  * Component names should not include the `Component` suffix. Components
@@ -35,7 +36,7 @@ class AppController extends Controller {
  *
  * @var array
  */
-	public $components = [
+    public $components = [
         'Flash',
         'RequestHandler',
         'Auth' => [
@@ -50,20 +51,20 @@ class AppController extends Controller {
         ]
     ];
 
-    public function beforeFilter(Event $event) {
-		$this->Auth->config('authorize', ['Controller']);
+    public function beforeFilter(Event $event)
+    {
+        $this->Auth->config('authorize', ['Controller']);
         $this->Auth->deny();
     }
-	
+    
     public function getErrors($errors)
     {
         $errorsString = '';
-		foreach ($errors as $field => $errs) {
-            foreach ($errs as $rule => $error){
+        foreach ($errors as $field => $errs) {
+            foreach ($errs as $rule => $error) {
                 $errorsString .= $field . ': ' . $error . ' ';
             }
         }
         return $errorsString;
     }
-
 }

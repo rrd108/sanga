@@ -1,21 +1,21 @@
 <?php
 echo '<p>';
-	echo __('Hi, You asked a password recovery on {0}. Click on the link below to reset your password.', [$baseUrl]);
+    echo __('Hi, You asked a password recovery on {0}. Click on the link below to reset your password.', [$baseUrl]);
 echo '</p>';
 
 echo '<a href="' . $resetlink . '">';
-	echo __('Click here to Reset Your Password');
+    echo __('Click here to Reset Your Password');
 echo '</a>';
 
 echo '<p>';
-	echo __('Or visit this link:');
+    echo __('Or visit this link:');
 echo '<br>';
 
 echo '<p>';
-	echo'<a href="' . $resetlink . '">' . $resetlink . '</a>';
+    echo'<a href="' . $resetlink . '">' . $resetlink . '</a>';
 echo '</p>';
 
 echo '<p>';
-	echo __('If you do not want to change your password just ignore this message.');
+    echo __('If you do not want to change your password just ignore this message.');
 echo '</p>';
 ?>

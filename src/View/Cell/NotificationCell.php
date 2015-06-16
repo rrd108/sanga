@@ -10,7 +10,6 @@ class NotificationCell extends Cell
     {
         $this->loadModel('Notifications');
         $notification_count = $this->Notifications->find('unread', ['User.id' => $userId])->count();
-    	$this->set('notification_count', $notification_count);
+        $this->set('notification_count', $notification_count);
     }
-
 }

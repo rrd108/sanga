@@ -21,9 +21,9 @@ class Zip extends Entity
         'lng' => true,
         'country' => true,
     ];
-	
-	protected function _getFullZip()
-	{
+    
+    protected function getFullZip()
+    {
         return $this->_properties['zip'] . '  ' .
             $this->_properties['name'];
     }

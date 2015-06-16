@@ -16,7 +16,7 @@ class ZipsTable extends Table
     /**
      * Initialize method
      *
-     * @param array $config The configuration for the Table.
+     * @param  array $config The configuration for the Table.
      * @return void
      */
     public function initialize(array $config)
@@ -24,15 +24,18 @@ class ZipsTable extends Table
         $this->table('zips');
         $this->displayField('zip');     //fullzip
         $this->primaryKey(['id']);
-        $this->belongsTo('Countries', [
+        $this->belongsTo(
+            'Countries',
+            [
             'foreignKey' => 'country_id'
-        ]);
+            ]
+        );
     }
 
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @param  \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator)
@@ -52,7 +55,7 @@ class ZipsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @param  \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules)
@@ -62,8 +65,8 @@ class ZipsTable extends Table
     }
     
     public function getIdForZip($zip)
-	{
-		if (is_array($zip)) {
+    {
+        if (is_array($zip)) {
             $where = ['zip' => $zip[0], 'name' => $zip[1]];
         } else {
             $where = ['zip' => $zip];
@@ -74,5 +77,5 @@ class ZipsTable extends Table
         } else {
             return;
         }
-	}
+    }
 }

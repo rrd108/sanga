@@ -8,104 +8,118 @@ use App\Controller\AppController;
  *
  * @property App\Model\Table\UnitsTable $Units
  */
-class UnitsController extends AppController {
+class UnitsController extends AppController
+{
 
-	public function isAuthorized($user = null) {
+    public function isAuthorized($user = null)
+    {
         return true;
     }
 
-	public function search(){
-		$query = $this->Units->find()
-				->select(['id', 'name'])
-				->where(['name LIKE "'.$this->request->query('term').'%"']);
-		foreach($query as $row){
-			$result[] = array('value' => $row->id,
-							  'label' => $row->name
-							  );
-		}
-		$this->set('result', $result);
-		$this->set('_serialize', 'result');
-	}
+    public function search()
+    {
+        $query = $this->Units->find()
+            ->select(['id', 'name'])
+            ->where(['name LIKE "'.$this->request->query('term').'%"']);
+        foreach ($query as $row) {
+            $result[] = array('value' => $row->id,
+                              'label' => $row->name
+                              );
+        }
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
+    }
 
-/**
+    /**
  * Index method
  *
  * @return void
  */
-	public function index() {
-		$this->set('units', $this->paginate($this->Units));
-	}
+    public function index()
+    {
+        $this->set('units', $this->paginate($this->Units));
+    }
 
-/**
+    /**
  * View method
  *
- * @param string $id
+ * @param  string $id
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */
-	public function view($id = null) {
-		$unit = $this->Units->get($id, [
-			'contain' => ['Histories']
-		]);
-		$this->set('unit', $unit);
-	}
+    public function view($id = null)
+    {
+        $unit = $this->Units->get(
+            $id,
+            [
+            'contain' => ['Histories']
+            ]
+        );
+        $this->set('unit', $unit);
+    }
 
-/**
+    /**
  * Add method
  *
  * @return void
  */
-	public function add() {
-		$unit = $this->Units->newEntity($this->request->data);
-		if ($this->request->is('post')) {
-			if ($this->Units->save($unit)) {
-				$this->Flash->success('The unit has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The unit could not be saved. Please, try again.');
-			}
-		}
-		$this->set(compact('unit'));
-	}
+    public function add()
+    {
+        $unit = $this->Units->newEntity($this->request->data);
+        if ($this->request->is('post')) {
+            if ($this->Units->save($unit)) {
+                $this->Flash->success('The unit has been saved.');
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error('The unit could not be saved. Please, try again.');
+            }
+        }
+        $this->set(compact('unit'));
+    }
 
-/**
+    /**
  * Edit method
  *
- * @param string $id
+ * @param  string $id
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */
-	public function edit($id = null) {
-		$unit = $this->Units->get($id, [
-			'contain' => []
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$unit = $this->Units->patchEntity($unit, $this->request->data);
-			if ($this->Units->save($unit)) {
-				$this->Flash->success('The unit has been saved.');
-				return $this->redirect(['action' => 'index']);
-			} else {
-				$this->Flash->error('The unit could not be saved. Please, try again.');
-			}
-		}
-		$this->set(compact('unit'));
-	}
+    public function edit($id = null)
+    {
+        $unit = $this->Units->get(
+            $id,
+            [
+            'contain' => []
+            ]
+        );
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $unit = $this->Units->patchEntity($unit, $this->request->data);
+            if ($this->Units->save($unit)) {
+                $this->Flash->success('The unit has been saved.');
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error('The unit could not be saved. Please, try again.');
+            }
+        }
+        $this->set(compact('unit'));
+    }
 
-/**
+    /**
  * Delete method
  *
- * @param string $id
+ * @param  string $id
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */
-	public function delete($id = null) {
-		$unit = $this->Units->get($id);
-		$this->request->allowMethod(['post', 'delete']);
-		if ($this->Units->delete($unit)) {
-			$this->Flash->success('The unit has been deleted.');
-		} else {
-			$this->Flash->error('The unit could not be deleted. Please, try again.');
-		}
-		return $this->redirect(['action' => 'index']);
-	}
+    public function delete($id = null)
+    {
+        $unit = $this->Units->get($id);
+        $this->request->allowMethod(['post', 'delete']);
+        if ($this->Units->delete($unit)) {
+            $this->Flash->success('The unit has been deleted.');
+        } else {
+            $this->Flash->error('The unit could not be deleted. Please, try again.');
+        }
+        return $this->redirect(['action' => 'index']);
+    }
 }

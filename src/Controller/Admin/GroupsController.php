@@ -8,27 +8,29 @@ use App\Controller\AppController;
  *
  * @property App\Model\Table\GroupsTable $Groups
  */
-class GroupsController extends AppController {
+class GroupsController extends AppController
+{
 
-	public function isAuthorized($user = null) {
-		if ($this->request['action'] == 'add' || $this->request['action'] == 'index') {
-			if ($user['role'] >= 9) {
-				return true;
-			}
-			return false;
-		}
+    public function isAuthorized($user = null)
+    {
+        if ($this->request['action'] == 'add' || $this->request['action'] == 'index') {
+            if ($user['role'] >= 9) {
+                return true;
+            }
+            return false;
+        }
         return true;
     }
 
-/**
+    /**
  * Index method
  *
  * @return void
  */
-	public function index() {
-		$groups = $this->Groups->find()
-								->contain(['Contacts', 'AdminUsers']);
-		$this->set('groups', $this->paginate($groups));
-	}
-
+    public function index()
+    {
+        $groups = $this->Groups->find()
+            ->contain(['Contacts', 'AdminUsers']);
+        $this->set('groups', $this->paginate($groups));
+    }
 }

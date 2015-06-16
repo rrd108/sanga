@@ -28,15 +28,18 @@ class DocumentsController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Document id.
+     * @param  string|null $id Document id.
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $document = $this->Documents->get($id, [
+        $document = $this->Documents->get(
+            $id,
+            [
             'contain' => ['Contacts']
-        ]);
+            ]
+        );
         $this->set('document', $document);
         $this->set('_serialize', ['document']);
     }
@@ -66,15 +69,18 @@ class DocumentsController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id Document id.
+     * @param  string|null $id Document id.
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $document = $this->Documents->get($id, [
+        $document = $this->Documents->get(
+            $id,
+            [
             'contain' => []
-        ]);
+            ]
+        );
         if ($this->request->is(['patch', 'post', 'put'])) {
             $document = $this->Documents->patchEntity($document, $this->request->data);
             if ($this->Documents->save($document)) {
@@ -92,7 +98,7 @@ class DocumentsController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Document id.
+     * @param  string|null $id Document id.
      * @return void Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
