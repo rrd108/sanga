@@ -440,9 +440,10 @@ $result = $this->Contacts->find()
 		$zips = $this->Contacts->Zips->find('list', ['keyField' => 'id', 'valueField' => 'full_zip']);
 		$contactsources = $this->Contacts->Contactsources->find('list');
 		$groups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
+		$default_groups = $this->Contacts->Users->Settings->getDefaultGroups();
 		$skills = $this->Contacts->Skills->find('list');
 		$users = $this->Contacts->Users->find();
-		$this->set(compact('result', 'contact', 'zips', 'contactsources', 'groups', 'skills', 'users'));
+		$this->set(compact('result', 'contact', 'zips', 'contactsources', 'groups', 'default_groups', 'skills', 'users'));
 		$this->set('_serialize', 'result');
 	}
 

@@ -65,4 +65,17 @@ class SettingsTable extends Table
             ->where(['user_id' => $user_id, 'name' => 'Contacts/searchquery'])
             ->order(['value' => 'ASC']);
     }
+    
+    public function getDefaultGroups()
+    {
+        $default_groups = $this->find()
+                            ->select(['value'])
+                            ->where([
+                                     'user_id' => 1,
+                                     'name' => 'default_groups'
+                                     ])
+                            ->toArray();
+        $default_groups = $default_groups[0];
+        return unserialize($default_groups->value);
+    }
 }

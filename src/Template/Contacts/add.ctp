@@ -183,10 +183,11 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 		echo '</div>';
 
 		$fGroups = $values = [];
-		foreach($groups as $group){
-			//$fGroups[$group->id] = '<span class="tag tag-default">' . $group->name . '</span>';
+		foreach($groups as $group)
+        {
 			$fGroups[$group->id] = $group->name;
-			if($group->shared){
+			if (in_array($group->id, $default_groups))
+            {
 				$values[] = $group->id;
 			}
 		}

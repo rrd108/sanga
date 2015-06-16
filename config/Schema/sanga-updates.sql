@@ -637,3 +637,6 @@ ADD CONSTRAINT `fk_documents_users1`
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
+INSERT INTO `reseller10_sanga`.`settings` (`id` ,`user_id` ,`name` ,`value`)
+VALUES (NULL , '1', 'default_groups', 'a:2:{i:0;i:6;i:1;i:7;}');
+
