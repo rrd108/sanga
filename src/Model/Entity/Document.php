@@ -16,11 +16,13 @@ class Document extends Entity
      */
     protected $_accessible = [
         'contact_id' => true,
+        'user_id' => true,
         'name' => true,
         'file_name' => true,
         'file_type' => true,
         'size' => true,
         'data' => true,
         'contact' => true,
+        'user' => true
     ];
 }

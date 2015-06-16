@@ -943,11 +943,18 @@ $result = $this->Contacts->find()
 
     public function documentSave()
     {
-        if(!empty($this->request->data['contactid'])) {
+        if ( ! empty($this->request->data['contactid']))
+		{
 
             $contactid = $this->request->data['contactid'];
+			
+			if (empty($this->request->data['document_title']))
+			{
+				$this->request->data['document_title'] = $this->request->data['uploadfile']['name'];
+			}
 
-            if(!empty($this->request->data['document_title']) && !empty($this->request->data['uploadfile']['type'])) {
+            if ( ! empty($this->request->data['uploadfile']['type']))
+			{
 
                 $document = $this->Contacts->Documents->newEntity();
 
@@ -957,9 +964,8 @@ $result = $this->Contacts->find()
                 $document->file_type = $this->request->data['uploadfile']['type'];
                 $document->size = $this->request->data['uploadfile']['size'];
                 $document->data = file_get_contents($this->request->data['uploadfile']['tmp_name']);
-                $document->created = Time::now();
                 $document->user_id = $this->Auth->user('id');
-
+				
                 $this->Contacts->Documents->save($document);
 
                 $this->Flash->success(__('The document has been saved.'));
