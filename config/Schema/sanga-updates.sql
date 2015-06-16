@@ -622,3 +622,18 @@ ALTER TABLE `sanga`.`documents` ADD `user_id` INT(10) NOT NULL AFTER `contact_id
 
 ALTER TABLE `sanga`.`documents` ADD INDEX `fk_documents_users1_idx` (`user_id` ASC);
 
+ALTER TABLE `sanga`.`documents` 
+DROP COLUMN `user_id`,
+ADD COLUMN `users_id` SMALLINT(5) UNSIGNED NOT NULL AFTER `contact_id`,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`id`, `users_id`),
+ADD INDEX `fk_documents_users1_idx1` (`users_id` ASC),
+DROP INDEX `fk_documents_users1_idx` ;
+
+ALTER TABLE `sanga`.`documents` 
+ADD CONSTRAINT `fk_documents_users1`
+  FOREIGN KEY (`users_id`)
+  REFERENCES `sanga`.`users` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
