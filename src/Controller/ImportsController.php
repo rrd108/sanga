@@ -41,11 +41,13 @@ class ImportsController extends AppController
                 $extraField = 'comment';
                 $this->Contacts = TableRegistry::get('Contacts');
                 $this->Zips = TableRegistry::get('Zips');
+				$this->Settings = TableRegistry::get('Settings');
                 
                 array_shift($fileData);     //remove header - field names
                 
                 $errors = $dataArray = [];
                 $imported = $notImported = 0;
+				
                 foreach ($fileData as $i => $row)
 				{
                     $dataArray[$extraField] = '';
@@ -57,7 +59,7 @@ class ImportsController extends AppController
                                               'workplace_address','workplace_phone','workplace_email',
                                               'contactsource_id','comment', 'skills', 'groups']))
 						{     //if this is the $field, the column exists in the contacts or its related tables
-                            if (isset($data[$j]) && $data[$j]) {
+                            if ((isset($data[$j]) && $data[$j]) || $field == 'groups') {	//we have defaults for groups so we should handle even if it is empty
                                 switch ($field)
 								{
                                     case 'birth' : 
@@ -81,12 +83,7 @@ class ImportsController extends AppController
                                         $data[$j] = ['_ids' => $skill_ids];
                                         break;
                                     case 'groups' :
-                                        if (mb_strpos($data[$j], ',') === false) {
-                                            $group_ids = [$data[$j]];
-                                        } else {
-                                            $group_ids = explode(',', $data[$j]);
-                                        }
-                                        $data[$j] = ['_ids' => $group_ids];
+                                        $data[$j] = $this->handleGroups($data[$j]);
                                         break;
                                 }
                                 $dataArray[$field] = $data[$j];
@@ -108,7 +105,6 @@ class ImportsController extends AppController
                         //debug($dataArray);
                         $contact = $this->Contacts->newEntity($dataArray);
                         $contact->loggedInUser = $this->Auth->user('id');
-                        //debug($contact);
                         $e = $contact->errors();
                         if (empty($e)) {
                             if ($this->Contacts->save($contact)) {
@@ -134,5 +130,41 @@ class ImportsController extends AppController
                 $this->Flash->error(__('The import file was not in the proper format. Download the sample file and save as a csv.'));
             }
         }
-    }    
+    }
+	
+	private function handleGroups($groups)
+	{
+		$group_ids = $this->Settings->getDefaultGroups();
+		
+		if (empty($groups))
+		{
+			return ['_ids' => $group_ids];
+		}
+
+		if (strpos($groups, ',') === false) {
+			if ($groups < 0)
+			{	//if it is a negative number
+				if(($key = array_search(abs($groups), $group_ids)) !== false) {
+					//and it is present in the default array, remove it
+					unset($group_ids[$key]);
+				}
+			} else {	//if it is positive just add it
+				$group_ids[] = (int) $groups;
+			}
+		} else {
+			$newGroups = explode(',', $groups);
+			foreach($newGroups as $nGroup)
+			{	//if it is a negative number
+				if ($nGroup < 0)
+				{
+					if(($key = array_search(abs($nGroup), $group_ids)) !== false) {
+						unset($group_ids[$key]);
+					}
+				} else {	//if it is positive just add it
+					$group_ids[] = (int) $nGroup;
+				}
+			}
+		}
+		return ['_ids' => $group_ids];
+	}
 }

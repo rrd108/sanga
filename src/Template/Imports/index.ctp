@@ -23,7 +23,7 @@ print $this->Html->script('sanga.contacts.import.js', ['block' => true]);
 		</div>
 	</div>
 	
-	<?php if ($imported) : ?>
+	<?php if (isset($imported) && $imported) : ?>
 	<div class="row">
 		<h2><?= __('Imported') ?></h2>
 		<div class="imports index large-10 medium-9 columns">
@@ -34,7 +34,7 @@ print $this->Html->script('sanga.contacts.import.js', ['block' => true]);
 	</div>
 	<?php endif; ?>
 
-	<?php if ($notImported) : ?>
+	<?php if (isset($notImported) && $notImported) : ?>
 	<div class="row">
 		<h3><?= __('Errors') ?></h3>
 		<div class="imports index large-10 medium-9 columns">
