@@ -616,5 +616,9 @@ BEGIN
     END IF;
     RETURN c;
   END$$
-
 DELIMITER ;
+
+ALTER TABLE `sanga`.`documents` ADD `user_id` INT(10) NOT NULL AFTER `contact_id`;
+
+ALTER TABLE `sanga`.`documents` ADD INDEX `fk_documents_users1_idx` (`user_id` ASC);
+
