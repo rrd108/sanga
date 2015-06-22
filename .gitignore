@@ -1,22 +1,21 @@
-/webroot/files/uj_contact_felvitele.ogv
-/vendor/*
 /config/app.php
-/config/google.php
+
+
+/vendor/*
 /tmp/*
 /logs/*
 /plugins/*
-composer.lock
+
 /webroot/coverage/*
+
 /webroot/img/contacts/*
 /webroot/scss/.sass-cache/*
 /webroot/scss/components/default/.sass-cache/*
-/webroot/config.codekit
+/webroot/scss/components/css/*
 
-/webroot/scss/components/css/select.css
-/webroot/scss/components/css/message-box.css
-/webroot/scss/components/css/menu-button.css
-/webroot/scss/components/css/header-search.css
-/webroot/scss/components/css/button-group.css
+/webroot/config.codekit
 
 .htaccess
 /webroot/.htaccess
+
+/webroot/files/uj_contact_felvitele.ogv
