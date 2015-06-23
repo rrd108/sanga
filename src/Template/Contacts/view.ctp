@@ -275,8 +275,11 @@ echo $this->element('ajax-images');
                         echo $this->Form->input('sex',
                                                 ['type' => 'radio',
                                                 'options' => [1 => __('Male'), 2 => __('Female')],
-                                                'templates' => ['inputContainer' => '<span class="editbox" id="sex">{{content}}</span>',
-                                                                'nestingLabel' => '{{input}}{{text}}'],
+                                                'templates' => [
+                                                        'inputContainer' => '{{content}}',
+                                                        'nestingLabel' => '{{input}}<label {{attrs}} class="editbox">{{text}}</label>',
+                                                        'radio' => '<input name="{{name}}" type="radio" class="editbox" value="{{value}}" {{attrs}}>'
+                                                        ],
                                                 'label' => false,
                                                 'value' => $contact->sex
                                                 ]);

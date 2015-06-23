@@ -76,6 +76,10 @@ input.editbox, textarea.editbox, span.editbox{
 input.editbox{
   width: 85%;
 }
+input.editbox[type="radio"]{
+  width: auto;
+  margin-left: 1em;
+}
 input.quantity{
   width: 65%;
   float: left;

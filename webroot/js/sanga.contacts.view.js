@@ -177,6 +177,10 @@ $(function() {
 			var newData;
 			var editbox = $(this);
 			
+			if (editbox.is('label')) {
+				return true;	//skip these and go to next iteration
+			}
+			
 			if (editbox.attr('class').search(/zip/) != -1) {
 				if (editbox.attr('id').search(/workplace/) != -1) {
 					theSpan = editbox.parent().find('.workplace_zip-zip');
@@ -211,12 +215,24 @@ $(function() {
 				theSpan = editbox.parent().find('.dta');
 				if (editbox.is(':checkbox')) {
 					newData = + editbox.is(':checked');		// + converts bool to int
-				} else if (editbox.is('span')) {		//sex
-					newData = editbox.parent().find(':checked').val();
+				} else if (editbox.is(':radio')) {		//sex
+					if (editbox.is(':checked')) {
+						editedData[editbox.attr('name')] = editbox.val();
+						if (editbox.val() == 1) {
+							newData = $.sanga.texts[$.sanga.lang].male;
+						} else if (editbox.val() == 2) {
+							newData = $.sanga.texts[$.sanga.lang].female;
+						} else {
+							newData = $.sanga.texts[$.sanga.lang].unknown;
+						}
+					}
 				} else {
 					newData = editbox.val();
 				}
-				editedData[editbox.attr('name')] = newData;
+				if (newData !== undefined && editbox.attr('name') !== undefined
+						&& editedData[editbox.attr('name')] === undefined) {
+					editedData[editbox.attr('name')] = newData;
+				}
 			}
 			oldData[editbox.attr('name')] = theSpan.text();		//editbox.attr('name') = pl legalname
 			theSpan.text(newData);
@@ -262,10 +278,10 @@ $(function() {
 	$('#editlink').click(function(event){
 		//if there is any other open input we should close it
 		$('.editbox').hide();
-		$('span.dta').show();
+		$('.dta').show();
 		//and open exactly this one
 		$(this).parent().find('.editbox').show();
-		$(this).parent().find('span.dta').hide();
+		$(this).parent().find('.dta').hide();
 		$('#ajaxsave').hide();
 		event.preventDefault();
 	});
