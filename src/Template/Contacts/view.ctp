@@ -10,7 +10,7 @@ if(isset($contact)) :
 //edit link
 echo $this->Html->link($this->Html->image('edit.png'),
                        ['action' => 'edit', $contact->id],
-                       ['id' => 'editlink', 'escape' => false]);
+                       ['id' => 'editlink', 'escape' => false, 'title' => __('Click to edit')]);
 
 echo $this->element('ajax-images');
 ?>
