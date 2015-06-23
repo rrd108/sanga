@@ -517,44 +517,54 @@ class ContactsController extends AppController
             'contain' => ['Groups', 'Skills', 'Users', 'Zips']
             ]
         );
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $contact = $this->Contacts->patchEntity($contact, $this->request->data);
-
-            if (isset($this->request->data['family_member_id'])) {
-                $contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
+        if ( ! empty($this->request->data)) {
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $contact = $this->Contacts->patchEntity($contact, $this->request->data);
+    
+                if (isset($this->request->data['family_member_id'])) {
+                    $contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
+                }
+    
+                $contact->loggedInUser = $this->Auth->user('id');
+                //debug($contact);die();
+                $saved = $this->Contacts->save($contact);
+                if ($saved) {
+                    $message = __('Contact data change has been saved.');
+                    if ($this->request->is('ajax')) {
+                        $result = ['message' => $message];
+                    } else {
+                        $this->Flash->success($message);
+                        return $this->redirect(['action' => 'view', $id]);
+                    }
+                } else {
+                    $message = __('Contact data change could not be saved. Please, try again.');
+                    if ($this->request->is('ajax')) {
+                        $result = ['message' => $message];
+                        throw new BadRequestException($message);
+                    } else {
+                        $this->Flash->error($message);
+                    }
+                }
             }
-
-            $contact->loggedInUser = $this->Auth->user('id');
-            //debug($contact);die();
-            $saved = $this->Contacts->save($contact);
-            if ($saved) {
-                $message = __('Contact data change has been saved.');
-                if ($this->request->is('ajax')) {
-                    $result = ['message' => $message];
-                } else {
-                    $this->Flash->success($message);
-                    return $this->redirect(['action' => 'view', $id]);
-                }
-            } else {
-                $message = __('Contact data change could not be saved. Please, try again.');
-                if ($this->request->is('ajax')) {
-                    $result = ['message' => $message];
-                    throw new BadRequestException($message);
-                } else {
-                    $this->Flash->error($message);
-                }
+            if ($this->request->is('ajax')) {
+                $this->set(compact('result'));
+                return;
+            }
+            $zips = $this->Contacts->Zips->find('list');
+            $contactsources = $this->Contacts->Contactsources->find('list');
+            $groups = $this->Contacts->Groups->find('list');
+            $skills = $this->Contacts->Skills->find('list');
+            $users = $this->Contacts->Users->find('list');
+            $this->set(compact('contact', 'zips', 'contactsources', 'groups', 'skills', 'users'));
+        } else {
+            if ($this->request->is('ajax')) {
+                $message = __('Nothing changed');
+                $result = ['message' => $message];
+                $this->set(compact('result'));
+                throw new BadRequestException($message);
+                return;
             }
         }
-        if ($this->request->is('ajax')) {
-            $this->set(compact('result'));
-            return;
-        }
-        $zips = $this->Contacts->Zips->find('list');
-        $contactsources = $this->Contacts->Contactsources->find('list');
-        $groups = $this->Contacts->Groups->find('list');
-        $skills = $this->Contacts->Skills->find('list');
-        $users = $this->Contacts->Users->find('list');
-        $this->set(compact('contact', 'zips', 'contactsources', 'groups', 'skills', 'users'));
     }
     
     public function remove_family($id)

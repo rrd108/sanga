@@ -207,9 +207,9 @@ $(function() {
 				}
 			} else if (editbox.attr('id') == 'skills'){
 				theSpan = editbox.parent().find('.dta');
-				editedData['skills[]'] = [];
-				$('[name=skills\\[\\]]').each(function(){
-					(editedData['skills[]']).push($(this).val());
+				editedData['skills[_ids][]'] = [];
+				$('[name="skills\\[\\][id]"]').each(function(){
+					(editedData['skills[_ids][]']).push($(this).val());
 				});
 			} else {
 				theSpan = editbox.parent().find('.dta');
