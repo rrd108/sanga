@@ -416,6 +416,7 @@ class ContactsController extends AppController
     {
         $this->request->data['users']['_ids'] = [$this->Auth->user('id')];        //add auth user as contact person
         //debug($this->request->data);
+        // TODO this could be removed in CakePHP 3.0.8 see : https://github.com/cakephp/cakephp/issues/6817
         if (isset($this->request->data['skills']) && $this->request->data['skills'] == '') {    //no skills added we should remove this key, as if it exists it should be
             //an array like 'skills' => ['_ids' => []]
             unset($this->request->data['skills']);
@@ -526,17 +527,17 @@ class ContactsController extends AppController
             //debug($contact);die();
             $saved = $this->Contacts->save($contact);
             if ($saved) {
-                $message = __('The contact has been saved.');
+                $message = __('Contact data change has been saved.');
                 if ($this->request->is('ajax')) {
-                    $result = ['save' => $message];
+                    $result = ['message' => $message];
                 } else {
                     $this->Flash->success($message);
                     return $this->redirect(['action' => 'view', $id]);
                 }
             } else {
-                $message = __('The contact could not be saved. Please, try again.');
+                $message = __('Contact data change could not be saved. Please, try again.');
                 if ($this->request->is('ajax')) {
-                    $result = ['save' => $message];
+                    $result = ['message' => $message];
                     throw new BadRequestException($message);
                 } else {
                     $this->Flash->error($message);

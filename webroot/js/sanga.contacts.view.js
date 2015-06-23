@@ -165,7 +165,7 @@ $(function() {
 		event.preventDefault();
 	});
 	
-	$('.editbox').keypress(function(event){
+	$('.editbox').focus(function(event){
 		handleChange(event);
 	});
 	
@@ -248,7 +248,11 @@ $(function() {
 			},
 			success : function(data, textStatus, jqXHR){
 				$('#ajaxloader').hide();
-				theP.append($('#okImg').show().hide(12500));
+				noty({
+					text: jqXHR.responseJSON.message,
+					type: 'success',
+					timeout: 3500,
+					});
 				if (addSpan) {
 					theP.append('<span class="tag tag-viewable draggable">' + addSpan + '</span> ');
 				}
