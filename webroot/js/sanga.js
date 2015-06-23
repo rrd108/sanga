@@ -20,10 +20,7 @@ $(function() {
 			contains	:	'contains',
 			not			:	'not',
 			or			:	'or',
-			save		:	'Save',
-			male		:	'Male',
-			female		:	'Female',
-			unknown		:	'Unknown'
+			save		:	'Save'
 		},
 		hu : {
 			and			:	'és',
@@ -32,10 +29,7 @@ $(function() {
 			contains	:	'tartalmazza',
 			not			:	'nem',
 			or			:	'vagy',
-			save		:	'Mentés',
-			male		:	'Férfi',
-			female		:	'Nő',
-			unknown		:	'Nem ismert'
+			save		:	'Mentés'
 		}
 	}
 	$.sanga.lang = 'hu';

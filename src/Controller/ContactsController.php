@@ -404,7 +404,8 @@ class ContactsController extends AppController
         $hasAccess = $this->Contacts->hasAccess($id);
         $this->set(compact('hasAccess'));
 
-
+        $contactsources = $this->Contacts->Contactsources->find('list');
+        $this->set(compact('contactsources'));
     }
     
     /**

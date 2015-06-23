@@ -294,10 +294,19 @@ echo $this->element('ajax-images');
                     <div class="column large-8">
                     <p class="ed">
                         <span class="dta">
-                            <?= $contact->has('contactsource') ? $this->Html->link($contact->contactsource->name, ['controller' => 'Contactsources', 'action' => 'view', $contact->contactsource->id]) : '' ?>
+                            <?= $contact->has('contactsource') ? h($contact->contactsource->name) : '' ?>
                         </span>
                         <?php
-                        echo '<span class="editbox tag tag-danger">NOT IMPLEMENTED</span>';
+                        echo $this->Form->input('contactsource_id',
+                                        ['type' => 'radio',
+                                         'options' => $contactsources,
+                                         'templates' => [
+                                                        'inputContainer' => '{{content}}',
+                                                        'nestingLabel' => '{{input}}<label {{attrs}} class="editbox">{{text}}</label>',
+                                                        'radio' => '<input name="{{name}}" type="radio" class="editbox" value="{{value}}" {{attrs}}>'
+                                                        ],
+                                         'label' => false
+                                         ]);
                         ?>
                     </p>
                 </div></div>

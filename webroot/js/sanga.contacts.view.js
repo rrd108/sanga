@@ -218,13 +218,7 @@ $(function() {
 				} else if (editbox.is(':radio')) {		//sex
 					if (editbox.is(':checked')) {
 						editedData[editbox.attr('name')] = editbox.val();
-						if (editbox.val() == 1) {
-							newData = $.sanga.texts[$.sanga.lang].male;
-						} else if (editbox.val() == 2) {
-							newData = $.sanga.texts[$.sanga.lang].female;
-						} else {
-							newData = $.sanga.texts[$.sanga.lang].unknown;
-						}
+						newData = $('label[for="' + editbox.attr('id') + '"]').text();
 					}
 				} else {
 					newData = editbox.val();

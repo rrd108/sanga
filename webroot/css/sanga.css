@@ -41,6 +41,9 @@ nav.primary span.notice{
 .dn{
   display: none;
 }
+.nw {
+  white-space: nowrap;
+}
 
 .draggable{
   cursor: grab;
@@ -66,7 +69,7 @@ nav.primary span.notice{
   float: right;
 }
 span.dta{
-  padding: 0.5rem 0.625rem;
+  padding: 0 0.625rem;
   display: inline-block;
 }
 input.editbox, textarea.editbox, span.editbox{
