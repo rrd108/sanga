@@ -168,10 +168,6 @@ $(function() {
 	$('.editbox').focus(function(event){
 		handleChange(event);
 	});
-	
-	$('.chg').change(function(event){
-		handleChange(event);
-	});
 
 	$('#ajaxsave').click(function(event){
 		var editboxes = $(this).parent().find('.editbox');
