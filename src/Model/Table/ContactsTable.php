@@ -493,8 +493,13 @@ class ContactsTable extends Table
     }
         
     /**
+/**
  * Find contacts owned by given user(s)
  * The given users are the contact persons for the contact
+ *
+ * @param array $query The query object
+ * @param array $options Options for filter matching, 'User.id' should be present
+ * @return void
  */
     public function findOwnedBy(Query $query, array $options)
     {
@@ -508,6 +513,22 @@ class ContactsTable extends Table
     }
     
     /**
+/**
+ * Find contacts accessible by given user(s)
+ * The given users are the contact persons for the contacts
+ *                  or has access to a group to where the contacts belongs to 
+ *                  or are an admin of a usergroup and the contact's contact person
+ *                      belongs to that usergroup
+ *
+ * @param array $query The query object
+ * @param array $options Options for filter matching, 'User.id' should be present
+ * @return void
+ */
+    public function findAccessibleBy(Query $query, array $options)
+    {
+    }
+
+ /**
  * Find contacts who are members of the given groups
  */
     public function findInGroups(Query $query, array $options)
