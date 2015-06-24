@@ -512,7 +512,6 @@ class ContactsTable extends Table
             );
     }
     
-    /**
 /**
  * Find contacts accessible by given user(s)
  * The given users are the contact persons for the contacts
@@ -528,7 +527,7 @@ class ContactsTable extends Table
     {
     }
 
- /**
+/**
  * Find contacts who are members of the given groups
  */
     public function findInGroups(Query $query, array $options)
