@@ -23,7 +23,7 @@ use Cake\Network\Email\Email;
  */
 class ContactsController extends AppController
 {
-    
+
     public $helpers = ['Number'];
 
     public function isAuthorized($user = null)
@@ -70,7 +70,7 @@ class ContactsController extends AppController
         //debug($result);
         $this->set('result', $result);
     }
-    
+
     //mindenféle lekérdezések
     public function searchquery($id = null)
     {
@@ -116,7 +116,7 @@ class ContactsController extends AppController
                     $conditions[$field]['connect'] = $values;
                 }
             }
-            
+
             //as we do not know in which order will the above array keys will come
             //we an not heck and remove empty conditions
             $conditionCount = 0;
@@ -158,7 +158,7 @@ class ContactsController extends AppController
                             $where .= ' OR ( ';
                             $bracketOpened = true;
                         }
-                        
+
                         $conditionCount = count($conval['condition']) - 1;
                         foreach ($conval['condition'] as $i => $condition) {
                             if ($i > 0) {
@@ -183,7 +183,7 @@ class ContactsController extends AppController
             if (! empty($contain)) {
                 $contacts = $query->contain($contain);
             }
-            
+
             /*if ($this->request->data['group_id']){
                     $result->matching('Groups', function($q){
                         return $q->where(['Groups.id' => $this->request->data['group_id']]);
@@ -191,11 +191,11 @@ class ContactsController extends AppController
             }*/
             $this->set('contacts', $this->paginate($contacts));
         }
-        
+
         $savedQueries = $this->Contacts->Users->Settings->getSavedQueries($this->Auth->user('id'));
         $this->set('savedQueries', $savedQueries);
     }
-    
+
     private function translateCode2Array($conditionCode, $field, $value)
     {
         switch ($conditionCode) {
@@ -222,7 +222,7 @@ class ContactsController extends AppController
         }
         return $key . $val;
     }
-    
+
     /*
     *Find area around
     *$center = $this->Contacts->Zips->find()
@@ -267,7 +267,7 @@ class ContactsController extends AppController
             //set the request->data array for the view to autofill the settings form
             foreach ($select as $i => $name) {
                 $selected[str_replace('Contacts.', '', $name)] = 1;
-                
+
                 if ($name == 'Contacts.zip_id') {
                     $select[] = 'Zips.id';
                     $select[] = 'Zips.zip';
@@ -307,7 +307,7 @@ class ContactsController extends AppController
 
         $myContacts = $this->Contacts->find('ownedBy', ['User.id' => $this->Auth->user('id')])
             ->select(['Contacts.id']);
-        $inmygroupsContacts = $this->Contacts->find('inGroups', ['groupIds' => $groupIds])
+        $inmygroupsContacts = $this->Contacts->find('inGroups', ['Group._ids' => $groupIds])
             ->select(['Contacts.id']);
 
         array_unshift($select, 'Contacts.sex');
@@ -353,11 +353,11 @@ class ContactsController extends AppController
 
         //debug($contact);die();
         $this->set('contact', $contact);
-        
+
         $family = $this->Contacts->find()
             ->where(['family_id' => $contact->family_id]);
         $this->set('family', $family);
-        
+
         $this->paginate = [
             'contain' => ['Contacts', 'Users', 'Events', 'Units', 'Groups']
         ];
@@ -384,7 +384,7 @@ class ContactsController extends AppController
             ->andWhere($where)
             ->order(['Histories.date' => 'DESC', 'Histories.id' => 'DESC']);
         $this->set('histories', $this->paginate($histories));
-        
+
         $finances = $this->Contacts->Histories->find()
             ->where(
                 [
@@ -397,14 +397,14 @@ class ContactsController extends AppController
 
         $accessibleGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
         $this->set(compact('accessibleGroups'));
-        
+
         $hasAccess = $this->Contacts->hasAccess($id);
         $this->set(compact('hasAccess'));
 
         $contactsources = $this->Contacts->Contactsources->find('list');
         $this->set(compact('contactsources'));
     }
-    
+
     /**
  * Add method
  *
@@ -460,13 +460,13 @@ class ContactsController extends AppController
     private function get_family_id($contact, $family_member_id)
     {
         $familyId = null;
-        
+
         if (isset($contact->id)) {        //we are editing an existing contact
             if (isset($contact->family_id)) {        //and she has family_id
                 $familyId = $contact->family_id;
             }
         }
-        
+
         //check if the selected member has a family_id
         $familyMember = $this->Contacts->find()
             ->select(['id', 'family_id'])
@@ -480,7 +480,7 @@ class ContactsController extends AppController
                 $familyId = $familyMember->family_id;
             }
         }
-        
+
         if (!$familyId) {        //this is a new family definition
             $familyId = uniqid();
         }
@@ -490,7 +490,7 @@ class ContactsController extends AppController
             $familyMember->family_id = $familyId;
             $this->Contacts->save($familyMember);
         }
-        
+
         return $familyId;
     }
 
@@ -514,14 +514,14 @@ class ContactsController extends AppController
             'contain' => ['Groups', 'Skills', 'Users', 'Zips']
             ]
         );
-        if ( ! empty($this->request->data)) {
+        if (! empty($this->request->data)) {
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $contact = $this->Contacts->patchEntity($contact, $this->request->data);
-    
+
                 if (isset($this->request->data['family_member_id'])) {
                     $contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
                 }
-    
+
                 $contact->loggedInUser = $this->Auth->user('id');
                 //debug($contact);die();
                 $saved = $this->Contacts->save($contact);
@@ -563,7 +563,7 @@ class ContactsController extends AppController
             }
         }
     }
-    
+
     public function remove_family($id)
     {
         if ($this->request->is('ajax')) {
@@ -596,7 +596,7 @@ class ContactsController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
-    
+
     public function checkDuplicates()
     {
         $duplicates = $this->Contacts->checkDuplicatesOnPhone();
@@ -608,7 +608,7 @@ class ContactsController extends AppController
         //$this->Contacts->checkDuplicatesOnBirth();
         //$this->Contacts->checkDuplicatesOnNames();
     }
-    
+
     public function editGroup($id = null)
     {
         if ($this->request->is('post') && $this->request->is('ajax')) {
@@ -644,7 +644,7 @@ class ContactsController extends AppController
             $this->set('_serialize', 'result');
         }
     }
-    
+
     public function removeSkill()
     {
         if ($this->request->is('post') && $this->request->is('ajax')) {
@@ -665,20 +665,20 @@ class ContactsController extends AppController
         $client->setClientId(Configure::read('Google.clientId'));
         $client->setClientSecret(Configure::read('Google.clientSecret'));
         $client->setRedirectUri(Configure::read('Google.redirectUri'));
-        
+
         $client->setScopes(
             ['http://www.google.com/m8/feeds/',
                             'https://www.googleapis.com/auth/userinfo.email']
         );
-        
+
         $user = $this->Contacts->Users->get($this->Auth->user('id'));
-        
+
         if (isset($this->request->query['code'])) {
             //google callback: saves access token and (at the very first time) refesh token
             $this->log('Get access (and refresh) token first time', 'debug');
             $client->authenticate($this->request->query['code']);
             $this->request->session()->write('Google.access_token', $client->getAccessToken());
-            
+
             $user->google_contacts_refresh_token = $client->getRefreshToken();
             if ($this->Contacts->Users->save($user)) {
                 $this->log('Refresh token saved for the user', 'debug');
@@ -690,7 +690,7 @@ class ContactsController extends AppController
         if ($this->request->session()->read('Google.access_token')) {
             $client->setAccessToken($this->request->session()->read('Google.access_token'));
         }
-        
+
         if ($client->isAccessTokenExpired() && $user->google_contacts_refresh_token) {
             $this->log('Get new access token with refreshToken as it is expired or not available', 'debug');
             $client->refreshToken($user->google_contacts_refresh_token);
@@ -699,7 +699,7 @@ class ContactsController extends AppController
 
         return $client;
     }
-    
+
     private function google_getUser($client)
     {
         $req = new Google_Http_Request('https://www.googleapis.com/userinfo/email?alt=json');
@@ -713,17 +713,17 @@ class ContactsController extends AppController
         */
         return $googleUser;
     }
-    
+
     public function google($page = 1)
     {
         $client = $this->google_client();
-        
+
         if ($client->getAccessToken()) {
             //https://developers.google.com/google-apps/contacts/v3/reference#Parameters - currently no support for alphabetical order
-            
+
             //in groups url we can not use default, we should give the email address
             $googleUser = $this->google_getUser($client);
-            
+
             $maxResults = 51;
             $startIndex = 1 + $maxResults * $page;
             $req = new Google_Http_Request(
@@ -752,12 +752,12 @@ class ContactsController extends AppController
                 //https://developers.google.com/gdata/docs/2.0/elements?csw=1#gdContactKind
                 foreach ($gContacts->feed->entry as $entry) {
                     //debug($entry);
-                    
+
                     $gId = $this->google_getid($entry);
-                    
+
                     //get photo bytes
                     $photo = $this->google_get_photo($gId, $client);
-                    
+
                     $contacts[] = ['gId' => $gId,
                                    'contactname' => isset($entry->title->{'$t'}) ? $entry->title->{'$t'} : '',
                                    'updated' => $entry->updated->{'$t'},
@@ -773,12 +773,12 @@ class ContactsController extends AppController
             $this->google_connectpage($client);
         }
     }
-    
+
     private function google_getid($entry)
     {
         return substr(strrchr($entry->id->{'$t'}, '/'), 1);
     }
-    
+
     private function google_connectpage($client)
     {
         $this->log('Create connect page', 'debug');
@@ -786,7 +786,7 @@ class ContactsController extends AppController
         $this->set('authUrl', $client->createAuthUrl());
         $this->render('google_connect');
     }
-    
+
     private function google_get_photo($gId, $client)
     {
         $req = new Google_Http_Request('https://www.google.com/m8/feeds/photos/media/default/' . $gId);
@@ -799,13 +799,13 @@ class ContactsController extends AppController
         if ($this->request->data && $this->request->is('post') && $this->request->is('ajax')) {
             //add contacts person
             $this->request->data['users'] = ['_ids' => [$this->Auth->user('id')]];
-            
+
             if ($this->request->data['address']) {
                 $address = $this->formatAddress($this->request->data['address']);
                 $this->request->data['zip_id'] = $address['zip_id'];
                 $this->request->data['address'] = $address['address'];
             }
-            
+
             $contact = $this->Contacts->newEntity($this->request->data);
             $contact->loggedInUser = $this->Auth->user('id');
             if ($this->Contacts->save($contact)) {
@@ -827,7 +827,7 @@ class ContactsController extends AppController
             $this->set(compact('result'));
         }
     }
-    
+
     public function google_save($id)
     {
         $client = $this->google_client();
@@ -835,31 +835,31 @@ class ContactsController extends AppController
             $googleUser = $this->google_getUser($client);
 
             $contact = $this->Contacts->get($id, ['contain' => ['Zips' => ['Countries']]]);
-            
+
             $contactEntry = "<atom:entry xmlns:atom='http://www.w3.org/2005/Atom' ".
                                 "xmlns:gd='http://schemas.google.com/g/2005' ".
                                 "xmlns:gContact='http://schemas.google.com/contact/2008'>".
                               "\n<atom:category scheme='http://schemas.google.com/g/2005#kind' ".
                                 "term='http://schemas.google.com/contact/2008#contact'/>";
-            
+
             $contactName = $contact->contactname ? $contact->contactname : $contact->legalname;
-            
+
             $contactEntry .= "\n<gd:name>".
                                 "<gd:fullName>" . $contactName . "</gd:fullName>".
                               "</gd:name>";
-                              
+
             if ($contact->email) {
                 $contactEntry .= "\n<gd:email rel='http://schemas.google.com/g/2005#work' ".
                                 "primary='true' ".
                                 "address='".$contact->email."'/>";
             }
-            
+
             if ($contact->phone) {
                 $contactEntry .= "\n<gd:phoneNumber rel='http://schemas.google.com/g/2005#work' ".
                                 "primary='true'>".$contact->phone.
                                 "</gd:phoneNumber>";
             }
-        
+
             if ($contact->address) {
                 $contactEntry .= "\n<gd:structuredPostalAddress ".
                                   "rel='http://schemas.google.com/g/2005#work' ".
@@ -870,13 +870,13 @@ class ContactsController extends AppController
                                     "<gd:country>".$contact->zip->country->name."</gd:country>".
                                 "</gd:structuredPostalAddress>";
             }
-            
+
             $contactEntry .= "\n<gContact:groupMembershipInfo deleted='false' ".
                 "href='http://www.google.com/m8/feeds/groups/".$googleUser->data->email."/base/6' />";    //add to my contacts group
-    
+
             $contactEntry .= "\n</atom:entry>";
             //$this->log($contactEntry, 'debug');
-            
+
             $req = new Google_Http_Request('https://www.google.com/m8/feeds/contacts/default/full?alt=json');
             $req->setRequestMethod('POST');
             $req->setRequestHeaders(
@@ -904,7 +904,7 @@ class ContactsController extends AppController
             $this->google_connectpage($client);
         }
     }
-    
+
     private function formatAddress($address)
     {
         preg_match('/\d{4}/', $address, $zip);
@@ -922,7 +922,7 @@ class ContactsController extends AppController
                 ];
         return $zip;
     }
-    
+
     public function google_sync()
     {
         $client = $this->google_client();
@@ -943,22 +943,22 @@ class ContactsController extends AppController
             //check if there is any conflict
             //save local changes to goole
             //save google changes to local
-            
+
         } else {
             $this->log('Unsuccessful sync', $debug);
         }
     }
-    
+
     public function merge()
     {
         //dont forget to rename the pic if neccessarry
     }
-    
+
     public function transfer($id)
     {
         //transfer contact to an other user
     }
-    
+
     public function sendmail()
     {
         $referer = explode('/', $this->request->referer());
@@ -993,7 +993,7 @@ class ContactsController extends AppController
     {
         if (! empty($this->request->data['contactid'])) {
             $contactid = $this->request->data['contactid'];
-            
+
             if (empty($this->request->data['document_title'])) {
                 $this->request->data['document_title'] = $this->request->data['uploadfile']['name'];
             }
@@ -1008,13 +1008,13 @@ class ContactsController extends AppController
                 $document->size = $this->request->data['uploadfile']['size'];
                 $document->data = file_get_contents($this->request->data['uploadfile']['tmp_name']);
                 $document->user_id = $this->Auth->user('id');
-                
+
                 $this->Contacts->Documents->save($document);
 
                 $this->Flash->success(__('The document has been saved.'));
-                
+
                 //TODO add history event
-                
+
                 return $this->redirect(['action' => 'view', $contactid]);
             } else {
                 $this->Flash->error(__('The document could not be saved.'));
@@ -1026,7 +1026,7 @@ class ContactsController extends AppController
     public function documentGet($documentId)
     {
         //TODO check ownership
-        
+
         $result = $this->Contacts->Documents->get($documentId);
 
         $this->response->header(

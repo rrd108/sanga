@@ -23,11 +23,9 @@ class UsergroupsTableTest extends TestCase {
 		'app.contacts',
 		'app.zips',
 		'app.countries',
-		
 		'app.contactsources',
 		'app.groups',
 		'app.groups_users',
-		
 		'app.contacts_groups',
 		'app.skills',
 		'app.contacts_skills',

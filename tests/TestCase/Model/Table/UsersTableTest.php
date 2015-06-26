@@ -72,7 +72,7 @@ class UsersTableTest extends TestCase {
 	public function testValidationDefault() {
 		//$this->markTestIncomplete('Not implemented yet.');
 	}
-	
+
 	public function testCheckPasswordStrength(){
 		$this->assertEquals(false, $this->Users->checkPasswordStrength('abc', null));
 		$this->assertEquals(false, $this->Users->checkPasswordStrength('abcA', null));
@@ -81,15 +81,25 @@ class UsersTableTest extends TestCase {
 		$this->assertEquals(true, $this->Users->checkPasswordStrength('abcA!1', null));
 	}
 
-	public function testIsAdminUser(){		
+	public function testIsAdminUser(){
 		$actual = $this->Users->isAdminUser(1);
 		$this->assertTrue($actual);
 
 		$actual = $this->Users->isAdminUser(4);
 		$this->assertTrue($actual);
-		
+
 		$actual = $this->Users->isAdminUser(2);
 		$this->assertFalse($actual);
 	}
 
+	public function testGetUnderAdminOf()
+	{
+		$actual = $this->Users->getUnderAdminOf(1)->extract('id')->toArray();
+		$expected = [3];
+		$this->assertEquals($expected, $actual);
+
+		$actual = $this->Users->getUnderAdminOf(2)->extract('id')->toArray();
+		$expected = [];
+		$this->assertEquals($expected, $actual);
+	}
 }

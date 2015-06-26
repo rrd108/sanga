@@ -145,7 +145,7 @@ class UsersTable extends Table
                   return $validator;
     }
 
-    /**
+/**
  * Measuring password strength
  * The password is strong if there are at least 3 of these characters presents in it:
  *   letter, capital letter, number, special character
@@ -181,18 +181,41 @@ class UsersTable extends Table
     }
 
 
-    /**
- * Find users who has access to the contact
+/**
+ * Find users who are members of any user group where the given $userId is admin
+ * @param int $userId the user's id who is the admin
+ * @return array of Entities
  */
+    public function getUnderAdminOf($userId)
+    {
+      $usergroupIds = $this->Usergroups->find()
+          ->where(['admin_user_id' => $userId])
+          ->extract('id')
+          ->toArray();
+
+      $users = $this->find()
+          ->matching(
+              'Usergroups',
+              function ($q) use ($usergroupIds)
+              {
+                return $q->where(['Usergroups.id IN' => $usergroupIds]);
+              }
+            );
+      return $users;
+    }
+
+/**
+ * Find users who has access to the contact
+ *
     public function findHasAccess(Query $query, array $options)
     {
         return $query;
     }
-    
-    /**
+
+/**
  * Find users who has access to the contact, because the user owns
  * (are the contact persons for) the contact
- */
+ *
     public function findHasAccessByOwner(Query $query, array $options)
     {
         return $query
@@ -204,21 +227,22 @@ class UsersTable extends Table
             );
     }
 
-    /**
+/**
  * Find users who has access to the contact because the user has access to a group
  * where the contact is a member
- */
+ *
     public function findHasAccessByGroup(Query $query, array $options)
     {
         return $query;
     }
 
-    /**
+/**
  * Find users who has access to the contact because the user is the owner of a usergroup
  * where there is user who has access to the user
- */
+ *
     public function findHasAccessByUsergroup(Query $query, array $options)
     {
         return $query;
     }
+*/
 }

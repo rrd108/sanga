@@ -144,9 +144,11 @@ class ContactsTableTest extends TestCase {
 		];
 		$this->assertEquals($expected, $actual);
 	}
-	
+
 	public function testFindOwnedBy(){
-		$_actual = $this->Contacts->find('ownedBy', ['User.id' => 2])->hydrate(false)->toArray();
+		$_actual = $this->Contacts->find('ownedBy', ['User.id' => 2])
+        ->hydrate(false)
+        ->toArray();
 		//debug($actual);
 		foreach($_actual as $a) {
 			$actual[] = ['id' => $a['id'], 'contactname' => $a['contactname']];
@@ -159,13 +161,61 @@ class ContactsTableTest extends TestCase {
 			];
 		$this->assertEquals($expected, $actual);
 	}
-	
+
+  public function testFindAccessibleViaGroupBy()
+  {
+    $class = new \ReflectionClass($this->Contacts);
+    $method = $class->getMethod('findAccessibleViaGroupBy');
+    $method->setAccessible(true);
+
+    $actual = $method->invoke($this->Contacts,
+        $this->Contacts->find(),
+        ['User.id' => 2])->hydrate(false)->extract('id')->toArray();
+    $expected = [6];
+    $this->assertEquals($expected, $actual);
+
+    $actual = $method->invoke($this->Contacts,
+        $this->Contacts->find(),
+        ['User.id' => 1])->hydrate(false)->extract('id')->toArray();
+    $expected = [1, 2];
+    $this->assertEquals($expected, $actual);
+  }
+
+  public function testFindAccessibleViaUsergroupBy()
+  {
+    $class = new \ReflectionClass($this->Contacts);
+    $method = $class->getMethod('findAccessibleViaUsergroupBy');
+    $method->setAccessible(true);
+
+    $actual = $method->invoke($this->Contacts,
+        $this->Contacts->find(),
+        ['User.id' => 1])->hydrate(false)->extract('id')->toArray();
+    $expected = [5, 6, 7];
+    $this->assertEquals($expected, $actual);
+
+    $actual = $method->invoke($this->Contacts,
+        $this->Contacts->find(),
+        ['User.id' => 2])->hydrate(false)->extract('id')->toArray();
+    $expected = [];
+    $this->assertEquals($expected, $actual);
+  }
+
+  public function testFindAccessibleBy()
+  {
+    $actual = $this->Contacts->findAccessibleBy($this->Contacts->find(), ['User.id' => 2])
+        ->hydrate(false)
+        ->toArray();
+		debug($actual);
+		$expected = [2, 3, 4, 6];
+		$this->assertEquals($expected, $actual);
+	}
+
 	public function testIsAccessibleAsContactPerson(){
 		//testing private method
 		$class = new \ReflectionClass($this->Contacts);
 		$method = $class->getMethod('isAccessibleAsContactPerson');
 		$method->setAccessible(true);
-		
+
 		$actual = $method->invoke($this->Contacts, 6, 3);
 		$this->assertTrue($actual);
 
@@ -178,7 +228,7 @@ class ContactsTableTest extends TestCase {
 		$class = new \ReflectionClass($this->Contacts);
 		$method = $class->getMethod('isAccessibleAsGroupMember');
 		$method->setAccessible(true);
-		
+
 		$actual = $method->invoke($this->Contacts, 6, 2);
 		$this->assertTrue($actual);
 
@@ -198,7 +248,7 @@ class ContactsTableTest extends TestCase {
 		$actual = $method->invoke($this->Contacts, 6, 2);
 		$this->assertFalse($actual);
 	}
-		
+
 	public function testIsAccessible(){
 		$actual = $this->Contacts->isAccessible(1, 1);
 		$this->assertTrue($actual);
@@ -216,20 +266,20 @@ class ContactsTableTest extends TestCase {
 		//as a usergroup member
 		$actual = $this->Contacts->isAccessible(6, 1);
 		$this->assertTrue($actual);
-		
+
 		//admin user
 		$actual = $this->Contacts->isAccessible(6, 4);
 		$this->assertTrue($actual);
 	}
-	
+
 	public function testHasAccess() {
-		$actual = $this->filterHasAccess($this->Contacts->hasAccess(3));		
+		$actual = $this->filterHasAccess($this->Contacts->hasAccess(3));
 		$expected = ['contactPersons' => [2],
 					'groupMembers' => [],
 					'usergroupMembers' => []];
 		$this->assertEquals($expected, $actual);
-		
-		$actual = $this->filterHasAccess($this->Contacts->hasAccess(5));		
+
+		$actual = $this->filterHasAccess($this->Contacts->hasAccess(5));
 		$expected = ['contactPersons' => [2, 3],
 					'groupMembers' => [],
 					'usergroupMembers' => [1, 3]];
@@ -241,14 +291,14 @@ class ContactsTableTest extends TestCase {
 					'groupMembers' => [1],
 					'usergroupMembers' => []];
 		$this->assertEquals($expected, $actual);
-		
+
 		$actual = $this->filterHasAccess($this->Contacts->hasAccess(6));
 		$expected = ['contactPersons' => [3],
 					'groupMembers' => [2],
 					'usergroupMembers' => [1, 3]];
 		$this->assertEquals($expected, $actual);
 	}
-	
+
 	private function filterHasAccess($actual){
 		foreach($actual as $type => $a) {
 			foreach ($a as $i => $user) {
