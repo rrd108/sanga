@@ -9,7 +9,8 @@ use Cake\I18n\Time;
 /**
  * App\Model\Table\ContactsTable Test Case
  */
-class ContactsTableTest extends TestCase {
+class ContactsTableTest extends TestCase
+{
 
 /**
  * Fixtures
@@ -44,305 +45,331 @@ class ContactsTableTest extends TestCase {
  *
  * @return void
  */
-	public function setUp() {
-		parent::setUp();
-		$config = TableRegistry::exists('Contacts') ? [] : ['className' => 'App\Model\Table\ContactsTable'];
-		$this->Contacts = TableRegistry::get('Contacts', $config);
-	}
+    public function setUp()
+    {
+        parent::setUp();
+        $config = TableRegistry::exists('Contacts') ? [] : ['className' => 'App\Model\Table\ContactsTable'];
+        $this->Contacts = TableRegistry::get('Contacts', $config);
+    }
 
 /**
  * tearDown method
  *
  * @return void
  */
-	public function tearDown() {
-		unset($this->Contacts);
+    public function tearDown()
+    {
+        unset($this->Contacts);
 
-		parent::tearDown();
-	}
+        parent::tearDown();
+    }
 
-	public function testCheckDuplicatesOnGeo(){
-		$actual = $this->Contacts->checkDuplicatesOnGeo();
-		$expected = [
-			[
-			'id1' => (int) 5,
-			'id2' => (int) 7,
-			'field' => 'geo',
-			'data' => '3 & Temesvári utca 6. : 3 & Temesvári utca 5.'
-			]
-		];
-		$this->assertEquals($expected, $actual);
-	}
+    public function testCheckDuplicatesOnGeo()
+    {
+        $actual = $this->Contacts->checkDuplicatesOnGeo();
+        $expected = [
+            [
+            'id1' => (int) 5,
+            'id2' => (int) 7,
+            'field' => 'geo',
+            'data' => '3 & Temesvári utca 6. : 3 & Temesvári utca 5.'
+            ]
+        ];
+        $this->assertEquals($expected, $actual);
+    }
 
-	public function testCheckDuplicatesOnPhone(){
-		$actual = $this->Contacts->checkDuplicatesOnPhone();
-		$expected = [
-				['id1' => 1, 'id2' => 2, 'data' => '+36 30 999 5091', 'field' => 'phone'],
-				['id1' => 1, 'id2' => 3, 'data' => '+36 30 999 5091', 'field' => 'phone'],
-				['id1' => 2, 'id2' => 3, 'data' => '36/30 99-95-091', 'field' => 'phone']
-			];
-		$this->assertEquals($expected, $actual);
-	}
+    public function testCheckDuplicatesOnPhone()
+    {
+        $actual = $this->Contacts->checkDuplicatesOnPhone();
+        $expected = [
+                ['id1' => 1, 'id2' => 2, 'data' => '+36 30 999 5091', 'field' => 'phone'],
+                ['id1' => 1, 'id2' => 3, 'data' => '+36 30 999 5091', 'field' => 'phone'],
+                ['id1' => 2, 'id2' => 3, 'data' => '36/30 99-95-091', 'field' => 'phone']
+            ];
+        $this->assertEquals($expected, $actual);
+    }
 
-	public function testCheckDuplicatesOnEmail(){
-		$actual = $this->Contacts->checkDuplicatesOnEmail();
-		$expected = [
-				['id1' => 3, 'id2' => 4, 'data' => 'dvd@1108.cc', 'field' => 'email'],
-				['id1' => 6, 'id2' => 7, 'data' => 'senki@sehol.se', 'field' => 'email']
-			];
-		$this->assertEquals($expected, $actual);
-	}
+    public function testCheckDuplicatesOnEmail()
+    {
+        $actual = $this->Contacts->checkDuplicatesOnEmail();
+        $expected = [
+                ['id1' => 3, 'id2' => 4, 'data' => 'dvd@1108.cc', 'field' => 'email'],
+                ['id1' => 6, 'id2' => 7, 'data' => 'senki@sehol.se', 'field' => 'email']
+            ];
+        $this->assertEquals($expected, $actual);
+    }
 
-	public function testCheckDuplicatesOnBirth(){
-		$actual = $this->Contacts->checkDuplicatesOnBirth();
-		$expected = [
-				['id1' => 1, 'id2' => 6, 'data' => Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00'), 'field' => 'birth']
-			];
-		$this->assertEquals($expected, $actual);
-	}
+    public function testCheckDuplicatesOnBirth()
+    {
+        $actual = $this->Contacts->checkDuplicatesOnBirth();
+        $expected = [
+                ['id1' => 1, 'id2' => 6, 'data' => Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00'), 'field' => 'birth']
+            ];
+        $this->assertEquals($expected, $actual);
+    }
 
-	public function testCheckDuplicatesOnNames(){
-		$actual = $this->Contacts->checkDuplicatesOnNames();
-		//debug($actual);
-		$expected = [
-			[
-				'id1' => 1,
-				'id2' => 7,
-				'field' => 'name',
-				'data' => 'Lokanatha dasa & Borsos László : Borsos László & Dvaipayan pr',
-				'levenshtein' => [
-				   'lcc' => 13,
-				   'lcl' => 12,
-				   'llc' => 0,
-				   'lll' => 13
-			   ]
-			],
-			[
-				'id1' => 2,
-				'id2' => 4,
-				'field' => 'name',
-				'data' => 'Acarya-ratna das & Kovács Árpád : Acarya-ratna Dasa & ',
-				'levenshtein' => [
-				   'lcc' => 2,
-				   'lcl' => 16,
-				   'llc' => 17,
-				   'lll' => 12
-			   ]
-			],
-			[
-				'id1' => 2,
-				'id2' => 6,
-				'field' => 'name',
-				'data' => 'Acarya-ratna das & Kovács Árpád : Horváth Zoltán & Kovács Árpi',
-				'levenshtein' => [
-				   'lcc' => 15,
-				   'lcl' => 16,
-				   'llc' => 9,
-				   'lll' => 2
-			   ]
-			]
-		];
-		$this->assertEquals($expected, $actual);
-	}
+    public function testCheckDuplicatesOnNames()
+    {
+        $actual = $this->Contacts->checkDuplicatesOnNames();
+        //debug($actual);
+        $expected = [
+            [
+                'id1' => 1,
+                'id2' => 7,
+                'field' => 'name',
+                'data' => 'Lokanatha dasa & Borsos László : Borsos László & Dvaipayan pr',
+                'levenshtein' => [
+                   'lcc' => 13,
+                   'lcl' => 12,
+                   'llc' => 0,
+                   'lll' => 13
+                ]
+            ],
+            [
+                'id1' => 2,
+                'id2' => 4,
+                'field' => 'name',
+                'data' => 'Acarya-ratna das & Kovács Árpád : Acarya-ratna Dasa & ',
+                'levenshtein' => [
+                   'lcc' => 2,
+                   'lcl' => 16,
+                   'llc' => 17,
+                   'lll' => 12
+                ]
+            ],
+            [
+                'id1' => 2,
+                'id2' => 6,
+                'field' => 'name',
+                'data' => 'Acarya-ratna das & Kovács Árpád : Horváth Zoltán & Kovács Árpi',
+                'levenshtein' => [
+                   'lcc' => 15,
+                   'lcl' => 16,
+                   'llc' => 9,
+                   'lll' => 2
+                ]
+            ]
+        ];
+        $this->assertEquals($expected, $actual);
+    }
 
-	public function testFindOwnedBy(){
-		$_actual = $this->Contacts->find('ownedBy', ['User.id' => 2])
+    public function testFindOwnedBy()
+    {
+        $_actual = $this->Contacts->find('ownedBy', ['User.id' => 2])
         ->hydrate(false)
         ->toArray();
-		//debug($actual);
-		foreach($_actual as $a) {
-			$actual[] = ['id' => $a['id'], 'contactname' => $a['contactname']];
-		}
-		$expected = [
-				['id' => 2, 'contactname' => 'Acarya-ratna das'],
-				['id' => 3, 'contactname' => 'Dvaipayana Dasa'],
-				['id' => 4, 'contactname' => 'Acarya-ratna Dasa'],
-				['id' => 5, 'contactname' => 'Filu']
-			];
-		$this->assertEquals($expected, $actual);
-	}
+        //debug($actual);
+        foreach ($_actual as $a) {
+            $actual[] = ['id' => $a['id'], 'contactname' => $a['contactname']];
+        }
+        $expected = [
+                ['id' => 2, 'contactname' => 'Acarya-ratna das'],
+                ['id' => 3, 'contactname' => 'Dvaipayana Dasa'],
+                ['id' => 4, 'contactname' => 'Acarya-ratna Dasa'],
+                ['id' => 5, 'contactname' => 'Filu']
+            ];
+        $this->assertEquals($expected, $actual);
+    }
 
-  public function testFindAccessibleViaGroupBy()
-  {
-    $class = new \ReflectionClass($this->Contacts);
-    $method = $class->getMethod('findAccessibleViaGroupBy');
-    $method->setAccessible(true);
+    public function testFindAccessibleViaGroupBy()
+    {
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('findAccessibleViaGroupBy');
+        $method->setAccessible(true);
 
-    $actual = $method->invoke($this->Contacts,
-        $this->Contacts->find(),
-        ['User.id' => 2])->hydrate(false)->extract('id')->toArray();
-    $expected = [6];
-    $this->assertEquals($expected, $actual);
+        $actual = $method->invoke(
+            $this->Contacts,
+            $this->Contacts->find(),
+            ['User.id' => 2]
+        )->hydrate(false)->extract('id')->toArray();
+        $expected = [6];
+        $this->assertEquals($expected, $actual);
 
-    $actual = $method->invoke($this->Contacts,
-        $this->Contacts->find(),
-        ['User.id' => 1])->hydrate(false)->extract('id')->toArray();
-    $expected = [1, 2];
-    $this->assertEquals($expected, $actual);
-  }
+        $actual = $method->invoke(
+            $this->Contacts,
+            $this->Contacts->find(),
+            ['User.id' => 1]
+        )->hydrate(false)->extract('id')->toArray();
+        $expected = [1, 2];
+        $this->assertEquals($expected, $actual);
+    }
 
-  public function testFindAccessibleViaUsergroupBy()
-  {
-    $class = new \ReflectionClass($this->Contacts);
-    $method = $class->getMethod('findAccessibleViaUsergroupBy');
-    $method->setAccessible(true);
+    public function testFindAccessibleViaUsergroupBy()
+    {
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('findAccessibleViaUsergroupBy');
+        $method->setAccessible(true);
 
-    $actual = $method->invoke($this->Contacts,
-        $this->Contacts->find(),
-        ['User.id' => 1])->hydrate(false)->extract('id')->toArray();
-    $expected = [5, 6, 7];
-    $this->assertEquals($expected, $actual);
+        $actual = $method->invoke(
+            $this->Contacts,
+            $this->Contacts->find(),
+            ['User.id' => 1]
+        )->hydrate(false)->extract('id')->toArray();
+        $expected = [5, 6, 7];
+        $this->assertEquals($expected, $actual);
 
-    $actual = $method->invoke($this->Contacts,
-        $this->Contacts->find(),
-        ['User.id' => 2])->hydrate(false)->extract('id')->toArray();
-    $expected = [];
-    $this->assertEquals($expected, $actual);
-  }
+        $actual = $method->invoke(
+            $this->Contacts,
+            $this->Contacts->find(),
+            ['User.id' => 2]
+        )->hydrate(false)->extract('id')->toArray();
+        $expected = [];
+        $this->assertEquals($expected, $actual);
+    }
 
-  public function testFindAccessibleBy()
-  {
-    $actual = $this->Contacts->findAccessibleBy($this->Contacts->find(), ['User.id' => 2])
+    public function testFindAccessibleBy()
+    {
+        $actual = $this->Contacts->findAccessibleBy($this->Contacts->find(), ['User.id' => 2])
         ->hydrate(false)
+        ->extract('id')
         ->toArray();
-		debug($actual);
-		$expected = [2, 3, 4, 6];
-		$this->assertEquals($expected, $actual);
-	}
+        debug($actual);
+        $expected = [2, 3, 4, 5, 6];
+        $this->assertEquals($expected, $actual);
+    }
 
-	public function testIsAccessibleAsContactPerson(){
-		//testing private method
-		$class = new \ReflectionClass($this->Contacts);
-		$method = $class->getMethod('isAccessibleAsContactPerson');
-		$method->setAccessible(true);
+    public function testIsAccessibleAsContactPerson()
+    {
+        //testing private method
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('isAccessibleAsContactPerson');
+        $method->setAccessible(true);
 
-		$actual = $method->invoke($this->Contacts, 6, 3);
-		$this->assertTrue($actual);
+        $actual = $method->invoke($this->Contacts, 6, 3);
+        $this->assertTrue($actual);
 
-		$actual = $method->invoke($this->Contacts, 6, 1);
-		$this->assertFalse($actual);
-	}
+        $actual = $method->invoke($this->Contacts, 6, 1);
+        $this->assertFalse($actual);
+    }
 
-	public function testIsAccessibleAsGroupMember(){
-		//testing private method
-		$class = new \ReflectionClass($this->Contacts);
-		$method = $class->getMethod('isAccessibleAsGroupMember');
-		$method->setAccessible(true);
+    public function testIsAccessibleAsGroupMember()
+    {
+        //testing private method
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('isAccessibleAsGroupMember');
+        $method->setAccessible(true);
 
-		$actual = $method->invoke($this->Contacts, 6, 2);
-		$this->assertTrue($actual);
+        $actual = $method->invoke($this->Contacts, 6, 2);
+        $this->assertTrue($actual);
 
-		$actual = $method->invoke($this->Contacts, 7,2);
-		$this->assertFalse($actual);
-	}
+        $actual = $method->invoke($this->Contacts, 7, 2);
+        $this->assertFalse($actual);
+    }
 
-	public function testIsAccessibleAsUsergroupMember(){
-		//testing private method
-		$class = new \ReflectionClass($this->Contacts);
-		$method = $class->getMethod('isAccessibleAsUsergroupMember');
-		$method->setAccessible(true);
+    public function testIsAccessibleAsUsergroupMember()
+    {
+        //testing private method
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('isAccessibleAsUsergroupMember');
+        $method->setAccessible(true);
 
-		$actual = $method->invoke($this->Contacts, 6, 1);
-		$this->assertTrue($actual);
+        $actual = $method->invoke($this->Contacts, 6, 1);
+        $this->assertTrue($actual);
 
-		$actual = $method->invoke($this->Contacts, 6, 2);
-		$this->assertFalse($actual);
-	}
+        $actual = $method->invoke($this->Contacts, 6, 2);
+        $this->assertFalse($actual);
+    }
 
-	public function testIsAccessible(){
-		$actual = $this->Contacts->isAccessible(1, 1);
-		$this->assertTrue($actual);
+    public function testIsAccessible()
+    {
+        $actual = $this->Contacts->isAccessible(1, 1);
+        $this->assertTrue($actual);
 
-		$actual = $this->Contacts->isAccessible(1, 2);
-		$this->assertFalse($actual);
+        $actual = $this->Contacts->isAccessible(1, 2);
+        $this->assertFalse($actual);
 
-		//as a group member or group admin
-		$actual = $this->Contacts->isAccessible(6, 2);
-		$this->assertTrue($actual);
+        //as a group member or group admin
+        $actual = $this->Contacts->isAccessible(6, 2);
+        $this->assertTrue($actual);
 
-		$actual = $this->Contacts->isAccessible(7, 2);
-		$this->assertFalse($actual);
+        $actual = $this->Contacts->isAccessible(7, 2);
+        $this->assertFalse($actual);
 
-		//as a usergroup member
-		$actual = $this->Contacts->isAccessible(6, 1);
-		$this->assertTrue($actual);
+        //as a usergroup member
+        $actual = $this->Contacts->isAccessible(6, 1);
+        $this->assertTrue($actual);
 
-		//admin user
-		$actual = $this->Contacts->isAccessible(6, 4);
-		$this->assertTrue($actual);
-	}
+        //admin user
+        $actual = $this->Contacts->isAccessible(6, 4);
+        $this->assertTrue($actual);
+    }
 
-	public function testHasAccess() {
-		$actual = $this->filterHasAccess($this->Contacts->hasAccess(3));
-		$expected = ['contactPersons' => [2],
-					'groupMembers' => [],
-					'usergroupMembers' => []];
-		$this->assertEquals($expected, $actual);
+    public function testHasAccess()
+    {
+        $actual = $this->filterHasAccess($this->Contacts->hasAccess(3));
+        $expected = ['contactPersons' => [2],
+                    'groupMembers' => [],
+                    'usergroupMembers' => []];
+        $this->assertEquals($expected, $actual);
 
-		$actual = $this->filterHasAccess($this->Contacts->hasAccess(5));
-		$expected = ['contactPersons' => [2, 3],
-					'groupMembers' => [],
-					'usergroupMembers' => [1, 3]];
-		$this->assertEquals($expected, $actual);
+        $actual = $this->filterHasAccess($this->Contacts->hasAccess(5));
+        $expected = ['contactPersons' => [2, 3],
+                    'groupMembers' => [],
+                    'usergroupMembers' => [1, 3]];
+        $this->assertEquals($expected, $actual);
 
-		$actual = $this->filterHasAccess($this->Contacts->hasAccess(2));
-		//debug($actual);
-		$expected = ['contactPersons' => [2],
-					'groupMembers' => [1],
-					'usergroupMembers' => []];
-		$this->assertEquals($expected, $actual);
+        $actual = $this->filterHasAccess($this->Contacts->hasAccess(2));
+        //debug($actual);
+        $expected = ['contactPersons' => [2],
+                    'groupMembers' => [1],
+                    'usergroupMembers' => []];
+        $this->assertEquals($expected, $actual);
 
-		$actual = $this->filterHasAccess($this->Contacts->hasAccess(6));
-		$expected = ['contactPersons' => [3],
-					'groupMembers' => [2],
-					'usergroupMembers' => [1, 3]];
-		$this->assertEquals($expected, $actual);
-	}
+        $actual = $this->filterHasAccess($this->Contacts->hasAccess(6));
+        $expected = ['contactPersons' => [3],
+                    'groupMembers' => [2],
+                    'usergroupMembers' => [1, 3]];
+        $this->assertEquals($expected, $actual);
+    }
 
-	private function filterHasAccess($actual){
-		foreach($actual as $type => $a) {
-			foreach ($a as $i => $user) {
-				$actual[$type][$i] = $user->id;
-			}
-		}
-		//debug($actual);
-		return $actual;
-	}
+    private function filterHasAccess($actual)
+    {
+        foreach ($actual as $type => $a) {
+            foreach ($a as $i => $user) {
+                $actual[$type][$i] = $user->id;
+            }
+        }
+        //debug($actual);
+        return $actual;
+    }
 
 /**
  * Test initialize method
  *
  * @return void
  */
-	public function testInitialize() {
-		$this->markTestIncomplete('Not implemented yet.');
-	}
+    public function testInitialize()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
 
 /**
  * Test validationDefault method
  *
  * @return void
  */
-	public function testValidationDefault() {
-		$this->markTestIncomplete('Not implemented yet.');
-	}
+    public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
 
 /**
  * Test beforeSave method
  *
  * @return void
  */
-	public function testBeforeSave() {
-		$this->markTestIncomplete('Not implemented yet.');
-	}
+    public function testBeforeSave()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
 
 /**
  * Test afterSave method
  *
  * @return void
  */
-	public function testAfterSave() {
-		$this->markTestIncomplete('Not implemented yet.');
-	}
-
+    public function testAfterSave()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
 }

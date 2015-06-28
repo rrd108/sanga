@@ -74,19 +74,19 @@ class ZipsTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
-	
-	public function testGetIdForZip()
-	{
-		$actual = $this->Zips->getIdForZip(1012);		
-		$expected = 2;
-		$this->assertEquals($expected, $actual);
+    
+    public function testGetIdForZip()
+    {
+        $actual = $this->Zips->getIdForZip(1012);
+        $expected = 2;
+        $this->assertEquals($expected, $actual);
 
-		$actual = $this->Zips->getIdForZip('notexists');		
-		$expected = null;
-		$this->assertEquals($expected, $actual);
+        $actual = $this->Zips->getIdForZip('notexists');
+        $expected = null;
+        $this->assertEquals($expected, $actual);
 
-		$actual = $this->Zips->getIdForZip([1011, 'Bp I.']);
-		$expected = 1;
-		$this->assertEquals($expected, $actual);
-	}
+        $actual = $this->Zips->getIdForZip([1011, 'Bp I.']);
+        $expected = 1;
+        $this->assertEquals($expected, $actual);
+    }
 }
