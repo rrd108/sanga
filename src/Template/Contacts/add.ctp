@@ -181,7 +181,6 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
                                          'title' => __('Secondary emails, phones, others')]);
         echo '</div>';
 
-echo $this->Form->end();
         $fGroups = $values = [];
         foreach($groups as $group)
         {
