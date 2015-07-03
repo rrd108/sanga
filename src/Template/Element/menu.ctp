@@ -9,7 +9,7 @@
                 if($this->request->session()->read('Auth.User.role') == 10):
             ?>
                 <li>
-                    Admin
+                    <?= __('Admin') ?>
                     <ul>
                         <?php
                             print '<li>' . $this->Html->link('❶ ' . __('Zips'),
@@ -49,7 +49,7 @@
                 </li>
                 <?php endif; ?>
             <li>
-                CRM
+                <?= __('CRM') ?>
                 <ul>
                     <?php
                         print '<li>'. $this->Html->link('♥ ' . __('Contacts'),
@@ -96,7 +96,7 @@
                 </ul>
             </li>
             <li>
-                Törzsadatok
+                <?= __('Master data') ?>
                 <ul>
                     <?php
                         if(in_array($this->request->session()->read('Auth.User.role'), [9,10])){
@@ -125,7 +125,7 @@
                 </ul>
             </li>
             <li>
-                
+
                 <?php
                     print $this->request->session()->read('Auth.User.realname');
                     print $cell = $this->cell('Notification', [$this->request->session()->read('Auth.User.id')]);
@@ -178,4 +178,3 @@
             endif;?>
         </div>
 </div>
-
