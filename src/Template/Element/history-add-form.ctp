@@ -9,12 +9,16 @@
                                  ]);
     ?>
     <?php
-    if ( ! isset($e_showContact) || $e_showContact) :
+    if ( ! isset($e_noContactTd)) :
     ?>
     <td>
         <?php
-        echo $this->Form->input('contact_id', ['type' => 'hidden']);
-        echo $this->Form->input('xcontact_id', ['type' => 'text', 'label' => false]);
+        if (isset($e_ContactId)) {
+            echo $this->Form->input('contact_id', ['type' => 'hidden', 'value' => $e_ContactId]);
+        } else {
+            echo $this->Form->input('contact_id', ['type' => 'hidden']);
+            echo $this->Form->input('xcontact_id', ['type' => 'text', 'label' => false]);
+        }
         ?>
     </td>
     <?php

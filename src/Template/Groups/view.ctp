@@ -16,19 +16,19 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
             <div class="row">
                 <div class="large-5 columns strings">
                     <h6 class="subheader">
-                        <?= __('Description') ?> : 
+                        <?= __('Description') ?> :
                         <?= h($group->description) ?>
                     </h6>
                     <h6 class="subheader">
-                        <?= __('Admin User') ?> : 
+                        <?= __('Admin User') ?> :
                         <?= $group->admin_user->name ?>
                     </h6>
                     <h6 class="subheader">
-                        <?= __('Shared') ?> : 
+                        <?= __('Shared') ?> :
                         <?= $group->shared ? __('Yes') : __('No'); ?>
                     </h6>
                     <h6 class="subheader">
-                        <?= __('Members') ?> : 
+                        <?= __('Members') ?> :
                         <?= count($group->contacts); ?>
                     </h6>
                 </div>
@@ -76,7 +76,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                                                                 ['class' => 'ajaxremove',
                                                                  'title' => __('Click to remove from group')]);
                             echo '</li>';
-                            
+
                             if($contacts->email != '') {
                                 $hasEmail++;
                             }
@@ -102,7 +102,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                     <th><?= $this->Paginator->sort('quantity') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
-                <?= $this->element('history-add-form', ['e_showContact' => false, 'e_group' => $group]) ?>
+                <?= $this->element('history-add-form', ['e_noContactTd' => true, 'e_group' => $group]) ?>
                 <?php
                 foreach($group->histories as $history) :
                 ?>

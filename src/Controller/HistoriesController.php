@@ -10,7 +10,7 @@ use App\Controller\AppController;
  */
 class HistoriesController extends AppController
 {
-    
+
     public $helper = ['Time'];
 
     public function isAuthorized($user = null)
@@ -42,7 +42,7 @@ class HistoriesController extends AppController
         */
         if (! empty($this->request->data)) {
             $where = [];
-            
+
             if (! empty($this->request->data['fcontact_id'])) {
                 $where['Histories.contact_id'] = $this->request->data['fcontact_id'];
             }
@@ -64,9 +64,9 @@ class HistoriesController extends AppController
             if (! empty($this->request->data['fdetail'])) {
                 $where['Histories.detail LIKE'] = '%' . $this->request->data['fdetail'] . '%';
             }
-            
+
             $histories = $this->Histories->find()->where($where);
-            
+
             if (isset($dates)) {
                 $histories->andWhere($between);
             }
@@ -110,8 +110,8 @@ class HistoriesController extends AppController
         $history->user_id = $this->Auth->user('id');
         if ($this->request->is('post')) {
             //debug($this->request->data);die();
-            
-            if (isset($this->request->data['target_group_id']) && ! $this->request->data['contact_id']) {    //add an event to multiple group members
+
+            if (isset($this->request->data['target_group_id']) && ! isset($this->request->data['contact_id'])) {    //add an event to multiple group members
                 $group = $this->Histories->groups->get($this->request->data['group_id'], ['contain' => 'Contacts']);
                 exec(WWW_ROOT . '../bin/cake history ' . json_encode(json_encode($history)) . ' ' . json_encode(json_encode($group)) . ' ' . $this->Auth->user('id') . ' > /dev/null &');
                 $result = ['save' => true,
@@ -139,13 +139,13 @@ class HistoriesController extends AppController
                 }
             }
         }
-        
+
         if ($this->request->is('ajax')) {
             $this->set(compact('result'));
             $this->set('_serialize', 'result');
             return;
         }
-    
+
         $contacts = $this->Histories->Contacts->find('list');
         $groups = $this->Histories->Groups->find('list');
         $events = $this->Histories->Events->find('list');

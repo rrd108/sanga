@@ -45,11 +45,11 @@ echo $this->element('ajax-images');
         </nav>
     </div>
     <div class="content-wrapper">
-    <div class="row">    
+    <div class="row">
     <?php
     echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit']);
     ?>
-    
+
     <div id="tabs-1" class="contacts view large-10 medium-9 columns">
         <h2>
             <?= h($contact->contactname) ?>
@@ -82,7 +82,7 @@ echo $this->element('ajax-images');
                     <div class="column large-4">
                         <label><?= __('Known name') ?></label>
                     </div><!-- column -->
-                    <div class="column large-8">                    
+                    <div class="column large-8">
                         <p class="ed">
                             <span class="dta"><?= h($contact->contactname) ?></span>
                             <?php
@@ -167,7 +167,7 @@ echo $this->element('ajax-images');
                         echo $this->Form->input('zip_id',
                                                 ['type' => 'hidden',
                                                  'value' => isset($contact->zip) ? $contact->zip->id : false]);
-                        
+
                         echo $this->Form->input('xzip',
                                                 ['templates' => ['inputContainer' => '{{content}}'],
                                                  'type' => 'text',
@@ -175,7 +175,7 @@ echo $this->element('ajax-images');
                                                 'label' => false,
                                                  'value' => isset($contact->zip) ? $contact->zip->zip : ''
                                                  ]);
-                        
+
                         echo '<span class="dta addr address">';
                             echo h($contact->address);
                         echo '</span>';
@@ -185,7 +185,7 @@ echo $this->element('ajax-images');
                                                 'label' => false,
                                                  'value' => $contact->address
                                                  ]);
-    
+
                         ?>
                     </p>
                     </div>
@@ -372,7 +372,7 @@ echo $this->element('ajax-images');
                 ?>
         </div>
     </div>
-    
+
     <div id="tabs-2" class="contacts view large-10 medium-9 columns">
         <h2><?= h($contact->contactname) ?></h2>
         <div class="row">
@@ -418,7 +418,7 @@ echo $this->element('ajax-images');
             </div>
         </div>
     </div>
-    
+
     <div id="tabs-3" class="contacts view large-10 medium-9 columns">
         <h2><?= h($contact->contactname) ?></h2>
         <div class="row">
@@ -429,7 +429,7 @@ echo $this->element('ajax-images');
                     </div>
                     <div class="large-8 column">
                         <p class="ed">
-                            
+
                             <span class="dta"><?= h($contact->workplace) ?></span>
                             <?php
                             echo $this->Form->input('workplace',
@@ -465,7 +465,7 @@ echo $this->element('ajax-images');
                         echo $this->Form->input('workplace_zip_id',
                                                 ['type' => 'hidden',
                                                  'value' => isset($contact->workplace_zip) ? $contact->workplace_zip->id : false]);
-                        
+
                         echo $this->Form->input('xworkplace_zip',
                                                 ['templates' => ['inputContainer' => '{{content}}'],
                                                  'type' => 'text',
@@ -473,7 +473,7 @@ echo $this->element('ajax-images');
                                                 'label' => false,
                                                  'value' => isset($contact->workplace_zip) ? $contact->workplace_zip->zip : ''
                                                  ]);
-                        
+
                         echo '<span class="dta addr workplace_address">';
                             echo h($contact->workplace_address);
                         echo '</span>';
@@ -484,7 +484,7 @@ echo $this->element('ajax-images');
                                                 'label' => false,
                                                  'value' => $contact->workplace_address
                                                  ]);
-    
+
                         ?>
                     </p>
                     </div>
@@ -496,7 +496,7 @@ echo $this->element('ajax-images');
                     </div>
                     <div class="large-8 column">
                         <p class="ed">
-                            
+
                             <span class="dta"><?= h($contact->workplace_phone) ?></span>
                             <?php
                             echo $this->Form->input('workplace_phone',
@@ -515,7 +515,7 @@ echo $this->element('ajax-images');
                     </div>
                     <div class="large-8 column">
                         <p class="ed">
-                            
+
                             <span class="dta"><?= h($contact->workplace_email) ?></span>
                             <?php
                             echo $this->Form->input('workplace_email',
@@ -559,11 +559,11 @@ echo $this->element('ajax-images');
             </div>
         </div>
     </div>
-    
+
     <?php
     echo $this->Form->end();
     ?>
-    
+
     <div id="tabs-4" class="contacts view large-10 medium-9 columns">
         <h2><?= h($contact->contactname) ?></h2>
         <h3><?= __('Member') ?></h3>
@@ -579,15 +579,15 @@ echo $this->element('ajax-images');
                             $myGroup = true;
                         }
                         $cssStyle = $groups->shared ? 'shared' : ($myGroup ? 'mine' : 'viewable');
-                        
+
                         $draggable = '';
                         if($myContact || $myGroup){
                             $draggable = 'draggable';
                         }
-                        
+
                 ?>
                         <span class="<?= $draggable ?> member tag tag-<?= $cssStyle ?>"
-                                data-css="tag-<?= $cssStyle ?>" 
+                                data-css="tag-<?= $cssStyle ?>"
                                 data-id="<?= $groups->id ?>"><?= h($groups->name) ?></span>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -642,50 +642,9 @@ echo $this->element('ajax-images');
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <?php
-                                    echo $this->Form->input('contact_id',
-                                                                ['type' => 'hidden',
-                                                                 'value' => $contact->id,
-                                                                 'class' => 'dontdel'
-                                                                 ]);
-                                    echo $this->Form->input('date',
-                                                            ['label' => false,
-                                                             'value' => date('Y-m-d'),
-                                                             'class' => 'dontdel']);
-                                    ?>
-                                </td>
-                                <td id="uName"><?= $this->request->session()->read('Auth.User.name') ?></td>
-                                <td>
-                                    <?php
-                                    echo $this->Form->input('group_id', ['type' => 'hidden']);
-                                    echo $this->Form->input('xgroup_id', ['label' => false, 'type' => 'text']);
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    echo $this->Form->input('event_id', ['type' => 'hidden']);
-                                    echo $this->Form->input('xevent_id', ['label' => false, 'type' => 'text']);
-                                    ?>
-                                </td>
-                                <td><?= $this->Form->input('detail', ['label' => false]) ?></td>
-                                <td>
-                                    <?php
-                                    echo $this->Form->input('quantity', [
-                                                                         'label' => false,
-                                                                         'class' => 'quantity'
-                                                                         ]);
-                                    echo $this->Form->input('unit_id', ['type' => 'hidden']);
-                                    echo $this->Form->input('xunit_id', ['label' => false,
-                                                                        'class' => 'thin',
-                                                                        'type' => 'text']);
-                                    ?>
-                                </td>
-                                <td id="hInfo">
-                                </td>
-                            </tr>
+
+                            <?= $this->element('history-add-form', ['e_ContactId' => $contact->id]) ?>
+
                             <?php foreach ($histories as $history): ?>
                             <tr>
                                 <td></td>
@@ -738,7 +697,7 @@ echo $this->element('ajax-images');
             </div>
         </div>
     </div>
-    
+
     <div id="tabs-6" class="contacts view large-12 columns">
         <h2><?= h($contact->contactname) ?></h2>
         <div class="row">
@@ -867,7 +826,7 @@ echo $this->element('ajax-images');
                                             ['type' => 'textarea']);
                     echo $this->Form->button(__('Submit'), ['id' => 'sendmail']);
                     ?>
-                
+
                 <?php
                 else :
                     echo __('We do not have the contact\'s email address, so we can not send mail');
