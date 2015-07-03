@@ -188,20 +188,19 @@ class UsersTable extends Table
  */
     public function getUnderAdminOf($userId)
     {
-      $usergroupIds = $this->Usergroups->find()
+        $usergroupIds = $this->Usergroups->find()
           ->where(['admin_user_id' => $userId])
           ->extract('id')
           ->toArray();
 
-      $users = $this->find()
+        $users = $this->find()
           ->matching(
               'Usergroups',
-              function ($q) use ($usergroupIds)
-              {
-                return $q->where(['Usergroups.id IN' => $usergroupIds]);
-              }
-            );
-      return $users;
+                function ($q) use ($usergroupIds) {
+                    return $q->where(['Usergroups.id IN' => $usergroupIds]);
+                }
+          );
+        return $users;
     }
 
 /**
