@@ -47,7 +47,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
                                             'title' => __('Civil name, official legal name, etc')
                                             ]);
             echo '</div>';
-    
+
             echo '<div class="row">';
                 echo $this->Form->input('xzip',
                                             ['templates' => [
@@ -66,7 +66,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
                                                     ],
                                              'class' => 'radius']);
             echo '</div>';
-                
+
             echo '<div class="row">';
                 echo $this->Form->input('phone',
                                             ['templates' => [
@@ -81,7 +81,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
                                                     ],
                                              'class' => 'radius']);
             echo '</div>';
-    
+
             echo '<div class="row">';
                 echo $this->Form->input('birth',
                                             ['templates' => [
@@ -97,7 +97,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
                                             'class' => 'radius',
                                             'options' => [1 => __('Male'), 2 => __('Female')]]);
             echo '</div>';
-            
+
             echo '<div class="row">';
             echo $this->Form->input('xfamily',
                                         ['templates' => [
@@ -130,7 +130,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
                                          'class' => 'radius',
                                          'type' => 'text']);
             echo '</div>';
-            
+
             echo '<div class="row">';
                 echo $this->Form->input('xworkplace_zip',
                                             ['templates' => [
@@ -149,7 +149,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
                                                     ],
                                              'class' => 'radius']);
             echo '</div>';
-    
+
             echo '<div class="row">';
                 echo $this->Form->input('workplace_phone',
                                             ['templates' => [
@@ -166,7 +166,6 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
             echo '</div>';
         echo '</fieldset>';
 
-
         echo '<div class="row">';
                 echo $this->Form->input('contactsource_id',
                                         ['templates' => ['inputContainer' => '<div class="column large-12 radio">{{content}}</div>'],
@@ -174,7 +173,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
                                          'options' => $contactsources,
                                          'type' => 'radio']);
         echo '</div>';
-        
+
         echo '<div class="row">';
             echo $this->Form->input('comment',
                                         ['templates' => ['inputContainer' => '<div class="column large-12">{{content}}</div>'],
@@ -182,6 +181,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
                                          'title' => __('Secondary emails, phones, others')]);
         echo '</div>';
 
+echo $this->Form->end();
         $fGroups = $values = [];
         foreach($groups as $group)
         {
@@ -191,7 +191,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
                 $values[] = $group->id;
             }
         }
-        
+
         echo '<div class="row">';
         echo '<div class="column large-12 radio">';
             echo $this->Form->input('groups._ids',
@@ -203,6 +203,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
                                          ]);
         echo '</div>';
         echo '</div>';
+
     ?>
 <?php
     echo '<div class="row">';

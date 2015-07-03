@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  */
 class ZipsTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -63,7 +62,7 @@ class ZipsTable extends Table
         $rules->add($rules->existsIn(['country_id'], 'Countries'));
         return $rules;
     }
-    
+
     public function getIdForZip($zip)
     {
         if (is_array($zip)) {

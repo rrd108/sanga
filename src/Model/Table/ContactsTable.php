@@ -29,10 +29,10 @@ use Cake\Log\Log;
 class ContactsTable extends Table
 {
     /**
-   * Initialize method.
-   *
-   * @param  array $config The configuration for the Table.
-   */
+     * Initialize method.
+     *
+     * @param array $config The configuration for the Table.
+     */
     public function initialize(array $config)
     {
         $this->table('contacts');
@@ -102,13 +102,13 @@ class ContactsTable extends Table
         );
     }
 
-  /**
-   * Default validation rules.
-   *
-   * @param  \Cake\Validation\Validator $validator
-   *
-   * @return \Cake\Validation\Validator
-   */
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator
+     *
+     * @return \Cake\Validation\Validator
+     */
     public function validationDefault(Validator $validator)
     {
         $validator
@@ -184,14 +184,14 @@ class ContactsTable extends Table
         return $validator;
     }
 
-  /**
-   * Returns a rules checker object that will be used for validating
-   * application integrity.
-   *
-   * @param  \Cake\ORM\RulesChecker $rules The rules object to be modified.
-   *
-   * @return \Cake\ORM\RulesChecker
-   */
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     *
+     * @return \Cake\ORM\RulesChecker
+     */
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['zip_id'], 'Zips'));
@@ -495,17 +495,18 @@ class ContactsTable extends Table
                 }
             }
         }
-
         return $duplicates;
     }
 
-  /**
-   * Find contacts owned by given user(s)
-   * The given users are the contact persons for the contact.
-   *
-   * @param array $query The query object
-   * @param array $options Options for filter matching, 'User.id' should be present
-   */
+    /**
+     * Find contacts owned by given user(s)
+     * The given users are the contact persons for the contact.
+     *
+     * @param array $query   The query object
+     * @param array $options Options for filter matching, 'User.id' should be present
+     *
+     * @return Query $query
+     */
     public function findOwnedBy(Query $query, array $options)
     {
         return $query
@@ -517,93 +518,95 @@ class ContactsTable extends Table
           );
     }
 
-  /**
-   * Find contacts accessible by given user(s)
-   * The given users are the contact persons for the contacts
-   *                  or has access to a group to where the contacts belongs to
-   *                  or are an admin of a usergroup and the contact's contact person
-   *                      belongs to that usergroup.
-   *
-   * @param array $query The query object
-   * @param array $options Options for filter matching, 'User.id' should be present
-   *
-   * @return Cake\ORM\Query $query
-   */
+    /**
+     * Find contacts accessible by given user(s)
+     * The given users are the contact persons for the contacts
+     *                  or has access to a group to where the contacts belongs to
+     *                  or are an admin of a usergroup and the contact's contact person
+     *                      belongs to that usergroup.
+     *
+     * @param array $query   The query object
+     * @param array $options Options for filter matching, 'User.id' should be present
+     *
+     * @return Cake\ORM\Query $query
+     */
     public function findAccessibleBy(Query $query, array $options)
     {
         $owned = $this->findOwnedBy($query, $options);
         //$accessViaGroups = $this->findAccessibleViaGroupBy($query, $options);
         //$accessViaUserGroups = $this->findAccessibleViaUsergroupBy($query, $options);
 
-        debug($owned->toArray());
-        //debug($accessViaGroups->toArray());
+        debug($owned);
+        //debug($accessViaGroups);
         //debug($accessViaUserGroups->toArray());
+        return $owned;
     }
 
-  /**
-   * Find contacts accessible by given user(s) by a contacts' group memberships
-   * accessible by group admins and users who has acess to the group
-   *
-   * @param array $query The query object
-   * @param array $options Options for filter matching, 'User.id' should be present
-   *
-   * @return Cake\ORM\Query $query
-   */
+    /**
+     * Find contacts accessible by given user(s) by a contacts' group memberships
+     * accessible by group admins and users who has acess to the group.
+     *
+     * @param array $query   The query object
+     * @param array $options Options for filter matching, 'User.id' should be present
+     *
+     * @return Cake\ORM\Query $query
+     */
     private function findAccessibleViaGroupBy(Query $query, array $options)
     {
-      //accessible groups for the user
-      $groupIds = $this->Groups->find('accessible', $options)
-          ->extract('id')
-          ->toArray();
+        //accessible groups for the user
+        $groupIds = $this->Groups->find('accessible', $options)
+          ->extract('id')->toArray();
 
-      $query = $this->findInGroups($query, ['Group._ids' => $groupIds]);
-      return $query;
+        $query = $this->findInGroups($query, ['Group._ids' => $groupIds]);
+
+        return $query;
     }
 
-  /**
-   * Find contacts accessible by given user(s) by a user groups
-   * ie the users are an admin of a usergroup and the contact's contact person
-   * belongs to that usergroup.
-   *
-   * @param array $query The query object
-   * @param array $options Options for filter matching, 'User.id' should be present
-   *
-   * @return Cake\ORM\Query $query
-   */
+    /**
+     * Find contacts accessible by given user(s) by a user groups
+     * ie the users are an admin of a usergroup and the contact's contact person
+     * belongs to that usergroup.
+     *
+     * @param array $query   The query object
+     * @param array $options Options for filter matching, 'User.id' should be present
+     *
+     * @return Cake\ORM\Query $query
+     */
     private function findAccessibleViaUsergroupBy(Query $query, array $options)
     {
         //get users who are in any user groups where the given user(s) are admin
         $userIds = $this->Users->getUnderAdminOf($options['User.id'])->extract('id')->toArray();
         //who are their contacts
         $contacts = $this->findOwnedBy($query, ['User.id' => $userIds]);
+
         return $contacts;
     }
 
-  /**
-   * Find contacts who are members of the given groups.
-   *
-   * @param array $query The query object
-   * @param array $options Options for filter matching, 'groupIds' should be present
-   *
-   * @return Cake\ORM\Query $query
-   */
+    /**
+     * Find contacts who are members of the given groups.
+     *
+     * @param array $query   The query object
+     * @param array $options Options for filter matching, 'groupIds' should be present
+     *
+     * @return Cake\ORM\Query $query
+     */
     public function findInGroups(Query $query, array $options)
     {
         return $query
           ->matching(
               'Groups',
-                function ($q) use ($options) {
+              function ($q) use ($options) {
                       return $q->where(['Groups.id IN ' => $options['Group._ids']]);
-                }
+                  }
           );
     }
 
-  /**
-   * Is the contact accessible for the user because
-   *         the user is a contact person for the contact, or
-   *         the contact is in a group what is accessible by the user, or
-   *         the contact person of the contact is a member of a usergroup what is created by the user.
-   */
+    /**
+     * Is the contact accessible for the user because
+     *         the user is a contact person for the contact, or
+     *         the contact is in a group what is accessible by the user, or
+     *         the contact person of the contact is a member of a usergroup what is created by the user.
+     */
     public function isAccessible($contactId, $userId)
     {
         if ($this->Users->isAdminUser($userId)) {
@@ -622,10 +625,10 @@ class ContactsTable extends Table
         return false;
     }
 
-  /**
-   * Is the contact accessible for the user because
-   *         the user is a contact person for the contact.
-   */
+    /**
+     * Is the contact accessible for the user because
+     *         the user is a contact person for the contact.
+     */
     private function isAccessibleAsContactPerson($contactId, $userId)
     {
         $contact = $this->find()
@@ -633,9 +636,9 @@ class ContactsTable extends Table
           ->where(['Contacts.id' => $contactId])
           ->matching(
               'Users',
-                function ($q) use ($userId) {
+              function ($q) use ($userId) {
                       return $q->where(['Users.id' => $userId]);
-                }
+                  }
           )
           ->toArray();
         //debug($contact);
@@ -647,10 +650,10 @@ class ContactsTable extends Table
         return false;
     }
 
-  /**
-   * Is the contact accessible for the user because
-   *         the contact is in a group what is accessible by the user.
-   */
+    /**
+     * Is the contact accessible for the user because
+     *         the contact is in a group what is accessible by the user.
+     */
     private function isAccessibleAsGroupMember($contactId, $userId)
     {
         $groupIds = $this->getGroupMemberships($contactId);
@@ -660,9 +663,9 @@ class ContactsTable extends Table
               ->where(['Users.id' => $userId])
               ->matching(
                   'Groups',
-                    function ($q) use ($groupIds) {
+                  function ($q) use ($groupIds) {
                                   return $q->where(['Groups.id IN ' => $groupIds]);
-                    }
+                      }
               )
                       ->toArray();
             if (count($userAsMember)) {
@@ -674,12 +677,12 @@ class ContactsTable extends Table
               ->where(['Users.id' => $userId])
               ->matching(
                   'AdminGroups',
-                    function ($q) use ($userId, $groupIds) {
+                  function ($q) use ($userId, $groupIds) {
                                   return $q->where(
                                       ['AdminGroups.admin_user_id' => $userId,
                                                     'AdminGroups.id IN' => $groupIds, ]
                                   );
-                    }
+                      }
               )
                       ->toArray();
             if (count($userAsAdmin)) {
@@ -691,10 +694,10 @@ class ContactsTable extends Table
         return false;
     }
 
-  /**
-   * Is the contact accessible for the user because
-   *         the contact person of the contact is a member of a usergroup what is created by the user.
-   */
+    /**
+     * Is the contact accessible for the user because
+     *         the contact person of the contact is a member of a usergroup what is created by the user.
+     */
     private function isAccessibleAsUsergroupMember($contactId, $userId)
     {
         //get contact persons
@@ -706,9 +709,9 @@ class ContactsTable extends Table
         $_usergroupMemberships = $this->Users->find()
           ->matching(
               'Usergroups',
-                function ($q) use ($userIds) {
+              function ($q) use ($userIds) {
                           return $q->where(['Users.id IN ' => $userIds]);
-                }
+                  }
           );
         foreach ($_usergroupMemberships as $uId) {
             if (isset($uId->_matchingData['Usergroups']->admin_user_id)) {
@@ -759,9 +762,9 @@ class ContactsTable extends Table
             $userAsMember = $this->Users->find()
               ->matching(
                   'Groups',
-                    function ($q) use ($groupIds) {
+                  function ($q) use ($groupIds) {
                                   return $q->where(['Groups.id IN ' => $groupIds]);
-                    }
+                      }
               )
                       ->toArray();
             //debug($userAsMember);
@@ -770,9 +773,9 @@ class ContactsTable extends Table
             $userAsAdmin = $this->Users->find()
               ->matching(
                   'AdminGroups',
-                    function ($q) use ($groupIds) {
+                  function ($q) use ($groupIds) {
                                   return $q->where(['AdminGroups.id IN' => $groupIds]);
-                    }
+                      }
               )
                       ->toArray();
             //debug($userAsAdmin);
@@ -790,9 +793,9 @@ class ContactsTable extends Table
         $usergroupMemberships = $this->Users->find()
           ->matching(
               'Usergroups',
-                function ($q) use ($userIds) {
+              function ($q) use ($userIds) {
                           return $q->where(['Users.id IN ' => $userIds]);
-                }
+                  }
           )
                   ->toArray();
         foreach ($usergroupMemberships as $u) {

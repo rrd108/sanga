@@ -25,7 +25,7 @@ class ContactsController extends AppController
 {
 
     public $helpers = ['Number'];
-
+    
     public function isAuthorized($user = null)
     {
         return true;

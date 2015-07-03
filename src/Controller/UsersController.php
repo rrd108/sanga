@@ -19,7 +19,7 @@ use Cake\Network\Email\Email;
  */
 class UsersController extends AppController
 {
-    
+
     public $components = ['RBruteForce.RBruteForce'];
 
     public function beforeFilter(Event $event)
@@ -54,7 +54,7 @@ class UsersController extends AppController
         $this->set(compact('result'));
         $this->set('_serialize', 'result');
     }
-    
+
     public function login()
     {
         if (isset($this->request->data['passreminder'])) {
@@ -64,18 +64,18 @@ class UsersController extends AppController
             if ($user) {
                 $this->Auth->setUser($user);
                 $this->removeResetToken($user);
-                
+
                 $user = $this->Users->get($this->Auth->user('id'));
                 $user->last_login = date('Y-m-d H:i:s');
                 $this->Users->save($user);
-                
+
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->RBruteForce->check(['maxAttempts' => 3, 'dataLog' => true]);        //should be here - so banned out user would not able to login with correct password
             $this->Flash->error(__('Invalid username or password, try again'));
         }
     }
-    
+
     private function removeResetToken($user)
     {
         //remove reset token on sucessful login (the user find out the pass, and did not used the token)
@@ -84,12 +84,12 @@ class UsersController extends AppController
         $user->resettoken = '';
         $this->Users->save($user);
     }
-    
+
     public function logout()
     {
         return $this->redirect($this->Auth->logout());
     }
-    
+
     private function forgotpass()
     {
         if ($this->request->data['email'] != '') {
@@ -103,7 +103,7 @@ class UsersController extends AppController
                 $user->resettoken = $token;
                 $this->Users->save($user);
                 $token = $user->id . ',' . $token;
-                
+
                 $baseUrl = Router::url(['_full' => true]);
                 $resetlink = Router::url(
                     ['_full' => true,
@@ -112,7 +112,7 @@ class UsersController extends AppController
                                            $token
                                            ]
                 );
-                
+
                 $email = new Email('default');
                 $email->from(['forgotpass@sanga.1108.cc' => __('Password reset request')])
                     ->to($user->email)
@@ -120,7 +120,7 @@ class UsersController extends AppController
                     ->emailFormat('html')
                     ->template('resetpass')
                     ->viewVars(['resetlink' => $resetlink, 'baseUrl' => $baseUrl]);
-                
+
                 if ($email->send()) {
                     $this->Flash->success(__('We sent an email to you, describing how to set up a new password.'));
                     $this->set('mailsent', true);
@@ -134,7 +134,7 @@ class UsersController extends AppController
             $this->Flash->error(__('You should provide your registered email address'));
         }
     }
-    
+
     public function resetpass($token)
     {
         if (!empty($token)) {
@@ -144,7 +144,7 @@ class UsersController extends AppController
                 ->first();
             if (!empty($user)) {
                 $tempPass = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
-                
+
                 $user = $this->Users->patchEntity($user, $this->request->data);
                 $user->password = $tempPass;
                 $user->resettoken = '';
@@ -211,16 +211,15 @@ class UsersController extends AppController
         $this->set(compact('json'));
         $this->set('_serialize', 'json');
     }
-    
+
     public function dashboard()
     {
-        $today = strtotime('now');
         $lastweek = strtotime('-7 days', strtotime('now'));
         $nextweek = strtotime('+7 days', strtotime('now'));
-        
+
         $dash['contacts']['total'] = $this->Users->Contacts
             ->find()->count();
-        
+
         $dash['contacts']['newtotal'] = $this->Users->Contacts
             ->find()
             ->where(['Contacts.created >=' => $lastweek])
@@ -228,10 +227,10 @@ class UsersController extends AppController
 
         $dash['histories']['total'] = $this->Users->Histories
             ->find()->count();
-        
+
         $dash['contacts']['own'] = $this->Users->Contacts
             ->find('ownedBy', ['User.id' => $this->Auth->user('id')])->count();
-        
+
         $dash['contacts']['birthdayown'] = $this->Users->Contacts
             ->find('ownedBy', ['User.id' => $this->Auth->user('id')])
             ->where(
@@ -250,7 +249,7 @@ class UsersController extends AppController
         $dash['histories']['own'] = $this->Users->Histories
             ->find('ownedBy', ['User.id' => $this->Auth->user('id')])
             ->count();
-        
+
         $dash['histories']['week'] = $this->Users->Histories
             ->find('ownedBy', ['User.id' => $this->Auth->user('id')])
             ->where(['Histories.date >= ' => date('Y-m-d', $lastweek)])
