@@ -68,5 +68,33 @@ class HistoriesFixture extends TestFixture
             'created' => '2014-10-30 12:19:40',
             'modified' => '2014-10-30 12:19:40'
         ],
+        [
+            'id' => 2,
+            'contact_id' => 2,
+            'date' => '2014-10-30',
+            'user_id' => 1,
+            'group_id' => 1,
+            'event_id' => 1,
+            'detail' => 'Lorem ipsum dolor sit amet',
+            'quantity' => '',
+            'unit_id' => 1,
+            'family' => 1,
+            'created' => '2014-10-30 12:19:40',
+            'modified' => '2014-10-30 12:19:40'
+        ],
+        [
+            'id' => 3,
+            'contact_id' => 1,
+            'date' => '2014-10-30',
+            'user_id' => 1,
+            'group_id' => 1,
+            'event_id' => 1,
+            'detail' => 'Lorem ipsum dolor sit amet',
+            'quantity' => '',
+            'unit_id' => 1,
+            'family' => 1,
+            'created' => '2014-10-30 12:19:40',
+            'modified' => '2014-10-30 12:19:40'
+        ],
     ];
 }

@@ -34,7 +34,11 @@ class UnitsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet'
+            'name' => 'Unit 1'
+        ],
+        [
+            'id' => 2,
+            'name' => 'Unit 2'
         ],
     ];
 }

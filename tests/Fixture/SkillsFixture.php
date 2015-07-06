@@ -35,7 +35,11 @@ class SkillsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet'
+            'name' => 'Skill 1'
+        ],
+        [
+            'id' => 2,
+            'name' => 'Skill 2'
         ],
     ];
 }

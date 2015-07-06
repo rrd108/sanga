@@ -34,7 +34,11 @@ class CountriesFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet'
+            'name' => 'Country 1'
+        ],
+        [
+            'id' => 2,
+            'name' => 'Country 2'
         ],
     ];
 }

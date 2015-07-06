@@ -39,8 +39,13 @@ class EventsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet',
+            'name' => 'Event 1',
             'user_id' => 1
+        ],
+        [
+            'id' => 2,
+            'name' => 'Event 2 - user 2',
+            'user_id' => 2
         ],
     ];
 }

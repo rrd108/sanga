@@ -34,7 +34,11 @@ class ContactsourcesFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet'
+            'name' => 'Contactsoure 1'
+        ],
+        [
+            'id' => 2,
+            'name' => 'Contactsoure 2'
         ],
     ];
 }

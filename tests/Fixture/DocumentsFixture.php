@@ -50,7 +50,7 @@ class DocumentsFixture extends TestFixture
             'contact_id' => 1,
             'name' => 'Lorem ipsum dolor sit amet',
             'file_name' => 'Lorem ipsum dolor sit amet',
-            'file_type' => 'Lorem ipsum dolor sit amet',
+            'file_type' => 'pdf',
             'size' => '10',
             'data' => 'Lorem ipsum dolor sit amet',
             'created' => '2015-06-04 14:38:06'

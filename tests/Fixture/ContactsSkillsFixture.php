@@ -42,5 +42,13 @@ class ContactsSkillsFixture extends TestFixture
             'contact_id' => 1,
             'skill_id' => 1
         ],
+        [
+            'contact_id' => 1,
+            'skill_id' => 2
+        ],
+        [
+            'contact_id' => 2,
+            'skill_id' => 1
+        ],
     ];
 }
