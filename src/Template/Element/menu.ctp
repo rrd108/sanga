@@ -141,7 +141,7 @@
                                                          ['plugin' => null,
                                                           'prefix' => false,
                                                           'controller' => 'pages',
-                                                          'action' => 'home']) . '</li>';
+                                                          'action' => 'help']) . '</li>';
                         print '<li>' . $this->Html->link('⚠ ' . __('Notifications') . $cell,
                                                          ['plugin' => null,
                                                           'prefix' => false,
