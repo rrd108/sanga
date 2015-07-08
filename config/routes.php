@@ -41,7 +41,7 @@ use Cake\Routing\Router;
  */
 Router::defaultRouteClass('Route');
 
-Router::extensions(['json']);
+Router::extensions(['json', 'csv']);
 
 Router::prefix('admin', function ($routes) {
     // All routes here will be prefixed with `/admin`
@@ -61,7 +61,7 @@ Router::scope('/', function($routes) {
  * ...and connect the rest of 'Pages' controller's URLs.
  */
 	$routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-	
+
 /**
  * Connect a route for the index action of any controller.
  * And a more general catch all route for any action.

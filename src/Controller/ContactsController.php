@@ -25,7 +25,14 @@ class ContactsController extends AppController
 {
 
     public $helpers = ['Number'];
-    
+
+    public $components = ['RequestHandler' =>
+            ['viewClassMap' => [
+                'csv' => 'CsvView.Csv'
+                ]
+            ]
+        ];
+
     public function isAuthorized($user = null)
     {
         return true;
@@ -189,7 +196,26 @@ class ContactsController extends AppController
                         return $q->where(['Groups.id' => $this->request->data['group_id']]);
                         });
             }*/
-            $this->set('contacts', $this->paginate($contacts));
+
+            if ($this->request->params['_ext'] == 'csv')
+            {
+                $i = 0;
+                foreach ($contacts as $contact)
+                {
+                    $csvData[$i] = [];
+                    foreach ($select as $s)
+                    {
+                        $field = substr($s, strpos($s, '.') + 1);
+                        $csvData[$i][] = $contact->$field;
+                    }
+                    $i++;
+                }
+                $_serialize = 'csvData';
+                $_header = /*$_extract = */$select;
+                $this->set(compact('csvData', '_serialize','_header'/*, '_extract'*/));
+            } else {
+                $this->set('contacts', $this->paginate($contacts));
+            }
         }
 
         $savedQueries = $this->Contacts->Users->Settings->getSavedQueries($this->Auth->user('id'));
