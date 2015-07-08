@@ -13,8 +13,8 @@
         "google/apiclient": "1.0.*@beta",
         "rrd/rbruteforce": "dev-master",
         "sendgrid/sendgrid": "~3.2",
-        "league/csv": "~7.1",
-        "phpoffice/phpexcel": "~1.8"
+        "phpoffice/phpexcel": "~1.8",
+        "friendsofcake/cakephp-csvview": "~2.0"
     },
     "require-dev": {
         "psy/psysh": "@stable",
