@@ -18,16 +18,20 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                     echo '</li>';
                 }
             }
-                
+
             ?>
         </ul>
     </nav>
     <div id="dialog">
         <?php
         echo $this->Form->create(null, ['id' => 'querySaveForm']);
-        echo $this->Form->input('queryname',
-                                ['class' => 'radius',
-                                 'type' => 'text']);
+        echo $this->Form->input(
+            'queryname',
+            [
+                'class' => 'radius',
+                 'type' => 'text'
+            ]
+        );
         echo $this->Form->button(__('Save'), ['class' => 'radius']);
         echo $this->Form->end();
         ?>
@@ -44,9 +48,13 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                 if (isset($query['qName'])) {
                     echo ' / ' . $query['qName'];
                     unset($query['qName']);
-                    echo $this->Html->image('remove.png',
-                                ['class' => 'ajaxremove',
-                                 'title' => __('Click to delete')]);
+                    echo $this->Html->image(
+                        'remove.png',
+                        [
+                            'class' => 'ajaxremove',
+                             'title' => __('Click to delete')
+                        ]
+                    );
 
                 }
                 ?>
@@ -56,7 +64,7 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                                             'type' => 'get',
                                             'id' => 'queryForm'
                                             ]);
-        
+
                 echo '<div class="row" id="query-select-box">';
                     echo '<h2>' . __('I want to see') . '</h2>';
                     $filterFields = [
@@ -80,7 +88,7 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                         'created' => __('Created'),
                         'modified' => __('Modified')
                         ];
-                    foreach($filterFields as $field => $fLabel) {
+                    foreach ($filterFields as $field => $fLabel) {
                         if ( ! empty($selected) && in_array($field, $selected)) {
                             $css = 'tag-viewable';
                         } else {
@@ -96,7 +104,7 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                         echo '</span>';
                     }
                 echo '</div>';
-                
+
                 echo '<h2>' . __('Where') . '</h2>';
                 echo '<div class="row" id="where">';
                     if (isset($query)) {
@@ -118,7 +126,7 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                                                     type="hidden"
                                                     value="'. $value . '"
                                                     name="connect_' . $dataName . '">';
-                                } 
+                                }
                             } else {
                                 foreach ($values as $vi => $value) {
                                     if (strpos($name, 'condition_') === 0) {
@@ -131,7 +139,7 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                                                 $fName = str_replace('Contacts.', '', $dataName);
                                                 $label[$dataName] .= $filterFields[$fName];
                                             $label[$dataName] .= '</label>';
-            
+
                                             $selects[$dataName][] = $this->Form->select($name . '[]',
                                                                      ['&%' => __('contains'),
                                                                       '&=' => '=',
@@ -158,7 +166,7 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                                                                         '|>' => __('or') . ' ' . '>']
                                                                     ],
                                                                     ['value' => $value]);
-                                            
+
                                         }
                                     } elseif (strpos($name, 'field_') === 0) {
                                         $inputs[$dataName][] = '<input
@@ -169,7 +177,7 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                                 }
                             }
                         }
-                        
+
                         if (isset($imgPlus)) {
                             foreach($imgPlus as $dataName => $x) {
                                 echo '<div data-name="' . $dataName . '">';
@@ -192,12 +200,12 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
             echo $this->Form->end();
             ?>
         </div>
-        
+
         <div class="contacts form large-10 medium-9 columns">
             <?php
             if (isset($contacts)){
                 echo '<h2>' . __('Search results') . '</h2>';
-                
+
                 echo $this->element('contacts_table',
                                     [
                                      'fields' => $selected,
@@ -207,7 +215,7 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                                      ]);
             }
             ?>
-        
+
         </div>
     </div>
 </div>
