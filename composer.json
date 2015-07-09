@@ -13,7 +13,6 @@
         "google/apiclient": "1.0.*@beta",
         "rrd/rbruteforce": "dev-master",
         "sendgrid/sendgrid": "~3.2",
-        "phpoffice/phpexcel": "~1.8",
         "friendsofcake/cakephp-csvview": "~2.0"
     },
     "require-dev": {

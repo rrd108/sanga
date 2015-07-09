@@ -195,7 +195,7 @@ if (Configure::read('debug')) {
 }
 
 Plugin::load('RBruteForce', ['bootstrap' => false, 'routes' => true]);
-
+Plugin::load('CsvView', ['bootstrap' => false, 'routes' => false]);
 /**
  * Connect middleware/dispatcher filters.
  */

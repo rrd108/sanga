@@ -195,8 +195,10 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                         }
                     }
                 echo '</div>';
-        
-                echo $this->Form->button(__('Search'), ['class' => 'radius']);
+
+                echo $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'radius']);
+                echo '&nbsp;';
+                echo $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'radius']);
             echo $this->Form->end();
             ?>
         </div>

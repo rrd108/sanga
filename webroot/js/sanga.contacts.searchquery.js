@@ -1,26 +1,26 @@
 $(function() {
-	
+
 	createSelect = function(name, addOptGroups){
 		var prefix = '';
 		var select = '<select ' +
 					'name="condition_' + name + '[]"' +
 					'>';
-		
+
 		if (addOptGroups) {
 			prefix = $.sanga.texts[$.sanga.lang].and + ' ';
 			select += '<optgroup label="---' + $.sanga.texts[$.sanga.lang].and + '---">';
 		}
-		
+
 		select += '<option value="&%">' + prefix + $.sanga.texts[$.sanga.lang].contains + '</option>' +
 					'<option value="&=">' + prefix + '=</option>' +
 					'<option value="&!">' + prefix + $.sanga.texts[$.sanga.lang].not + '</option>' +
 					'<option value="&<">' + prefix + '<</option>' +
 					'<option value="&>">' + prefix + '></option>';
-					
+
 		if (addOptGroups) {
 			prefix = $.sanga.texts[$.sanga.lang].or + ' ';
-			select += 	'</optgroup>' + 
-						'<optgroup label="---' + $.sanga.texts[$.sanga.lang].or + '---">' + 
+			select += 	'</optgroup>' +
+						'<optgroup label="---' + $.sanga.texts[$.sanga.lang].or + '---">' +
 							'<option value="|%">' + prefix + $.sanga.texts[$.sanga.lang].contains + '</option>' +
 							'<option value="|=">' + prefix + '=</option>' +
 							'<option value="|!">' + prefix + $.sanga.texts[$.sanga.lang].not + '</option>' +
@@ -28,42 +28,42 @@ $(function() {
 							'<option value="|>">' + prefix + '></option>' +
 						'</optgroup>';
 		}
-		
+
 		select += '</select>';
 		return select;
 	};
-	
+
 	createInput = function(name){
 		var input = '<input type="text" ' +
 						'name="field_' + name + '[]" ' +
 					'>';
 		return input;
 	};
-	
+
 	addedDivs = 0;
-	
+
 	$('#query-select-box span').click(function(event){
 		if ($(this).hasClass('tag-default')) {
 			$(this).removeClass('tag-default');
 			$(this).addClass('tag-viewable');
-			
+
 			var imgPlus, imgAndOr, connectAndOr, label, select, input;
 			imgAndOr = connectAndOr = '';
 			if (addedDivs) {
-				imgAndOr = '<img ' + 
+				imgAndOr = '<img ' +
 						'src="' +  $.sanga.baseUrl + '/img/and.png" ' +
-						'title="*' + $.sanga.texts[$.sanga.lang].and + '* ' + $.sanga.texts[$.sanga.lang].click2change + '"' + 
+						'title="*' + $.sanga.texts[$.sanga.lang].and + '* ' + $.sanga.texts[$.sanga.lang].click2change + '"' +
 						'class="fl">';
 				connectAndOr = '<input type="hidden" ' +
 									'name="connect_' + $(this).data('name') + '" ' +
 									'value="&"' +
 								'>';
 			}
-			imgPlus = '<img ' + 
+			imgPlus = '<img ' +
 						'src="' +  $.sanga.baseUrl + '/img/plus.png" ' +
-						'data-name="' + $(this).data('name') + '"' + 
+						'data-name="' + $(this).data('name') + '"' +
 						'class="fl">';
-			label = '<label for="' + $(this).data('name') + '"' + 
+			label = '<label for="' + $(this).data('name') + '"' +
 						'id="l' + $(this).data('name').replace(/\./g, '_') + '" ' +		//there are .-s in the id what we should replace for jQuery
 						'>' +
 						$(this).text() +
@@ -72,8 +72,8 @@ $(function() {
 			input = createInput($(this).data('name'));
 			$('#where').append('<div data-name="' + $(this).data('name') + '">' +
 									imgAndOr +
-									connectAndOr + 
-									imgPlus + 
+									connectAndOr +
+									imgPlus +
 									label +
 									select +
 									input +
@@ -85,7 +85,7 @@ $(function() {
 			$('div[data-name="' + $(this).data('name') + '"]').remove();
 		}
 	});
-	
+
 	$('#where').on('click', 'img', function(event){
 		if ($(this).data('name')) {	//this is the "plus" img
 			var img, selet, input;
@@ -104,13 +104,13 @@ $(function() {
 			}
 		}
 	});
-	
+
 	$('#dialog').dialog({
 		autoOpen: false,
 		closeText: '⊗',
 		modal: true
 	});
-	
+
 	$('#savequery').click(function(event){
 		//offer an input a save and a canel button in a popup
 		$('#dialog').dialog('open');
@@ -118,7 +118,7 @@ $(function() {
 		//add this to saved queries
 		event.preventDefault();
 	});
-	
+
 	$('#querySaveForm').submit(function(event){
 		$('#dialog').dialog('close');
 		event.preventDefault();
@@ -152,14 +152,14 @@ $(function() {
 			}
 		});
 	});
-	
+
 	$('.ajaxremove').mouseenter(function(event){
 		var src = $(event.target).attr('src');
-		$(event.target).attr('src', src.replace(/remove.png/, 'remove_r.png'))
+		$(event.target).attr('src', src.replace(/remove.png/, 'remove_r.png'));
 	});
 	$('.ajaxremove').mouseleave(function(event){
 		var src = $(event.target).attr('src');
-		$(event.target).attr('src', src.replace(/remove_r.png/, 'remove.png'))
+		$(event.target).attr('src', src.replace(/remove_r.png/, 'remove.png'));
 	});
 	$('.ajaxremove').click(function(event){
 		$.ajax({
@@ -183,4 +183,23 @@ $(function() {
 		});
 	});
 
+	$('#csvButton').click(function(event) {
+		var form = $(this).parents('form:first');
+		var action = form.attr('action');
+		if (action.search('.csv') == -1) {
+			if (action.search(/\?/) == -1) {
+				form.attr('action', action + '.csv');
+			} else {
+				form.attr('action', action.replace(/\?/, '.csv?'));
+			}
+		}
+	});
+
+	$('#sButton').click(function(event) {
+		var form = $(this).parents('form:first');
+		var action = form.attr('action');
+		if (action.search('.csv')) {
+			form.attr('action', action.replace('.csv', ''));
+		}
+	});
 });
