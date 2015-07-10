@@ -1,7 +1,7 @@
 $(function() {
-	
+
 	$('.editbox').hide();
-	
+
 	var n = $.localStorage('sanga.userViewActiveTab') ? $.localStorage('sanga.userViewActiveTab') : 0;
 	$("#tabs").tabs({active : n}).addClass("ui-tabs-vertical ui-helper-clearfix");
 	$("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
@@ -16,7 +16,7 @@ $(function() {
 		opacity : 0.7,
 		zIndex : 100
 	});
-	
+
 	//family
 	$("#notfamilymember").droppable({
 		over : function(event, ui){
@@ -109,7 +109,7 @@ $(function() {
 			});
 		}
 	});
-	
+
 	//personal data, workplace
 	$('p.ed').hover(
 		function(){		//handlerIn
@@ -158,13 +158,13 @@ $(function() {
 			$(event.target).hide();
 			$(event.target).parent().find('.dta').show();
 			$('#ajaxsave').hide();
-		} 
+		}
 	};
 
 	$('#editForm').submit(function(event){
 		event.preventDefault();
 	});
-	
+
 	$('.editbox').focus(function(event){
 		handleChange(event);
 	});
@@ -172,15 +172,15 @@ $(function() {
 	$('#ajaxsave').click(function(event){
 		var editboxes = $(this).parent().find('.editbox');
 		var editedData = {}, oldData = {}, theSpan, addSpan;
-		
+
 		editboxes.each(function(index){
 			var newData;
 			var editbox = $(this);
-			
+
 			if (editbox.is('label')) {
 				return true;	//skip these and go to next iteration
 			}
-			
+
 			if (editbox.attr('class').search(/zip/) != -1) {
 				if (editbox.attr('id').search(/workplace/) != -1) {
 					theSpan = editbox.parent().find('.workplace_zip-zip');
@@ -229,7 +229,11 @@ $(function() {
 				}
 			}
 			oldData[editbox.attr('name')] = theSpan.text();		//editbox.attr('name') = pl legalname
-			theSpan.text(newData);
+			if (newData.search(/\n/) != -1) {
+				theSpan.html(newData.replace(/</, '&lt;').replace(/\n/g, '<br>'));
+			} else {
+				theSpan.text(newData);
+			}
 		});
 
 		$('#editlink').hide();
@@ -279,7 +283,7 @@ $(function() {
 		$('#ajaxsave').hide();
 		event.preventDefault();
 	});
-	
+
 	$('#gSave').click(function(event){
 		var container = $(this);
 		container.append($('#ajaxloader').css('float', 'none').show());
@@ -300,7 +304,7 @@ $(function() {
 		});
 		event.preventDefault();
 	});
-	
+
 	$('#sendmail').click(function(event){
 		var container = $(this).parent();
 		container.append($('#ajaxloader').css('float', 'none').show());
@@ -325,9 +329,9 @@ $(function() {
 				$('#message').val('');
 			}
 		});
-		
+
 	});
-	
+
 	$( "#dialog" ).dialog({
 		autoOpen: false,
 		closeText: '⊗',
@@ -348,7 +352,7 @@ $(function() {
 	$( "#settings" ).click(function() {
 		$( "#dialog" ).dialog( "open" );
 	});
-	
+
 	$('#settingsForm').submit(function(event){
 		event.preventDefault();
 		$.ajax({
