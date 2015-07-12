@@ -182,11 +182,9 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
         echo '</div>';
 
         $fGroups = $values = [];
-        foreach($groups as $group)
-        {
+        foreach ($groups as $group) {
             $fGroups[$group->id] = $group->name;
-            if (in_array($group->id, $default_groups))
-            {
+            if (is_array($default_groups) && in_array($group->id, $default_groups)) {
                 $values[] = $group->id;
             }
         }
