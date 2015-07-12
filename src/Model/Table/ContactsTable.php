@@ -319,7 +319,7 @@ class ContactsTable extends Table
     public function checkDuplicatesOnEmail()
     {
         $duplicates = [];
-        $_duplicates = $this->find()
+        $duplicatesTemp = $this->find()
           ->innerJoin(
               ['c' => 'contacts'], //alias
               [//conditions
@@ -330,7 +330,7 @@ class ContactsTable extends Table
           )
           ->select(['Contacts.id', 'Contacts.email', 'c.id'])
           ->toArray();
-        foreach ($_duplicates as $d) {
+        foreach ($duplicatesTemp as $d) {
             $duplicates[] = ['id1' => $d->id,
                            'id2' => (int) $d->c['id'],
                            'field' => 'email',
@@ -344,7 +344,7 @@ class ContactsTable extends Table
     public function checkDuplicatesOnBirth()
     {
         $duplicates = [];
-        $_duplicates = $this->find()
+        $duplicatesTemp = $this->find()
           ->innerJoin(
               ['c' => 'contacts'], //alias
               [//conditions
@@ -355,7 +355,7 @@ class ContactsTable extends Table
           )
           ->select(['Contacts.id', 'Contacts.birth', 'c.id'])
           ->toArray();
-        foreach ($_duplicates as $d) {
+        foreach ($duplicatesTemp as $d) {
             $duplicates[] = ['id1' => $d->id,
                            'id2' => (int) $d->c['id'],
                            'field' => 'birth',
@@ -400,7 +400,7 @@ class ContactsTable extends Table
     public function checkDuplicatesOnPhone()
     {
         $duplicates = [];
-        $_duplicates = $this->find()
+        $duplicatesTemp = $this->find()
           ->innerJoin(
               ['c' => 'contacts'], //alias
               [//conditions
@@ -415,8 +415,8 @@ class ContactsTable extends Table
                     'tcPhone' => $this->huPhoneReformat('c'),
                     ]
           );
-        $_duplicates->toArray();
-        foreach ($_duplicates as $d) {
+        $duplicatesTemp->toArray();
+        foreach ($duplicatesTemp as $d) {
             $duplicates[] = ['id1' => $d->id,
                            'id2' => (int) $d->c['id'],
                            'field' => 'phone',
@@ -431,7 +431,7 @@ class ContactsTable extends Table
     {
         $duplicates = [];
         $delta = 0.0001;    //10m
-        $_duplicates = $this->find()
+        $duplicatesTemp = $this->find()
           ->innerJoin(
               ['c' => 'contacts'], //alias
               [//conditions
@@ -445,8 +445,8 @@ class ContactsTable extends Table
               ['Contacts.id', 'Contacts.zip_id', 'Contacts.address',
                     'c.id', 'c.zip_id', 'c.address', ]
           );
-        $_duplicates->toArray();
-        foreach ($_duplicates as $d) {
+        $duplicatesTemp->toArray();
+        foreach ($duplicatesTemp as $d) {
             $duplicates[] = ['id1' => $d->id,
                            'id2' => (int) $d->c['id'],
                            'field' => 'geo',
@@ -509,13 +509,12 @@ class ContactsTable extends Table
      */
     public function findOwnedBy(Query $query, array $options)
     {
-        return $query
-          ->matching(
-              'Users',
-                function ($q) use ($options) {
-                      return $q->where(['Users.id IN ' => $options['User.id']]);
-                }
-          );
+        return $query->matching(
+            'Users',
+            function ($q) use ($options) {
+                return $q->where(['Users.id IN ' => $options['User.id']]);
+            }
+        );
     }
 
     /**
@@ -592,13 +591,12 @@ class ContactsTable extends Table
      */
     public function findInGroups(Query $query, array $options)
     {
-        return $query
-          ->matching(
-              'Groups',
-              function ($q) use ($options) {
-                      return $q->where(['Groups.id IN ' => $options['Group._ids']]);
-                  }
-          );
+        return $query->matching(
+            'Groups',
+            function ($q) use ($options) {
+                return $q->where(['Groups.id IN ' => $options['Group._ids']]);
+            }
+        );
     }
 
     /**
@@ -632,15 +630,15 @@ class ContactsTable extends Table
     private function isAccessibleAsContactPerson($contactId, $userId)
     {
         $contact = $this->find()
-          ->select('id')
-          ->where(['Contacts.id' => $contactId])
-          ->matching(
-              'Users',
-              function ($q) use ($userId) {
-                      return $q->where(['Users.id' => $userId]);
-                  }
-          )
-          ->toArray();
+            ->select('id')
+            ->where(['Contacts.id' => $contactId])
+            ->matching(
+                'Users',
+                function ($q) use ($userId) {
+                    return $q->where(['Users.id' => $userId]);
+                }
+            )
+            ->toArray();
         //debug($contact);
         if (isset($contact[0]) && $contact[0]['id'] == $contactId) {
             //Log::write('debug', 'Accessibel as contact person ' . $contactId . ' :: ' . $userId);
@@ -701,19 +699,19 @@ class ContactsTable extends Table
     private function isAccessibleAsUsergroupMember($contactId, $userId)
     {
         //get contact persons
-        $_contactUsers = $this->get($contactId, ['contain' => 'Users']);
-        foreach ($_contactUsers->users as $u) {
+        $contactUserTemp = $this->get($contactId, ['contain' => 'Users']);
+        foreach ($contactUserTemp->users as $u) {
             $userIds[] = $u->id;
         }
         //get their usergroup memberships
-        $_usergroupMemberships = $this->Users->find()
+        $usergroupMembershipsTemp = $this->Users->find()
           ->matching(
               'Usergroups',
               function ($q) use ($userIds) {
                           return $q->where(['Users.id IN ' => $userIds]);
                   }
           );
-        foreach ($_usergroupMemberships as $uId) {
+        foreach ($usergroupMembershipsTemp as $uId) {
             if (isset($uId->_matchingData['Usergroups']->admin_user_id)) {
                 $userIds[] = $uId->_matchingData['Usergroups']->admin_user_id;
             }

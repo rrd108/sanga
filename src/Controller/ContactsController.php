@@ -5,8 +5,8 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Utility\String;
 use Cake\I18n\Time;
-
 use Cake\Core\Configure;
+use Cake\Utility\Hash;
 
 use Google_Client;
 use Google_Http_Request;
@@ -281,8 +281,10 @@ class ContactsController extends AppController
         $select = $this->Contacts->Users->Settings
             ->find()
             ->where(
-                ['user_id' => $this->Auth->user('id'),
-                         'name' => 'Contacts/index']
+                [
+                    'user_id' => $this->Auth->user('id'),
+                    'name' => 'Contacts/index'
+                ]
             )
             ->first();
         $selected = [];

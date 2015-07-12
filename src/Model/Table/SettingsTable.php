@@ -61,26 +61,29 @@ class SettingsTable extends Table
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         return $rules;
     }
-    
-    public function getSavedQueries($user_id)
+
+    public function getSavedQueries($userId)
     {
         return $this->find()
-            ->where(['user_id' => $user_id, 'name' => 'Contacts/searchquery'])
+            ->where(['user_id' => $userId, 'name' => 'Contacts/searchquery'])
             ->order(['value' => 'ASC']);
     }
-    
+
     public function getDefaultGroups()
     {
-        $default_groups = $this->find()
+        $defaultGroups = $this->find()
             ->select(['value'])
             ->where(
                 [
-                                     'user_id' => 1,
-                                     'name' => 'default_groups'
-                                     ]
+                    'user_id' => 1,
+                    'name' => 'default_groups'
+                ]
             )
             ->toArray();
-        $default_groups = $default_groups[0];
-        return unserialize($default_groups->value);
+        if (!isset($defaultGroups[0])) {
+            return null;
+        }
+        $defaultGroups = $defaultGroups[0];
+        return unserialize($defaultGroups->value);
     }
 }
