@@ -275,6 +275,39 @@ class ContactsController extends AppController
     public function index()
     {
         $select = $this->Contacts->Users->Settings->getDefaultContactFields($this->Auth->user('id'));
+        $s = $this->createArraysForFind($select);
+
+        $this->request->data = $s['selected'];
+
+        $_myGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id')])->toArray();
+        foreach ($_myGroups as $mg) {
+            $groupIds[] = $mg->id;
+        }
+        $myContacts = $this->Contacts->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+            ->select(['Contacts.id']);
+        $inmygroupsContacts = $this->Contacts->find('inGroups', ['Group._ids' => $groupIds])
+            ->select(['Contacts.id']);
+
+        array_unshift($s['select'], 'Contacts.sex');
+        array_unshift($s['select'], 'Contacts.id');
+        //debug($s['select']);
+        $contacts = $this->Contacts->find()
+            ->select($s['select'])
+            ->contain($s['contain'])
+            ->where(['Contacts.id IN ' => $myContacts])
+            ->orWhere(['Contacts.id IN ' => $inmygroupsContacts])
+            ->order(['Contacts.contactname' => 'ASC']);
+        $this->set('contacts', $this->paginate($contacts));
+    }
+
+    /**
+ * Create $select, $selected and $contain arrays for the next find
+ *
+ * @param array $select array of selected fields
+ * @return array
+ */
+    private function createArraysForFind($select)
+    {
         if (empty($select)) {
             $select = ['Contacts.contactname', 'Contacts.legalname', 'Contacts.phone', 'Contacts.email'];
             $selected = ['contactname' => 1, 'legalname' => 1, 'phone' => 1, 'email' => 1];
@@ -315,27 +348,7 @@ class ContactsController extends AppController
                 }
             }
         }
-        $this->request->data = $selected;
-
-        $_myGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id')])->toArray();
-        foreach ($_myGroups as $mg) {
-            $groupIds[] = $mg->id;
-        }
-        $myContacts = $this->Contacts->find('ownedBy', ['User.id' => $this->Auth->user('id')])
-            ->select(['Contacts.id']);
-        $inmygroupsContacts = $this->Contacts->find('inGroups', ['Group._ids' => $groupIds])
-            ->select(['Contacts.id']);
-
-        array_unshift($select, 'Contacts.sex');
-        array_unshift($select, 'Contacts.id');
-        //debug($select);
-        $contacts = $this->Contacts->find()
-            ->select($select)
-            ->contain($contain)
-            ->where(['Contacts.id IN ' => $myContacts])
-            ->orWhere(['Contacts.id IN ' => $inmygroupsContacts])
-            ->order(['Contacts.contactname' => 'ASC']);
-        $this->set('contacts', $this->paginate($contacts));
+        return ['select' => $select, 'selected' => $selected, 'contain' => $contain];
     }
 
     /**
