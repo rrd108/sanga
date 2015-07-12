@@ -198,14 +198,11 @@ class ContactsController extends AppController
                         });
             }*/
 
-            if ($this->request->params['_ext'] == 'csv')
-            {
+            if ($this->request->params['_ext'] == 'csv') {
                 $i = 0;
-                foreach ($contacts as $contact)
-                {
+                foreach ($contacts as $contact) {
                     $csvData[$i] = [];
-                    foreach ($selectCsv as $s)
-                    {
+                    foreach ($selectCsv as $s) {
                         $field = substr($s, strpos($s, '.') + 1);
                         $csvData[$i][] = $contact->$field;
                     }
@@ -451,7 +448,7 @@ class ContactsController extends AppController
         $contact = $this->Contacts->newEntity($this->request->data);
         //debug($contact);
         if (! empty($this->request->data['family_member_id'])) {
-            $contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
+            $contact->family_id = $this->getFamilyId($contact, $this->request->data['family_member_id']);
         }
         if ($this->request->is('post')) {
             $contact->loggedInUser = $this->Auth->user('id');
@@ -486,7 +483,7 @@ class ContactsController extends AppController
         $this->set('_serialize', 'result');
     }
 
-    private function get_family_id($contact, $family_member_id)
+    private function getFamilyId($contact, $family_member_id)
     {
         $familyId = null;
 
@@ -548,7 +545,7 @@ class ContactsController extends AppController
                 $contact = $this->Contacts->patchEntity($contact, $this->request->data);
 
                 if (isset($this->request->data['family_member_id'])) {
-                    $contact->family_id = $this->get_family_id($contact, $this->request->data['family_member_id']);
+                    $contact->family_id = $this->getFamilyId($contact, $this->request->data['family_member_id']);
                 }
 
                 $contact->loggedInUser = $this->Auth->user('id');
