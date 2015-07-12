@@ -40,7 +40,7 @@ class GroupsFixture extends TestFixture
  * @var array
  */
     public $records = [
-        ['id' => '1','name' => 'NVD','description' => '','admin_user_id' => '1','shared' => '1'],
+        ['id' => '1','name' => 'NVD','description' => '','admin_user_id' => 1,'shared' => '1'],
         ['id' => '2','name' => 'Budapest','description' => '','admin_user_id' => 2,'shared' => '1'],
         ['id' => '3','name' => 'Seva-puja','description' => 'Seva-puja tagok','admin_user_id' => 2,'shared' => '0']
     ];

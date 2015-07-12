@@ -10,11 +10,12 @@ use Cake\TestSuite\Fixture\TestFixture;
 class GroupsUsersFixture extends TestFixture
 {
 
-/**
- * Fields
- *
- * @var array
- */
+    /**
+     * Fields
+     *
+     * @var array
+     */
+    // @codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 5, 'unsigned' => true, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'group_id' => ['type' => 'integer', 'length' => 8, 'unsigned' => true, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -32,16 +33,23 @@ class GroupsUsersFixture extends TestFixture
             'fk_groups_users_groups1' => ['type' => 'foreign', 'columns' => ['intersection_group_id'], 'references' => ['groups', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
         ],
         '_options' => [
-        'engine' => 'InnoDB', 'collation' => 'utf8_hungarian_ci'
+            'engine' => 'InnoDB',
+            'collation' => 'utf8_hungarian_ci'
         ],
     ];
+    // @codingStandardsIgnoreEnd
 
-/**
- * Records
- *
- * @var array
- */
+    /**
+     * Records
+     *
+     * @var array
+     */
     public $records = [
-        //['id' => '1','group_id' => '1','user_id' => '3','intersection_group_id' => NULL]
+        [
+            'id' => 1,
+            'group_id' => 1,
+            'user_id' => 2,
+            'intersection_group_id' => null
+        ],
     ];
 }
