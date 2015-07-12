@@ -155,19 +155,11 @@ class ContactsTableTest extends TestCase
 
     public function testFindOwnedBy()
     {
-        $_actual = $this->Contacts->find('ownedBy', ['User.id' => 2])
+        $actual = $this->Contacts->find('ownedBy', ['User.id' => 2])
         ->hydrate(false)
+        ->extract('id')
         ->toArray();
-        //debug($actual);
-        foreach ($_actual as $a) {
-            $actual[] = ['id' => $a['id'], 'contactname' => $a['contactname']];
-        }
-        $expected = [
-                ['id' => 2, 'contactname' => 'Acarya-ratna das'],
-                ['id' => 3, 'contactname' => 'Dvaipayana Dasa'],
-                ['id' => 4, 'contactname' => 'Acarya-ratna Dasa'],
-                ['id' => 5, 'contactname' => 'Filu']
-            ];
+        $expected = [2, 3, 4, 5];
         $this->assertEquals($expected, $actual);
     }
 
