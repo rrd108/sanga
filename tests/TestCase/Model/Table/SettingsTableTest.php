@@ -81,6 +81,17 @@ class SettingsTableTest extends TestCase
         $expected = [6, 7];
         $actual = $this->Settings->getDefaultGroups();
         $this->assertEquals($expected, $actual);
+    }
 
+    public function testGetDefaultContactFields()
+    {
+        $expected = [];
+        $actual = $this->Settings->getDefaultContactFields(10);
+        $this->assertEquals($expected, $actual);
+
+        $expected = ['Contacts.contactname', 'Contacts.legalname', 'Contacts.zip_id',
+                    'Contacts.phone', 'Contacts.email', 'Contacts.users'];
+        $actual = $this->Settings->getDefaultContactFields(2);
+        $this->assertEquals($expected, $actual);
     }
 }

@@ -274,22 +274,12 @@ class ContactsController extends AppController
  */
     public function index()
     {
-        $contain = [];
-        $select = $this->Contacts->Users->Settings
-            ->find()
-            ->where(
-                [
-                    'user_id' => $this->Auth->user('id'),
-                    'name' => 'Contacts/index'
-                ]
-            )
-            ->first();
-        $selected = [];
+        $select = $this->Contacts->Users->Settings->getDefaultContactFields($this->Auth->user('id'));
         if (empty($select)) {
             $select = ['Contacts.contactname', 'Contacts.legalname', 'Contacts.phone', 'Contacts.email'];
             $selected = ['contactname' => 1, 'legalname' => 1, 'phone' => 1, 'email' => 1];
         } else {
-            $select = unserialize($select->value);
+            $contain = $selected = [];
             //set the request->data array for the view to autofill the settings form
             foreach ($select as $i => $name) {
                 $selected[str_replace('Contacts.', '', $name)] = 1;
@@ -326,11 +316,11 @@ class ContactsController extends AppController
             }
         }
         $this->request->data = $selected;
+
         $_myGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id')])->toArray();
         foreach ($_myGroups as $mg) {
             $groupIds[] = $mg->id;
         }
-
         $myContacts = $this->Contacts->find('ownedBy', ['User.id' => $this->Auth->user('id')])
             ->select(['Contacts.id']);
         $inmygroupsContacts = $this->Contacts->find('inGroups', ['Group._ids' => $groupIds])

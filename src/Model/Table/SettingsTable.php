@@ -97,4 +97,27 @@ class SettingsTable extends Table
         $defaultGroups = $defaultGroups[0];
         return unserialize($defaultGroups->value);
     }
+
+    /**
+     * Returns the user's saved list of fileds for displaying the list of contacts
+     *
+     * @param int $userId the id of the user
+     * @return array of default groups' ids or null if there are no default groups
+     */
+    public function getDefaultContactFields($userId)
+    {
+        $contactFields = $this->find()
+                ->where(
+                    [
+                        'user_id' => $userId,
+                        'name' => 'Contacts/index'
+                    ]
+                )
+                ->first();
+        if (!isset($contactFields->value)) {
+            return [];
+        }
+        $contactFields = unserialize($contactFields->value);
+        return $contactFields;
+    }
 }

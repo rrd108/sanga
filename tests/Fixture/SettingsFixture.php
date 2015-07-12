@@ -52,11 +52,19 @@ class SettingsFixture extends TestFixture
             'name' => 'Contacts/searchquery',
             'value' => 'qName=szeptemberi&condition_Contacts.contactname%5B%5D=%26%25&field_Contacts.contactname%5B%5D=&connect_Contacts.legalname=%26&condition_Contacts.legalname%5B%5D=%26%25&field_Contacts.legalname%5B%5D=&connect_Contacts.birth=%26&condition_Contacts.birth%5B%5D=%26%25&field_Contacts.birth%5B%5D=-09-'
         ],
+
         [
             'id' => 3,
             'user_id' => 1,
             'name' => 'default_groups',
             'value' => 'a:2:{i:0;i:6;i:1;i:7;}'
+        ],
+
+        [
+            'id' => 4,
+            'user_id' => 2,
+            'name' => 'Contacts/index',
+            'value' => 'a:6:{i:0;s:20:"Contacts.contactname";i:1;s:18:"Contacts.legalname";i:2;s:15:"Contacts.zip_id";i:3;s:14:"Contacts.phone";i:4;s:14:"Contacts.email";i:5;s:14:"Contacts.users";}'
         ],
     ];
 }
