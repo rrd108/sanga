@@ -62,6 +62,12 @@ class SettingsTable extends Table
         return $rules;
     }
 
+    /**
+     * Returns saved queries for the user
+     *
+     * @param int $userId The id of the user
+     * @return Query
+     */
     public function getSavedQueries($userId)
     {
         return $this->find()
@@ -69,6 +75,11 @@ class SettingsTable extends Table
             ->order(['value' => 'ASC']);
     }
 
+    /**
+     * Returns default groups' ids
+     *
+     * @return array of default groups' ids or null if there are no default groups
+     */
     public function getDefaultGroups()
     {
         $defaultGroups = $this->find()
