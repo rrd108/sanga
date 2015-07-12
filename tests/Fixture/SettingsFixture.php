@@ -29,7 +29,7 @@ class SettingsFixture extends TestFixture
             'fk_settings_users1' => ['type' => 'foreign', 'columns' => ['user_id'], 'references' => ['users', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
         ],
         '_options' => [
-'engine' => 'InnoDB', 'collation' => 'utf8_general_ci'
+            'engine' => 'InnoDB', 'collation' => 'utf8_general_ci'
         ],
     ];
     // @codingStandardsIgnoreEnd
@@ -43,8 +43,20 @@ class SettingsFixture extends TestFixture
         [
             'id' => 1,
             'user_id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet',
-            'value' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.'
+            'name' => 'Contacts/searchquery',
+            'value' => 'qName=m%C3%A1rciusiak&condition_Contacts.contactname%5B%5D=%26%25&field_Contacts.contactname%5B%5D=&connect_Contacts.legalname=%26&condition_Contacts.legalname%5B%5D=%26%25&field_Contacts.legalname%5B%5D=&connect_Contacts.birth=%26&condition_Contacts.birth%5B%5D=%26%25&field_Contacts.birth%5B%5D=-03-'
+        ],
+        [
+            'id' => 2,
+            'user_id' => 1,
+            'name' => 'Contacts/searchquery',
+            'value' => 'qName=szeptemberi&condition_Contacts.contactname%5B%5D=%26%25&field_Contacts.contactname%5B%5D=&connect_Contacts.legalname=%26&condition_Contacts.legalname%5B%5D=%26%25&field_Contacts.legalname%5B%5D=&connect_Contacts.birth=%26&condition_Contacts.birth%5B%5D=%26%25&field_Contacts.birth%5B%5D=-09-'
+        ],
+        [
+            'id' => 3,
+            'user_id' => 1,
+            'name' => 'default_groups',
+            'value' => 'a:2:{i:0;i:6;i:1;i:7;}'
         ],
     ];
 }

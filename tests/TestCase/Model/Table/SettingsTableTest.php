@@ -64,33 +64,23 @@ class SettingsTableTest extends TestCase
         parent::tearDown();
     }
 
-    /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize()
+    public function testGetSavedQueries()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $expected = [];
+        $actual = $this->Settings->getSavedQueries(10)->toArray();
+        $this->assertEquals($expected, $actual);
+
+        $expected = [1, 2];
+        $actual = $this->Settings->getSavedQueries(1)->extract('id')->toArray();
+        $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * Test validationDefault method
-     *
-     * @return void
-     */
-    public function testValidationDefault()
+    public function testGetDefaultGroups()
     {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+        //$expected = null;  //if there is no such row in the database we get null
+        $expected = [6, 7];
+        $actual = $this->Settings->getDefaultGroups();
+        $this->assertEquals($expected, $actual);
 
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
     }
 }
