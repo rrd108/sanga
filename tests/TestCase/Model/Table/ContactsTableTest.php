@@ -5,6 +5,8 @@ use Cake\ORM\TableRegistry;
 use App\Model\Table\ContactsTable;
 use Cake\TestSuite\TestCase;
 use Cake\I18n\Time;
+use Cake\Utility\Hash;
+use Cake\Collection\Collection;
 
 /**
  * App\Model\Table\ContactsTable Test Case
@@ -103,7 +105,12 @@ class ContactsTableTest extends TestCase
     {
         $actual = $this->Contacts->checkDuplicatesOnBirth();
         $expected = [
-                ['id1' => 1, 'id2' => 6, 'data' => Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00'), 'field' => 'birth']
+                [
+                    'id1' => 1,
+                    'id2' => 6,
+                    'data' => Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00'),
+                    'field' => 'birth'
+                ]
             ];
         $this->assertEquals($expected, $actual);
     }
@@ -174,7 +181,7 @@ class ContactsTableTest extends TestCase
             $this->Contacts->find(),
             ['User.id' => 2]
         )->hydrate(false)->extract('id')->toArray();
-        $expected = [6];
+        $expected = [1, 2, 6];
         $this->assertEquals($expected, $actual);
 
         $actual = $method->invoke(
@@ -211,13 +218,16 @@ class ContactsTableTest extends TestCase
 
     public function testFindAccessibleBy()
     {
-        $actual = $this->Contacts->findAccessibleBy($this->Contacts->find(), ['User.id' => 2])
-        ->hydrate(false)
-        ->extract('id')
-        ->toArray();
-        debug($actual);
-        $expected = [2, 3, 4, 5, 6];
+        $actual = $this->Contacts->findAccessibleBy($this->Contacts->find(), ['User.id' => 2]);
+        $actual = Hash::extract($actual, '{n}.id');
+        //debug($actual);
+        $expected = [1, 2, 3, 4, 5, 6];
         $this->assertEquals($expected, $actual);
+
+        /*$actual = $this->Contacts->findAccessibleBy($this->Contacts->find(), ['User.id' => 1]);
+        debug($actual);
+        $expected = [1, 2, 5, 6, 7];
+        $this->assertEquals($expected, $actual);*/
     }
 
     public function testIsAccessibleAsContactPerson()
@@ -267,7 +277,7 @@ class ContactsTableTest extends TestCase
         $actual = $this->Contacts->isAccessible(1, 1);
         $this->assertTrue($actual);
 
-        $actual = $this->Contacts->isAccessible(1, 2);
+        $actual = $this->Contacts->isAccessible(1, 3);
         $this->assertFalse($actual);
 
         //as a group member or group admin
@@ -303,7 +313,7 @@ class ContactsTableTest extends TestCase
         $actual = $this->filterHasAccess($this->Contacts->hasAccess(2));
         //debug($actual);
         $expected = ['contactPersons' => [2],
-                    'groupMembers' => [1],
+                    'groupMembers' => [1, 2],
                     'usergroupMembers' => []];
         $this->assertEquals($expected, $actual);
 
@@ -320,6 +330,7 @@ class ContactsTableTest extends TestCase
             foreach ($a as $i => $user) {
                 $actual[$type][$i] = $user->id;
             }
+            sort($actual[$type]);
         }
         //debug($actual);
         return $actual;
