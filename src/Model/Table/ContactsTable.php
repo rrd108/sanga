@@ -12,6 +12,8 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Entity;
 use Cake\Log\Log;
+use Cake\Utility\Hash;
+use Cake\Collection\Collection;
 
 /**
  * Contacts Model.
@@ -502,7 +504,7 @@ class ContactsTable extends Table
      * Find contacts owned by given user(s)
      * The given users are the contact persons for the contact.
      *
-     * @param array $query   The query object
+     * @param Query $query   The query object
      * @param array $options Options for filter matching, 'User.id' should be present
      *
      * @return Query $query
@@ -524,28 +526,45 @@ class ContactsTable extends Table
      *                  or are an admin of a usergroup and the contact's contact person
      *                      belongs to that usergroup.
      *
-     * @param array $query   The query object
+     * @param Query $query   The query object
      * @param array $options Options for filter matching, 'User.id' should be present
      *
-     * @return Cake\ORM\Query $query
+     * @return array
      */
     public function findAccessibleBy(Query $query, array $options)
     {
-        $owned = $this->findOwnedBy($query, $options);
-        //$accessViaGroups = $this->findAccessibleViaGroupBy($query, $options);
-        //$accessViaUserGroups = $this->findAccessibleViaUsergroupBy($query, $options);
+        //as $query is a reference it's value will change after every find, but we need the original one
+        $queryTemp1 = clone $query;
+        $queryTemp2 = clone $query;
 
-        debug($owned);
-        //debug($accessViaGroups);
-        //debug($accessViaUserGroups->toArray());
-        return $owned;
+        // TODO change this at CakePHP 3.1
+        // http://stackoverflow.com/questions/31343250/remove-fields-from-select-generated-by-matching
+        $select = $this->schema()->columns();
+        if (isset($options['select'])) {
+            $select = $options['select'];
+        }
+        $owned = $this->findOwnedBy($query, $options)
+            ->select($select);
+        $accessViaGroups = $this->findAccessibleViaGroupBy($queryTemp1, $options)
+            ->select($select);
+        $accessViaUserGroups = $this->findAccessibleViaUsergroupBy($queryTemp2, $options)
+            ->select($select);
+        if (isset($options['contain'])) {
+            $owned = $owned->contain($options['conatin']);
+            $accessViaGroups = $accessViaGroups->contain($options['conatin']);
+            $accessViaUserGroups = $accessViaUserGroups->contain($options['conatin']);
+        }
+
+        $accessible = $owned->union($accessViaGroups)->union($accessViaUserGroups);
+
+        return $accessible;
     }
 
     /**
      * Find contacts accessible by given user(s) by a contacts' group memberships
      * accessible by group admins and users who has acess to the group.
      *
-     * @param array $query   The query object
+     * @param Query $query   The query object
      * @param array $options Options for filter matching, 'User.id' should be present
      *
      * @return Cake\ORM\Query $query
@@ -557,7 +576,6 @@ class ContactsTable extends Table
           ->extract('id')->toArray();
 
         $query = $this->findInGroups($query, ['Group._ids' => $groupIds]);
-
         return $query;
     }
 
@@ -566,7 +584,7 @@ class ContactsTable extends Table
      * ie the users are an admin of a usergroup and the contact's contact person
      * belongs to that usergroup.
      *
-     * @param array $query   The query object
+     * @param Query $query   The query object
      * @param array $options Options for filter matching, 'User.id' should be present
      *
      * @return Cake\ORM\Query $query
@@ -576,15 +594,15 @@ class ContactsTable extends Table
         //get users who are in any user groups where the given user(s) are admin
         $userIds = $this->Users->getUnderAdminOf($options['User.id'])->extract('id')->toArray();
         //who are their contacts
-        $contacts = $this->findOwnedBy($query, ['User.id' => $userIds]);
+        $query = $this->findOwnedBy($query, ['User.id' => $userIds]);
 
-        return $contacts;
+        return $query;
     }
 
     /**
      * Find contacts who are members of the given groups.
      *
-     * @param array $query   The query object
+     * @param Query $query   The query object
      * @param array $options Options for filter matching, 'groupIds' should be present
      *
      * @return Cake\ORM\Query $query

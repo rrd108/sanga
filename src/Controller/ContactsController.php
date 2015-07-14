@@ -279,24 +279,24 @@ class ContactsController extends AppController
 
         $this->request->data = $s['selected'];
 
-        $_myGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id')])->toArray();
-        foreach ($_myGroups as $mg) {
-            $groupIds[] = $mg->id;
-        }
-        $myContacts = $this->Contacts->find('ownedBy', ['User.id' => $this->Auth->user('id')])
-            ->select(['Contacts.id']);
-        $inmygroupsContacts = $this->Contacts->find('inGroups', ['Group._ids' => $groupIds])
-            ->select(['Contacts.id']);
-
         array_unshift($s['select'], 'Contacts.sex');
         array_unshift($s['select'], 'Contacts.id');
         //debug($s['select']);
-        $contacts = $this->Contacts->find()
-            ->select($s['select'])
-            ->contain($s['contain'])
-            ->where(['Contacts.id IN ' => $myContacts])
-            ->orWhere(['Contacts.id IN ' => $inmygroupsContacts])
-            ->order(['Contacts.contactname' => 'ASC']);
+
+        // TODO change this at CakePHP 3.1 - see ContactsTable.php
+        $contacts = $this->Contacts
+            ->find(
+                'accessibleBy',
+                [
+                    'User.id' => $this->Auth->user('id'),
+                    'select' => $s['select'],
+                    'contain' => $s['contain']
+                ]
+            )
+            //->select($s['select'])
+            //->contain($s['contain'])
+            ->order(['Contacts.contactname' => 'ASC', 'Contacts.legalname' => 'ASC']);
+
         $this->set('contacts', $this->paginate($contacts));
     }
 

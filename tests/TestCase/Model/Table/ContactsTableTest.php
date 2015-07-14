@@ -218,16 +218,29 @@ class ContactsTableTest extends TestCase
 
     public function testFindAccessibleBy()
     {
-        $actual = $this->Contacts->findAccessibleBy($this->Contacts->find(), ['User.id' => 2]);
-        $actual = Hash::extract($actual, '{n}.id');
-        //debug($actual);
-        $expected = [1, 2, 3, 4, 5, 6];
+        $actual = $this->Contacts
+            ->findAccessibleBy(
+                $this->Contacts->find(),
+                [
+                    'User.id' => 2
+                ]
+            )
+            ->extract('id')
+            ->toArray();
+        $expected = [2, 3, 4, 5, 1, 6];
         $this->assertEquals($expected, $actual);
 
-        /*$actual = $this->Contacts->findAccessibleBy($this->Contacts->find(), ['User.id' => 1]);
-        debug($actual);
+        $actual = $this->Contacts
+            ->findAccessibleBy(
+                $this->Contacts->find(),
+                [
+                    'User.id' => 1
+                ]
+            )
+            ->extract('id')
+            ->toArray();
         $expected = [1, 2, 5, 6, 7];
-        $this->assertEquals($expected, $actual);*/
+        $this->assertEquals($expected, $actual);
     }
 
     public function testIsAccessibleAsContactPerson()
