@@ -38,6 +38,9 @@ class ContactsController extends AppController
         return true;
     }
 
+/**
+* Used at contacts/add, Histories/add, etc for getting owned contacts (should it be accessible?)
+*/
     public function search()
     {
         $contact = $this->Contacts->newEntity($this->request->data);
@@ -45,6 +48,7 @@ class ContactsController extends AppController
             ->select(['id', 'contactname', 'legalname'])
             ->where(['contactname LIKE "%'.$this->request->query('term').'%"'])
             ->orWhere(['legalname LIKE "%'.$this->request->query('term').'%"']);
+        //debug($query);
         foreach ($query as $row) {
             $label = $this->createHighlight($row->contactname) .
                     $this->createHighlight($row->legalname);
@@ -292,12 +296,33 @@ class ContactsController extends AppController
                     'select' => $s['select'],
                     'contain' => $s['contain']
                 ]
-            )
+            );
             //->select($s['select'])
             //->contain($s['contain'])
-            ->order(['Contacts.contactname' => 'ASC', 'Contacts.legalname' => 'ASC']);
+            //->order(['Contacts.contactname' => 'ASC', 'Contacts.legalname' => 'ASC']);
 
-        $this->set('contacts', $this->paginate($contacts));
+        //we should add the order by and pagination to the end - after the union. For this we  have to use epilog
+        //http://stackoverflow.com/questions/29379579/how-do-you-modify-a-union-query-in-cakephp-3/29386189#29386189
+        $page = isset($this->request->query['page']) ? (int) $this->request->query['page'] : 0;
+        $contacts = $contacts->epilog('ORDER BY Contacts__contactname, Contacts__legalname' .
+            ' LIMIT 20 OFFSET ' . $page);
+
+        $this->set('contacts', $contacts);
+
+        /*
+        $this->paginate = [
+            //'limit' => 20,
+            //'order' => '',
+            'finder' => [
+                'accessibleBy' => [
+                    'User.id' => $this->Auth->user('id'),
+                    'select' => $s['select'],
+                    'contain' => $s['contain']
+                ]
+            ]
+        ];
+        $this->set('contacts', $this->paginate());
+        */
     }
 
     /**
