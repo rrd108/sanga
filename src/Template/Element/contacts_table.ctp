@@ -65,7 +65,7 @@
                     case 'WorkplaceZips.name' :
                         echo $contact->has('workplace_zip') ? $contact->workplace_zip->name : '' ;
                         break;
-                    case 'birth' : 
+                    case 'birth' :
                         echo isset($contact->birth) ? h($contact->birth->format('Y-m-d')) : '';
                         break;
                     case 'contactsource_id' :
@@ -74,7 +74,7 @@
                     case 'Contactsources.name' :
                         echo $contact->has('contactsource') ? '<span class="tag tag-shared">' . $contact->contactsource->name . '</span>' : '' ;
                         break;
-                    case 'users' : 
+                    case 'users' :
                         if (isset($contact->users)){
                             foreach($contact->users as $user){
                                 $css = ($user->id == $this->request->session()->read('Auth.User.id')) ? 'mine' : 'viewable';
@@ -82,14 +82,14 @@
                             }
                         }
                         break;
-                    case 'skills' : 
+                    case 'skills' :
                         if (isset($contact->skills)){
                             foreach($contact->skills as $skill){
                                 print '<span class="tag tag-shared">' . $skill->name . '</span>' . "\n";
                             }
                         }
                         break;
-                    case 'groups' : 
+                    case 'groups' :
                         if (isset($contact->groups)){
                             foreach($contact->groups as $group){
                                 if($group->shared){
@@ -105,7 +105,7 @@
                             }
                         }
                         break;
-                    default : 
+                    default :
                         echo h($contact->$field);
                 }
             echo '</td>';
@@ -123,5 +123,8 @@
         echo $this->Paginator->next(__('next') . ' >');
     ?>
     </ul>
-    <div class="pagination-counter"><?= $this->Paginator->counter() ?></div>
+    <div class="pagination-counter">
+        <?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} records out of
+     {{count}} total, starting on record {{start}}, ending on {{end}}')) ?>
+     </div>
 </div>
