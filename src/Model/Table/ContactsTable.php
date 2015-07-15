@@ -536,26 +536,40 @@ class ContactsTable extends Table
         //as $query is a reference it's value will change after every find, but we need the original one
         $queryTemp1 = clone $query;
         $queryTemp2 = clone $query;
+        $queryTemp3 = clone $query;
 
         // TODO change this at CakePHP 3.1
         // http://stackoverflow.com/questions/31343250/remove-fields-from-select-generated-by-matching
         $select = $this->schema()->columns();
-        if (isset($options['select'])) {
-            $select = $options['select'];
+        if (isset($options['_select'])) {
+            $select = $options['_select'];
         }
-        $owned = $this->findOwnedBy($query, $options)
+        $owned = $this->findOwnedBy($queryTemp1, $options)
             ->select($select);
-        $accessViaGroups = $this->findAccessibleViaGroupBy($queryTemp1, $options)
+        $accessibleViaGroups = $this->findAccessibleViaGroupBy($queryTemp2, $options)
             ->select($select);
-        $accessViaUserGroups = $this->findAccessibleViaUsergroupBy($queryTemp2, $options)
+        $accessibleViaUsergroups = $this->findAccessibleViaUsergroupBy($queryTemp3, $options)
             ->select($select);
-        if (isset($options['contain'])) {
-            $owned = $owned->contain($options['conatin']);
-            $accessViaGroups = $accessViaGroups->contain($options['conatin']);
-            $accessViaUserGroups = $accessViaUserGroups->contain($options['conatin']);
+        if (isset($options['_contain'])) {
+            $owned = $owned->contain($options['_contain']);
+            $accessibleViaGroups = $accessibleViaGroups->contain($options['_contain']);
+            $accessibleViaUsergroups = $accessibleViaUsergroups->contain($options['_contain']);
         }
 
-        $accessible = $owned->union($accessViaGroups)->union($accessViaUserGroups);
+        $accessible = $owned->union($accessibleViaGroups)->union($accessibleViaUsergroups);
+        $accessibleCount = $accessible->count();
+
+        $accessible->counter(function ($query) use ($accessibleCount) {
+            return $accessibleCount;
+        });
+
+        //we should add the order by and pagination to the end - after the union. For this we  have to use epilog
+        //http://stackoverflow.com/questions/29379579/how-do-you-modify-a-union-query-in-cakephp-3/29386189#29386189
+        $limit = isset($options['_limit']) ? $options['_limit'] : 20;
+        $page = isset($options['_page']) ? $options['_page'] : 1;
+        $offset = $limit * ($page - 1);
+        $accessible->epilog('ORDER BY Contacts__contactname, Contacts__legalname' .
+            ' LIMIT ' . $limit . ' OFFSET ' . $offset);
 
         return $accessible;
     }

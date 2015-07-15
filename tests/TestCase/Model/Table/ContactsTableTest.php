@@ -227,7 +227,7 @@ class ContactsTableTest extends TestCase
             )
             ->extract('id')
             ->toArray();
-        $expected = [2, 3, 4, 5, 1, 6];
+        $expected = [2, 4, 3, 5, 6, 1];
         $this->assertEquals($expected, $actual);
 
         $actual = $this->Contacts
@@ -239,7 +239,7 @@ class ContactsTableTest extends TestCase
             )
             ->extract('id')
             ->toArray();
-        $expected = [1, 2, 5, 6, 7];
+        $expected = [2, 7, 5, 6, 1];
         $this->assertEquals($expected, $actual);
     }
 
