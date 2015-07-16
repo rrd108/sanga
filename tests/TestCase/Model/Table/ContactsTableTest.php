@@ -79,6 +79,12 @@ class ContactsTableTest extends TestCase
         $actual = $this->Contacts->checkDuplicatesOnGeo();
         $expected = [
             [
+            'id1' => (int) 3,
+            'id2' => (int) 4,
+            'field' => 'geo',
+            'data' => '3287 & Nitáj krt 26 : 3287 & Nitáj krt 25'
+            ],
+            [
             'id1' => (int) 5,
             'id2' => (int) 7,
             'field' => 'geo',
