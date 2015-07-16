@@ -206,14 +206,18 @@ class ContactsTable extends Table
     public function beforeSave(Event $event, Entity $entity, ArrayObject $options)
     {
         if ($entity->isNew()) {
-            if ((!empty($entity->contactname) + !empty($entity->legalname) + !empty($entity->zip_id)                + !empty($entity->address) + !empty($entity->phone) + !empty($entity->email)                + !empty($entity->birth->time) + !empty($entity->workplace)                + !empty($entity->workplace_address)  + !empty($entity->workplace_phone)                + !empty($entity->workplace_email) + !empty($entity->workplace->zip_id) + !empty($entity->contactsource_id) + !empty($entity->family_id)) >= 2
+            if ((!empty($entity->contactname) + !empty($entity->legalname) + !empty($entity->zip_id)
+                + !empty($entity->address) + !empty($entity->phone) + !empty($entity->email)
+                + !empty($entity->birth->time) + !empty($entity->workplace)
+                + !empty($entity->workplace_address)  + !empty($entity->workplace_phone)
+                + !empty($entity->workplace_email) + !empty($entity->workplace->zip_id)
+                + !empty($entity->contactsource_id) + !empty($entity->family_id)) >= 2
             ) {
                 return true;
-            } else {
-                $entity->errors('contactname', __('At least 2 info should be filled'));
-
-                return false;
             }
+
+            $entity->errors('contactname', __('At least 2 info should be filled'));
+            return false;
         }
 
         return true;
@@ -303,9 +307,11 @@ class ContactsTable extends Table
         return $query;
     }
 
-    private function setGeo($id)
+    private function setGeo($contactId)
     {
-        exec(WWW_ROOT.'../bin/cake geo set_geo_for_user '.$id.' > /dev/null &');
+        exec(WWW_ROOT.'../bin/cake geo set_geo_for_user '.$contactId.' > /dev/null &');
+    }
+
     }
 
   /*
@@ -690,31 +696,33 @@ class ContactsTable extends Table
         if (count($groupIds)) {
             //user has access for the group as a member or admin
             $userAsMember = $this->Users->find()
-              ->where(['Users.id' => $userId])
-              ->matching(
-                  'Groups',
-                  function ($q) use ($groupIds) {
-                                  return $q->where(['Groups.id IN ' => $groupIds]);
-                      }
-              )
-                      ->toArray();
+                ->where(['Users.id' => $userId])
+                ->matching(
+                    'Groups',
+                    function ($q) use ($groupIds) {
+                        return $q->where(['Groups.id IN ' => $groupIds]);
+                    }
+                )
+                ->toArray();
             if (count($userAsMember)) {
                 //Log::write('debug', 'Accessibel as group member ' . $contactId . ' :: ' . $userId);
                 return true;
             }
 
             $userAsAdmin = $this->Users->find()
-              ->where(['Users.id' => $userId])
-              ->matching(
-                  'AdminGroups',
-                  function ($q) use ($userId, $groupIds) {
-                                  return $q->where(
-                                      ['AdminGroups.admin_user_id' => $userId,
-                                                    'AdminGroups.id IN' => $groupIds, ]
-                                  );
-                      }
-              )
-                      ->toArray();
+                ->where(['Users.id' => $userId])
+                ->matching(
+                    'AdminGroups',
+                    function ($q) use ($userId, $groupIds) {
+                        return $q->where(
+                            [
+                                'AdminGroups.admin_user_id' => $userId,
+                                'AdminGroups.id IN' => $groupIds,
+                            ]
+                        );
+                    }
+                )
+                ->toArray();
             if (count($userAsAdmin)) {
                 //Log::write('debug', 'Accessibel as group admin ' . $contactId . ' :: ' . $userId);
                 return true;
@@ -737,12 +745,12 @@ class ContactsTable extends Table
         }
         //get their usergroup memberships
         $usergroupMembershipsTemp = $this->Users->find()
-          ->matching(
-              'Usergroups',
-              function ($q) use ($userIds) {
-                          return $q->where(['Users.id IN ' => $userIds]);
-                  }
-          );
+            ->matching(
+                'Usergroups',
+                function ($q) use ($userIds) {
+                    return $q->where(['Users.id IN ' => $userIds]);
+                }
+            );
         foreach ($usergroupMembershipsTemp as $uId) {
             if (isset($uId->_matchingData['Usergroups']->admin_user_id)) {
                 $userIds[] = $uId->_matchingData['Usergroups']->admin_user_id;
@@ -758,7 +766,7 @@ class ContactsTable extends Table
         return false;
     }
 
-  //group memberships of the contact
+    //group memberships of the contact
     private function getGroupMemberships($contactId)
     {
         $contactGroups = $this->find()
@@ -790,24 +798,24 @@ class ContactsTable extends Table
         if (count($groupIds)) {
             //user has access for the group as a member or admin
             $userAsMember = $this->Users->find()
-              ->matching(
-                  'Groups',
-                  function ($q) use ($groupIds) {
-                                  return $q->where(['Groups.id IN ' => $groupIds]);
-                      }
-              )
-                      ->toArray();
+                ->matching(
+                    'Groups',
+                    function ($q) use ($groupIds) {
+                        return $q->where(['Groups.id IN ' => $groupIds]);
+                    }
+                )
+                ->toArray();
             //debug($userAsMember);
             $access['groupMembers'] = $userAsMember;
 
             $userAsAdmin = $this->Users->find()
-              ->matching(
-                  'AdminGroups',
-                  function ($q) use ($groupIds) {
-                                  return $q->where(['AdminGroups.id IN' => $groupIds]);
-                      }
-              )
-                      ->toArray();
+                ->matching(
+                    'AdminGroups',
+                    function ($q) use ($groupIds) {
+                        return $q->where(['AdminGroups.id IN' => $groupIds]);
+                    }
+                )
+                ->toArray();
             //debug($userAsAdmin);
             $access['groupMembers'][] = $userAsAdmin[0];        //only 1 user could be the admin fro a group
             //debug($access);
@@ -821,13 +829,13 @@ class ContactsTable extends Table
         //debug($userIds);
         //get their usergroup memberships
         $usergroupMemberships = $this->Users->find()
-          ->matching(
-              'Usergroups',
-              function ($q) use ($userIds) {
-                          return $q->where(['Users.id IN ' => $userIds]);
-                  }
-          )
-                  ->toArray();
+            ->matching(
+                'Usergroups',
+                function ($q) use ($userIds) {
+                    return $q->where(['Users.id IN ' => $userIds]);
+                }
+            )
+            ->toArray();
         foreach ($usergroupMemberships as $u) {
             //get the usergroup admin
             $usergroupAdmin = $this->Users->get($u->_matchingData['Usergroups']->admin_user_id);
