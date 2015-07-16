@@ -312,6 +312,25 @@ class ContactsTable extends Table
         exec(WWW_ROOT.'../bin/cake geo set_geo_for_user '.$contactId.' > /dev/null &');
     }
 
+    /**
+     * Check duplicates over the database
+     *
+     * @return array
+     */
+    public function checkDuplicates()
+    {
+        $onMail = $this->checkDuplicatesOnEmail();
+        //debug($onMail);
+        $onBirth = $this->checkDuplicatesOnBirth();
+        //debug($onBirth);
+        $onPhone = $this->checkDuplicatesOnPhone();
+        //debug($onPhone);
+        $onGeo = $this->checkDuplicatesOnGeo();
+        //debug($onGeo);
+        $onNames = $this->checkDuplicatesOnNames();
+        //debug($onNames);
+        //debug(array_unique(array_merge($onMail, $onBirth, $onPhone, $onGeo, $onNames)));
+        return array_unique(array_merge($onMail, $onBirth, $onPhone, $onGeo, $onNames));
     }
 
   /*
