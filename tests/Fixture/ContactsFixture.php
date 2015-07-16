@@ -54,7 +54,7 @@ class ContactsFixture extends TestFixture
             'fk_contacts_zips1' => ['type' => 'foreign', 'columns' => ['zip_id'], 'references' => ['zips', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
         ],
         '_options' => [
-'engine' => 'InnoDB', 'collation' => 'utf8_hungarian_ci'
+            'engine' => 'InnoDB', 'collation' => 'utf8_hungarian_ci'
         ],
     ];
     // @codingStandardsIgnoreEnd
@@ -80,13 +80,13 @@ class ContactsFixture extends TestFixture
         ['id' => 3,'contactname' => 'Dvaipayana Dasa','legalname' => '','zip_id' => '3287',
             'address' => 'Nitáj krt 26','lat' => '46.567085','lng' => '17.701822',
             'phone' => '06 (30) 99-95-091','email' => 'dvd@1108.cc',
-            'birth' => null,'sex' => '1','workplace' => '',
+            'birth' => '1985-08-05','sex' => '1','workplace' => '',
             'family_id' => null,'contactsource_id' => '4','active' => '1',
             'comment' => 'rendszeresen fizet','created' => null,'modified' => '2014-11-09 14:34:42'],
         ['id' => 4,'contactname' => 'Acarya-ratna Dasa','legalname' => '','zip_id' => '162',
             'address' => 'Rózsakert utca 6','lat' => '0.000000','lng' => '0.000000',
             'phone' => '06 20 56 58 774','email' => 'dvd@1108.cc',
-            'birth' => null,'sex' => null,'workplace' => '',
+            'birth' => '1985-08-05','sex' => null,'workplace' => '',
             'family_id' => null,'contactsource_id' => '4','active' => '1',
             'comment' => 'adategyeztetés !','created' => null,'modified' => '2014-11-09 12:31:27'],
         ['id' => 5,'contactname' => 'Filu','legalname' => 'Filutás István','zip_id' => 3,

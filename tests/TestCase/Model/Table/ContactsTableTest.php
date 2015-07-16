@@ -105,13 +105,19 @@ class ContactsTableTest extends TestCase
     {
         $actual = $this->Contacts->checkDuplicatesOnBirth();
         $expected = [
-                [
-                    'id1' => 1,
-                    'id2' => 6,
-                    'data' => Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00'),
-                    'field' => 'birth'
-                ]
-            ];
+            [
+                'id1' => 1,
+                'id2' => 6,
+                'data' => Time::createFromFormat('Y-m-d H:i:s', '1974-09-12 00:00:00'),
+                'field' => 'birth'
+            ],
+            [
+                'id1' => 3,
+                'id2' => 4,
+                'data' => Time::createFromFormat('Y-m-d H:i:s', '1985-08-05 00:00:00'),
+                'field' => 'birth'
+            ]
+        ];
         $this->assertEquals($expected, $actual);
     }
 
