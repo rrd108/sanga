@@ -330,7 +330,59 @@ class ContactsTable extends Table
         $onNames = $this->checkDuplicatesOnNames();
         //debug($onNames);
         //debug(array_unique(array_merge($onMail, $onBirth, $onPhone, $onGeo, $onNames)));
-        return array_unique(array_merge($onMail, $onBirth, $onPhone, $onGeo, $onNames));
+        $duplicatesBase = array_merge($onMail, $onBirth, $onPhone, $onGeo, $onNames);
+        /*
+        [
+            [
+                'id1' => (int) 1,
+                'id2' => (int) 2,
+                'field' => 'phone',
+                'data' => '+36 30 999 5091'
+            ],
+            [
+                'id1' => (int) 1,
+                'id2' => (int) 2,
+                'field' => 'name',
+                'data' => 'Lokanatha dasa & Borsos László : Borsos László & Dvaipayan pr',
+                'levenshtein' => [
+                    'lcc' => (int) 13,
+                    'lcl' => (int) 12,
+                    'llc' => (int) 0,
+                    'lll' => (int) 13
+                ]
+            ],
+        ]
+        */
+        //merge pairs
+        $duplicates = $ids = [];
+        foreach ($duplicatesBase as $d) {
+            $index = array_search($d['id1'] . ':' . $d['id2'], $ids);
+            if ($index === false) {
+                $ids[] = $d['id1'] . ':' . $d['id2'];
+                $index = count($ids) - 1;
+                $duplicates[] = $d;
+            } else {
+                $field = [$duplicates[$index]['field'], $d['field']];
+                if(is_array($duplicates[$index]['field'])) {
+                    array_push($duplicates[$index]['field'], $d['field']);
+                    $field = $duplicates[$index]['field'];
+                }
+
+                $data = [$duplicates[$index]['field'], $d['data']];
+                if(is_array($duplicates[$index]['data'])) {
+                    array_push($duplicates[$index]['data'], $d['data']);
+                    $data = $duplicates[$index]['data'];
+                }
+                
+                $duplicates[$index] = [
+                    'id1' => $d['id1'],
+                    'id2' => $d['id2'],
+                    'field' => $field,
+                    'data' => $data
+                ];
+            }
+        }
+        return $duplicates;
     }
 
   /*

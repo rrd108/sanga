@@ -69,7 +69,7 @@ class ContactsTableTest extends TestCase
     public function testCheckDuplicates()
     {
         $actual = Hash::format($this->Contacts->checkDuplicates(), ['{n}.id1', '{n}.id2'], '%1$d, %2$d');
-        $expected = ['3, 4', '6, 7', '1, 6', '3, 4', '1, 2', '1, 3', '2, 3', '5, 7',
+        $expected = ['3, 4', '6, 7', '1, 6', '1, 2', '1, 3', '2, 3', '5, 7',
             '1, 7', '2, 4', '2, 6'];
         $this->assertEquals($expected, $actual);
     }
