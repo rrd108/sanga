@@ -2,7 +2,6 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\Event\Event;
 use Cake\Utility\String;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
