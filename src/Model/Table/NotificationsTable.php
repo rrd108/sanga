@@ -5,10 +5,14 @@ use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
+use Cake\Event\EventListenerInterface;
+use Cake\Event\EventManager;
+use Cake\Event\Event;
+
 /**
  * Notifications Model
  */
-class NotificationsTable extends Table
+class NotificationsTable extends Table implements EventListenerInterface
 {
 
     /**
@@ -61,14 +65,27 @@ class NotificationsTable extends Table
         return $validator;
     }
 
-        public function findUnread(Query $query, array $options)
-        {
-            $query->where(
-                [
-                    'Notifications.unread' => true,
-                    'Notifications.user_id' => $options['User.id']
-                    ]
-            );
-            return $query;
-        }
+    public function findUnread(Query $query, array $options)
+    {
+        $query->where(
+            [
+                'Notifications.unread' => true,
+                'Notifications.user_id' => $options['User.id']
+                ]
+        );
+        return $query;
+    }
+
+    public function implementedEvents()
+    {
+        return [
+            'Model.Contact.afterDuplicates' => 'duplicatesNotification',
+        ];
+    }
+
+    public function duplicatesNotification(Event $event, array $data)
+    {
+        //debug($event);
+        //debug($data);
+    }
 }

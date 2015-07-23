@@ -8,12 +8,14 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use ArrayObject;
-use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Entity;
 use Cake\Log\Log;
 use Cake\Utility\Hash;
 use Cake\Collection\Collection;
+
+use Cake\Event\Event;
+use Cake\Event\EventManager;
 
 /**
  * Contacts Model.
@@ -278,7 +280,7 @@ class ContactsTable extends Table
                     }
                 }
             }
-
+            // TODO change this to an event
             $history = TableRegistry::get('Histories');
             foreach ($details as $detail) {
                 $data = [
@@ -320,39 +322,12 @@ class ContactsTable extends Table
     public function checkDuplicates()
     {
         $onMail = $this->checkDuplicatesOnEmail();
-        //debug($onMail);
         $onBirth = $this->checkDuplicatesOnBirth();
-        //debug($onBirth);
         $onPhone = $this->checkDuplicatesOnPhone();
-        //debug($onPhone);
         $onGeo = $this->checkDuplicatesOnGeo();
-        //debug($onGeo);
         $onNames = $this->checkDuplicatesOnNames();
-        //debug($onNames);
-        //debug(array_unique(array_merge($onMail, $onBirth, $onPhone, $onGeo, $onNames)));
         $duplicatesBase = array_merge($onMail, $onBirth, $onPhone, $onGeo, $onNames);
-        /*
-        [
-            [
-                'id1' => (int) 1,
-                'id2' => (int) 2,
-                'field' => 'phone',
-                'data' => '+36 30 999 5091'
-            ],
-            [
-                'id1' => (int) 1,
-                'id2' => (int) 2,
-                'field' => 'name',
-                'data' => 'Lokanatha dasa & Borsos László : Borsos László & Dvaipayan pr',
-                'levenshtein' => [
-                    'lcc' => (int) 13,
-                    'lcl' => (int) 12,
-                    'llc' => (int) 0,
-                    'lll' => (int) 13
-                ]
-            ],
-        ]
-        */
+
         //merge pairs
         $duplicates = $ids = [];
         foreach ($duplicatesBase as $d) {
@@ -363,17 +338,17 @@ class ContactsTable extends Table
                 $duplicates[] = $d;
             } else {
                 $field = [$duplicates[$index]['field'], $d['field']];
-                if(is_array($duplicates[$index]['field'])) {
+                if (is_array($duplicates[$index]['field'])) {
                     array_push($duplicates[$index]['field'], $d['field']);
                     $field = $duplicates[$index]['field'];
                 }
 
                 $data = [$duplicates[$index]['field'], $d['data']];
-                if(is_array($duplicates[$index]['data'])) {
+                if (is_array($duplicates[$index]['data'])) {
                     array_push($duplicates[$index]['data'], $d['data']);
                     $data = $duplicates[$index]['data'];
                 }
-                
+
                 $duplicates[$index] = [
                     'id1' => $d['id1'],
                     'id2' => $d['id2'],
@@ -382,6 +357,14 @@ class ContactsTable extends Table
                 ];
             }
         }
+
+        //dispatch Notification table about the event
+        $event = new Event('Model.Contact.afterDuplicates',
+                           $this,
+                           ['duplicates' => $duplicates]
+                           );
+        $this->eventManager()->dispatch($event);
+
         return $duplicates;
     }
 
