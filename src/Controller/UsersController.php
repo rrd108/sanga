@@ -8,6 +8,8 @@ use Cake\Event\Event;
 use Cake\Routing\Router;
 use Cake\Network\Email\Email;
 
+use Cake\I18n\I18n;
+
 /**
  * Users Controller
  *
@@ -56,7 +58,7 @@ class UsersController extends AppController
     }
 
     public function login()
-    {
+    {        
         if (isset($this->request->data['passreminder'])) {
             $this->forgotpass();
         } elseif ($this->request->is('post')) {
@@ -64,9 +66,12 @@ class UsersController extends AppController
             if ($user) {
                 $this->Auth->setUser($user);
                 $this->removeResetToken($user);
+                
+                I18n::locale($user['locale']);
+                $this->Cookie->write('User.locale', $user['locale']);
 
                 $user = $this->Users->get($this->Auth->user('id'));
-                $user->last_login = date('Y-m-d H:i:s');
+                $user['last_login'] = date('Y-m-d H:i:s');
                 $this->Users->save($user);
 
                 return $this->redirect($this->Auth->redirectUrl());
@@ -192,6 +197,10 @@ class UsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             $saved = $this->Users->save($user);
+            
+            I18n::locale($user->locale);
+            $this->Cookie->write('User.locale', $user->locale);
+            
             if ($saved) {
                 $json = ['save' => __('The contact has been saved.')];
             } else {

@@ -640,3 +640,5 @@ ADD CONSTRAINT `fk_documents_users1`
 INSERT INTO `reseller10_sanga`.`settings` (`id` ,`user_id` ,`name` ,`value`)
 VALUES (NULL , '1', 'default_groups', 'a:2:{i:0;i:6;i:1;i:7;}');
 
+ALTER TABLE `sanga`.`users` 
+ADD COLUMN `locale` VARCHAR(5) NULL DEFAULT NULL AFTER `google_contacts_refresh_token`

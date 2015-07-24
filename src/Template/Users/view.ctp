@@ -138,6 +138,25 @@ echo $this->Html->script('sanga.users.view.js', ['block' => true]);
                     </div><!-- row -->
                     <div class="row">
                         <div class="column large-6 panel">
+                            <p class="label"><?= __('Language') ?></p>
+                        </div>
+                        <div class="column large-6 panel">
+                            <p class="ed">
+                                &nbsp;
+                                <span class="dta"><?= h($user->locale) ?></span>
+                                <?php
+                                echo $this->Form->input('locale',
+                                                   ['templates' => ['inputContainer' => '{{content}}'],
+                                                    'class' => 'editbox',
+                                                    'label' => false,
+                                                    'value' => h($user->locale)
+                                                    ]);
+                                ?>
+                            </p>
+                        </div>
+                    </div><!-- row -->
+                    <div class="row">
+                        <div class="column large-6 panel">
                             <p class="label"><?= __('Created') ?></p>
                         </div>
                         <div class="column large-6 panel">

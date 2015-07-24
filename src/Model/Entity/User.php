@@ -28,6 +28,7 @@ class User extends Entity
         'groups' => true,
         'histories' => true,
         'notifications' => true,
+        'locale' => true,
         'google_contacts_refresh_token' => true,
         'last_login' => true,
         'contacts' => true,

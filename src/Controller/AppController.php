@@ -17,6 +17,8 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 
+use Cake\I18n\I18n;
+
 /**
  * Application Controller
  *
@@ -39,6 +41,7 @@ class AppController extends Controller
     public $components = [
         'Flash',
         'RequestHandler',
+        'Cookie',
         'Auth' => [
             'authenticate' => [
                 'Form' => [
@@ -55,6 +58,12 @@ class AppController extends Controller
     {
         $this->Auth->config('authorize', ['Controller']);
         $this->Auth->deny();
+        
+        //get locale cookie
+        $locale = $this->Cookie->read('User.locale');
+        if ($locale) {
+            I18n::locale(h($locale));
+        }
     }
     
     public function getErrors($errors)
