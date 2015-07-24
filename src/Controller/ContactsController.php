@@ -471,12 +471,6 @@ class ContactsController extends AppController
     public function add()
     {
         $this->request->data['users']['_ids'] = [$this->Auth->user('id')];        //add auth user as contact person
-        //debug($this->request->data);
-        // TODO this could be removed in CakePHP 3.0.8 see : https://github.com/cakephp/cakephp/issues/6817
-        /*if (isset($this->request->data['skills']) && $this->request->data['skills'] == '') {    //no skills added we should remove this key, as if it exists it should be
-            //an array like 'skills' => ['_ids' => []]
-            unset($this->request->data['skills']);
-        }*/
         $contact = $this->Contacts->newEntity($this->request->data);
         //debug($contact);
         if (! empty($this->request->data['family_member_id'])) {
