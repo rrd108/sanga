@@ -229,10 +229,12 @@ $(function() {
 				}
 			}
 			oldData[editbox.attr('name')] = theSpan.text();		//editbox.attr('name') = pl legalname
-			if (newData.search(/\n/) != -1) {
-				theSpan.html(newData.replace(/</, '&lt;').replace(/\n/g, '<br>'));
-			} else {
-				theSpan.text(newData);
+			if (newData !== undefined) {
+				if (newData.search(/\n/) != -1) {
+					theSpan.html(newData.replace(/</, '&lt;').replace(/\n/g, '<br>'));
+				} else {
+					theSpan.text(newData);
+				}
 			}
 		});
 
