@@ -142,7 +142,7 @@ class UsersTable extends Table
             ->allowEmpty('resettoken')
             ->allowEmpty('google_contacts_refresh_token');
 
-                  return $validator;
+        return $validator;
     }
 
 /**

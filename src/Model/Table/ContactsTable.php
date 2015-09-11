@@ -610,10 +610,18 @@ class ContactsTable extends Table
             ->select($select);
         $accessibleViaUsergroups = $this->findAccessibleViaUsergroupBy($queryTemp3, $options)
             ->select($select);
+
+        if (isset($options['_where'])) {
+            $where = $owned->newExpr()->add($options['_where']);
+            $owned->where($where);
+            $accessibleViaGroups->where($where);
+            $accessibleViaUsergroups->where($where);
+        }
+
         if (isset($options['_contain'])) {
-            $owned = $owned->contain($options['_contain']);
-            $accessibleViaGroups = $accessibleViaGroups->contain($options['_contain']);
-            $accessibleViaUsergroups = $accessibleViaUsergroups->contain($options['_contain']);
+            $owned->contain($options['_contain']);
+            $accessibleViaGroups->contain($options['_contain']);
+            $accessibleViaUsergroups->contain($options['_contain']);
         }
 
         $accessible = $owned->union($accessibleViaGroups)->union($accessibleViaUsergroups);

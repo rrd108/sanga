@@ -48,9 +48,9 @@ class UsersController extends AppController
             ->select(['id', 'name'])
             ->where(['name LIKE "'.$this->request->query('term').'%"']);
         foreach ($query as $row) {
-            $result[] = array('value' => $row->id,
+            $result[] = ['value' => $row->id,
                               'label' => $row->name
-                              );
+                              ];
         }
         //debug($result);die();
         $this->set(compact('result'));
@@ -58,7 +58,7 @@ class UsersController extends AppController
     }
 
     public function login()
-    {        
+    {
         if (isset($this->request->data['passreminder'])) {
             $this->forgotpass();
         } elseif ($this->request->is('post')) {
@@ -66,7 +66,7 @@ class UsersController extends AppController
             if ($user) {
                 $this->Auth->setUser($user);
                 $this->removeResetToken($user);
-                
+
                 I18n::locale($user['locale']);
                 $this->Cookie->write('User.locale', $user['locale']);
 
@@ -197,12 +197,12 @@ class UsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             $saved = $this->Users->save($user);
-            
+
             I18n::locale($user->locale);
             $this->Cookie->write('User.locale', $user->locale);
-            
+
             if ($saved) {
-                $json = ['save' => __('The contact has been saved.')];
+                $json = ['save' => __('The user has been saved.')];
             } else {
                 $error = '';
                 foreach ($user->errors() as $field => $err) {
@@ -212,7 +212,7 @@ class UsersController extends AppController
                     }
                 }
                 $json = [
-                         'save' => __('The contact could not be saved. Please, try again.'),
+                         'save' => __('The user could not be saved. Please, try again.'),
                          'error' => $error
                          ];
             }

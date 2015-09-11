@@ -58,14 +58,14 @@ class AppController extends Controller
     {
         $this->Auth->config('authorize', ['Controller']);
         $this->Auth->deny();
-        
+
         //get locale cookie
         $locale = $this->Cookie->read('User.locale');
         if ($locale) {
             I18n::locale(h($locale));
         }
     }
-    
+
     public function getErrors($errors)
     {
         $errorsString = '';
