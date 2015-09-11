@@ -51,8 +51,8 @@ class ContactsController extends AppController
         foreach ($query as $row) {
             $label = $this->createHighlight($row->contactname) .
                     $this->createHighlight($row->legalname);
-            $result[] = array('value' => $row->id,
-                              'label' => $label);
+            $result[] = ['value' => $row->id,
+                              'label' => $label];
         }
         $this->set('result', $result);
         $this->set('_serialize', 'result');
@@ -62,7 +62,7 @@ class ContactsController extends AppController
     private function createHighlight($value = null)
     {
         if ($value && strpos(strtolower($value), $this->request->query('term')) !== false) {
-            $highlight = array('format' => '<span class="b i">\1</span>');
+            $highlight = ['format' => '<span class="b i">\1</span>'];
             return String::highlight($value, $this->request->query('term'), $highlight) . ' ';
         } else {
             return $value;
@@ -97,7 +97,8 @@ class ContactsController extends AppController
 
         if (isset($query)) {
             $this->set('query', $query);
-            $contain = $conditions = $select = $selected = [];
+            $matching = $contain = $conditions = $select = $selected = [];
+            // TODO $matching kezelés mentettek esetében
             foreach ($query as $keyName => $values) {
                 $remove = [];
                 if (strpos($keyName, 'field_') === 0) {
@@ -152,8 +153,6 @@ class ContactsController extends AppController
             debug($conditions);
             debug($contain);*/
 
-            $contacts = $query = $this->Contacts->find('ownedBy', ['User.id' => $this->Auth->user('id')])
-                ->select($select);
             $where = '';
             if ($conditionCount > 0) {
                 $bracketOpened = false;
@@ -187,13 +186,27 @@ class ContactsController extends AppController
                     }
                 }
                 //debug($where);die();
-                $expr = $query->newExpr()->add($where);
-                $contacts = $query->where($expr);
+                //$expr = $query->newExpr()->add($where);
+                //$query->where($expr);
+
             }
 
+            $query = $this->Contacts->find(
+                    'accessibleBy',
+                    [
+                        'User.id' => $this->Auth->user('id'),
+                        '_where' => $where,
+                        //'_contain' => $contain
+                    ]
+                )
+                ->select($select);
+
+
+            /*
             if (! empty($contain)) {
-                $contacts = $query->contain($contain);
+                $query->contain($contain);
             }
+            */
 
             /*if ($this->request->data['group_id']){
                     $result->matching('Groups', function($q){
@@ -203,7 +216,7 @@ class ContactsController extends AppController
 
             if ($this->request->params['_ext'] == 'csv') {
                 $i = 0;
-                foreach ($contacts as $contact) {
+                foreach ($query as $contact) {
                     $csvData[$i] = [];
                     foreach ($selectCsv as $s) {
                         $field = substr($s, strpos($s, '.') + 1);
@@ -215,7 +228,7 @@ class ContactsController extends AppController
                 $_header = /*$_extract = */$selectCsv;
                 $this->set(compact('csvData', '_serialize', '_header'/*, '_extract'*/));
             } else {
-                $this->set('contacts', $this->paginate($contacts));
+                $this->set('contacts', $this->paginate($query));
             }
         }
 
