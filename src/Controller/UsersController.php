@@ -67,7 +67,7 @@ class UsersController extends AppController
                 $this->Auth->setUser($user);
                 $this->removeResetToken($user);
 
-                I18n::locale($user['locale']);
+                I18n::locale(h($user['locale']));
                 $this->Cookie->write('User.locale', $user['locale']);
 
                 $user = $this->Users->get($this->Auth->user('id'));
