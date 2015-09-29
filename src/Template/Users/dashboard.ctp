@@ -15,41 +15,41 @@
 
             <h2 class="cl"><?= $this->request->session()->read('Auth.User.realname') ?></h2>
             <div class="dashstat">
-                <h6><?= $dash['contacts']['own'] ?></h6>
+                <h6><?= $this->Number->format($dash['contacts']['own'], ['places' => 0]) ?></h6>
                 <p><?= __('Contacts') ?></p>
             </div>
             <div class="dashstat">
-                <h6><?= $dash['contacts']['newown'] ?></h6>
+                <h6><?= $this->Number->format($dash['contacts']['newown'], ['places' => 0]) ?></h6>
                 <p><?= __('New Contacts this week') ?></p>
             </div>
             <div class="dashstat">
-                <h6><?= $dash['contacts']['birthdayown'] ?></h6>
+                <h6><?= $this->Number->format($dash['contacts']['birthdayown'], ['places' => 0]) ?></h6>
                 <p><?= __('Birthdays this week') ?></p>
             </div>
             <div class="dashstat">
-                <h6><?= $dash['histories']['own'] ?></h6>
+                <h6><?= $this->Number->format($dash['histories']['own'], ['places' => 0]) ?></h6>
                 <p><?= __('Histories') ?></p>
             </div>
             <div class="dashstat">
-                <h6><?= $dash['histories']['week'] ?></h6>
+                <h6><?= $this->Number->format($dash['histories']['week'], ['places' => 0]) ?></h6>
                 <p><?= __('This week\'s activity') ?></p>
             </div>
             <div class="dashstat">
-                <h6><?= $dash['histories']['last2weeks'] - $dash['histories']['week'] ?></h6>
+                <h6><?= $this->Number->format($dash['histories']['last2weeks'], ['places' => 0]) ?></h6>
                 <p><?= __('Last week\'s activity') ?></p>
             </div>
 
             <h2 class="cl"><?= __('Total') ?></h2>
             <div class="dashstat">
-                <h6><?= $dash['contacts']['total'] ?></h6>
+                <h6><?= $this->Number->format($dash['contacts']['total'], ['places' => 0]) ?></h6>
                 <p><?= __('Contacts') ?></p>
             </div>
             <div class="dashstat">
-                <h6><?= $dash['contacts']['newtotal'] ?></h6>
+                <h6><?= $this->Number->format($dash['contacts']['newtotal'], ['places' => 0]) ?></h6>
                 <p><?= __('New Contacts this week') ?></p>
             </div>
             <div class="dashstat">
-                <h6><?= $dash['histories']['total'] ?></h6>
+                <h6><?= $this->Number->format($dash['histories']['total'], ['places' => 0]) ?></h6>
                 <p><?= __('Histories') ?></p>
             </div>
 
