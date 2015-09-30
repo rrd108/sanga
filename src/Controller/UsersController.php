@@ -68,7 +68,7 @@ class UsersController extends AppController
                 $this->removeResetToken($user);
 
                 I18n::locale(h($user['locale']));
-                $this->Cookie->write('User.locale', $user['locale']);
+                $this->Cookie->write('User.locale', h($user['locale']));
 
                 $user = $this->Users->get($this->Auth->user('id'));
                 $user['last_login'] = date('Y-m-d H:i:s');
@@ -198,8 +198,8 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             $saved = $this->Users->save($user);
 
-            I18n::locale($user->locale);
-            $this->Cookie->write('User.locale', $user->locale);
+            I18n::locale(h($user->locale));
+            $this->Cookie->write('User.locale', h($user->locale));
 
             if ($saved) {
                 $json = ['save' => __('The user has been saved.')];
