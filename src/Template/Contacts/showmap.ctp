@@ -1,21 +1,29 @@
 <?php
 echo $this->Html->script('gmap3.min.js', ['block' => true]);
-echo $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=hu', ['block' => true]);
+echo $this->Html->script('http://maps.google.com/maps/api/js?sensor=false&amp;language=' . $lang, ['block' => true]);
 echo $this->Html->css('googleMaps.css', ['block' => true]);
 
 //debug($result);
+?>
+
+<div class="row">
+    <h1><?= __('{0} contacts on map', count($result)) ?></h1>
+</div>
+
+<?php
 $c = '';
 foreach($result as $r){
+    $c .= '{
+            lat:'.$r->lat.',
+            lng:'.$r->lng;
     if(isset($r->zip->zip)){
-        $c .= '{
-            lat : '.$r->lat.',
-            lng : '.$r->lng.',
-            data : {
-                zip : '.$r->zip->zip.',
-                city : "'.$r->zip->name.'" 
-                }
-            },';
+        $c .= ',
+            data:{
+                zip:'.$r->zip->zip.',
+                city:"'.$r->zip->name.'"
+            }';
     }
+    $c .= '},';
 }
 ?>
 <div id="map" class="row"></div>

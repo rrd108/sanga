@@ -79,6 +79,7 @@ class ContactsController extends AppController
             ->toArray();
         //debug($result);
         $this->set('result', $result);
+        $this->set('lang', substr(h($this->Cookie->read('User.locale')), 0, 2));
     }
 
     //mindenféle lekérdezések
