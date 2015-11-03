@@ -1034,6 +1034,7 @@ class ContactsController extends AppController
         $email = new Email('default');
         $email->from([$this->Auth->user('email') => $this->Auth->user('realname')])
             ->to($contact->email)
+            ->bcc($this->Auth->user('email'))
             ->subject($this->request->data['subject'])
             ->send($this->request->data['message']);
 
