@@ -89,7 +89,22 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                 <?php foreach ($histories as $history): ?>
                     <tr>
                         <td>
-                            <?= $history->has('contact') ? $this->Html->link($history->contact->contactname, ['controller' => 'Contacts', 'action' => 'view', $history->contact->id]) : '' ?>
+                            <?php
+                            $cName = $history->contact->contactname;
+                            if ($history->contact->legalname) {
+                                $cName .= '<span class="legalname">' . $history->contact->legalname . '</span>';
+                            }
+                            echo $history->has('contact') ?
+                                    $this->Html->link($cName,
+                                                      [
+                                                       'controller' => 'Contacts',
+                                                       'action' => 'view',
+                                                       $history->contact->id
+                                                       ],
+                                                       ['escape' => false]
+                                                      )
+                                    : '';
+                            ?>
                         </td>
                         <td><?= $history->date->format('Y-m-d') ?></td>
                         <td>

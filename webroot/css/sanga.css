@@ -267,3 +267,9 @@ h1 > img.ajaxremove{
 input.imp {
   width: auto;
 }
+
+span.legalname{
+  font-style: italic;
+  margin-left: 0.8em;
+  white-space: nowrap;
+}
