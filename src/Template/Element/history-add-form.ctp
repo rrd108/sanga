@@ -14,8 +14,14 @@
     <td>
         <?php
         if (isset($e_ContactId)) {
-            echo $this->Form->input('contact_id', ['type' => 'hidden', 'value' => $e_ContactId]);
+            //contact view
+            echo $this->Form->input('contact_id', [
+                                                   'type' => 'hidden',
+                                                   'class' => 'dontdel',
+                                                   'value' => $e_ContactId
+                                                   ]);
         } else {
+            //history add
             echo $this->Form->input('contact_id', ['type' => 'hidden']);
             echo $this->Form->input('xcontact_id', ['type' => 'text', 'label' => false]);
         }
