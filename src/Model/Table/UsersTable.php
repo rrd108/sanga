@@ -203,7 +203,7 @@ class UsersTable extends Table
                     }
                 );
         } else {
-            return $this->find();
+            return false;
         }
     }
 
