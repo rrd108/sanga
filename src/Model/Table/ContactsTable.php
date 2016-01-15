@@ -638,8 +638,14 @@ class ContactsTable extends Table
         $limit = isset($options['_limit']) ? $options['_limit'] : 20;
         $page = isset($options['_page']) ? $options['_page'] : 1;
         $offset = $limit * ($page - 1);
-        $accessible->epilog('ORDER BY Contacts__contactname, Contacts__legalname' .
-            ' LIMIT ' . $limit . ' OFFSET ' . $offset);
+        $order = '';
+        foreach($options['_order'] as $field => $ascdesc) {
+            $order .= ' ' . str_replace('.', '__', $field) . ' ' . $ascdesc . ',';
+        }
+        if($order) {
+            $order = 'ORDER BY' . rtrim($order, ',');
+        }
+        $accessible->epilog($order . ' LIMIT ' . $limit . ' OFFSET ' . $offset);
 
         return $accessible;
     }

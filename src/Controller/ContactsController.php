@@ -298,6 +298,15 @@ class ContactsController extends AppController
 
         array_unshift($s['select'], 'Contacts.sex');
         array_unshift($s['select'], 'Contacts.id');
+
+        $order = [];
+        if(array_key_exists('contactname', $s['selected'])) {
+            $order['Contacts.contactname'] = 'ASC';
+        }
+        if(array_key_exists('legalname', $s['selected'])) {
+            $order['Contacts.legalname'] = 'ASC';
+        }
+
         //debug($s['select']);
 
         // TODO change this at CakePHP 3.1 - see ContactsTable.php
@@ -333,7 +342,7 @@ class ContactsController extends AppController
                     'User.id' => $this->Auth->user('id'),
                     '_select' => $s['select'],
                     '_contain' => $s['contain'],
-                    '_order' => ['Contacts.contactname' => 'ASC', 'Contacts.legalname' => 'ASC'],
+                    '_order' => $order,
                     '_page' => isset($this->request->query['page']) ? $this->request->query['page'] : 1,
                     '_limit' => 20
                 ]
