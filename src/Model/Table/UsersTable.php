@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\Collection\Collection;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -193,14 +194,17 @@ class UsersTable extends Table
           ->extract('id')
           ->toArray();
 
-        $users = $this->find()
-          ->matching(
-              'Usergroups',
-                function ($q) use ($usergroupIds) {
-                    return $q->where(['Usergroups.id IN' => $usergroupIds]);
-                }
-          );
-        return $users;
+        if($usergroupIds) {
+            return $this->find()
+                ->matching(
+                    'Usergroups',
+                    function ($q) use ($usergroupIds) {
+                        return $q->where(['Usergroups.id IN' => $usergroupIds]);
+                    }
+                );
+        } else {
+            return $this->find();
+        }
     }
 
 /**

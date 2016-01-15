@@ -624,7 +624,9 @@ class ContactsTable extends Table
             $accessibleViaUsergroups->contain($options['_contain']);
         }
 
-        $accessible = $owned->union($accessibleViaGroups)->union($accessibleViaUsergroups);
+        $accessible = $owned
+            ->union($accessibleViaGroups)
+            ->union($accessibleViaUsergroups);
         $accessibleCount = $accessible->count();
 
         $accessible->counter(function ($query) use ($accessibleCount) {
@@ -654,8 +656,7 @@ class ContactsTable extends Table
     private function findAccessibleViaGroupBy(Query $query, array $options)
     {
         //accessible groups for the user
-        $groupIds = $this->Groups->find('accessible', $options)
-          ->extract('id')->toArray();
+        $groupIds = $this->Groups->find('accessible', $options)->extract('id')->toArray();
 
         $query = $this->findInGroups($query, ['Group._ids' => $groupIds]);
         return $query;

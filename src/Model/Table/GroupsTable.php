@@ -76,7 +76,7 @@ class GroupsTable extends Table
     }
 
 /**
-* Find acessible groups for the user
+* Find accessible groups for the user
 *
 * @param  Cake\ORM\Query $query
 * @param  array $options Options for filter matching, 'User.id' should be present
@@ -91,10 +91,13 @@ class GroupsTable extends Table
         } else {
             $shared = null;
         }
+        $memberInGroup = $this->findWhereMember($query, $options);
+        if ($memberInGroup) {
+            $query->orWhere(['Groups.id IN' => $memberInGroup]);
+        }
         return $query
           ->orWhere($shared)
           ->orWhere(['admin_user_id' => $options['User.id']])
-          ->orWhere(['Groups.id IN' => $this->findWhereMember($query, $options)])
           ->order(['Groups.name']);
     }
 
