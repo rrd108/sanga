@@ -683,7 +683,7 @@ class ContactsTable extends Table
     {
         //get users who are in any user groups where the given user(s) are admin
         $userIds = $this->Users->getUnderAdminOf($options['User.id']);
-        if($userIds) {
+        if($userIds->count()) {
             $userIds = $userIds->extract('id')->toArray();
             //who are their contacts
             return $this->findOwnedBy($query, ['User.id' => $userIds]);
