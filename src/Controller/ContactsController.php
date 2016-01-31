@@ -335,7 +335,6 @@ class ContactsController extends AppController
 
         //$this->set('contacts', $contacts);
 
-
         $this->paginate = [
             'finder' => [
                 'accessibleBy' => [
@@ -349,7 +348,6 @@ class ContactsController extends AppController
             ]
         ];
         $this->set('contacts', $this->paginate());
-
     }
 
     /**

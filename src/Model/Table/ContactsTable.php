@@ -305,7 +305,6 @@ class ContactsTable extends Table
     public function beforeFind(Event $event, Query $query)
     {
         $query->where(['Contacts.active' => 1]);
-
         return $query;
     }
 
