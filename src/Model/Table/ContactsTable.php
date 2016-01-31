@@ -618,7 +618,7 @@ class ContactsTable extends Table
             $accessibleViaUsergroups->where($where);
         }
 
-        if (isset($options['_contain'])) {
+        if (isset($options['_contain']) && $options['_contain']) {
             $owned->contain($options['_contain']);
             $accessibleViaGroups->contain($options['_contain']);
             $accessibleViaUsergroups->contain($options['_contain']);
@@ -639,11 +639,13 @@ class ContactsTable extends Table
         $page = isset($options['_page']) ? $options['_page'] : 1;
         $offset = $limit * ($page - 1);
         $order = '';
-        foreach($options['_order'] as $field => $ascdesc) {
-            $order .= ' ' . str_replace('.', '__', $field) . ' ' . $ascdesc . ',';
-        }
-        if($order) {
-            $order = 'ORDER BY' . rtrim($order, ',');
+        if (isset($options['_order'])) {
+            foreach ($options['_order'] as $field => $ascdesc) {
+                $order .= ' ' . str_replace('.', '__', $field) . ' ' . $ascdesc . ',';
+            }
+            if ($order) {
+                $order = 'ORDER BY' . rtrim($order, ',');
+            }
         }
         $accessible->epilog($order . ' LIMIT ' . $limit . ' OFFSET ' . $offset);
 
@@ -683,7 +685,7 @@ class ContactsTable extends Table
         //get users who are in any user groups where the given user(s) are admin
         $userIds = $this->Users->getUnderAdminOf($options['User.id']);
         if($userIds) {
-            $userIds->extract('id')->toArray();
+            $userIds = $userIds->extract('id')->toArray();
             //who are their contacts
             return $this->findOwnedBy($query, ['User.id' => $userIds]);
         }
@@ -853,9 +855,13 @@ class ContactsTable extends Table
         return $groupIds;
     }
 
-  /*
-  * Which users has acess to this contact
-  */
+    /**
+     *
+     * Which users has access to this contact
+     *
+     * @param $contactId
+     * @return array
+     */
     public function hasAccess($contactId)
     {
         $access = ['contactPersons' => [], 'groupMembers' => [], 'usergroupMembers' => []];
