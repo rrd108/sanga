@@ -203,7 +203,7 @@ class UsersTable extends Table
                     }
                 );
         } else {
-            return false;
+            return $this->find()->where(['id <' => 0]);
         }
     }
 
