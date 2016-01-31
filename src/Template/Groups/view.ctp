@@ -1,13 +1,12 @@
 <?php
-echo $this->Html->script('sanga.groups.view.js', ['block' => true]);
-echo $this->Html->css('daterangepicker.css', ['block' => true]);
+print $this->Html->script('sanga.groups.view.js', ['block' => true]);
+print $this->Html->css('daterangepicker.css', ['block' => true]);
 
-echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
-echo $this->Html->script('sanga.histories.index.js', ['block' => true]);
+print $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
+print $this->Html->script('sanga.histories.index.js', ['block' => true]);
 
-echo $this->Html->script('moment.min.js', ['block' => true]);
-echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
-
+print $this->Html->script('moment.min.js', ['block' => true]);
+print $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
 ?>
 <div class="groups view">
     <div class="related row">
@@ -56,9 +55,9 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
             <div class="column large-6">
                 <h4 class="subheader"><?= __('Add Contacts to this Group') ?></h4>
                 <?php
-                echo $this->Form->create(null, ['id' => 'addMember']);
-                echo $this->Form->input('name', ['label' => __('Contactname or Legalname')]);
-                echo $this->Form->end();
+                print $this->Form->create(null, ['id' => 'addMember']);
+                print $this->Form->input('name', ['label' => __('Contactname or Legalname')]);
+                print $this->Form->end();
                 ?>
             </div>
             <div class="column large-6">
@@ -68,14 +67,14 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                     $hasEmail = 0;
                     if (!empty($group->contacts)) {
                         foreach ($group->contacts as $contacts) {
-                            echo '<li>';
-                                echo $this->Html->link($contacts->contactname ? h($contacts->contactname) : h($contacts->legalname),
+                            print '<li>';
+                                print $this->Html->link($contacts->contactname ? h($contacts->contactname) : h($contacts->legalname),
                                                                ['controller' => 'Contacts',
                                                                 'action' => 'view', $contacts->id]);
-                                echo $this->Html->image('remove.png',
+                                print $this->Html->image('remove.png',
                                                                 ['class' => 'ajaxremove',
                                                                  'title' => __('Click to remove from group')]);
-                            echo '</li>';
+                            print '</li>';
 
                             if($contacts->email != '') {
                                 $hasEmail++;
@@ -151,11 +150,11 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
         <?= $this->request->session()->read('Auth.User.email') ?>
         <h6 class="subheader"><?= __('To') ?></h6>
         <?php
-        echo h($group->name) . ' (' . $hasEmail . ' ' . __('recepients') . ')';
-        echo $this->Form->input('subject');
-        echo $this->Form->input('message',
+        print h($group->name) . ' (' . $hasEmail . ' ' . __('recepients') . ')';
+        print $this->Form->input('subject');
+        print $this->Form->input('message',
                                 ['type' => 'textarea']);
-        echo $this->Form->button(__('Submit'), ['id' => 'sendmail']);
+        print $this->Form->button(__('Submit'), ['id' => 'sendmail']);
         ?>
     </div>
 </div>
