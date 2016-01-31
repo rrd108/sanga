@@ -310,30 +310,6 @@ class ContactsController extends AppController
         //debug($s['select']);
 
         // TODO change this at CakePHP 3.1 - see ContactsTable.php
-        /*$contacts = $this->Contacts
-            ->find(
-                'accessibleBy',
-                [
-                    'User.id' => $this->Auth->user('id'),
-                    'select' => $s['select'],
-                    'contain' => $s['contain'],
-                    'order' => ['Contacts.contactname' => 'ASC', 'Contacts.legalname' => 'ASC'],
-                    'page' => $this->request->query['page']
-                ]
-            );
-            //->select($s['select'])
-            //->contain($s['contain'])
-            //->order(['Contacts.contactname' => 'ASC', 'Contacts.legalname' => 'ASC']);
-
-        //we should add the order by and pagination to the end - after the union. For this we  have to use epilog
-        //http://stackoverflow.com/questions/29379579/how-do-you-modify-a-union-query-in-cakephp-3/29386189#29386189
-        /*
-        $page = isset($this->request->query['page']) ? (int) $this->request->query['page'] : 1;
-        $contacts = $contacts->epilog('ORDER BY Contacts__contactname, Contacts__legalname' .
-            ' LIMIT 20 OFFSET ' . 20 * $page);
-        */
-
-        //$this->set('contacts', $contacts);
 
         $this->paginate = [
             'finder' => [
