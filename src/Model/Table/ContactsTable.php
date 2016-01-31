@@ -593,9 +593,9 @@ class ContactsTable extends Table
     public function findAccessibleBy(Query $query, array $options)
     {
         //as $query is a reference it's value will change after every find, but we need the original one
-        $queryTemp1 = clone $query;
-        $queryTemp2 = clone $query;
-        $queryTemp3 = clone $query;
+        $queryTemp1 = $query->cleanCopy();
+        $queryTemp2 = $query->cleanCopy();
+        $queryTemp3 = $query->cleanCopy();
 
         // TODO change this at CakePHP 3.1
         // http://stackoverflow.com/questions/31343250/remove-fields-from-select-generated-by-matching
