@@ -646,8 +646,8 @@ class ContactsTable extends Table
                 $order = 'ORDER BY' . rtrim($order, ',');
             }
         }
-        $accessible->epilog($order . ' LIMIT ' . $limit . ' OFFSET ' . $offset);
 
+        $accessible->epilog($order . ' LIMIT ' . $limit . ' OFFSET ' . $offset);
         return $accessible;
     }
 
