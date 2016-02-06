@@ -77,6 +77,26 @@ class GroupsTableTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    public function testIsAdmin()
+    {
+        $actual = $this->Groups->isAdmin(2,3);
+        $this->assertTrue($actual);
+
+        $actual = $this->Groups->isAdmin(1,3);
+        $this->assertFalse($actual);
+    }
+
+    public function testIsWritable()
+    {
+        $actual = $this->Groups->isWritable(2,1);
+        $this->assertTrue($actual);
+
+        $actual = $this->Groups->isWritable(3,1);
+        $this->assertFalse($actual);
+
+        $actual = $this->Groups->isWritable(2,2);
+        $this->assertTrue($actual);
+    }
 /**
  * Test initialize method
  *

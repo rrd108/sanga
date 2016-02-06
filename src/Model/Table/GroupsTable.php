@@ -116,4 +116,47 @@ class GroupsTable extends Table
         }
         return $memberInGroup;
     }
+
+    /**
+     * Is the given user the admin of the given group
+     *
+     * @param $userId
+     * @param $groupId
+     * @return bool
+     */
+    public function isAdmin($userId, $groupId)
+    {
+        $group = $this->find()
+            ->select('admin_user_id')
+            ->where(['id' => $groupId])
+            ->toArray();
+        if($group[0]['admin_user_id'] == $userId) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * The given user has write access to the given group
+     *
+     * @param $userId
+     * @param $groupId
+     * @return bool
+     */
+    public function isWritable($userId, $groupId)
+    {
+        $group = $this->find()
+            ->where(['Groups.id' => $groupId])
+            ->innerJoinWith('Users',
+                function ($q) use ($userId) {
+                    return $q->where(['Users.id' => $userId]);
+                })
+            ->toArray();
+        if(isset($group[0]) && $group[0]['id'] == $groupId) {
+            return true;
+        } else {
+            return $this->isAdmin($userId, $groupId);
+        }
+        return false;
+    }
 }
