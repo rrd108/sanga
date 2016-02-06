@@ -11,6 +11,16 @@ use App\Controller\AppController;
 class GroupsController extends AppController
 {
 
+    public $components = [
+        'RequestHandler' =>
+            [
+                'viewClassMap' =>
+                    [
+                        'csv' => 'CsvView.Csv'
+                    ]
+            ]
+    ];
+
     public function isAuthorized($user = null)
     {
         return true;
@@ -67,7 +77,8 @@ class GroupsController extends AppController
         $group = $this->Groups->get(
             $id,
             [
-            'contain' => ['Users', 'Contacts', 'AdminUsers',
+            'contain' => ['Users', 'Contacts', 'Contacts.Zips', 'Contacts.WorkplaceZips',
+                          'AdminUsers',
                           'Histories' => function ($q) {
                                 return $q->group(['date', 'event_id', 'detail']);
                           },
@@ -76,7 +87,34 @@ class GroupsController extends AppController
             ]
         );
         //debug($group);
-        $this->set('group', $group);
+
+        if ($this->request->params['_ext'] == 'csv') {
+            $i = 0;
+            $_header = ['id', 'legalname', 'contactname', 'phone', 'email', 'birth', 'sex'];
+            foreach($group->contacts as $contact){
+                foreach($_header as $field) {
+                    $csvData[$i][] = $contact[$field];
+                }
+                $csvData[$i][] = $contact['zip']['zip'];
+                $csvData[$i][] = $contact['zip']['name'];
+                $csvData[$i][] = $contact['address'];
+                $csvData[$i][] = $contact['workplace'];
+                $csvData[$i][] = $contact['workplace_zip']['zip'];
+                $csvData[$i][] = $contact['workplace_zip']['name'];
+                $csvData[$i][] = $contact['workplace_address'];
+                $csvData[$i][] = $contact['workplace_phone'];
+                $csvData[$i][] = $contact['workplace_email'];
+                $i++;
+            }
+            $_header = array_merge($_header, ['zip', 'city', 'address', 'workplace', 'workplace zip',
+                'workplace address', 'workplace city', 'workplace phone', 'workplace email']);
+            $_delimiter = ';';
+            $_serialize = 'csvData';
+            $this->response->download($group->name . '.csv');
+            $this->set(compact('csvData', '_serialize', '_header', '_delimiter'));
+        } else {
+            $this->set('group', $group);
+        }
     }
 
     /**

@@ -8,9 +8,25 @@ print $this->Html->script('sanga.histories.index.js', ['block' => true]);
 print $this->Html->script('moment.min.js', ['block' => true]);
 print $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
 ?>
-<div class="groups view">
+<div class="groups view large-12 columns">
     <div class="related row">
         <div class="column large-12">
+            <div class="fr">
+                <?php
+                print $this->Html->link(
+                    __('Save as CSV'),
+                    [
+                        'controller' => 'Groups',
+                        'action' => 'view', h($group->id),
+                        '_ext' => 'csv'
+                    ],
+                    [
+                        'class' => 'button radius'
+                    ]
+                );
+                ?>
+            </div>
+
             <h1><?= h($group->name) ?></h1>
             <div class="row">
                 <div class="large-5 columns strings">
@@ -141,6 +157,7 @@ print $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
         </div>
     </div>
 </div>
+
 <?php
 /*
 <div class="related row">
