@@ -159,4 +159,27 @@ class GroupsTable extends Table
         }
         return false;
     }
+
+    /**
+     * Is the group readable by the user
+     *
+     * It is readable if it it shared, or writable
+     *
+     * @param $userId
+     * @param $groupId
+     * @return bool
+     */
+    public function isReadable($userId, $groupId)
+    {
+        $group = $this->find()
+            ->where(['Groups.id' => $groupId])
+            ->toArray();
+        if(isset($group[0]) && $group[0]['shared']) {
+            return true;
+        }
+        if($this->isWritable($userId, $groupId)) {
+            return true;
+        }
+        return false;
+    }
 }

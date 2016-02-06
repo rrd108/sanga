@@ -96,7 +96,23 @@ class GroupsTableTest extends TestCase
 
         $actual = $this->Groups->isWritable(2,2);
         $this->assertTrue($actual);
+
+        $actual = $this->Groups->isWritable(2,null);
+        $this->assertFalse($actual);
     }
+
+    public function testIsReadable()
+    {
+        $actual = $this->Groups->isReadable(2,1);
+        $this->assertTrue($actual);
+
+        $actual = $this->Groups->isReadable(3,3);
+        $this->assertFalse($actual);
+
+        $actual = $this->Groups->isReadable(3,1);
+        $this->assertTrue($actual);
+    }
+
 /**
  * Test initialize method
  *
