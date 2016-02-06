@@ -51,18 +51,18 @@ class GroupsController extends AppController
         $groups = $this->Groups->find(
             'accessible',
             [
-                                       'User.id' => $this->Auth->user('id'),
-                                       'shared' => true
-                                       ]
+            'User.id' => $this->Auth->user('id'),
+            'shared' => true
+            ]
         )
-            ->contain(['Contacts', 'AdminUsers']);
-                                      $this->set('groups', $this->paginate($groups));
-        
-                                      //for adding new group
-                                      $this->set('group', $this->Groups->newEntity($this->request->data));
-                                      $users = $this->Groups->Users->find('list');
-                                      $contacts = $this->Groups->Contacts->find('list');
-                                      $this->set(compact('users', 'contacts'));
+        ->contain(['Contacts', 'AdminUsers']);
+        $this->set('groups', $this->paginate($groups));
+
+        //for adding new group
+        $this->set('group', $this->Groups->newEntity($this->request->data));
+        $users = $this->Groups->Users->find('list');
+        $contacts = $this->Groups->Contacts->find('list');
+        $this->set(compact('users', 'contacts'));
     }
 
     /**
