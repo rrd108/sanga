@@ -1,5 +1,5 @@
 <?php
-echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
+print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 ?>
 
 <div class="sidebar-wrapper">
@@ -13,9 +13,9 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
             if (isset($savedQueries)) {
                 foreach ($savedQueries as $q) {
                     parse_str($q->value, $savedQuery);
-                    echo '<li>';
-                        echo $this->Html->link($savedQuery['qName'], ['action' => 'searchquery', $q->id]);
-                    echo '</li>';
+                    print '<li>';
+                        print $this->Html->link($savedQuery['qName'], ['action' => 'searchquery', $q->id]);
+                    print '</li>';
                 }
             }
 
@@ -24,16 +24,16 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
     </nav>
     <div id="dialog">
         <?php
-        echo $this->Form->create(null, ['id' => 'querySaveForm']);
-        echo $this->Form->input(
+        print $this->Form->create(null, ['id' => 'querySaveForm']);
+        print $this->Form->input(
             'queryname',
             [
                 'class' => 'radius',
                  'type' => 'text'
             ]
         );
-        echo $this->Form->button(__('Save'), ['class' => 'radius']);
-        echo $this->Form->end();
+        print $this->Form->button(__('Save'), ['class' => 'radius']);
+        print $this->Form->end();
         ?>
     </div>
 </div>
@@ -44,11 +44,11 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
         <div class="contacts index columns large-12">
             <h1>
                 <?php
-                echo __('Queries');
+                print __('Queries');
                 if (isset($query['qName'])) {
-                    echo ' / ' . $query['qName'];
+                    print ' / ' . $query['qName'];
                     unset($query['qName']);
-                    echo $this->Html->image(
+                    print $this->Html->image(
                         'remove.png',
                         [
                             'class' => 'ajaxremove',
@@ -60,13 +60,13 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                 ?>
             </h1>
             <?php
-            echo $this->Form->create(null, [
+            print $this->Form->create(null, [
                                             'type' => 'get',
                                             'id' => 'queryForm'
                                             ]);
 
-                echo '<div class="row" id="query-select-box">';
-                    echo '<h2>' . __('I want to see') . '</h2>';
+                print '<div class="row" id="query-select-box">';
+                    print '<h2>' . __('I want to see') . '</h2>';
                     $filterFields = [
                         'contactname' => __('Contactname'),
                         'legalname' => __('Legalname'),
@@ -99,14 +99,14 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                         } else {
                             $dataName = 'Contacts.'.$field;
                         }
-                        echo '<span class="tag ' . $css . '" data-name="' . $dataName . '">';
-                            echo $fLabel;
-                        echo '</span>';
+                        print '<span class="tag ' . $css . '" data-name="' . $dataName . '">';
+                            print $fLabel;
+                        print '</span>';
                     }
-                echo '</div>';
+                print '</div>';
 
-                echo '<h2>' . __('Where') . '</h2>';
-                echo '<div class="row" id="where">';
+                print '<h2>' . __('Where') . '</h2>';
+                print '<div class="row" id="where">';
                     if (isset($query)) {
                         foreach ($query as $name => $values) {
                             if ( ! is_array($values)) {        //connect
@@ -122,7 +122,7 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                                     $connect[$dataName] = $this->Html->image($img,
                                                                 ['class' => 'fl',
                                                                  'title' => $title]);
-                                    $connect[$dataName] .=     '<input
+                                    $connect[$dataName] .= '<input
                                                     type="hidden"
                                                     value="'. $value . '"
                                                     name="connect_' . $dataName . '">';
@@ -180,35 +180,35 @@ echo $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 
                         if (isset($imgPlus)) {
                             foreach($imgPlus as $dataName => $x) {
-                                echo '<div data-name="' . $dataName . '">';
+                                print '<div data-name="' . $dataName . '">';
                                     if (isset($connect[$dataName])) {
-                                        echo $connect[$dataName];
+                                        print $connect[$dataName];
                                     }
-                                    echo $imgPlus[$dataName];
-                                    echo $label[$dataName];
+                                    print $imgPlus[$dataName];
+                                    print $label[$dataName];
                                     foreach ($selects[$dataName] as $i => $select) {
-                                        echo $select;
-                                        echo $inputs[$dataName][$i];
+                                        print $select;
+                                        print $inputs[$dataName][$i];
                                     }
-                                echo '</div>';
+                                print '</div>';
                             }
                         }
                     }
-                echo '</div>';
+                print '</div>';
 
-                echo $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'radius']);
-                echo '&nbsp;';
-                echo $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'radius']);
-            echo $this->Form->end();
+                print $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'radius']);
+                print '&nbsp;';
+                print $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'radius']);
+            print $this->Form->end();
             ?>
         </div>
 
         <div class="contacts form large-10 medium-9 columns">
             <?php
             if (isset($contacts)){
-                echo '<h2>' . __('Search results') . '</h2>';
+                print '<h2>' . __('Search results') . '</h2>';
 
-                echo $this->element('contacts_table',
+                print $this->element('contacts_table',
                                     [
                                      'fields' => $selected,
                                      'contacts' => $contacts,
