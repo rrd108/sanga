@@ -131,7 +131,7 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                                     );
                                     $connect[$dataName] .= '<input
                                         type="hidden"
-                                        value="'. $value . '"
+                                        value="'. $values . '"
                                         name="connect_' . $dataName . '">';
                                 }
                             } else {
