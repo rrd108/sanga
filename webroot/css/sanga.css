@@ -1,275 +1,275 @@
 header{
-  height: 50px;
+    height: 50px;
 }
 
 .header-search {
-  max-width: 400px;
+    max-width: 400px;
 }
 
 nav.primary span.notice{
-  display: inline-block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-  width: 1.5em;
-  text-align: center;
-  font-size: 0.8em;
-  background: #e5d580;
+    display: inline-block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    width: 1.5em;
+    text-align: center;
+    font-size: 0.8em;
+    background: #e5d580;
 }
 
 .b{
-  font-weight: bold;
+    font-weight: bold;
 }
 .i{
-  font-style: italic;
+    font-style: italic;
 }
 .r{
-  text-align: right;
+    text-align: right;
 }
 
 .fr{
-  float: right;
+    float: right;
 }
 .fl{
-  float: left;
+    float: left;
 }
 
 .cl{
-  clear: left;
+    clear: left;
 }
 
 .dn{
-  display: none;
+    display: none;
 }
 .nw {
-  white-space: nowrap;
+    white-space: nowrap;
 }
-
+.small, .small input, .small select {
+    font-size: 0.85em;
+}
 .draggable{
-  cursor: grab;
+    cursor: grab;
 }
 
 .ui-droppable{
-  min-height: 1.7em;
+    min-height: 1.7em;
 }
 
 .removeable{
-  cursor: not-allowed;
+    cursor: not-allowed;
 }
 .removeable:hover{
-  background: #777777;
+    background: #777777;
 }
 
 .highlight{
-  background: #DFFFE0;
+    background: #DFFFE0;
 }
 
 #editlink{
-  display: none;
-  float: right;
+    display: none;
+    float: right;
 }
 span.dta{
-  padding: 0 0.625rem;
-  display: inline-block;
+    padding: 0 0.625rem;
+    display: inline-block;
 }
 input.editbox, textarea.editbox, span.editbox{
-  display: inline;
+    display: inline;
 }
 
 input.editbox{
-  width: 85%;
+    width: 85%;
 }
 input.editbox[type="radio"]{
-  width: auto;
-  margin-left: 1em;
+    width: auto;
+    margin-left: 1em;
 }
 input.quantity{
-  width: 65%;
-  float: left;
+    width: 65%;
+    float: left;
 }
 input.editbox.zip, span.zip, input.thin, .thin{
-  width: 30%;
+    width: 30%;
 }
 input.editbox.addr, span.addr{
-  width: 55%;
+    width: 55%;
 }
 /* Contacts/google */
 .gContact{
-  width: 33%;
-  float: left;
+    width: 33%;
+    float: left;
 }
 .gimg{
-  width: 30%;
-  float: left;
+    width: 30%;
+    float: left;
 }
 .gdata{
-  width: 70%;
-  float: left;
+    width: 70%;
+    float: left;
 }
 .gSelected{
-  background-color: #dfd;
+    background-color: #dfd;
 }
 #hInfo{
-  width: 20px;
+    width: 20px;
 }
 
 .delete-close{
-  background-image: url("../img/delete-close.png");
-  background-repeat: no-repeat;
-  min-height: 25px;
+    background-image: url("../img/delete-close.png");
+    background-repeat: no-repeat;
+    min-height: 25px;
 }
 .delete-open{
-  background-image: url("../img/delete-open.png");
-  background-repeat: no-repeat;
-  min-height: 25px;
+    background-image: url("../img/delete-open.png");
+    background-repeat: no-repeat;
+    min-height: 25px;
 }
 
 
 #ajaxloader, #ajaxsave, #okImg, #errorImg{
-  display: none;
-  float: right;
+    display: none;
+    float: right;
 }
 #ajaxsave{
-  border: none;
-  width: auto;
-  height: auto;
-  padding: 0;
-  margin: 0;
+    border: none;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
 }
 /*icons: http://www.iconsdb.com/royal-blue-icons*/
 
 .noaccess {
-  color: #aaa;
+    color: #aaa;
 }
 
 .ui-helper-hidden-accessible{
-  position: absolute; left:-999em;
+    position: absolute; left:-999em;
 }
 .ui-tabs-active, .ui-state-active{
-  background: #0b464c;
+    background: #0b464c;
 }
 
 p.ed{
-  min-width: 1em;
-  min-height: 1.2em;
+    min-width: 1em;
+    min-height: 1.2em;
 }
 
 .dashstat {
-  width: 31%;
-  float: left;
-  margin-bottom: 2em;
+    width: 31%;
+    float: left;
+    margin-bottom: 2em;
 }
 
 .dashstat h6{
-  font-size: 450%;
-  font-weight: bold;
-  margin-bottom: 0;
+    font-size: 450%;
+    font-weight: bold;
+    margin-bottom: 0;
 }
 
 .cake-error{
-  z-index: 1000;
-  position: absolute;
-  background: yellow;
+    z-index: 1000;
+    position: absolute;
+    background: yellow;
 }
 
 #settings{
-  float: left;
-  cursor: pointer;
+    float: left;
+    cursor: pointer;
 }
 
 #dialog{
-  background: #DFEEFF;
-  padding: 1em;
+    background: #DFEEFF;
+    padding: 1em;
 }
 .ui-dialog-titlebar{
-  float: right;
+    float: right;
 }
 .ui-dialog-titlebar button{
-  font-size: 200%;
-  padding: 0;
-  color: #000;
-  background: #DFEEFF;
+    font-size: 200%;
+    padding: 0;
+    color: #000;
+    background: #DFEEFF;
 }
 #dialog .checkbox{
-  float: left;
-  margin-right: 1em;
-  width: 20%;
+    float: left;
+    margin-right: 1em;
+    width: 20%;
 }
 #dialog button{
-  clear: left;
-  display: block;
+    clear: left;
+    display: block;
 }
-
 #query-select-box span{
-  width: 15%;
-  float: left;
-  cursor: pointer;
+    width: 18%;
+    float: left;
+    cursor: pointer;
 }
 #where img {
-  margin-right: 1em;
-  cursor: pointer;
+    margin-right: 1em;
+    cursor: pointer;
 }
 #where select{
-  font-size: 75%;
-  width: 7em;
-  float: left;
-  background: #fff;
-  clear: left;
+    width: 7em;
+    float: left;
+    background: #fff;
+    clear: left;
 }
 #where input{
-  float: left;
-  width: auto;
+    float: left;
+    width: auto;
 }
 #where > div{
-  width: 30%;
-  float: left;
-  padding: 0.7em;
+    width: 30%;
+    float: left;
+    padding: 0.7em;
 }
-#where div:nth-child(3n+1){
-  clear:left
+#where div:nth-child(3n+2){
+    clear:left
 }
 #where label{
-  color: #4169E1;
-  font-weight: bolder;
+    color: #4169E1;
+    font-weight: bolder;
 }
 
 #members li{
-  float: left;
-  list-style-type: none;
-  margin-right: 1em;
+    float: left;
+    list-style-type: none;
+    margin-right: 1em;
 }
 #members li img{
-  margin: 0 0 5px 2px;
-  cursor: pointer;
+    margin: 0 0 5px 2px;
+    cursor: pointer;
 }
 
 .ajaxremove{
-  cursor: pointer;
+    cursor: pointer;
 }
 h1 > img.ajaxremove{
-  margin-bottom: 0.65em;
+    margin-bottom: 0.65em;
 }
 
 .ui-datepicker-title select{
-  width: 45%;
+    width: 45%;
 }
 
 #hsave{
-  width: auto;
-  border: none;
+    width: auto;
+    border: none;
 }
 
 #hsave:focus{
-  border: 1px solid #e5e5e5;
-  background: #00BF2C;
+    border: 1px solid #e5e5e5;
+    background: #00BF2C;
 }
 
 input.imp {
-  width: auto;
+    width: auto;
 }
 
 span.legalname{
-  font-style: italic;
-  margin-left: 0.8em;
-  white-space: nowrap;
+    font-style: italic;
+    margin-left: 0.8em;
+    white-space: nowrap;
 }

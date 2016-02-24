@@ -68,7 +68,7 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                 ]
             );
 
-                print '<div class="row" id="query-select-box">';
+                print '<div id="query-select-box" class="small">';
                     print '<h2>' . __('I want to see') . '</h2>';
                     $filterFields = [
                         'contactname' => __('Contactname'),
@@ -108,8 +108,8 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                     }
                 print '</div>';
 
-                print '<h2>' . __('Where') . '</h2>';
-                print '<div class="row" id="where">';
+                print '<div id="where" class="cl small">';
+                    print '<h2>' . __('Where') . '</h2>';
                     if (isset($query)) {
                         foreach ($query as $name => $values) {
                             if ( ! is_array($values)) {        //connect
@@ -210,11 +210,13 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                             }
                         }
                     }
+                print '<div class="cl">';
+                    print $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'radius']);
+                    print '&nbsp;';
+                    print $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'radius']);
                 print '</div>';
 
-                print $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'radius']);
-                print '&nbsp;';
-                print $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'radius']);
+            print '</div>';
             print $this->Form->end();
             ?>
         </div>

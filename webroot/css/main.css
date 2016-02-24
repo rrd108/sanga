@@ -94,7 +94,7 @@ header .main-logo a img { max-width: 135px; }
 
 .ui-datepicker-today a { color: #fff; }
 
-main.primary-content { display: block; padding: 7.5rem 0; width: 100%; }
+main.primary-content { display: block; padding: 5.5rem 0; width: 100%; }
 main.primary-content:before, main.primary-content:after { content: " "; display: table; }
 main.primary-content:after { clear: both; }
 
