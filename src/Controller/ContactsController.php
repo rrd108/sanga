@@ -92,17 +92,17 @@ class ContactsController extends AppController
                 $this->Flash->error(__('Permission deined'));
                 $this->render();
             }
-            parse_str($query->value, $query);
+            parse_str($query->value, $queryArray);
         } elseif ($this->request->query) {
-            $query = $this->request->query;
+            $queryArray = $this->request->query;
             // TODO if we have query at the url we should add the connect hidden inputs
         }
 
-        if (isset($query)) {
-            $this->set('query', $query);
+        if (isset($queryArray)) {
+            $this->set('query', $queryArray);
             $matching = $contain = $conditions = $select = $selected = [];
             // TODO $matching kezelés mentettek esetében
-            foreach ($query as $keyName => $values) {
+            foreach ($queryArray as $keyName => $values) {
                 $remove = [];
                 if (strpos($keyName, 'field_') === 0) {
                     $field = str_replace('field_', '', $keyName);
