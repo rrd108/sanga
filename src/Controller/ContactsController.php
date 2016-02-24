@@ -95,6 +95,7 @@ class ContactsController extends AppController
             parse_str($query->value, $query);
         } elseif ($this->request->query) {
             $query = $this->request->query;
+            // TODO if we have query at the url we should add the connect hidden inputs
         }
 
         if (isset($query)) {
