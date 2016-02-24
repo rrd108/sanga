@@ -70,6 +70,7 @@ class ContactsController extends AppController
     }
 
     //cím adatok lekérdezése a mapon való megjelenéshez
+    // TODO only accessible
     public function showmap()
     {
         $result = $this->Contacts->find()
@@ -152,7 +153,7 @@ class ContactsController extends AppController
             /*debug($select);
             debug($selected);
             debug($conditions);
-            debug($contain);*/
+            debug($contain);die();*/
 
             $where = '';
             if ($conditionCount > 0) {
@@ -197,17 +198,10 @@ class ContactsController extends AppController
                     [
                         'User.id' => $this->Auth->user('id'),
                         '_where' => $where,
-                        //'_contain' => $contain
+                        '_contain' => $contain,
+                        '_select' => $select
                     ]
-                )
-                ->select($select);
-
-
-            /*
-            if (! empty($contain)) {
-                $query->contain($contain);
-            }
-            */
+                );
 
             /*if ($this->request->data['group_id']){
                     $result->matching('Groups', function($q){
@@ -306,10 +300,6 @@ class ContactsController extends AppController
         if(array_key_exists('legalname', $s['selected'])) {
             $order['Contacts.legalname'] = 'ASC';
         }
-
-        //debug($s['select']);
-
-        // TODO change this at CakePHP 3.1 - see ContactsTable.php
 
         $this->paginate = [
             'finder' => [

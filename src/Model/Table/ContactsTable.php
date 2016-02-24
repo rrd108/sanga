@@ -570,7 +570,7 @@ class ContactsTable extends Table
      */
     public function findOwnedBy(Query $query, array $options)
     {
-        return $query->matching(
+        return $query->innerJoinWith(
             'Users',
             function ($q) use ($options) {
                 return $q->where(['Users.id IN ' => $options['User.id']]);
@@ -597,8 +597,6 @@ class ContactsTable extends Table
         $queryTemp2 = $query->cleanCopy();
         $queryTemp3 = $query->cleanCopy();
 
-        // TODO change this at CakePHP 3.1
-        // http://stackoverflow.com/questions/31343250/remove-fields-from-select-generated-by-matching
         $select = $this->schema()->columns();
         if (isset($options['_select'])) {
             $select = $options['_select'];
@@ -701,7 +699,7 @@ class ContactsTable extends Table
      */
     public function findInGroups(Query $query, array $options)
     {
-        return $query->matching(
+        return $query->innerJoinWith(
             'Groups',
             function ($q) use ($options) {
                 return $q->where(['Groups.id IN ' => $options['Group._ids']]);
