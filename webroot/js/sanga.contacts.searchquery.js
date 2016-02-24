@@ -3,8 +3,8 @@ $(function() {
 	createSelect = function(name, addOptGroups){
 		var prefix = '';
 		var select = '<select ' +
-					'name="condition_' + name + '[]"' +
-					'>';
+			'name="condition_' + name + '[]"' +
+			'>';
 
 		if (addOptGroups) {
 			prefix = $.sanga.texts[$.sanga.lang].and + ' ';
@@ -12,21 +12,21 @@ $(function() {
 		}
 
 		select += '<option value="&%">' + prefix + $.sanga.texts[$.sanga.lang].contains + '</option>' +
-					'<option value="&=">' + prefix + '=</option>' +
-					'<option value="&!">' + prefix + $.sanga.texts[$.sanga.lang].not + '</option>' +
-					'<option value="&<">' + prefix + '<</option>' +
-					'<option value="&>">' + prefix + '></option>';
+			'<option value="&=">' + prefix + '=</option>' +
+			'<option value="&!">' + prefix + $.sanga.texts[$.sanga.lang].not + '</option>' +
+			'<option value="&<">' + prefix + '<</option>' +
+			'<option value="&>">' + prefix + '></option>';
 
 		if (addOptGroups) {
 			prefix = $.sanga.texts[$.sanga.lang].or + ' ';
 			select += 	'</optgroup>' +
-						'<optgroup label="---' + $.sanga.texts[$.sanga.lang].or + '---">' +
-							'<option value="|%">' + prefix + $.sanga.texts[$.sanga.lang].contains + '</option>' +
-							'<option value="|=">' + prefix + '=</option>' +
-							'<option value="|!">' + prefix + $.sanga.texts[$.sanga.lang].not + '</option>' +
-							'<option value="|<">' + prefix + '<</option>' +
-							'<option value="|>">' + prefix + '></option>' +
-						'</optgroup>';
+				'<optgroup label="---' + $.sanga.texts[$.sanga.lang].or + '---">' +
+					'<option value="|%">' + prefix + $.sanga.texts[$.sanga.lang].contains + '</option>' +
+					'<option value="|=">' + prefix + '=</option>' +
+					'<option value="|!">' + prefix + $.sanga.texts[$.sanga.lang].not + '</option>' +
+					'<option value="|<">' + prefix + '<</option>' +
+					'<option value="|>">' + prefix + '></option>' +
+				'</optgroup>';
 		}
 
 		select += '</select>';
@@ -35,8 +35,8 @@ $(function() {
 
 	createInput = function(name){
 		var input = '<input type="text" ' +
-						'name="field_' + name + '[]" ' +
-					'>';
+			'name="field_' + name + '[]" ' +
+		'>';
 		return input;
 	};
 
@@ -51,33 +51,33 @@ $(function() {
 			imgAndOr = connectAndOr = '';
 			if (addedDivs) {
 				imgAndOr = '<img ' +
-						'src="' +  $.sanga.baseUrl + '/img/and.png" ' +
-						'title="*' + $.sanga.texts[$.sanga.lang].and + '* ' + $.sanga.texts[$.sanga.lang].click2change + '"' +
-						'class="fl">';
+					'src="' +  $.sanga.baseUrl + '/img/and.png" ' +
+					'title="*' + $.sanga.texts[$.sanga.lang].and + '* ' + $.sanga.texts[$.sanga.lang].click2change + '"' +
+					'class="fl">';
 				connectAndOr = '<input type="hidden" ' +
-									'name="connect_' + $(this).data('name') + '" ' +
-									'value="&"' +
-								'>';
+					'name="connect_' + $(this).data('name') + '" ' +
+					'value="&"' +
+				'>';
 			}
 			imgPlus = '<img ' +
-						'src="' +  $.sanga.baseUrl + '/img/plus.png" ' +
-						'data-name="' + $(this).data('name') + '"' +
-						'class="fl">';
+				'src="' +  $.sanga.baseUrl + '/img/plus.png" ' +
+				'data-name="' + $(this).data('name') + '"' +
+				'class="fl">';
 			label = '<label for="' + $(this).data('name') + '"' +
-						'id="l' + $(this).data('name').replace(/\./g, '_') + '" ' +		//there are .-s in the id what we should replace for jQuery
-						'>' +
-						$(this).text() +
-					'</label>';
+				'id="l' + $(this).data('name').replace(/\./g, '_') + '" ' +		//there are .-s in the id what we should replace for jQuery
+				'>' +
+				$(this).text() +
+			'</label>';
 			select = createSelect($(this).data('name'), false);
 			input = createInput($(this).data('name'));
 			$('#where').append('<div data-name="' + $(this).data('name') + '">' +
-									imgAndOr +
-									connectAndOr +
-									imgPlus +
-									label +
-									select +
-									input +
-								'</div>');
+				imgAndOr +
+				connectAndOr +
+				imgPlus +
+				label +
+				select +
+				input +
+			'</div>');
 			addedDivs++;
 		} else {
 			$(this).removeClass('tag-viewable');
