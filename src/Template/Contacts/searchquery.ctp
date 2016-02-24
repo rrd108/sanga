@@ -52,7 +52,7 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                         'remove.png',
                         [
                             'class' => 'ajaxremove',
-                             'title' => __('Click to delete')
+                            'title' => __('Click to delete')
                         ]
                     );
 
@@ -60,10 +60,13 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                 ?>
             </h1>
             <?php
-            print $this->Form->create(null, [
-                                            'type' => 'get',
-                                            'id' => 'queryForm'
-                                            ]);
+            print $this->Form->create(
+                null,
+                [
+                    'type' => 'get',
+                    'id' => 'queryForm'
+                ]
+            );
 
                 print '<div class="row" id="query-select-box">';
                     print '<h2>' . __('I want to see') . '</h2>';
@@ -119,60 +122,73 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                                         $img = 'or.png';
                                         $title = '*' . __('or') . '* ' . __('Click to change');
                                     }
-                                    $connect[$dataName] = $this->Html->image($img,
-                                                                ['class' => 'fl',
-                                                                 'title' => $title]);
+                                    $connect[$dataName] = $this->Html->image(
+                                        $img,
+                                        [
+                                            'class' => 'fl',
+                                            'title' => $title
+                                        ]
+                                    );
                                     $connect[$dataName] .= '<input
-                                                    type="hidden"
-                                                    value="'. $value . '"
-                                                    name="connect_' . $dataName . '">';
+                                        type="hidden"
+                                        value="'. $value . '"
+                                        name="connect_' . $dataName . '">';
                                 }
                             } else {
                                 foreach ($values as $vi => $value) {
                                     if (strpos($name, 'condition_') === 0) {
                                         if ($vi == 0) {
                                             $dataName = str_replace('_', '.', str_replace('condition_', '', $name));
-                                            $imgPlus[$dataName] = $this->Html->image('plus.png',
-                                                                    ['class' => 'fl',
-                                                                     'data-name' => $dataName]);
-                                            $label[$dataName] = '<label id="l' . str_replace('.', '_', $dataName) . '" for="' . $dataName . '">';
-                                                $fName = str_replace('Contacts.', '', $dataName);
-                                                $label[$dataName] .= $filterFields[$fName];
+                                            $imgPlus[$dataName] = $this->Html->image(
+                                                'plus.png',
+                                                [
+                                                    'class' => 'fl',
+                                                    'data-name' => $dataName
+                                                ]
+                                            );
+                                            $label[$dataName] = '<label id="l' .
+                                                str_replace('.', '_', $dataName) . '" for="' . $dataName . '">';
+                                            $fName = str_replace('Contacts.', '', $dataName);
+                                            $label[$dataName] .= $filterFields[$fName];
                                             $label[$dataName] .= '</label>';
 
-                                            $selects[$dataName][] = $this->Form->select($name . '[]',
-                                                                     ['&%' => __('contains'),
-                                                                      '&=' => '=',
-                                                                      '&!' => __('not'),
-                                                                      '&<' => '<',
-                                                                      '&>' => '>'],
-                                                                     ['value' => $value]);
+                                            $selects[$dataName][] = $this->Form->select(
+                                                $name . '[]',
+                                                [
+                                                    '&%' => __('contains'),
+                                                    '&=' => '=',
+                                                    '&!' => __('not'),
+                                                    '&<' => '<',
+                                                    '&>' => '>'
+                                                ],
+                                                ['value' => $value]
+                                            );
                                         } else {
-                                            $selects[$dataName][] = $this->Form->select($name . '[]',
-                                                                    ['---' . __('and') . '---' =>
-                                                                        ['&%' => __('and') . ' ' . __('contains'),
-                                                                         '&=' => __('and') . ' ' . '=',
-                                                                         '&!' => __('and') . ' ' . __('not'),
-                                                                         '&<' => __('and') . ' ' . '<',
-                                                                         '&>' => __('and') . ' ' . '>'
-                                                                        ]
-                                                                    ,
-                                                                    '---' . __('or') . '---' =>
-                                                                        [
-                                                                        '|%' => __('or') . ' ' . __('contains'),
-                                                                        '|=' => __('or') . ' ' . '=',
-                                                                        '|!' => __('or') . ' ' . __('not'),
-                                                                        '|<' => __('or') . ' ' . '<',
-                                                                        '|>' => __('or') . ' ' . '>']
-                                                                    ],
-                                                                    ['value' => $value]);
-
+                                            $selects[$dataName][] = $this->Form->select(
+                                                $name . '[]',
+                                                [
+                                                    '---' . __('and') . '---' => [
+                                                        '&%' => __('and') . ' ' . __('contains'),
+                                                        '&=' => __('and') . ' ' . '=',
+                                                        '&!' => __('and') . ' ' . __('not'),
+                                                        '&<' => __('and') . ' ' . '<',
+                                                        '&>' => __('and') . ' ' . '>'
+                                                    ],
+                                                    '---' . __('or') . '---' => [
+                                                        '|%' => __('or') . ' ' . __('contains'),
+                                                        '|=' => __('or') . ' ' . '=',
+                                                        '|!' => __('or') . ' ' . __('not'),
+                                                        '|<' => __('or') . ' ' . '<',
+                                                        '|>' => __('or') . ' ' . '>']
+                                                    ],
+                                                    ['value' => $value]
+                                            );
                                         }
                                     } elseif (strpos($name, 'field_') === 0) {
                                         $inputs[$dataName][] = '<input
-                                                type="text"
-                                                name="field_' . $dataName . '[]"
-                                                value="' . $value . '">';
+                                            type="text"
+                                            name="field_' . $dataName . '[]"
+                                            value="' . $value . '">';
                                     }
                                 }
                             }
@@ -208,16 +224,17 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
             if (isset($contacts)){
                 print '<h2>' . __('Search results') . '</h2>';
 
-                print $this->element('contacts_table',
-                                    [
-                                     'fields' => $selected,
-                                     'contacts' => $contacts,
-                                     'settings' => false,
-                                     'fieldNames' => $filterFields
-                                     ]);
+                print $this->element(
+                    'contacts_table',
+                    [
+                        'fields' => $selected,
+                        'contacts' => $contacts,
+                        'settings' => false,
+                        'fieldNames' => $filterFields
+                    ]
+                );
             }
             ?>
-
         </div>
     </div>
 </div>
