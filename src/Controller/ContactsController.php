@@ -95,7 +95,6 @@ class ContactsController extends AppController
             parse_str($query->value, $queryArray);
         } elseif ($this->request->query) {
             $queryArray = $this->request->query;
-            // TODO if we have query at the url we should add the connect hidden inputs
         }
 
         if (isset($queryArray)) {
@@ -215,8 +214,15 @@ class ContactsController extends AppController
                 foreach ($query as $contact) {
                     $csvData[$i] = [];
                     foreach ($selectCsv as $s) {
-                        $field = substr($s, strpos($s, '.') + 1);
-                        $csvData[$i][] = $contact->$field;
+                        if(strpos($s, 'Contacts') === 0) {
+                            $field = substr($s, strpos($s, '.') + 1);
+                            $csvData[$i][] = $contact->$field;
+                        } else {
+                            //Zips.name should became zip->name
+                            $field = explode('.', $s);
+                            $field[0] = substr(strtolower($field[0]), 0, -1);
+                            $csvData[$i][] = $contact->{$field[0]}->{$field[1]};
+                        }
                     }
                     $i++;
                 }
