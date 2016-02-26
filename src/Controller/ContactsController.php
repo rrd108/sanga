@@ -193,13 +193,19 @@ class ContactsController extends AppController
 
             }
 
+            if ($this->request->params['_ext'] == 'csv') {
+                $limit = 1000;
+            } else {
+                $limit = 25;
+            }
             $query = $this->Contacts->find(
                     'accessibleBy',
                     [
                         'User.id' => $this->Auth->user('id'),
                         '_where' => $where,
                         '_contain' => $contain,
-                        '_select' => $select
+                        '_select' => $select,
+                        '_limit' => $limit
                     ]
                 );
 
@@ -211,6 +217,8 @@ class ContactsController extends AppController
 
             if ($this->request->params['_ext'] == 'csv') {
                 $i = 0;
+
+                //debug($query); die();
                 foreach ($query as $contact) {
                     $csvData[$i] = [];
                     foreach ($selectCsv as $s) {
