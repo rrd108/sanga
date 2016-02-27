@@ -632,9 +632,6 @@ class ContactsTable extends Table
 
         //we should add the order by and pagination to the end - after the union. For this we  have to use epilog
         //http://stackoverflow.com/questions/29379579/how-do-you-modify-a-union-query-in-cakephp-3/29386189#29386189
-        $limit = isset($options['_limit']) ? $options['_limit'] : 25;
-        $page = isset($options['_page']) ? $options['_page'] : 1;
-        $offset = $limit * ($page - 1);
         $order = '';
         if (isset($options['_order'])) {
             foreach ($options['_order'] as $field => $ascdesc) {
@@ -645,7 +642,21 @@ class ContactsTable extends Table
             }
         }
 
-        $accessible->epilog($order . ' LIMIT ' . $limit . ' OFFSET ' . $offset);
+        $limit = 25;
+        if (isset($options['_limit'])) {
+            if ($options['_limit'] !== false) {
+                $limit = $options['_limit'];
+            } else {
+                $limit = '';
+            }
+        }
+        if ($limit) {
+            $page = isset($options['_page']) ? $options['_page'] : 1;
+            $offset = $limit * ($page - 1);
+            $limit = ' LIMIT ' . $limit . ' OFFSET ' . $offset;
+        }
+
+        $accessible->epilog($order . $limit);
         return $accessible;
     }
 

@@ -194,7 +194,7 @@ class ContactsController extends AppController
             }
 
             if ($this->request->params['_ext'] == 'csv') {
-                $limit = 1000;
+                $limit = false;
             } else {
                 $limit = 25;
             }
