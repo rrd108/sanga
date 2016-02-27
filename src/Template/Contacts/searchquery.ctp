@@ -108,7 +108,7 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                     }
                 print '</div>';
 
-                print '<div id="where" class="cl small">';
+                print '<div class="cl small">';
                     print '<h2>' . __('Where') . '</h2>';
                     if (isset($query)) {
                         foreach ($query as $name => $values) {
@@ -210,13 +210,13 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                             }
                         }
                     }
-                print '<div class="cl">';
-                    print $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'radius']);
-                    print '&nbsp;';
-                    print $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'radius']);
-                print '</div>';
+                print $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'radius']);
+                print '&nbsp;';
+                print $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'radius']);
 
+                print '<div id="where"></div>';
             print '</div>';
+
             print $this->Form->end();
             ?>
         </div>

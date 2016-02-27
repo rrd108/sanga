@@ -33,13 +33,23 @@ nav.primary span.notice{
 .fl{
     float: left;
 }
-
+.fn {
+    float: none;
+}
 .cl{
     clear: left;
 }
-
+.cr {
+    clear: right;
+}
+.cb {
+    clear: both;
+}
 .dn{
     display: none;
+}
+.db {
+    display: block;
 }
 .nw {
     white-space: nowrap;
@@ -225,7 +235,7 @@ p.ed{
     float: left;
     padding: 0.7em;
 }
-#where div:nth-child(3n+2){
+#where div:nth-child(3n+1){
     clear:left
 }
 #where label{
