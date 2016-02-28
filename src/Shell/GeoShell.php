@@ -92,7 +92,10 @@ class GeoShell extends Shell
         } else {
             Log::debug($geourl);
             Log::debug($json);
-            $this->out('<error>Error:</error> ' . $json->error_message);
+            $this->out(
+                '<error>Error:</error> ' .
+                $json->error_message ? $json->error_message : $json->status
+            );
             return(
             [
                 'id' => $data->id,
