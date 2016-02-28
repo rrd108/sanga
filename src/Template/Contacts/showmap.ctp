@@ -6,6 +6,19 @@ echo $this->Html->css('googleMaps.css', ['block' => true]);
 //debug($result);
 ?>
 
+<div class="sidebar-wrapper">
+    <h6><?= __('Filter') ?></h6>
+    <nav class="side-nav">
+        <ul>
+            <li><?= $this->Html->link(__('Everybody'), ['action' => 'showmap']) ?></li>
+            <li><?= $this->Html->link(__('Accessible'), ['action' => 'showmap', 'accessible']) ?></li>
+            <li><?= $this->Html->link(__('Own'), ['action' => 'showmap', 'owned']) ?></li>
+        </ul>
+    </nav>
+</div>
+
+
+<div class="content-wrapper">
 <div class="row">
     <h1><?= __('{0} contacts on map', count($result)) ?></h1>
 </div>
@@ -97,3 +110,4 @@ $("#map").gmap3({
 <?php
 $this->Html->scriptEnd();
 ?>
+</div>

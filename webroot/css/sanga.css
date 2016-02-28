@@ -283,3 +283,8 @@ span.legalname{
     margin-left: 0.8em;
     white-space: nowrap;
 }
+.sidebar-wrapper h6 {
+    font-weight: bold;
+    color: #E5D580;
+    padding: 0.125rem 0.9375rem;
+}

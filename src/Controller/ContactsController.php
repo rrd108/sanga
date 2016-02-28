@@ -71,13 +71,41 @@ class ContactsController extends AppController
 
     //cím adatok lekérdezése a mapon való megjelenéshez
     // TODO only accessible
-    public function showmap()
+    public function showmap($type = 'all')
     {
-        $result = $this->Contacts->find()
-            ->contain(['Zips'])
-            ->select(['Contacts.lat', 'Contacts.lng', 'Zips.zip', 'Zips.name'])
-            ->where('Contacts.lat != 0')
-            ->toArray();
+        $select = ['Contacts.lat', 'Contacts.lng', 'Zips.zip', 'Zips.name'];
+        $where = ['Contacts.lat !=' => 0];
+        $contain = ['Zips'];
+        if( $type == 'accessible') {
+            $result = $this->Contacts->find(
+                'accessibleBy',
+                [
+                    'User.id' => $this->Auth->user('id'),
+                    '_select' => $select,
+                    '_where' => $where,
+                    '_contain' => $contain,
+                    '_limit' => false
+                ]
+            );
+        } else if ($type == 'owned') {
+            $result = $this->Contacts->find(
+                'ownedBy',
+                [
+                    'User.id' => $this->Auth->user('id')
+                ]
+            );
+            $result = $result->select($select)
+                ->where($where)
+                ->contain($contain);
+        } else {    //$tpye == all
+            $result = $this->Contacts->find()
+                ->select($select)
+                ->where($where)
+                ->contain($contain);
+        }
+
+        $result = $result->toArray();
+
         //debug($result);
         $this->set('result', $result);
         $this->set('lang', substr(h($this->Cookie->read('User.locale')), 0, 2));
