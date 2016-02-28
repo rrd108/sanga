@@ -94,7 +94,7 @@ class GeoShell extends Shell
             Log::debug($json);
             $this->out(
                 '<error>Error:</error> ' .
-                $json->error_message ? $json->error_message : $json->status
+                isset($json->error_message) ? $json->error_message : $json->status
             );
             return(
             [
