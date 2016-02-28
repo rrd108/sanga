@@ -39,16 +39,22 @@ class GeoShell extends Shell
     
     public function saveGeo($latLngContact)
     {
-        $contactsTable = TableRegistry::get('Contacts');
-        $contact = $this->Contacts->get($latLngContact['id']);
-        $contact->lat = $latLngContact['lat'];
-        $contact->lng = $latLngContact['lng'];
-        if ($contactsTable->save($contact)) {
-            $this->out('Success: ' . $latLngContact['id']);
+        if ($latLngContact['lat']) {
+            $contactsTable = TableRegistry::get('Contacts');
+            $contact = $this->Contacts->get($latLngContact['id']);
+            $contact->lat = $latLngContact['lat'];
+            $contact->lng = $latLngContact['lng'];
+            if ($contactsTable->save($contact)) {
+                $this->out('Success: ' . $latLngContact['id']);
+                return true;
+            } else {
+                $this->out('<error>Error:</error> ' . $latLngContact['id']);
+                Log::debug('GeoShell/saveGeo/id/' . $latLngContact['id']);
+                Log::debug($contact->errors());
+                return false;
+            }
         } else {
-            $this->out('<error>Error:</error> ' . $latLngContact['id']);
-            Log::debug('DbRefineShell/saveGeo/id/' . $latLngContact['id']);
-            Log::debug($contact->errors());
+            return false;
         }
     }
     
@@ -77,13 +83,22 @@ class GeoShell extends Shell
         //debug($json->results[0]);
         $this->out('Status : ' . $json->status);
         if (isset($json->results[0])) {
-            return(['id' => $data->id,
+            return(
+            [
+                'id' => $data->id,
                 'lat' => $json->results[0]->geometry->location->lat,
-                'lng' => $json->results[0]->geometry->location->lng]);
+                'lng' => $json->results[0]->geometry->location->lng
+            ]);
         } else {
-            return(['id' => $data->id,
+            Log::debug($geourl);
+            Log::debug($json);
+            $this->out('<error>Error:</error> ' . $json->error_message);
+            return(
+            [
+                'id' => $data->id,
                 'lat' => null,
-                'lng' => null]);
+                'lng' => null
+            ]);
         }
     }
     
