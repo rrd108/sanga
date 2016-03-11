@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\String;
+use Cake\Utility\Text;
 
 class SearchController extends AppController
 {
@@ -95,14 +95,14 @@ class SearchController extends AppController
         if ($filterout) {
             if ($value && mb_strpos(mb_strtolower($value), $this->request->query('term')) !== false) {
                 $highlight = array('format' => '<span class="b i">\1</span>');
-                return String::highlight($value, $this->request->query('term'), $highlight);
+                return Text::highlight($value, $this->request->query('term'), $highlight);
             } else {
                 return '';
             }
         } else {
             if ($value && mb_strpos(mb_strtolower($value), $this->request->query('term')) !== false) {
                 $highlight = array('format' => '<span class="b i">\1</span>');
-                return String::highlight($value, $this->request->query('term'), $highlight);
+                return Text::highlight($value, $this->request->query('term'), $highlight);
             } else {
                 return $value;
             }

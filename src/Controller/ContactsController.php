@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\Utility\String;
+use Cake\Utility\Text;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
 use Cake\Utility\Hash;
@@ -63,7 +63,7 @@ class ContactsController extends AppController
     {
         if ($value && strpos(strtolower($value), $this->request->query('term')) !== false) {
             $highlight = ['format' => '<span class="b i">\1</span>'];
-            return String::highlight($value, $this->request->query('term'), $highlight) . ' ';
+            return Text::highlight($value, $this->request->query('term'), $highlight) . ' ';
         } else {
             return $value;
         }
