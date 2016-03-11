@@ -89,7 +89,7 @@ class GeoShell extends Shell
                 'lat' => $json->results[0]->geometry->location->lat,
                 'lng' => $json->results[0]->geometry->location->lng
             ]);
-        } else {
+        } elseif ($json->status =! 'ZERO_RESULTS') {
             Log::debug($geourl);
             Log::debug($json);
             $this->out(
@@ -97,11 +97,12 @@ class GeoShell extends Shell
                 isset($json->error_message) ? $json->error_message : $json->status
             );
             return(
-            [
-                'id' => $data->id,
-                'lat' => null,
-                'lng' => null
-            ]);
+                [
+                    'id' => $data->id,
+                    'lat' => null,
+                    'lng' => null
+                ]
+            );
         }
     }
     
