@@ -48,7 +48,7 @@ use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ErrorHandler;
 use Cake\Log\Log;
-use Cake\Network\Email\Email;
+use Cake\Mailer\Email;
 use Cake\Network\Request;
 use Cake\Routing\DispatcherFactory;
 use Cake\Utility\Inflector;
@@ -66,13 +66,7 @@ try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
 } catch (\Exception $e) {
-    die($e->getMessage() . "\n");
-}
-
-try {
-	Configure::load('extras', 'default', true);
-} catch (\Exception $e) {
-    Log::debug($e->getMessage());
+    exit($e->getMessage() . "\n");
 }
 
 // Load an environment local configuration file.
@@ -103,12 +97,12 @@ mb_internal_encoding(Configure::read('App.encoding'));
  * Set the default locale. This controls how dates, number and currency is
  * formatted and sets the default language to use for translations.
  */
-ini_set('intl.default_locale', 'hu_HU');
+ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
 
 /**
  * Register application error and exception handlers.
  */
-$isCli = php_sapi_name() === 'cli';
+$isCli = PHP_SAPI === 'cli';
 if ($isCli) {
     (new ConsoleErrorHandler(Configure::read('Error')))->register();
 } else {
@@ -207,6 +201,12 @@ DispatcherFactory::add('ControllerFactory');
  * Enable default locale format parsing.
  * This is needed for matching the auto-localized string output of Time() class when parsing dates.
  */
-Type::build('datetime')->useLocaleParser();
-
-require __DIR__ . '/events.php';
+Type::build('time')
+    ->useImmutable()
+    ->useLocaleParser();
+Type::build('date')
+    ->useImmutable()
+    ->useLocaleParser();
+Type::build('datetime')
+    ->useImmutable()
+    ->useLocaleParser();
