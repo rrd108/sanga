@@ -17,13 +17,16 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
             <thead>
                 <tr>
                     <?php
-                    echo $this->Form->create(null,
-                                                ['id' => 'fForm',
-                                                 'url' => [
-                                                           'controller' => 'Histories',
-                                                           'action' => 'index'
-                                                           ]
-                                                 ]);
+                    echo $this->Form->create(
+                        null,
+                        [
+                            'id' => 'fForm',
+                            'url' => [
+                                'controller' => 'Histories',
+                                'action' => 'index'
+                            ]
+                         ]
+                    );
                     ?>
                     <td>
                         <?php

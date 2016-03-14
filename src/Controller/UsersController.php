@@ -244,9 +244,9 @@ class UsersController extends AppController
             ->find('ownedBy', ['User.id' => $this->Auth->user('id')])
             ->where(
                 [
-                         'CONCAT(MONTH(Contacts.birth),"-",DAY(Contacts.birth)) >=' => date('n-j'),
-                         'CONCAT(MONTH(Contacts.birth),"-",DAY(Contacts.birth)) <=' => date('n-j', $nextweek)
-                         ]
+                    'CONCAT(MONTH(Contacts.birth),"-",DAY(Contacts.birth)) >=' => date('n-j'),
+                    'CONCAT(MONTH(Contacts.birth),"-",DAY(Contacts.birth)) <=' => date('n-j', $nextweek)
+                ]
             )
             ->count();
 
