@@ -636,7 +636,7 @@ echo $this->element('ajax-images');
                                 <th><?= $this->Paginator->sort('User.name') ?></th>
                                 <th><?= $this->Paginator->sort('Group.name') ?></th>
                                 <th><?= $this->Paginator->sort('Event.name') ?></th>
-                                <th><?= $this->Paginator->sort('detail') ?></th>
+                                <th><?= $this->Paginator->sort('short_detail') ?></th>
                                 <th><?= $this->Paginator->sort('quantity') ?></th>
                                 <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
                             </tr>
@@ -664,7 +664,7 @@ echo $this->element('ajax-images');
                                     ?>
                                 </td>
                                 <td><?= h($history->event->name) ?></td>
-                                <td><?= h($history->detail) ?></td>
+                                <td><?= h($history->short_detail) ?></td>
                                 <td class="r">
                                     <?php
                                         if(isset($history->unit->name)){

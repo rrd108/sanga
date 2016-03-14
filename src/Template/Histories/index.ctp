@@ -77,7 +77,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                     <th><?= $this->Paginator->sort('user_id') ?></th>
                     <th><?= $this->Paginator->sort('group_id') ?></th>
                     <th><?= $this->Paginator->sort('event_id') ?></th>
-                    <th><?= $this->Paginator->sort('detail') ?></th>
+                    <th><?= $this->Paginator->sort('short_detail') ?></th>
                     <th><?= $this->Paginator->sort('quantity') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
@@ -116,7 +116,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                         <td>
                             <?= $history->has('event') ? $history->event->name : '' ?>
                         </td>
-                        <td><?= h($history->detail) ?></td>
+                        <td><?= h($history->short_detail) ?></td>
                         <td><?= h($history->quantity) ?></td>
                         <td class="actions">
                             <?php

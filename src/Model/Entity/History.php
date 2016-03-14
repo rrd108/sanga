@@ -31,4 +31,12 @@ class History extends Entity
         'unit' => true,
         'group' => true,
     ];
+
+    public function _getShortDetail () {
+        if (strlen($this->_properties['detail']) > 100) {
+            return substr($this->_properties['detail'], 0, 100) . '...';
+        } else {
+            return $this->_properties['detail'];
+        }
+    }
 }
