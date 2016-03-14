@@ -1,7 +1,7 @@
 <div class="row">
     <div class="groups index column large-12">
         <?php
-        echo $this->Form->create($group, ['action' => 'add']);
+        echo $this->Form->create($group, ['url' => ['action' => 'add']]);
         ?>
         <table cellpadding="0" cellspacing="0">
         <thead>

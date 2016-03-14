@@ -47,7 +47,7 @@ echo $this->element('ajax-images');
     <div class="content-wrapper">
     <div class="row">
     <?php
-    echo $this->Form->create($contact, ['id'=> 'editForm', 'action' => 'edit']);
+    echo $this->Form->create($contact, ['id'=> 'editForm', 'url' => ['action' => 'edit']]);
     ?>
 
     <div id="tabs-1" class="contacts view large-10 medium-9 columns">

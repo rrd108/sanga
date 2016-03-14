@@ -19,7 +19,7 @@ echo $this->Html->script('sanga.users.view.js', ['block' => true]);
 
         echo $this->element('ajax-images');
 
-        echo $this->Form->create($user, ['id'=> 'editForm', 'action' => 'edit', $user->id]);
+        echo $this->Form->create($user, ['id'=> 'editForm', 'url' => ['action' => 'edit', $user->id]]);
         ?>
         <div class="user-details-view">
             <div class="main-title row">

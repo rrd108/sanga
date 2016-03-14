@@ -1,7 +1,7 @@
 <div class="row">
     <div class="events index large-12 columns">
         <?php
-        echo $this->Form->create($event, ['action' => 'add']);
+        echo $this->Form->create($event, ['url' => ['action' => 'add']]);
         ?>
         <table cellpadding="0" cellspacing="0">
         <thead>
