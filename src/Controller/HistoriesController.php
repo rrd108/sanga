@@ -47,7 +47,7 @@ class HistoriesController extends AppController
                 $where['Histories.contact_id'] = $this->request->data['fcontact_id'];
             }
             if (! empty($this->request->data['daterange'])) {
-                $dates = split(' - ', $this->request->data['daterange']);
+                $dates = str_split(' - ', $this->request->data['daterange']);
                 $between = function ($exp) use ($dates) {
                     return $exp->between('date', $dates[0], $dates[1], 'date');
                 };
