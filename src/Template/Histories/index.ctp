@@ -3,6 +3,7 @@ echo $this->Html->css('daterangepicker.css', ['block' => true]);
 
 echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
 echo $this->Html->script('sanga.histories.index.js', ['block' => true]);
+echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
 
 echo $this->Html->script('moment.min.js', ['block' => true]);
 echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
@@ -119,7 +120,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                         <td>
                             <?= $history->has('event') ? $history->event->name : '' ?>
                         </td>
-                        <td><?= h($history->short_detail) ?></td>
+                        <td class="_hd" data-h-id="<?= $history->id ?>"><?= h($history->short_detail) ?></td>
                         <td><?= h($history->quantity) ?></td>
                         <td class="actions">
                             <?php

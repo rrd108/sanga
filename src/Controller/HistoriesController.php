@@ -208,4 +208,17 @@ class HistoriesController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
+    public function get_detail($id)
+    {
+        //TODO add test case
+        //TODO check if the user has access to this history data
+        $result = $this->Histories->find()
+            ->select(['detail'])
+            ->where(['id' => $id])
+            ->toArray('assoc');
+        $result = $result[0];
+        $this->set(compact('result'));
+        $this->set('_serialize', 'result');
+    }
 }

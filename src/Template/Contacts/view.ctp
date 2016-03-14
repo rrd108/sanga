@@ -4,6 +4,7 @@
 echo $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 echo $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
+echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
 
 if(isset($contact)) :
 
@@ -664,7 +665,7 @@ echo $this->element('ajax-images');
                                     ?>
                                 </td>
                                 <td><?= h($history->event->name) ?></td>
-                                <td><?= h($history->short_detail) ?></td>
+                                <td class="_hd" data-h-id="<?= $history->id ?>"><?= h($history->short_detail) ?></td>
                                 <td class="r">
                                     <?php
                                         if(isset($history->unit->name)){
