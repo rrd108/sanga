@@ -33,13 +33,12 @@ class UsersController extends AppController
 
     public function isAuthorized($user = null)
     {
-        if ($this->request['action'] == 'add' || $this->request['action'] == 'index') {
-            if ($user['role'] >= 9) {
-                return true;
-            }
-            return false;
-        }
         return true;
+    }
+
+    public function index()
+    {
+        $this->set('users', $this->paginate($this->Users->find()->contain('Contacts')));
     }
 
     public function search()

@@ -51,19 +51,19 @@ header .main-logo a img { max-width: 135px; }
 
 .main-login .main-login-logo { padding-bottom: 20px; }
 
-.tag { display: block; color: white; border-radius: 5px; padding: 3px 10px 5px; font-weight: bold; width: auto; float: left; margin: 0 10px 0 0; }
+.tag { display: block; color: white; border-radius: 5px; padding: 3px 10px 5px; font-weight: bold; width: auto; float: left; margin: 0 7px 7px 0; }
 .tag label { line-height: 1; }
 .tag input { line-height: 1; margin: 0 10px 0 0; }
 
 .tag label { color: #777; margin: 0 !important; padding: 0 !important; }
 
-.tag-mine { color: #428BCA; }
+.tag-mine { background: #428BCA; }
 
-.tag-viewable { color: #5CB85C; }
+.tag-viewable { background: #5CB85C; }
 
-.tag-shared { color: #5BC0DE; }
+.tag-shared { background: #5BC0DE; }
 
-.tag-default { color: #777777; }
+.tag-default { background: #777777; }
 .removeable:hover { color: #fff; }
 
 .tag-danger { background: #D9534F; }

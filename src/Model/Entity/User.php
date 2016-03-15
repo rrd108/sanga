@@ -22,6 +22,7 @@ class User extends Entity
         'email' => true,
         'phone' => true,
         'active' => true,
+        'responsible' => true,
         'role' => true,
         'resettoken' => true,
         'events' => true,

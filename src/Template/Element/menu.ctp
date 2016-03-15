@@ -99,28 +99,39 @@
                 <?= __('Master data') ?>
                 <ul>
                     <?php
-                        if(in_array($this->request->session()->read('Auth.User.role'), [9,10])){
-                            print '<li>' . $this->Html->link('⚓ ' . __('Contact sources'),
-                                                             ['plugin' => null,
-                                                              'prefix' => false,
-                                                              'controller' => 'Contactsources',
-                                                              'action' => 'index']) . '</li>';
-                            print '<li>' . $this->Html->link('✋ ' . __('User groups'),
-                                                             ['plugin' => null,
-                                                              'prefix' => false,
-                                                              'controller' => 'Usergroups',
-                                                              'action' => 'index']) . '</li>';
-                            print '<li>' . $this->Html->link('✄ ' . __('Skills'),
-                                                             ['plugin' => null,
-                                                              'prefix' => false,
-                                                              'controller' => 'Skills',
-                                                              'action' => 'index']) . '</li>';
-                        }
-                        print '<li>' . $this->Html->link('✿ ' . __('Events'),
+                    print '<li>' .
+                        $this->Html->link(
+                            '✮ ' . __('Users'),
+                            [
+                                'plugin' => null,
+                                'prefix' => false,
+                                'controller' => 'Users',
+                                'action' => 'index'
+                            ]
+                        ) .
+                        '</li>';
+                    if(in_array($this->request->session()->read('Auth.User.role'), [9,10])){
+                        print '<li>' . $this->Html->link('⚓ ' . __('Contact sources'),
                                                          ['plugin' => null,
                                                           'prefix' => false,
-                                                          'controller' => 'Events',
+                                                          'controller' => 'Contactsources',
                                                           'action' => 'index']) . '</li>';
+                        print '<li>' . $this->Html->link('✋ ' . __('User groups'),
+                                                         ['plugin' => null,
+                                                          'prefix' => false,
+                                                          'controller' => 'Usergroups',
+                                                          'action' => 'index']) . '</li>';
+                        print '<li>' . $this->Html->link('✄ ' . __('Skills'),
+                                                         ['plugin' => null,
+                                                          'prefix' => false,
+                                                          'controller' => 'Skills',
+                                                          'action' => 'index']) . '</li>';
+                    }
+                    print '<li>' . $this->Html->link('✿ ' . __('Events'),
+                                                     ['plugin' => null,
+                                                      'prefix' => false,
+                                                      'controller' => 'Events',
+                                                      'action' => 'index']) . '</li>';
                     ?>
                 </ul>
             </li>

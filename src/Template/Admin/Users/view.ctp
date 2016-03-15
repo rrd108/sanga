@@ -119,11 +119,30 @@ echo $this->Html->script('sanga.users.view.js', ['block' => true]);
                                 <span class="dta"><?= h($user->phone) ?></span>
                                 <?php
                                 echo $this->Form->input('phone',
-                                                   ['templates' => ['inputContainer' => '{{content}}'],
-                                                    'class' => 'editbox',
-                                                    'label' => false,
-                                                    'value' => h($user->phone)
-                                                    ]);
+                                    ['templates' => ['inputContainer' => '{{content}}'],
+                                        'class' => 'editbox',
+                                        'label' => false,
+                                        'value' => h($user->phone)
+                                    ]);
+                                ?>
+                            </p>
+                        </div>
+                    </div><!-- row -->
+                    <div class="row">
+                        <div class="column large-6 panel">
+                            <p class="label"><?= __('Responsible') ?></p>
+                        </div>
+                        <div class="column large-6 panel">
+                            <p class="ed">
+                                &nbsp;
+                                <span class="dta"><?= h($user->responsible) ?></span>
+                                <?php
+                                echo $this->Form->input('responsible',
+                                    ['templates' => ['inputContainer' => '{{content}}'],
+                                        'class' => 'editbox',
+                                        'label' => false,
+                                        'value' => h($user->responsible)
+                                    ]);
                                 ?>
                             </p>
                         </div>

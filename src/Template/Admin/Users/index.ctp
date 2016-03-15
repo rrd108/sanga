@@ -20,6 +20,7 @@
                         <th><?= $this->Paginator->sort('email') ?></th>
                         <th><?= $this->Paginator->sort('phone') ?></th>
                         <th><?= $this->Paginator->sort('last_login') ?></th>
+                        <th><?= $this->Paginator->sort('responsible') ?></th>
                         <th><?= $this->Paginator->sort('active') ?></th>
                         <th><?= $this->Paginator->sort('contacts') ?></th>
                         <th class="actions"><?= __('Actions') ?></th>
@@ -34,6 +35,7 @@
                         <td><?= h($user->email) ?></td>
                         <td><?= h($user->phone) ?></td>
                         <td><?= h($user->last_login) ?></td>
+                        <td><?= h($user->responsible) ?></td>
                         <td><?= h($user->active) ?></td>
                         <td><?= h(count($user->contacts)) ?></td>
                         <td class="actions">
