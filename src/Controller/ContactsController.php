@@ -70,7 +70,6 @@ class ContactsController extends AppController
     }
 
     //cím adatok lekérdezése a mapon való megjelenéshez
-    // TODO only accessible
     public function showmap($type = 'all')
     {
         //Contacts.id should be selected, otherwise contacts width the same lat
