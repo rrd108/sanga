@@ -593,6 +593,22 @@ class ContactsTable extends Table
     public function findAccessibleBy(Query $query, array $options)
     {
         //as $query is a reference it's value will change after every find, but we need the original one
+/*
+cleanCopy( )
+
+Creates a copy of this current query, triggers beforeFind and resets some state.
+
+The following state will be cleared:
+
+    autoFields
+    limit
+    offset
+    map/reduce functions
+    result formatters
+    order
+    containments
+
+*/
         $queryTemp1 = $query->cleanCopy();
         $queryTemp2 = $query->cleanCopy();
         $queryTemp3 = $query->cleanCopy();
