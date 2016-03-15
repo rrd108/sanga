@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 
@@ -13,10 +13,9 @@ class UsergroupsController extends AppController
 
     public function isAuthorized($user = null)
     {
-        //return true;
-        // TODO
-        //since we did not define who to invite people into a user group this whole
-        //thing should not work
+        if ($user['role'] >= 9) {
+            return true;
+        }
         return false;
     }
 
@@ -30,12 +29,7 @@ class UsergroupsController extends AppController
         $this->set(
             'usergroups',
             $this->paginate(
-                $this->Usergroups->find(
-                    'ownedBy',
-                    [
-                        'User.id' => $this->Auth->user('id')
-                    ]
-                )
+                $this->Usergroups->find()->contain(['Users', 'AdminUsers'])
             )
         );
     }
@@ -47,7 +41,6 @@ class UsergroupsController extends AppController
  */
     public function add()
     {
-        $this->request->data['admin_user_id'] = $this->Auth->user('id');
         $usergroup = $this->Usergroups->newEntity($this->request->data);
         if ($this->request->is('post')) {
             if ($this->Usergroups->save($usergroup)) {

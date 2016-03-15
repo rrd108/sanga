@@ -15,6 +15,7 @@
                 <legend><?= __('Add Usergroup') ?></legend>
             <?php
                 echo $this->Form->input('name');
+                echo $this->Form->input('admin_user_id', ['options' => $users]);
                 echo $this->Form->input('users._ids', ['options' => $users]);
             ?>
             </fieldset>

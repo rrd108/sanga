@@ -31,6 +31,17 @@
                                                               'prefix' => 'admin',
                                                               'controller' => 'Users',
                                                               'action' => 'index']) . '</li>';
+                            print '<li>' .
+                                $this->Html->link(
+                                    '✋ ' . __('User groups'),
+                                    [
+                                        'plugin' => null,
+                                        'prefix' => 'admin',
+                                        'controller' => 'Usergroups',
+                                        'action' => 'index'
+                                    ]
+                                ) .
+                                '</li>';
                             print '<li>' . $this->Html->link('⁂ ' . __('Groups'),
                                                              ['plugin' => null,
                                                               'prefix' => 'admin',
@@ -110,16 +121,25 @@
                             ]
                         ) .
                         '</li>';
+                    /*
+                     see https://github.com/rrd108/sanga/issues/162
+                     print '<li>' .
+                        $this->Html->link(
+                            '✋ ' . __('User groups'),
+                            [
+                                'plugin' => null,
+                                'prefix' => false,
+                                'controller' => 'Usergroups',
+                                'action' => 'index'
+                            ]
+                        ) .
+                        '</li>';
+                    */
                     if(in_array($this->request->session()->read('Auth.User.role'), [9,10])){
                         print '<li>' . $this->Html->link('⚓ ' . __('Contact sources'),
                                                          ['plugin' => null,
                                                           'prefix' => false,
                                                           'controller' => 'Contactsources',
-                                                          'action' => 'index']) . '</li>';
-                        print '<li>' . $this->Html->link('✋ ' . __('User groups'),
-                                                         ['plugin' => null,
-                                                          'prefix' => false,
-                                                          'controller' => 'Usergroups',
                                                           'action' => 'index']) . '</li>';
                         print '<li>' . $this->Html->link('✄ ' . __('Skills'),
                                                          ['plugin' => null,

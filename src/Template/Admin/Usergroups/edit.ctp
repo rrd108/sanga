@@ -3,8 +3,6 @@
         <ul>
             <li><?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $usergroup->id], ['confirm' => __('Are you sure you want to delete # {0}?', $usergroup->id)]) ?></li>
             <li><?= $this->Html->link(__('List Usergroups'), ['action' => 'index']) ?></li>
-            <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-            <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
         </ul>
     </nav>
 </div>

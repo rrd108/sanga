@@ -36,7 +36,7 @@ class UsergroupsTable extends Table
             'foreignKey' => 'usergroup_id',
             'targetForeignKey' => 'user_id',
             'joinTable' => 'users_usergroups',
-            'sort' => 'User.name'
+            'sort' => 'Users.name'
             ]
         );
     }
@@ -59,5 +59,18 @@ class UsergroupsTable extends Table
             ->notEmpty('admin_user_id');
 
         return $validator;
+    }
+
+    public function findOwnedBy(Query $query, array $options)
+    {
+        return $query
+            ->where(['Usergroups.admin_user_id' => $options['User.id']])
+            ->contain(
+                [
+                    'AdminUsers',
+                    'Users'
+                ]
+            )
+            ->order(['Usergroups.name']);
     }
 }
