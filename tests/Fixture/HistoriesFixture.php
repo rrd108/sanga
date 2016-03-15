@@ -61,7 +61,7 @@ class HistoriesFixture extends TestFixture
             'user_id' => 1,
             'group_id' => 1,
             'event_id' => 1,
-            'detail' => 'Lorem ipsum dolor sit amet',
+            'detail' => 'History 1',
             'quantity' => '',
             'unit_id' => 1,
             'family' => 1,
@@ -75,7 +75,7 @@ class HistoriesFixture extends TestFixture
             'user_id' => 1,
             'group_id' => 1,
             'event_id' => 1,
-            'detail' => 'Lorem ipsum dolor sit amet',
+            'detail' => 'History 2',
             'quantity' => '',
             'unit_id' => 1,
             'family' => 1,
@@ -85,16 +85,30 @@ class HistoriesFixture extends TestFixture
         [
             'id' => 3,
             'contact_id' => 1,
-            'date' => '2014-10-30',
-            'user_id' => 1,
+            'date' => '2014-10-31',
+            'user_id' => 2,
             'group_id' => 1,
             'event_id' => 1,
-            'detail' => 'Lorem ipsum dolor sit amet',
+            'detail' => 'History 3',
             'quantity' => '',
             'unit_id' => 1,
             'family' => 1,
-            'created' => '2014-10-30 12:19:40',
-            'modified' => '2014-10-30 12:19:40'
+            'created' => '2014-10-31 12:19:40',
+            'modified' => '2014-10-31 12:19:40'
+        ],
+        [
+            'id' => 4,
+            'contact_id' => 2,
+            'date' => '2014-10-31',
+            'user_id' => 3,
+            'group_id' => 1,
+            'event_id' => 1,
+            'detail' => 'History 4',
+            'quantity' => '',
+            'unit_id' => 1,
+            'family' => 1,
+            'created' => '2014-10-31 12:19:40',
+            'modified' => '2014-10-31 12:19:40'
         ],
     ];
 }

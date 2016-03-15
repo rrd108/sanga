@@ -19,22 +19,7 @@ class HistoriesTableTest extends TestCase
     public $fixtures = [
         'app.histories',
         'app.contacts',
-        'app.zips',
-        'app.countries',
-        'app.contactsources',
-        'app.groups',
         'app.users',
-        'app.events',
-        'app.notifications',
-        'app.contacts_users',
-        
-        
-        
-        'app.usergroups',
-        'app.users_usergroups',
-        'app.contacts_groups',
-        'app.skills',
-        'app.contacts_skills',
         'app.units'
     ];
 
@@ -80,5 +65,22 @@ class HistoriesTableTest extends TestCase
     public function testValidationDefault()
     {
         $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    public function testFindOwnedBy()
+    {
+        $actual = $this->Histories->find('ownedBy', ['User.id' => 1])
+            ->hydrate(false)
+            ->extract('id')
+            ->toArray();
+        $expected = [1, 2];
+        $this->assertEquals($expected, $actual);
+
+        $actual = $this->Histories->find('ownedBy', ['User.id' => [2, 3]])
+            ->hydrate(false)
+            ->extract('id')
+            ->toArray();
+        $expected = [3, 4];
+        $this->assertEquals($expected, $actual);
     }
 }
