@@ -582,6 +582,7 @@ class ContactsTable extends Table
      * Find contacts accessible by given user(s)
      * The given users are the contact persons for the contacts
      *                  or has access to a group to where the contacts belongs to
+     *                      TODO dev-question: https://github.com/rrd108/sanga/issues/163
      *                  or are an admin of a usergroup and the contact's contact person
      *                      belongs to that usergroup.
      *

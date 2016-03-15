@@ -25,22 +25,11 @@ class HistoriesController extends AppController
  */
     public function index()
     {
-        //debug($this->request->data);
-        /*
-        [
-            'fcontact_id' => '18',
-            'xfcontact_id' => 'Bakony Ágnes Agness',
-            'daterange' => '2015-03-01 - 2015-03-25',
-            'fuser_id' => '3',
-            'xfuser_id' => 'ddd',
-            'fgroup_id' => '3',
-            'xfgroup_id' => 'Seva-puja',
-            'fevent_id' => '2',
-            'xfevent_id' => 'telefonhívás',
-            'fdetail' => 'lev'
-        ]
-        */
+        $contain = ['Contacts', 'Users', 'Groups', 'Events', 'Units'];
+        $order = ['Histories.date' => 'DESC', 'Histories.id' => 'DESC'];
+
         if (! empty($this->request->data)) {
+            //TODO see accessible only
             $where = [];
 
             if (! empty($this->request->data['fcontact_id'])) {
@@ -70,14 +59,24 @@ class HistoriesController extends AppController
             if (isset($dates)) {
                 $histories->andWhere($between);
             }
+            $histories->contain($contain)
+                ->order($order);
         } else {
-            $histories = $this->Histories;
+            $histories = $this->Histories->find(
+                'accessibleBy',
+                [
+                    'User.id' => $this->Auth->user('id'),
+                    '_contain' => $contain,
+                    '_order' => $order
+                ]
+            );
         }
-        $this->paginate = [
-            'conditions' => ['Histories.user_id =' => $this->Auth->user('id')],
+        //TODO paginator will mess up the query
+        //so we have to add contain and order the same way as in contacts table
+        /*$this->paginate = [
             'contain' => ['Contacts', 'Users', 'Groups', 'Events', 'Units'],
             'order' => ['Histories.date' => 'DESC', 'Histories.id' => 'DESC']
-        ];
+        ];*/
         $this->set('histories', $this->paginate($histories));
     }
 

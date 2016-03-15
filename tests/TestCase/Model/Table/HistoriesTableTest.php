@@ -20,6 +20,8 @@ class HistoriesTableTest extends TestCase
         'app.histories',
         'app.contacts',
         'app.users',
+        'app.usergroups',
+        'app.users_usergroups',
         'app.units'
     ];
 
@@ -81,6 +83,23 @@ class HistoriesTableTest extends TestCase
             ->extract('id')
             ->toArray();
         $expected = [3, 4];
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testFindAccessibleBy()
+    {
+        $actual = $this->Histories->find('accessibleBy', ['User.id' => 1])
+            ->hydrate(false)
+            ->extract('id')
+            ->toArray();
+        $expected = [1, 2, 4];
+        $this->assertEquals($expected, $actual);
+
+        $actual = $this->Histories->find('accessibleBy', ['User.id' => 3])
+            ->hydrate(false)
+            ->extract('id')
+            ->toArray();
+        $expected = [4];
         $this->assertEquals($expected, $actual);
     }
 }
