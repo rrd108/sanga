@@ -19,20 +19,6 @@ class UsergroupsTableTest extends TestCase
     public $fixtures = [
         'app.usergroups',
         'app.users',
-        'app.events',
-        'app.histories',
-        'app.contacts',
-        'app.zips',
-        'app.countries',
-        'app.contactsources',
-        'app.groups',
-        'app.groups_users',
-        'app.contacts_groups',
-        'app.skills',
-        'app.contacts_skills',
-        'app.contacts_users',
-        'app.units',
-        'app.notifications',
         'app.users_usergroups'
     ];
 
@@ -79,4 +65,15 @@ class UsergroupsTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
+
+    public function testFindOwnedBy()
+    {
+        $actual = $this->Usergroups->find('ownedBy', ['User.id' => 1])
+            ->hydrate(false)
+            ->extract('id')
+            ->toArray();
+        $expected = [1];
+        $this->assertEquals($expected, $actual);
+    }
+
 }
