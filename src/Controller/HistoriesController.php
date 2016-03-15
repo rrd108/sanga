@@ -61,23 +61,23 @@ class HistoriesController extends AppController
             }
             $histories->contain($contain)
                 ->order($order);
+            $this->set('histories', $this->paginate($histories));
         } else {
-            $histories = $this->Histories->find(
-                'accessibleBy',
-                [
-                    'User.id' => $this->Auth->user('id'),
-                    '_contain' => $contain,
-                    '_order' => $order
+            //we should call paginate like this to do not mess up union
+            $histories = $this->Histories->find();
+            $this->paginate = [
+                'finder' => [
+                    'accessibleBy' => [
+                        'User.id' => $this->Auth->user('id'),
+                        '_contain' => $contain,
+                        '_order' => $order,
+                        '_page' => isset($this->request->query['page']) ? $this->request->query['page'] : 1,
+                        '_limit' => 20
+                    ]
                 ]
-            );
+            ];
+            $this->set('histories', $this->paginate());
         }
-        //TODO paginator will mess up the query
-        //so we have to add contain and order the same way as in contacts table
-        /*$this->paginate = [
-            'contain' => ['Contacts', 'Users', 'Groups', 'Events', 'Units'],
-            'order' => ['Histories.date' => 'DESC', 'Histories.id' => 'DESC']
-        ];*/
-        $this->set('histories', $this->paginate($histories));
     }
 
     /**
