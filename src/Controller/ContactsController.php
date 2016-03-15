@@ -73,10 +73,12 @@ class ContactsController extends AppController
     // TODO only accessible
     public function showmap($type = 'all')
     {
-        $select = ['Contacts.lat', 'Contacts.lng', 'Zips.zip', 'Zips.name'];
+        //Contacts.id should be selected, otherwise contacts width the same lat
+        //will be merged
+        $select = ['Contacts.id', 'Contacts.lat', 'Contacts.lng', 'Zips.zip', 'Zips.name'];
         $where = ['Contacts.lat !=' => 0];
         $contain = ['Zips'];
-        if( $type == 'accessible') {
+        if ($type == 'accessible') {
             $result = $this->Contacts->find(
                 'accessibleBy',
                 [
