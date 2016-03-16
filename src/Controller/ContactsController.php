@@ -162,6 +162,7 @@ class ContactsController extends AppController
                     $conditions[$field]['connect'] = $values;
                 }
             }
+
             $selectCsv = $select;
             array_unshift($select, 'Contacts.sex');
             array_unshift($select, 'Contacts.id');
@@ -180,6 +181,7 @@ class ContactsController extends AppController
             } else {
                 $order = null;
             }
+
             $this->paginate = [
                 'finder' => [
                     'accessibleBy' => [
@@ -193,6 +195,7 @@ class ContactsController extends AppController
                     ]
                 ]
             ];
+
             $this->set('contacts', $this->paginate());
 
             /*if ($this->request->data['group_id']){
@@ -204,6 +207,17 @@ class ContactsController extends AppController
             if ($this->request->params['_ext'] == 'csv') {
                 $i = 0;
 
+                $query = $this->Contacts->find(
+                    'accessibleBy',
+                    [
+                        'User.id' => $this->Auth->user('id'),
+                        '_where' => $conditions,
+                        '_contain' => $contain,
+                        '_select' => $select,
+                        '_order' => $order,
+                        '_limit' => false
+                    ]
+                );
                 //debug($query); die();
                 foreach ($query as $contact) {
                     $csvData[$i] = [];
