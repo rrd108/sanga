@@ -184,7 +184,7 @@ class ContactsController extends AppController
                 'finder' => [
                     'accessibleBy' => [
                         'User.id' => $this->Auth->user('id'),
-                        '_where' => $where,
+                        '_where' => $conditions,
                         '_contain' => $contain,
                         '_select' => $select,
                         '_order' => $order,
