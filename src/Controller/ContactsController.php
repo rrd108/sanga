@@ -167,11 +167,6 @@ class ContactsController extends AppController
             array_unshift($select, 'Contacts.id');
             $this->set('selected', $selected);
 
-            /*debug($select);
-            debug($selected);
-            debug($conditions);
-            debug($contain);die();*/
-
             if ($this->request->params['_ext'] == 'csv') {
                 $limit = false;
             } else {
