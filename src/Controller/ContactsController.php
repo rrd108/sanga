@@ -32,6 +32,8 @@ class ContactsController extends AppController
             ]
         ];
 
+    public $paginate = ['limit' => 20];
+
     public function isAuthorized($user = null)
     {
         return true;
@@ -226,7 +228,7 @@ class ContactsController extends AppController
             if ($this->request->params['_ext'] == 'csv') {
                 $limit = false;
             } else {
-                $limit = 20;
+                $limit = $this->paginate['limit'];
             }
 
             if (in_array('Contacts.contactname', $select)) {
@@ -236,7 +238,6 @@ class ContactsController extends AppController
             } else {
                 $order = null;
             }
-
             $this->paginate = [
                 'finder' => [
                     'accessibleBy' => [
@@ -365,7 +366,7 @@ class ContactsController extends AppController
                     '_contain' => $s['contain'],
                     '_order' => $order,
                     '_page' => isset($this->request->query['page']) ? $this->request->query['page'] : 1,
-                    '_limit' => 20
+                    '_limit' => $this->paginate['limit']
                 ]
             ]
         ];
