@@ -109,115 +109,116 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                 print '</div>';
 
                 print '<div class="cl small">';
-                    print '<h2>' . __('Where') . '</h2>';
-                    print '<div id="where">';
-                    print '<div>';
-                    print $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'radius']);
-                    print '&nbsp;';
-                    print $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'radius']);
-                    print '</div>';
+                print '<h2>' . __('Where') . '</h2>';
+                print '<div id="where">';
 
-                    if (isset($query)) {
-                        foreach ($query as $name => $values) {
-                            if ( ! is_array($values)) {        //connect
-                                if (strpos($name, 'connect_') === 0) {
-                                    $dataName = preg_replace('/_/', '.', str_replace('connect_', '', $name), 1);
-                                    if (substr($values, 0, 1)  == '&' || $values == ''){
-                                        $img = 'and.png';
-                                        $title = '*' . __('and') . '* ' . __('Click to change');
-                                    } else {
-                                        $img = 'or.png';
-                                        $title = '*' . __('or') . '* ' . __('Click to change');
-                                    }
-                                    $connect[$dataName] = $this->Html->image(
-                                        $img,
-                                        [
-                                            'class' => 'fl',
-                                            'title' => $title
-                                        ]
-                                    );
-                                    $connect[$dataName] .= '<input
-                                        type="hidden"
-                                        value="'. $values . '"
-                                        name="connect_' . $dataName . '">';
+                if (isset($query)) {
+                    foreach ($query as $name => $values) {
+                        if ( ! is_array($values)) {        //connect
+                            if (strpos($name, 'connect_') === 0) {
+                                $dataName = preg_replace('/_/', '.', str_replace('connect_', '', $name), 1);
+                                if (substr($values, 0, 1)  == '&' || $values == ''){
+                                    $img = 'and.png';
+                                    $title = '*' . __('and') . '* ' . __('Click to change');
+                                } else {
+                                    $img = 'or.png';
+                                    $title = '*' . __('or') . '* ' . __('Click to change');
                                 }
-                            } else {
-                                foreach ($values as $vi => $value) {
-                                    if (strpos($name, 'condition_') === 0) {
-                                        if ($vi == 0) {
-                                            $dataName = preg_replace('/_/', '.', str_replace('condition_', '', $name), 1);
-                                            $imgPlus[$dataName] = $this->Html->image(
-                                                'plus.png',
-                                                [
-                                                    'class' => 'fl',
-                                                    'data-name' => $dataName
-                                                ]
-                                            );
-                                            $label[$dataName] = '<label id="l' .
-                                                preg_replace('/./', '_', $dataName, 1) . '" for="' . $dataName . '">';
-                                            $fName = str_replace('Contacts.', '', $dataName);
-                                            $label[$dataName] .= $filterFields[$fName];
-                                            $label[$dataName] .= '</label>';
+                                $connect[$dataName] = $this->Html->image(
+                                    $img,
+                                    [
+                                        'class' => 'fl',
+                                        'title' => $title
+                                    ]
+                                );
+                                $connect[$dataName] .= '<input
+                                    type="hidden"
+                                    value="'. $values . '"
+                                    name="connect_' . $dataName . '">';
+                            }
+                        } else {
+                            foreach ($values as $vi => $value) {
+                                if (strpos($name, 'condition_') === 0) {
+                                    if ($vi == 0) {
+                                        $dataName = preg_replace('/_/', '.', str_replace('condition_', '', $name), 1);
+                                        $imgPlus[$dataName] = $this->Html->image(
+                                            'plus.png',
+                                            [
+                                                'class' => 'fl',
+                                                'data-name' => $dataName
+                                            ]
+                                        );
+                                        $label[$dataName] = '<label id="l' .
+                                            preg_replace('/./', '_', $dataName, 1) . '" for="' . $dataName . '">';
+                                        $fName = str_replace('Contacts.', '', $dataName);
+                                        $label[$dataName] .= $filterFields[$fName];
+                                        $label[$dataName] .= '</label>';
 
-                                            $selects[$dataName][] = $this->Form->select(
-                                                $name . '[]',
-                                                [
-                                                    '&%' => __('contains'),
-                                                    '&=' => '=',
-                                                    '&!' => __('not'),
-                                                    '&<' => '<',
-                                                    '&>' => '>'
+                                        $selects[$dataName][] = $this->Form->select(
+                                            $name . '[]',
+                                            [
+                                                '&%' => __('contains'),
+                                                '&=' => '=',
+                                                '&!' => __('not'),
+                                                '&<' => '<',
+                                                '&>' => '>'
+                                            ],
+                                            ['value' => $value]
+                                        );
+                                    } else {
+                                        $selects[$dataName][] = $this->Form->select(
+                                            $name . '[]',
+                                            [
+                                                '---' . __('and') . '---' => [
+                                                    '&%' => __('and') . ' ' . __('contains'),
+                                                    '&=' => __('and') . ' ' . '=',
+                                                    '&!' => __('and') . ' ' . __('not'),
+                                                    '&<' => __('and') . ' ' . '<',
+                                                    '&>' => __('and') . ' ' . '>'
+                                                ],
+                                                '---' . __('or') . '---' => [
+                                                    '|%' => __('or') . ' ' . __('contains'),
+                                                    '|=' => __('or') . ' ' . '=',
+                                                    '|!' => __('or') . ' ' . __('not'),
+                                                    '|<' => __('or') . ' ' . '<',
+                                                    '|>' => __('or') . ' ' . '>']
                                                 ],
                                                 ['value' => $value]
-                                            );
-                                        } else {
-                                            $selects[$dataName][] = $this->Form->select(
-                                                $name . '[]',
-                                                [
-                                                    '---' . __('and') . '---' => [
-                                                        '&%' => __('and') . ' ' . __('contains'),
-                                                        '&=' => __('and') . ' ' . '=',
-                                                        '&!' => __('and') . ' ' . __('not'),
-                                                        '&<' => __('and') . ' ' . '<',
-                                                        '&>' => __('and') . ' ' . '>'
-                                                    ],
-                                                    '---' . __('or') . '---' => [
-                                                        '|%' => __('or') . ' ' . __('contains'),
-                                                        '|=' => __('or') . ' ' . '=',
-                                                        '|!' => __('or') . ' ' . __('not'),
-                                                        '|<' => __('or') . ' ' . '<',
-                                                        '|>' => __('or') . ' ' . '>']
-                                                    ],
-                                                    ['value' => $value]
-                                            );
-                                        }
-                                    } elseif (strpos($name, 'field_') === 0) {
-                                        $inputs[$dataName][] = '<input
-                                            type="text"
-                                            name="field_' . $dataName . '[]"
-                                            value="' . $value . '">';
+                                        );
                                     }
+                                } elseif (strpos($name, 'field_') === 0) {
+                                    $inputs[$dataName][] = '<input
+                                        type="text"
+                                        name="field_' . $dataName . '[]"
+                                        value="' . $value . '">';
                                 }
-                            }
-                        }
-
-                        if (isset($imgPlus)) {
-                            foreach($imgPlus as $dataName => $x) {
-                                print '<div data-name="' . $dataName . '">';
-                                    if (isset($connect[$dataName])) {
-                                        print $connect[$dataName];
-                                    }
-                                    print $imgPlus[$dataName];
-                                    print $label[$dataName];
-                                    foreach ($selects[$dataName] as $i => $select) {
-                                        print $select;
-                                        print $inputs[$dataName][$i];
-                                    }
-                                print '</div>';
                             }
                         }
                     }
-                print '</div>';
+
+                    if (isset($imgPlus)) {
+                        foreach($imgPlus as $dataName => $x) {
+                            print '<div data-name="' . $dataName . '">';
+                                if (isset($connect[$dataName])) {
+                                    print $connect[$dataName];
+                                }
+                                print $imgPlus[$dataName];
+                                print $label[$dataName];
+                                foreach ($selects[$dataName] as $i => $select) {
+                                    print $select;
+                                    print $inputs[$dataName][$i];
+                                }
+                            print '</div>';
+                        }
+                    }
+                }
+            print '</div>';
+            print '<div class="cl">';
+            print $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'radius']);
+            print '&nbsp;';
+            print $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'radius']);
+            print '</div>';
+
             print '</div>';
 
             print $this->Form->end();

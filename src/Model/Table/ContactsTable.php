@@ -641,8 +641,8 @@ The following state will be cleared:
         $accessible = $owned
             ->union($accessibleViaGroups)
             ->union($accessibleViaUsergroups);
-        $accessibleCount = $accessible->count();
 
+        $accessibleCount = $accessible->count();
         $accessible->counter(function ($query) use ($accessibleCount) {
             return $accessibleCount;
         });
@@ -659,7 +659,7 @@ The following state will be cleared:
             }
         }
 
-        $limit = 25;
+        $limit = 20;
         if (isset($options['_limit'])) {
             if ($options['_limit'] !== false) {
                 $limit = $options['_limit'];

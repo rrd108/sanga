@@ -226,18 +226,31 @@ class ContactsController extends AppController
             if ($this->request->params['_ext'] == 'csv') {
                 $limit = false;
             } else {
-                $limit = 25;
+                $limit = 20;
             }
-            $query = $this->Contacts->find(
-                    'accessibleBy',
-                    [
+
+            if (in_array('Contacts.contactname', $select)) {
+                $order['Contacts.contactname'] = 'ASC';
+            } else if (in_array('Contacts.legalname', $select)) {
+                $order['Contacts.legalname'] = 'ASC';
+            } else {
+                $order = null;
+            }
+
+            $this->paginate = [
+                'finder' => [
+                    'accessibleBy' => [
                         'User.id' => $this->Auth->user('id'),
                         '_where' => $where,
                         '_contain' => $contain,
                         '_select' => $select,
+                        '_order' => $order,
+                        '_page' => isset($this->request->query['page']) ? $this->request->query['page'] : 1,
                         '_limit' => $limit
                     ]
-                );
+                ]
+            ];
+            $this->set('contacts', $this->paginate());
 
             /*if ($this->request->data['group_id']){
                     $result->matching('Groups', function($q){
@@ -267,8 +280,6 @@ class ContactsController extends AppController
                 $_serialize = 'csvData';
                 $_header = /*$_extract = */$selectCsv;
                 $this->set(compact('csvData', '_serialize', '_header'/*, '_extract'*/));
-            } else {
-                $this->set('contacts', $this->paginate($query));
             }
         }
 
