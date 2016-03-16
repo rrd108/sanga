@@ -38,7 +38,14 @@ class UsersController extends AppController
 
     public function index()
     {
-        $this->set('users', $this->paginate($this->Users->find()->contain('Contacts')));
+        $this->set(
+            'users',
+            $this->paginate(
+                $this->Users->find()
+                    ->contain('Contacts')
+                    ->order(['Users.name'])
+            )
+        );
     }
 
     public function search()
