@@ -45,9 +45,9 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
             <h1>
                 <?php
                 print __('Queries');
-                if (isset($query['qName'])) {
-                    print ' / ' . $query['qName'];
-                    unset($query['qName']);
+                if (isset($queryArray['qName'])) {
+                    print ' / ' . $queryArray['qName'];
+                    unset($queryArray['qName']);
                     print $this->Html->image(
                         'remove.png',
                         [
@@ -89,7 +89,8 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                         'Contactsources.name' => __('Contactsource'),
                         'comment' => __('Comment'),
                         'created' => __('Created'),
-                        'modified' => __('Modified')
+                        'modified' => __('Modified'),
+                        'Groups.name' => __('Groups')
                         ];
                     foreach ($filterFields as $field => $fLabel) {
                         if ( ! empty($selected) && in_array($field, $selected)) {
@@ -112,8 +113,8 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                 print '<h2>' . __('Where') . '</h2>';
                 print '<div id="where">';
 
-                if (isset($query)) {
-                    foreach ($query as $name => $values) {
+                if (isset($queryArray)) {
+                    foreach ($queryArray as $name => $values) {
                         if ( ! is_array($values)) {        //connect
                             if (strpos($name, 'connect_') === 0) {
                                 $dataName = preg_replace('/_/', '.', str_replace('connect_', '', $name), 1);

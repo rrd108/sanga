@@ -129,7 +129,7 @@ class ContactsController extends AppController
         }
 
         if (isset($queryArray)) {
-            $this->set('query', $queryArray);
+            $this->set('queryArray', $queryArray);
             $matching = $contain = $conditions = $select = $selected = [];
             // TODO $matching kezelés mentettek esetében
             foreach ($queryArray as $keyName => $values) {
