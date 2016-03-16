@@ -593,23 +593,8 @@ class ContactsTable extends Table
      */
     public function findAccessibleBy(Query $query, array $options)
     {
+        //debug($options);die();
         //as $query is a reference it's value will change after every find, but we need the original one
-/*
-cleanCopy( )
-
-Creates a copy of this current query, triggers beforeFind and resets some state.
-
-The following state will be cleared:
-
-    autoFields
-    limit
-    offset
-    map/reduce functions
-    result formatters
-    order
-    containments
-
-*/
         $queryTemp1 = $query->cleanCopy();
         $queryTemp2 = $query->cleanCopy();
         $queryTemp3 = $query->cleanCopy();
@@ -626,17 +611,46 @@ The following state will be cleared:
             ->select($select);
 
         if (isset($options['_where'])) {
-            $where = $owned->newExpr()->add($options['_where']);
+            $where = $this->buildWhere($options['_where']);
+            $where = $owned->newExpr()->add($where);
             $owned->where($where);
             $accessibleViaGroups->where($where);
             $accessibleViaUsergroups->where($where);
         }
 
-        if (isset($options['_contain']) && $options['_contain']) {
-            $owned->contain($options['_contain']);
-            $accessibleViaGroups->contain($options['_contain']);
-            $accessibleViaUsergroups->contain($options['_contain']);
+        //belongsTo association are handled automatically on contain
+        //but belongsToMany should switched to innerjoinwith or matching
+        //on belongsToMany $ass->type() is manyToMany
+        $contain = $belongsToMany = $associations = [];
+        foreach ($this->associations() as $association) {
+            $associations[$association->name()] = $association->type();
         }
+        foreach ($options['_contain'] as $c) {
+            if ($associations[$c] == 'manyToMany') {
+                //this is a belongsToMany association
+                $belongsToMany[] = $c;
+            } else {
+                $contain[] = $c;
+            }
+        }
+        if ($contain) {
+            $owned->contain($contain);
+            $accessibleViaGroups->contain($contain);
+            $accessibleViaUsergroups->contain($contain);
+        }
+        /*debug($options);
+        debug($belongsToMany);
+        //die();
+        if ($belongsToMany) {
+            foreach ($belongsToMany as $btm) {
+                $owned->innerJoinWith(
+                    $btm,
+                    function ($q) use ($options) {
+                        return $q->where($options['_where']);
+                    }
+                );
+            }
+        }*/
 
         $accessible = $owned
             ->union($accessibleViaGroups)
@@ -946,5 +960,121 @@ The following state will be cleared:
         $access['usergroupMembers'] = $usergroupMemberships;
 
         return $access;
+    }
+
+    /**
+     * Transform the array created by searcquery form into a useable where query
+     *
+     * @param $conditions it is something like this
+     *      [
+     *          'Contacts.contactname' => [
+     *              'condition' => ['&%'],
+     *              'value' => ['a']
+     *          ],
+     *          'Contacts.legalname' => [
+     *              'connect' => '&',
+     *              'condition' => ['&%'],
+     *              'value' => ['']
+     *          ],
+     *          'Zips.name' => [
+     *              'connect' => '&',
+     *              'condition' => ['&%'],
+     *              'value' => ['b']
+     *          ]
+     *      ]
+     *
+     * @return string
+     */
+    private function buildWhere($conditions)
+    {
+        $conditionCount = 0;
+        //count how many conditions we have
+        foreach ($conditions as $field => $conditionAndValue) {
+            if (isset($conditionAndValue['value'])) {
+                foreach ($conditionAndValue['value'] as $i => $value) {
+                    if ($value == '') {
+                        unset($conditions[$field]['condition'][$i]);
+                        unset($conditions[$field]['value'][$i]);
+                    } else {
+                        $conditionCount++;
+                    }
+                }
+            }
+        }
+
+        if (!$conditionCount) {
+            return '';
+        } else {
+            $where = '';
+            $bracketOpened = false;
+            foreach ($conditions as $field => $conditionAndValue) {
+                if (!empty($conditionAndValue['value'])) {
+                    if (!isset($conditionAndValue['connect'])) {    //this is the first line of the conditions
+                        $where .= '( ';
+                        $bracketOpened = true;
+                    } elseif ($conditionAndValue['connect'] == '&' && strlen($where)) {
+                        $where .= ' AND ( ';
+                        $bracketOpened = true;
+                    } elseif ($conditionAndValue['connect'] == '|' && strlen($where)) {
+                        $where .= ' OR ( ';
+                        $bracketOpened = true;
+                    }
+
+                    $conditionCount = count($conditionAndValue['condition']) - 1;
+                    foreach ($conditionAndValue['condition'] as $i => $condition) {
+                        if ($i > 0) {
+                            if ($condition[0] == '&') {
+                                $where .= ' AND ';
+                            } else {
+                                $where .= ' OR ';
+                            }
+                        }
+                        $where .= $this->translateCode2Array($condition[1], $field, $conditionAndValue['value'][$i]);
+                        if ($i == $conditionCount && $bracketOpened) {
+                            $where .= ')';
+                        }
+                    }
+                }
+            }
+            return $where;
+        }
+    }
+
+    /**
+     * Translate
+     *      '=', 'contactname', 'Gábor'
+     *     to
+     *      'contactname = "Gábor"' for SQL
+     *
+     * @param $conditionCode
+     * @param $field
+     * @param $value
+     * @return string
+     */
+    private function translateCode2Array($conditionCode, $field, $value)
+    {
+        switch ($conditionCode) {
+            case "%":
+                $key = $field . ' LIKE ';
+                $val = '"%' . $value . '%"';
+                break;
+            case "=":
+                $key = $field . ' = ';
+                $val = is_string($value) ? '"' . $value . '"' : $value;
+                break;
+            case "!":
+                $key = $field . ' != ';
+                $val = $val = is_string($value) ? '"' . $value . '"' : $value;
+                break;
+            case "<":
+                $key = $field . ' < ';
+                $val = $val = is_string($value) ? '"' . $value . '"' : $value;
+                break;
+            case ">":
+                $key = $field . ' > ';
+                $val = $val = is_string($value) ? '"' . $value . '"' : $value;
+                break;
+        }
+        return $key . $val;
     }
 }

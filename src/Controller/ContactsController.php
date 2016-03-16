@@ -162,21 +162,6 @@ class ContactsController extends AppController
                     $conditions[$field]['connect'] = $values;
                 }
             }
-            //as we do not know in which order will the above array keys will come
-            //we an not heck and remove empty conditions
-            $conditionCount = 0;
-            foreach ($conditions as $field => $conval) {
-                if (isset($conval['value'])) {
-                    foreach ($conval['value'] as $i => $value) {
-                        if ($value == '') {
-                            unset($conditions[$field]['condition'][$i]);
-                            unset($conditions[$field]['value'][$i]);
-                        } else {
-                            $conditionCount++;
-                        }
-                    }
-                }
-            }
             $selectCsv = $select;
             array_unshift($select, 'Contacts.sex');
             array_unshift($select, 'Contacts.id');
@@ -186,44 +171,6 @@ class ContactsController extends AppController
             debug($selected);
             debug($conditions);
             debug($contain);die();*/
-
-            $where = '';
-            if ($conditionCount > 0) {
-                $bracketOpened = false;
-                foreach ($conditions as $field => $conval) {
-                    if (! empty($conval['value'])) {
-                        if (! isset($conval['connect'])) {    //this is the first line of the conditions
-                            $where .= '( ';
-                            $bracketOpened = true;
-                        } elseif ($conval['connect'] == '&' && strlen($where)) {
-                            $where .= ' AND ( ';
-                            $bracketOpened = true;
-                        } elseif ($conval['connect'] == '|' && strlen($where)) {
-                            $where .= ' OR ( ';
-                            $bracketOpened = true;
-                        }
-
-                        $conditionCount = count($conval['condition']) - 1;
-                        foreach ($conval['condition'] as $i => $condition) {
-                            if ($i > 0) {
-                                if ($condition[0] == '&') {
-                                    $where .= ' AND ';
-                                } else {
-                                    $where .= ' OR ';
-                                }
-                            }
-                            $where .= $this->translateCode2Array($condition[1], $field, $conval['value'][$i]);
-                            if ($i == $conditionCount && $bracketOpened) {
-                                $where .= ')';
-                            }
-                        }
-                    }
-                }
-                //debug($where);die();
-                //$expr = $query->newExpr()->add($where);
-                //$query->where($expr);
-
-            }
 
             if ($this->request->params['_ext'] == 'csv') {
                 $limit = false;
@@ -286,33 +233,6 @@ class ContactsController extends AppController
 
         $savedQueries = $this->Contacts->Users->Settings->getSavedQueries($this->Auth->user('id'));
         $this->set('savedQueries', $savedQueries);
-    }
-
-    private function translateCode2Array($conditionCode, $field, $value)
-    {
-        switch ($conditionCode) {
-            case "%":
-                $key = $field . ' LIKE ';
-                $val = '"%' . $value . '%"';
-                break;
-            case "=":
-                $key = $field . ' = ';
-                $val = is_string($value) ? '"' . $value . '"' : $value;
-                break;
-            case "!":
-                $key = $field . ' != ';
-                $val = $val = is_string($value) ? '"' . $value . '"' : $value;
-                break;
-            case "<":
-                $key = $field . ' < ';
-                $val = $val = is_string($value) ? '"' . $value . '"' : $value;
-                break;
-            case ">":
-                $key = $field . ' > ';
-                $val = $val = is_string($value) ? '"' . $value . '"' : $value;
-                break;
-        }
-        return $key . $val;
     }
 
     /*
