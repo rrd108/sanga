@@ -357,6 +357,120 @@ class ContactsTableTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    public function testTranslateCode2Array()
+    {
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('translateCode2Array');
+        $method->setAccessible(true);
+
+        $actual = $method->invoke($this->Contacts, '%', 'contactname', 'Gábor');
+        $expected = 'contactname LIKE "%Gábor%"';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke($this->Contacts, '=', 'contactname', 'Gábor');
+        $expected = 'contactname = "Gábor"';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke($this->Contacts, '=', 'length', 5);
+        $expected = 'length = 5';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke($this->Contacts, '!', 'contactname', 'Gábor');
+        $expected = 'contactname != "Gábor"';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke($this->Contacts, '!', 'length', 5);
+        $expected = 'length != 5';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke($this->Contacts, '<', 'contactname', 'Zz');
+        $expected = 'contactname < "Zz"';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke($this->Contacts, '<', 'length', 5);
+        $expected = 'length < 5';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke($this->Contacts, '>', 'contactname', 'Zz');
+        $expected = 'contactname > "Zz"';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke($this->Contacts, '>', 'length', 5);
+        $expected = 'length > 5';
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testBuildWhere()
+    {
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('buildWhere');
+        $method->setAccessible(true);
+
+        $actual = $method->invoke(
+            $this->Contacts,
+            [
+                'Contacts.contactname' => [
+                    'condition' => ['&%'],
+                    'value' => ['a']
+                ],
+                'Zips.name' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['Balaton']
+                ]
+            ]
+        );
+        $expected = '( Contacts.contactname LIKE "%a%") AND ( Zips.name LIKE "%Balaton%")';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke(
+            $this->Contacts,
+            [
+                'Contacts.contactname' => [
+                    'condition' => ['&%'],
+                    'value' => ['']
+                ],
+                'Contacts.legalname' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['']
+                ],
+                'Contacts.email' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['@']
+                ]
+            ]
+
+        );
+        $expected = 'Contacts.email LIKE "%@%"';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke(
+            $this->Contacts,
+            [
+                'Contacts.contactname' => [
+                    'condition' => ['&%', '|%'],
+                    'value' => ['a', 'b']
+                ],
+                'Contacts.legalname' => [
+                    'connect' => '|',
+                    'condition' => ['&%', '&%'],
+                    'value' => ['c', 'd']
+                ],
+                'Zips.name' => [
+                    'connect' => '&',
+                    'condition' => ['&!'],
+                    'value' => ['kecskemét']
+                ]
+            ]
+        );
+        $expected = '( Contacts.contactname LIKE "%a%" OR Contacts.contactname LIKE "%b%") OR ' .
+            '( Contacts.legalname LIKE "%c%" AND Contacts.legalname LIKE "%d%") AND ' .
+            '( Zips.name != "kecskemét")';
+        $this->assertEquals($expected, $actual);
+    }
+
     private function filterHasAccess($actual)
     {
         foreach ($actual as $type => $a) {
