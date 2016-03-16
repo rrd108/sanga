@@ -134,7 +134,9 @@ class ContactsController extends AppController
                 $remove = [];
                 if (strpos($keyName, 'field_') === 0) {
                     $field = str_replace('field_', '', $keyName);
-                    $field = str_replace('_', '.', $field);
+                    //$filed is Contacts_contactname or Contacts_workplace_address
+                    //we should change the first underscore to a dot
+                    $field = preg_replace('/_/', '.', $field, 1);
                     $select[] = $field;
                     if (strpos($field, 'Contacts.') === 0) {
                         $selected[] = substr(strstr($field, '.'), 1);
@@ -158,7 +160,6 @@ class ContactsController extends AppController
                     $conditions[$field]['connect'] = $values;
                 }
             }
-
             //as we do not know in which order will the above array keys will come
             //we an not heck and remove empty conditions
             $conditionCount = 0;

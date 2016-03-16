@@ -110,11 +110,18 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 
                 print '<div class="cl small">';
                     print '<h2>' . __('Where') . '</h2>';
+                    print '<div id="where">';
+                    print '<div>';
+                    print $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'radius']);
+                    print '&nbsp;';
+                    print $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'radius']);
+                    print '</div>';
+
                     if (isset($query)) {
                         foreach ($query as $name => $values) {
                             if ( ! is_array($values)) {        //connect
                                 if (strpos($name, 'connect_') === 0) {
-                                    $dataName = str_replace('_', '.', str_replace('connect_', '', $name));
+                                    $dataName = preg_replace('/_/', '.', str_replace('connect_', '', $name), 1);
                                     if (substr($values, 0, 1)  == '&' || $values == ''){
                                         $img = 'and.png';
                                         $title = '*' . __('and') . '* ' . __('Click to change');
@@ -138,7 +145,7 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                                 foreach ($values as $vi => $value) {
                                     if (strpos($name, 'condition_') === 0) {
                                         if ($vi == 0) {
-                                            $dataName = str_replace('_', '.', str_replace('condition_', '', $name));
+                                            $dataName = preg_replace('/_/', '.', str_replace('condition_', '', $name), 1);
                                             $imgPlus[$dataName] = $this->Html->image(
                                                 'plus.png',
                                                 [
@@ -147,7 +154,7 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                                                 ]
                                             );
                                             $label[$dataName] = '<label id="l' .
-                                                str_replace('.', '_', $dataName) . '" for="' . $dataName . '">';
+                                                preg_replace('/./', '_', $dataName, 1) . '" for="' . $dataName . '">';
                                             $fName = str_replace('Contacts.', '', $dataName);
                                             $label[$dataName] .= $filterFields[$fName];
                                             $label[$dataName] .= '</label>';
@@ -210,11 +217,7 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                             }
                         }
                     }
-                print $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'radius']);
-                print '&nbsp;';
-                print $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'radius']);
-
-                print '<div id="where"></div>';
+                print '</div>';
             print '</div>';
 
             print $this->Form->end();
