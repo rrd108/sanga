@@ -242,13 +242,15 @@ echo $this->element('ajax-images');
                             ?>
                         </span>
                         <?php
-                        echo $this->Form->input('birth',
-                                                ['templates' => ['inputContainer' => '{{content}}'],
-                                                'type' => 'text',
-                                                'class' => 'editbox',
-                                                'label' => false,
-                                                'value' => $contact->birth ? h($contact->birth->format('Y-m-d')) : null
-                                                ]);
+                        echo $this->Form->input(
+                            'birth',
+                            [
+                                'templates' => ['inputContainer' => '{{content}}'],
+                                'type' => 'text',
+                                'class' => 'editbox',
+                                'label' => false,
+                                'value' => $contact->birth ? h($contact->birth->format('Y-m-d')) : null
+                            ]);
                         ?>
                     </p>
                 </div></div>
