@@ -237,7 +237,7 @@ echo $this->element('ajax-images');
                         <span class="dta">
                             <?php
                             if($contact->birth){
-                                echo h($contact->birth->format('Y-m-d'));
+                                echo h($contact->birth);
                             }
                             ?>
                         </span>
@@ -249,7 +249,7 @@ echo $this->element('ajax-images');
                                 'type' => 'text',
                                 'class' => 'editbox',
                                 'label' => false,
-                                'value' => $contact->birth ? h($contact->birth->format('Y-m-d')) : null
+                                'value' => $contact->birth ? h($contact->birth) : null
                             ]);
                         ?>
                     </p>
@@ -651,7 +651,7 @@ echo $this->element('ajax-images');
                             <?php foreach ($histories as $history): ?>
                             <tr>
                                 <td></td>
-                                <td><?php echo $history->date->format('Y-m-d'); ?></td>
+                                <td><?php echo $history->date; ?></td>
                                 <td>
                                     <?php
                                     if(isset($history->user->name)){
@@ -722,7 +722,7 @@ echo $this->element('ajax-images');
                 foreach ($finances as $history):
                 ?>
                 <tr>
-                    <td><?php echo $history->date->format('Y-m-d'); ?></td>
+                    <td><?php echo $history->date; ?></td>
                     <td>
                         <?php
                         if(isset($history->user->name)){

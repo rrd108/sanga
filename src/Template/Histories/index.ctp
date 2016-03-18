@@ -110,7 +110,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                                     : '';
                             ?>
                         </td>
-                        <td><?= $history->date->format('Y-m-d') ?></td>
+                        <td><?= $history->date ?></td>
                         <td>
                             <?= $history->has('user') ? $history->user->name : '' ?>
                         </td>

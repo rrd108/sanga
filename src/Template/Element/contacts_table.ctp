@@ -66,7 +66,7 @@
                         echo $contact->has('workplace_zip') ? $contact->workplace_zip->name : '' ;
                         break;
                     case 'birth' :
-                        echo isset($contact->birth) ? h($contact->birth->format('Y-m-d')) : '';
+                        echo isset($contact->birth) ? h($contact->birth) : '';
                         break;
                     case 'contactsource_id' :
                         echo $contact->has('contactsource') ? '<span class="tag tag-shared">' . $contact->contactsource->name . '</span>' : '' ;
