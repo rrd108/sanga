@@ -198,12 +198,6 @@ class ContactsController extends AppController
 
             $this->set('contacts', $this->paginate());
 
-            /*if ($this->request->data['group_id']){
-                    $result->matching('Groups', function($q){
-                        return $q->where(['Groups.id' => $this->request->data['group_id']]);
-                        });
-            }*/
-
             if ($this->request->params['_ext'] == 'csv') {
                 $i = 0;
 
@@ -373,9 +367,10 @@ class ContactsController extends AppController
         $contact = $this->Contacts->get(
             $id,
             [
-            'contain' => ['WorkplaceZips', 'Zips', 'Contactsources', 'Groups',
-                          'Skills', 'Users', 'Histories', 'Documents'
-                          ]
+                'contain' => [
+                    'WorkplaceZips', 'Zips', 'Contactsources', 'Groups',
+                    'Skills', 'Users', 'Histories', 'Documents'
+                ]
             ]
         );
 
@@ -395,8 +390,10 @@ class ContactsController extends AppController
         $setting = $this->Contacts->Users->Settings
             ->find()
             ->where(
-                ['user_id' => $this->Auth->user('id'),
-                         'name' => 'Contacts/view/history/system']
+                [
+                    'user_id' => $this->Auth->user('id'),
+                    'name' => 'Contacts/view/history/system'
+                ]
             )
             ->first();
         //debug($setting);die();        //'value' => 'a:1:{i:0;s:21:"Contacts.systemevents";}'    //'value' => 'a:0:{}'

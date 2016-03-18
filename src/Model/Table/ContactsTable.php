@@ -610,56 +610,61 @@ class ContactsTable extends Table
         $accessibleViaUsergroups = $this->findAccessibleViaUsergroupBy($queryTemp3, $options)
             ->select($select);
 
+        debug($options);
+
         if (isset($options['_where'])) {
-            $where = $this->buildWhere($options['_where']);
-            $where = $owned->newExpr()->add($where);
+            $where = $this->buildWhere($options, ['Contacts']);
             $owned->where($where);
             $accessibleViaGroups->where($where);
             $accessibleViaUsergroups->where($where);
         }
+        debug($owned->sql());
 
-        //belongsTo association are handled automatically on contain
-        //but belongsToMany should switched to innerjoinwith or matching
-        //on belongsToMany $ass->type() is manyToMany
-        $contain = $belongsToMany = $associations = [];
-        foreach ($this->associations() as $association) {
-            $associations[$association->name()] = $association->type();
-        }
-        foreach ($options['_contain'] as $c) {
-            if ($associations[$c] == 'manyToMany') {
-                //this is a belongsToMany association
-                $belongsToMany[] = $c;
-            } else {
-                $contain[] = $c;
-            }
-        }
+        list($contain, $belongsToMany) = $this->getArraysForQuery($options);
+
         if ($contain) {
-            $owned->contain($contain);
             $accessibleViaGroups->contain($contain);
             $accessibleViaUsergroups->contain($contain);
         }
-        /*debug($options);
-        debug($belongsToMany);
-        //die();
+        debug($owned->sql());
         if ($belongsToMany) {
-            foreach ($belongsToMany as $btm) {
+            //debug($belongsToMany);
+            foreach ($belongsToMany as $tableName) {
+                $where = $this->buildWhere($options, [$tableName]);
                 $owned->innerJoinWith(
-                    $btm,
-                    function ($q) use ($options) {
-                        return $q->where($options['_where']);
+                    $tableName,
+                    function ($q) use ($where) {
+                        return $q->where($where);
+                    }
+                );
+                $accessibleViaGroups->innerJoinWith(
+                    $tableName,
+                    function ($q) use ($where) {
+                        return $q->where($where);
+                    }
+                );
+                $accessibleViaUsergroups->innerJoinWith(
+                    $tableName,
+                    function ($q) use ($where) {
+                        return $q->where($where);
                     }
                 );
             }
-        }*/
+        }
+        debug($owned->sql());
 
         $accessible = $owned
             ->union($accessibleViaGroups)
             ->union($accessibleViaUsergroups);
 
+        debug($accessible->sql());
+
+        //Groups.name is not in filed list
         $accessibleCount = $accessible->count();
         $accessible->counter(function ($query) use ($accessibleCount) {
             return $accessibleCount;
         });
+
 
         //we should add the order by and pagination to the end - after the union. For this we  have to use epilog
         //http://stackoverflow.com/questions/29379579/how-do-you-modify-a-union-query-in-cakephp-3/29386189#29386189
@@ -688,6 +693,7 @@ class ContactsTable extends Table
         }
 
         $accessible->epilog($order . $limit);
+        debug($accessible->sql());
         return $accessible;
     }
 
@@ -963,9 +969,10 @@ class ContactsTable extends Table
     }
 
     /**
-     * Transform the array created by searcquery form into a useable where query
+     * Transform the array created by searcquery form
+     * into a query object for where() calls
      *
-     * @param $conditions it is something like this
+     * @param $options : it is something like this
      *      [
      *          'Contacts.contactname' => [
      *              'condition' => ['&%'],
@@ -982,61 +989,16 @@ class ContactsTable extends Table
      *              'value' => ['b']
      *          ]
      *      ]
-     *
+     * @param $tableNames : we build the where for this model
      * @return string
      */
-    private function buildWhere($conditions)
+    private function buildWhere($options, $tableNames)
     {
-        $conditionCount = 0;
-        //count how many conditions we have
-        foreach ($conditions as $field => $conditionAndValue) {
-            if (isset($conditionAndValue['value'])) {
-                foreach ($conditionAndValue['value'] as $i => $value) {
-                    if ($value == '') {
-                        unset($conditions[$field]['condition'][$i]);
-                        unset($conditions[$field]['value'][$i]);
-                    } else {
-                        $conditionCount++;
-                    }
-                }
-            }
-        }
-
-        if (!$conditionCount) {
+        $conditions = $this->removeEmptyConditions($options['_where']);
+        if (!count($conditions)) {
             return '';
         } else {
-            $where = '';
-            $bracketOpened = false;
-            foreach ($conditions as $field => $conditionAndValue) {
-                if (!empty($conditionAndValue['value'])) {
-                    if (!isset($conditionAndValue['connect'])) {    //this is the first line of the conditions
-                        $where .= '( ';
-                        $bracketOpened = true;
-                    } elseif ($conditionAndValue['connect'] == '&' && strlen($where)) {
-                        $where .= ' AND ( ';
-                        $bracketOpened = true;
-                    } elseif ($conditionAndValue['connect'] == '|' && strlen($where)) {
-                        $where .= ' OR ( ';
-                        $bracketOpened = true;
-                    }
-
-                    $conditionCount = count($conditionAndValue['condition']) - 1;
-                    foreach ($conditionAndValue['condition'] as $i => $condition) {
-                        if ($i > 0) {
-                            if ($condition[0] == '&') {
-                                $where .= ' AND ';
-                            } else {
-                                $where .= ' OR ';
-                            }
-                        }
-                        $where .= $this->translateCode2Array($condition[1], $field, $conditionAndValue['value'][$i]);
-                        if ($i == $conditionCount && $bracketOpened) {
-                            $where .= ')';
-                        }
-                    }
-                }
-            }
-            return $where;
+            return $this->getWhereQueryExpressionObject($conditions, $tableNames);
         }
     }
 
@@ -1051,7 +1013,7 @@ class ContactsTable extends Table
      * @param $value
      * @return string
      */
-    private function translateCode2Array($conditionCode, $field, $value)
+    private function translateCode2SQL($conditionCode, $field, $value)
     {
         switch ($conditionCode) {
             case "%":
@@ -1076,5 +1038,147 @@ class ContactsTable extends Table
                 break;
         }
         return $key . $val;
+    }
+
+    /**
+     *
+     * Get $contain and $belongsToMany arrays
+     *
+     * belongsTo association are handled automatically on above contain
+     * but belongsToMany should switched to innerjoinwith or matching
+     *
+     * @param array $options
+     * @return array [$belongsToMany, $contain]
+     */
+    private function getArraysForQuery(array $options)
+    {
+        list($contain, $belongsToMany) = $this->getAssociationsArrays($options);
+
+        //$belongsToMany = $this->getWhereQueryExpressionObject($options['_where'], $belongsToMany);
+
+        //debug($contain);
+        //debug($belongsToMany);
+        return [$contain, $belongsToMany];
+    }
+
+    /**
+     * @param array $options
+     * @return array [$contain, $belongsToMany]
+     */
+    private function getAssociationsArrays(array $options)
+    {
+        $contain = $belongsToMany = $associations = [];
+        //on belongsToMany $association->type() is manyToMany
+        foreach ($this->associations() as $association) {
+            $associations[$association->name()] = $association->type();
+        }
+        foreach ($options['_where'] as $field => $data) {
+            $model = $this->getTableName($field);
+            if (isset($associations[$model])) {
+                if ($associations[$model] == 'manyToMany') {
+                    //this is a belongsToMany association
+                    $belongsToMany[] = $model;
+                } else {
+                    $contain[] = $model;
+                }
+            }
+        }
+
+        return [$contain, $belongsToMany];
+    }
+
+    /**
+     * @param $field
+     * @return string
+     */
+    private function getTableName($field)
+    {
+        return substr($field, 0, strpos($field, '.'));
+    }
+
+    /**
+     * From the $condtions array (created by searchquery form)
+     * we cretae an SQL string for WHERE and than transform it
+     * to a Query object
+     *
+     * @param array $conditions
+     * @param array $tableNames
+     * @return Query
+     */
+    private function getWhereQueryExpressionObject(array $conditions, array $tableNames)
+    {
+        // TODO security of values!
+
+        $where = '';
+        $bracketOpened = false;
+        foreach ($this->associations() as $association) {
+            $associations[$association->name()] = $association->type();
+        }
+        foreach ($conditions as $field => $data) {
+            $tableName = $this->getTableName($field);
+            if (in_array($tableName, $tableNames)
+                || (isset($associations[$tableName]) && $associations[$tableName] != 'manyToMany')) {
+                if (!empty($data['value'])) {
+                    if (!isset($data['connect'])) {    //this is the first line of the conditions
+                        $where .= '( ';
+                        $bracketOpened = true;
+                    } elseif ($data['connect'] == '&' && strlen($where)) {
+                        $where .= ' AND ( ';
+                        $bracketOpened = true;
+                    } elseif ($data['connect'] == '|' && strlen($where)) {
+                        $where .= ' OR ( ';
+                        $bracketOpened = true;
+                    }
+
+                    $conditionCount = count($data['condition']) - 1;
+                    foreach ($data['condition'] as $i => $condition) {
+                        if ($i > 0) {
+                            if ($condition[0] == '&') {
+                                $where .= ' AND ';
+                            } else {
+                                $where .= ' OR ';
+                            }
+                        }
+                        $where .= $this->translateCode2SQL($condition[1], $field, $data['value'][$i]);
+                        if ($i == $conditionCount && $bracketOpened) {
+                            $where .= ')';
+                        }
+                    }
+                }
+            }
+        }
+        $query = new Query($this->connection(), $this);
+        return $query->newExpr()->add($where);
+    }
+
+    /**
+     * Remove items where the value is empty
+     * these items generated by searchquery field, we selected them
+     * but there are no values for where, eg they are there
+     * in SELECT but they are not there in WHERE
+     *
+     * @param $conditions
+     * @return array
+     */
+    private function removeEmptyConditions($conditions)
+    {
+        foreach ($conditions as $field => $data) {
+            if (isset($data['value'])) {
+                foreach ($data['value'] as $i => $value) {
+                    if ($value == '') {
+                        unset($conditions[$field]['condition'][$i]);
+                        unset($conditions[$field]['value'][$i]);
+                    }
+                }
+            }
+        }
+        
+        foreach ($conditions as $field => $data) {
+            if (!$data['value']) {
+                unset($conditions[$field]);
+            }
+        }
+        
+        return $conditions;
     }
 }

@@ -357,10 +357,10 @@ class ContactsTableTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testTranslateCode2Array()
+    public function testTranslateCode2SQL()
     {
         $class = new \ReflectionClass($this->Contacts);
-        $method = $class->getMethod('translateCode2Array');
+        $method = $class->getMethod('translateCode2SQL');
         $method->setAccessible(true);
 
         $actual = $method->invoke($this->Contacts, '%', 'contactname', 'Gábor');
@@ -400,10 +400,10 @@ class ContactsTableTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testBuildWhere()
+    public function testRemoveEmptyConditions()
     {
         $class = new \ReflectionClass($this->Contacts);
-        $method = $class->getMethod('buildWhere');
+        $method = $class->getMethod('removeEmptyConditions');
         $method->setAccessible(true);
 
         $actual = $method->invoke(
@@ -411,65 +411,146 @@ class ContactsTableTest extends TestCase
             [
                 'Contacts.contactname' => [
                     'condition' => ['&%'],
-                    'value' => ['a']
+                    'value' => ['']
                 ],
                 'Zips.name' => [
                     'connect' => '&',
                     'condition' => ['&%'],
                     'value' => ['Balaton']
-                ]
-            ]
-        );
-        $expected = '( Contacts.contactname LIKE "%a%") AND ( Zips.name LIKE "%Balaton%")';
-        $this->assertEquals($expected, $actual);
-
-        $actual = $method->invoke(
-            $this->Contacts,
-            [
-                'Contacts.contactname' => [
-                    'condition' => ['&%'],
-                    'value' => ['']
                 ],
-                'Contacts.legalname' => [
+                'Groups.name' => [
                     'connect' => '&',
                     'condition' => ['&%'],
                     'value' => ['']
                 ],
-                'Contacts.email' => [
+                'Groups.shared' => [
                     'connect' => '&',
                     'condition' => ['&%'],
-                    'value' => ['@']
-                ]
-            ]
-
-        );
-        $expected = 'Contacts.email LIKE "%@%"';
-        $this->assertEquals($expected, $actual);
-
-        $actual = $method->invoke(
-            $this->Contacts,
-            [
-                'Contacts.contactname' => [
-                    'condition' => ['&%', '|%'],
-                    'value' => ['a', 'b']
-                ],
-                'Contacts.legalname' => [
-                    'connect' => '|',
-                    'condition' => ['&%', '&%'],
-                    'value' => ['c', 'd']
-                ],
-                'Zips.name' => [
-                    'connect' => '&',
-                    'condition' => ['&!'],
-                    'value' => ['kecskemét']
+                    'value' => [1]
                 ]
             ]
         );
-        $expected = '( Contacts.contactname LIKE "%a%" OR Contacts.contactname LIKE "%b%") OR ' .
-            '( Contacts.legalname LIKE "%c%" AND Contacts.legalname LIKE "%d%") AND ' .
-            '( Zips.name != "kecskemét")';
+        $expected = [
+            'Zips.name' => [
+                'connect' => '&',
+                'condition' => ['&%'],
+                'value' => ['Balaton']
+            ],
+            'Groups.shared' => [
+                'connect' => '&',
+                'condition' => ['&%'],
+                'value' => [1]
+            ]
+        ];
         $this->assertEquals($expected, $actual);
     }
+
+    public function testGetWhereQueryExpressionObject()
+    {
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('getWhereQueryExpressionObject');
+        $method->setAccessible(true);
+
+        $queryExpressionObject = $method->invoke(
+            $this->Contacts,
+            [
+                'Zips.name' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['Balaton']
+                ],
+                'Groups.shared' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => [1]
+                ]
+            ],
+            ['Contacts']
+        );
+        $generator = $this->Contacts->find()->valueBinder();
+        $actual = ($queryExpressionObject->sql($generator));
+        $expected = 'Zips.name LIKE "%Balaton%"';
+        $this->assertEquals($expected, $actual);
+    }
+
+    /*public function testGetArraysForQuery()
+    {
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('getArraysForQuery');
+        $method->setAccessible(true);
+
+        $actual = $method->invoke(
+            $this->Contacts,
+            [
+                '_contain' => ['Groups'],
+                '_where' => [
+                    'Contacts.contactname' => [
+                        'condition' => ['&%'],
+                        'value' => ['']
+                    ],
+                    'Groups.name' => [
+                        'connect' => '&',
+                        'condition' => ['&%'],
+                        'value' => ['']
+                    ],
+                    'Groups.shared' => [
+                        'connect' => '&',
+                        'condition' => ['&%'],
+                        'value' => [1]
+                    ]
+                ]
+            ]
+        );
+        $expected = [
+            [
+                ['Groups' => 'Groups.name'],
+                ['Groups' => ['Groups.shared' => 1]]
+            ],
+            []
+        ];
+        $this->assertEquals($expected, $actual);
+
+    }
+
+    public function testGetAssociationsArrays()
+    {
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('getAssociationsArrays');
+        $method->setAccessible(true);
+
+        $actual = $method->invoke(
+            $this->Contacts,
+            [
+                '_contain' => ['Groups', 'Zips'],
+                '_where' => [
+                    'Contacts.contactname' => [
+                        'condition' => ['&%'],
+                        'value' => ['']
+                    ],
+                    'Zips.name' => [
+                        'connect' => '&',
+                        'condition' => ['&%'],
+                        'value' => ['Balaton']
+                    ],
+                    'Groups.name' => [
+                        'connect' => '&',
+                        'condition' => ['&%'],
+                        'value' => ['']
+                    ],
+                    'Groups.shared' => [
+                        'connect' => '&',
+                        'condition' => ['&%'],
+                        'value' => [1]
+                    ]
+                ]
+            ]
+        );
+        $expected = [
+            ['Zips'],
+            ['Groups', 'Groups']
+        ];
+        $this->assertEquals($expected, $actual);
+    }*/
 
     private function filterHasAccess($actual)
     {
