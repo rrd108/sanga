@@ -419,9 +419,9 @@ class ContactsController extends AppController
         $finances = $this->Contacts->Histories->find()
             ->where(
                 [
-                         'contact_id' => $id,
-                         'unit_id' => 1        //TODO: HC id
-                         ]
+                    'contact_id' => $id,
+                    'unit_id' => 1        //TODO: HC id
+                ]
             )
             ->order(['Histories.date' => 'DESC', 'Histories.id' => 'DESC']);
         $this->set('finances', $this->paginate($finances));
