@@ -1,3 +1,19 @@
+<?php /**
+ * @param $group
+ * @param $userId
+ * @return string
+ */
+function setGroupCss($group, $userId)
+{
+    if ($group->shared) {
+        return 'viewable';
+    } elseif ($group->admin_user_id == $userId) {
+        return 'mine';
+    } else {
+        return 'shared';
+    }
+}
+?>
 <table cellpadding="0" cellspacing="0">
 <thead>
     <tr>
@@ -96,23 +112,20 @@
                         break;
                     case 'groups' :
                         if (isset($contact->groups)){
-                            foreach($contact->groups as $group){
-                                if($group->shared){
-                                    $css = 'viewable';
-                                }
-                                elseif($group->admin_user_id == $this->request->session()->read('Auth.User.id')){
-                                    $css = 'mine';
-                                }
-                                else{
-                                    $css = 'shared';
-                                }
+                            foreach ($contact->groups as $group){
+                                $css = setGroupCss($group, $this->request->session()->read('Auth.User.id'));
                                 print '<span class="tag tag-'.$css.'">' . $group->name . '</span>' . "\n";
                             }
                         }
                         break;
                     case 'Groups.name' :
                         if (isset($contact->_matchingData['Groups'])){
-                            print $contact->_matchingData['Groups']->name;
+                            foreach ($contact->groups as $group){
+                                if ($group->name == $contact->_matchingData['Groups']->name) {
+                                    $css = setGroupCss($group, $this->request->session()->read('Auth.User.id'));
+                                    print '<span class="tag tag-'.$css.'">' . $group->name . '</span>' . "\n";
+                                }
+                            }
                         }
                         break;
                     default :

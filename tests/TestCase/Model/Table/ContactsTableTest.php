@@ -247,7 +247,7 @@ class ContactsTableTest extends TestCase
             )
             ->extract('id')
             ->toArray();
-        $expected = [2, 4, 3, 5, 6, 1];
+        $expected = [2, 3, 4, 5, 1, 6];
         $this->assertEquals($expected, $actual);
 
         $actual = $this->Contacts
@@ -473,16 +473,16 @@ class ContactsTableTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testGetArraysForQuery()
+    public function testGetAssociationsArrays()
     {
         $class = new \ReflectionClass($this->Contacts);
-        $method = $class->getMethod('getArraysForQuery');
+        $method = $class->getMethod('getAssociationsArrays');
         $method->setAccessible(true);
 
         $actual = $method->invoke(
             $this->Contacts,
             [
-                '_contain' => ['Groups'],
+                '_contain' => ['Zips'],
                 '_where' => [
                     'Contacts.contactname' => [
                         'condition' => ['&%'],
@@ -502,11 +502,8 @@ class ContactsTableTest extends TestCase
             ]
         );
         $expected = [
-            [
-                ['Groups' => 'Groups.name'],
-                ['Groups' => ['Groups.shared' => 1]]
-            ],
-            []
+            ['Zips'],
+            ['Groups', 'Groups']
         ];
         $this->assertEquals($expected, $actual);
 

@@ -593,7 +593,6 @@ class ContactsTable extends Table
      */
     public function findAccessibleBy(Query $query, array $options)
     {
-        //debug($options);die();
         //as $query is a reference it's value will change after every find, but we need the original one
         $queryTemp1 = $query->cleanCopy();
         $queryTemp2 = $query->cleanCopy();
@@ -620,6 +619,7 @@ class ContactsTable extends Table
         list($contain, $belongsToMany) = $this->getAssociationsArrays($options);
 
         if ($contain) {
+            $owned->contain($contain);
             $accessibleViaGroups->contain($contain);
             $accessibleViaUsergroups->contain($contain);
         }
@@ -1046,17 +1046,18 @@ class ContactsTable extends Table
                 $associations[$association->name()] = $association->type();
             }
             foreach ($options['_where'] as $field => $data) {
-                $model = $this->getTableName($field);
-                if (isset($associations[$model])) {
-                    if ($associations[$model] == 'manyToMany') {
+                $tableName = $this->getTableName($field);
+                if (isset($associations[$tableName])) {
+                    if ($associations[$tableName] == 'manyToMany') {
                         //this is a belongsToMany association
-                        $belongsToMany[] = $model;
+                        $belongsToMany[] = $tableName;
                     } else {
-                        $contain[] = $model;
+                        $contain[] = $tableName;
                     }
                 }
             }
         }
+        $contain = array_merge($contain, $options['_contain']);
 
         return [$contain, $belongsToMany];
     }
