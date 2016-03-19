@@ -1,19 +1,22 @@
-<?php //debug($contacts->toArray()); ?>
 <table cellpadding="0" cellspacing="0">
 <thead>
     <tr>
         <th>
             <?php
             if ($settings) {
-                echo $this->Html->image('settings.png',
-                                    ['id' => 'settings',
-                                     'title' => _('Choose columns to display')]);
+                echo $this->Html->image(
+                    'settings.png',
+                    [
+                        'id' => 'settings',
+                        'title' => _('Choose columns to display')
+                    ]
+                );
             }
             ?>
         </th>
 
         <?php
-        foreach($fields as $field) {
+        foreach ($fields as $field) {
             echo '<th>';
                 if (in_array($field, ['contactname', 'legalname'])) {
                     echo $this->Paginator->sort(__($field));
@@ -38,9 +41,11 @@
             if ($contact->sex) {
                 $cs = $contact->sex;
             }
-            echo $this->Html->link($this->Html->image('contact'.$cs.'.png'),
-                                  ['action' => 'view', $contact->id],
-                                  ['escape' => false, 'title' => __('View')]);
+            echo $this->Html->link(
+                $this->Html->image('contact'.$cs.'.png'),
+                ['action' => 'view', $contact->id],
+                ['escape' => false, 'title' => __('View')]
+            );
             ?>
         </td>
         <?php
@@ -103,6 +108,11 @@
                                 }
                                 print '<span class="tag tag-'.$css.'">' . $group->name . '</span>' . "\n";
                             }
+                        }
+                        break;
+                    case 'Groups.name' :
+                        if (isset($contact->_matchingData['Groups'])){
+                            print $contact->_matchingData['Groups']->name;
                         }
                         break;
                     default :

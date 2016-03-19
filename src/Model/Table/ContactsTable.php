@@ -610,15 +610,12 @@ class ContactsTable extends Table
         $accessibleViaUsergroups = $this->findAccessibleViaUsergroupBy($queryTemp3, $options)
             ->select($select);
 
-        debug($options);
-
         if (isset($options['_where'])) {
             $where = $this->buildWhere($options, ['Contacts']);
             $owned->where($where);
             $accessibleViaGroups->where($where);
             $accessibleViaUsergroups->where($where);
         }
-        debug($owned->sql());
 
         list($contain, $belongsToMany) = $this->getArraysForQuery($options);
 
@@ -626,7 +623,7 @@ class ContactsTable extends Table
             $accessibleViaGroups->contain($contain);
             $accessibleViaUsergroups->contain($contain);
         }
-        debug($owned->sql());
+
         if ($belongsToMany) {
             //debug($belongsToMany);
             foreach ($belongsToMany as $tableName) {
@@ -651,13 +648,10 @@ class ContactsTable extends Table
                 );
             }
         }
-        debug($owned->sql());
 
         $accessible = $owned
             ->union($accessibleViaGroups)
             ->union($accessibleViaUsergroups);
-
-        debug($accessible->sql());
 
         //Groups.name is not in filed list
         $accessibleCount = $accessible->count();
@@ -693,7 +687,6 @@ class ContactsTable extends Table
         }
 
         $accessible->epilog($order . $limit);
-        debug($accessible->sql());
         return $accessible;
     }
 
@@ -1068,18 +1061,20 @@ class ContactsTable extends Table
     private function getAssociationsArrays(array $options)
     {
         $contain = $belongsToMany = $associations = [];
-        //on belongsToMany $association->type() is manyToMany
-        foreach ($this->associations() as $association) {
-            $associations[$association->name()] = $association->type();
-        }
-        foreach ($options['_where'] as $field => $data) {
-            $model = $this->getTableName($field);
-            if (isset($associations[$model])) {
-                if ($associations[$model] == 'manyToMany') {
-                    //this is a belongsToMany association
-                    $belongsToMany[] = $model;
-                } else {
-                    $contain[] = $model;
+        if (isset($options['_where'])) {
+            //on belongsToMany $association->type() is manyToMany
+            foreach ($this->associations() as $association) {
+                $associations[$association->name()] = $association->type();
+            }
+            foreach ($options['_where'] as $field => $data) {
+                $model = $this->getTableName($field);
+                if (isset($associations[$model])) {
+                    if ($associations[$model] == 'manyToMany') {
+                        //this is a belongsToMany association
+                        $belongsToMany[] = $model;
+                    } else {
+                        $contain[] = $model;
+                    }
                 }
             }
         }
