@@ -115,7 +115,7 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             $saved = $this->Users->save($user);
             if ($saved) {
-                $json = ['save' => __('The contact has been saved.')];
+                $json = ['save' => __('The user has been saved.')];
             } else {
                 $error = '';
                 foreach ($user->errors() as $field => $err) {
@@ -125,7 +125,7 @@ class UsersController extends AppController
                     }
                 }
                 $json = [
-                         'save' => __('The contact could not be saved. Please, try again.'),
+                         'save' => __('The user could not be saved. Please, try again.'),
                          'error' => $error
                          ];
             }
