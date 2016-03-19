@@ -473,7 +473,7 @@ class ContactsTableTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /*public function testGetArraysForQuery()
+    public function testGetArraysForQuery()
     {
         $class = new \ReflectionClass($this->Contacts);
         $method = $class->getMethod('getArraysForQuery');
@@ -511,46 +511,6 @@ class ContactsTableTest extends TestCase
         $this->assertEquals($expected, $actual);
 
     }
-
-    public function testGetAssociationsArrays()
-    {
-        $class = new \ReflectionClass($this->Contacts);
-        $method = $class->getMethod('getAssociationsArrays');
-        $method->setAccessible(true);
-
-        $actual = $method->invoke(
-            $this->Contacts,
-            [
-                '_contain' => ['Groups', 'Zips'],
-                '_where' => [
-                    'Contacts.contactname' => [
-                        'condition' => ['&%'],
-                        'value' => ['']
-                    ],
-                    'Zips.name' => [
-                        'connect' => '&',
-                        'condition' => ['&%'],
-                        'value' => ['Balaton']
-                    ],
-                    'Groups.name' => [
-                        'connect' => '&',
-                        'condition' => ['&%'],
-                        'value' => ['']
-                    ],
-                    'Groups.shared' => [
-                        'connect' => '&',
-                        'condition' => ['&%'],
-                        'value' => [1]
-                    ]
-                ]
-            ]
-        );
-        $expected = [
-            ['Zips'],
-            ['Groups', 'Groups']
-        ];
-        $this->assertEquals($expected, $actual);
-    }*/
 
     private function filterHasAccess($actual)
     {

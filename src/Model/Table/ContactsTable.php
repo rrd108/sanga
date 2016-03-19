@@ -617,7 +617,7 @@ class ContactsTable extends Table
             $accessibleViaUsergroups->where($where);
         }
 
-        list($contain, $belongsToMany) = $this->getArraysForQuery($options);
+        list($contain, $belongsToMany) = $this->getAssociationsArrays($options);
 
         if ($contain) {
             $accessibleViaGroups->contain($contain);
@@ -1031,27 +1031,6 @@ class ContactsTable extends Table
                 break;
         }
         return $key . $val;
-    }
-
-    /**
-     *
-     * Get $contain and $belongsToMany arrays
-     *
-     * belongsTo association are handled automatically on above contain
-     * but belongsToMany should switched to innerjoinwith or matching
-     *
-     * @param array $options
-     * @return array [$belongsToMany, $contain]
-     */
-    private function getArraysForQuery(array $options)
-    {
-        list($contain, $belongsToMany) = $this->getAssociationsArrays($options);
-
-        //$belongsToMany = $this->getWhereQueryExpressionObject($options['_where'], $belongsToMany);
-
-        //debug($contain);
-        //debug($belongsToMany);
-        return [$contain, $belongsToMany];
     }
 
     /**
