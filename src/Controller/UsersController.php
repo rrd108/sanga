@@ -67,6 +67,47 @@ class UsersController extends AppController
         $this->set('user', $user);
     }
 
+    /**
+     * Edit method
+     *
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
+    public function edit()
+    {
+        $user = $this->Users->get(
+            $this->Auth->user('id'),
+            [
+                'contain' => ['Contacts', 'Groups', 'Usergroups']
+            ]
+        );
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            $saved = $this->Users->save($user);
+
+            I18n::locale(h($user->locale));
+            $this->Cookie->write('User.locale', h($user->locale));
+
+            if ($saved) {
+                $json = ['save' => __('The user has been saved.')];
+            } else {
+                $error = '';
+                foreach ($user->errors() as $field => $err) {
+                    $error .= $field . ': ';
+                    foreach ($err as $e) {
+                        $error .= $e;
+                    }
+                }
+                $json = [
+                    'save' => __('The user could not be saved. Please, try again.'),
+                    'error' => $error
+                ];
+            }
+        }
+        $this->set(compact('json'));
+        $this->set('_serialize', 'json');
+    }
+
     public function search()
     {
         $query = $this->Users->find()
