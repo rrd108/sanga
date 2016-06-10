@@ -120,6 +120,7 @@ class HistoriesController extends AppController
                 if ($saved) {
                     $message = __('The history has been saved.');
                     if ($this->request->is('ajax')) {
+         $this->Flash->success($message);
                         $result = ['save' => true,
                                    'message' => $message];
                     } else {
