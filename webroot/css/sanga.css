@@ -1,3 +1,7 @@
+img {
+    max-width: none;
+}
+
 header{
     height: 50px;
 }
