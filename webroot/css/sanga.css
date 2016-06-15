@@ -1,7 +1,3 @@
-img {
-    max-width: none;
-}
-
 header{
     height: 50px;
 }
@@ -291,4 +287,8 @@ span.legalname{
     font-weight: bold;
     color: #E5D580;
     padding: 0.125rem 0.9375rem;
+}
+
+.contacts img {
+    max-width: none;
 }
