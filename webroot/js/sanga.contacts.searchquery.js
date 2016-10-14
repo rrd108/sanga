@@ -40,7 +40,7 @@ $(function() {
 		return input;
 	};
 
-	addedDivs = 0;
+	addedDivs = $('.tag-viewable').length;
 
 	$('#query-select-box span').click(function(event){
 		if ($(this).hasClass('tag-default')) {

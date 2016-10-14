@@ -1051,15 +1051,19 @@ class ContactsTable extends Table
                     if ($associations[$tableName] == 'manyToMany') {
                         //this is a belongsToMany association
                         $belongsToMany[] = $tableName;
+                        $where_belongsToMany[$field] = $data;
                     } else {
-                        $contain[] = $tableName;
+                        //$contain[] = $tableName;
+                        $where_contain[$field] = $data;
                     }
                 }
             }
         }
-        $contain = array_merge($contain, $options['_contain']);
+       // $contain = array_merge($contain, $options['_contain']);
+        $contain = $options['_contain'];
 
-        return [$contain, $belongsToMany];
+        //return [$contain, $belongsToMany];
+        return [$contain, $belongsToMany, $where_belongsToMany, $where_contain];
     }
 
     /**
