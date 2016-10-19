@@ -1127,7 +1127,7 @@ class ContactsTable extends Table
             }
         }
         $query = new Query($this->connection(), $this);
-        return $query->newExpr()->add($where);
+        return $rawCode ? str_replace(".", "__", $where) : $query->newExpr()->add($where);
     }
 
     /**
