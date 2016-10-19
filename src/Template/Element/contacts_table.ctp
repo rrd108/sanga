@@ -119,9 +119,10 @@ function setGroupCss($group, $userId)
                         }
                         break;
                     case 'Groups.name' :
+                        $GroupsName = explode(',', $contact->_matchingData['Groups']->name);
                         if (isset($contact->_matchingData['Groups'])){
                             foreach ($contact->groups as $group){
-                                if ($group->name == $contact->_matchingData['Groups']->name) {
+                                if (in_array($group->name,$GroupsName)) {
                                     $css = setGroupCss($group, $this->request->session()->read('Auth.User.id'));
                                     print '<span class="tag tag-'.$css.'">' . $group->name . '</span>' . "\n";
                                 }

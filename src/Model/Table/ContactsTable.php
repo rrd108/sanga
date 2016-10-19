@@ -593,15 +593,35 @@ class ContactsTable extends Table
      */
     public function findAccessibleBy(Query $query, array $options)
     {
+
         //as $query is a reference it's value will change after every find, but we need the original one
         $queryTemp1 = $query->cleanCopy();
         $queryTemp2 = $query->cleanCopy();
         $queryTemp3 = $query->cleanCopy();
 
-        $select = $this->schema()->columns();
+        list($contain, $belongsToMany, $whereBelongsToMany, $whereContain) = $this->getAssociationsArrays($options);
+
+        $tmp_select = $this->schema()->columns();
         if (isset($options['_select'])) {
-            $select = $options['_select'];
+            $tmp_select = $options['_select'];
         }
+
+        //select ertekek osszeallitasa: belongsToMany eseten MYSQL group_concat() fuggvenyt kell hasznalni,
+        //igy kulon kell szedni -> select es groupConcats tombok
+        $groupConcats = array();
+        if($belongsToMany){
+            foreach($tmp_select As $field) {
+                $tableName = $this->getTableName($field);
+                if(in_array($tableName, $belongsToMany)) {
+                    $groupConcats[] = $field;
+                }
+                else
+                    $select[] = $field;
+            }
+        }
+        else 
+            $select = $tmp_select;
+
         $owned = $this->findOwnedBy($queryTemp1, $options)
             ->select($select);
         $accessibleViaGroups = $this->findAccessibleViaGroupBy($queryTemp2, $options)
@@ -609,14 +629,27 @@ class ContactsTable extends Table
         $accessibleViaUsergroups = $this->findAccessibleViaUsergroupBy($queryTemp3, $options)
             ->select($select);
 
+        //ha van belongsToMany tablara vonatkozo kereses, akkor itt tesszuk hozza a select reszhez group_concat-tal
+        if(!empty($groupConcats)) {
+            foreach($groupConcats AS $item) {
+                $itemName = str_replace(".", "__", $item);
+                $owned->select([$itemName => "group_concat(".$item.")"]);
+                $accessibleViaGroups->select([$itemName => "group_concat(".$item.")"]);
+                $accessibleViaUsergroups->select([$itemName => "group_concat(".$item.")"]);
+            }
+        }
+
+        //sajat, Contacts tablara vonatkozo feltetelek ($ownedWhere) es a siman kapcsolo tablakhoz tartozo feltetelek ($whereContain)
+        //egyszerre beepithetoek a lekerdezesbe (buildWhere)
+        $ownedWhere = isset($options['_where']) ? $this->ownedWhere($options['_where'], 'Contacts') : array();
+        $mixedWhere = array_merge($ownedWhere, $whereContain);
+
         if (isset($options['_where'])) {
-            $where = $this->buildWhere($options, ['Contacts']);
+            $where = $this->buildWhere($mixedWhere, ['Contacts'], false);
             $owned->where($where);
             $accessibleViaGroups->where($where);
             $accessibleViaUsergroups->where($where);
         }
-
-        list($contain, $belongsToMany) = $this->getAssociationsArrays($options);
 
         if ($contain) {
             $owned->contain($contain);
@@ -625,30 +658,51 @@ class ContactsTable extends Table
         }
 
         if ($belongsToMany) {
-            //debug($belongsToMany);
             foreach ($belongsToMany as $tableName) {
-                $where = $this->buildWhere($options, [$tableName]);
+                //az innerJoinWith-nek mindenkeppen kell egy where hivas is, 
+                //kulonben nem kapcsolja valamiert minden unionhoz minden tablat a megfelelo sorrendbe
+                $where_tmp = '';
+                
+                //a nyers sql kodot adja vissza - utolso true parameter szabalyozza, hogy mivel ter vissza
+                $where = $this->buildWhere($whereBelongsToMany, [$tableName], true);
                 $owned->innerJoinWith(
                     $tableName,
-                    function ($q) use ($where) {
-                        return $q->where($where);
+                    function ($q) use ($where_tmp) {
+                        return $q->where($where_tmp);
                     }
                 );
+                if($where) {
+                    $owned->group("Contacts.id HAVING ".$where);
+                } else {
+                    $owned->group("Contacts.id");
+                }
                 $accessibleViaGroups->innerJoinWith(
                     $tableName,
-                    function ($q) use ($where) {
-                        return $q->where($where);
+                    function ($q) use ($where_tmp) {
+                        return $q->where($where_tmp);
                     }
                 );
+                if($where) {
+                    $accessibleViaGroups->group("Contacts.id HAVING ".$where);
+                } else {
+                    $accessibleViaGroups->group("Contacts.id");
+                }
+                
                 $accessibleViaUsergroups->innerJoinWith(
                     $tableName,
-                    function ($q) use ($where) {
-                        return $q->where($where);
+                    function ($q) use ($where_tmp) {
+                        return $q->where($where_tmp);
                     }
                 );
+                if($where) {
+                    $accessibleViaUsergroups->group("Contacts.id HAVING ".$where);
+                } else {
+                    $accessibleViaUsergroups->group("Contacts.id");
+                }
+
             }
         }
-
+        
         $accessible = $owned
             ->union($accessibleViaGroups)
             ->union($accessibleViaUsergroups);
@@ -982,16 +1036,18 @@ class ContactsTable extends Table
      *              'value' => ['b']
      *          ]
      *      ]
-     * @param $tableNames : we build the where for this model
+     * @param array $tableNames : we build the where for this model
+     * @param boolean $rawCode : what value return 
      * @return string
      */
-    private function buildWhere($options, $tableNames)
+    private function buildWhere($where, $tableNames, $rawCode=false)
     {
-        $conditions = $this->removeEmptyConditions($options['_where']);
+        $conditions = $this->removeEmptyConditions($where);
+
         if (!count($conditions)) {
             return '';
         } else {
-            return $this->getWhereQueryExpressionObject($conditions, $tableNames);
+            return $this->getWhereQueryExpressionObject($conditions, $tableNames, $rawCode);
         }
     }
 
@@ -1034,12 +1090,31 @@ class ContactsTable extends Table
     }
 
     /**
+     * @param array $where
+     * @param string $tableName
+     * @return array $ownedWhere
+     */
+    private function ownedWhere(array $where, $tableName)
+    {
+        $ownedWhere = [];
+        if (isset($where)) {
+            foreach ($where as $field => $data) {
+                $tblName = $this->getTableName($field);
+                if ($tblName == $tableName) {
+                    $ownedWhere[$field] = $data;
+                }
+            }
+        }
+        return $ownedWhere;
+    }
+
+    /**
      * @param array $options
-     * @return array [$contain, $belongsToMany]
+     * @return array [$contain, $belongsToMany, $whereBelongsToMany, $whereContain]
      */
     private function getAssociationsArrays(array $options)
     {
-        $contain = $belongsToMany = $associations = [];
+        $contain = $belongsToMany = $associations = $whereBelongsToMany = $whereContain =[];
         if (isset($options['_where'])) {
             //on belongsToMany $association->type() is manyToMany
             foreach ($this->associations() as $association) {
@@ -1051,19 +1126,20 @@ class ContactsTable extends Table
                     if ($associations[$tableName] == 'manyToMany') {
                         //this is a belongsToMany association
                         $belongsToMany[] = $tableName;
-                        $where_belongsToMany[$field] = $data;
+                        $whereBelongsToMany[$field] = $data;
                     } else {
-                        //$contain[] = $tableName;
-                        $where_contain[$field] = $data;
+                        $contain[] = $tableName;
+                        $whereContain[$field] = $data;
                     }
                 }
             }
         }
-       // $contain = array_merge($contain, $options['_contain']);
+       // $contain = array_unique(array_merge($contain, $options['_contain']));
+       //egyelore ugy tunik nincs szukseg levalogatni, mert korabban mar megtettuk, ezert az options erteket adjuk vissza
         $contain = $options['_contain'];
 
         //return [$contain, $belongsToMany];
-        return [$contain, $belongsToMany, $where_belongsToMany, $where_contain];
+        return [$contain, $belongsToMany, $whereBelongsToMany, $whereContain];
     }
 
     /**
@@ -1082,9 +1158,10 @@ class ContactsTable extends Table
      *
      * @param array $conditions
      * @param array $tableNames
+     * @param boolean $rawCode
      * @return Query
      */
-    private function getWhereQueryExpressionObject(array $conditions, array $tableNames)
+    private function getWhereQueryExpressionObject(array $conditions, array $tableNames, $rawCode=false)
     {
         // TODO security of values!
 
@@ -1093,6 +1170,7 @@ class ContactsTable extends Table
         foreach ($this->associations() as $association) {
             $associations[$association->name()] = $association->type();
         }
+
         foreach ($conditions as $field => $data) {
             $tableName = $this->getTableName($field);
             if (in_array($tableName, $tableNames)
