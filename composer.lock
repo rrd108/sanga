@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "93b028cccb5add03835c122df137b888",
+    "hash": "87044a7a6f9bb519b001f7a789676e33",
     "content-hash": "1b101b802cd72a9de115b2bc37a0964e",
     "packages": [
         {
@@ -128,16 +128,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "3.3.5",
+            "version": "3.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "d1a1d304af8d04ef50add08d9610c224662b2295"
+                "reference": "71a2cf6bf38ef53423e63922669b6f526625a906"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/d1a1d304af8d04ef50add08d9610c224662b2295",
-                "reference": "d1a1d304af8d04ef50add08d9610c224662b2295",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/71a2cf6bf38ef53423e63922669b6f526625a906",
+                "reference": "71a2cf6bf38ef53423e63922669b6f526625a906",
                 "shasum": ""
             },
             "require": {
@@ -197,7 +197,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-09-30 01:33:11"
+            "time": "2016-10-15 01:26:47"
         },
         {
             "name": "cakephp/chronos",
@@ -692,7 +692,6 @@
                 "rest",
                 "web service"
             ],
-            "abandoned": "guzzlehttp/guzzle",
             "time": "2015-03-18 18:23:50"
         },
         {
@@ -1956,16 +1955,16 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "3.3.5",
+            "version": "3.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "d6f5d6849bdc842e8a5b6c1d19923355ea2f0ae8"
+                "reference": "408aede9c727f66e2194a405a37a99d2f48e5ca3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/d6f5d6849bdc842e8a5b6c1d19923355ea2f0ae8",
-                "reference": "d6f5d6849bdc842e8a5b6c1d19923355ea2f0ae8",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/408aede9c727f66e2194a405a37a99d2f48e5ca3",
+                "reference": "408aede9c727f66e2194a405a37a99d2f48e5ca3",
                 "shasum": ""
             },
             "require": {
@@ -2009,7 +2008,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2016-10-11 08:12:24"
+            "time": "2016-10-19 01:22:28"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
