@@ -259,7 +259,7 @@ class ContactsTableTest extends TestCase
             )
             ->extract('id')
             ->toArray();
-        $expected = [2, 7, 5, 6, 1];
+        $expected = [1, 2, 5, 6, 7];
         $this->assertEquals($expected, $actual);
     }
 
@@ -503,7 +503,20 @@ class ContactsTableTest extends TestCase
         );
         $expected = [
             ['Zips'],
-            ['Groups', 'Groups']
+            ['Groups', 'Groups'],
+            [
+                'Groups.name' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['']
+                ],
+                'Groups.shared' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => [1]
+                ]
+            ],
+            []
         ];
         $this->assertEquals($expected, $actual);
 
