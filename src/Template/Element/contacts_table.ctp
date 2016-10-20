@@ -33,7 +33,8 @@ function setGroupCss($group, $userId)
 
         <?php
         foreach ($fields as $field) {
-            echo '<th>';
+            $tdWidth = $field == 'Groups.name' ? 'id="groups"' : '';
+            echo '<th '.$tdWidth.'>';
                 if (in_array($field, ['contactname', 'legalname'])) {
                     echo $this->Paginator->sort(__($field));
                 } else {
@@ -119,7 +120,7 @@ function setGroupCss($group, $userId)
                         }
                         break;
                     case 'Groups.name' :
-                        $GroupsName = explode(',', $contact->_matchingData['Groups']->name);
+                        $GroupsName = explode('|', $contact->_matchingData['Groups']->name);
                         if (isset($contact->_matchingData['Groups'])){
                             foreach ($contact->groups as $group){
                                 if (in_array($group->name,$GroupsName)) {
