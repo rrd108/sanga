@@ -33,7 +33,7 @@ function setGroupCss($group, $userId)
 
         <?php
         foreach ($fields as $field) {
-            $tdWidth = $field == 'Groups.name' ? 'width="25%"' : '';
+            $tdWidth = $field == 'Groups.name' ? 'id="groups"' : '';
             echo '<th '.$tdWidth.'>';
                 if (in_array($field, ['contactname', 'legalname'])) {
                     echo $this->Paginator->sort(__($field));

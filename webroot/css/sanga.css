@@ -292,3 +292,7 @@ span.legalname{
 .contacts img {
     max-width: none;
 }
+
+th#groups {
+    width: 25%;
+}
