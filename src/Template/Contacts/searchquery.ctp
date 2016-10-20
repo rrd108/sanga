@@ -226,7 +226,7 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
             ?>
         </div>
 
-        <div class="contacts form large-10 medium-9 columns">
+        <div class="contacts form large-12 medium-9 columns">
             <?php
             if (isset($contacts)){
                 print '<h2>' . __('Search results') . '</h2>';

@@ -633,9 +633,9 @@ class ContactsTable extends Table
         if(!empty($groupConcats)) {
             foreach($groupConcats AS $item) {
                 $itemName = str_replace(".", "__", $item);
-                $owned->select([$itemName => "group_concat(".$item.")"]);
-                $accessibleViaGroups->select([$itemName => "group_concat(".$item.")"]);
-                $accessibleViaUsergroups->select([$itemName => "group_concat(".$item.")"]);
+                $owned->select([$itemName => "GROUP_CONCAT(".$item." SEPARATOR '|')"]);
+                $accessibleViaGroups->select([$itemName => "GROUP_CONCAT(".$item." SEPARATOR '|')"]);
+                $accessibleViaUsergroups->select([$itemName => "GROUP_CONCAT(".$item." SEPARATOR '|')"]);
             }
         }
 
