@@ -174,9 +174,9 @@ class ContactsController extends AppController
                 $limit = $this->paginate['limit'];
             }
 
-            if(isset($queryArray["sort"]) && $queryArray["sort"] != '' ) {
-                $sort = strpos($queryArray["sort"], '.') ? $queryArray["sort"] : "Contacts.".$queryArray["sort"];
-                $direction = isset($queryArray["direction"]) && $queryArray["direction"] != '' ? $queryArray["direction"] : "ASC";
+            if(isset($queryArray['sort']) && $queryArray['sort'] != '' ) {
+                $sort = strpos($queryArray['sort'], '.') ? $queryArray['sort'] : 'Contacts.'.$queryArray['sort'];
+                $direction = isset($queryArray['direction']) && $queryArray['direction'] != '' ? $queryArray['direction'] : 'ASC';
                 $order[$sort] = $direction;
             } else if (in_array('Contacts.contactname', $select)) {
                 $order['Contacts.contactname'] = 'ASC';
