@@ -89,7 +89,7 @@ class GroupsController extends AppController
                     'contain' => ['Users', 'Contacts', 'Contacts.Zips', 'Contacts.WorkplaceZips',
                         'AdminUsers',
                         'Histories' => function ($q) {
-                            return $q->group(['date', 'event_id', 'detail']);
+                            return $q->group(['date', 'event_id', 'detail', 'Histories.id']);
                         },
                         'Histories.Users', 'Histories.Events', 'Histories.Units'
                     ]

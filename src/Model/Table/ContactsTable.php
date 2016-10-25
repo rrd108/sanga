@@ -632,10 +632,10 @@ class ContactsTable extends Table
         //ha van belongsToMany tablara vonatkozo kereses, akkor itt tesszuk hozza a select reszhez group_concat-tal
         if(!empty($groupConcats)) {
             foreach($groupConcats AS $item) {
-                $itemName = str_replace(".", "__", $item);
-                $owned->select([$itemName => "GROUP_CONCAT(".$item." SEPARATOR '|')"]);
-                $accessibleViaGroups->select([$itemName => "GROUP_CONCAT(".$item." SEPARATOR '|')"]);
-                $accessibleViaUsergroups->select([$itemName => "GROUP_CONCAT(".$item." SEPARATOR '|')"]);
+                $itemName = str_replace('.', '__', $item);
+                $owned->select([$itemName => 'GROUP_CONCAT('.$item.' SEPARATOR \'|\')']);
+                $accessibleViaGroups->select([$itemName => 'GROUP_CONCAT('.$item.' SEPARATOR \'|\')']);
+                $accessibleViaUsergroups->select([$itemName => 'GROUP_CONCAT('.$item.' SEPARATOR \'|\')']);
             }
         }
 
@@ -650,7 +650,7 @@ class ContactsTable extends Table
             $accessibleViaGroups->where($where);
             $accessibleViaUsergroups->where($where);
         }
-
+//debug($owned->matching('Histories', function ($q) use ($tableName) {return $q->matching('Events', function ($q) use ($where){return $q->where(['Events.name'=>'email']);});}));
         if ($contain) {
             $owned->contain($contain);
             $accessibleViaGroups->contain($contain);
@@ -659,45 +659,36 @@ class ContactsTable extends Table
 
         if ($belongsToMany) {
             foreach ($belongsToMany as $tableName) {
-                //az innerJoinWith-nek mindenkeppen kell egy where hivas is, 
-                //kulonben nem kapcsolja valamiert minden unionhoz minden tablat a megfelelo sorrendbe
-                $where_tmp = '';
+                //ONLY_FULL_GROUP_BY miatt a GROUP BY-hoz kell kapcsolni minden kapcsolodo tablabol szarmazo select erteket, ami nincs aggregalva
+                $groupBy = 'Contacts.id';
+                if($whereContain) {
+                    foreach($whereContain AS $key => $value) {
+                        $groupBy .= ', '.$key;
+                    }
+                }
                 
                 //a nyers sql kodot adja vissza - utolso true parameter szabalyozza, hogy mivel ter vissza
                 $where = $this->buildWhere($whereBelongsToMany, [$tableName], true);
-                $owned->innerJoinWith(
-                    $tableName,
-                    function ($q) use ($where_tmp) {
-                        return $q->where($where_tmp);
-                    }
-                );
-                if($where) {
-                    $owned->group("Contacts.id HAVING ".$where);
-                } else {
-                    $owned->group("Contacts.id");
-                }
-                $accessibleViaGroups->innerJoinWith(
-                    $tableName,
-                    function ($q) use ($where_tmp) {
-                        return $q->where($where_tmp);
-                    }
-                );
-                if($where) {
-                    $accessibleViaGroups->group("Contacts.id HAVING ".$where);
-                } else {
-                    $accessibleViaGroups->group("Contacts.id");
-                }
                 
-                $accessibleViaUsergroups->innerJoinWith(
-                    $tableName,
-                    function ($q) use ($where_tmp) {
-                        return $q->where($where_tmp);
-                    }
-                );
+                $owned->matching($tableName);
                 if($where) {
-                    $accessibleViaUsergroups->group("Contacts.id HAVING ".$where);
+                    $owned->group($groupBy.' HAVING '.$where);
                 } else {
-                    $accessibleViaUsergroups->group("Contacts.id");
+                    $owned->group($groupBy);
+                }
+
+                $accessibleViaGroups->matching($tableName);
+                if($where) {
+                    $accessibleViaGroups->group($groupBy.' HAVING '.$where);
+                } else {
+                    $accessibleViaGroups->group($groupBy);
+                }
+
+                $accessibleViaUsergroups->matching($tableName);
+                if($where) {
+                    $accessibleViaUsergroups->group($groupBy.' HAVING '.$where);
+                } else {
+                    $accessibleViaUsergroups->group($groupBy);
                 }
 
             }

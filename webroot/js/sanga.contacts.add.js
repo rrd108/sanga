@@ -1,5 +1,23 @@
 $(function() {
-	
+
+	$(window).on('load', function(){
+		var isDisplay = $.localStorage('sanga.contactBlockPersonal');
+		$('fieldset#personal_data div').css('display', isDisplay);
+
+		var isDisplay = $.localStorage('sanga.contactBlockWorkplace');
+		$('fieldset#workplace_skills div').css('display', isDisplay);
+	});
+
+	$('fieldset#personal_data legend').click(function () {
+		$('fieldset#personal_data div').toggle();
+		$.localStorage('sanga', {contactBlockPersonal : $('fieldset#personal_data div').css('display')});
+
+	});
+	$('fieldset#workplace_skills legend').click(function () {
+		$('fieldset#workplace_skills div').toggle();
+		$.localStorage('sanga', {contactBlockWorkplace : $('fieldset#workplace_skills div').css('display')});
+	});
+
 	$('#birth').datepicker({
 		showMonthAfterYear: true,
 		yearRange: '1900:' + new Date().getFullYear(),

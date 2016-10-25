@@ -24,7 +24,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
         echo '</div>';
         echo '</div>';*/
 
-        echo '<fieldset>';
+        echo '<fieldset id="personal_data">';
             echo '<legend>' . __('Personal data') . '</legend>';
 
             echo '<div class="row">';
@@ -113,7 +113,7 @@ print $this->Html->script('sanga.contacts.add.js', ['block' => true]);
         echo '</fieldset>';
 
 
-        echo '<fieldset>';
+        echo '<fieldset id="workplace_skills">';
             echo '<legend>' . __('Workplace and Skills') . '</legend>';
             echo '<div class="row">';
                 echo $this->Form->input('workplace',

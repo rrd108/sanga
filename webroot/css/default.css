@@ -23,7 +23,7 @@ img { height: auto; max-width: 100%; }
 .row .row:before, .row .row:after { content: " "; display: table; }
 .row .row:after { clear: both; }
 
-.column, .columns { float: left; padding-left: 1.875rem; padding-right: 1.875rem; width: 100%; }
+.column, .columns { float: left; padding-left: 0.775rem; padding-right: 0.775rem; width: 100%; }
 
 @media only screen { .column, .columns { float: left; position: relative; }
   .column.small-centered, .columns.small-centered { float: none; margin-left: auto; margin-right: auto; }

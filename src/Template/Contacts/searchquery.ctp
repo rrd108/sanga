@@ -90,7 +90,10 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                         'comment' => __('Comment'),
                         'created' => __('Created'),
                         'modified' => __('Modified'),
-                        'Groups.name' => __('Groups')
+                        'Groups.name' => __('Groups')/*,
+                        'Histories.date' => __('History_date'),
+                        'Events.name' => __('History_event'),
+                        'Histories.detail' => __('History_detail')*/
                         ];
                     foreach ($filterFields as $field => $fLabel) {
                         if ( ! empty($selected) && in_array($field, $selected)) {
