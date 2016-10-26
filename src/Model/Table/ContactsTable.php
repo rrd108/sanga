@@ -623,21 +623,27 @@ class ContactsTable extends Table
             $select = $tmp_select;
 
         $owned = $this->findOwnedBy($queryTemp1, $options)
+            ->select('Contacts.id');
+        $accessibleViaGroups = $this->findAccessibleViaGroupBy($queryTemp2, $options)
+            ->select('Contacts.id');
+        $accessibleViaUsergroups = $this->findAccessibleViaUsergroupBy($queryTemp3, $options)
+            ->select('Contacts.id');
+       /* $owned = $this->findOwnedBy($queryTemp1, $options)
             ->select($select);
         $accessibleViaGroups = $this->findAccessibleViaGroupBy($queryTemp2, $options)
             ->select($select);
         $accessibleViaUsergroups = $this->findAccessibleViaUsergroupBy($queryTemp3, $options)
-            ->select($select);
+            ->select($select); */
 
         //ha van belongsToMany tablara vonatkozo kereses, akkor itt tesszuk hozza a select reszhez group_concat-tal
-        if(!empty($groupConcats)) {
+        /*if(!empty($groupConcats)) {
             foreach($groupConcats AS $item) {
                 $itemName = str_replace('.', '__', $item);
                 $owned->select([$itemName => 'GROUP_CONCAT('.$item.' SEPARATOR \'|\')']);
                 $accessibleViaGroups->select([$itemName => 'GROUP_CONCAT('.$item.' SEPARATOR \'|\')']);
                 $accessibleViaUsergroups->select([$itemName => 'GROUP_CONCAT('.$item.' SEPARATOR \'|\')']);
             }
-        }
+        }*/
 
         //sajat, Contacts tablara vonatkozo feltetelek ($ownedWhere) es a siman kapcsolo tablakhoz tartozo feltetelek ($whereContain)
         //egyszerre beepithetoek a lekerdezesbe (buildWhere)
@@ -650,12 +656,14 @@ class ContactsTable extends Table
             $accessibleViaGroups->where($where);
             $accessibleViaUsergroups->where($where);
         }
+
 //debug($owned->matching('Histories', function ($q) use ($tableName) {return $q->matching('Events', function ($q) use ($where){return $q->where(['Events.name'=>'email']);});}));
         if ($contain) {
             $owned->contain($contain);
             $accessibleViaGroups->contain($contain);
             $accessibleViaUsergroups->contain($contain);
         }
+debug($owned);
 
         if ($belongsToMany) {
             foreach ($belongsToMany as $tableName) {
