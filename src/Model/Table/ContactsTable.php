@@ -623,27 +623,21 @@ class ContactsTable extends Table
             $select = $tmp_select;
 
         $owned = $this->findOwnedBy($queryTemp1, $options)
-            ->select('Contacts.id');
-        $accessibleViaGroups = $this->findAccessibleViaGroupBy($queryTemp2, $options)
-            ->select('Contacts.id');
-        $accessibleViaUsergroups = $this->findAccessibleViaUsergroupBy($queryTemp3, $options)
-            ->select('Contacts.id');
-       /* $owned = $this->findOwnedBy($queryTemp1, $options)
             ->select($select);
         $accessibleViaGroups = $this->findAccessibleViaGroupBy($queryTemp2, $options)
             ->select($select);
         $accessibleViaUsergroups = $this->findAccessibleViaUsergroupBy($queryTemp3, $options)
-            ->select($select); */
+            ->select($select);
 
         //ha van belongsToMany tablara vonatkozo kereses, akkor itt tesszuk hozza a select reszhez group_concat-tal
-        /*if(!empty($groupConcats)) {
+        if(!empty($groupConcats)) {
             foreach($groupConcats AS $item) {
                 $itemName = str_replace('.', '__', $item);
                 $owned->select([$itemName => 'GROUP_CONCAT('.$item.' SEPARATOR \'|\')']);
                 $accessibleViaGroups->select([$itemName => 'GROUP_CONCAT('.$item.' SEPARATOR \'|\')']);
                 $accessibleViaUsergroups->select([$itemName => 'GROUP_CONCAT('.$item.' SEPARATOR \'|\')']);
             }
-        }*/
+        }
 
         //sajat, Contacts tablara vonatkozo feltetelek ($ownedWhere) es a siman kapcsolo tablakhoz tartozo feltetelek ($whereContain)
         //egyszerre beepithetoek a lekerdezesbe (buildWhere)
@@ -663,7 +657,6 @@ class ContactsTable extends Table
             $accessibleViaGroups->contain($contain);
             $accessibleViaUsergroups->contain($contain);
         }
-debug($owned);
 
         if ($belongsToMany) {
             foreach ($belongsToMany as $tableName) {
@@ -698,7 +691,6 @@ debug($owned);
                 } else {
                     $accessibleViaUsergroups->group($groupBy);
                 }
-
             }
         }
         
@@ -711,7 +703,6 @@ debug($owned);
         $accessible->counter(function ($query) use ($accessibleCount) {
             return $accessibleCount;
         });
-
 
         //we should add the order by and pagination to the end - after the union. For this we  have to use epilog
         //http://stackoverflow.com/questions/29379579/how-do-you-modify-a-union-query-in-cakephp-3/29386189#29386189
@@ -740,6 +731,7 @@ debug($owned);
         }
 
         $accessible->epilog($order . $limit);
+
         return $accessible;
     }
 
