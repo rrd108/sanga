@@ -166,6 +166,7 @@ class ContactsController extends AppController
             $selectCsv = $select;
             array_unshift($select, 'Contacts.sex');
             array_unshift($select, 'Contacts.id');
+            array_unshift($select, 'Contacts.active');
             $this->set('selected', $selected);
 
             if ($this->request->params['_ext'] == 'csv') {
