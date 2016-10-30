@@ -596,246 +596,246 @@ class ContactsTable extends Table
     public function findAccessibleBy(Query $query, array $options)
     {
 
-        $ownedSql = '';
-        $groupSql = '';
-        $usergroupSql = '';
-        $leftJoinSql = '';
-        $innerJoins = '';
-        $groupBy = '';
-        $subQuery = '';
-        $mainQuery = '';
-
-        list($contain, $belongsToMany, $whereBelongsToMany, $whereContain) = $this->getAssociationsArrays($options);
-
-        /**** SELECT osszeallitas - a subquerykhez es reszben a main queryhez is ****/
-        $tmp_select = $this->schema()->columns();
-        if (isset($options['_select'])) {
-            $tmp_select = $options['_select'];
-        }
-        //select ertekek osszeallitasa: belongsToMany eseten MYSQL group_concat() fuggvenyt kell hasznalni,
-        //igy kulon kell szedni -> select es groupConcats tombok
-        $groupConcats = array();
-        if($belongsToMany){
-            foreach($tmp_select As $field) {
-                $tableName = $this->getTableName($field);
-                if(in_array($tableName, $belongsToMany)) {
-                    $groupConcats[] = $field;
-                }
-                else
-                    $select[] = $field;
-            }
-        }
-        else 
-            $select = $tmp_select;
-        
-        //nyers select kod keszitese
-        $selectRawSub = $selectRawMain = $groupBy = '';
-        foreach($select AS $item) {
-            $item__ = str_replace('.', '__', $item);
-            $selectRawSub .= ', '. $item .' AS '.$item__; 
-            $selectRawMain .= ', '. $item__;
-        }
-        $selectRawSub = ltrim($selectRawSub, ', ');
-        $selectRawMain = $groupBy = ltrim($selectRawMain, ', ');
-
-        //ha van belongsToMany tablara vonatkozo kereses, akkor itt tesszuk hozza a select reszhez group_concat-tal
-        if(!empty($groupConcats)) {
-            foreach($groupConcats AS $item) {
-                $itemName = str_replace('.', '__', $item);
-                $selectRawMain .= ', GROUP_CONCAT('.$item.' SEPARATOR \'|\') AS '.$itemName;
-            }
-        }
-        /**** SELECT osszeallitas vege ****/
-
-        /**** WHERE osszeallitas ****/
-        //sajat, Contacts tablara vonatkozo feltetelek ($ownedWhere) es a siman kapcsolo tablakhoz tartozo feltetelek ($whereContain)
-        //egyszerre beepithetoek a lekerdezesbe (buildWhere)
-        $where = 'Contacts.active = 1';
-        if (isset($options['_where'])) {
-            $ownedWhere = isset($options['_where']) ? $this->ownedWhere($options['_where'], 'Contacts') : array();
-            $mixedWhere = array_merge($ownedWhere, $whereContain);
-            $where_tmp = $this->buildWhere($mixedWhere, ['Contacts'], true);
-            $where .= $where_tmp ? ' AND '.$where_tmp : '';
-        }
-        /**** WHERE osszeallitas vege ****/
-
-        /**** LEFT JOIN osszeallitas ****/
-        /* contain tartalmazza pl. a Groups tablat is, ezert van szukseg egy diff-re a belongsToMany tombbel. */
-        $leftJoinTables = array_diff($contain, $belongsToMany);
-        foreach($leftJoinTables AS $table) {
-            $foreignKey = $this->association($table)->foreignKey();
-            $tableName = $this->association($table)->name();
-            $className = $this->association($table)->className();
-            $className = $className ? $className : $tableName;
-
-            $leftJoinSql .= '
-                LEFT JOIN
-                    '.$className.' AS '.$tableName.'
-                ON
-                    '.$tableName.'.id = Contacts.'.$foreignKey.'
-            ';
-        }
-        /**** LEFT JOIN osszeallitas vege ****/
-
-        /**** SUBQUERY osszeallitas (UNION-ok) ****/
-        $ownedSql = '
-            SELECT '.$selectRawSub.'
-            FROM
-              contacts AS Contacts
-            INNER JOIN
-              contacts_users AS ContactsUsers
-            ON
-              Contacts.id = ContactsUsers.contact_id
-            INNER JOIN
-              users AS Users
-            ON
-              (
-                Users.id = ContactsUsers.user_id
-                AND Users.id IN(:user_id)
-              )
-            '.$leftJoinSql.'
-            WHERE '.$where;
-
-        $groupSql = '
-            SELECT '.$selectRawSub.'
-            FROM
-                contacts AS Contacts
-            INNER JOIN
-                contacts_groups AS ContactsGroups
-            ON
-                Contacts.id = ContactsGroups.contact_id 
-            INNER JOIN
-                groups AS Groups
-            ON
-                (
-                  Groups.id = ContactsGroups.group_id 
-                  AND Groups.id IN(
-                        SELECT id 
-                        FROM Groups 
-                        WHERE shared = 1 
-                            OR admin_user_id IN (:user_id2)
-                            OR (
-                                SELECT group_id
-                                FROM groups_users
-                                WHERE user_id IN (:user_id3)
-                            )    
-                    )
-                )
-            '.$leftJoinSql.'
-            WHERE '.$where;
-
-        $usergroupSql = '
-            SELECT '.$selectRawSub.'
-            FROM
-                contacts AS Contacts
-            INNER JOIN
-                contacts_users AS ContactsUsers
-            ON
-                Contacts.id = ContactsUsers.contact_id
-            INNER JOIN
-                users AS Users
-            ON
-                (
-                  Users.id = ContactsUsers.user_id
-                  AND Users.id IN(
-                    SELECT user_id 
-                    FROM users_usergroups
-                    WHERE usergroup_id IN(
-                        SELECT id 
-                        FROM usergroups
-                        WHERE admin_user_id IN (:user_id4)
-                    )
-                  ) 
-                )
-            '.$leftJoinSql.'
-            WHERE '.$where;
-
-        $subQuery = '
-        ('.$ownedSql.')
-        UNION
-        ('.$groupSql.')
-        UNION
-        ('.$usergroupSql.')
-        ';
-        /**** SUBQUERY osszeallitasa vege (UNION-ok) ****/
-
-        /**** GROUP BY es hozzakapcsolodo INNER_JOIN-ok osszeallitasa ****/
-        if ($belongsToMany) {
-            foreach ($belongsToMany as $tableName) {
-                $foreignKey = $this->association($tableName)->foreignKey();
-                $targetForeignKey = $this->association($tableName)->targetForeignKey();
-                $joinTable = $this->association($tableName)->junction()->table();
-
-                $innerJoins .= '
-                    INNER JOIN '.$joinTable.' ON Contacts__id = '.$joinTable.'.'.$foreignKey.'
-                    INNER JOIN '.$tableName.' ON '.$tableName.'.id = '.$joinTable.'.'.$targetForeignKey.'
-                ';
-
-                //ONLY_FULL_GROUP_BY miatt a GROUP BY-hoz kell kapcsolni minden kapcsolodo tablabol szarmazo select erteket, ami nincs aggregalva
-                $groupBy = 'GROUP BY '.$groupBy;
-
-                //a nyers sql kodot adja vissza - utolso true parameter szabalyozza, hogy mivel ter vissza
-                $having = $this->buildWhere($whereBelongsToMany, [$tableName], true);
-                $having = str_replace(".", "__", $having);
-                
-                $groupBy .= $having ? ' HAVING '.$having : '';        
-            }
-        }
-        /**** GROUP BY es hozzakapcsolodo INNER_JOIN-ok osszeallitasa vege ****/
-
-        /**** MAINQUERY osszeallitasa ****/
-        $mainQuery = '
-            SELECT '.$selectRawMain.'
-            FROM ('.$subQuery.') AS sub '
-            .$innerJoins
-            .$groupBy;
-
-        //we should add the order by and pagination to the end - after the union. For this we  have to use epilog
-        //http://stackoverflow.com/questions/29379579/how-do-you-modify-a-union-query-in-cakephp-3/29386189#29386189
-        $order = '';
-        if (isset($options['_order'])) {
-            foreach ($options['_order'] as $field => $ascdesc) {
-                $order .= ' ' . str_replace('.', '__', $field) . ' ' . $ascdesc . ',';
-            }
-            if ($order) {
-                $order = ' ORDER BY' . rtrim($order, ',');
-            }
-        }
-
-        $limit = 20;
-        if (isset($options['_limit'])) {
-            if ($options['_limit'] !== false) {
-                $limit = $options['_limit'];
-            } else {
-                $limit = '';
-            }
-        }
-        if ($limit) {
-            $page = isset($options['_page']) ? $options['_page'] : 1;
-            $offset = $limit * ($page - 1);
-            $limit = ' LIMIT ' . $limit . ' OFFSET ' . $offset;
-        }
-        /**** MAINQUERY osszeallitasa vege ****/
-
-        $connection = ConnectionManager::get('default');
-
-        $results = $connection
-            ->execute($mainQuery, ['user_id' => $options['User.id'], 'user_id2' => $options['User.id'], 'user_id3' => $options['User.id'], 'user_id4' => $options['User.id']]);
-        $resultsCount = $results->rowCount();
-        /*$accessible->counter(function ($query) use ($accessibleCount) {
-            return $accessibleCount;
-        });*/
-
-        $mainQuery .= $order . $limit;
-        $results = $connection
-            ->execute($mainQuery, ['user_id' => $options['User.id'], 'user_id2' => $options['User.id'], 'user_id3' => $options['User.id'], 'user_id4' => $options['User.id']]);
-
-        // return $results;
-debug($results);
-exit();
-//debug($owned->matching('Histories', function ($q) use ($tableName) {return $q->matching('Events', function ($q) use ($where){return $q->where(['Events.name'=>'email']);});}));
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//        $ownedSql = '';
+//        $groupSql = '';
+//        $usergroupSql = '';
+//        $leftJoinSql = '';
+//        $innerJoins = '';
+//        $groupBy = '';
+//        $subQuery = '';
+//        $mainQuery = '';
+//
+//        list($contain, $belongsToMany, $whereBelongsToMany, $whereContain) = $this->getAssociationsArrays($options);
+//
+//        /**** SELECT osszeallitas - a subquerykhez es reszben a main queryhez is ****/
+//        $tmp_select = $this->schema()->columns();
+//        if (isset($options['_select'])) {
+//            $tmp_select = $options['_select'];
+//        }
+//        //select ertekek osszeallitasa: belongsToMany eseten MYSQL group_concat() fuggvenyt kell hasznalni,
+//        //igy kulon kell szedni -> select es groupConcats tombok
+//        $groupConcats = array();
+//        if($belongsToMany){
+//            foreach($tmp_select As $field) {
+//                $tableName = $this->getTableName($field);
+//                if(in_array($tableName, $belongsToMany)) {
+//                    $groupConcats[] = $field;
+//                }
+//                else
+//                    $select[] = $field;
+//            }
+//        }
+//        else
+//            $select = $tmp_select;
+//
+//        //nyers select kod keszitese
+//        $selectRawSub = $selectRawMain = $groupBy = '';
+//        foreach($select AS $item) {
+//            $item__ = str_replace('.', '__', $item);
+//            $selectRawSub .= ', '. $item .' AS '.$item__;
+//            $selectRawMain .= ', '. $item__;
+//        }
+//        $selectRawSub = ltrim($selectRawSub, ', ');
+//        $selectRawMain = $groupBy = ltrim($selectRawMain, ', ');
+//
+//        //ha van belongsToMany tablara vonatkozo kereses, akkor itt tesszuk hozza a select reszhez group_concat-tal
+//        if(!empty($groupConcats)) {
+//            foreach($groupConcats AS $item) {
+//                $itemName = str_replace('.', '__', $item);
+//                $selectRawMain .= ', GROUP_CONCAT('.$item.' SEPARATOR \'|\') AS '.$itemName;
+//            }
+//        }
+//        /**** SELECT osszeallitas vege ****/
+//
+//        /**** WHERE osszeallitas ****/
+//        //sajat, Contacts tablara vonatkozo feltetelek ($ownedWhere) es a siman kapcsolo tablakhoz tartozo feltetelek ($whereContain)
+//        //egyszerre beepithetoek a lekerdezesbe (buildWhere)
+//        $where = 'Contacts.active = 1';
+//        if (isset($options['_where'])) {
+//            $ownedWhere = isset($options['_where']) ? $this->ownedWhere($options['_where'], 'Contacts') : array();
+//            $mixedWhere = array_merge($ownedWhere, $whereContain);
+//            $where_tmp = $this->buildWhere($mixedWhere, ['Contacts'], true);
+//            $where .= $where_tmp ? ' AND '.$where_tmp : '';
+//        }
+//        /**** WHERE osszeallitas vege ****/
+//
+//        /**** LEFT JOIN osszeallitas ****/
+//        /* contain tartalmazza pl. a Groups tablat is, ezert van szukseg egy diff-re a belongsToMany tombbel. */
+//        $leftJoinTables = array_diff($contain, $belongsToMany);
+//        foreach($leftJoinTables AS $table) {
+//            $foreignKey = $this->association($table)->foreignKey();
+//            $tableName = $this->association($table)->name();
+//            $className = $this->association($table)->className();
+//            $className = $className ? $className : $tableName;
+//
+//            $leftJoinSql .= '
+//                LEFT JOIN
+//                    '.$className.' AS '.$tableName.'
+//                ON
+//                    '.$tableName.'.id = Contacts.'.$foreignKey.'
+//            ';
+//        }
+//        /**** LEFT JOIN osszeallitas vege ****/
+//
+//        /**** SUBQUERY osszeallitas (UNION-ok) ****/
+//        $ownedSql = '
+//            SELECT '.$selectRawSub.'
+//            FROM
+//              contacts AS Contacts
+//            INNER JOIN
+//              contacts_users AS ContactsUsers
+//            ON
+//              Contacts.id = ContactsUsers.contact_id
+//            INNER JOIN
+//              users AS Users
+//            ON
+//              (
+//                Users.id = ContactsUsers.user_id
+//                AND Users.id IN(:user_id)
+//              )
+//            '.$leftJoinSql.'
+//            WHERE '.$where;
+//
+//        $groupSql = '
+//            SELECT '.$selectRawSub.'
+//            FROM
+//                contacts AS Contacts
+//            INNER JOIN
+//                contacts_groups AS ContactsGroups
+//            ON
+//                Contacts.id = ContactsGroups.contact_id
+//            INNER JOIN
+//                groups AS Groups
+//            ON
+//                (
+//                  Groups.id = ContactsGroups.group_id
+//                  AND Groups.id IN(
+//                        SELECT id
+//                        FROM Groups
+//                        WHERE shared = 1
+//                            OR admin_user_id IN (:user_id2)
+//                            OR (
+//                                SELECT group_id
+//                                FROM groups_users
+//                                WHERE user_id IN (:user_id3)
+//                            )
+//                    )
+//                )
+//            '.$leftJoinSql.'
+//            WHERE '.$where;
+//
+//        $usergroupSql = '
+//            SELECT '.$selectRawSub.'
+//            FROM
+//                contacts AS Contacts
+//            INNER JOIN
+//                contacts_users AS ContactsUsers
+//            ON
+//                Contacts.id = ContactsUsers.contact_id
+//            INNER JOIN
+//                users AS Users
+//            ON
+//                (
+//                  Users.id = ContactsUsers.user_id
+//                  AND Users.id IN(
+//                    SELECT user_id
+//                    FROM users_usergroups
+//                    WHERE usergroup_id IN(
+//                        SELECT id
+//                        FROM usergroups
+//                        WHERE admin_user_id IN (:user_id4)
+//                    )
+//                  )
+//                )
+//            '.$leftJoinSql.'
+//            WHERE '.$where;
+//
+//        $subQuery = '
+//        ('.$ownedSql.')
+//        UNION
+//        ('.$groupSql.')
+//        UNION
+//        ('.$usergroupSql.')
+//        ';
+//        /**** SUBQUERY osszeallitasa vege (UNION-ok) ****/
+//
+//        /**** GROUP BY es hozzakapcsolodo INNER_JOIN-ok osszeallitasa ****/
+//        if ($belongsToMany) {
+//            foreach ($belongsToMany as $tableName) {
+//                $foreignKey = $this->association($tableName)->foreignKey();
+//                $targetForeignKey = $this->association($tableName)->targetForeignKey();
+//                $joinTable = $this->association($tableName)->junction()->table();
+//
+//                $innerJoins .= '
+//                    INNER JOIN '.$joinTable.' ON Contacts__id = '.$joinTable.'.'.$foreignKey.'
+//                    INNER JOIN '.$tableName.' ON '.$tableName.'.id = '.$joinTable.'.'.$targetForeignKey.'
+//                ';
+//
+//                //ONLY_FULL_GROUP_BY miatt a GROUP BY-hoz kell kapcsolni minden kapcsolodo tablabol szarmazo select erteket, ami nincs aggregalva
+//                $groupBy = 'GROUP BY '.$groupBy;
+//
+//                //a nyers sql kodot adja vissza - utolso true parameter szabalyozza, hogy mivel ter vissza
+//                $having = $this->buildWhere($whereBelongsToMany, [$tableName], true);
+//                $having = str_replace(".", "__", $having);
+//
+//                $groupBy .= $having ? ' HAVING '.$having : '';
+//            }
+//        }
+//        /**** GROUP BY es hozzakapcsolodo INNER_JOIN-ok osszeallitasa vege ****/
+//
+//        /**** MAINQUERY osszeallitasa ****/
+//        $mainQuery = '
+//            SELECT '.$selectRawMain.'
+//            FROM ('.$subQuery.') AS sub '
+//            .$innerJoins
+//            .$groupBy;
+//
+//        //we should add the order by and pagination to the end - after the union. For this we  have to use epilog
+//        //http://stackoverflow.com/questions/29379579/how-do-you-modify-a-union-query-in-cakephp-3/29386189#29386189
+//        $order = '';
+//        if (isset($options['_order'])) {
+//            foreach ($options['_order'] as $field => $ascdesc) {
+//                $order .= ' ' . str_replace('.', '__', $field) . ' ' . $ascdesc . ',';
+//            }
+//            if ($order) {
+//                $order = ' ORDER BY' . rtrim($order, ',');
+//            }
+//        }
+//
+//        $limit = 20;
+//        if (isset($options['_limit'])) {
+//            if ($options['_limit'] !== false) {
+//                $limit = $options['_limit'];
+//            } else {
+//                $limit = '';
+//            }
+//        }
+//        if ($limit) {
+//            $page = isset($options['_page']) ? $options['_page'] : 1;
+//            $offset = $limit * ($page - 1);
+//            $limit = ' LIMIT ' . $limit . ' OFFSET ' . $offset;
+//        }
+//        /**** MAINQUERY osszeallitasa vege ****/
+//
+//        $connection = ConnectionManager::get('default');
+//
+//        $results = $connection
+//            ->execute($mainQuery, ['user_id' => $options['User.id'], 'user_id2' => $options['User.id'], 'user_id3' => $options['User.id'], 'user_id4' => $options['User.id']]);
+//        $resultsCount = $results->rowCount();
+//        /*$accessible->counter(function ($query) use ($accessibleCount) {
+//            return $accessibleCount;
+//        });*/
+//
+//        $mainQuery .= $order . $limit;
+//        $results = $connection
+//            ->execute($mainQuery, ['user_id' => $options['User.id'], 'user_id2' => $options['User.id'], 'user_id3' => $options['User.id'], 'user_id4' => $options['User.id']]);
+//
+//        // return $results;
+//debug($results);
+//exit();
+////debug($owned->matching('Histories', function ($q) use ($tableName) {return $q->matching('Events', function ($q) use ($where){return $q->where(['Events.name'=>'email']);});}));
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 
         //as $query is a reference it's value will change after every find, but we need the original one
