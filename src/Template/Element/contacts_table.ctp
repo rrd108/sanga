@@ -130,6 +130,16 @@ function setGroupCss($group, $userId)
                             }
                         }
                         break;
+                    case 'Histories.date' :
+                        if ($contact->_matchingData['Histories']) {
+                            echo $contact->_matchingData['Histories']->date;
+                        }
+                        break;
+                    case 'Histories.detail' :
+                        if ($contact->_matchingData['Histories']) {
+                            echo $contact->_matchingData['Histories']->detail;
+                        }
+                        break;
                     default :
                         echo h($contact->$field);
                 }

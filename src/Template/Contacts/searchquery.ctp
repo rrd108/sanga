@@ -90,10 +90,11 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                         'comment' => __('Comment'),
                         'created' => __('Created'),
                         'modified' => __('Modified'),
-                        'Groups.name' => __('Groups')/*,
-                        'Histories.date' => __('History_date'),
-                        'Events.name' => __('History_event'),
-                        'Histories.detail' => __('History_detail')*/
+                        'Groups.name' => __('Groups'),
+                        'Histories.date' => __('History date'),
+                        'Histories.Events.name' => __('! History event'),
+                        'Histories.detail' => __('History detail'),
+                        'Histories.Groups.name' => __('!!! History group name')
                         ];
                     foreach ($filterFields as $field => $fLabel) {
                         if ( ! empty($selected) && in_array($field, $selected)) {
@@ -231,6 +232,7 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
 
         <div class="contacts form large-12 medium-9 columns">
             <?php
+            //debug($contacts);
             if (isset($contacts)){
                 print '<h2>' . __('Search results') . '</h2>';
 
