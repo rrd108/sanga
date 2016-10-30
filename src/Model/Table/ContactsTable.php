@@ -843,7 +843,14 @@ class ContactsTable extends Table
         $queryTemp2 = $query->cleanCopy();
         $queryTemp3 = $query->cleanCopy();
 
-        list($contain, $belongsToMany, $whereBelongsToMany, $whereContain) = $this->getAssociationsArrays($options);
+        list(
+            $contain,
+            $belongsToMany,
+            $whereBelongsToMany,
+            $whereContain,
+            $hasMany,
+            $whereHasMany,
+            ) = $this->getAssociationsArrays($options);
 
         $tmp_select = $this->schema()->columns();
         if (isset($options['_select'])) {
@@ -901,6 +908,28 @@ class ContactsTable extends Table
             $accessibleViaUsergroups->contain($contain);
         }
 
+        //debug($hasMany);debug($whereHasMany);die();
+        /*        $owned->matching(
+                    'Histories.Events',
+                    function ($q) {
+                        return $q->where(['Events.name' => 'email']);
+                    });
+        */
+        if ($hasMany) {
+            foreach ($hasMany as $tableName) {
+                if ($whereHasMany) {
+                    $callback = function ($q) use ($whereHasMany, $tableName) {
+                        return $q->where($this->buildWhere($whereHasMany, [$tableName]));
+                    };
+                } else {
+                    $callback = null;
+                }
+                $owned->matching($tableName, $callback);
+                $accessibleViaGroups->matching($tableName, $callback);
+                $accessibleViaUsergroups->matching($tableName, $callback);
+            }
+        }
+
         if ($belongsToMany) {
             foreach ($belongsToMany as $tableName) {
                 //ONLY_FULL_GROUP_BY miatt a GROUP BY-hoz kell kapcsolni minden kapcsolodo tablabol szarmazo select erteket, ami nincs aggregalva
@@ -937,18 +966,13 @@ class ContactsTable extends Table
                 }
             }
         }
-        
+
         $accessible = $owned
             ->union($accessibleViaGroups)
             ->union($accessibleViaUsergroups);
 
-        //Groups.name is not in filed list
-        $accessibleCount = $accessible->count();
-        $accessible->counter(function ($query) use ($accessibleCount) {
-            return $accessibleCount;
-        });
-
-        //we should add the order by and pagination to the end - after the union. For this we  have to use epilog
+        //we should add the order by and pagination to the end - after the union.
+        //For this we  have to use epilog, ORM call will not work
         //http://stackoverflow.com/questions/29379579/how-do-you-modify-a-union-query-in-cakephp-3/29386189#29386189
         $order = '';
         if (isset($options['_order'])) {
@@ -975,7 +999,6 @@ class ContactsTable extends Table
         }
 
         $accessible->epilog($order . $limit);
-debug($accessible);exit();
 
         return $accessible;
     }
@@ -1276,8 +1299,9 @@ debug($accessible);exit();
      * @param boolean $rawCode : what value return 
      * @return string
      */
-    private function buildWhere($where, $tableNames, $rawCode=false)
+    private function buildWhere($where, $tableNames, $rawCode = false)
     {
+        //TODO ez itt a histories + histories.event egyidejű lekérésnél hülyeséet gyárt le
         $conditions = $this->removeEmptyConditions($where);
 
         if (!count($conditions)) {
@@ -1350,7 +1374,10 @@ debug($accessible);exit();
      */
     private function getAssociationsArrays(array $options)
     {
-        $contain = $belongsToMany = $associations = $whereBelongsToMany = $whereContain =[];
+        //debug($options);die();
+        //TODO ez itt erősen refactorért kiabál
+        $contain = $belongsToMany = $associations = $whereBelongsToMany =
+            $whereContain = $hasMany = $whereHasMany = $extraTables = [];
         if (isset($options['_where'])) {
             //on belongsToMany $association->type() is manyToMany
             foreach ($this->associations() as $association) {
@@ -1358,11 +1385,16 @@ debug($accessible);exit();
             }
             foreach ($options['_where'] as $field => $data) {
                 $tableName = $this->getTableName($field);
-                if (isset($associations[$tableName])) {
-                    if ($associations[$tableName] == 'manyToMany') {
+                //$baseTableName will we be the first associated table in case of tableName.otherTableName format
+                $baseTableName = $this->getTableName($tableName);
+                if (isset($associations[$baseTableName])) {
+                    if ($associations[$baseTableName] == 'manyToMany') {
                         //this is a belongsToMany association
                         $belongsToMany[] = $tableName;
                         $whereBelongsToMany[$field] = $data;
+                    } elseif ($associations[$baseTableName] == 'oneToMany') {
+                        $hasMany[] = $tableName;
+                        $whereHasMany[$field] = $data;
                     } else {
                         $contain[] = $tableName;
                         $whereContain[$field] = $data;
@@ -1370,21 +1402,32 @@ debug($accessible);exit();
                 }
             }
         }
-       // $contain = array_unique(array_merge($contain, $options['_contain']));
-       //egyelore ugy tunik nincs szukseg levalogatni, mert korabban mar megtettuk, ezert az options erteket adjuk vissza
-        $contain = $options['_contain'];
 
-        //return [$contain, $belongsToMany];
-        return [$contain, $belongsToMany, $whereBelongsToMany, $whereContain];
+        return [
+            $contain,
+            $belongsToMany,
+            $whereBelongsToMany,
+            $whereContain,
+            $hasMany,
+            $whereHasMany
+        ];
     }
 
     /**
-     * @param $field
+     * Returns the table name (Histories) or
+     * the table name with the associated table (Histories.Events)
+     *
+     * @param $name
      * @return string
      */
-    private function getTableName($field)
+    private function getTableName($name)
     {
-        return substr($field, 0, strpos($field, '.'));
+        $lastDotPosition = strrpos($name, '.');
+        if ($lastDotPosition) {
+            return substr($name, 0, $lastDotPosition);
+        } else {
+            return $name;
+        }
     }
 
     /**
@@ -1397,7 +1440,7 @@ debug($accessible);exit();
      * @param boolean $rawCode
      * @return Query
      */
-    private function getWhereQueryExpressionObject(array $conditions, array $tableNames, $rawCode=false)
+    private function getWhereQueryExpressionObject(array $conditions, array $tableNames, $rawCode = false)
     {
         // TODO security of values!
 

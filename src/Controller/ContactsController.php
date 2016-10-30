@@ -131,7 +131,7 @@ class ContactsController extends AppController
         if (isset($queryArray)) {
             $this->set('queryArray', $queryArray);
             $matching = $contain = $conditions = $select = $selected = [];
-            // TODO $matching kezelés mentettek esetében
+            //TODO handling Histories_Events_name type keys
             foreach ($queryArray as $keyName => $values) {
                 $remove = [];
                 if (strpos($keyName, 'field_') === 0) {
@@ -139,7 +139,14 @@ class ContactsController extends AppController
                     //$filed is Contacts_contactname or Contacts_workplace_address
                     //we should change the first underscore to a dot
                     $field = preg_replace('/_/', '.', $field, 1);
-                    $select[] = $field;
+                    //and change when we have capital letter after the .
+                    //like Histories.Events_name should be Histories.Events.name
+                    if (preg_match('/\.[A-Z]/', $field)) {
+                        $field = preg_replace('/_/', '.', $field, 1);
+                        $select[] = substr($field, strpos($field, '.') + 1);
+                    } else {
+                        $select[] = $field;
+                    }
                     if (strpos($field, 'Contacts.') === 0) {
                         $selected[] = substr(strstr($field, '.'), 1);
                     } else {
@@ -219,6 +226,7 @@ class ContactsController extends AppController
                 );
                 //debug($query); die();
                 foreach ($query as $contact) {
+                    //debug($contact);
                     $csvData[$i] = [];
                     foreach ($selectCsv as $s) {
                         if(strpos($s, 'Contacts') === 0) {
