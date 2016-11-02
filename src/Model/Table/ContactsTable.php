@@ -664,7 +664,6 @@ class ContactsTable extends Table
             $accessibleViaUsergroups->contain($contain);
         }
 
-        //debug($hasMany);debug($whereHasMany);die();
         /*        $owned->matching(
                     'Histories.Events',
                     function ($q) {
@@ -1056,7 +1055,6 @@ class ContactsTable extends Table
      */
     private function buildWhere($where, $tableName)
     {
-        //TODO ez itt a histories + histories.event egyidejű lekérésnél hülyeséet gyárt le
         $conditions = $this->removeEmptyConditions($where);
 
         if (!count($conditions)) {
