@@ -600,32 +600,39 @@ class ContactsTable extends Table
         $queryTemp2 = $query->cleanCopy();
         $queryTemp3 = $query->cleanCopy();
 
-        list(
-            $contain,
-            $whereContain,
-            $belongsToMany,
-            $whereBelongsToMany,
-            $hasMany,
-            $whereHasMany,
-            ) = $this->getAssociationsArrays($options);
+        list($contain, $hasMany, $belongsToMany) = $this->getAssociationsArrays($options);
 
-        //select ertekek osszeallitasa
-        //belongsToMany eseten MYSQL group_concat() függvenyt kell majd hasznalni,
-        //igy kulon kell szedni -> select es groupConcats tombokre
-        $groupConcats = array();
-        if($belongsToMany){
-            foreach($options['_select'] as $field) {
-                //deeper associations are handled earlier, so getTableName will give back proper results
-                $tableName = $this->getTableName($field);
-                if(in_array($tableName, $belongsToMany)) {
-                    $groupConcats[] = $field;
-                }
-                else
-                    $select[] = $field;
+        //ONLY_FULL_GROUP_BY miatt a GROUP BY-hoz kell kapcsolni minden kapcsolódó
+        //táblából származó select értéket, ami nincs aggregalva
+        $groupBy = 'Contacts.id';
+        if($contain) {
+            foreach($contain as $key => $value) {
+                $groupBy .= ', ' . $key;
             }
         }
-        else 
+        if($hasMany) {
+            foreach($hasMany as $key => $value) {
+                $groupBy .= ', ' . $key;    //TODO remove first part if there are more dots
+            }
+        }
+
+        //select értékek összeállítasa
+        //belongsToMany esetén MySQL group_concat() függvényt kell majd használni,
+        //így külön kell szedni -> select és groupConcats tömbökre
+        $groupConcats = array();
+        if ($belongsToMany) {
+            foreach ($options['_select'] as $field) {
+                if (array_key_exists($field, $belongsToMany)) {
+                    $groupConcats[] = $field;
+                }
+                else {
+                    $select[] = $field;
+                }
+            }
+        }
+        else {
             $select = $options['_select'];
+        }
 
         //az options tömbből csaka User.id lesz használva ezekben a hívásokban
         $owned = $this->findOwnedBy($queryTemp1, $options)
@@ -646,12 +653,12 @@ class ContactsTable extends Table
         }
 
         //in the where() call we need only conditions belongs to contacts
-        //and $whereContain
+        //and where array from $contain
         $whereContacts = $this->getPart('Contacts', $options['_where']);
-        $where = array_merge($whereContacts, $whereContain);
+        $where = array_merge($whereContacts, $contain);
 
         if (isset($options['_where'])) {
-            $where = $this->buildWhere($where, 'Contacts');
+            $where = $this->buildWhere($where);
 
             $owned->where($where);
             $accessibleViaGroups->where($where);
@@ -659,10 +666,13 @@ class ContactsTable extends Table
         }
 
         if ($contain) {
-            $owned->contain($contain);
-            $accessibleViaGroups->contain($contain);
-            $accessibleViaUsergroups->contain($contain);
+            //getting tableNames from $contain
+            $containTables = array_map([$this, 'getTableName'], array_keys($contain));
+            $owned->contain($containTables);
+            $accessibleViaGroups->contain($containTables);
+            $accessibleViaUsergroups->contain($containTables);
         }
+
 
         /*        $owned->matching(
                     'Histories.Events',
@@ -671,14 +681,16 @@ class ContactsTable extends Table
                     });
         */
         if ($hasMany) {
-            foreach ($hasMany as $tableName) {
-                if ($whereHasMany) {
-                    $callback = function ($q) use ($whereHasMany, $tableName) {
-                        return $q->where($this->buildWhere($whereHasMany, $tableName));
+            foreach ($hasMany as $field => $conditions) {
+                if ($conditions['value']) {
+                    $arr = [$field => $conditions];
+                    $callback = function ($q) use ($arr) {
+                        return $q->where($this->buildWhere($arr));
                     };
                 } else {
                     $callback = null;
                 }
+                $tableName = $this->getTableName($field);
                 $owned->matching($tableName, $callback);
                 $accessibleViaGroups->matching($tableName, $callback);
                 $accessibleViaUsergroups->matching($tableName, $callback);
@@ -686,19 +698,12 @@ class ContactsTable extends Table
         }
 
         if ($belongsToMany) {
-            foreach ($belongsToMany as $tableName) {
-                //ONLY_FULL_GROUP_BY miatt a GROUP BY-hoz kell kapcsolni minden kapcsolodo tablabol szarmazo select erteket, ami nincs aggregalva
-                $groupBy = 'Contacts.id';
-                if($whereContain) {
-                    foreach($whereContain as $key => $value) {
-                        $groupBy .= ', '.$key;
-                    }
-                }
-                
+            foreach ($belongsToMany as $field => $condition) {
                 //a nyers sql kodot adja vissza - utolso true parameter szabalyozza, hogy mivel ter vissza
-                $where = $this->buildWhere($whereBelongsToMany, $tableName);
+                $where = $this->buildWhere($belongsToMany);
                 $where = str_replace(".", "__", $where);
-                
+
+                $tableName = $this->getTableName($field);
                 $owned->matching($tableName);
                 if($where) {
                     $owned->group($groupBy.' HAVING '.$where);
@@ -1050,17 +1055,16 @@ class ContactsTable extends Table
      *              'value' => ['b']
      *          ]
      *      ]
-     * @param string $tableName : we build the where for this model
      * @return string
      */
-    private function buildWhere($where, $tableName)
+    private function buildWhere($where)
     {
         $conditions = $this->removeEmptyConditions($where);
 
         if (!count($conditions)) {
             return '';
         } else {
-            return $this->getWhereQueryExpressionObject($conditions, $tableName);
+            return $this->getWhereQueryExpressionObject($conditions);
         }
     }
 
@@ -1124,16 +1128,9 @@ class ContactsTable extends Table
         return $ownedWhere;
     }
 
-    /**
-     * @param array $options
-     * @return array [$contain, $belongsToMany, $whereBelongsToMany, $whereContain]
-     */
     private function getAssociationsArrays(array $options)
     {
-        //debug($options);die();
-        //TODO ez itt erősen refactorért kiabál
-        $contain = $belongsToMany = $associations = $whereBelongsToMany =
-            $whereContain = $hasMany = $whereHasMany = $extraTables = [];
+        $associations = $contain = $belongsToMany = $hasMany = [];
         if (isset($options['_where'])) {
             //on belongsToMany $association->type() is manyToMany
             foreach ($this->associations() as $association) {
@@ -1141,19 +1138,16 @@ class ContactsTable extends Table
             }
             foreach ($options['_where'] as $field => $data) {
                 $tableName = $this->getTableName($field);
-                //$baseTableName will we be the first associated table in case of tableName.otherTableName format
+                //$baseTableName will we be the first associated table in case of
+                //tableName.otherTableName format (deeper association)
                 $baseTableName = $this->getTableName($tableName);
                 if (isset($associations[$baseTableName])) {
-                    if ($associations[$baseTableName] == 'manyToMany') {
-                        //this is a belongsToMany association
-                        $belongsToMany[] = $tableName;
-                        $whereBelongsToMany[$field] = $data;
+                    if ($associations[$baseTableName] == 'manyToOne') {
+                        $contain[$field] = $data;
                     } elseif ($associations[$baseTableName] == 'oneToMany') {
-                        $hasMany[] = $tableName;
-                        $whereHasMany[$field] = $data;
-                    } elseif ($associations[$baseTableName] == 'manyToOne') {
-                        $contain[] = $tableName;
-                        $whereContain[$field] = $data;
+                        $hasMany[$field] = $data;
+                    } elseif ($associations[$baseTableName] == 'manyToMany') {
+                        $belongsToMany[$field] = $data;
                     } else {
                         //oneToOne
                     }
@@ -1163,26 +1157,30 @@ class ContactsTable extends Table
 
         return [
             $contain,
-            $whereContain,
-            $belongsToMany,
-            $whereBelongsToMany,
             $hasMany,
-            $whereHasMany
+            $belongsToMany
         ];
     }
 
     /**
      * Returns the table name (Histories) or
      * the table name with the associated table (Histories.Events)
+     * or the associated table name (Events from Histories.Events)
      *
      * @param $name
      * @return string
      */
-    private function getTableName($name)
+    private function getTableName($name, $associated = false)
     {
-        $lastDotPosition = strrpos($name, '.');
-        if ($lastDotPosition) {
-            return substr($name, 0, $lastDotPosition);
+        /*$tableName = '';
+        if ($associated) {
+            $dotPosition = strpos($name, '.');  //first dot
+            $name = substr($name, $dotPosition + 1);
+        }*/
+        $dotPosition = strrpos($name, '.'); //last dot
+        $tableName = substr($name, 0, $dotPosition);
+        if ($tableName) {
+            return $tableName;
         } else {
             return $name;
         }
@@ -1194,10 +1192,9 @@ class ContactsTable extends Table
      * to a Query object
      *
      * @param array $conditions
-     * @param string $tableName
      * @return Query
      */
-    private function getWhereQueryExpressionObject(array $conditions, string $tableName)
+    private function getWhereQueryExpressionObject(array $conditions)
     {
         // TODO security of values!
 
@@ -1209,8 +1206,7 @@ class ContactsTable extends Table
 
         foreach ($conditions as $field => $data) {
             $tableName = $this->getTableName($field);
-            if (in_array($tableName, $tableNames)
-                || (isset($associations[$tableName]) && $associations[$tableName] != 'manyToMany')) {
+            if (isset($associations[$tableName]) && $associations[$tableName] != 'manyToMany') {
                 if (!empty($data['value'])) {
                     if (!isset($data['connect'])) {    //this is the first line of the conditions
                         $where .= '( ';

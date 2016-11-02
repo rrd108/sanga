@@ -400,6 +400,29 @@ class ContactsTableTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    public function testGetTableName()
+    {
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('getTableName');
+        $method->setAccessible(true);
+
+        $actual = $method->invoke($this->Contacts, 'Contacts.contactname');
+        $expected = 'Contacts';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke($this->Contacts, 'Histories.date');
+        $expected = 'Histories';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke($this->Contacts, 'Histories.Events.name');
+        $expected = 'Histories.Events';
+        $this->assertEquals($expected, $actual);
+
+        /*$actual = $method->invoke($this->Contacts, 'Histories.Events.name', true);
+        $expected = 'Events';
+        $this->assertEquals($expected, $actual);*/
+    }
+
     public function testRemoveEmptyConditions()
     {
         $class = new \ReflectionClass($this->Contacts);
@@ -464,12 +487,89 @@ class ContactsTableTest extends TestCase
                     'condition' => ['&%'],
                     'value' => [1]
                 ]
-            ],
-            ['Contacts']
+            ]
         );
         $generator = $this->Contacts->find()->valueBinder();
         $actual = ($queryExpressionObject->sql($generator));
         $expected = 'Zips.name LIKE "%Balaton%"';
+        $this->assertEquals($expected, $actual);
+
+        $queryExpressionObject = $method->invoke(
+            $this->Contacts,
+            [
+                'Histories.date' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['-10-']
+                ],
+                'Histories.Events.name' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['email']
+                ]
+            ]
+        );
+        $generator = $this->Contacts->find()->valueBinder();
+        $actual = ($queryExpressionObject->sql($generator));
+        $expected = 'Histories.date LIKE "%-10-%" AND Events.name LIKE "email"';
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testGetPart()
+    {
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('getPart');
+        $method->setAccessible(true);
+
+        $where = [
+            'Contacts.contactname' => [
+                'condition' => ['&%'],
+                'value' => ['goura']
+            ],
+            'Contacts.legalname' => [
+                'connect' => '|',
+                'condition' => ['&%'],
+                'value' => ['hari']
+            ],
+            'Zips.name' => [
+                'connect' => '&',
+                'condition' => ['&%'],
+                'value' => ['']
+            ],
+            'WorkplaceZips.name' => [
+                'connect' => '&',
+                'condition' => ['&%','|%'],
+                'value' => ['buda', 'pest']
+            ],
+            'Groups.name' => [
+                'connect' => '&',
+                'condition' => ['&%'],
+                'value' => ['']
+            ],
+            'Histories.date' => [
+                'connect' => '&',
+                'condition' => ['&%'],
+                'value' => ['-10-']
+            ],
+            'Histories.Events.name' => [
+                'connect' => '&',
+                'condition' => ['&%'],
+                'value' => ['email']
+            ]
+        ];
+
+        $actual = $method->invoke($this->Contacts, 'Contacts', $where);
+        $expected = [
+            'Contacts.contactname' => [
+                'condition' => ['&%'],
+                'value' => ['goura']
+            ],
+            'Contacts.legalname' => [
+                'connect' => '|',
+                'condition' => ['&%'],
+                'value' => ['hari']
+            ]
+        ];
         $this->assertEquals($expected, $actual);
     }
 
@@ -502,8 +602,8 @@ class ContactsTableTest extends TestCase
             ]
         );
         $expected = [
-            ['Zips'],
-            ['Groups', 'Groups'],
+            [],
+            [],
             [
                 'Groups.name' => [
                     'connect' => '&',
@@ -515,11 +615,92 @@ class ContactsTableTest extends TestCase
                     'condition' => ['&%'],
                     'value' => [1]
                 ]
-            ],
-            []
+            ]
         ];
         $this->assertEquals($expected, $actual);
 
+        $actual = $method->invoke(
+            $this->Contacts,
+            [
+                'User.id' => 2,
+                '_contain' => ['Zips', 'WorkplaceZips', 'Groups', 'Histories'],
+                '_limit' => 20,
+                '_order' => ['Contacts.contactname' => 'ASC'],
+                '_page' => 1,
+                '_select' => ['Contacts.active', 'Contacts.id', 'Contacts.sex', 'Contacts.contactname',
+                    'Contacts.legalname', 'Zips.name', 'WorkplaceZips.name', 'Groups.name', 'Histories.date',
+                    'Events.name'],
+                '_where' => [
+                    'Contacts.contactname' => [
+                        'condition' => ['&%'],
+                        'value' => ['Gábor']
+                    ],
+                    'Contacts.legalname' => [
+                        'connect' => '|',
+                        'condition' => ['&%'],
+                        'value' => ['Gábor']
+                    ],
+                    'Zips.name' => [
+                        'connect' => '&',
+                        'condition' => ['&%'],
+                        'value' => ['']
+                    ],
+                    'WorkplaceZips.name' => [
+                        'connect' => '&',
+                        'condition' => ['&%', '|%'],
+                        'value' => ['buda', 'pest']
+                    ],
+                    'Groups.name' => [
+                        'connect' => '&',
+                        'condition' => ['&%'],
+                        'value' => ['']
+                    ],
+                    'Histories.date' => [
+                        'connect' => '&',
+                        'condition' => ['&%'],
+                        'value' => ['-10-']
+                    ],
+                    'Histories.Events.name' => [
+                        'connect' => '&',
+                        'condition' => ['&%'],
+                        'value' => ['email']
+                    ]
+                ]
+            ]);
+        $expected = [
+            [
+                'Zips.name' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['']
+                ],
+                'WorkplaceZips.name' => [
+                    'connect' => '&',
+                    'condition' => ['&%', '|%'],
+                    'value' => ['buda', 'pest']
+                ]
+            ],
+            [
+                'Histories.date' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['-10-']
+                ],
+                'Histories.Events.name' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['email']
+                ]
+            ],
+            [
+                'Groups.name' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['']
+                ]
+            ]
+        ];
+        $this->assertEquals($expected, $actual);
     }
 
     private function filterHasAccess($actual)

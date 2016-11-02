@@ -132,6 +132,7 @@ class ContactsController extends AppController
             $this->set('queryArray', $queryArray);
             $matching = $contain = $conditions = $select = $selected = [];
             //TODO handling Histories_Events_name type keys
+            //TODO put this to the model
             foreach ($queryArray as $keyName => $values) {
                 $remove = [];
                 if (strpos($keyName, 'field_') === 0) {
@@ -150,7 +151,7 @@ class ContactsController extends AppController
                     if (strpos($field, 'Contacts.') === 0) {
                         $selected[] = substr(strstr($field, '.'), 1);
                     } else {
-                        $modelName = strstr($field, '.', true);
+                        $modelName = strstr($field, '.', true); //TODO több pöttyös - ha egyáltalán kell a conatin
                         if (! in_array($modelName, $contain)) {
                             $contain[] = $modelName;
                         }
@@ -164,7 +165,7 @@ class ContactsController extends AppController
                     foreach ($values as $value) {
                         $conditions[$field]['condition'][] = $value;
                     }
-                } else {
+                } else {        //connect keys
                     $field = str_replace('_', '.', str_replace('connect_', '', $keyName));
                     $conditions[$field]['connect'] = $values;
                 }
@@ -199,7 +200,7 @@ class ContactsController extends AppController
                     'accessibleBy' => [
                         'User.id' => $this->Auth->user('id'),
                         '_where' => $conditions,
-                        '_contain' => $contain,
+                        '_contain' => $contain, //TODO remove
                         '_select' => $select,
                         '_order' => $order,
                         '_page' => isset($this->request->query['page']) ? $this->request->query['page'] : 1,
