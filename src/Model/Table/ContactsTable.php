@@ -1051,7 +1051,6 @@ class ContactsTable extends Table
      *              'value' => ['b']
      *          ]
      *      ]
-     * @param boolean $rawCode : what value return 
      * @param string $tableName : we build the where for this model
      * @return string
      */
