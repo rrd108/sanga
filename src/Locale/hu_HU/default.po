@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sanga 1.0\n"
-"POT-Creation-Date: 2016-11-01 16:05+0100\n"
-"PO-Revision-Date: 2016-11-01 16:07+0100\n"
+"POT-Creation-Date: 2016-11-02 11:10+0100\n"
+"PO-Revision-Date: 2016-11-02 11:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: hu\n"
@@ -16,90 +16,90 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: Controller/ContactsController.php:123;377;542
+#: Controller/ContactsController.php:123;379;544
 #: Controller/GroupsController.php:80
 msgid "Permission deined"
 msgstr "Hozzáférés megtagadva"
 
-#: Controller/ContactsController.php:465;847
+#: Controller/ContactsController.php:467;849
 msgid "The contact has been saved."
 msgstr "A kapcsolat mentve"
 
-#: Controller/ContactsController.php:474;860
+#: Controller/ContactsController.php:476;862
 msgid "The contact could not be saved. Please, try again."
 msgstr "Nem tudtam elmenteni a kapcsolatot. Kérlek próbáld meg újra."
 
-#: Controller/ContactsController.php:513
+#: Controller/ContactsController.php:515
 msgid "Two family members are in different families"
 msgstr "A családtagok más családokhoz tartoznak"
 
-#: Controller/ContactsController.php:564
+#: Controller/ContactsController.php:566
 msgid "Contact data change has been saved."
 msgstr ""
 
-#: Controller/ContactsController.php:572
+#: Controller/ContactsController.php:574
 msgid "Contact data change could not be saved. Please, try again."
 msgstr ""
 
-#: Controller/ContactsController.php:593
+#: Controller/ContactsController.php:595
 msgid "Nothing changed"
 msgstr ""
 
-#: Controller/ContactsController.php:608
+#: Controller/ContactsController.php:610
 msgid "The contact is removed from this family"
 msgstr "A kapcsolat kikerült ebből a családból."
 
-#: Controller/ContactsController.php:610
+#: Controller/ContactsController.php:612
 msgid "The contact could not be removed from this family"
 msgstr "A kapcsolatot nem tudtam kivenni a családból."
 
-#: Controller/ContactsController.php:658
+#: Controller/ContactsController.php:660
 msgid "New Group membership saved"
 msgstr "Csoporttagság hozzáadva"
 
-#: Controller/ContactsController.php:660
+#: Controller/ContactsController.php:662
 msgid "New Group membership is not saved"
 msgstr "Az új csoporttagságot nem tudtam hozzáadni"
 
-#: Controller/ContactsController.php:661
+#: Controller/ContactsController.php:663
 msgid "Group membership change did not saved"
 msgstr "A csoporttagság módosítása nem sikerült"
 
-#: Controller/ContactsController.php:665
+#: Controller/ContactsController.php:667
 msgid "You have no access to this contact"
 msgstr "Ehhez a kapcsolathoz nincs hozzáférésed"
 
-#: Controller/ContactsController.php:677
+#: Controller/ContactsController.php:679
 msgid "Group membership removed"
 msgstr "Csoporttagság törölve"
 
-#: Controller/ContactsController.php:690
+#: Controller/ContactsController.php:692
 msgid "Skill removed"
 msgstr "A szakértelem törölve"
 
-#: Controller/ContactsController.php:857
+#: Controller/ContactsController.php:859
 msgid "Contact photo saved."
 msgstr "A kapcsolat fényképe mentve."
 
-#: Controller/ContactsController.php:857
+#: Controller/ContactsController.php:859
 msgid "Unable to save contact photo."
 msgstr "A kapcsolat fényképét nem sikerült menteni."
 
-#: Controller/ContactsController.php:1020
+#: Controller/ContactsController.php:1022
 #: Controller/HistoriesController.php:121
 msgid "The history has been saved."
 msgstr "A történés mente."
 
-#: Controller/ContactsController.php:1023
+#: Controller/ContactsController.php:1025
 msgid "The history could not be saved."
 msgstr "A történést nem sikerült menteni."
 
-#: Controller/ContactsController.php:1050
+#: Controller/ContactsController.php:1052
 #: Controller/DocumentsController.php:58;87
 msgid "The document has been saved."
 msgstr ""
 
-#: Controller/ContactsController.php:1056
+#: Controller/ContactsController.php:1058
 msgid "The document could not be saved."
 msgstr ""
 
@@ -829,16 +829,16 @@ msgid "History date"
 msgstr "Történés dátuma"
 
 #: Template/Contacts/searchquery.ctp:95
-msgid "! History event"
-msgstr ""
+msgid "History event"
+msgstr "Történés esemény"
 
 #: Template/Contacts/searchquery.ctp:96
 msgid "History detail"
 msgstr "Történés leírás"
 
 #: Template/Contacts/searchquery.ctp:97
-msgid "!!! History group name"
-msgstr ""
+msgid "History group name"
+msgstr "Történés csoport"
 
 #: Template/Contacts/searchquery.ctp:117
 msgid "Where"
