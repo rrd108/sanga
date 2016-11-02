@@ -1239,7 +1239,7 @@ class ContactsTable extends Table
             }
         }
         $query = new Query($this->connection(), $this);
-        return $rawCode ? $where : $query->newExpr()->add($where);
+        return $query->newExpr()->add($where);
     }
 
     /**
