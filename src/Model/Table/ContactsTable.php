@@ -653,7 +653,8 @@ class ContactsTable extends Table
         $mixedWhere = array_merge($ownedWhere, $whereContain);
 
         if (isset($options['_where'])) {
-            $where = $this->buildWhere($mixedWhere, ['Contacts'], false);
+            $where = $this->buildWhere($where, 'Contacts');
+
             $owned->where($where);
             $accessibleViaGroups->where($where);
             $accessibleViaUsergroups->where($where);
@@ -676,7 +677,7 @@ class ContactsTable extends Table
             foreach ($hasMany as $tableName) {
                 if ($whereHasMany) {
                     $callback = function ($q) use ($whereHasMany, $tableName) {
-                        return $q->where($this->buildWhere($whereHasMany, [$tableName]));
+                        return $q->where($this->buildWhere($whereHasMany, $tableName));
                     };
                 } else {
                     $callback = null;
@@ -698,7 +699,7 @@ class ContactsTable extends Table
                 }
                 
                 //a nyers sql kodot adja vissza - utolso true parameter szabalyozza, hogy mivel ter vissza
-                $where = $this->buildWhere($whereBelongsToMany, [$tableName], true);
+                $where = $this->buildWhere($whereBelongsToMany, $tableName);
                 $where = str_replace(".", "__", $where);
                 
                 $owned->matching($tableName);
@@ -1052,11 +1053,11 @@ class ContactsTable extends Table
      *              'value' => ['b']
      *          ]
      *      ]
-     * @param array $tableNames : we build the where for this model
      * @param boolean $rawCode : what value return 
+     * @param string $tableName : we build the where for this model
      * @return string
      */
-    private function buildWhere($where, $tableNames, $rawCode = false)
+    private function buildWhere($where, $tableName)
     {
         //TODO ez itt a histories + histories.event egyidejű lekérésnél hülyeséet gyárt le
         $conditions = $this->removeEmptyConditions($where);
@@ -1064,7 +1065,7 @@ class ContactsTable extends Table
         if (!count($conditions)) {
             return '';
         } else {
-            return $this->getWhereQueryExpressionObject($conditions, $tableNames, $rawCode);
+            return $this->getWhereQueryExpressionObject($conditions, $tableName);
         }
     }
 
@@ -1106,12 +1107,15 @@ class ContactsTable extends Table
         return $key . $val;
     }
 
+
     /**
-     * @param array $where
+     * Get the part of $where array identified by $tableName
+     *
      * @param string $tableName
-     * @return array $ownedWhere
+     * @param array $where
+     * @return array
      */
-    private function ownedWhere(array $where, $tableName)
+    private function getPart(string $tableName, array $where)
     {
         $ownedWhere = [];
         if (isset($where)) {
@@ -1193,11 +1197,10 @@ class ContactsTable extends Table
      * to a Query object
      *
      * @param array $conditions
-     * @param array $tableNames
-     * @param boolean $rawCode
+     * @param string $tableName
      * @return Query
      */
-    private function getWhereQueryExpressionObject(array $conditions, array $tableNames, $rawCode = false)
+    private function getWhereQueryExpressionObject(array $conditions, string $tableName)
     {
         // TODO security of values!
 
