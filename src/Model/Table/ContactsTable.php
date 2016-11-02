@@ -602,9 +602,9 @@ class ContactsTable extends Table
 
         list(
             $contain,
+            $whereContain,
             $belongsToMany,
             $whereBelongsToMany,
-            $whereContain,
             $hasMany,
             $whereHasMany,
             ) = $this->getAssociationsArrays($options);
@@ -1162,9 +1162,9 @@ class ContactsTable extends Table
 
         return [
             $contain,
+            $whereContain,
             $belongsToMany,
             $whereBelongsToMany,
-            $whereContain,
             $hasMany,
             $whereHasMany
         ];
