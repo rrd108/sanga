@@ -612,7 +612,11 @@ class ContactsTable extends Table
         }
         if($hasMany) {
             foreach($hasMany as $key => $value) {
-                $groupBy .= ', ' . $key;    //TODO remove first part if there are more dots
+                //remove first part if there are more dots
+                if (substr_count($key, '.') > 1) {
+                    $key = substr($key, strpos($key, '.'));
+                }
+                $groupBy .= ', ' . $key;
             }
         }
 
@@ -654,7 +658,7 @@ class ContactsTable extends Table
 
         //in the where() call we need only conditions belongs to contacts
         //and where array from $contain
-        $whereContacts = $this->getPart('Contacts', $options['_where']);
+        $whereContacts = isset($options['_where']) ? $this->getPart('Contacts', $options['_where']) : [];
         $where = array_merge($whereContacts, $contain);
 
         if (isset($options['_where'])) {
