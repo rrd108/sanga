@@ -627,6 +627,7 @@ class ContactsTable extends Table
         else 
             $select = $options['_select'];
 
+        //az options tömbből csaka User.id lesz használva ezekben a hívásokban
         $owned = $this->findOwnedBy($queryTemp1, $options)
             ->select($select);
         $accessibleViaGroups = $this->findAccessibleViaGroupBy($queryTemp2, $options)
