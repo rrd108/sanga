@@ -677,13 +677,6 @@ class ContactsTable extends Table
             $accessibleViaUsergroups->contain($containTables);
         }
 
-
-        /*        $owned->matching(
-                    'Histories.Events',
-                    function ($q) {
-                        return $q->where(['Events.name' => 'email']);
-                    });
-        */
         if ($hasMany) {
             foreach ($hasMany as $field => $conditions) {
                 if ($conditions['value']) {
