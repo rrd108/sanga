@@ -637,7 +637,7 @@ class ContactsTable extends Table
 
         //ha van belongsToMany tablara vonatkozo kereses, akkor itt tesszuk hozza a select reszhez group_concat-tal
         if(!empty($groupConcats)) {
-            foreach($groupConcats AS $item) {
+            foreach($groupConcats as $item) {
                 $itemName = str_replace('.', '__', $item);
                 $owned->select([$itemName => 'GROUP_CONCAT('.$item.' SEPARATOR \'|\')']);
                 $accessibleViaGroups->select([$itemName => 'GROUP_CONCAT('.$item.' SEPARATOR \'|\')']);
@@ -691,7 +691,7 @@ class ContactsTable extends Table
                 //ONLY_FULL_GROUP_BY miatt a GROUP BY-hoz kell kapcsolni minden kapcsolodo tablabol szarmazo select erteket, ami nincs aggregalva
                 $groupBy = 'Contacts.id';
                 if($whereContain) {
-                    foreach($whereContain AS $key => $value) {
+                    foreach($whereContain as $key => $value) {
                         $groupBy .= ', '.$key;
                     }
                 }
