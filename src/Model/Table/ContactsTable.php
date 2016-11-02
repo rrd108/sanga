@@ -1152,6 +1152,9 @@ class ContactsTable extends Table
             }
         }
 
+        $hasMany = $this->sortByDots($hasMany);
+        $belongsToMany = $this->sortByDots($belongsToMany);
+
         return [
             $contain,
             $hasMany,
@@ -1267,5 +1270,26 @@ class ContactsTable extends Table
         }
         
         return $conditions;
+    }
+
+    /**
+     * @param $arr
+     * @param $dotsNum
+     * @return mixed
+     */
+    private function sortByDots($arr)
+    {
+        //hasMany should be sorted
+        //we should have entries with dots at the beginning to avoid duplicate calls on matching
+        $dotsNum = [];
+        foreach ($arr as $field => $condition) {
+            $dotsNum[$field] = substr_count($field, '.');
+        }
+        arsort($dotsNum);
+        $sortedArr = [];
+        foreach ($dotsNum as $field => $num) {
+            $sortedArr[$field] = $arr[$field];
+        }
+        return $sortedArr;
     }
 }
