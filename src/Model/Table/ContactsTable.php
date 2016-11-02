@@ -1185,7 +1185,7 @@ class ContactsTable extends Table
 
     /**
      * From the $condtions array (created by searchquery form)
-     * we cretae an SQL string for WHERE and than transform it
+     * we create an SQL string for WHERE and than transform it
      * to a Query object
      *
      * @param array $conditions
