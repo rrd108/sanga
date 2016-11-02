@@ -1203,7 +1203,8 @@ class ContactsTable extends Table
 
         foreach ($conditions as $field => $data) {
             $tableName = $this->getTableName($field);
-            if (isset($associations[$tableName]) && $associations[$tableName] != 'manyToMany') {
+            if ($tableName == $this->alias()
+                || (isset($associations[$tableName]) && $associations[$tableName] != 'manyToMany')) {
                 if (!empty($data['value'])) {
                     if (!isset($data['connect'])) {    //this is the first line of the conditions
                         $where .= '( ';
