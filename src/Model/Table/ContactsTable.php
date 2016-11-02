@@ -614,7 +614,7 @@ class ContactsTable extends Table
             foreach($hasMany as $key => $value) {
                 //remove first part if there are more dots
                 if (substr_count($key, '.') > 1) {
-                    $key = substr($key, strpos($key, '.'));
+                    $key = substr($key, strpos($key, '.') + 1);
                 }
                 $groupBy .= ', ' . $key;
             }
