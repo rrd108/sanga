@@ -645,10 +645,10 @@ class ContactsTable extends Table
             }
         }
 
-        //sajat, Contacts tablara vonatkozo feltetelek ($ownedWhere) es a siman kapcsolo tablakhoz tartozo feltetelek ($whereContain)
-        //egyszerre beepithetoek a lekerdezesbe (buildWhere)
-        $ownedWhere = isset($options['_where']) ? $this->ownedWhere($options['_where'], 'Contacts') : array();
-        $mixedWhere = array_merge($ownedWhere, $whereContain);
+        //in the where() call we need only conditions belongs to contacts
+        //and $whereContain
+        $whereContacts = $this->getPart('Contacts', $options['_where']);
+        $where = array_merge($whereContacts, $whereContain);
 
         if (isset($options['_where'])) {
             $where = $this->buildWhere($where, 'Contacts');
