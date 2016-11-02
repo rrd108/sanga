@@ -661,7 +661,7 @@ class ContactsTable extends Table
         $whereContacts = isset($options['_where']) ? $this->getPart('Contacts', $options['_where']) : [];
         $where = array_merge($whereContacts, $contain);
 
-        if (isset($options['_where'])) {
+        if ($whereContacts) {
             $where = $this->buildWhere($where);
 
             $owned->where($where);
