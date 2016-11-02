@@ -1151,9 +1151,11 @@ class ContactsTable extends Table
                     } elseif ($associations[$baseTableName] == 'oneToMany') {
                         $hasMany[] = $tableName;
                         $whereHasMany[$field] = $data;
-                    } else {
+                    } elseif ($associations[$baseTableName] == 'manyToOne') {
                         $contain[] = $tableName;
                         $whereContain[$field] = $data;
+                    } else {
+                        //oneToOne
                     }
                 }
             }
