@@ -609,16 +609,13 @@ class ContactsTable extends Table
             $whereHasMany,
             ) = $this->getAssociationsArrays($options);
 
-        $tmp_select = $this->schema()->columns();
-        if (isset($options['_select'])) {
-            $tmp_select = $options['_select'];
-        }
-
-        //select ertekek osszeallitasa: belongsToMany eseten MYSQL group_concat() fuggvenyt kell hasznalni,
-        //igy kulon kell szedni -> select es groupConcats tombok
+        //select ertekek osszeallitasa
+        //belongsToMany eseten MYSQL group_concat() függvenyt kell majd hasznalni,
+        //igy kulon kell szedni -> select es groupConcats tombokre
         $groupConcats = array();
         if($belongsToMany){
-            foreach($tmp_select As $field) {
+            foreach($options['_select'] as $field) {
+                //deeper associations are handled earlier, so getTableName will give back proper results
                 $tableName = $this->getTableName($field);
                 if(in_array($tableName, $belongsToMany)) {
                     $groupConcats[] = $field;
@@ -628,7 +625,7 @@ class ContactsTable extends Table
             }
         }
         else 
-            $select = $tmp_select;
+            $select = $options['_select'];
 
         $owned = $this->findOwnedBy($queryTemp1, $options)
             ->select($select);
