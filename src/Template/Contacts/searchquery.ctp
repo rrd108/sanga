@@ -92,9 +92,9 @@ print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
                         'modified' => __('Modified'),
                         'Groups.name' => __('Groups'),
                         'Histories.date' => __('History date'),
-                        'Histories.Events.name' => '!' . __('History event'),
+                        'Histories.Events.name' => __('History event'),
                         'Histories.detail' => __('History detail'),
-                        'Histories.Groups.name' => '!!!' . __('History group name')
+                        'Histories.Groups.name' => '!' . __('History group name')
                         ];
                     foreach ($filterFields as $field => $fLabel) {
                         if ( ! empty($selected) && in_array($field, $selected)) {
