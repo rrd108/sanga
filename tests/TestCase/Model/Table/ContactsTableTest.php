@@ -477,6 +477,25 @@ class ContactsTableTest extends TestCase
         $queryExpressionObject = $method->invoke(
             $this->Contacts,
             [
+                'Contacts.contactname' => [
+                    'condition' => ['&%'],
+                    'value' => ['Gábor']
+                ],
+                'Contacts.legalname' => [
+                    'connect' => '|',
+                    'condition' => ['&%'],
+                    'value' => ['Gábor']
+                ]
+            ]
+        );
+        $generator = $this->Contacts->find()->valueBinder();
+        $actual = ($queryExpressionObject->sql($generator));
+        $expected = '( Contacts.contactname LIKE "%Gábor%") OR ( Contacts.legalname LIKE "%Gábor%")';
+        $this->assertEquals($expected, $actual);
+
+        $queryExpressionObject = $method->invoke(
+            $this->Contacts,
+            [
                 'Zips.name' => [
                     'connect' => '&',
                     'condition' => ['&%'],
@@ -715,7 +734,44 @@ class ContactsTableTest extends TestCase
         return $actual;
     }
 
-/**
+    public function testSortByDots()
+    {
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('sortByDots');
+        $method->setAccessible(true);
+
+        $actual = $method->invoke(
+            $this->Contacts,
+            [
+                'Histories.date' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['-10-']
+                ],
+                'Histories.Events.name' => [
+                    'connect' => '&',
+                    'condition' => ['&%'],
+                    'value' => ['email']
+                ]
+            ]
+        );
+        $expected = [
+            'Histories.Events.name' => [
+                'connect' => '&',
+                'condition' => ['&%'],
+                'value' => ['email']
+            ],
+            'Histories.date' => [
+                'connect' => '&',
+                'condition' => ['&%'],
+                'value' => ['-10-']
+            ]
+        ];
+        $this->assertEquals($expected, $actual);
+    }
+
+
+        /**
  * Test initialize method
  *
  * @return void
