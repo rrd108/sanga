@@ -120,13 +120,12 @@ function setGroupCss($group, $userId)
                         }
                         break;
                     case 'Groups.name' :
-                        $GroupsName = explode('|', $contact->_matchingData['Groups']->name);
                         if (isset($contact->_matchingData['Groups'])){
-                            foreach ($contact->groups as $group){
-                                if (in_array($group->name,$GroupsName)) {
-                                    $css = setGroupCss($group, $this->request->session()->read('Auth.User.id'));
-                                    print '<span class="tag tag-'.$css.'">' . $group->name . '</span>' . "\n";
-                                }
+                            $groupNames = explode('|', $contact->_matchingData['Groups']->name);
+                            foreach ($groupNames as $groupName){
+                                //TODO $css = setGroupCss($groupName, $this->request->session()->read('Auth.User.id'));
+                                $css = 'shared';
+                                print '<span class="tag tag-'.$css.'">' . $groupName . '</span>' . "\n";
                             }
                         }
                         break;
@@ -138,6 +137,16 @@ function setGroupCss($group, $userId)
                     case 'Histories.detail' :
                         if ($contact->_matchingData['Histories']) {
                             echo $contact->_matchingData['Histories']->detail;
+                        }
+                        break;
+                    case 'Histories.Events.name' :
+                        if ($contact->_matchingData['Events']) {
+                            echo $contact->_matchingData['Events']->name;
+                        }
+                        break;
+                    case 'Histories.Groups.name' :
+                        if ($contact->_matchingData['Groups']) {
+                            echo $contact->_matchingData['Groups']->name;
                         }
                         break;
                     default :
