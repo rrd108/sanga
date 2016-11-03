@@ -417,13 +417,24 @@ class ContactsTableTest extends TestCase
         $actual = $method->invoke($this->Contacts, 'Histories.Events.name');
         $expected = 'Histories.Events';
         $this->assertEquals($expected, $actual);
-
-        /*$actual = $method->invoke($this->Contacts, 'Histories.Events.name', true);
-        $expected = 'Events';
-        $this->assertEquals($expected, $actual);*/
     }
 
-    public function testRemoveEmptyConditions()
+    public function testGetFieldName()
+    {
+        $class = new \ReflectionClass($this->Contacts);
+        $method = $class->getMethod('getFieldName');
+        $method->setAccessible(true);
+
+        $actual = $method->invoke($this->Contacts, 'Contacts.contactname');
+        $expected = 'Contacts.contactname';
+        $this->assertEquals($expected, $actual);
+
+        $actual = $method->invoke($this->Contacts, 'Histories.Events.name');
+        $expected = 'Events.name';
+        $this->assertEquals($expected, $actual);
+    }
+
+        public function testRemoveEmptyConditions()
     {
         $class = new \ReflectionClass($this->Contacts);
         $method = $class->getMethod('removeEmptyConditions');
@@ -500,11 +511,6 @@ class ContactsTableTest extends TestCase
                     'connect' => '&',
                     'condition' => ['&%'],
                     'value' => ['Balaton']
-                ],
-                'Groups.shared' => [
-                    'connect' => '&',
-                    'condition' => ['&%'],
-                    'value' => [1]
                 ]
             ]
         );

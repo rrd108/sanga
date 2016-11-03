@@ -635,8 +635,8 @@ class ContactsTable extends Table
             }
         }
         else {
-            $select = $options['_select'];
-        }
+            $select = isset($options['_select']) ? $options['_select'] : null;
+       }
 
         //az options tömbből csaka User.id lesz használva ezekben a hívásokban
         $owned = $this->findOwnedBy($queryTemp1, $options)
@@ -672,31 +672,47 @@ class ContactsTable extends Table
         if ($contain) {
             //getting tableNames from $contain
             $containTables = array_map([$this, 'getTableName'], array_keys($contain));
+            //TODO if we have exactly 2 tables here and ask for histories the results are dupliated
+            //if we have only 1 or 3 we get no duplication
             $owned->contain($containTables);
             $accessibleViaGroups->contain($containTables);
             $accessibleViaUsergroups->contain($containTables);
         }
 
+        /*debug($accessibleViaGroups);
+        //TODO the next innerJoin creates only
+        //INNER JOIN histories Histories ON Contacts.id = (Histories.contact_id)
+        //without group filter because $accessibleViaGroups called an innerJoin upper
+        //and Cake requires to start from the deeper (more dotted) associations
+        //that is why Histories.groups serch drops filter
+         $accessibleViaGroups->innerJoinWith(
+            'Histories.Groups',
+            function ($q) {
+                return $q-where(['Groups.name' => 'seva']);
+            }
+        );
+        debug($accessibleViaGroups);
+        die();*/
+
         if ($hasMany) {
             foreach ($hasMany as $field => $conditions) {
                 if ($conditions['value']) {
-                    $arr = [$field => $conditions];
-                    $callback = function ($q) use ($arr) {
-                        return $q->where($this->buildWhere($arr));
+                    $queryExp = $this->buildWhere([$field => $conditions]);
+                    $callback = function ($q) use ($queryExp) {
+                        return $q->where($queryExp);
                     };
                 } else {
                     $callback = null;
                 }
                 $tableName = $this->getTableName($field);
-                $owned->matching($tableName, $callback);
-                $accessibleViaGroups->matching($tableName, $callback);
-                $accessibleViaUsergroups->matching($tableName, $callback);
+                $owned->innerJoinWith($tableName, $callback);
+                $accessibleViaGroups->innerJoinWith($tableName, $callback);
+                $accessibleViaUsergroups->innerJoinWith($tableName, $callback);
             }
         }
 
-        if ($belongsToMany) {
+        if ($belongsToMany) { //TODO
             foreach ($belongsToMany as $field => $condition) {
-                //a nyers sql kodot adja vissza - utolso true parameter szabalyozza, hogy mivel ter vissza
                 $where = $this->buildWhere($belongsToMany);
                 $where = str_replace(".", "__", $where);
 
@@ -772,7 +788,9 @@ class ContactsTable extends Table
     private function findAccessibleViaGroupBy(Query $query, array $options)
     {
         //accessible groups for the user
-        $groupIds = $this->Groups->find('accessible', $options)->extract('id')->toArray();
+        $groupIds = $this->Groups
+            ->find('accessible', $options)
+            ->select('Groups.id');
 
         $query = $this->findInGroups($query, ['Group._ids' => $groupIds]);
         return $query;
@@ -791,6 +809,7 @@ class ContactsTable extends Table
     private function findAccessibleViaUsergroupBy(Query $query, array $options)
     {
         //get users who are in any user groups where the given user(s) are admin
+        //TODO refactor to subquery
         $userIds = $this->Users->getUnderAdminOf($options['User.id']);
         if($userIds->count()) {
             $userIds = $userIds->extract('id')->toArray();
@@ -1050,16 +1069,21 @@ class ContactsTable extends Table
      *              'connect' => '&',
      *              'condition' => ['&%'],
      *              'value' => ['b']
+     *          ],
+     *          'Histories.Groups.name' => [
+     *              'connect' => '&',
+     *              'condition' => ['&%'],
+     *              'value' => ['seva']
      *          ]
      *      ]
-     * @return string
+     * @return \Cake\Database\Expression\QueryExpression|null
      */
     private function buildWhere($where)
     {
         $conditions = $this->removeEmptyConditions($where);
 
         if (!count($conditions)) {
-            return '';
+            return null;
         } else {
             return $this->getWhereQueryExpressionObject($conditions);
         }
@@ -1165,12 +1189,11 @@ class ContactsTable extends Table
     /**
      * Returns the table name (Histories) or
      * the table name with the associated table (Histories.Events)
-     * or the associated table name (Events from Histories.Events)
      *
      * @param $name
      * @return string
      */
-    private function getTableName($name, $associated = false)
+    private function getTableName($name)
     {
         /*$tableName = '';
         if ($associated) {
@@ -1187,17 +1210,31 @@ class ContactsTable extends Table
     }
 
     /**
+     * Returns the field name (Histories.date)
+     *
+     * @param $name
+     * @return string
+     */
+    private function getFieldName($name)
+    {
+        if (substr_count($name, '.') > 1) {
+            $dotPosition = strpos($name, '.');  //first dot
+            $name = substr($name, $dotPosition + 1);
+        }
+        return $name;
+    }
+
+    /**
      * From the $condtions array (created by searchquery form)
      * we create an SQL string for WHERE and than transform it
      * to a Query object
      *
      * @param array $conditions
-     * @return Query
+     * @return \Cake\Database\Expression\QueryExpression
      */
     private function getWhereQueryExpressionObject(array $conditions)
     {
         // TODO security of values!
-
         $where = '';
         $bracketOpened = false;
         foreach ($this->associations() as $association) {
@@ -1205,34 +1242,31 @@ class ContactsTable extends Table
         }
 
         foreach ($conditions as $field => $data) {
-            $tableName = $this->getTableName($field);
-            if ($tableName == $this->alias()
-                || (isset($associations[$tableName]) && $associations[$tableName] != 'manyToMany')) {
-                if (!empty($data['value'])) {
-                    if (!isset($data['connect'])) {    //this is the first line of the conditions
-                        $where .= '( ';
-                        $bracketOpened = true;
-                    } elseif ($data['connect'] == '&' && strlen($where)) {
-                        $where .= ' AND ( ';
-                        $bracketOpened = true;
-                    } elseif ($data['connect'] == '|' && strlen($where)) {
-                        $where .= ' OR ( ';
-                        $bracketOpened = true;
-                    }
+            $field = $this->getFieldName($field);
+            if (!empty($data['value'])) {
+                if (!isset($data['connect'])) {    //this is the first line of the conditions
+                    $where .= '( ';
+                    $bracketOpened = true;
+                } elseif ($data['connect'] == '&' && strlen($where)) {
+                    $where .= ' AND ( ';
+                    $bracketOpened = true;
+                } elseif ($data['connect'] == '|' && strlen($where)) {
+                    $where .= ' OR ( ';
+                    $bracketOpened = true;
+                }
 
-                    $conditionCount = count($data['condition']) - 1;
-                    foreach ($data['condition'] as $i => $condition) {
-                        if ($i > 0) {
-                            if ($condition[0] == '&') {
-                                $where .= ' AND ';
-                            } else {
-                                $where .= ' OR ';
-                            }
+                $conditionCount = count($data['condition']) - 1;
+                foreach ($data['condition'] as $i => $condition) {
+                    if ($i > 0) {
+                        if ($condition[0] == '&') {
+                            $where .= ' AND ';
+                        } else {
+                            $where .= ' OR ';
                         }
-                        $where .= $this->translateCode2SQL($condition[1], $field, $data['value'][$i]);
-                        if ($i == $conditionCount && $bracketOpened) {
-                            $where .= ')';
-                        }
+                    }
+                    $where .= $this->translateCode2SQL($condition[1], $field, $data['value'][$i]);
+                    if ($i == $conditionCount && $bracketOpened) {
+                        $where .= ')';
                     }
                 }
             }
