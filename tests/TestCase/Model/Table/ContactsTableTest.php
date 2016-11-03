@@ -536,7 +536,7 @@ class ContactsTableTest extends TestCase
         );
         $generator = $this->Contacts->find()->valueBinder();
         $actual = ($queryExpressionObject->sql($generator));
-        $expected = 'Histories.date LIKE "%-10-%" AND Events.name LIKE "email"';
+        $expected = 'Histories.date LIKE "%-10-%" AND ( Events.name LIKE "%email%")';
         $this->assertEquals($expected, $actual);
     }
 

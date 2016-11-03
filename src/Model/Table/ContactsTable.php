@@ -639,12 +639,15 @@ class ContactsTable extends Table
        }
 
         //az options tömbből csaka User.id lesz használva ezekben a hívásokban
-        $owned = $this->findOwnedBy($queryTemp1, $options)
-            ->select($select);
-        $accessibleViaGroups = $this->findAccessibleViaGroupBy($queryTemp2, $options)
-            ->select($select);
-        $accessibleViaUsergroups = $this->findAccessibleViaUsergroupBy($queryTemp3, $options)
-            ->select($select);
+        $owned = $this->findOwnedBy($queryTemp1, $options);
+        $accessibleViaGroups = $this->findAccessibleViaGroupBy($queryTemp2, $options);
+        $accessibleViaUsergroups = $this->findAccessibleViaUsergroupBy($queryTemp3, $options);
+
+        if($select) {
+            $owned->select($select);
+            $accessibleViaGroups->select($select);
+            $accessibleViaUsergroups->select($select);
+        }
 
         //ha van belongsToMany tablara vonatkozo kereses, akkor itt tesszuk hozza a select reszhez group_concat-tal
         if(!empty($groupConcats)) {
@@ -696,14 +699,7 @@ class ContactsTable extends Table
 
         if ($hasMany) {
             foreach ($hasMany as $field => $conditions) {
-                if ($conditions['value']) {
-                    $queryExp = $this->buildWhere([$field => $conditions]);
-                    $callback = function ($q) use ($queryExp) {
-                        return $q->where($queryExp);
-                    };
-                } else {
-                    $callback = null;
-                }
+                $callback = $this->getCallback($field, $conditions);
                 $tableName = $this->getTableName($field);
                 $owned->innerJoinWith($tableName, $callback);
                 $accessibleViaGroups->innerJoinWith($tableName, $callback);
@@ -711,32 +707,13 @@ class ContactsTable extends Table
             }
         }
 
-        if ($belongsToMany) { //TODO
-            foreach ($belongsToMany as $field => $condition) {
-                $where = $this->buildWhere($belongsToMany);
-                $where = str_replace(".", "__", $where);
-
+        if ($belongsToMany) {
+            foreach ($belongsToMany as $field => $conditions) {
+                $callback = $this->getCallback($field, $conditions);
                 $tableName = $this->getTableName($field);
-                $owned->matching($tableName);
-                if($where) {
-                    $owned->group($groupBy.' HAVING '.$where);
-                } else {
-                    $owned->group($groupBy);
-                }
-
-                $accessibleViaGroups->matching($tableName);
-                if($where) {
-                    $accessibleViaGroups->group($groupBy.' HAVING '.$where);
-                } else {
-                    $accessibleViaGroups->group($groupBy);
-                }
-
-                $accessibleViaUsergroups->matching($tableName);
-                if($where) {
-                    $accessibleViaUsergroups->group($groupBy.' HAVING '.$where);
-                } else {
-                    $accessibleViaUsergroups->group($groupBy);
-                }
+                $owned->innerJoinWith($tableName, $callback)->group($groupBy);
+                $accessibleViaGroups->innerJoinWith($tableName, $callback)->group($groupBy);
+                $accessibleViaUsergroups->innerJoinWith($tableName, $callback)->group($groupBy);
             }
         }
 
@@ -1325,5 +1302,23 @@ class ContactsTable extends Table
             $sortedArr[$field] = $arr[$field];
         }
         return $sortedArr;
+    }
+
+    /**
+     * @param $field
+     * @param $conditions
+     * @return Clousure
+     */
+    private function getCallback($field, $conditions)
+    {
+        if ($conditions['value']) {
+            $queryExp = $this->buildWhere([$field => $conditions]);
+            $callback = function ($q) use ($queryExp) {
+                return $q->where($queryExp);
+            };
+        } else {
+            $callback = null;
+        }
+        return $callback;
     }
 }
