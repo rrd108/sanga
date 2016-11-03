@@ -94,7 +94,11 @@ function setGroupCss($group, $userId)
                         echo $contact->has('contactsource') ? '<span class="tag tag-shared">' . $contact->contactsource->name . '</span>' : '' ;
                         break;
                     case 'Contactsources.name' :
-                        echo $contact->has('contactsource') ? '<span class="tag tag-shared">' . $contact->contactsource->name . '</span>' : '' ;
+                        if ($contact->has('contactsource')) {
+                            if ($contact->contactsource->name) {
+                                echo '<span class="tag tag-shared">' . $contact->contactsource->name . '</span>';       
+                            }
+                        }
                         break;
                     case 'users' :
                         if (isset($contact->users)){
