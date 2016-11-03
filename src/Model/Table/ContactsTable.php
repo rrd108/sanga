@@ -786,14 +786,12 @@ class ContactsTable extends Table
     private function findAccessibleViaUsergroupBy(Query $query, array $options)
     {
         //get users who are in any user groups where the given user(s) are admin
-        //TODO refactor to subquery
-        $userIds = $this->Users->getUnderAdminOf($options['User.id']);
+        $userIds = $this->Users->getUnderAdminOf($options['User.id'])->select('Users.id');
         if($userIds->count()) {
-            $userIds = $userIds->extract('id')->toArray();
             //who are their contacts
             return $this->findOwnedBy($query, ['User.id' => $userIds]);
         }
-        return $query->where(['Contacts.id < ' => 0]);  //empty set
+        return $query->where(['Contacts.id < ' => 0]);  //forcing return value to a Query object
     }
 
     /**
