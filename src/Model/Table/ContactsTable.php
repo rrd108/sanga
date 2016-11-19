@@ -807,7 +807,7 @@ class ContactsTable extends Table
         return $query->innerJoinWith(
             'Groups',
             function ($q) use ($options) {
-                return $q->where(['Groups.id IN ' => $options['Group._ids']]);
+                return $q->where(['Groups.id IN ' => $options['Group._ids']]); //TODO drop IN as we got a query? not an array?
             }
         );
     }
@@ -1289,7 +1289,10 @@ class ContactsTable extends Table
     private function sortByDots($arr)
     {
         //hasMany should be sorted
-        //we should have entries with dots at the beginning to avoid duplicate calls on matching
+        //we should have entries with dots at the beginning to avoid duplicate calls
+        //on matching conditions
+        //however there is a good chance, that condition duplication is
+        //dropped by MySQL optimizer
         $dotsNum = [];
         foreach ($arr as $field => $condition) {
             $dotsNum[$field] = substr_count($field, '.');
