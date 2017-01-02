@@ -682,20 +682,19 @@ class ContactsTable extends Table
             $accessibleViaUsergroups->contain($containTables);
         }
 
-        /*debug($accessibleViaGroups);
+        //debug($accessibleViaGroups);
         //TODO the next innerJoin creates only
         //INNER JOIN histories Histories ON Contacts.id = (Histories.contact_id)
         //without group filter because $accessibleViaGroups called an innerJoin upper
         //and Cake requires to start from the deeper (more dotted) associations
-        //that is why Histories.groups serch drops filter
-         $accessibleViaGroups->innerJoinWith(
+        //that is why Histories.groups search drops filter
+         /*$accessibleViaGroups->innerJoinWith(
             'Histories.Groups',
             function ($q) {
                 return $q-where(['Groups.name' => 'seva']);
             }
-        );
-        debug($accessibleViaGroups);
-        die();*/
+        );*/
+        //debug($accessibleViaGroups->sql());
 
         if ($hasMany) {
             foreach ($hasMany as $field => $conditions) {
@@ -716,6 +715,8 @@ class ContactsTable extends Table
                 $accessibleViaUsergroups->innerJoinWith($tableName, $callback)->group($groupBy);
             }
         }
+        //$accessibleViaGroups->all();
+        //die();
 
         $accessible = $owned
             ->union($accessibleViaGroups)
