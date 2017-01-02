@@ -721,6 +721,12 @@ class ContactsTable extends Table
             ->union($accessibleViaGroups)
             ->union($accessibleViaUsergroups);
 
+        //we need this custom counter as we use epilog here
+        $accessibleCount = $accessible->count();
+        $accessible->counter(function ($query) use ($accessibleCount) {
+            return $accessibleCount;
+        });
+
         //we should add the order by and pagination to the end - after the union.
         //For this we  have to use epilog, ORM call will not work
         //http://stackoverflow.com/questions/29379579/how-do-you-modify-a-union-query-in-cakephp-3/29386189#29386189
