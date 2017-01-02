@@ -17,12 +17,13 @@ class SearchController extends AppController
     {
         $this->Contacts = TableRegistry::get('Contacts');
         $query = $this->Contacts->find()
-            ->select(['id', 'contactname', 'legalname', 'email', 'phone', 'birth', 'workplace'])
+            ->select(['id', 'contactname', 'legalname', 'email', 'phone', 'birth', 'workplace', 'comment'])
             ->where(['contactname LIKE "%'.$this->request->query('term').'%"'])
             ->orWhere(['legalname LIKE "%'.$this->request->query('term').'%"'])
             ->orWhere(['email LIKE "%'.$this->request->query('term').'%"'])
             ->orWhere(['phone LIKE "%'.$this->request->query('term').'%"'])
             ->orWhere(['birth LIKE "%'.$this->request->query('term').'%"'])
+            ->orWhere(['comment LIKE "%'.$this->request->query('term').'%"'])
             ->orWhere(['workplace LIKE "%'.$this->request->query('term').'%"']);
         //debug($query->toArray());
         foreach ($query as $row) {
@@ -42,6 +43,7 @@ class SearchController extends AppController
                 $label .= $this->createHighlight($row->phone) ? '☏ ' . $this->createHighlight($row->phone) . ' ' : '';
                 $label .= (isset($row->birth) && $this->createHighlight($row->birth->format('Y-m-d'))) ? '↫ ' . $this->createHighlight($row->birth->format('Y-m-d')) . ' ' : '';
                 $label .= $this->createHighlight($row->workplace) ? '♣ ' . $this->createHighlight($row->workplace) . ' ' : '';
+                $label .= $this->createHighlight($row->comment) ? '✍ ' : '';
             }
             if (isset($label)) {
                 $result[] = array('value' => 'c'.$row->id,
