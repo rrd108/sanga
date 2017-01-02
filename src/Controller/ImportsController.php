@@ -50,10 +50,13 @@ class ImportsController extends AppController
                     foreach ($fields as $j => $field) {
                         if (in_array(
                             $field,
-                            ['contactname','legalname','zip','address','phone','email',
-                                              'birth','sex','workplace','workplace_zip',
-                                              'workplace_address','workplace_phone','workplace_email',
-                                              'contactsource_id','comment', 'skills', 'groups']
+                            [
+                                'contactname','legalname','zip','address','phone','email',
+                                'birth','sex','workplace','workplace_zip',
+                                'workplace_address','workplace_phone','workplace_email',
+                                'contactsource_id','comment', 'skills', 'groups',
+                                'created'
+                            ]
                         )) {     //if this is the $field, the column exists in the contacts or its related tables
                             if ((isset($data[$j]) && $data[$j]) || $field == 'groups') {    //we have defaults for groups so we should handle even if it is empty
                                 switch ($field)
@@ -105,13 +108,17 @@ class ImportsController extends AppController
                                 $imported++;
                             } else {
                                 $notImported++;
-                                $errors[] = ['errors' => $this->getErrors($contact->errors()),
-                                            'data' => $dataArray];
+                                $errors[] = [
+                                    'errors' => $this->getErrors($contact->errors()),
+                                    'data' => $dataArray
+                                ];
                             }
                         } else {
                             $notImported++;
-                            $errors[] = ['errors' => $this->getErrors($contact->errors()),
-                                        'data' => $dataArray];
+                            $errors[] = [
+                                'errors' => $this->getErrors($contact->errors()),
+                                'data' => $dataArray
+                            ];
                         }
                         unset($dataArray);
                     }
