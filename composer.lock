@@ -257,22 +257,22 @@
         },
         {
             "name": "cakephp/migrations",
-            "version": "1.6.5",
+            "version": "1.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/migrations.git",
-                "reference": "e50eafdea2a58e8cad9f14f6a04758242404d894"
+                "reference": "bed3b4d4957a04b355f85a49cf80440092a6c23f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/migrations/zipball/e50eafdea2a58e8cad9f14f6a04758242404d894",
-                "reference": "e50eafdea2a58e8cad9f14f6a04758242404d894",
+                "url": "https://api.github.com/repos/cakephp/migrations/zipball/bed3b4d4957a04b355f85a49cf80440092a6c23f",
+                "reference": "bed3b4d4957a04b355f85a49cf80440092a6c23f",
                 "shasum": ""
             },
             "require": {
                 "cakephp/cakephp": "~3.1",
                 "php": ">=5.4",
-                "robmorgan/phinx": "0.5.3"
+                "robmorgan/phinx": "0.6.5"
             },
             "require-dev": {
                 "cakephp/bake": "@stable",
@@ -303,7 +303,7 @@
                 "cakephp",
                 "migrations"
             ],
-            "time": "2016-12-30 21:05:55"
+            "time": "2017-01-01 17:29:48"
         },
         {
             "name": "cakephp/plugin-installer",
@@ -1236,16 +1236,16 @@
         },
         {
             "name": "robmorgan/phinx",
-            "version": "v0.5.3",
+            "version": "v0.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robmorgan/phinx.git",
-                "reference": "4e7fee7792f4bf3dbf55ee29001850ba26c86a88"
+                "reference": "6943cb4bb78bf9d3964967a032220b7c793b97b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/4e7fee7792f4bf3dbf55ee29001850ba26c86a88",
-                "reference": "4e7fee7792f4bf3dbf55ee29001850ba26c86a88",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/6943cb4bb78bf9d3964967a032220b7c793b97b7",
+                "reference": "6943cb4bb78bf9d3964967a032220b7c793b97b7",
                 "shasum": ""
             },
             "require": {
@@ -1255,7 +1255,7 @@
                 "symfony/yaml": "~2.8|~3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^3.7|^4.0|^5.0"
+                "phpunit/phpunit": "^4.8.26|^5.0"
             },
             "bin": [
                 "bin/phinx"
@@ -1272,15 +1272,20 @@
             ],
             "authors": [
                 {
-                    "name": "Rob Morgan",
-                    "email": "robbym@gmail.com",
-                    "homepage": "http://robmorgan.id.au",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Woody Gilk",
                     "email": "woody.gilk@gmail.com",
                     "homepage": "http://shadowhand.me",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Rob Morgan",
+                    "email": "robbym@gmail.com",
+                    "homepage": "https://robmorgan.id.au",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Richard Quadling",
+                    "email": "rquadling@gmail.com",
                     "role": "Developer"
                 }
             ],
@@ -1293,7 +1298,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2016-03-07 14:09:22"
+            "time": "2016-10-27 10:16:12"
         },
         {
             "name": "rrd/rbruteforce",
@@ -1891,16 +1896,16 @@
     "packages-dev": [
         {
             "name": "cakephp/bake",
-            "version": "1.2.10",
+            "version": "1.2.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/bake.git",
-                "reference": "5a76999b2379895a1581912500673da9c112429f"
+                "reference": "f3a149a21da2d49afd86119ac8ab5683f9062e16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/bake/zipball/5a76999b2379895a1581912500673da9c112429f",
-                "reference": "5a76999b2379895a1581912500673da9c112429f",
+                "url": "https://api.github.com/repos/cakephp/bake/zipball/f3a149a21da2d49afd86119ac8ab5683f9062e16",
+                "reference": "f3a149a21da2d49afd86119ac8ab5683f9062e16",
                 "shasum": ""
             },
             "require": {
@@ -1934,7 +1939,7 @@
                 "bake",
                 "cakephp"
             ],
-            "time": "2016-12-26 04:29:56"
+            "time": "2017-01-04 07:52:22"
         },
         {
             "name": "cakephp/cakephp-codesniffer",
