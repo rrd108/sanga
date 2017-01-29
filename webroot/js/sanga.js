@@ -5,13 +5,13 @@ $(function() {
 	});
 	
 	$.sanga = {};
-	$.sanga.baseUrl = $($('script')[0]).attr('src').replace(/\/js\/jquery\.js/, '');
+	$.sanga.baseUrl = $($('script')[1]).attr('src').replace(/\/js\/jquery\.js/, '');
 	$.sanga.animation = {
-					open : 'animated bounceInDown', // Animate.css class names
-					close : 'animated bounceOutUp', // Animate.css class names
-					easing : 'swing', // unavailable - no need
-					speed: 500 // opening & closing animation speed
-					};
+		open : 'animated bounceInDown', // Animate.css class names
+		close : 'animated bounceOutUp', // Animate.css class names
+		easing : 'swing', // unavailable - no need
+		speed: 500 // opening & closing animation speed
+	};
 	$.sanga.texts = {
 		en : {
 			and			:	'and',
