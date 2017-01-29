@@ -172,31 +172,34 @@ class UsersController extends AppController
                 $token = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 32);
                 $user = $this->Users->patchEntity($user, $this->request->data);
                 $user->resettoken = $token;
-                $this->Users->save($user);
-                $token = $user->id . ',' . $token;
+                if ($this->Users->save($user)) {
+                    $token = $user->id . ',' . $token;
+                    $baseUrl = Router::url(['_full' => true]);
+                    $resetlink = Router::url(
+                        [
+                            '_full' => true,
+                            'controller' => 'Users',
+                            'action' => 'resetpass',
+                            $token
+                        ]
+                    );
 
-                $baseUrl = Router::url(['_full' => true]);
-                $resetlink = Router::url(
-                    ['_full' => true,
-                                           'controller' => 'Users',
-                                           'action' => 'resetpass',
-                                           $token
-                                           ]
-                );
+                    $email = new Email('default');
+                    $email->from(['forgotpass@sanga.1108.cc' => __('Password reset request')])
+                        ->to($user->email)
+                        ->subject(__('Password reset'))
+                        ->emailFormat('html')
+                        ->template('resetpass')
+                        ->viewVars(['resetlink' => $resetlink, 'baseUrl' => $baseUrl]);
 
-                $email = new Email('default');
-                $email->from(['forgotpass@sanga.1108.cc' => __('Password reset request')])
-                    ->to($user->email)
-                    ->subject(__('Password reset'))
-                    ->emailFormat('html')
-                    ->template('resetpass')
-                    ->viewVars(['resetlink' => $resetlink, 'baseUrl' => $baseUrl]);
-
-                if ($email->send()) {
-                    $this->Flash->success(__('We sent an email to you, describing how to set up a new password.'));
-                    $this->set('mailsent', true);
+                    if ($email->send()) {
+                        $this->Flash->success(__('We sent an email to you, describing how to set up a new password.'));
+                        $this->set('mailsent', true);
+                    } else {
+                        $this->Flash->error(__('Something went wrong with the password reminder email. Please try again later.'));
+                    }
                 } else {
-                    $this->Flash->error(__('Something went wrong with the password reminder email. Please try again later.'));
+                    $this->Flash->error(__('Token creation error. Please try again later.'));
                 }
             } else {
                 $this->Flash->error(__('We do not have this email address in our database. Are you sure you are registered with this?'));

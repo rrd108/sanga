@@ -105,7 +105,7 @@ class UsersTable extends Table
                    'message' => __('This username is already taken'),
                    'provider' => 'table']
             )
-            ->notEmpty('password')
+            ->allowEmpty('password')
             ->add(
                 'password',
                 [
