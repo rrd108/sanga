@@ -5,7 +5,7 @@ $(function() {
 	});
 	
 	$.sanga = {};
-	$.sanga.baseUrl = $($('script')[1]).attr('src').replace(/\/js\/jquery\.js/, '');
+	$.sanga.baseUrl = $($('script')[1]).attr('src').replace(/\/js\/.*/, '');
 	$.sanga.animation = {
 		open : 'animated bounceInDown', // Animate.css class names
 		close : 'animated bounceOutUp', // Animate.css class names
