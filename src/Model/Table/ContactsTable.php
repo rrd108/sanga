@@ -847,7 +847,7 @@ class ContactsTable extends Table
      * Is the contact accessible for the user because
      *         the user is a contact person for the contact.
      */
-    private function isAccessibleAsContactPerson($contactId, $userId)
+    public function isAccessibleAsContactPerson($contactId, $userId)
     {
         $contact = $this->find()
             ->select('id')

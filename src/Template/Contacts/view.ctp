@@ -52,6 +52,19 @@ echo $this->element('ajax-images');
     ?>
 
     <div id="tabs-1" class="contacts view large-10 medium-9 columns">
+        <?php
+        print $this->Html->link(
+            __('Inactive'),
+            [
+                'action' => 'setinactive', $contact->id
+            ],
+            [
+                'id' => 'setinactive',
+                'title' => __('Make contact inactive (remove from all lists)'),
+                'confirm' => __('Are you sure you want to delete this contact?')
+            ]
+        );
+        ?>
         <h2>
             <?= h($contact->contactname) ?>
             <?php

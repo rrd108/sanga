@@ -614,21 +614,25 @@ class ContactsController extends AppController
         }
     }
 
-    /**
- * Delete method
+ /**
+ * Set contacts inactive method
  *
  * @param  string $id
  * @return void
  * @throws \Cake\Network\Exception\NotFoundException
  */
-    public function delete($id = null)
+    public function setinactive($id = null)
     {
         $contact = $this->Contacts->get($id);
-        $this->request->allowMethod(['post', 'delete']);
-        if ($this->Contacts->delete($contact)) {
-            $this->Flash->success('The contact has been deleted.');
+        if ($this->Contacts->isAccessibleAsContactPerson($id, $this->Auth->user('id'))) {
+            $contact->active = false;
+            if ($this->Contacts->save($contact)) {
+                $this->Flash->success('The contact has been deleted.');
+            } else {
+                $this->Flash->error('The contact could not be deleted. Please, try again.');
+            }
         } else {
-            $this->Flash->error('The contact could not be deleted. Please, try again.');
+            $this->Flash->error('Only the contact person can delete a contact.');
         }
         return $this->redirect(['action' => 'index']);
     }
