@@ -3,6 +3,8 @@
 namespace App\Model\Table;
 
 use App\Model\Entity\Contact;
+use Cake\Core\Exception\Exception;
+use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -607,9 +609,12 @@ class ContactsTable extends Table
         $groupBy = 'Contacts.id';
         if($contain) {
             foreach($contain as $key => $value) {
-                $groupBy .= ', ' . $key;
+                if (is_string($key)) {
+                    $groupBy .= ', ' . $key;
+                }
             }
         }
+
         if($hasMany) {
             foreach($hasMany as $key => $value) {
                 //remove first part if there are more dots
@@ -674,7 +679,15 @@ class ContactsTable extends Table
 
         if ($contain) {
             //getting tableNames from $contain
-            $containTables = array_map([$this, 'getTableName'], array_keys($contain));
+            $containTables = [];
+            foreach ($contain as $i => $v) {
+                if (is_string($i)) {
+                    $v = $this->getTableName($i);
+                }
+                if (!in_array($v, $containTables)) {
+                    $containTables[] = $v;
+                }
+            }
             //TODO if we have exactly 2 tables here and ask for histories the results are dupliated
             //if we have only 1 or 3 we get no duplication
             $owned->contain($containTables);
@@ -1133,7 +1146,8 @@ class ContactsTable extends Table
 
     private function getAssociationsArrays(array $options)
     {
-        $associations = $contain = $belongsToMany = $hasMany = [];
+        $associations = $belongsToMany = $hasMany = [];
+        $contain = $options['_contain'];
         if (isset($options['_where'])) {
             //on belongsToMany $association->type() is manyToMany
             foreach ($this->associations() as $association) {
@@ -1177,11 +1191,6 @@ class ContactsTable extends Table
      */
     private function getTableName($name)
     {
-        /*$tableName = '';
-        if ($associated) {
-            $dotPosition = strpos($name, '.');  //first dot
-            $name = substr($name, $dotPosition + 1);
-        }*/
         $dotPosition = strrpos($name, '.'); //last dot
         $tableName = substr($name, 0, $dotPosition);
         if ($tableName) {
@@ -1280,7 +1289,7 @@ class ContactsTable extends Table
         }
         
         foreach ($conditions as $field => $data) {
-            if (!$data['value']) {
+            if (!isset($data['value']) || !$data['value']) {
                 unset($conditions[$field]);
             }
         }
