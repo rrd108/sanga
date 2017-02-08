@@ -113,7 +113,7 @@ $(function() {
 	//personal data, workplace
 	$('p.ed').hover(
 		function(){		//handlerIn
-			if ($(this).find('#ajaxsave').length) {	//if ajaxsave is there we do not needmeditlink
+			if ($(this).find('#ajaxsave').length) {	//if ajaxsave is there we do not need editlink
 				$('#editlink').hide();
 			} else {
 				$(this).append($('#editlink').show());
@@ -184,13 +184,11 @@ $(function() {
 			if (editbox.attr('class').search(/zip/) != -1) {
 				if (editbox.attr('id').search(/workplace/) != -1) {
 					theSpan = editbox.parent().find('.workplace_zip-zip');
-					newData = $('#xworkplace-zip').val().split(' ');
-					newData = newData[0];
+					newData = $('#xworkplace-zip').val();
 					editedData['workplace_zip_id'] = $('#workplace-zip-id').val();
 				} else {
 					theSpan = editbox.parent().find('.zip-zip');
-					newData = $('#xzip').val().split(' ');
-					newData = newData[0];
+					newData = $('#xzip').val();
 					editedData['zip_id'] = $('#zip-id').val();
 				}
 			} else if (editbox.attr('class').search(/family/) != -1) {
@@ -236,7 +234,9 @@ $(function() {
 					theSpan.text(newData);
 				}
 			}
-		});
+
+            theSpan.show();
+        });
 
 		$('#editlink').hide();
 		var theP = $(editboxes[0]).parent();
@@ -271,7 +271,6 @@ $(function() {
 			}
 		});
 		editboxes.hide();
-		theSpan.show();
 		event.preventDefault();
 	});
 

@@ -187,7 +187,7 @@ echo $this->element('ajax-images');
                                                  'type' => 'text',
                                                 'class' => 'editbox zip',
                                                 'label' => false,
-                                                 'value' => isset($contact->zip) ? $contact->zip->zip : ''
+                                                 'value' => isset($contact->zip) ? $contact->zip->zip . ' ' . $contact->zip->name : ''
                                                  ]);
 
                         echo '<span class="dta addr address">';
