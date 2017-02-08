@@ -18,7 +18,16 @@
                 <td><?= h($user->realname) ?></td>
                 <td><?= h($user->email) ?></td>
                 <td><?= h($user->phone) ?></td>
-                <td <?= $user->responsible?'class="tag tag-viewable"':'' ?>><?= h($user->responsible) ?></td>
+                <td>
+                    <?php
+                    if ($user->responsible) {
+                        $responsibilities = explode(', ', $user->responsible);
+                        foreach ($responsibilities as $resp) {
+                            print '<span class="tag tag-viewable">' . h($resp) . '</span>';
+                        }
+                    }
+                    ?>
+                </td>
                 <td class="r"><?= $this->Number->format(h(count($user->contacts))) ?></td>
             </tr>
         <?php endforeach; ?>

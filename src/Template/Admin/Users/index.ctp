@@ -35,7 +35,16 @@
                         <td><?= h($user->email) ?></td>
                         <td><?= h($user->phone) ?></td>
                         <td><?= h($user->last_login) ?></td>
-                        <td><?= h($user->responsible) ?></td>
+                        <td>
+                            <?php
+                            if ($user->responsible) {
+                                $responsibilities = explode(', ', $user->responsible);
+                                foreach ($responsibilities as $resp) {
+                                    print '<span class="tag tag-viewable">' . h($resp) . '</span>';
+                                }
+                            }
+                            ?>
+                        </td>
                         <td><?= h($user->active) ?></td>
                         <td><?= h(count($user->contacts)) ?></td>
                         <td class="actions">
