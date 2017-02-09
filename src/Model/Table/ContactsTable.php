@@ -362,10 +362,11 @@ class ContactsTable extends Table
         }
 
         //dispatch Notification table about the event
-        $event = new Event('Model.Contact.afterDuplicates',
-                           $this,
-                           ['duplicates' => $duplicates]
-                           );
+        $event = new Event(
+            'Model.Contact.afterDuplicates',
+            $this,
+            ['duplicates' => $duplicates]
+        );
         $this->eventManager()->dispatch($event);
 
         return $duplicates;
