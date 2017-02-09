@@ -1,8 +1,12 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\Usergroup;
+use Cake\Collection\Collection;
+use Cake\Log\Log;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
+use Cake\Routing\Router;
 use Cake\Validation\Validator;
 
 use Cake\Event\EventListenerInterface;
@@ -80,6 +84,7 @@ class NotificationsTable extends Table implements EventListenerInterface
     {
         return [
             'Model.Contact.afterDuplicates' => 'duplicatesNotification',
+            'Controller.Usergroup.afterUserAdded' => 'inviteUsersToUsergroup',
         ];
     }
 
@@ -87,5 +92,33 @@ class NotificationsTable extends Table implements EventListenerInterface
     {
         //debug($event);
         //debug($data);
+    }
+
+    /**
+     * @param Event $event
+     * @param Usergroup $usergroup
+     */
+    public function inviteUsersToUsergroup(Event $event, Usergroup $usergroup)
+    {
+        $invitor = $this->Users->get($usergroup->admin_user_id);
+        foreach ($usergroup->users as $user) {
+            $data = [
+                'user_id' => $user->id,
+                'sender_id' => $usergroup->admin_user_id,
+                'notification' => __('{0} invited you to join {1} usergroup. ' .
+                    'Join by <a href="' .
+                    Router::url(['controller' => 'Usergroups', 'action' => 'join', $usergroup->id]) .
+                    '">clicking here</a>.',
+                    $invitor->name, $usergroup->name),
+                'unread' => 1
+            ];
+            $notification = $this->newEntity($data);
+            if ($this->save($notification)) {
+                return true;
+            } else {
+                Log::debug('Notification creation error' . explode(', ', $notification->errors()));
+                return false;
+            }
+        }
     }
 }
