@@ -56,14 +56,16 @@ class NotificationsController extends AppController
         $notification = $this->Notifications->get(
             $id,
             [
-            'contain' => ['Users']
+            'contain' => ['Senders']
             ]
         );
         if ($notification->user_id == $this->Auth->user('id')) {
             $notification->unread = false;
             $this->Notifications->save($notification);
         }
-        $this->set('notification_count', ($this->Notifications->find('unread', ['user_id' => $this->Auth->user('id')])->count()));
+        $this->set(
+            'notification_count',
+            ($this->Notifications->find('unread', ['User.id' => $this->Auth->user('id')])->count()));
         $this->set('notification', $notification);
     }
 

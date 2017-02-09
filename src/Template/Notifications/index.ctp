@@ -26,7 +26,14 @@
                     <td><?= h($notification->sender->realname) ?></td>
                     <td>
                         <?php
-                            echo $this->Html->link($notification->notification, ['action' => 'view', $notification->id]);
+                        echo $this->Html->link(
+                            $this->Text->truncate(
+                                $this->Text->stripLinks(
+                                    $notification->notification
+                                )
+                            ),
+                            ['action' => 'view', $notification->id]
+                        );
                         ?>
                     </td>
                     <td><?= h($notification->created) ?></td>
@@ -68,7 +75,14 @@
                     <td><?= h($notification->sender->realname) ?></td>
                     <td>
                         <?php
-                            echo $this->Html->link($notification->notification, ['action' => 'view', $notification->id]);
+                        echo $this->Html->link(
+                            $this->Text->truncate(
+                                $this->Text->stripLinks(
+                                    $notification->notification
+                                )
+                            ),
+                            ['action' => 'view', $notification->id]
+                        );
                         ?>
                     </td>
                     <td><?= h($notification->created) ?></td>
@@ -110,7 +124,14 @@
                     <td><?= h($notification->user->realname) ?></td>
                     <td>
                         <?php
-                            echo $this->Html->link($notification->notification, ['action' => 'view', $notification->id]);
+                        echo $this->Html->link(
+                            $this->Text->truncate(
+                                $this->Text->stripLinks(
+                                    $notification->notification
+                                )
+                            ),
+                            ['action' => 'view', $notification->id]
+                        );
                         ?>
                     </td>
                     <td><?= h($notification->created) ?></td>
