@@ -42,5 +42,10 @@ class UsergroupsFixture extends TestFixture
             'name' => 'Usergroup 1',
             'admin_user_id' => 1
         ],
+        [
+            'id' => 2,
+            'name' => 'Usergroup 2',
+            'admin_user_id' => 1
+        ],
     ];
 }

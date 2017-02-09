@@ -293,6 +293,10 @@ span.legalname{
     max-width: none;
 }
 
+h6.subheader {
+    font-weight: bold;
+}
+
 th#groups {
     width: 25%;
 }

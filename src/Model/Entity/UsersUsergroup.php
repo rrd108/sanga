@@ -16,8 +16,8 @@ class UsersUsergroup extends Entity
  */
     protected $_accessible = [
         'id' => true,
-        'admin' => true,
-        'user' => true,
-        'usergroup' => true,
+        'user_id' => true,
+        'usergroup_id' => true,
+        'joined' => true,
     ];
 }

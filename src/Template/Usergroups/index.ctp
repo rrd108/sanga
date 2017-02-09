@@ -23,11 +23,25 @@
             <?php foreach ($usergroups as $usergroup): ?>
                 <tr>
                     <td><?= h($usergroup->name) ?></td>
-                    <td><?= $usergroup->admin_user->name ?></td>
+                    <td>
+                        <?php
+                        if ($usergroup->admin_user->id == $this->request->session()->read('Auth.User.id')) {
+                            print '<span class="tag tag-viewable">' . $usergroup->admin_user->name . '</span>';
+                        } else {
+                            print $usergroup->admin_user->name;
+                        }
+                        ?>
+                    </td>
                     <td>
                         <?php
                             foreach ($usergroup->users as $user) {
-                                print '<span class="tag tag-viewable">' . $user->name . '</span>';
+                                print '<span class="tag ';
+                                if ($user->_joinData->joined) {
+                                    print 'tag-viewable"';
+                                } else {
+                                    print 'tag-shared"';
+                                }
+                                print '>' . $user->name . '</span>';
                             }
                         ?>
                     </td>

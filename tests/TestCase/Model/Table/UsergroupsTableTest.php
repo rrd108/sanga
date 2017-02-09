@@ -76,4 +76,29 @@ class UsergroupsTableTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
+    public function testJoin()
+    {
+        $actual = $this->Usergroups->join(1, 2);
+        $this->AssertTrue($actual->users[0]->_joinData->joined);
+
+        $this->AssertNull($this->Usergroups->join(1, 4));
+    }
+
+    public function testFindMemberships()
+    {
+        $actual = $this->Usergroups->find('memberships', ['User.id' => 3])
+            ->hydrate(false)
+            ->extract('id')
+            ->toArray();
+        $expected = [1];
+        $this->AssertEquals($expected, $actual);
+
+        $actual = $this->Usergroups->find('memberships', ['User.id' => 2])
+            ->hydrate(false)
+            ->extract('id')
+            ->toArray();
+        $expected = [1, 2];
+        $this->AssertEquals($expected, $actual);
+    }
+
 }

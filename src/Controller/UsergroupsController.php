@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Usergroups Controller
@@ -13,11 +14,7 @@ class UsergroupsController extends AppController
 
     public function isAuthorized($user = null)
     {
-        //return true;
-        // TODO
-        //since we did not define who to invite people into a user group this whole
-        //thing should not work
-        return false;
+        return true;
     }
 
     /**
@@ -27,24 +24,31 @@ class UsergroupsController extends AppController
  */
     public function index()
     {
+        $owned = $this->Usergroups->find(
+            'ownedBy',
+            [
+                'User.id' => $this->Auth->user('id')
+            ]
+        );
+
+        $member = $this->Usergroups->find(
+            'memberships',
+            [
+                'User.id' => $this->Auth->user('id')
+            ]
+        );
+
         $this->set(
             'usergroups',
-            $this->paginate(
-                $this->Usergroups->find(
-                    'ownedBy',
-                    [
-                        'User.id' => $this->Auth->user('id')
-                    ]
-                )
-            )
+            $this->paginate($owned->union($member))
         );
     }
 
     /**
  * Add method
  *
- * @return void
- */
+ * @return \Cake\Network\Response|void
+     */
     public function add()
     {
         $this->request->data['admin_user_id'] = $this->Auth->user('id');
@@ -52,6 +56,14 @@ class UsergroupsController extends AppController
         if ($this->request->is('post')) {
             if ($this->Usergroups->save($usergroup)) {
                 $this->Flash->success('The usergroup has been saved.');
+                //send invitations via event system
+                $event = new Event(
+                    'Controller.Usergroup.afterUserAdded',
+                    $this,
+                    ['usergroup' => $usergroup]
+                );
+                $this->eventManager()->dispatch($event);
+
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error('The usergroup could not be saved. Please, try again.');
@@ -62,18 +74,35 @@ class UsergroupsController extends AppController
     }
 
     /**
- * Edit method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * @param int $id
+     * @return \Cake\Network\Response|null
+     */
+    public function join(int $id)
+    {
+        $joined = $this->Usergroups->join($id, $this->Auth->user('id'));
+        if ($joined) {
+            $this->Flash->success('You have successfully joined');
+            //TODO notify admin
+        } else {
+            $this->Flash->error('You were not able to join this group');
+        }
+        return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Edit method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function edit($id = null)
     {
+        //TODO only admin can edit
         $usergroup = $this->Usergroups->get(
             $id,
             [
-            'contain' => ['Users']
+                'contain' => ['Users']
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {

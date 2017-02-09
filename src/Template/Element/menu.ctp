@@ -121,9 +121,8 @@
                             ]
                         ) .
                         '</li>';
-                    /*
-                     see https://github.com/rrd108/sanga/issues/162
-                     print '<li>' .
+
+                    print '<li>' .
                         $this->Html->link(
                             '✋ ' . __('User groups'),
                             [
@@ -134,7 +133,6 @@
                             ]
                         ) .
                         '</li>';
-                    */
                     if(in_array($this->request->session()->read('Auth.User.role'), [9,10])){
                         print '<li>' . $this->Html->link('⚓ ' . __('Contact sources'),
                                                          ['plugin' => null,
