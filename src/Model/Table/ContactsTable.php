@@ -614,6 +614,8 @@ class ContactsTable extends Table
                     $groupBy .= ', ' . $key;
                 }
             }
+        } else {
+            $contain = [];
         }
 
         if($hasMany) {
@@ -1148,7 +1150,7 @@ class ContactsTable extends Table
     private function getAssociationsArrays(array $options)
     {
         $associations = $belongsToMany = $hasMany = [];
-        $contain = $options['_contain'];
+        $contain = isset($options['_contain']) ? $options['_contain'] : [];
         if (isset($options['_where'])) {
             //on belongsToMany $association->type() is manyToMany
             foreach ($this->associations() as $association) {

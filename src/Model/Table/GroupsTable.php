@@ -130,7 +130,7 @@ class GroupsTable extends Table
             ->select('admin_user_id')
             ->where(['id' => $groupId])
             ->toArray();
-        if($group[0]['admin_user_id'] == $userId) {
+        if(isset($group[0]) && $group[0]['admin_user_id'] == $userId) {
             return true;
         }
         return false;

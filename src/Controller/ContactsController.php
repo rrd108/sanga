@@ -321,6 +321,7 @@ class ContactsController extends AppController
         if (empty($select)) {
             $select = ['Contacts.contactname', 'Contacts.legalname', 'Contacts.phone', 'Contacts.email'];
             $selected = ['contactname' => 1, 'legalname' => 1, 'phone' => 1, 'email' => 1];
+            $contain = [];
         } else {
             $contain = $selected = [];
             //set the request->data array for the view to autofill the settings form
@@ -410,8 +411,8 @@ class ContactsController extends AppController
                 ]
             )
             ->first();
-        //debug($setting);die();        //'value' => 'a:1:{i:0;s:21:"Contacts.systemevents";}'    //'value' => 'a:0:{}'
-        $unserialized = unserialize($setting->value);
+
+        $unserialized = $setting ? unserialize($setting->value) : null;
         if (empty($setting) || empty($unserialized)) {
             $where = ['event_id != ' => 1];
         } else {
