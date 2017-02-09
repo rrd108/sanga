@@ -102,7 +102,7 @@ class UsersTableTest extends TestCase
     public function testGetUnderAdminOf()
     {
         $actual = $this->Users->getUnderAdminOf(1)->extract('id')->toArray();
-        $expected = [3];
+        $expected = [3, 2, 2];
         $this->assertEquals($expected, $actual);
 
         $actual = $this->Users->getUnderAdminOf(2)->extract('id')->toArray();

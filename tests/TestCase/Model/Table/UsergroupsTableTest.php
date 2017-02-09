@@ -72,7 +72,7 @@ class UsergroupsTableTest extends TestCase
             ->hydrate(false)
             ->extract('id')
             ->toArray();
-        $expected = [1];
+        $expected = [1, 2];
         $this->assertEquals($expected, $actual);
     }
 
