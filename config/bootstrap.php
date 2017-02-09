@@ -211,3 +211,5 @@ Type::build('date')
 Type::build('datetime')
     ->useImmutable()
     ->useLocaleParser();
+
+require __DIR__ . '/events.php';
