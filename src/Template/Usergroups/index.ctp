@@ -46,8 +46,17 @@
                         ?>
                     </td>
                     <td class="actions">
+                        <?php if ($usergroup->admin_user->id == $this->request->session()->read('Auth.User.id')) : ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $usergroup->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $usergroup->id], ['confirm' => __('Are you sure you want to delete # {0}?', $usergroup->id)]) ?>
+                        <?= $this->Form->postLink(
+                                __('Delete'),
+                                [
+                                    'action' => 'delete',
+                                    $usergroup->id
+                                ],
+                                ['confirm' => __('Are you sure you want to delete # {0}?', $usergroup->id)]
+                            ) ?>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
