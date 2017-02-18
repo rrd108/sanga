@@ -360,6 +360,24 @@ echo $this->element('ajax-images');
                         ?>
                     </p>
                 </div></div>
+
+                <div class="row">
+                    <div class="column large-4">
+                        <label><?= __('Created') ?></label>
+                    </div>
+                    <div class="column large-8">
+                        <p><?= $contact->created ?></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column large-4">
+                        <label><?= __('Id') ?></label>
+                    </div>
+                    <div class="column large-8">
+                        <p><?= $contact->id ?></p>
+                    </div>
+                </div>
+
             </div>
             <div id="mapsmall"></div>
                 <?php
