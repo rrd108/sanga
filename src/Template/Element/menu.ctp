@@ -177,6 +177,13 @@
                                                           'controller' => 'Notifications',
                                                           'action' => 'index'],
                                                          ['escapeTitle' => false]) . '</li>';
+                        print '<li>' . $this->Html->link('☭ ' . __('Duplicates'),
+                            [
+                                'plugin' => null,
+                                'prefix' => false,
+                                'controller' => 'Contacts',
+                                'action' => 'checkDuplicates'
+                            ]) . '</li>';
                         print '<li>' . $this->Html->link('⊗ ' . __('Logout'),
                                                          ['plugin' => null,
                                                           'prefix' => false,

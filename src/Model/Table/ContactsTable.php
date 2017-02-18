@@ -4,10 +4,12 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Contact;
 use Cake\Core\Exception\Exception;
+use Cake\Filesystem\File;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Utility\Text;
 use Cake\Validation\Validator;
 use ArrayObject;
 use Cake\ORM\TableRegistry;
@@ -322,16 +324,17 @@ class ContactsTable extends Table
      *
      * @return array
      */
-    public function checkDuplicates()
+    public function checkDuplicates($owner = 0)
     {
-        $onMail = $this->checkDuplicatesOnEmail();
-        $onBirth = $this->checkDuplicatesOnBirth();
-        $onPhone = $this->checkDuplicatesOnPhone();
-        $onGeo = $this->checkDuplicatesOnGeo();
-        $onNames = $this->checkDuplicatesOnNames();
+        $onMail = $this->checkDuplicatesOnEmail($owner);
+        $onBirth = $this->checkDuplicatesOnBirth($owner);
+        $onPhone = $this->checkDuplicatesOnPhone($owner);
+        $onGeo = $this->checkDuplicatesOnGeo($owner);
+        $onNames = $this->checkDuplicatesOnNames($owner);
         $duplicatesBase = array_merge($onMail, $onBirth, $onPhone, $onGeo, $onNames);
 
-        //merge pairs
+        //there can be multiple fields what are similar, lets merge them
+        //TODO a contact can have multiple similar contact
         $duplicates = $ids = [];
         foreach ($duplicatesBase as $d) {
             $index = array_search($d['id1'] . ':' . $d['id2'], $ids);
@@ -346,7 +349,7 @@ class ContactsTable extends Table
                     $field = $duplicates[$index]['field'];
                 }
 
-                $data = [$duplicates[$index]['field'], $d['data']];
+                $data = [$duplicates[$index]['data'], $d['data']];
                 if (is_array($duplicates[$index]['data'])) {
                     array_push($duplicates[$index]['data'], $d['data']);
                     $data = $duplicates[$index]['data'];
@@ -361,13 +364,25 @@ class ContactsTable extends Table
             }
         }
 
+        //write duplicates to a file
+        $file = new File('../logs/' . Text::uuid(), true, 0644);
+        $file->write(json_encode($duplicates));
+
         //dispatch Notification table about the event
         $event = new Event(
             'Model.Contact.afterDuplicates',
             $this,
-            ['duplicates' => $duplicates]
+            [
+                'data' => [
+                    'duplicates' => count($duplicates),
+                    'file' => $file->name,
+                    'owner' => $owner
+                ]
+            ]
         );
         $this->eventManager()->dispatch($event);
+
+        $file->close();
 
         return $duplicates;
     }
@@ -382,7 +397,7 @@ class ContactsTable extends Table
   * legalname, contactname    similar [legalname, contactname]
   *
   */
-    public function checkDuplicatesOnEmail()
+    public function checkDuplicatesOnEmail($owner = 0)
     {
         $duplicates = [];
         $duplicatesTemp = $this->find()
@@ -394,20 +409,28 @@ class ContactsTable extends Table
                  'Contacts.email != ' => '',
               ]
           )
-          ->select(['Contacts.id', 'Contacts.email', 'c.id'])
-          ->toArray();
+          ->select(['Contacts.id', 'Contacts.email', 'c.id']);
+        if ($owner) {
+            $duplicatesTemp->innerJoinWith(
+                'Users',
+                function ($q) use ($owner) {
+                    return $q->where(['Users.id' => $owner]);
+                }
+            );
+        }
         foreach ($duplicatesTemp as $d) {
-            $duplicates[] = ['id1' => $d->id,
-                           'id2' => (int) $d->c['id'],
-                           'field' => 'email',
-                           'data' => $d->email,
-                           ];
+            $duplicates[] = [
+                'id1' => $d->id,
+                'id2' => (int) $d->c['id'],
+                'field' => 'email',
+                'data' => $d->email,
+            ];
         }
 
         return $duplicates;
     }
 
-    public function checkDuplicatesOnBirth()
+    public function checkDuplicatesOnBirth($owner = 0)
     {
         $duplicates = [];
         $duplicatesTemp = $this->find()
@@ -419,14 +442,22 @@ class ContactsTable extends Table
                  'Contacts.birth != ' => '',
               ]
           )
-          ->select(['Contacts.id', 'Contacts.birth', 'c.id'])
-          ->toArray();
+          ->select(['Contacts.id', 'Contacts.birth', 'c.id']);
+        if ($owner) {
+            $duplicatesTemp->innerJoinWith(
+                'Users',
+                function ($q) use ($owner) {
+                    return $q->where(['Users.id' => $owner]);
+                }
+            );
+        }
         foreach ($duplicatesTemp as $d) {
-            $duplicates[] = ['id1' => $d->id,
-                           'id2' => (int) $d->c['id'],
-                           'field' => 'birth',
-                           'data' => $d->birth,
-                           ];
+            $duplicates[] = [
+                'id1' => $d->id,
+                'id2' => (int) $d->c['id'],
+                'field' => 'birth',
+                'data' => $d->birth,
+            ];
         }
 
         return $duplicates;
@@ -463,7 +494,7 @@ class ContactsTable extends Table
         return $tPhone;
     }
 
-    public function checkDuplicatesOnPhone()
+    public function checkDuplicatesOnPhone($owner = 0)
     {
         $duplicates = [];
         $duplicatesTemp = $this->find()
@@ -476,24 +507,33 @@ class ContactsTable extends Table
               ]
           )
           ->select(
-              ['Contacts.id', 'Contacts.phone', 'c.id',
-                    'tCPhone' => $this->huPhoneReformat('Contacts'),
-                    'tcPhone' => $this->huPhoneReformat('c'),
-                    ]
+              [
+                  'Contacts.id', 'Contacts.phone', 'c.id',
+                  'tCPhone' => $this->huPhoneReformat('Contacts'),
+                  'tcPhone' => $this->huPhoneReformat('c'),
+              ]
           );
-        $duplicatesTemp->toArray();
+        if ($owner) {
+            $duplicatesTemp->innerJoinWith(
+                'Users',
+                function ($q) use ($owner) {
+                    return $q->where(['Users.id' => $owner]);
+                }
+            );
+        }
         foreach ($duplicatesTemp as $d) {
-            $duplicates[] = ['id1' => $d->id,
-                           'id2' => (int) $d->c['id'],
-                           'field' => 'phone',
-                           'data' => $d->phone,
-                           ];
+            $duplicates[] = [
+                'id1' => $d->id,
+                'id2' => (int) $d->c['id'],
+                'field' => 'phone',
+                'data' => $d->phone,
+            ];
         }
 
         return $duplicates;
     }
 
-    public function checkDuplicatesOnGeo()
+    public function checkDuplicatesOnGeo($owner = 0)
     {
         $duplicates = [];
         $delta = 0.0001;    //10m
@@ -508,28 +548,45 @@ class ContactsTable extends Table
               ]
           )
           ->select(
-              ['Contacts.id', 'Contacts.zip_id', 'Contacts.address',
-                    'c.id', 'c.zip_id', 'c.address', ]
+              [
+                  'Contacts.id', 'Contacts.zip_id', 'Contacts.address',
+                  'c.id', 'c.zip_id', 'c.address',
+              ]
           );
-        $duplicatesTemp->toArray();
+        if ($owner) {
+            $duplicatesTemp->innerJoinWith(
+                'Users',
+                function ($q) use ($owner) {
+                    return $q->where(['Users.id' => $owner]);
+                }
+            );
+        }
         foreach ($duplicatesTemp as $d) {
-            $duplicates[] = ['id1' => $d->id,
-                           'id2' => (int) $d->c['id'],
-                           'field' => 'geo',
-                           'data' => $d->zip_id.' & '.$d->address.
-                                  ' : '.$d->c['zip_id'].' & '.$d->c['address'],
-                           ];
+            $duplicates[] = [
+                'id1' => $d->id,
+                'id2' => (int) $d->c['id'],
+                'field' => 'geo',
+                'data' => $d->zip_id.' & '.$d->address.
+                      ' : '.$d->c['zip_id'].' & '.$d->c['address'],
+                ];
         }
 
         return $duplicates;
     }
 
-    public function checkDuplicatesOnNames($distance = 3)
+    public function checkDuplicatesOnNames($owner = 0, $distance = 3)
     {
         $duplicates = [];
         $rows = $this->find()
-          ->select(['id', 'contactname', 'legalname'])
-          ->toArray();
+          ->select(['id', 'contactname', 'legalname']);
+        if ($owner) {
+            $rows->innerJoinWith(
+                'Users',
+                function ($q) use ($owner) {
+                    return $q->where(['Users.id' => $owner]);
+                }
+            );
+        }
 
         foreach ($rows as $r) {
             foreach ($rows as $r2) {
@@ -545,17 +602,17 @@ class ContactsTable extends Table
                       || ($lll <= $distance && $r->legalname && $r2->legalname)
                     ) {
                         $duplicates[] = [
-                          'id1' => $r->id,
-                          'id2' => $r2->id,
-                          'field' => 'name',
-                          'data' => $r->contactname.' & '.$r->legalname.' : '.
-                                      $r2->contactname.' & '.$r2->legalname,
-                          'levenshtein' => [
-                             'lcc' => $lcc,
-                             'lcl' => $lcl,
-                             'llc' => $llc,
-                             'lll' => $lll,
-                          ],
+                            'id1' => $r->id,
+                            'id2' => $r2->id,
+                            'field' => 'name',
+                            'data' => $r->contactname.' & '.$r->legalname.' : '.
+                              $r2->contactname.' & '.$r2->legalname,
+                            'levenshtein' => [
+                                'lcc' => $lcc,
+                                'lcl' => $lcl,
+                                'llc' => $llc,
+                                'lll' => $lll,
+                            ],
                         ];
                     }
                 }

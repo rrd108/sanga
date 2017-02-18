@@ -58,7 +58,7 @@ class UsergroupsController extends AppController
                 $this->Flash->success('The usergroup has been saved.');
                 //send invitations via event system
                 $event = new Event(
-                    'Controller.Usergroup.afterUserAdded',
+                    'Controller.Usergroups.afterUserAdded',
                     $this,
                     ['usergroup' => $usergroup]
                 );

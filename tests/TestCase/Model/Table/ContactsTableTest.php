@@ -62,46 +62,18 @@ class ContactsTableTest extends TestCase
     public function tearDown()
     {
         unset($this->Contacts);
-
         parent::tearDown();
     }
 
-    public function testCheckDuplicates()
+    public function testCheckDuplicatesFull()
     {
-        $actual = Hash::format($this->Contacts->checkDuplicates(), ['{n}.id1', '{n}.id2'], '%1$d, %2$d');
-        $expected = ['3, 4', '6, 7', '1, 6', '1, 2', '1, 3', '2, 3', '5, 7',
-            '1, 7', '2, 4', '2, 6'];
+        $actual = $this->Contacts->checkDuplicates();
+        $actual = Hash::format($actual, ['{n}.id1', '{n}.id2'], '%1$d, %2$d');
+        $expected = ['3, 4', '6, 7', '1, 6', '1, 2', '1, 3', '2, 3', '5, 7', '1, 7'];
         $this->assertEquals($expected, $actual);
-    }
 
-    public function testCheckDuplicatesOnGeo()
-    {
-        $actual = $this->Contacts->checkDuplicatesOnGeo();
-        $expected = [
-            [
-            'id1' => (int) 3,
-            'id2' => (int) 4,
-            'field' => 'geo',
-            'data' => '3287 & Nitáj krt 26 : 3287 & Nitáj krt 25'
-            ],
-            [
-            'id1' => (int) 5,
-            'id2' => (int) 7,
-            'field' => 'geo',
-            'data' => '3 & Temesvári utca 6. : 3 & Temesvári utca 5.'
-            ]
-        ];
-        $this->assertEquals($expected, $actual);
-    }
-
-    public function testCheckDuplicatesOnPhone()
-    {
-        $actual = $this->Contacts->checkDuplicatesOnPhone();
-        $expected = [
-                ['id1' => 1, 'id2' => 2, 'data' => '+36 30 999 5091', 'field' => 'phone'],
-                ['id1' => 1, 'id2' => 3, 'data' => '+36 30 999 5091', 'field' => 'phone'],
-                ['id1' => 2, 'id2' => 3, 'data' => '36/30 99-95-091', 'field' => 'phone']
-            ];
+        $actual = Hash::format($this->Contacts->checkDuplicates(3), ['{n}.id1', '{n}.id2'], '%1$d, %2$d');
+        $expected = ['6, 7', '5, 7'];
         $this->assertEquals($expected, $actual);
     }
 
@@ -109,9 +81,15 @@ class ContactsTableTest extends TestCase
     {
         $actual = $this->Contacts->checkDuplicatesOnEmail();
         $expected = [
-                ['id1' => 3, 'id2' => 4, 'data' => 'dvd@1108.cc', 'field' => 'email'],
-                ['id1' => 6, 'id2' => 7, 'data' => 'senki@sehol.se', 'field' => 'email']
-            ];
+            ['id1' => 3, 'id2' => 4, 'data' => 'dvd@1108.cc', 'field' => 'email'],
+            ['id1' => 6, 'id2' => 7, 'data' => 'senki@sehol.se', 'field' => 'email']
+        ];
+        $this->assertEquals($expected, $actual);
+
+        $actual = $this->Contacts->checkDuplicatesOnEmail(3);
+        $expected = [
+            ['id1' => 6, 'id2' => 7, 'data' => 'senki@sehol.se', 'field' => 'email']
+        ];
         $this->assertEquals($expected, $actual);
     }
 
@@ -133,12 +111,70 @@ class ContactsTableTest extends TestCase
             ]
         ];
         $this->assertEquals($expected, $actual);
+
+        $actual = $this->Contacts->checkDuplicatesOnBirth(2);
+        $expected = [
+            [
+                'id1' => 3,
+                'id2' => 4,
+                'data' => Time::createFromFormat('Y-m-d H:i:s', '1985-08-05 00:00:00'),
+                'field' => 'birth'
+            ]
+        ];
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testCheckDuplicatesOnPhone()
+    {
+        $actual = $this->Contacts->checkDuplicatesOnPhone();
+        $expected = [
+            ['id1' => 1, 'id2' => 2, 'data' => '+36 30 999 5091', 'field' => 'phone'],
+            ['id1' => 1, 'id2' => 3, 'data' => '+36 30 999 5091', 'field' => 'phone'],
+            ['id1' => 2, 'id2' => 3, 'data' => '36/30 99-95-091', 'field' => 'phone']
+        ];
+        $this->assertEquals($expected, $actual);
+
+        $actual = $this->Contacts->checkDuplicatesOnPhone(2);
+        $expected = [
+            ['id1' => 2, 'id2' => 3, 'data' => '36/30 99-95-091', 'field' => 'phone']
+        ];
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testCheckDuplicatesOnGeo()
+    {
+        $actual = $this->Contacts->checkDuplicatesOnGeo();
+        $expected = [
+            [
+            'id1' => 3,
+            'id2' => 4,
+            'field' => 'geo',
+            'data' => '3287 & Nitáj krt 26 : 3287 & Nitáj krt 25'
+            ],
+            [
+            'id1' => 5,
+            'id2' => 7,
+            'field' => 'geo',
+            'data' => '3 & Temesvári utca 6. : 3 & Temesvári utca 5.'
+            ]
+        ];
+        $this->assertEquals($expected, $actual);
+
+        $actual = $this->Contacts->checkDuplicatesOnGeo(3);
+        $expected = [
+            [
+                'id1' => 5,
+                'id2' => 7,
+                'field' => 'geo',
+                'data' => '3 & Temesvári utca 6. : 3 & Temesvári utca 5.'
+            ]
+        ];
+        $this->assertEquals($expected, $actual);
     }
 
     public function testCheckDuplicatesOnNames()
     {
         $actual = $this->Contacts->checkDuplicatesOnNames();
-        //debug($actual);
         $expected = [
             [
                 'id1' => 1,
@@ -151,32 +187,12 @@ class ContactsTableTest extends TestCase
                    'llc' => 0,
                    'lll' => 13
                 ]
-            ],
-            [
-                'id1' => 2,
-                'id2' => 4,
-                'field' => 'name',
-                'data' => 'Acarya-ratna das & Kovács Árpád : Acarya-ratna Dasa & ',
-                'levenshtein' => [
-                   'lcc' => 2,
-                   'lcl' => 16,
-                   'llc' => 17,
-                   'lll' => 12
-                ]
-            ],
-            [
-                'id1' => 2,
-                'id2' => 6,
-                'field' => 'name',
-                'data' => 'Acarya-ratna das & Kovács Árpád : Horváth Zoltán & Kovács Árpi',
-                'levenshtein' => [
-                   'lcc' => 15,
-                   'lcl' => 16,
-                   'llc' => 9,
-                   'lll' => 2
-                ]
             ]
         ];
+        $this->assertEquals($expected, $actual);
+
+        $actual = $this->Contacts->checkDuplicatesOnNames(3);
+        $expected = [];
         $this->assertEquals($expected, $actual);
     }
 

@@ -3,6 +3,7 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Usergroup;
 use Cake\Collection\Collection;
+use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
@@ -84,14 +85,33 @@ class NotificationsTable extends Table implements EventListenerInterface
     {
         return [
             'Model.Contact.afterDuplicates' => 'duplicatesNotification',
-            'Controller.Usergroup.afterUserAdded' => 'inviteUsersToUsergroup',
+            'Controller.Usergroups.afterUserAdded' => 'inviteUsersToUsergroup',
         ];
     }
 
     public function duplicatesNotification(Event $event, array $data)
     {
-        //debug($event);
-        //debug($data);
+        //App.fullBaseUrl should be added to the url as this function called
+        //from a shell script and Router does not set the correct domain
+        //without this
+        $notification = [
+            'user_id' => $data['owner'],
+            'sender_id' => 1,
+            'notification' => __('Duplicates check finished. ' .
+                'We have found {0} duplicate(s). ' .
+                'Let\'s <a href="' . Configure::read('App.fullBaseUrl') .
+                    Router::url(['controller' => 'Contacts', 'action' => 'handleDuplicates', $data['file']]) .
+                '">see them</a>.',
+                $data['duplicates']),
+            'unread' => 1
+        ];
+        $notification = $this->newEntity($notification);
+        if ($this->save($notification)) {
+            return true;
+        } else {
+            Log::debug('Notification creation error' . explode(', ', $notification->errors()));
+            return false;
+        }
     }
 
     /**

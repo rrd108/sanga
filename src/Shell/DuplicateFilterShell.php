@@ -14,9 +14,9 @@ class DuplicateFilterShell extends Shell
         $this->loadModel('Contacts');
     }
     
-    public function main()
+    public function main($owner = 0)
     {
-        $this->Contacts->checkDuplicatesOnPhone();
+        $this->Contacts->checkDuplicates($owner);
     }
     
     //TODO search and delete families with one member family_id is only for one contact

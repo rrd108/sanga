@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Filesystem\File;
 use Cake\Utility\Text;
 use Cake\I18n\Time;
 use Cake\Core\Configure;
@@ -640,14 +641,30 @@ class ContactsController extends AppController
 
     public function checkDuplicates()
     {
-        $duplicates = $this->Contacts->checkDuplicatesOnPhone();
-        //debug($duplicates);
-        /*foreach($this->Contacts->checkDuplicatesOnPhone() as $q){
-            debug($q->toArray());
-        }*/
-        //$this->Contacts->checkDuplicatesOnEmail();
-        //$this->Contacts->checkDuplicatesOnBirth();
-        //$this->Contacts->checkDuplicatesOnNames();
+        //this is a long running one, put to the background
+        //the user will be notified when it is ready
+        exec(WWW_ROOT.'../bin/cake duplicate_filter '.$this->Auth->user('id').' > /dev/null &');
+        //$duplicates = $this->Contacts->checkDuplicates($this->Auth->user('id'));
+    }
+
+    public function handleDuplicates($file, $daysExpired = 3)
+    {
+        $file = new File('../logs/' . $file);
+        if ($file->exists()) {
+            //check creation time
+            $fileTime = Time::createFromTimestamp($file->lastChange());
+            if (!$fileTime->wasWithinLast($daysExpired)) {
+                $this->set('error', __('The list of duplicates is older than {0} days. Please generate a new list.', $daysExpired));
+            } else {
+                $duplicates = json_decode($file->read());
+                //have a paginator
+                //query the contacts
+                //debug($duplicates);
+            }
+            $file->close();
+        } else {
+            $this->set('error', __('An error occured. Please generate a new list.'));
+        }
     }
 
     public function editGroup($id = null)
