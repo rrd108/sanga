@@ -334,7 +334,6 @@ class ContactsTable extends Table
         $duplicatesBase = array_merge($onMail, $onBirth, $onPhone, $onGeo, $onNames);
 
         //there can be multiple fields what are similar, lets merge them
-        //TODO a contact can have multiple similar contact
         $duplicates = $ids = [];
         foreach ($duplicatesBase as $d) {
             $index = array_search($d['id1'] . ':' . $d['id2'], $ids);
@@ -587,19 +586,20 @@ class ContactsTable extends Table
                 }
             );
         }
+        $rows = $rows->toArray();
 
         foreach ($rows as $r) {
             foreach ($rows as $r2) {
-                if ($r->id < $r2->id) {
+                if ($r->id < $r2->id) { //compare every row only ones
                     $lcc = levenshtein(utf8_decode($r->contactname), utf8_decode($r2->contactname));
                     $lcl = levenshtein(utf8_decode($r->contactname), utf8_decode($r2->legalname));
                     $llc = levenshtein(utf8_decode($r->legalname), utf8_decode($r2->contactname));
                     $lll = levenshtein(utf8_decode($r->legalname), utf8_decode($r2->legalname));
 
-                    if (($lcc <= $distance && $r->contactname && $r2->contactname)
-                      || ($lcl <= $distance && $r->contactname && $r2->legalname)
-                      || ($llc <= $distance && $r->legalname && $r2->contactname)
-                      || ($lll <= $distance && $r->legalname && $r2->legalname)
+                    if (($lcc <= $distance && ($r->contactname && $r2->contactname))
+                      || ($lcl <= $distance && ($r->contactname && $r2->legalname))
+                      || ($llc <= $distance && ($r->legalname && $r2->contactname))
+                      || ($lll <= $distance && ($r->legalname && $r2->legalname))
                     ) {
                         $duplicates[] = [
                             'id1' => $r->id,

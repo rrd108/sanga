@@ -59,7 +59,7 @@ echo $this->element('ajax-images');
                 'action' => 'setinactive', $contact->id
             ],
             [
-                'id' => 'setinactive',
+                'class' => 'setChange fr',
                 'title' => __('Make contact inactive (remove from all lists)'),
                 'confirm' => __('Are you sure you want to delete this contact?')
             ]

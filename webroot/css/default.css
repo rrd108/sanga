@@ -135,7 +135,7 @@ table thead tr th, table thead tr td { color: #222222; font-size: 0.875rem; font
 table tfoot { background: #e7e7e7; }
 table tfoot tr th, table tfoot tr td { color: #222222; font-size: 0.875rem; font-weight: bold; padding: 0.5rem 0.625rem 0.625rem; }
 table tr th, table tr td { border: solid 0 #e5e5e5; color: #222222; font-size: 0.875rem; padding: 0.5625rem 0.625rem; text-align: left; }
-table tr.even, table tr.alt, table tr:nth-of-type(even) { background: #f8f8f8; }
+table tr.even, table tr.alt, table tr:nth-of-type(even) { background: #f3f3f3; }
 
 ul, ol, dl { font-family: inherit; font-size: 0.875rem; line-height: 1.6; list-style-position: inside; margin-bottom: 1.25rem; }
 

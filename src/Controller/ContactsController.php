@@ -643,8 +643,10 @@ class ContactsController extends AppController
     {
         //this is a long running one, put to the background
         //the user will be notified when it is ready
+        //TODO a kreált fileban olyanokat is látok akik nem az enyémek!
         exec(WWW_ROOT.'../bin/cake duplicate_filter '.$this->Auth->user('id').' > /dev/null &');
         //$duplicates = $this->Contacts->checkDuplicates($this->Auth->user('id'));
+        //$duplicates = $this->Contacts->checkDuplicates();
     }
 
     public function handleDuplicates($file, $daysExpired = 3)
@@ -657,9 +659,31 @@ class ContactsController extends AppController
                 $this->set('error', __('The list of duplicates is older than {0} days. Please generate a new list.', $daysExpired));
             } else {
                 $duplicates = json_decode($file->read());
-                //have a paginator
-                //query the contacts
-                //debug($duplicates);
+                $ids = array_unique(
+                    array_merge(
+                        Hash::extract($duplicates, '{*}.id1'),
+                        Hash::extract($duplicates, '{*}.id2')
+                    )
+                );
+                //$contacts = $this->paginate($this->Contacts->find()->where(['id IN' => $ids]));
+                $contacts = $this->Contacts->find()->where(['Contacts.id IN' => $ids])->contain(['Zips', 'WorkplaceZips']);
+                //get the contact id as the key of the contact array item to have find them easier in the view
+                $contacts = Hash::combine($contacts->toArray(), '{n}.id', '{n}');
+                //collect ids from $duplicates
+                $duplicateIds = [];
+                foreach ($duplicates as $i => $duplicate) {
+                    if (isset($duplicateIds[$duplicate->id1])) {
+                        array_push($duplicateIds[$duplicate->id1], $i);
+                    } else {
+                        $duplicateIds[$duplicate->id1] = [$i];
+                    }
+                    if (isset($duplicateIds[$duplicate->id2])) {
+                        array_push($duplicateIds[$duplicate->id2], $i);
+                    } else {
+                        $duplicateIds[$duplicate->id2] = [$i];
+                    }
+                }
+                $this->set(compact('duplicates', 'contacts', 'duplicateIds'));
             }
             $file->close();
         } else {

@@ -94,6 +94,7 @@ class NotificationsTable extends Table implements EventListenerInterface
         //App.fullBaseUrl should be added to the url as this function called
         //from a shell script and Router does not set the correct domain
         //without this
+        //TODO fix for localhost
         $notification = [
             'user_id' => $data['owner'],
             'sender_id' => 1,
