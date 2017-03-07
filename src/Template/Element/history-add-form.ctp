@@ -1,12 +1,15 @@
 <tr>
     <?php
-    echo $this->Form->create(null,
-                                ['id' => 'hForm',
-                                 'url' => [
-                                           'controller' => 'Histories',
-                                           'action' => 'add'
-                                           ]
-                                 ]);
+    echo $this->Form->create(
+        null,
+        [
+            'id' => 'hForm',
+            'url' => [
+                'controller' => 'Histories',
+                'action' => 'add'
+            ]
+        ]
+    );
     ?>
     <?php
     if ( ! isset($e_noContactTd)) :
@@ -15,11 +18,14 @@
         <?php
         if (isset($e_ContactId)) {
             //contact view
-            echo $this->Form->input('contact_id', [
-                                                   'type' => 'hidden',
-                                                   'class' => 'dontdel',
-                                                   'value' => $e_ContactId
-                                                   ]);
+            echo $this->Form->input(
+                'contact_id',
+                [
+                    'type' => 'hidden',
+                    'class' => 'dontdel',
+                    'value' => $e_ContactId
+                ]
+            );
         } else {
             //history add
             echo $this->Form->input('contact_id', ['type' => 'hidden']);
@@ -32,9 +38,13 @@
     ?>
     <td>
         <?php
-        echo $this->Form->input('date',
-                                    ['label' => false,
-                                     'value' => date('Y-m-d')]);
+        echo $this->Form->input(
+            'date',
+            [
+                'label' => false,
+                'value' => date('Y-m-d')
+            ]
+        );
         ?>
     </td>
     <td id="uName">
