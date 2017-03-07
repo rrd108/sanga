@@ -78,14 +78,29 @@
     </td>
     <td>
         <?php
-        echo $this->Form->input('quantity', [
-                                            'label' => false,
-                                            'class' => 'quantity'
-                                            ]);
-        echo $this->Form->input('unit_id', ['type' => 'hidden']);
-        echo $this->Form->input('xunit_id', ['label' => false,
-                                           'class' => 'thin',
-                                           'type' => 'text'])
+        echo $this->Form->input(
+            'quantity',
+            [
+                'label' => false,
+                'class' => 'quantity'
+            ]
+        );
+        echo $this->Form->input(
+            'unit_id',
+            [
+                'type' => 'hidden',
+                'value' => 1        //TODO hardcoded value for HUF
+            ]
+        );
+        echo ' Ft';
+        /*echo $this->Form->input(
+            'xunit_id',
+            [
+                'label' => false,
+                'class' => 'thin',
+                'type' => 'text'
+            ]
+        );*/
         ?>
     </td>
     <td id="hInfo">

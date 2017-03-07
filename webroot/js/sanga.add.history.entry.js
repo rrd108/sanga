@@ -61,7 +61,7 @@ $(function() {
 		}
 	});
 	
-	$('#xunit-id').autocomplete({
+	/*$('#xunit-id').autocomplete({
 		minLength : 1,
 		html: true,
 		source : $.sanga.baseUrl + '/Units/search',
@@ -78,25 +78,31 @@ $(function() {
 			$('#unit-id').val(ui.item.value);
 			return false;
 		}
-	});
+	});*/
 
 	$('#hsave').click(function(event){
 		var inf = $('#hInfo');
 		inf.append($('#ajaxloader').show());
 		$('#hsave').hide();
+
+		var data = {
+            contact_id : $('#contact-id').val(),
+            date : $('#date').val(),
+            group_id : $('#group-id').val(),
+            event_id : $('#event-id').val(),
+            detail : $('#detail').val(),
+            target_group_id : $('#target-group-id').val(),
+            family : null
+        };
+
+        if ($('#quantity').val()) {
+            data.quantity = $('#quantity').val();
+            data.unit_id = $('#unit-id').val();
+        }
+
 		$.ajax({
 			url : $('#hForm').attr('action'),
-			data : {
-				contact_id : $('#contact-id').val(),
-				date : $('#date').val(),
-				group_id : $('#group-id').val(),
-				event_id : $('#event-id').val(),
-				detail : $('#detail').val(),
-				quantity : $('#quantity').val(),
-				unit_id : $('#unit-id').val(),
-				target_group_id : $('#target-group-id').val(),
-				family : null
-			},
+			data : data,
 			type : 'post',
 			dataType : 'json',
 			error : function(jqXHR, textStatus, errorThrown){
@@ -134,10 +140,13 @@ $(function() {
 				cols += '<td>' + $('#xgroup-id').val() + '</td>';
 				cols += '<td>' + $('#xevent-id').val() + '</td>';
 				cols += '<td>' + $('#detail').val() + '</td>';
-				cols += '<td class="r">' +
-							$('#quantity').val() + ' ' +
-							$('#xunit-id').val() +
-						'</td>';
+				cols += '<td class="r">';
+				if ($('#quantity').val()) {
+                    cols += $('#quantity').val() + ' ' +
+                        //$('#xunit-id').val() +
+                        ' Ft';
+                }
+				cols += '</td>';
 				cols += '<td></td>';
 				newRow.append(cols);
 				$('#hTable > tbody').children('tr:first').after(newRow);
