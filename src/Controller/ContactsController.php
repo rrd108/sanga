@@ -228,17 +228,23 @@ class ContactsController extends AppController
                 );
                 //debug($query); die();
                 foreach ($query as $contact) {
-                    //debug($contact);
                     $csvData[$i] = [];
                     foreach ($selectCsv as $s) {
                         if(strpos($s, 'Contacts') === 0) {
                             $field = substr($s, strpos($s, '.') + 1);
                             $csvData[$i][] = $contact->$field;
                         } else {
-                            //Zips.name should became zip->name
                             $field = explode('.', $s);
-                            $field[0] = substr(strtolower($field[0]), 0, -1);
-                            $csvData[$i][] = $contact->{$field[0]}->{$field[1]};
+                            //TODO test this
+                            //Zips.name should became zip->name
+                            //$field[0] = substr(strtolower($field[0]), 0, -1);
+                            //Users.name should became users->name
+                            $field[0] = strtolower($field[0]);
+                            if (is_array($contact->{$field[0]})) {
+                                $csvData[$i][] = implode(': ', Hash::extract($contact->{$field[0]}, '{n}.' . $field[1]));
+                            } elseif (($contact->{$field[0]})) {
+                                $csvData[$i][] = $contact->{$field[0]}->{$field[1]};
+                            }
                         }
                     }
                     $i++;

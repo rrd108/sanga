@@ -1190,7 +1190,7 @@ class ContactsTable extends Table
      * @param array $where
      * @return array
      */
-    private function getPart(string $tableName, array $where)
+    private function getPart($tableName, array $where)
     {
         $ownedWhere = [];
         if (isset($where)) {
