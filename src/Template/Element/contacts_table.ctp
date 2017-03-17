@@ -1,4 +1,7 @@
-<?php /**
+<?php
+use Cake\Utility\Hash;
+
+/**
  * @param $group
  * @param $userId
  * @return string
@@ -100,6 +103,10 @@ function setGroupCss($group, $userId)
                             }
                         }
                         break;
+                    case 'Users.name' :
+                        echo implode(', ', Hash::extract($contact->users, '{n}.name'));
+                        break;
+
                     case 'users' :
                         if (isset($contact->users)){
                             foreach($contact->users as $user){

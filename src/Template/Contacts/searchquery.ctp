@@ -109,7 +109,8 @@ function getDataName($name, $type)
                         'Histories.date' => __('History date'),
                         'Histories.Events.name' => __('History event'),
                         'Histories.detail' => __('History detail'),
-                        'Histories.Groups.name' => '! ' . __('History group name')
+                        'Histories.Groups.name' => '! ' . __('History group name'),
+                        'Users.name' => __('User'),
                         ];
                     foreach ($filterFields as $field => $fLabel) {
                         if ( ! empty($selected) && in_array($field, $selected)) {
