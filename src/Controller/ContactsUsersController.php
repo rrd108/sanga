@@ -54,7 +54,7 @@ class ContactsUsersController extends AppController
  */
     public function add()
     {
-        $contactsUser = $this->ContactsUsers->newEntity($this->request->data);
+        $contactsUser = $this->ContactsUsers->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->ContactsUsers->save($contactsUser)) {
                 $this->Flash->success('The contacts user has been saved.');
@@ -84,7 +84,7 @@ class ContactsUsersController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $contactsUser = $this->ContactsUsers->patchEntity($contactsUser, $this->request->data);
+            $contactsUser = $this->ContactsUsers->patchEntity($contactsUser, $this->request->getData());
             if ($this->ContactsUsers->save($contactsUser)) {
                 $this->Flash->success('The contacts user has been saved.');
                 return $this->redirect(['action' => 'index']);

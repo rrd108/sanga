@@ -54,7 +54,7 @@ class GroupsUsersController extends AppController
  */
     public function add()
     {
-        $groupsUser = $this->GroupsUsers->newEntity($this->request->data);
+        $groupsUser = $this->GroupsUsers->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->GroupsUsers->save($groupsUser)) {
                 $this->Flash->success('The groups user has been saved.');
@@ -84,7 +84,7 @@ class GroupsUsersController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $groupsUser = $this->GroupsUsers->patchEntity($groupsUser, $this->request->data);
+            $groupsUser = $this->GroupsUsers->patchEntity($groupsUser, $this->request->getData());
             if ($this->GroupsUsers->save($groupsUser)) {
                 $this->Flash->success('The groups user has been saved.');
                 return $this->redirect(['action' => 'index']);

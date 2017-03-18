@@ -19,9 +19,9 @@ class UsersUsergroupsTable extends Table
  */
     public function initialize(array $config)
     {
-        $this->table('users_usergroups');
-        $this->displayField('id');
-        $this->primaryKey(['user_id', 'usergroup_id']);
+        $this->setTable('users_usergroups');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey(['user_id', 'usergroup_id']);
         $this->addBehavior('Timestamp');
 
         $this->belongsTo(

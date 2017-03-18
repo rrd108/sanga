@@ -15,15 +15,15 @@ class ImportsController extends AppController
     public function index()
     {
         //debug($this->request->data);
-        if (! empty($this->request->data)
-            && is_uploaded_file($this->request->data['file']['tmp_name'])
+        if (! empty($this->request->getData())
+            && is_uploaded_file($this->request->getData('file.tmp_name'))
         ) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
-            $file_mime = finfo_file($finfo, $this->request->data['file']['tmp_name']);
+            $file_mime = finfo_file($finfo, $this->request->getData('file.tmp_name'));
             finfo_close($finfo);
             
             if (in_array($file_mime, ['application/vnd.ms-excel','text/plain','text/csv'])) {
-                $fileData = fread(fopen($this->request->data['file']['tmp_name'], "r"), $this->request->data['file']['size']);
+                $fileData = fread(fopen($this->request->getData('file.tmp_name'), "r"), $this->request->getData('file.size'));
                 $fileData = explode("\n", $fileData);
                 
                 /*data[0]

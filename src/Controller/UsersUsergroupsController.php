@@ -54,7 +54,7 @@ class UsersUsergroupsController extends AppController
  */
     public function add()
     {
-        $usersUsergroup = $this->UsersUsergroups->newEntity($this->request->data);
+        $usersUsergroup = $this->UsersUsergroups->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->UsersUsergroups->save($usersUsergroup)) {
                 $this->Flash->success('The users usergroup has been saved.');
@@ -84,7 +84,7 @@ class UsersUsergroupsController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $usersUsergroup = $this->UsersUsergroups->patchEntity($usersUsergroup, $this->request->data);
+            $usersUsergroup = $this->UsersUsergroups->patchEntity($usersUsergroup, $this->request->getData());
             if ($this->UsersUsergroups->save($usersUsergroup)) {
                 $this->Flash->success('The users usergroup has been saved.');
                 return $this->redirect(['action' => 'index']);

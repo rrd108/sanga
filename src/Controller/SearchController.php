@@ -18,13 +18,13 @@ class SearchController extends AppController
         $this->Contacts = TableRegistry::get('Contacts');
         $query = $this->Contacts->find()
             ->select(['id', 'contactname', 'legalname', 'email', 'phone', 'birth', 'workplace', 'comment'])
-            ->where(['contactname LIKE "%'.$this->request->query('term').'%"'])
-            ->orWhere(['legalname LIKE "%'.$this->request->query('term').'%"'])
-            ->orWhere(['email LIKE "%'.$this->request->query('term').'%"'])
-            ->orWhere(['phone LIKE "%'.$this->request->query('term').'%"'])
-            ->orWhere(['birth LIKE "%'.$this->request->query('term').'%"'])
-            ->orWhere(['comment LIKE "%'.$this->request->query('term').'%"'])
-            ->orWhere(['workplace LIKE "%'.$this->request->query('term').'%"'])
+            ->where(['contactname LIKE "%'.$this->request->getQuery('term').'%"'])
+            ->orWhere(['legalname LIKE "%'.$this->request->getQuery('term').'%"'])
+            ->orWhere(['email LIKE "%'.$this->request->getQuery('term').'%"'])
+            ->orWhere(['phone LIKE "%'.$this->request->getQuery('term').'%"'])
+            ->orWhere(['birth LIKE "%'.$this->request->getQuery('term').'%"'])
+            ->orWhere(['comment LIKE "%'.$this->request->getQuery('term').'%"'])
+            ->orWhere(['workplace LIKE "%'.$this->request->getQuery('term').'%"'])
             ->limit(25);
         //debug($query->toArray());die();
         foreach ($query as $row) {
@@ -66,7 +66,7 @@ class SearchController extends AppController
                 'shared' => true
             ]
         )
-            ->where(['name LIKE "%'.$this->request->query('term').'%"']);
+            ->where(['name LIKE "%'.$this->request->getQuery('term').'%"']);
         foreach ($query as $row) {
             if ($this->createHighlight($row->name)) {
                 $label = '⁂ ' . $this->createHighlight($row->name);
@@ -81,7 +81,7 @@ class SearchController extends AppController
         $this->Skills = TableRegistry::get('Skills');
         $query = $this->Skills
             ->find()
-            ->where(['name LIKE "%'.$this->request->query('term').'%"']);
+            ->where(['name LIKE "%'.$this->request->getQuery('term').'%"']);
         //debug($query->toArray());die();
         foreach ($query as $row) {
             if ($this->createHighlight($row->name)) {
@@ -113,8 +113,8 @@ class SearchController extends AppController
     {
         //sql returns ékezetes, but this one not
         $highlight = ['format' => '<span class="b i">\1</span>'];
-        if ($value && mb_strpos(mb_strtolower($value), $this->request->query('term')) !== false) {
-            return Text::highlight($value, $this->request->query('term'), $highlight);
+        if ($value && mb_strpos(mb_strtolower($value), $this->request->getQuery('term')) !== false) {
+            return Text::highlight($value, $this->request->getQuery('term'), $highlight);
         } else {
             return null;
         }

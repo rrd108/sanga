@@ -53,7 +53,7 @@ class DocumentsController extends AppController
     {
         $document = $this->Documents->newEntity();
         if ($this->request->is('post')) {
-            $document = $this->Documents->patchEntity($document, $this->request->data);
+            $document = $this->Documents->patchEntity($document, $this->request->getData());
             if ($this->Documents->save($document)) {
                 $this->Flash->success(__('The document has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -82,7 +82,7 @@ class DocumentsController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $document = $this->Documents->patchEntity($document, $this->request->data);
+            $document = $this->Documents->patchEntity($document, $this->request->getData());
             if ($this->Documents->save($document)) {
                 $this->Flash->success(__('The document has been saved.'));
                 return $this->redirect(['action' => 'index']);

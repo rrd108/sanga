@@ -20,9 +20,9 @@ class ZipsTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('zips');
-        $this->displayField('zip');     //fullzip
-        $this->primaryKey(['id']);
+        $this->setTable('zips');
+        $this->setDisplayField('zip');     //fullzip
+        $this->setPrimaryKey(['id']);
         $this->belongsTo(
             'Countries',
             [

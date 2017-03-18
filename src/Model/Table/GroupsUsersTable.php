@@ -19,9 +19,9 @@ class GroupsUsersTable extends Table
  */
     public function initialize(array $config)
     {
-        $this->table('groups_users');
-        $this->displayField('group_id');
-        $this->primaryKey(['id']);
+        $this->setTable('groups_users');
+        $this->setDisplayField('group_id');
+        $this->setPrimaryKey(['id']);
 
         $this->belongsTo(
             'Groups',

@@ -30,7 +30,7 @@ class GroupsController extends AppController
     {
         $query = $this->Groups->find()
             ->select(['id', 'name'])
-            ->where(['name LIKE "'.$this->request->query('term').'%"']);
+            ->where(['name LIKE "'.$this->request->getQuery('term').'%"']);
         foreach ($query as $row) {
             $result[] = array('value' => $row->id,
                               'label' => $row->name
@@ -59,7 +59,7 @@ class GroupsController extends AppController
         $this->set('groups', $this->paginate($groups));
 
         //for adding new group
-        $this->set('group', $this->Groups->newEntity($this->request->data));
+        $this->set('group', $this->Groups->newEntity($this->request->getData()));
         $users = $this->Groups->Users->find('list');
         $contacts = $this->Groups->Contacts->find('list');
         $this->set(compact('users', 'contacts'));
@@ -97,7 +97,7 @@ class GroupsController extends AppController
             );
             //debug($group);
 
-            if ($this->request->params['_ext'] == 'csv') {
+            if ($this->request->getParams('_ext') == 'csv') {
                 $i = 0;
                 $_header = ['id', 'legalname', 'contactname', 'phone', 'email', 'birth', 'sex'];
                 foreach ($group->contacts as $contact) {
@@ -119,7 +119,7 @@ class GroupsController extends AppController
                     'workplace address', 'workplace city', 'workplace phone', 'workplace email']);
                 $_delimiter = ';';
                 $_serialize = 'csvData';
-                $this->response->download($group->name . '.csv');
+                $this->response->setDownload($group->name . '.csv');
                 $this->set(compact('csvData', '_serialize', '_header', '_delimiter'));
             } else {
                 $this->set('group', $group);
@@ -134,10 +134,10 @@ class GroupsController extends AppController
  */
     public function add()
     {
-        if (!isset($this->request->data['admin_user_id'])) {
-            $this->request->data['admin_user_id'] = $this->Auth->User('id');
+        if (!$this->request->getData('admin_user_id')) {
+            $this->request->setData('admin_user_id', $this->Auth->User('id'));
         }
-        $group = $this->Groups->newEntity($this->request->data);
+        $group = $this->Groups->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->Groups->save($group)) {
                 $this->Flash->success('The group has been saved.');
@@ -167,7 +167,7 @@ class GroupsController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $group = $this->Groups->patchEntity($group, $this->request->data);
+            $group = $this->Groups->patchEntity($group, $this->request->getData());
             if ($this->Groups->save($group)) {
                 $this->Flash->success('The group has been saved.');
                 //return $this->redirect(['action' => 'index']);

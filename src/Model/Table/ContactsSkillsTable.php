@@ -19,9 +19,9 @@ class ContactsSkillsTable extends Table
  */
     public function initialize(array $config)
     {
-        $this->table('contacts_skills');
-        $this->displayField('contact_id');
-        $this->primaryKey(['contact_id', 'skill_id']);
+        $this->setTable('contacts_skills');
+        $this->setDisplayField('contact_id');
+        $this->setPrimaryKey(['contact_id', 'skill_id']);
 
         $this->belongsTo(
             'Contacts',

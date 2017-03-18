@@ -20,11 +20,12 @@ class UnitsController extends AppController
     {
         $query = $this->Units->find()
             ->select(['id', 'name'])
-            ->where(['name LIKE "'.$this->request->query('term').'%"']);
+            ->where(['name LIKE "'.$this->request->getQuery('term').'%"']);
         foreach ($query as $row) {
-            $result[] = array('value' => $row->id,
-                              'label' => $row->name
-                              );
+            $result[] = [
+                'value' => $row->id,
+                'label' => $row->name
+            ];
         }
         $this->set('result', $result);
         $this->set('_serialize', 'result');
@@ -65,7 +66,7 @@ class UnitsController extends AppController
  */
     public function add()
     {
-        $unit = $this->Units->newEntity($this->request->data);
+        $unit = $this->Units->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->Units->save($unit)) {
                 $this->Flash->success('The unit has been saved.');
@@ -93,7 +94,7 @@ class UnitsController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $unit = $this->Units->patchEntity($unit, $this->request->data);
+            $unit = $this->Units->patchEntity($unit, $this->request->getData());
             if ($this->Units->save($unit)) {
                 $this->Flash->success('The unit has been saved.');
                 return $this->redirect(['action' => 'index']);

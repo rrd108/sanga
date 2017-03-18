@@ -19,9 +19,9 @@ class UnitsTable extends Table
  */
     public function initialize(array $config)
     {
-        $this->table('units');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('units');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->hasMany(
             'Histories',

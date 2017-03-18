@@ -54,7 +54,7 @@ class ContactsGroupsController extends AppController
  */
     public function add()
     {
-        $contactsGroup = $this->ContactsGroups->newEntity($this->request->data);
+        $contactsGroup = $this->ContactsGroups->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->ContactsGroups->save($contactsGroup)) {
                 $this->Flash->success('The contacts group has been saved.');
@@ -84,7 +84,7 @@ class ContactsGroupsController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $contactsGroup = $this->ContactsGroups->patchEntity($contactsGroup, $this->request->data);
+            $contactsGroup = $this->ContactsGroups->patchEntity($contactsGroup, $this->request->getData());
             if ($this->ContactsGroups->save($contactsGroup)) {
                 $this->Flash->success('The contacts group has been saved.');
                 return $this->redirect(['action' => 'index']);

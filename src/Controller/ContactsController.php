@@ -45,11 +45,11 @@ class ContactsController extends AppController
 */
     public function search()
     {
-        $contact = $this->Contacts->newEntity($this->request->data);
+        $contact = $this->Contacts->newEntity($this->request->getData());
         $query = $this->Contacts->find('ownedBy', ['User.id' => $this->Auth->user('id')])
             ->select(['id', 'contactname', 'legalname'])
-            ->where(['contactname LIKE "%'.$this->request->query('term').'%"'])
-            ->orWhere(['legalname LIKE "%'.$this->request->query('term').'%"']);
+            ->where(['contactname LIKE "%'.$this->request->getQuery('term').'%"'])
+            ->orWhere(['legalname LIKE "%'.$this->request->getQuery('term').'%"']);
         //debug($query);
         foreach ($query as $row) {
             $label = $this->createHighlight($row->contactname) .
@@ -64,9 +64,9 @@ class ContactsController extends AppController
 
     private function createHighlight($value = null)
     {
-        if ($value && strpos(strtolower($value), $this->request->query('term')) !== false) {
+        if ($value && strpos(strtolower($value), $this->request->getQuery('term')) !== false) {
             $highlight = ['format' => '<span class="b i">\1</span>'];
-            return Text::highlight($value, $this->request->query('term'), $highlight) . ' ';
+            return Text::highlight($value, $this->request->getQuery('term'), $highlight) . ' ';
         } else {
             return $value;
         }
@@ -125,8 +125,8 @@ class ContactsController extends AppController
                 $this->render();
             }
             parse_str($query->value, $queryArray);
-        } elseif ($this->request->query) {
-            $queryArray = $this->request->query;
+        } elseif ($this->request->getQuery()) {
+            $queryArray = $this->request->getQuery();
         }
 
         if (isset($queryArray)) {
@@ -178,7 +178,7 @@ class ContactsController extends AppController
             array_unshift($select, 'Contacts.active');
             $this->set('selected', $selected);
 
-            if ($this->request->params['_ext'] == 'csv') {
+            if ($this->request->getParams['_ext'] == 'csv') {
                 $limit = false;
             } else {
                 $limit = $this->paginate['limit'];
@@ -204,7 +204,7 @@ class ContactsController extends AppController
                         '_contain' => $contain, //TODO remove
                         '_select' => $select,
                         '_order' => $order,
-                        '_page' => isset($this->request->query['page']) ? $this->request->query['page'] : 1,
+                        '_page' => $this->request->getQuery('page') ? $this->request->getQuery('page') : 1,
                         '_limit' => $limit
                     ]
                 ]
@@ -212,7 +212,7 @@ class ContactsController extends AppController
 
             $this->set('contacts', $this->paginate());
 
-            if ($this->request->params['_ext'] == 'csv') {
+            if ($this->request->getParams('_ext') == 'csv') {
                 $i = 0;
 
                 $query = $this->Contacts->find(
@@ -289,7 +289,7 @@ class ContactsController extends AppController
         $select = $this->Contacts->Users->Settings->getDefaultContactFields($this->Auth->user('id'));
         $s = $this->createArraysForFind($select);
 
-        $this->request->data = $s['selected'];
+        $this->request->setData($s['selected']);
 
         array_unshift($s['select'], 'Contacts.sex');
         array_unshift($s['select'], 'Contacts.id');
@@ -309,7 +309,7 @@ class ContactsController extends AppController
                     '_select' => $s['select'],
                     '_contain' => $s['contain'],
                     '_order' => $order,
-                    '_page' => isset($this->request->query['page']) ? $this->request->query['page'] : 1,
+                    '_page' => $this->request->getQuery('page') ? $this->request->getQuery('page') : 1,
                     '_limit' => $this->paginate['limit']
                 ]
             ]
@@ -426,7 +426,7 @@ class ContactsController extends AppController
             $select = $unserialized;
             $where = [];
             foreach ($select as $i => $name) {
-                $this->request->data[str_replace('Contacts.', '', $name)] = 1;
+                $this->request->setData(str_replace('Contacts.', '', $name), 1);
             }
         }
         $histories = $this->Contacts->Histories->find()
@@ -462,11 +462,11 @@ class ContactsController extends AppController
  */
     public function add()
     {
-        $this->request->data['users']['_ids'] = [$this->Auth->user('id')];        //add auth user as contact person
-        $contact = $this->Contacts->newEntity($this->request->data);
+        $this->request->setData('users._ids', $this->Auth->user('id'));        //add auth user as contact person
+        $contact = $this->Contacts->newEntity($this->request->getData());
         //debug($contact);
-        if (! empty($this->request->data['family_member_id'])) {
-            $contact->family_id = $this->getFamilyId($contact, $this->request->data['family_member_id']);
+        if (! empty($this->request->getData('family_member_id'))) {
+            $contact->family_id = $this->getFamilyId($contact, $this->request->getData('family_member_id'));
         }
         if ($this->request->is('post')) {
             $contact->loggedInUser = $this->Auth->user('id');
@@ -558,12 +558,12 @@ class ContactsController extends AppController
             'contain' => ['Groups', 'Skills', 'Users', 'Zips']
             ]
         );
-        if (! empty($this->request->data)) {
+        if (! empty($this->request->getData())) {
             if ($this->request->is(['patch', 'post', 'put'])) {
-                $contact = $this->Contacts->patchEntity($contact, $this->request->data);
+                $contact = $this->Contacts->patchEntity($contact, $this->request->getData());
 
-                if (isset($this->request->data['family_member_id'])) {
-                    $contact->family_id = $this->getFamilyId($contact, $this->request->data['family_member_id']);
+                if ($this->request->getData('family_member_id')) {
+                    $contact->family_id = $this->getFamilyId($contact, $this->request->getData('family_member_id'));
                 }
 
                 $contact->loggedInUser = $this->Auth->user('id');
@@ -706,7 +706,7 @@ class ContactsController extends AppController
                     $this->request->data['groups']['_ids'][] = $group->id;
                 }
                 $contact->loggedInUser = $this->Auth->user('id');
-                $this->Contacts->patchEntity($contact, $this->request->data);
+                $this->Contacts->patchEntity($contact, $this->request->getData());
                 if ($this->Contacts->save($contact)) {
                     $result = ['message' => __('New Group membership saved')];
                 } else {
@@ -724,7 +724,7 @@ class ContactsController extends AppController
     {
         if ($this->request->is('post') && $this->request->is('ajax')) {
             $contact = $this->Contacts->get($id, ['contain' => ['Groups']]);
-            $group = $this->Contacts->Groups->get($this->request->data['group_id']);
+            $group = $this->Contacts->Groups->get($this->request->getData('group_id'));
             $this->Contacts->Groups->unlink($contact, [$group]);
             $result = ['saved' => true,
                        'message' => __('Group membership removed')];
@@ -736,8 +736,8 @@ class ContactsController extends AppController
     public function removeSkill()
     {
         if ($this->request->is('post') && $this->request->is('ajax')) {
-            $contact = $this->Contacts->get($this->request->data['contact_id']);
-            $skill = $this->Contacts->Skills->get($this->request->data['skill_id']);
+            $contact = $this->Contacts->get($this->request->getData('contact_id'));
+            $skill = $this->Contacts->Skills->get($this->request->getData('skill_id'));
             $this->Contacts->Skills->unlink($contact, [$skill]);
             $result = ['saved' => true,
                        'message' => __('Skill removed')];
@@ -761,10 +761,10 @@ class ContactsController extends AppController
 
         $user = $this->Contacts->Users->get($this->Auth->user('id'));
 
-        if (isset($this->request->query['code'])) {
+        if ($this->request->getQuery('code')) {
             //google callback: saves access token and (at the very first time) refesh token
             $this->log('Get access (and refresh) token first time', 'debug');
-            $client->authenticate($this->request->query['code']);
+            $client->authenticate($this->request->getQuery('code'));
             $this->request->session()->write('Google.access_token', $client->getAccessToken());
 
             $user->google_contacts_refresh_token = $client->getRefreshToken();
@@ -884,24 +884,24 @@ class ContactsController extends AppController
 
     public function google_import()
     {
-        if ($this->request->data && $this->request->is('post') && $this->request->is('ajax')) {
+        if ($this->request->getData() && $this->request->is('post') && $this->request->is('ajax')) {
             //add contacts person
-            $this->request->data['users'] = ['_ids' => [$this->Auth->user('id')]];
+            $this->request->setData('users', ['_ids' => [$this->Auth->user('id')]]);
 
-            if ($this->request->data['address']) {
-                $address = $this->formatAddress($this->request->data['address']);
-                $this->request->data['zip_id'] = $address['zip_id'];
-                $this->request->data['address'] = $address['address'];
+            if ($this->request->getData('address')) {
+                $address = $this->formatAddress($this->request->getData('address'));
+                $this->request->setData('zip_id', $address['zip_id']);
+                $this->request->setData('address', $address['address']);
             }
 
-            $contact = $this->Contacts->newEntity($this->request->data);
+            $contact = $this->Contacts->newEntity($this->request->getData());
             $contact->loggedInUser = $this->Auth->user('id');
             if ($this->Contacts->save($contact)) {
                 $result = ['save' => __('The contact has been saved.')];
 
                 //save photos
                 $client = $this->google_client();
-                $photo = $this->google_get_photo($this->request->data['google_id'], $client);
+                $photo = $this->google_get_photo($this->request->getData('google_id'), $client);
                 if (strlen($photo) > 32) {
                     $source = imagecreatefromstring($photo);
                     $file = $this->webroot . 'img/contacts/' . $contact->id . '.jpg';
@@ -1033,7 +1033,7 @@ class ContactsController extends AppController
             //save google changes to local
 
         } else {
-            $this->log('Unsuccessful sync', $debug);
+            $this->log('Unsuccessful sync', 'debug');
         }
     }
 
@@ -1057,8 +1057,8 @@ class ContactsController extends AppController
         $email->setFrom([$this->Auth->user('email') => $this->Auth->user('realname')])
             ->setTo($contact->email)
             ->setBcc($this->Auth->user('email'))
-            ->setSubject($this->request->data['subject'])
-            ->send($this->request->data['message']);
+            ->setSubject($this->request->getData('subject'))
+            ->send($this->request->getData('message'));
 
         //add to history
         $history = $this->Contacts->Histories->newEntity();
@@ -1066,7 +1066,7 @@ class ContactsController extends AppController
         $history->date = date('Y-m-d H:i:s');
         $history->user_id = $this->Auth->user('id');
         $history->event_id = 3;    //TODO HC
-        $history->detail = $this->request->data['subject'] . ' : ' . $this->request->data['message'];
+        $history->detail = $this->request->getData('subject') . ' : ' . $this->request->getData('message');
         $saved = $this->Contacts->Histories->save($history);
         if ($saved) {
             $result = ['save' => true,
@@ -1080,22 +1080,22 @@ class ContactsController extends AppController
 
     public function documentSave()
     {
-        if (! empty($this->request->data['contactid'])) {
-            $contactid = $this->request->data['contactid'];
+        if (! empty($this->request->getData('contactid'))) {
+            $contactid = $this->request->getData('contactid');
 
-            if (empty($this->request->data['document_title'])) {
-                $this->request->data['document_title'] = $this->request->data['uploadfile']['name'];
+            if (empty($this->request->getData('document_title'))) {
+                $this->request->setData('document_title', $this->request->getData('uploadfile.name'));
             }
 
-            if (! empty($this->request->data['uploadfile']['type'])) {
+            if (! empty($this->request->getData('uploadfile.type'))) {
                 $document = $this->Contacts->Documents->newEntity();
 
                 $document->contact_id = $contactid;
-                $document->name = $this->request->data['document_title'];
-                $document->file_name = $this->request->data['uploadfile']['name'];
-                $document->file_type = $this->request->data['uploadfile']['type'];
-                $document->size = $this->request->data['uploadfile']['size'];
-                $document->data = file_get_contents($this->request->data['uploadfile']['tmp_name']);
+                $document->name = $this->request->getData('document_title');
+                $document->file_name = $this->request->getData('uploadfile.name');
+                $document->file_type = $this->request->getData('uploadfile.type');
+                $document->size = $this->request->getData('uploadfile.size');
+                $document->data = file_get_contents($this->request->getData('uploadfile.tmp_name'));
                 $document->user_id = $this->Auth->user('id');
 
                 $this->Contacts->Documents->save($document);
@@ -1118,13 +1118,13 @@ class ContactsController extends AppController
 
         $result = $this->Contacts->Documents->get($documentId);
 
-        $this->response->header(
+        $this->response->setHeader(
             [
             "Content-type: $result->file_type"
             ]
         );
-        $this->response->body(stream_get_contents($result->data));
-        $this->response->download($result->file_name);
+        $this->response->setBody(stream_get_contents($result->data));
+        $this->response->setDownload($result->file_name);
 
         return $this->response;
 

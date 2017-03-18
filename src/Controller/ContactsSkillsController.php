@@ -54,7 +54,7 @@ class ContactsSkillsController extends AppController
  */
     public function add()
     {
-        $contactsSkill = $this->ContactsSkills->newEntity($this->request->data);
+        $contactsSkill = $this->ContactsSkills->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->ContactsSkills->save($contactsSkill)) {
                 $this->Flash->success('The contacts skill has been saved.');
@@ -84,7 +84,7 @@ class ContactsSkillsController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $contactsSkill = $this->ContactsSkills->patchEntity($contactsSkill, $this->request->data);
+            $contactsSkill = $this->ContactsSkills->patchEntity($contactsSkill, $this->request->getData());
             if ($this->ContactsSkills->save($contactsSkill)) {
                 $this->Flash->success('The contacts skill has been saved.');
                 return $this->redirect(['action' => 'index']);

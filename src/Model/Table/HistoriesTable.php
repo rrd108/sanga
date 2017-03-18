@@ -19,9 +19,9 @@ class HistoriesTable extends Table
  */
     public function initialize(array $config)
     {
-        $this->table('histories');
-        $this->displayField('id');
-        $this->primaryKey('id');
+        $this->setTable('histories');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
 
         $this->belongsTo(
@@ -132,7 +132,7 @@ class HistoriesTable extends Table
                     return $q->where(['Usergroups.admin_user_id' => $options['User.id']]);
                 }
             )
-            ->hydrate(false)
+            ->setHydrate(false)
             ->extract('id')
             ->toArray();
         if (empty($userIds)) {

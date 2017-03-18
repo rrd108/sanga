@@ -19,9 +19,9 @@ class ContactsUsersTable extends Table
  */
     public function initialize(array $config)
     {
-        $this->table('contacts_users');
-        $this->displayField('contact_id');
-        $this->primaryKey(['contact_id', 'user_id']);
+        $this->setTable('contacts_users');
+        $this->setDisplayField('contact_id');
+        $this->setPrimaryKey(['contact_id', 'user_id']);
 
         $this->belongsTo(
             'Contacts',

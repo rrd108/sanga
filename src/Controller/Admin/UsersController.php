@@ -81,7 +81,7 @@ class UsersController extends AppController
  */
     public function add()
     {
-        $user = $this->Users->newEntity($this->request->data);
+        $user = $this->Users->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->Users->save($user)) {
                 $this->Flash->success('The user has been saved.');
@@ -112,7 +112,7 @@ class UsersController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user = $this->Users->patchEntity($user, $this->request->getData());
             $saved = $this->Users->save($user);
             if ($saved) {
                 $json = ['save' => __('The user has been saved.')];

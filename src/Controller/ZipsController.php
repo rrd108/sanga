@@ -20,8 +20,8 @@ class ZipsController extends AppController
     {
         $query = $this->Zips->find()
             ->select(['id', 'zip', 'name'])
-            ->where(['zip LIKE "'.$this->request->query('term').'%"'])
-            ->orWhere(['name LIKE "'.$this->request->query('term').'%"']);
+            ->where(['zip LIKE "'.$this->request->getQuery('term').'%"'])
+            ->orWhere(['name LIKE "'.$this->request->getQuery('term').'%"']);
         //debug($query);
         foreach ($query as $row) {
             $result[] = array('value' => $row->id,
@@ -70,7 +70,7 @@ class ZipsController extends AppController
  */
     public function add()
     {
-        $zip = $this->Zips->newEntity($this->request->data);
+        $zip = $this->Zips->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->Zips->save($zip)) {
                 $this->Flash->success('The zip has been saved.');
@@ -99,7 +99,7 @@ class ZipsController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $zip = $this->Zips->patchEntity($zip, $this->request->data);
+            $zip = $this->Zips->patchEntity($zip, $this->request->getData());
             if ($this->Zips->save($zip)) {
                 $this->Flash->success('The zip has been saved.');
                 return $this->redirect(['action' => 'index']);

@@ -28,9 +28,9 @@ class NotificationsTable extends Table implements EventListenerInterface
  */
     public function initialize(array $config)
     {
-        $this->table('notifications');
-        $this->displayField('id');
-        $this->primaryKey('id');
+        $this->setTable('notifications');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
 
         $this->belongsTo(

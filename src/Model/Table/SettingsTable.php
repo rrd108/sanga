@@ -21,9 +21,9 @@ class SettingsTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('settings');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('settings');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
         $this->belongsTo(
             'Users',
             [

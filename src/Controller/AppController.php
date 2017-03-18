@@ -56,7 +56,7 @@ class AppController extends Controller
 
     public function beforeFilter(Event $event)
     {
-        $this->Auth->config('authorize', ['Controller']);
+        $this->Auth->setConfig('authorize', ['Controller']);
         $this->Auth->deny();
 
         //get locale cookie

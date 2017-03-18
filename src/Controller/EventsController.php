@@ -20,7 +20,7 @@ class EventsController extends AppController
     {
         $query = $this->Events->find()
             ->select(['id', 'name'])
-            ->where(['name LIKE "'.$this->request->query('term').'%"']);
+            ->where(['name LIKE "'.$this->request->getQuery('term').'%"']);
         foreach ($query as $row) {
             $result[] = array('value' => $row->id,
                               'label' => $row->name
@@ -44,7 +44,7 @@ class EventsController extends AppController
         $this->set('events', $this->paginate($this->Events));
         
         //for adding new event
-        $this->set('event', $this->Events->newEntity($this->request->data));
+        $this->set('event', $this->Events->newEntity($this->request->getData()));
     }
 
 
@@ -55,11 +55,11 @@ class EventsController extends AppController
  */
     public function add()
     {
-        if (!isset($this->request->data['user_id']) && $this->Auth->User('role') < 9) {
-            $this->request->data['user_id'] = $this->Auth->User('id');
+        if (!$this->request->getData('user_id') && $this->Auth->User('role') < 9) {
+            $this->request->setData('user_id', $this->Auth->User('id'));
         }
 
-        $event = $this->Events->newEntity($this->request->data);
+        $event = $this->Events->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->Events->save($event)) {
                 $this->Flash->success('The event has been saved.');
@@ -88,7 +88,7 @@ class EventsController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $event = $this->Events->patchEntity($event, $this->request->data);
+            $event = $this->Events->patchEntity($event, $this->request->getData());
             if ($this->Events->save($event)) {
                 $this->Flash->success('The event has been saved.');
                 return $this->redirect(['action' => 'index']);

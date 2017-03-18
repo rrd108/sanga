@@ -51,7 +51,7 @@ class ContactsourcesController extends AppController
  */
     public function add()
     {
-        $contactsource = $this->Contactsources->newEntity($this->request->data);
+        $contactsource = $this->Contactsources->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->Contactsources->save($contactsource)) {
                 $this->Flash->success('The contactsource has been saved.');
@@ -79,7 +79,7 @@ class ContactsourcesController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $contactsource = $this->Contactsources->patchEntity($contactsource, $this->request->data);
+            $contactsource = $this->Contactsources->patchEntity($contactsource, $this->request->getData());
             if ($this->Contactsources->save($contactsource)) {
                 $this->Flash->success('The contactsource has been saved.');
                 return $this->redirect(['action' => 'index']);

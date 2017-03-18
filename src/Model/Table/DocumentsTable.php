@@ -23,9 +23,9 @@ class DocumentsTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('documents');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('documents');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
         
         $this->belongsTo(

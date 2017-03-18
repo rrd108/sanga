@@ -19,9 +19,9 @@ class ContactsourcesTable extends Table
  */
     public function initialize(array $config)
     {
-        $this->table('contactsources');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('contactsources');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->hasMany(
             'Contacts',

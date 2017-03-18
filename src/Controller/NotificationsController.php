@@ -76,7 +76,7 @@ class NotificationsController extends AppController
  */
     public function add($user_id = null)
     {
-        $notification = $this->Notifications->newEntity($this->request->data);
+        $notification = $this->Notifications->newEntity($this->request->getData());
         if ($user_id) {
             $notification->user_id = $user_id;
         } else {
@@ -111,7 +111,7 @@ class NotificationsController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $notification = $this->Notifications->patchEntity($notification, $this->request->data);
+            $notification = $this->Notifications->patchEntity($notification, $this->request->getData());
             if ($this->Notifications->save($notification)) {
                 $this->Flash->success(__('The notification has been saved.'));
                 return $this->redirect(['action' => 'index']);

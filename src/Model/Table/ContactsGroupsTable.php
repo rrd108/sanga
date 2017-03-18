@@ -19,9 +19,9 @@ class ContactsGroupsTable extends Table
  */
     public function initialize(array $config)
     {
-        $this->table('contacts_groups');
-        $this->displayField('group_id');
-        $this->primaryKey(['group_id', 'contact_id']);
+        $this->setTable('contacts_groups');
+        $this->setDisplayField('group_id');
+        $this->setPrimaryKey(['group_id', 'contact_id']);
 
         $this->belongsTo(
             'Groups',

@@ -28,30 +28,30 @@ class HistoriesController extends AppController
         $contain = ['Contacts', 'Users', 'Groups', 'Events', 'Units'];
         $order = ['Histories.date' => 'DESC', 'Histories.id' => 'DESC'];
 
-        if (! empty($this->request->data)) {
+        if (! empty($this->request->getData())) {
             //TODO see accessible only
             $where = [];
 
-            if (! empty($this->request->data['fcontact_id'])) {
-                $where['Histories.contact_id'] = $this->request->data['fcontact_id'];
+            if (! empty($this->request->getData('fcontact_id'))) {
+                $where['Histories.contact_id'] = $this->request->getData('fcontact_id');
             }
-            if (! empty($this->request->data['daterange'])) {
-                $dates = str_split(' - ', $this->request->data['daterange']);
+            if (! empty($this->request->getData('daterange'))) {
+                $dates = str_split(' - ', $this->request->getData('daterange'));
                 $between = function ($exp) use ($dates) {
                     return $exp->between('date', $dates[0], $dates[1], 'date');
                 };
             }
-            if (! empty($this->request->data['fuser_id'])) {
-                $where['Histories.user_id'] = $this->request->data['fuser_id'];
+            if (! empty($this->request->getData('fuser_id'))) {
+                $where['Histories.user_id'] = $this->request->getData('fuser_id');
             }
-            if (! empty($this->request->data['fgroup_id'])) {
-                $where['Histories.group_id'] = $this->request->data['fgroup_id'];
+            if (! empty($this->request->getData('fgroup_id'))) {
+                $where['Histories.group_id'] = $this->request->getData('fgroup_id');
             }
-            if (! empty($this->request->data['fevent_id'])) {
-                $where['Histories.event_id'] = $this->request->data['fevent_id'];
+            if (! empty($this->request->getData('fevent_id'))) {
+                $where['Histories.event_id'] = $this->request->getData('fevent_id');
             }
-            if (! empty($this->request->data['fdetail'])) {
-                $where['Histories.detail LIKE'] = '%' . $this->request->data['fdetail'] . '%';
+            if (! empty($this->request->getData('fdetail'))) {
+                $where['Histories.detail LIKE'] = '%' . $this->request->getData('fdetail') . '%';
             }
 
             $histories = $this->Histories->find()->where($where);
@@ -71,7 +71,7 @@ class HistoriesController extends AppController
                         'User.id' => $this->Auth->user('id'),
                         '_contain' => $contain,
                         '_order' => $order,
-                        '_page' => isset($this->request->query['page']) ? $this->request->query['page'] : 1,
+                        '_page' => $this->request->getQuery('page') ? $this->request->getQuery('page') : 1,
                         '_limit' => 20
                     ]
                 ]
@@ -105,13 +105,13 @@ class HistoriesController extends AppController
  */
     public function add()
     {
-        $history = $this->Histories->newEntity($this->request->data);
+        $history = $this->Histories->newEntity($this->request->getData());
         $history->user_id = $this->Auth->user('id');
         if ($this->request->is('post')) {
             //debug($this->request->data);die();
 
-            if (isset($this->request->data['target_group_id']) && ! isset($this->request->data['contact_id'])) {    //add an event to multiple group members
-                $group = $this->Histories->groups->get($this->request->data['group_id'], ['contain' => 'Contacts']);
+            if ($this->request->getData('target_group_id') && ! $this->request->getData('contact_id')) {    //add an event to multiple group members
+                $group = $this->Histories->groups->get($this->request->getData('group_id'), ['contain' => 'Contacts']);
                 exec(WWW_ROOT . '../bin/cake history ' . json_encode(json_encode($history)) . ' ' . json_encode(json_encode($group)) . ' ' . $this->Auth->user('id') . ' > /dev/null &');
                 $result = ['save' => true,
                             'message' => __('Adding history event to all group members started in the background')];
@@ -170,7 +170,7 @@ class HistoriesController extends AppController
         );
         if ($this->Auth->user('id') ==  $history->user_id) {
             if ($this->request->is(['patch', 'post', 'put'])) {
-                $history = $this->Histories->patchEntity($history, $this->request->data);
+                $history = $this->Histories->patchEntity($history, $this->request->getData());
                 if ($this->Histories->save($history)) {
                     $this->Flash->success('The history has been saved.');
                     return $this->redirect(['action' => 'index']);

@@ -19,9 +19,9 @@ class CountriesTable extends Table
  */
     public function initialize(array $config)
     {
-        $this->table('countries');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('countries');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->hasMany(
             'Zips',

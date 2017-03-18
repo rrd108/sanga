@@ -51,7 +51,7 @@ class CountriesController extends AppController
  */
     public function add()
     {
-        $country = $this->Countries->newEntity($this->request->data);
+        $country = $this->Countries->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->Countries->save($country)) {
                 $this->Flash->success('The country has been saved.');
@@ -79,7 +79,7 @@ class CountriesController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $country = $this->Countries->patchEntity($country, $this->request->data);
+            $country = $this->Countries->patchEntity($country, $this->request->getData());
             if ($this->Countries->save($country)) {
                 $this->Flash->success('The country has been saved.');
                 return $this->redirect(['action' => 'index']);

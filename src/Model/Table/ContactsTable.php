@@ -45,9 +45,9 @@ class ContactsTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('contacts');
-        $this->displayField('contactname');
-        $this->primaryKey('id');
+        $this->setTable('contacts');
+        $this->setDisplayField('contactname');
+        $this->setPrimaryKey('id');
         $this->addBehavior('Timestamp');
 
         $this->belongsTo(
@@ -224,7 +224,7 @@ class ContactsTable extends Table
                 return true;
             }
 
-            $entity->errors('contactname', __('At least 2 info should be filled'));
+            $entity->setErrors('contactname', __('At least 2 info should be filled'));
             return false;
         }
 
@@ -1322,7 +1322,7 @@ class ContactsTable extends Table
                 }
             }
         }
-        $query = new Query($this->connection(), $this);
+        $query = new Query($this->getConnection(), $this);
         return $query->newExpr()->add($where);
     }
 

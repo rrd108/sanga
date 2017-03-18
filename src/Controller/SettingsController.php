@@ -58,11 +58,11 @@ class SettingsController extends AppController
     {
         $setting = $this->Settings->newEntity();
         if ($this->request->is('post') || $this->request->is('ajax')) {
-            if (! isset( $this->request->data['user_id'])) {
-                 $this->request->data['user_id'] = $this->Auth->user('id');
+            if (! $this->request->getData('user_id')) {
+                 $this->request->setData('user_id', $this->Auth->user('id'));
             }
             
-            $setting = $this->Settings->patchEntity($setting, $this->request->data);
+            $setting = $this->Settings->patchEntity($setting, $this->request->getData());
             if ($this->Settings->save($setting)) {
                 $this->Flash->success(__('The setting has been saved.'));
                 $setting = ['message' => __('The setting has been saved.'),
@@ -87,8 +87,10 @@ class SettingsController extends AppController
         $setting = $this->Settings
             ->find()
             ->where(
-                ['user_id' => $this->Auth->user('id'),
-                    'name' => $this->request->data['sName']]
+                [
+                    'user_id' => $this->Auth->user('id'),
+                    'name' => $this->request->getData('sName')
+                ]
             )
             ->first();
         //debug($setting);die();
@@ -115,15 +117,18 @@ class SettingsController extends AppController
         ]
         */
         $select = [];
-        foreach ($this->request->data as $name => $value) {
+        foreach ($this->request->getData() as $name => $value) {
             if ($name != 'sName' && $value) {
                 $select[] = 'Contacts.' . $name;
             }
         }
-        $this->request->data = ['user_id' => $this->Auth->user('id'),
-                                'name' => $this->request->data['sName'],
-                                'value' => serialize($select)
-                                ];
+        $this->request->setData(
+            [
+                'user_id' => $this->Auth->user('id'),
+                'name' => $this->request->getData('sName'),
+                'value' => serialize($select)
+            ]
+        );
         
         if (empty($setting)) {
             $this->add();
@@ -131,7 +136,7 @@ class SettingsController extends AppController
         }
         $setting = $this->Settings->get($setting->id);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $setting = $this->Settings->patchEntity($setting, $this->request->data);
+            $setting = $this->Settings->patchEntity($setting, $this->request->getData());
             if ($this->Settings->save($setting)) {
                 $result = ['message' => __('The setting has been saved')];
             } else {

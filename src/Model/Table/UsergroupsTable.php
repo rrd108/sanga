@@ -20,9 +20,9 @@ class UsergroupsTable extends Table
  */
     public function initialize(array $config)
     {
-        $this->table('usergroups');
-        $this->displayField('name');
-        $this->primaryKey('id');
+        $this->setTable('usergroups');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
 
         $this->belongsTo(
             'AdminUsers',

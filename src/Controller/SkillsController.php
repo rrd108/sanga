@@ -20,12 +20,13 @@ class SkillsController extends AppController
     {
         $query = $this->Skills->find()
             ->select(['id', 'name'])
-            ->where(['name LIKE "'.$this->request->query('term').'%"']);
+            ->where(['name LIKE "'.$this->request->getQuery('term').'%"']);
         //debug($query);
         foreach ($query as $row) {
-            $result[] = array('value' => $row->id,
-                              'label' => $row->name
-                              );
+            $result[] = [
+                'value' => $row->id,
+                'label' => $row->name
+            ];
         }
         //debug($result);die();
         $this->set('result', $result);
@@ -68,7 +69,7 @@ class SkillsController extends AppController
  */
     public function add()
     {
-        $skill = $this->Skills->newEntity($this->request->data);
+        $skill = $this->Skills->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->Skills->save($skill)) {
                 $this->Flash->success('The skill has been saved.');
@@ -97,7 +98,7 @@ class SkillsController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $skill = $this->Skills->patchEntity($skill, $this->request->data);
+            $skill = $this->Skills->patchEntity($skill, $this->request->getData());
             if ($this->Skills->save($skill)) {
                 $this->Flash->success('The skill has been saved.');
                 return $this->redirect(['action' => 'index']);

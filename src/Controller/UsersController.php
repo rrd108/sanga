@@ -82,7 +82,7 @@ class UsersController extends AppController
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
+            $user = $this->Users->patchEntity($user, $this->request->getData());
             $saved = $this->Users->save($user);
 
             I18n::locale(h($user->locale));
@@ -112,7 +112,7 @@ class UsersController extends AppController
     {
         $query = $this->Users->find()
             ->select(['id', 'name'])
-            ->where(['name LIKE "'.$this->request->query('term').'%"']);
+            ->where(['name LIKE "'.$this->request->getQuery('term').'%"']);
         foreach ($query as $row) {
             $result[] = ['value' => $row->id,
                               'label' => $row->name
@@ -125,7 +125,7 @@ class UsersController extends AppController
 
     public function login()
     {
-        if (isset($this->request->data['passreminder'])) {
+        if ($this->request->getData('passreminder')) {
             $this->forgotpass();
         } elseif ($this->request->is('post')) {
             $user = $this->Auth->identify();
@@ -163,14 +163,14 @@ class UsersController extends AppController
 
     private function forgotpass()
     {
-        if ($this->request->data['email'] != '') {
+        if ($this->request->getData('email') != '') {
             $user = $this->Users->find()
-                ->where(['email' => $this->request->data['email']])
+                ->where(['email' => $this->request->getData('email')])
                 ->first();
             if (!empty($user)) {
                 //create and save random token
                 $token = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 32);
-                $user = $this->Users->patchEntity($user, $this->request->data);
+                $user = $this->Users->patchEntity($user, $this->request->getData());
                 $user->resettoken = $token;
                 if ($this->Users->save($user)) {
                     $token = $user->id . ',' . $token;
@@ -219,7 +219,7 @@ class UsersController extends AppController
             if (!empty($user)) {
                 $tempPass = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
 
-                $user = $this->Users->patchEntity($user, $this->request->data);
+                $user = $this->Users->patchEntity($user, $this->request->getData());
                 $user->password = $tempPass;
                 $user->resettoken = '';
                 $this->Users->save($user);
