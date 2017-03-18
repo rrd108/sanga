@@ -1054,10 +1054,10 @@ class ContactsController extends AppController
         $contact = $this->Contacts->get($contactId);
 
         $email = new Email('default');
-        $email->from([$this->Auth->user('email') => $this->Auth->user('realname')])
-            ->to($contact->email)
-            ->bcc($this->Auth->user('email'))
-            ->subject($this->request->data['subject'])
+        $email->setFrom([$this->Auth->user('email') => $this->Auth->user('realname')])
+            ->setTo($contact->email)
+            ->setBcc($this->Auth->user('email'))
+            ->setSubject($this->request->data['subject'])
             ->send($this->request->data['message']);
 
         //add to history

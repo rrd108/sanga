@@ -185,12 +185,12 @@ class UsersController extends AppController
                     );
 
                     $email = new Email('default');
-                    $email->from(['forgotpass@sanga.1108.cc' => __('Password reset request')])
-                        ->to($user->email)
-                        ->subject(__('Password reset'))
-                        ->emailFormat('html')
-                        ->template('resetpass')
-                        ->viewVars(['resetlink' => $resetlink, 'baseUrl' => $baseUrl]);
+                    $email->setFrom(['forgotpass@sanga.1108.cc' => __('Password reset request')])
+                        ->setTo($user->email)
+                        ->setSubject(__('Password reset'))
+                        ->setEmailFormat('html')
+                        ->setTemplate('resetpass')
+                        ->setViewVars(['resetlink' => $resetlink, 'baseUrl' => $baseUrl]);
 
                     if ($email->send()) {
                         $this->Flash->success(__('We sent an email to you, describing how to set up a new password.'));
