@@ -227,6 +227,7 @@ class UsersController extends AppController
                 $this->render('login');
             }
         }
+        $this->Flash->error(__('It seems you are trying to access an invalid token.'));
     }
 
     public function dashboard()
