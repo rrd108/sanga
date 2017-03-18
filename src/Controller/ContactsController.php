@@ -152,7 +152,7 @@ class ContactsController extends AppController
                     if (strpos($field, 'Contacts.') === 0) {
                         $selected[] = substr(strstr($field, '.'), 1);
                     } else {
-                        $modelName = strstr($field, '.', true); //TODO több pöttyös - ha egyáltalán kell a conatin
+                        $modelName = strstr($field, '.', true); //TODO több pöttyös - ha egyáltalán kell a contain
                         if (! in_array($modelName, $contain)) {
                             $contain[] = $modelName;
                         }
