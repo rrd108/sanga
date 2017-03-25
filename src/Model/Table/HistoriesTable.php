@@ -132,7 +132,7 @@ class HistoriesTable extends Table
                     return $q->where(['Usergroups.admin_user_id' => $options['User.id']]);
                 }
             )
-            ->setHydrate(false)
+            ->enableHydration(false)
             ->extract('id')
             ->toArray();
         if (empty($userIds)) {
