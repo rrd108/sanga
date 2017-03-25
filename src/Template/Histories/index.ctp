@@ -37,8 +37,13 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                     </td>
                     <td>
                         <?php
-                        echo $this->Form->input('daterange',
-                                                    ['label' => false, 'value' => false]);
+                        echo $this->Form->input(
+                            'daterange',
+                            [
+                                'label' => false,
+                                'value' => false
+                            ]
+                        );
                         ?>
         
                     </td>
@@ -99,14 +104,15 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                                 $cName .= '<span class="legalname">' . $history->contact->legalname . '</span>';
                             }
                             echo $history->has('contact') ?
-                                    $this->Html->link($cName,
-                                                      [
-                                                       'controller' => 'Contacts',
-                                                       'action' => 'view',
-                                                       $history->contact->id
-                                                       ],
-                                                       ['escape' => false]
-                                                      )
+                                    $this->Html->link(
+                                        $cName,
+                                        [
+                                            'controller' => 'Contacts',
+                                            'action' => 'view',
+                                            $history->contact->id
+                                        ],
+                                        ['escape' => false]
+                                    )
                                     : '';
                             ?>
                         </td>
@@ -121,7 +127,24 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                             <?= $history->has('event') ? $history->event->name : '' ?>
                         </td>
                         <td class="_hd" data-h-id="<?= $history->id ?>"><?= h($history->short_detail) ?></td>
-                        <td><?= h($history->quantity) ?></td>
+                        <td class="r">
+                            <?php
+                            if (isset($history->unit->name)) {
+                                echo h(
+                                    $this->Number->currency(
+                                        $history->quantity,
+                                        $history->unit->name,
+                                        [
+                                            'places' => 0,
+                                        ]
+                                    )
+                                );
+                            }
+                            else{
+                                echo h($history->quantity);
+                            }
+                            ?>
+                        </td>
                         <td class="actions">
                             <?php
                                 //csak akkor szerkeszthető az esemény, ha nem system eseményről van szó
