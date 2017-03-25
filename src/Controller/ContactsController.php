@@ -289,7 +289,7 @@ class ContactsController extends AppController
         $select = $this->Contacts->Users->Settings->getDefaultContactFields($this->Auth->user('id'));
         $s = $this->createArraysForFind($select);
 
-        $this->request->setData($s['selected']);
+        $this->request->data = $s['selected'];
 
         array_unshift($s['select'], 'Contacts.sex');
         array_unshift($s['select'], 'Contacts.id');
