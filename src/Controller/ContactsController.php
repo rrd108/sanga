@@ -295,10 +295,10 @@ class ContactsController extends AppController
         array_unshift($s['select'], 'Contacts.id');
 
         $order = [];
-        if(array_key_exists('contactname', $s['selected'])) {
+        if (array_key_exists('contactname', $s['selected'])) {
             $order['Contacts.contactname'] = 'ASC';
         }
-        if(array_key_exists('legalname', $s['selected'])) {
+        if (array_key_exists('legalname', $s['selected'])) {
             $order['Contacts.legalname'] = 'ASC';
         }
 
