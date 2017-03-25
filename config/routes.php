@@ -21,6 +21,7 @@
 use Cake\Core\Plugin;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
+use Cake\Routing\Route\DashedRoute;
 
 /**
  * The default class to use for all routes
@@ -32,7 +33,7 @@ use Cake\Routing\Router;
  * - InflectedRoute
  * - DashedRoute
  *
- * If no call is made to `Router::defaultRouteClass`, the class used is
+ * If no call is made to `Router::defaultRouteClass()`, the class used is
  * `Route` (`Cake\Routing\Route\Route`)
  *
  * Note that `Route` does not do any inflections on URLs which will result in
@@ -40,41 +41,46 @@ use Cake\Routing\Router;
  * `:action` markers.
  *
  */
-Router::defaultRouteClass('Route');
+Router::defaultRouteClass(DashedRoute::class);
 
 Router::extensions(['json', 'csv']);
+
+Router::scope('/', function (RouteBuilder $routes) {
+    /**
+     * Here, we are connecting '/' (base path) to a controller called 'Pages',
+     * its action called 'display', and we pass a param to select the view file
+     * to use (in this case, src/Template/Pages/home.ctp)...
+     */
+    $routes->connect('/', ['controller' => 'Users', 'action' => 'dashboard']);
+
+    /**
+     * ...and connect the rest of 'Pages' controller's URLs.
+     */
+    $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+
+    /**
+     * Connect catchall routes for all controllers.
+     *
+     * Using the argument `DashedRoute`, the `fallbacks` method is a shortcut for
+     *    `$routes->connect('/:controller', ['action' => 'index'], ['routeClass' => 'DashedRoute']);`
+     *    `$routes->connect('/:controller/:action/*', [], ['routeClass' => 'DashedRoute']);`
+     *
+     * Any route class can be used with this method, such as:
+     * - DashedRoute
+     * - InflectedRoute
+     * - Route
+     * - Or your own route class
+     *
+     * You can remove these routes once you've connected the
+     * routes you want in your application.
+     */
+    $routes->fallbacks(DashedRoute::class);
+});
 
 Router::prefix('admin', function ($routes) {
     // All routes here will be prefixed with `/admin`
     // And have the prefix => admin route element added.
     $routes->fallbacks('InflectedRoute');
-});
-
-Router::scope('/', function($routes) {
-/**
- * Here, we are connecting '/' (base path) to a controller called 'Pages',
- * its action called 'display', and we pass a param to select the view file
- * to use (in this case, src/Template/Pages/home.ctp)...
- */
-	$routes->connect('/', ['controller' => 'Users', 'action' => 'dashboard']);
-
-/**
- * ...and connect the rest of 'Pages' controller's URLs.
- */
-	$routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
-
-/**
- * Connect a route for the index action of any controller.
- * And a more general catch all route for any action.
- *
- * The `fallbacks` method is a shortcut for
- *    `$routes->connect('/:controller', ['action' => 'index'], ['routeClass' => 'InflectedRoute']);`
- *    `$routes->connect('/:controller/:action/*', [], ['routeClass' => 'InflectedRoute']);`
- *
- * You can remove these routes once you've connected the
- * routes you want in your application.
- */
-	$routes->fallbacks('InflectedRoute');
 });
 
 /**

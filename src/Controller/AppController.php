@@ -30,14 +30,6 @@ use Cake\I18n\I18n;
 class AppController extends Controller
 {
 
-    /**
- * Components this controller uses.
- *
- * Component names should not include the `Component` suffix. Components
- * declared in subclasses will be merged with components declared here.
- *
- * @var array
- */
     public $components = [
         'Flash',
         'RequestHandler',
@@ -53,6 +45,21 @@ class AppController extends Controller
             'logoutRedirect' => '/'
         ]
     ];
+
+    /**
+     * Before render callback.
+     *
+     * @param \Cake\Event\Event $event The beforeRender event.
+     * @return \Cake\Network\Response|null|void
+     */
+    public function beforeRender(Event $event)
+    {
+        if (!array_key_exists('_serialize', $this->viewVars) &&
+            in_array($this->response->type(), ['application/json', 'application/xml'])
+        ) {
+            $this->set('_serialize', true);
+        }
+    }
 
     public function beforeFilter(Event $event)
     {
