@@ -701,7 +701,7 @@ echo $this->element('ajax-images');
                                 <td class="_hd" data-h-id="<?= $history->id ?>"><?= h($history->short_detail) ?></td>
                                 <td class="r">
                                     <?php
-                                        if (isset($history->unit->name)) {
+                                        if (isset($history->unit->name) && $history->quantity) {
                                             echo h(
                                                 $this->Number->currency(
                                                     $history->quantity,
@@ -780,7 +780,7 @@ echo $this->element('ajax-images');
                     <td><?= h($history->detail) ?></td>
                     <td class="r">
                         <?php
-                            if(isset($history->unit->name)){
+                            if(isset($history->unit->name) && $history->quantity){
                                 $total += $history->quantity;
                                 echo h(
                                     $this->Number->currency(
@@ -811,7 +811,15 @@ echo $this->element('ajax-images');
                     <td class="r">
                         <?php
                         if (isset($history->unit)) {
-                            echo h($this->Number->currency($total, $history->unit->name));
+                            echo h(
+                                $this->Number->currency(
+                                    $total,
+                                    $history->unit->name,
+                                    [
+                                        'places' => 0,
+                                    ]
+                                )
+                            );
                         }
                         ?>
                     </td>

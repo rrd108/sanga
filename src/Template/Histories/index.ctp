@@ -129,7 +129,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                         <td class="_hd" data-h-id="<?= $history->id ?>"><?= h($history->short_detail) ?></td>
                         <td class="r">
                             <?php
-                            if (isset($history->unit->name)) {
+                            if (isset($history->unit->name) && $history->quantity) {
                                 echo h(
                                     $this->Number->currency(
                                         $history->quantity,
