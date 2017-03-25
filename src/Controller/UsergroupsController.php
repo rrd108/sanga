@@ -24,24 +24,27 @@ class UsergroupsController extends AppController
  */
     public function index()
     {
+        //TODO matching contacts and histories needed here not contained
         $owned = $this->Usergroups->find(
             'ownedBy',
             [
-                'User.id' => $this->Auth->user('id')
+                'User.id' => $this->Auth->user('id'),
+                'contain' => [
+                    'Users.Histories',
+                    'Users.Contacts'
+                ]
             ]
         );
 
-        $member = $this->Usergroups->find(
+        $memberships = $this->Usergroups->find(
             'memberships',
             [
                 'User.id' => $this->Auth->user('id')
             ]
         );
 
-        $this->set(
-            'usergroups',
-            $this->paginate($owned->union($member))
-        );
+        $this->set('ownedBy', $this->paginate($owned));
+        $this->set('memberships', $this->paginate($memberships));
     }
 
     /**

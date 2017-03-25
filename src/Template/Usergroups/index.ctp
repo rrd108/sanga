@@ -20,33 +20,47 @@
                 </tr>
             </thead>
             <tbody>
-            <?php foreach ($usergroups as $usergroup): ?>
+            <?php foreach ($ownedBy as $usergroup): ?>
                 <tr>
                     <td><?= h($usergroup->name) ?></td>
                     <td>
                         <?php
-                        if ($usergroup->admin_user->id == $this->request->session()->read('Auth.User.id')) {
-                            print '<span class="tag tag-viewable">' . $usergroup->admin_user->name . '</span>';
-                        } else {
-                            print $usergroup->admin_user->name;
-                        }
+                        //if ($usergroup->admin_user->id == $this->request->session()->read('Auth.User.id')) {
+                            print '<span class="tag tag-viewable">' .
+                                $this->request->session()->read('Auth.User.name') .
+                                '</span>';
+                        //} else {
+                        //    print $usergroup->admin_user->name;
+                        //}
                         ?>
                     </td>
                     <td>
                         <?php
-                            foreach ($usergroup->users as $user) {
-                                print '<span class="tag ';
-                                if ($user->_joinData->joined) {
-                                    print 'tag-viewable"';
-                                } else {
-                                    print 'tag-shared"';
-                                }
-                                print '>' . $user->name . '</span>';
+                        print '<table>';
+                        print $this->Html->tableHeaders(
+                            [__('User'), __('Contacts'), __('Histories')]
+                        );
+                        foreach ($usergroup->users as $user) {
+
+                            $usr = '<span class="tag ';
+                            if ($user->_joinData->joined) {
+                                $usr .= 'tag-viewable"';
+                            } else {
+                                $usr .= 'tag-shared"';
                             }
+                            $usr .= '>' . $user->name . '</span>';
+
+                            print $this->Html->tableCells(
+                                [
+                                    [$usr, count($user->contacts), count($user->histories)],
+                                ]
+                            );
+                        }
+                        print '</table>';
                         ?>
                     </td>
                     <td class="actions">
-                        <?php if ($usergroup->admin_user->id == $this->request->session()->read('Auth.User.id')) : ?>
+                        <?php //if ($usergroup->admin_user->id == $this->request->session()->read('Auth.User.id')) : ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $usergroup->id]) ?>
                         <?= $this->Form->postLink(
                                 __('Delete'),
@@ -56,7 +70,7 @@
                                 ],
                                 ['confirm' => __('Are you sure you want to delete # {0}?', $usergroup->id)]
                             ) ?>
-                        <?php endif; ?>
+                        <?php //endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -75,3 +89,6 @@
         </div>
     </div>
 </div>
+<?php
+//TODO memberships
+?>
