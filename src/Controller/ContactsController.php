@@ -426,7 +426,7 @@ class ContactsController extends AppController
             $select = $unserialized;
             $where = [];
             foreach ($select as $i => $name) {
-                $this->request->setData(str_replace('Contacts.', '', $name), 1);
+                $this->request->withData(str_replace('Contacts.', '', $name), 1);
             }
         }
         $histories = $this->Contacts->Histories->find()
