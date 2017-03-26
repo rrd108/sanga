@@ -22,11 +22,9 @@ class SearchController extends AppController
             ->orWhere(['legalname LIKE "%'.$this->request->getQuery('term').'%"'])
             ->orWhere(['email LIKE "%'.$this->request->getQuery('term').'%"'])
             ->orWhere(['phone LIKE "%'.$this->request->getQuery('term').'%"'])
-            ->orWhere(['birth LIKE "%'.$this->request->getQuery('term').'%"'])
             ->orWhere(['comment LIKE "%'.$this->request->getQuery('term').'%"'])
             ->orWhere(['workplace LIKE "%'.$this->request->getQuery('term').'%"'])
             ->limit(25);
-        //debug($query->toArray());die();
         foreach ($query as $row) {
             $label = '';
             if (! $this->Contacts->isAccessible($row->id, $this->Auth->user('id'))) {
