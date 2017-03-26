@@ -26,6 +26,9 @@ nav.primary span.notice{
 .r{
     text-align: right;
 }
+.c{
+    text-align: center;
+}
 
 .fr{
     float: right;
@@ -334,4 +337,12 @@ table tr.similar td.setKeep, table tr td.setKeep {
     color: #fff;
     font-weight: bold;
     font-style: italic;
+}
+
+td.actions a {
+    display: block;
+    text-align: center;
+    border: thin solid #15848f;
+    border-radius: .3em;
+    margin: .3em;
 }

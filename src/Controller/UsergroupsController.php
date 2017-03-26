@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\I18n\Time;
+use Cake\Utility\Hash;
 
 /**
  * Usergroups Controller
@@ -18,23 +20,41 @@ class UsergroupsController extends AppController
     }
 
     /**
- * Index method
- *
- * @return void
- */
-    public function index()
+     * Index method
+     *
+     * @param $filter
+     * @return void
+     */
+    public function index($filter = null)
     {
-        //TODO matching contacts and histories needed here not contained
         $owned = $this->Usergroups->find(
             'ownedBy',
             [
                 'User.id' => $this->Auth->user('id'),
-                'contain' => [
-                    'Users.Histories',
-                    'Users.Contacts'
-                ]
             ]
         );
+
+        if ($filter == 'month') {
+            $filter = date('Y-m') . '-01';
+        } elseif ($filter == 'week') {
+            $filter = date('Y-m-d', strtotime('-1 weeks'));
+        } else {
+            $filter = '1900-01-01';
+        }
+        $query = $this->Usergroups->Users->find()
+            ->where(
+                [
+                    'Users.id IN' => Hash::extract($owned->toArray(), '{n}.users.{n}.id')
+                ]
+            );
+        $query->select(['Users.id', 'total_contacts' => $query->func()->count('Contacts.id'), 'total_histories' => $query->func()->count('Histories.id')])
+            ->where(['Contacts.created >=' => $filter])
+            ->orWhere(['Histories.created >=' => $filter])
+            ->leftJoinWith('Contacts')
+            ->leftJoinWith('Histories')
+            ->group(['Users.id']);
+        $totalsByUsers = Hash::combine($query->toArray(), '{n}.id', '{n}');
+        $this->set(compact('totalsByUsers'));
 
         $memberships = $this->Usergroups->find(
             'memberships',
@@ -43,8 +63,8 @@ class UsergroupsController extends AppController
             ]
         );
 
-        $this->set('ownedBy', $this->paginate($owned));
-        $this->set('memberships', $this->paginate($memberships));
+        $this->set('ownedBy', $owned);
+        $this->set('memberships', $memberships);
     }
 
     /**

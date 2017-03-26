@@ -64,16 +64,9 @@ class UsergroupsTable extends Table
 
     public function findOwnedBy(Query $query, array $options)
     {
-        $contain = [
-            'AdminUsers',
-            'Users',
-        ];
-        if (isset($options['contain'])) {
-            $contain = array_merge($contain, $options['contain']);
-        }
         return $query
             ->where(['Usergroups.admin_user_id' => $options['User.id']])
-            ->contain($contain)
+            ->contain(['AdminUsers', 'Users'])
             ->order(['Usergroups.name']);
     }
 

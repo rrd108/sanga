@@ -48,11 +48,19 @@
                             } else {
                                 $usr .= 'tag-shared"';
                             }
-                            $usr .= '>' . $user->name . '</span>';
+                            $usr .= '>' . $user->realname . '</span>';
 
                             print $this->Html->tableCells(
                                 [
-                                    [$usr, count($user->contacts), count($user->histories)],
+                                    [
+                                        $usr,
+                                        (isset($totalsByUsers[$user->id]) && $totalsByUsers[$user->id]->total_contacts > 0)
+                                            ? [$totalsByUsers[$user->id]->total_contacts, ['class' => 'c']]
+                                            : ['-', ['class' => 'c']],
+                                        (isset($totalsByUsers[$user->id]) && $totalsByUsers[$user->id]->total_histories > 0)
+                                            ? [$totalsByUsers[$user->id]->total_histories, ['class' => 'c']]
+                                            : ['-', ['class' => 'c']]
+                                    ],
                                 ]
                             );
                         }
@@ -61,6 +69,7 @@
                     </td>
                     <td class="actions">
                         <?php //if ($usergroup->admin_user->id == $this->request->session()->read('Auth.User.id')) : ?>
+                        <?= __('Actions') ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $usergroup->id]) ?>
                         <?= $this->Form->postLink(
                                 __('Delete'),
@@ -70,22 +79,16 @@
                                 ],
                                 ['confirm' => __('Are you sure you want to delete # {0}?', $usergroup->id)]
                             ) ?>
+                        <?= __('Filter') ?>
+                        <?= $this->Html->link(__('Total'), ['action' => 'index']) ?>
+                        <?= $this->Html->link(__('Month'), ['action' => 'index', 'month']) ?>
+                        <?= $this->Html->link(__('Week'), ['action' => 'index', 'week']) ?>
                         <?php //endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
             </table>
-            <div class="paginator">
-                <ul class="pagination">
-                <?php
-                    echo $this->Paginator->prev('< ' . __('previous'));
-                    echo $this->Paginator->numbers();
-                    echo $this->Paginator->next(__('next') . ' >');
-                ?>
-                </ul>
-                <p><?= $this->Paginator->counter() ?></p>
-            </div>
         </div>
     </div>
 </div>
