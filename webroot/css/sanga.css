@@ -342,7 +342,12 @@ table tr.similar td.setKeep, table tr td.setKeep {
 td.actions a {
     display: block;
     text-align: center;
-    border: thin solid #15848f;
+    border: 1px solid #15848f;
     border-radius: .3em;
     margin: .3em;
+}
+
+td.actions a:hover, td.actions a.active{
+    background-color: #0288d1;
+    color: #fff;
 }
