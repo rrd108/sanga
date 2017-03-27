@@ -1,3 +1,4 @@
+<?= $this->Html->script('sanga.groups.index.js', ['block' => true]) ?>
 <div class="row">
     <div class="groups index column large-12">
         <?php
@@ -78,7 +79,11 @@
                         <?= $this->Html->link(__('View'), ['action' => 'view', $group->id]) ?>
                         <?php
                         if ($group->admin_user_id == $this->request->session()->read('Auth.User.id')) {
-                            //echo $this->Html->link(__('Edit'), ['action' => 'edit', $group->id]);
+                            echo $this->Html->link(
+                                __('Edit'),
+                                ['action' => 'edit', $group->id],
+                                ['class' => 'editlink']
+                            );
                             echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $group->id],
                                 ['confirm' => __('Are you sure you want to delete # {0}?', $group->id)]);
                         }
