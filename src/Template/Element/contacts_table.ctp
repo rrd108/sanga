@@ -160,6 +160,13 @@ function setGroupCss($group, $userId)
                             echo $contact->_matchingData['Groups']->name;
                         }
                         break;
+                    case 'sex' :
+                        if ($contact->sex == 1) {
+                            print __('Male');
+                        } elseif ($contact->sex == 2) {
+                            print __('Female');
+                        }
+                        break;
                     default :
                         echo h($contact->$field);
                 }

@@ -159,6 +159,12 @@ class ContactsController extends AppController
                         $selected[] = $field;
                     }
                     foreach ($values as $value) {
+                        //allowing for searching for sex by text not just numbers
+                        if (mb_strtolower($value) == mb_strtolower(__('Male'))) {
+                            $value = 1;
+                        } elseif (mb_strtolower($value) == mb_strtolower(__('Female'))) {
+                            $value = 2;
+                        }
                         $conditions[$field]['value'][] = $value;
                     }
                 } elseif (strpos($keyName, 'condition_') === 0) {
