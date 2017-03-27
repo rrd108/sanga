@@ -76,9 +76,30 @@
                                 ['confirm' => __('Are you sure you want to delete # {0}?', $usergroup->id)]
                             ) ?>
                             <?= __('Filter') ?>
-                            <?= $this->Html->link(__('Total'), ['action' => 'index']) ?>
-                            <?= $this->Html->link(__('Month'), ['action' => 'index', 'month']) ?>
-                            <?= $this->Html->link(__('Week'), ['action' => 'index', 'week']) ?>
+                            <?=
+                            $this->Html->link(
+                                __('Total'),
+                                ['action' => 'index'],
+                                !isset($this->request->getParam('pass')[0])
+                                    ? ['class' => 'active'] : []
+                            )
+                            ?>
+                            <?=
+                            $this->Html->link(
+                                __('Month'),
+                                ['action' => 'index', 'month'],
+                                (isset($this->request->getParam('pass')[0]) && $this->request->getParam('pass')[0] == 'month')
+                                    ? ['class' => 'active'] : []
+                            )
+                            ?>
+                            <?=
+                            $this->Html->link(
+                                __('Week'),
+                                ['action' => 'index', 'week'],
+                                (isset($this->request->getParam('pass')[0]) && $this->request->getParam('pass')[0] == 'week')
+                                    ? ['class' => 'active'] : []
+                            )
+                            ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
