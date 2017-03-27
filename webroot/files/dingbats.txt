@@ -27,3 +27,5 @@
 ❓ - Help
 ❗ - Warning
 ❣ - Duplicates
+
+➤ - More

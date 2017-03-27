@@ -258,7 +258,7 @@
                                     'plugin' => null,
                                     'prefix' => false,
                                     'controller' => 'Users',
-                                    'action' => 'view'
+                                    'action' => 'profile'
                                 ]
                             ) . '</li>';
                     print '<li>' .

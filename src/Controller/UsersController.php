@@ -55,16 +55,20 @@ class UsersController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException
      */
-    public function view()
+    public function view($id)
     {
-        $id = $this->Auth->user('id');
         $user = $this->Users->get(
             $id,
             [
-                'contain' => ['Events', 'Groups', 'Usergroups']
+                'contain' => ['Events', 'AdminGroups.Contacts', 'Usergroups']
             ]
         );
         $this->set('user', $user);
+    }
+
+    public function profile()
+    {
+        $this->view($this->Auth->user('id'));
     }
 
     /**

@@ -35,7 +35,7 @@
                             <?php
                             print '<table>';
                             print $this->Html->tableHeaders(
-                                [__('User'), __('Contacts'), __('Histories')]
+                                [null, __('User'), __('Contacts'), __('Histories')]
                             );
                             foreach ($usergroup->users as $user) {
 
@@ -46,10 +46,18 @@
                                     $usr .= 'tag-shared"';
                                 }
                                 $usr .= '>' . $user->realname . '</span>';
+                                $link = $this->Html->link(
+                                        '➤',
+                                        [
+                                            'controller' => 'Users',
+                                            'action' => 'view', $user->id
+                                        ]
+                                    );
 
                                 print $this->Html->tableCells(
                                     [
                                         [
+                                            $link,
                                             $usr,
                                             (isset($totalsByUsers[$user->id]) && $totalsByUsers[$user->id]->total_contacts > 0)
                                                 ? [$totalsByUsers[$user->id]->total_contacts, ['class' => 'c']]

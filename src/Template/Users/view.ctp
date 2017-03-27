@@ -3,15 +3,6 @@ print $this->Html->script('sanga.users.view.js', ['block' => true]);
 ?>
 <div class="row">
     <div class="large-10 medium-9 columns">
-    <?php
-    print $this->Html->link($this->Html->image('edit.png'),
-                   ['action' => 'edit', $user->id],
-                   ['id' => 'editlink', 'escape' => false]);
-
-    print $this->element('ajax-images');
-
-    print $this->Form->create($user, ['id'=> 'editForm', 'url' => ['action' => 'edit', $user->id]]);
-    ?>
     <div class="user-details-view">
         <div class="main-title row">
             <div class="column large-12">
@@ -29,55 +20,18 @@ print $this->Html->script('sanga.users.view.js', ['block' => true]);
                     </div>
                     <div class="column large-6 panel">
                         <p class="ed">
-                            &nbsp;
                             <span class="dta"><?= h($user->name) ?></span>
-                            <?php
-                            print $this->Form->input('name',
-                                               ['templates' => ['inputContainer' => '{{content}}'],
-                                                'class' => 'editbox',
-                                                'label' => false,
-                                                'value' => h($user->name)
-                                                ]);
-                            ?>
                         </p>
                     </div>
                 </div><!-- row -->
 
                 <div class="row">
                     <div class="column large-6 panel">
-                        <p class="label"><?= __('Password') ?></p>
-                    </div>
-                    <div class="column large-6 panel">
-                        <p class="ed">
-                            &nbsp;
-                            <span class="dta">******</span>
-                            <?php
-                            print $this->Form->input('password',
-                                               ['templates' => ['inputContainer' => '{{content}}'],
-                                                'class' => 'editbox',
-                                                'label' => false,
-                                                'value' => false
-                                                ]);
-                            ?>
-                        </p>
-                    </div>
-                </div><!-- row -->
-                <div class="row">
-                    <div class="column large-6 panel">
                         <p class="label"><?= __('Realname') ?></p>
                     </div>
                     <div class="column large-6 panel">
                         <p class="ed">
-                            &nbsp;
                             <span class="dta"><?= h($user->realname) ?></span>
-                            <?php
-                            print $this->Form->input('realname',
-                                               ['templates' => ['inputContainer' => '{{content}}'],
-                                                'class' => 'editbox',
-                                                'label' => false,
-                                                'value' => h($user->realname)
-                                                ]);
-                            ?>
                         </p>
                     </div>
                 </div><!-- row -->
@@ -87,16 +41,7 @@ print $this->Html->script('sanga.users.view.js', ['block' => true]);
                     </div>
                     <div class="column large-6 panel">
                         <p class="ed">
-                            &nbsp;
                             <span class="dta"><?= h($user->email) ?></span>
-                            <?php
-                            print $this->Form->input('email',
-                                               ['templates' => ['inputContainer' => '{{content}}'],
-                                                'class' => 'editbox',
-                                                'label' => false,
-                                                'value' => h($user->email)
-                                                ]);
-                            ?>
                         </p>
                     </div>
                 </div><!-- row -->
@@ -106,16 +51,7 @@ print $this->Html->script('sanga.users.view.js', ['block' => true]);
                     </div>
                     <div class="column large-6 panel">
                         <p class="ed">
-                            &nbsp;
                             <span class="dta"><?= h($user->phone) ?></span>
-                            <?php
-                            print $this->Form->input('phone',
-                                ['templates' => ['inputContainer' => '{{content}}'],
-                                    'class' => 'editbox',
-                                    'label' => false,
-                                    'value' => h($user->phone)
-                                ]);
-                            ?>
                         </p>
                     </div>
                 </div><!-- row -->
@@ -125,16 +61,7 @@ print $this->Html->script('sanga.users.view.js', ['block' => true]);
                     </div>
                     <div class="column large-6 panel">
                         <p class="ed">
-                            &nbsp;
                             <span class="dta"><?= h($user->responsible) ?></span>
-                            <?php
-                            print $this->Form->input('responsible',
-                                ['templates' => ['inputContainer' => '{{content}}'],
-                                    'class' => 'editbox',
-                                    'label' => false,
-                                    'value' => h($user->responsible)
-                                ]);
-                            ?>
                         </p>
                     </div>
                 </div><!-- row -->
@@ -144,41 +71,6 @@ print $this->Html->script('sanga.users.view.js', ['block' => true]);
                     </div>
                     <div class="column large-6 panel">
                         <p class="value"><?= $this->Number->format($user->role) ?></p>
-                    </div>
-                </div><!-- row -->
-                <div class="row">
-                    <div class="column large-6 panel">
-                        <p class="label"><?= __('Language') ?></p>
-                    </div>
-                    <div class="column large-6 panel">
-                        <p class="ed">
-                            &nbsp;
-                            <span class="dta"><?= h($user->locale) ?></span>
-                            <?php
-                            print $this->Form->input('locale',
-                                               ['templates' => ['inputContainer' => '{{content}}'],
-                                                'class' => 'editbox',
-                                                'label' => false,
-                                                'value' => h($user->locale)
-                                                ]);
-                            ?>
-                        </p>
-                    </div>
-                </div><!-- row -->
-                <div class="row">
-                    <div class="column large-6 panel">
-                        <p class="label"><?= __('Created') ?></p>
-                    </div>
-                    <div class="column large-6 panel">
-                        <p class="value"><?= h($user->created) ?></p>
-                    </div>
-                </div><!-- row -->
-                <div class="row">
-                    <div class="column large-6 panel">
-                        <p class="label"><?= __('Modified') ?></p>
-                    </div>
-                    <div class="column large-6 panel">
-                        <p class="value"><?= h($user->modified) ?></p>
                     </div>
                 </div><!-- row -->
                 <div class="row">
@@ -195,41 +87,58 @@ print $this->Html->script('sanga.users.view.js', ['block' => true]);
     </div>
     <!-- user detaisl view -->
 
-
-    <div class="user-details-view">
-        <div class="row">
-            <div class="column large-12">
-                <h4 class="subheader"><?= __('Events') ?></h4>
-                <?php if (!empty($user->events)): ?>
-                    <?php
-                    foreach ($user->events as $events):
-                        print $this->Html->link(h($events->name),
-                                        ['controller' => 'Events',
-                                         'action' => 'view', $events->id]);
-                    endforeach;
-                    ?>
-                <?php endif; ?>
-            </div><!-- column -->
-        </div><!-- row -->
-    </div>
-    <!-- user detaisl view -->
-
-    <div class="user-details-view">
-        <div class="row">
-            <div class="column large-12">
-                <h4 class="subheader"><?= __('Usergroups') ?></h4>
-                <?php if (!empty($user->usergroups)): ?>
+        <div class="user-details-view">
+            <div class="row">
+                <div class="column large-12">
+                    <h4 class="subheader"><?= __('Groups') ?></h4>
+                    <?php if (!empty($user->admin_groups)): ?>
+                        <dl id="groups">
+                        <?php foreach ($user->admin_groups as $groups): ?>
+                            <?php
+                            print '<dt>';
+                                print h($groups->name);
+                                print ' (' . count($groups->contacts) . ') ';
+                                print $this->Html->link(
+                                    '➤',
+                                    [
+                                        'controller' => 'groups',
+                                        'action' => 'view', $groups->id
+                                    ],
+                                    ['id' => 'l' . $groups->id]
+                                );
+                            print '</dt>';
+                            print '<dd>';
+                                print h($groups->description);
+                                print '<br>';
+                                print '<span id="gl' . $groups->id . '"">';
+                                    foreach ($groups->contacts as $contact) {
+                                        print $contact->contactname ? $contact->contactname : $contact->legalname;
+                                        print ', ';
+                                    }
+                                print '</span>';
+                            print '</dd>';
+                            ?>
+                        <?php endforeach; ?>
+                        </dl>
+                    <?php endif; ?>
+                </div><!-- column -->
+            </div><!-- row -->
+        </div>
+        <div class="user-details-view">
+            <div class="row">
+                <div class="column large-12">
+                    <h4 class="subheader"><?= __('Usergroups') ?></h4>
+                    <?php if (!empty($user->usergroups)): ?>
+                    <dl>
                     <?php foreach ($user->usergroups as $usergroups): ?>
-                            <?= $this->Html->link(h($usergroups->name), ['controller' => 'Usergroups', 'action' => 'view', $usergroups->id]) ?>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div><!-- column -->
-        </div><!-- row -->
-    </div>
+                            <?= '<dt>' . h($usergroups->name) . '</dt>' ?>
+                        <?php endforeach; ?>
+                    </dl>
+                    <?php endif; ?>
+                </div><!-- column -->
+            </div><!-- row -->
+        </div>
     <!-- user detaisl view -->
-    <?php
-    print $this->Form->end();
-    ?>
     </div>
 </div>
 <!-- row -->
