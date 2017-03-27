@@ -889,12 +889,12 @@ class ContactsController extends AppController
     {
         if ($this->request->getData() && $this->request->is('post') && $this->request->is('ajax')) {
             //add contacts person
-            $this->request->setData('users', ['_ids' => [$this->Auth->user('id')]]);
+            $this->request = $this->request->withData('users', ['_ids' => [$this->Auth->user('id')]]);
 
             if ($this->request->getData('address')) {
                 $address = $this->formatAddress($this->request->getData('address'));
-                $this->request->setData('zip_id', $address['zip_id']);
-                $this->request->setData('address', $address['address']);
+                $this->request = $this->request->withData('zip_id', $address['zip_id']);
+                $this->request = $this->request->withData('address', $address['address']);
             }
 
             $contact = $this->Contacts->newEntity($this->request->getData());
@@ -1087,7 +1087,7 @@ class ContactsController extends AppController
             $contactid = $this->request->getData('contactid');
 
             if (empty($this->request->getData('document_title'))) {
-                $this->request->setData('document_title', $this->request->getData('uploadfile.name'));
+                $this->request = $this->request->withData('document_title', $this->request->getData('uploadfile.name'));
             }
 
             if (! empty($this->request->getData('uploadfile.type'))) {

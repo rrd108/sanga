@@ -59,7 +59,7 @@ class SettingsController extends AppController
         $setting = $this->Settings->newEntity();
         if ($this->request->is('post') || $this->request->is('ajax')) {
             if (! $this->request->getData('user_id')) {
-                 $this->request->setData('user_id', $this->Auth->user('id'));
+                $this->request = $this->request->withData('user_id', $this->Auth->user('id'));
             }
             
             $setting = $this->Settings->patchEntity($setting, $this->request->getData());
@@ -122,7 +122,7 @@ class SettingsController extends AppController
                 $select[] = 'Contacts.' . $name;
             }
         }
-        $this->request->setData(
+        $this->request = $this->request->withData(
             [
                 'user_id' => $this->Auth->user('id'),
                 'name' => $this->request->getData('sName'),

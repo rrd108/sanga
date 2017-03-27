@@ -56,7 +56,7 @@ class EventsController extends AppController
     public function add()
     {
         if (!$this->request->getData('user_id') && $this->Auth->User('role') < 9) {
-            $this->request->setData('user_id', $this->Auth->User('id'));
+            $this->request = $this->request->withData('user_id', $this->Auth->User('id'));
         }
 
         $event = $this->Events->newEntity($this->request->getData());

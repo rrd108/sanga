@@ -74,7 +74,7 @@ class UsergroupsController extends AppController
      */
     public function add()
     {
-        $this->request->setData('admin_user_id', $this->Auth->user('id'));
+        $this->request->withData('admin_user_id', $this->Auth->user('id'));
         $usergroup = $this->Usergroups->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->Usergroups->save($usergroup)) {
