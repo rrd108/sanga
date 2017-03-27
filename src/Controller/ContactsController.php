@@ -212,7 +212,7 @@ class ContactsController extends AppController
 
             $this->set('contacts', $this->paginate());
 
-            if ($this->request->getParams('_ext') == 'csv') {
+            if ($this->request->getParam('_ext') == 'csv') {
                 $i = 0;
 
                 $query = $this->Contacts->find(
