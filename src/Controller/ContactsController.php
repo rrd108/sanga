@@ -462,9 +462,8 @@ class ContactsController extends AppController
  */
     public function add()
     {
-        $this->request->setData('users._ids', $this->Auth->user('id'));        //add auth user as contact person
-        $contact = $this->Contacts->newEntity($this->request->getData());
-        //debug($contact);
+        $data = $this->request->withData('users._ids', [$this->Auth->user('id')]);        //add auth user as contact person
+        $contact = $this->Contacts->newEntity($data->getData());
         if (! empty($this->request->getData('family_member_id'))) {
             $contact->family_id = $this->getFamilyId($contact, $this->request->getData('family_member_id'));
         }
@@ -473,18 +472,22 @@ class ContactsController extends AppController
             if ($this->Contacts->save($contact)) {
                 $message = __('The contact has been saved.');
                 if ($this->request->is('ajax')) {
-                    $result = ['success' => true,
-                               'message' => $message];
+                    $result = [
+                        'success' => true,
+                        'message' => $message
+                    ];
                 } else {
                     $this->Flash->success($message);
-                    return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'view', $contact->id]);
                 }
             } else {
                 $message = __('The contact could not be saved. Please, try again.');
                 if ($this->request->is('ajax')) {
-                    $result = ['success' => false,
-                               'message' => $message,
-                               'errors' => $this->getErrors($contact->errors())];
+                    $result = [
+                        'success' => false,
+                        'message' => $message,
+                        'errors' => $this->getErrors($contact->errors())
+                    ];
                 } else {
                     $this->Flash->error($message);
                     $this->log($this->getErrors($contact->errors()), 'debug');
