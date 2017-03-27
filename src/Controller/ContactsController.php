@@ -178,7 +178,7 @@ class ContactsController extends AppController
             array_unshift($select, 'Contacts.active');
             $this->set('selected', $selected);
 
-            if ($this->request->getParams['_ext'] == 'csv') {
+            if ($this->request->getParam('_ext') == 'csv') {
                 $limit = false;
             } else {
                 $limit = $this->paginate['limit'];

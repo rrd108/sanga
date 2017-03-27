@@ -97,7 +97,7 @@ class GroupsController extends AppController
             );
             //debug($group);
 
-            if ($this->request->getParams('_ext') == 'csv') {
+            if ($this->request->getParam('_ext') == 'csv') {
                 $i = 0;
                 $_header = ['id', 'legalname', 'contactname', 'phone', 'email', 'birth', 'sex'];
                 foreach ($group->contacts as $contact) {
