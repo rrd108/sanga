@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5ff286596451206197cae2c03c763b33",
-    "content-hash": "1e5e395c087485b797526994b767d863",
+    "hash": "45cd4abb50eb4ee8b28c0d8154f9c667",
+    "content-hash": "4afd6caead2f5d08b209e69e5f46a5fa",
     "packages": [
         {
             "name": "aura/intl",
@@ -322,16 +322,16 @@
         },
         {
             "name": "friendsofcake/cakephp-csvview",
-            "version": "2.3.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfCake/cakephp-csvview.git",
-                "reference": "ef829a095991d777f3b04c4cb0ae0be7b5257f19"
+                "reference": "f36684fad38a6c274d7e552692c700710e5e8c2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfCake/cakephp-csvview/zipball/ef829a095991d777f3b04c4cb0ae0be7b5257f19",
-                "reference": "ef829a095991d777f3b04c4cb0ae0be7b5257f19",
+                "url": "https://api.github.com/repos/FriendsOfCake/cakephp-csvview/zipball/f36684fad38a6c274d7e552692c700710e5e8c2c",
+                "reference": "f36684fad38a6c274d7e552692c700710e5e8c2c",
                 "shasum": ""
             },
             "require": {
@@ -389,7 +389,7 @@
                 "export",
                 "view"
             ],
-            "time": "2016-01-20 20:59:55"
+            "time": "2016-11-07 09:30:57"
         },
         {
             "name": "google/apiclient",
