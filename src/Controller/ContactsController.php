@@ -425,7 +425,7 @@ class ContactsController extends AppController
             )
             ->first();
 
-        $unserialized = $setting ? unserialize($setting->value) : null;
+        $unserialized = $setting ? json_decode($setting->value) : null;
         if (empty($setting) || empty($unserialized)) {
             $where = ['event_id != ' => 1];
         } else {

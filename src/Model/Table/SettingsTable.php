@@ -95,7 +95,7 @@ class SettingsTable extends Table
             return null;
         }
         $defaultGroups = $defaultGroups[0];
-        return unserialize($defaultGroups->value);
+        return json_decode($defaultGroups->value);
     }
 
     /**
@@ -117,7 +117,7 @@ class SettingsTable extends Table
         if (!isset($contactFields->value)) {
             return [];
         }
-        $contactFields = unserialize($contactFields->value);
+        $contactFields = json_decode($contactFields->value);
         return $contactFields;
     }
 }

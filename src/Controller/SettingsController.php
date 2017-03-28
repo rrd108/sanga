@@ -126,7 +126,7 @@ class SettingsController extends AppController
             [
                 'user_id' => $this->Auth->user('id'),
                 'name' => $this->request->getData('sName'),
-                'value' => serialize($select)
+                'value' => json_encode($select)
             ]
         );
         
@@ -165,5 +165,16 @@ class SettingsController extends AppController
         }
         $this->set(compact('result'));
         $this->set('_serialize', 'result');
+    }
+
+    public function update()
+    {
+        $settings = $this->Settings->find();
+        foreach ($settings as $setting) {
+            //fixing offset error
+            $setting->value = preg_replace('!s:(\d+):"(.*?)";!e', "'s:'.strlen('$2').':\"$2\";'", $setting->value);
+            $setting->value = json_encode(unserialize($setting->value));
+            $this->Settings->save($setting);
+        }
     }
 }
