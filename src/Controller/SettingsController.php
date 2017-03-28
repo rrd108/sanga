@@ -167,7 +167,9 @@ class SettingsController extends AppController
         $this->set('_serialize', 'result');
     }
 
-    public function update()
+    /*
+     * convert serialized field values to json values
+     public function update()
     {
         $settings = $this->Settings->find();
         foreach ($settings as $setting) {
@@ -177,4 +179,5 @@ class SettingsController extends AppController
             $this->Settings->save($setting);
         }
     }
+    */
 }
