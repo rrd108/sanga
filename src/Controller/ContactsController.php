@@ -54,8 +54,10 @@ class ContactsController extends AppController
         foreach ($query as $row) {
             $label = $this->createHighlight($row->contactname) .
                     $this->createHighlight($row->legalname);
-            $result[] = ['value' => $row->id,
-                              'label' => $label];
+            $result[] = [
+                'value' => $row->id,
+                'label' => $label
+            ];
         }
         $this->set('result', $result);
         $this->set('_serialize', 'result');
