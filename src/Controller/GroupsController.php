@@ -161,24 +161,17 @@ class GroupsController extends AppController
  */
     public function edit($id = null)
     {
-        $group = $this->Groups->get(
-            $id,
-            [
-            'contain' => ['Users', 'Contacts']
-            ]
-        );
+        $group = $this->Groups->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $group = $this->Groups->patchEntity($group, $this->request->getData());
             if ($this->Groups->save($group)) {
-                $this->Flash->success('The group has been saved.');
-                //return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('The group has been saved.'));
             } else {
-                $this->Flash->error('The group could not be saved. Please, try again.');
+                $this->Flash->error(__('The group could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Groups->Users->find('list');
-        $contacts = $this->Groups->Contacts->find('list');
-        $this->set(compact('group', 'users', 'contacts'));
+        $this->set(compact('group'));
+        $this->set('_serialize', 'group');
     }
 
     /**

@@ -3,47 +3,42 @@ $(function () {
         var tds = $(this).parent().parent().children();
         var groupId = $(this).attr('href').split('/').pop();
         //hide other inputs if they are opened
-        $('#groupName').parent().html($('#groupName').val());
-        $('#groupDescription').parent().html($('#groupDescription').val());
+        $('#name').parent().html($('#name').val());
+        $('#description').parent().html($('#description').val());
         //add 2 new inputs
-        var groupName = $($(tds[2]).children()[0]).text();
-        var input = '<input type="text" value="' + groupName + '" id="groupName" data-gid="' + groupId + '">';
+        var name = $($(tds[2]).children()[0]).text();
+        var input = '<input type="text" value="' + name + '" id="name" data-gid="' + groupId + '">';
         $($(tds[2]).children()[0]).html(input);
-        var groupDescription = $(tds[4]).text();
-        input = '<input type="text" value="' + groupDescription + '" id="groupDescription" data-gid="' + groupId + '">';
+        var description = $(tds[4]).text();
+        input = '<input type="text" value="' + description + '" id="description" data-gid="' + groupId + '">';
         $(tds[4]).html(input);
-
-        $('#groupName').on('blur', function (event) {
-            console.log($(this).data('gid'));
-            //send ajax
-        });
 
         event.preventDefault();
     });
-/*    $('#members').on('click', '.ajaxremove', function (event) {
+
+    $(document.body).on('change', '#name, #description', function (event) {
+        var data = {};
+        data[$(this).attr('id')] = $(this).val();
         $.ajax({
-            url: $.sanga.baseUrl + '/Contacts/removegroup/' + $(this).prev().attr('href').split('/').pop(),
-            data: {
-                'group_id': $(location).attr('href').split('/').pop()
-            },
+            url: $.sanga.baseUrl + '/Groups/edit/' + $(this).data('gid'),
+            data: data,
             type: 'post',
             dataType: 'json',
             error: function (jqXHR, textStatus, errorThrown) {
                 noty({
-                    text: textStatus + ((jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.message) ? ' : ' + jqXHR.responseJSON - message : ''),
+                    text: textStatus + (jqXHR && jqXHR.responseJSON ? ' : ' + jqXHR.responseJSON : ''),
                     type: 'error',
                     timeout: 3500,
                 });
             },
             success: function (data, textStatus, jqXHR) {
                 noty({
-                    text: jqXHR.responseJSON.message,
+                    text: jqXHR.responseJSON.name + ' saved',
                     type: 'success',
                     timeout: 3500,
                 });
-                $(event.target).parent().fadeOut();
+                $(this).parent().html($(this).val());
             }
         });
     });
-*/
 });
