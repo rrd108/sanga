@@ -1340,7 +1340,8 @@ class ContactsTable extends Table
         foreach ($conditions as $field => $data) {
             if (isset($data['value'])) {
                 foreach ($data['value'] as $i => $value) {
-                    if ($value == '') {
+                    //remove only if type of select is contain, leave others
+                    if ($data['condition'][$i] == '&%' && $value == '') {
                         unset($conditions[$field]['condition'][$i]);
                         unset($conditions[$field]['value'][$i]);
                     }
