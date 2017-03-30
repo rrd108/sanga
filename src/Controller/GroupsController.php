@@ -135,7 +135,7 @@ class GroupsController extends AppController
     public function add()
     {
         if (!$this->request->getData('admin_user_id')) {
-            $this->request = $this->request->withData('admin_user_id', [$this->Auth->User('id')]);
+            $this->request = $this->request->withData('admin_user_id', $this->Auth->User('id'));
         }
 
         $group = $this->Groups->newEntity($this->request->getData());

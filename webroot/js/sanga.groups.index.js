@@ -3,22 +3,22 @@ $(function () {
         var tds = $(this).parent().parent().children();
         var groupId = $(this).attr('href').split('/').pop();
         //hide other inputs if they are opened
-        $('#name').parent().html($('#name').val());
-        $('#description').parent().html($('#description').val());
+        $('#gname').parent().html($('#gname').val());
+        $('#gdescription').parent().html($('#gdescription').val());
         //add 2 new inputs
-        var name = $($(tds[2]).children()[0]).text();
-        var input = '<input type="text" value="' + name + '" id="name" data-gid="' + groupId + '">';
+        var gname = $($(tds[2]).children()[0]).text();
+        var input = '<input type="text" value="' + gname + '" id="gname" data-gid="' + groupId + '">';
         $($(tds[2]).children()[0]).html(input);
-        var description = $(tds[4]).text();
-        input = '<input type="text" value="' + description + '" id="description" data-gid="' + groupId + '">';
+        var gdescription = $(tds[4]).text();
+        input = '<input type="text" value="' + gdescription + '" id="gdescription" data-gid="' + groupId + '">';
         $(tds[4]).html(input);
 
         event.preventDefault();
     });
 
-    $(document.body).on('change', '#name, #description', function (event) {
+    $(document.body).on('change', '#gname, #gdescription', function (event) {
         var data = {};
-        data[$(this).attr('id')] = $(this).val();
+        data[$(this).attr('id').replace('g', '')] = $(this).val();
         $.ajax({
             url: $.sanga.baseUrl + '/Groups/edit/' + $(this).data('gid'),
             data: data,
