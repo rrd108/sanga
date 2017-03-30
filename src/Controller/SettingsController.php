@@ -122,7 +122,7 @@ class SettingsController extends AppController
                 $select[] = 'Contacts.' . $name;
             }
         }
-        $this->request = $this->request->withData(
+        $this->request = $this->request->withParsedBody(
             [
                 'user_id' => $this->Auth->user('id'),
                 'name' => $this->request->getData('sName'),
