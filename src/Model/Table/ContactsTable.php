@@ -1323,7 +1323,7 @@ class ContactsTable extends Table
             }
         }
         $query = new Query($this->getConnection(), $this);
-        return $query->newExpr()->add($where);
+        return $query->newExpr()->add('(' . $where . ')');
     }
 
     /**

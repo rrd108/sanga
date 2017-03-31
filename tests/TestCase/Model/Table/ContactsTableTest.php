@@ -517,7 +517,7 @@ class ContactsTableTest extends TestCase
         );
         $generator = $this->Contacts->find()->valueBinder();
         $actual = ($queryExpressionObject->sql($generator));
-        $expected = '( Contacts.contactname LIKE "%Gábor%") OR ( Contacts.legalname LIKE "%Gábor%")';
+        $expected = '(( Contacts.contactname LIKE "%Gábor%") OR ( Contacts.legalname LIKE "%Gábor%"))';
         $this->assertEquals($expected, $actual);
 
         $queryExpressionObject = $method->invoke(
@@ -532,7 +532,7 @@ class ContactsTableTest extends TestCase
         );
         $generator = $this->Contacts->find()->valueBinder();
         $actual = ($queryExpressionObject->sql($generator));
-        $expected = 'Zips.name LIKE "%Balaton%"';
+        $expected = '(Zips.name LIKE "%Balaton%")';
         $this->assertEquals($expected, $actual);
 
         $queryExpressionObject = $method->invoke(
@@ -552,7 +552,7 @@ class ContactsTableTest extends TestCase
         );
         $generator = $this->Contacts->find()->valueBinder();
         $actual = ($queryExpressionObject->sql($generator));
-        $expected = 'Histories.date LIKE "%-10-%" AND ( Events.name LIKE "%email%")';
+        $expected = '(Histories.date LIKE "%-10-%" AND ( Events.name LIKE "%email%"))';
         $this->assertEquals($expected, $actual);
     }
 
