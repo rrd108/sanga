@@ -243,13 +243,16 @@ class ContactsController extends AppController
                             $csvData[$i][] = $contact->$field;
                         } else {
                             $field = explode('.', $s);
-                            //TODO test this
+                            //belongsTo drop "s" at the end of associated modelName
                             //Zips.name should became zip->name
-                            //$field[0] = substr(strtolower($field[0]), 0, -1);
-                            //Users.name should became users->name
-                            $field[0] = strtolower($field[0]);
+                            if ($this->Contacts->association($field[0])->type() == 'manyToOne') {
+                                $field[0] = substr(strtolower($field[0]), 0, -1);
+                            } else {
+                                //Users.name should became users->name
+                                $field[0] = strtolower($field[0]);
+                            }
                             if (is_array($contact->{$field[0]})) {
-                                $csvData[$i][] = implode(': ', Hash::extract($contact->{$field[0]}, '{n}.' . $field[1]));
+                                $csvData[$i][] = implode(' ; ', Hash::extract($contact->{$field[0]}, '{n}.' . $field[1]));
                             } elseif (($contact->{$field[0]})) {
                                 $csvData[$i][] = $contact->{$field[0]}->{$field[1]};
                             }
