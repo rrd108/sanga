@@ -9,15 +9,24 @@
             </div>
         </div>
         <?php if ( ! isset($mailsent)) : ?>
-        <?= $this->Form->create('Users', ['url' => ['action' => 'login?redirect=' . $this->request->getQuery('redirect')]]) ?>
+        <?= $this->Form->create(
+                'Users',
+                [
+                    'url' => [
+                        'controller' => 'Users',
+                        'action' => 'login',
+                        'redirect' => $this->request->getQuery('redirect')
+                    ]
+                ]
+            ) ?>
         <div class="row">
             <div class="column large-12">
-                <?= $this->Form->input('email', ['autofocus' => 'autofocus']) ?>
+                <?= $this->Form->control('email', ['autofocus' => 'autofocus']) ?>
             </div>
         </div>
         <div class="row">
             <div class="column large-12">
-                <?= $this->Form->input('password') ?>    
+                <?= $this->Form->control('password') ?>
             </div>
         </div>
         <div class="row">
