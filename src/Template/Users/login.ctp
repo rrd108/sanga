@@ -9,7 +9,7 @@
             </div>
         </div>
         <?php if ( ! isset($mailsent)) : ?>
-        <?= $this->Form->create('Users', ['url' => ['action' => 'login']]) ?>
+        <?= $this->Form->create('Users', ['url' => ['action' => 'login?redirect=' . $this->request->getQuery('redirect')]]) ?>
         <div class="row">
             <div class="column large-12">
                 <?= $this->Form->input('email', ['autofocus' => 'autofocus']) ?>
