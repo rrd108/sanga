@@ -21,6 +21,7 @@ class SearchController extends AppController
         } else {
             $this->request = $this->request->withQueryParams(['term' => '%' . $this->request->getQuery('term')]);
         }
+        //TODO find only accessible
         $query = $this->Contacts->find()
             ->select(['id', 'contactname', 'legalname', 'email', 'phone', 'birth', 'workplace', 'comment'])
             ->where(['contactname LIKE "'.$this->request->getQuery('term').'%"'])
@@ -32,14 +33,13 @@ class SearchController extends AppController
             ->limit(25);
         foreach ($query as $row) {
             $label = '';
-            if (! $this->Contacts->isAccessible($row->id, $this->Auth->user('id'))) {
+            if ($this->Contacts->isAccessible($row->id, $this->Auth->user('id'))) {
                 if ($this->createHighlight($row->contactname) || $this->createHighlight($row->legalname)) {
                     $label .= '<span class="noaccess">';
                         $label .= $this->createHighlight($row->contactname) ? '♥ ' . $this->createHighlight($row->contactname) . ' ' : '';
                         $label .= $this->createHighlight($row->legalname) ? '♥ ' . $this->createHighlight($row->legalname) . ' ' : '';
                     $label .= '</span>';
                 }
-            } else {
                 if ($row->contactname) {
                     $label .= $this->createHighlight($row->contactname) ? '♥ ' . $this->createHighlight($row->contactname) . ' ' : '♥ ' . $row->contactname . ' ';
                 }
@@ -59,7 +59,7 @@ class SearchController extends AppController
                 ];
             }
         }
-        
+
         //groups
         $this->Groups = TableRegistry::get('Groups');
         $query = $this->Groups->find(
@@ -116,8 +116,16 @@ class SearchController extends AppController
     {
         //sql returns ékezetes, but this one not
         $highlight = ['format' => '<span class="b i">\1</span>'];
-        if ($value && mb_strpos(mb_strtolower($value), $this->request->getQuery('term')) !== false) {
-            return Text::highlight($value, $this->request->getQuery('term'), $highlight);
+        //remove % from beginning
+        $term = $this->request->getQuery('term');
+        if (strpos($value, '%') === 0) {
+            $value = substr($value, 1);
+        }
+        if (strpos($term, '%') === 0) {
+            $term = substr($term, 1);
+        }
+        if ($value && mb_strpos(mb_strtolower($value), $term) !== false) {
+            return Text::highlight($value, $term, $highlight);
         } else {
             return null;
         }
