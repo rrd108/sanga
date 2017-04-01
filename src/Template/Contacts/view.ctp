@@ -47,6 +47,23 @@ echo $this->element('ajax-images');
     </div>
     <div class="content-wrapper">
     <div class="row">
+    <h2>
+        <?= h($contact->contactname) ? h($contact->contactname) : h($contact->legalname) ?>
+        <?php
+        if ($contact->google_id) {
+            echo $this->Html->image('google.png');
+        } else {
+            echo $this->Html->link(
+                $this->Html->image('google-inactive.png',
+                    ['id' => 'gImg',
+                        'title' => __('Save to Google Contacts')]
+                ),
+                ['action' => 'google_save', $contact->id],
+                ['id' => 'gSave', 'escape' => false]);
+        }
+        ?>
+    </h2>
+
     <?php
     echo $this->Form->create($contact, ['id'=> 'editForm', 'url' => ['action' => 'edit']]);
     ?>
@@ -65,22 +82,6 @@ echo $this->element('ajax-images');
             ]
         );
         ?>
-        <h2>
-            <?= h($contact->contactname) ?>
-            <?php
-            if ($contact->google_id) {
-                echo $this->Html->image('google.png');
-            } else {
-                echo $this->Html->link(
-                                $this->Html->image('google-inactive.png',
-                                                   ['id' => 'gImg',
-                                                    'title' => __('Save to Google Contacts')]
-                                                   ),
-                                ['action' => 'google_save', $contact->id],
-                                ['id' => 'gSave', 'escape' => false]);
-            }
-            ?>
-        </h2>
         <div class="row">
             <?php
             if (file_exists(WWW_ROOT . 'img/contacts/' . $contact->id . '.jpg')) {
