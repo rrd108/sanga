@@ -94,10 +94,10 @@
                     </ul>
                 </li>
                 <?php endif; ?>
-            <li>
-                <?= __('CRM') ?>
-                <ul>
-                    <?php
+                <li>
+                    <?= __('CRM') ?>
+                    <ul>
+                        <?php
                         print '<li>'.
                             $this->Html->link(
                                 '♥ ' . __('Contacts'),
@@ -116,26 +116,6 @@
                                     'prefix' => false,
                                     'controller' => 'Contacts',
                                     'action' => 'add'
-                                ]
-                            ) . '</li>';
-                        print '<li>'.
-                            $this->Html->link(
-                                '⇉ ' . __('Google Contact Import'),
-                                [
-                                    'plugin' => null,
-                                    'prefix' => false,
-                                    'controller' => 'Contacts',
-                                    'action' => 'google'
-                                ]
-                            ) . '</li>';
-                        print '<li>'.
-                            $this->Html->link(
-                                '⇉ ' . __('Csv Contact Import'),
-                                [
-                                    'plugin' => null,
-                                    'prefix' => false,
-                                    'controller' => 'Imports',
-                                    'action' => 'index'
                                 ]
                             ) . '</li>';
                         print '<li>' .
@@ -178,9 +158,46 @@
                                     'action' => 'showmap'
                                 ]
                             ) . '</li>';
-                    ?>
-                </ul>
-            </li>
+                        ?>
+                    </ul>
+                </li>
+                <li>
+                    <?= __('Import') ?>
+                    <ul>
+                        <?php
+                        print '<li>'.
+                            $this->Html->link(
+                                '⇉ ' . __('Google Contact Import'),
+                                [
+                                    'plugin' => null,
+                                    'prefix' => false,
+                                    'controller' => 'Contacts',
+                                    'action' => 'google'
+                                ]
+                            ) . '</li>';
+                        print '<li>'.
+                            $this->Html->link(
+                                '⇉ ' . __('Contact Import'),
+                                [
+                                    'plugin' => null,
+                                    'prefix' => false,
+                                    'controller' => 'Imports',
+                                    'action' => 'contacts'
+                                ]
+                            ) . '</li>';
+                        print '<li>'.
+                            $this->Html->link(
+                                '⇉ ' . __('History Import'),
+                                [
+                                    'plugin' => null,
+                                    'prefix' => false,
+                                    'controller' => 'Imports',
+                                    'action' => 'histories'
+                                ]
+                            ) . '</li>';
+                        ?>
+                    </ul>
+                </li>
             <li>
                 <?= __('Master data') ?>
                 <ul>
@@ -280,7 +297,7 @@
                             ],
                             ['escapeTitle' => false]
                         ) . '</li>';
-                    print '<li>' .
+                    /*print '<li>' .
                         $this->Html->link('❣ ' . __('Duplicates'),
                             [
                                 'plugin' => null,
@@ -288,7 +305,7 @@
                                 'controller' => 'Contacts',
                                 'action' => 'checkDuplicates'
                             ]
-                        ) . '</li>';
+                        ) . '</li>';*/
                     print '<li>' .
                         $this->Html->link('⊗ ' . __('Logout'),
                             [

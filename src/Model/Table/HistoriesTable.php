@@ -110,6 +110,7 @@ class HistoriesTable extends Table
      * Find histories what are created by the given user
      *  or by an other user who is a member of a usergroup
      *  where the given user is admin
+     *  or the contact is a member of a group what is accessible by the given user
      *
      * @param Query $query
      * @param array $options

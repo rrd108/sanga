@@ -11,19 +11,20 @@ class ImportsController extends AppController
     {
         return true;
     }
-    
-    public function index()
+
+    public function contacts()
     {
         //debug($this->request->data);
-        if (! empty($this->request->getData())
+        if (!empty($this->request->getData())
             && is_uploaded_file($this->request->getData('file.tmp_name'))
         ) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
             $file_mime = finfo_file($finfo, $this->request->getData('file.tmp_name'));
             finfo_close($finfo);
-            
-            if (in_array($file_mime, ['application/vnd.ms-excel','text/plain','text/csv'])) {
-                $fileData = fread(fopen($this->request->getData('file.tmp_name'), "r"), $this->request->getData('file.size'));
+
+            if (in_array($file_mime, ['application/vnd.ms-excel', 'text/plain', 'text/csv'])) {
+                $fileData = fread(fopen($this->request->getData('file.tmp_name'), "r"),
+                    $this->request->getData('file.size'));
                 if (mb_detect_encoding($fileData, 'UTF-8', true)) {
                     $fileData = explode("\n", $fileData);
 
@@ -150,11 +151,11 @@ class ImportsController extends AppController
             }
         }
     }
-    
+
     private function handleGroups($groups)
     {
         $group_ids = $this->Settings->getDefaultGroups();
-        
+
         if (empty($groups)) {
             return ['_ids' => $group_ids];
         }
@@ -166,7 +167,7 @@ class ImportsController extends AppController
                     unset($group_ids[$key]);
                 }
             } else {    //if it is positive just add it
-                $group_ids[] = (int) $groups;
+                $group_ids[] = (int)$groups;
             }
         } else {
             $newGroups = explode(',', $groups);
@@ -177,10 +178,15 @@ class ImportsController extends AppController
                         unset($group_ids[$key]);
                     }
                 } else {    //if it is positive just add it
-                    $group_ids[] = (int) $nGroup;
+                    $group_ids[] = (int)$nGroup;
                 }
             }
         }
         return ['_ids' => $group_ids];
+    }
+
+    public function histories()
+    {
+
     }
 }
