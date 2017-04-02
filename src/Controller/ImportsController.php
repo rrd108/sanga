@@ -18,14 +18,9 @@ class ImportsController extends AppController
         if (!empty($this->request->getData())
             && is_uploaded_file($this->request->getData('file.tmp_name'))
         ) {
-            $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
-            $file_mime = finfo_file($finfo, $this->request->getData('file.tmp_name'));
-            finfo_close($finfo);
-
-            if (in_array($file_mime, ['application/vnd.ms-excel', 'text/plain', 'text/csv'])) {
-                $fileData = fread(fopen($this->request->getData('file.tmp_name'), "r"),
-                    $this->request->getData('file.size'));
-                if (mb_detect_encoding($fileData, 'UTF-8', true)) {
+            if ($this->isCsv($this->getMime())) {
+                $fileData = $this->getFileDate();
+                if ($this->isUtf8($fileData)) {
                     $fileData = explode("\n", $fileData);
 
                     /*data[0]
@@ -188,5 +183,50 @@ class ImportsController extends AppController
     public function histories()
     {
 
+
+    /**
+     * get mime type ala mimetype extension
+     *
+     * @return mixed
+     */
+    protected function getMime()
+    {
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $file_mime = finfo_file($finfo, $this->request->getData('file.tmp_name'));
+        finfo_close($finfo);
+        return $file_mime;
+    }
+
+    /**
+     * Check if file is a csv file
+     *
+     * @param $file_mime
+     * @return bool
+     */
+    protected function isCsv($file_mime)
+    {
+        return in_array($file_mime, ['application/vnd.ms-excel', 'text/plain', 'text/csv']);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFileDate(): string
+    {
+        $fileData = fread(fopen($this->request->getData('file.tmp_name'), "r"),
+            $this->request->getData('file.size'));
+        return $fileData;
+    }
+
+    /**
+     * @param $fileData
+     * @return bool|mixed|string
+     */
+    protected function isUtf8($fileData)
+    {
+        return mb_detect_encoding($fileData, 'UTF-8', true);
+    }
+
+    public function test()
     }
 }
