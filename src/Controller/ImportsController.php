@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\I18n\Date;
 use Cake\ORM\TableRegistry;
 
 class ImportsController extends AppController
@@ -182,7 +183,110 @@ class ImportsController extends AppController
 
     public function histories()
     {
+        //debug($this->request->data);
+        if (!empty($this->request->getData())
+            && is_uploaded_file($this->request->getData('file.tmp_name'))
+        ) {
+            if ($this->isCsv($this->getMime())) {
+                $fileData = $this->getFileDate();
+                if ($this->isUtf8($fileData)) {
+                    $fileData = explode("\n", $fileData);
+                    $fields = explode(";", $fileData[0]);
 
+                    $this->Contacts = TableRegistry::get('Contacts');
+
+                    array_shift($fileData);     //remove header - field names
+
+                    $errors = $dataArray = [];
+                    $imported = $notImported = 0;
+
+                    foreach ($fileData as $i => $row) {
+                        $data = explode(';', $row);
+                        foreach ($fields as $j => $field) {
+                            switch ($field) {
+                                case 'contact':
+                                    if (is_string($data[$j])) {
+                                        $contact = $this->Contacts->find(
+                                            'accessibleBy',
+                                            [
+                                                'User.id' => $this->Auth->user('id'),
+                                                '_where' => [
+                                                    'Contacts.contactname' => [
+                                                        'condition' => ['&='],
+                                                        'value' => ['Lokanatha d']
+                                                    ],
+                                                    'Contacts.legalname' => [
+                                                        'connect' => '|',
+                                                        'condition' => ['&='],
+                                                        'value' => ['Lokanatha d']
+                                                    ]
+                                                ]
+                                            ]
+                                        );
+                                        if ($contact->count() === 1) {
+                                            $data[$j] = $contact[0]->id;
+                                        } else {
+                                            $data[$j] = 0;
+                                        }
+                                    }
+                                    break;
+                                case 'date':
+                                    if (!$data[$j]) {
+                                        $data[$j] = date('Y-m-d');
+                                    } else {
+                                        $data[$j] = Date::createFromFormat('Y-m-d', $data[$j]);
+                                    }
+                                    break;
+                                case 'group':
+                                    break;
+                                case 'event':
+                                    break;
+                                case 'unit':
+                                    break;
+                            }
+                            $dataArray[$field] = $data[$j];
+                        }
+
+                        if (!empty($dataArray)) {
+                            $dataArray['users'] = ['_ids' => [$this->Auth->user('id')]];    //add myself as the contact person
+                            //debug($dataArray);
+                            $contact = $this->Contacts->newEntity($dataArray);
+                            $contact->loggedInUser = $this->Auth->user('id');
+                            $e = $contact->errors();
+                            if (empty($e)) {
+                                if ($this->Contacts->save($contact)) {
+                                    $imported++;
+                                } else {
+                                    $notImported++;
+                                    $errors[] = [
+                                        'errors' => $this->getErrors($contact->errors()),
+                                        'data' => $dataArray
+                                    ];
+                                }
+                            } else {
+                                $notImported++;
+                                $errors[] = [
+                                    'errors' => $this->getErrors($contact->errors()),
+                                    'data' => $dataArray
+                                ];
+                            }
+                            unset($dataArray);
+                        }
+                    }
+                } else {
+                    $this->Flash->error(__('The import file was not a valid UTF-8 encoded csv file. Regenerate it.'));
+                    $this->Flash->error(__('Nothing is imported'));
+                }
+                $this->set('errors', $errors);
+                $this->set('fields', $fields);
+                $this->set('imported', $imported);
+                $this->set('notImported', $notImported);
+            } else {
+                $this->Flash->error(__('The import file was not in the proper format. Download the sample file and save as a csv.'));
+                $this->Flash->error(__('Nothing is imported'));
+            }
+        }
+    }
 
     /**
      * get mime type ala mimetype extension
@@ -228,5 +332,27 @@ class ImportsController extends AppController
     }
 
     public function test()
+    {
+        $this->Contacts = TableRegistry::get('Contacts');
+        $contact = $this->Contacts->find(
+            'accessibleBy',
+            [
+                'User.id' => $this->Auth->user('id'),
+                '_where' => [
+                    'Contacts.contactname' => [
+                        'condition' => ['&='],
+                        'value' => ['Lokanatha d']
+                    ],
+                    'Contacts.legalname' => [
+                        'connect' => '|',
+                        'condition' => ['&='],
+                        'value' => ['Lokanatha d']
+                    ]
+                ]
+            ]
+        );
+        debug($contact->count());
+        debug($contact->toArray());
+        die();
     }
 }
