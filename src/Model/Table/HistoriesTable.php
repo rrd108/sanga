@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\RulesChecker;
 
 /**
  * Histories Model
@@ -73,7 +74,6 @@ class HistoriesTable extends Table
             ->add('date', 'valid', ['rule' => 'date'])
             ->notEmpty('date')
             ->add('user_id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('user_id')
             ->add('group_id', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('group_id')
             ->add('event_id', 'valid', ['rule' => 'numeric'])
@@ -89,6 +89,25 @@ class HistoriesTable extends Table
 
         return $validator;
     }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     *
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['contact_id'], 'Contacts'));
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['group_id'], 'Groups'));
+        $rules->add($rules->existsIn(['event_id'], 'Events'));
+        $rules->add($rules->existsIn(['unit_id'], 'Units'));
+        return $rules;
+    }
+
 
     /**
  * Find histories owned by given user(s)

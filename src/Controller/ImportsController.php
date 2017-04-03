@@ -194,6 +194,10 @@ class ImportsController extends AppController
                     $fields = explode(";", $fileData[0]);
 
                     $this->Contacts = TableRegistry::get('Contacts');
+                    $this->Groups = TableRegistry::get('Groups');
+                    $this->Events = TableRegistry::get('Events');
+                    $this->Units = TableRegistry::get('Units');
+                    $this->Histories = TableRegistry::get('Histories');
 
                     array_shift($fileData);     //remove header - field names
 
@@ -202,75 +206,113 @@ class ImportsController extends AppController
 
                     foreach ($fileData as $i => $row) {
                         $data = explode(';', $row);
-                        foreach ($fields as $j => $field) {
-                            switch ($field) {
-                                case 'contact':
-                                    if (is_string($data[$j])) {
-                                        $contact = $this->Contacts->find(
-                                            'accessibleBy',
-                                            [
-                                                'User.id' => $this->Auth->user('id'),
-                                                '_where' => [
-                                                    'Contacts.contactname' => [
-                                                        'condition' => ['&='],
-                                                        'value' => ['Lokanatha d']
-                                                    ],
-                                                    'Contacts.legalname' => [
-                                                        'connect' => '|',
-                                                        'condition' => ['&='],
-                                                        'value' => ['Lokanatha d']
+                        if (count($data) > 1) {
+                            foreach ($fields as $j => $field) {
+                                switch ($field) {
+                                    case 'contact':
+                                        // if $data[$j] is an integer than it is an id
+                                        if (strlen($data[$j]) && !is_numeric($data[$j])) {
+                                            $contact = $this->Contacts->find(
+                                                'accessibleBy',
+                                                [
+                                                    'User.id' => $this->Auth->user('id'),
+                                                    '_where' => [
+                                                        'Contacts.contactname' => [
+                                                            'condition' => ['&='],
+                                                            'value' => [$data[$j]]
+                                                        ],
+                                                        'Contacts.legalname' => [
+                                                            'connect' => '|',
+                                                            'condition' => ['&='],
+                                                            'value' => [$data[$j]]
+                                                        ]
                                                     ]
                                                 ]
-                                            ]
-                                        );
-                                        if ($contact->count() === 1) {
-                                            $data[$j] = $contact[0]->id;
-                                        } else {
-                                            $data[$j] = 0;
+                                            );
+                                            if ($contact->count() === 1) {
+                                                $data[$j] = $contact->toArray()[0]->id;
+                                            } else {
+                                                //no contats find or there are more results
+                                                $data[$j] = -1;
+                                            }
                                         }
-                                    }
-                                    break;
-                                case 'date':
-                                    if (!$data[$j]) {
-                                        $data[$j] = date('Y-m-d');
-                                    } else {
-                                        $data[$j] = Date::createFromFormat('Y-m-d', $data[$j]);
-                                    }
-                                    break;
-                                case 'group':
-                                    break;
-                                case 'event':
-                                    break;
-                                case 'unit':
-                                    break;
+                                        $field = 'contact_id';
+                                        break;
+                                    case 'date':
+                                        if (!$data[$j]) {
+                                            $data[$j] = date('Y-m-d');
+                                        } else {
+                                            $data[$j] = Date::createFromFormat('Y-m-d', $data[$j]);
+                                        }
+                                        break;
+                                    case 'group':
+                                        // if $data[$j] is an integer than it is an id
+                                        if (strlen($data[$j]) && !is_numeric($data[$j])) {
+                                            $group = $this->Groups->find()
+                                                ->select('id')
+                                                ->where(['Groups.name' => $data[$j]]);
+                                            if ($group->count() == 1) {
+                                                $data[$j] = $group->toArray()[0]->id;
+                                            } else {
+                                                $data[$j] = -1;
+                                            }
+                                        }
+                                        $field = 'group_id';
+                                        break;
+                                    case 'event':
+                                        // if $data[$j] is an integer than it is an id
+                                        if (strlen($data[$j]) && !is_numeric($data[$j])) {
+                                            $event = $this->Events->find()
+                                                ->select('id')
+                                                ->where(['Events.name' => $data[$j]]);
+                                            if ($event->count() == 1) {
+                                                $data[$j] = $event->toArray()[0]->id;
+                                            } else {
+                                                $data[$j] = -1;
+                                            }
+                                        }
+                                        $field = 'event_id';
+                                        break;
+                                    case 'unit':
+                                        // if $data[$j] is an integer than it is an id
+                                        if (strlen($data[$j]) && !is_numeric($data[$j])) {
+                                            $unit = $this->Units->find()
+                                                ->select('id')
+                                                ->where(['Units.name' => $data[$j]]);
+                                            if ($unit->count() == 1) {
+                                                $data[$j] = $unit->toArray()[0]->id;
+                                            } else {
+                                                $data[$j] = -1;
+                                            }
+                                        }
+                                        $field = 'unit_id';
+                                        break;
+                                }
+                                $dataArray[$field] = $data[$j];
                             }
-                            $dataArray[$field] = $data[$j];
-                        }
 
-                        if (!empty($dataArray)) {
-                            $dataArray['users'] = ['_ids' => [$this->Auth->user('id')]];    //add myself as the contact person
-                            //debug($dataArray);
-                            $contact = $this->Contacts->newEntity($dataArray);
-                            $contact->loggedInUser = $this->Auth->user('id');
-                            $e = $contact->errors();
-                            if (empty($e)) {
-                                if ($this->Contacts->save($contact)) {
-                                    $imported++;
+                            if (!empty($dataArray)) {
+                                $dataArray['user_id'] = $this->Auth->user('id');
+                                $history = $this->Histories->newEntity($dataArray);
+                                if (empty($history->errors())) {
+                                    if ($this->Histories->save($history)) {
+                                        $imported++;
+                                    } else {
+                                        $notImported++;
+                                        $errors[] = [
+                                            'errors' => $this->getErrors($history->errors()),
+                                            'data' => $dataArray
+                                        ];
+                                    }
                                 } else {
                                     $notImported++;
                                     $errors[] = [
-                                        'errors' => $this->getErrors($contact->errors()),
+                                        'errors' => $this->getErrors($history->errors()),
                                         'data' => $dataArray
                                     ];
                                 }
-                            } else {
-                                $notImported++;
-                                $errors[] = [
-                                    'errors' => $this->getErrors($contact->errors()),
-                                    'data' => $dataArray
-                                ];
+                                unset($dataArray);
                             }
-                            unset($dataArray);
                         }
                     }
                 } else {
@@ -333,26 +375,12 @@ class ImportsController extends AppController
 
     public function test()
     {
-        $this->Contacts = TableRegistry::get('Contacts');
-        $contact = $this->Contacts->find(
-            'accessibleBy',
-            [
-                'User.id' => $this->Auth->user('id'),
-                '_where' => [
-                    'Contacts.contactname' => [
-                        'condition' => ['&='],
-                        'value' => ['Lokanatha d']
-                    ],
-                    'Contacts.legalname' => [
-                        'connect' => '|',
-                        'condition' => ['&='],
-                        'value' => ['Lokanatha d']
-                    ]
-                ]
-            ]
-        );
-        debug($contact->count());
-        debug($contact->toArray());
+        $this->Groups = TableRegistry::get('Groups');
+        $group = $this->Groups->find()
+            ->select('id')
+            ->where(['Groups.name' => 'india-szállítaás']);
+
+        debug($group->toArray());
         die();
     }
 }
