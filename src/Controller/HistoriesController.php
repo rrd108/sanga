@@ -120,9 +120,11 @@ class HistoriesController extends AppController
                 if ($saved) {
                     $message = __('The history has been saved.');
                     if ($this->request->is('ajax')) {
-         $this->Flash->success($message);
-                        $result = ['save' => true,
-                                   'message' => $message];
+                        $this->Flash->success($message);
+                        $result = [
+                            'success' => true,
+                            'message' => $message
+                        ];
                     } else {
                         $this->Flash->success($message);
                         return $this->redirect(['action' => 'index']);
@@ -130,11 +132,14 @@ class HistoriesController extends AppController
                 } else {
                     $message = __('The history could not be saved. Please, try again.');
                     if ($this->request->is('ajax')) {
-                        $result = ['save' => false,
-                                   'message' => $message,
-                                   'errors' => $this->getErrors($history->errors())];
+                        $result = [
+                            'success' => false,
+                            'message' => $message,
+                            'errors' => $this->getErrors($history->errors())
+                        ];
                     } else {
                         $this->Flash->error($message);
+                        $this->log($this->getErrors($history->errors()), 'debug');
                     }
                 }
             }

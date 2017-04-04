@@ -1,3 +1,7 @@
+<?php
+print $this->Html->script('sanga.autocompleteBuilder.js', ['block' => true]);
+print $this->Html->script('sanga.histories.import.js', ['block' => true]);
+?>
 <div class="sidebar-wrapper">
     <nav class="side-nav">
         <ul>
@@ -61,7 +65,7 @@
                                 $tdContent = $e['data'][$field];
                             }
                         }
-                        echo '<td' . $tdTitle . $tdClass . '>';
+                        echo '<td data-id="' . $field . '"' . $tdTitle . $tdClass . '>';
                         if (is_array($tdContent))
                         {
                             echo implode(',', $tdContent['_ids']);

@@ -118,7 +118,7 @@ $(function() {
 				$('#ajaxloader').hide();
 				noty({
 					text : jqXHR.responseJSON.errors ? (jqXHR.responseJSON.message + ' ' + jqXHR.responseJSON.errors) : jqXHR.responseJSON.message,
-					type : jqXHR.responseJSON.save ? 'success' : 'error',
+					type : jqXHR.responseJSON.success ? 'success' : 'error',
 					animation : $.sanga.animation,
 					buttons: false,
 					timeout: 2

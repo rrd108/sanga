@@ -1,6 +1,7 @@
 <?php
 echo $this->Html->css('daterangepicker.css', ['block' => true]);
 
+echo $this->Html->script('sanga.autocompleteBuilder.js', ['block' => true]);
 echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
 echo $this->Html->script('sanga.histories.index.js', ['block' => true]);
 echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);

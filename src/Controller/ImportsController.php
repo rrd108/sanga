@@ -20,7 +20,7 @@ class ImportsController extends AppController
             && is_uploaded_file($this->request->getData('file.tmp_name'))
         ) {
             if ($this->isCsv($this->getMime())) {
-                $fileData = $this->getFileDate();
+                $fileData = $this->getFileData();
                 if ($this->isUtf8($fileData)) {
                     $fileData = explode("\n", $fileData);
 
@@ -188,7 +188,7 @@ class ImportsController extends AppController
             && is_uploaded_file($this->request->getData('file.tmp_name'))
         ) {
             if ($this->isCsv($this->getMime())) {
-                $fileData = $this->getFileDate();
+                $fileData = $this->getFileData();
                 if ($this->isUtf8($fileData)) {
                     $fileData = explode("\n", $fileData);
                     $fields = explode(";", $fileData[0]);
@@ -357,7 +357,7 @@ class ImportsController extends AppController
     /**
      * @return string
      */
-    protected function getFileDate(): string
+    protected function getFileData()
     {
         $fileData = fread(fopen($this->request->getData('file.tmp_name'), "r"),
             $this->request->getData('file.size'));
