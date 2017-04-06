@@ -409,7 +409,6 @@ echo $this->element('ajax-images');
     </div>
 
     <div id="tabs-2" class="contacts view large-10 medium-9 columns">
-        <h2><?= h($contact->contactname) ?></h2>
         <div class="row">
             <div class="column large-9">
         <div class="row">
@@ -455,7 +454,6 @@ echo $this->element('ajax-images');
     </div>
 
     <div id="tabs-3" class="contacts view large-10 medium-9 columns">
-        <h2><?= h($contact->contactname) ?></h2>
         <div class="row">
             <div class="large-9 columns strings">
                 <div class="row">
@@ -600,7 +598,6 @@ echo $this->element('ajax-images');
     ?>
 
     <div id="tabs-4" class="contacts view large-10 medium-9 columns">
-        <h2><?= h($contact->contactname) ?></h2>
         <h3><?= __('Member') ?></h3>
         <div class="column large-12" id="member">
             <?php
@@ -648,7 +645,6 @@ echo $this->element('ajax-images');
     </div>
 
     <div id="tabs-5" class="contacts view large-12 columns">
-        <h2><?= h($contact->contactname) ?></h2>
         <div class="row">
             <div class="column large-12">
                 <?php if (!empty($histories)): ?>
@@ -742,7 +738,6 @@ echo $this->element('ajax-images');
     </div>
 
     <div id="tabs-6" class="contacts view large-12 columns">
-        <h2><?= h($contact->contactname) ?></h2>
         <div class="row">
         <div class="column large-12">
         <table id="hTable" cellpadding="0" cellspacing="0">
@@ -833,7 +828,6 @@ echo $this->element('ajax-images');
     </div>
 
     <div id="tabs-7" class="contacts view large-10 medium-9 columns">
-        <h2><?= h($contact->contactname) ?></h2>
         <div class="row">
             <div class="column large-12">
                 <h3><?= __('Has access as contact persons') ?></h3>
@@ -871,7 +865,6 @@ echo $this->element('ajax-images');
     </div>
 
     <div id="tabs-8" class="contacts view large-10 medium-9 columns">
-        <h2><?= h($contact->contactname) ?></h2>
         <div class="row">
             <div class="column large-12">
                 <?php if (h($contact->email)) : ?>
@@ -896,7 +889,6 @@ echo $this->element('ajax-images');
     </div>
 
     <div id="tabs-9" class="contacts view large-10 medium-9 columns">
-        <h2><?= h($contact->contactname) ?></h2>
         <div class="row">
         <div class="column large-12">
 
