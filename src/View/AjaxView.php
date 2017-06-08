@@ -15,8 +15,8 @@
 namespace App\View;
 
 use Cake\Event\EventManager;
-use Cake\Network\Request;
-use Cake\Network\Response;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 
 /**
  * A view class that is used for AJAX responses.
@@ -44,6 +44,6 @@ class AjaxView extends AppView
     {
         parent::initialize();
 
-        $this->response->type('ajax');
+        $this->response = $this->response->withType('ajax');
     }
 }

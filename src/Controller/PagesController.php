@@ -37,8 +37,8 @@ class PagesController extends AppController
     /**
      * Displays a view
      *
-     * @param string ...$path Path segments.
-     * @return void|\Cake\Network\Response
+     * @param array ...$path Path segments.
+     * @return \Cake\Http\Response|null
      * @throws \Cake\Network\Exception\ForbiddenException When a directory traversal attempt.
      * @throws \Cake\Network\Exception\NotFoundException When the view file could not
      *   be found or \Cake\View\Exception\MissingTemplateException in debug mode.
@@ -64,9 +64,9 @@ class PagesController extends AppController
 
         try {
             $this->render(implode('/', $path));
-        } catch (MissingTemplateException $e) {
+        } catch (MissingTemplateException $exception) {
             if (Configure::read('debug')) {
-                throw $e;
+                throw $exception;
             }
             throw new NotFoundException();
         }
