@@ -174,7 +174,11 @@ class UsersController extends AppController
             if (!empty($user)) {
                 //create and save random token
                 $token = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 32);
-                $user = $this->Users->patchEntity($user, $this->request->getData());
+                //password field may be filled on requesting password reset,
+                //the value should be removed to avoid overwrite existing password
+                $user_data = $this->request->getData();
+                unset($user_data['password']);
+                $user = $this->Users->patchEntity($user, $user_data);
                 $user->resettoken = $token;
                 if ($this->Users->save($user)) {
                     $token = $user->id . ',' . $token;
