@@ -36,7 +36,8 @@
                     __('Password Reminder'),
                     [
                         'class' => 'radius',
-                        'name' => 'passreminder'
+                        'name' => 'passreminder',
+                        'value' => 'remindme'
                     ]
                 ); ?>
             </div>
