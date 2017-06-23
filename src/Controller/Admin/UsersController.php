@@ -153,4 +153,15 @@ class UsersController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
+    public function personalize($id) {
+        if (!$this->request->session()->read('switchUser')) {
+            $this->request->session()->write('switchUser', $this->Auth->user('id'));
+            $this->Auth->setUser($this->Users->get($id));
+        } else {
+            $this->Auth->setUser($this->Users->get($this->request->session()->read('switchUser')));
+            $this->request->session()->delete('switchUser');
+        }
+        return $this->redirect('/');
+    }
 }

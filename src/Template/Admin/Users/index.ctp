@@ -49,6 +49,7 @@
                         <td><?= h(count($user->contacts)) ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
+                            <?= $this->Html->link(__('Personalize'), ['action' => 'personalize', $user->id]) ?>
                             <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
                         </td>
                     </tr>

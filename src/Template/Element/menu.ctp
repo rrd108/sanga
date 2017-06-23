@@ -306,6 +306,17 @@
                                 'action' => 'checkDuplicates'
                             ]
                         ) . '</li>';*/
+                    if ($this->request->session()->read('switchUser')) {
+                        print '<li>' .
+                            $this->Html->link('⊗ ' . __('Back to admin'),
+                                [
+                                    'plugin' => null,
+                                    'prefix' => 'admin',
+                                    'controller' => 'Users',
+                                    'action' => 'personalize/' . $this->request->session()->read('Auth.User.id')
+                                ]
+                            ) . '</li>';
+                    }
                     print '<li>' .
                         $this->Html->link('⊗ ' . __('Logout'),
                             [
