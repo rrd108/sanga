@@ -214,7 +214,7 @@ class HistoriesController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function get_detail($id)
+    public function getDetail($id)
     {
         //TODO add test case
         //TODO check if the user has access to this history data
