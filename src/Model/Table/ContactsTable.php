@@ -224,7 +224,7 @@ class ContactsTable extends Table
                 return true;
             }
 
-            $entity->setErrors('contactname', __('At least 2 info should be filled'));
+            $entity->setErrors(['contactname' => __('At least 2 info should be filled')]);
             return false;
         }
 
@@ -1348,13 +1348,13 @@ class ContactsTable extends Table
                 }
             }
         }
-        
+
         foreach ($conditions as $field => $data) {
             if (!isset($data['value']) || !$data['value']) {
                 unset($conditions[$field]);
             }
         }
-        
+
         return $conditions;
     }
 

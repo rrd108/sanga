@@ -11,16 +11,6 @@ use App\Controller\AppController;
 class GroupsController extends AppController
 {
 
-    public $components = [
-        'RequestHandler' =>
-            [
-                'viewClassMap' =>
-                    [
-                        'csv' => 'CsvView.Csv'
-                    ]
-            ]
-    ];
-
     public function isAuthorized($user = null)
     {
         return true;

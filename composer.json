@@ -6,10 +6,11 @@
     "license": "GPL",
     "require": {
         "php": ">=5.6",
-        "cakephp/cakephp": "3.4.*",
+        "cakephp/cakephp": "3.6.*",
+        "cakephp/migrations": "^2.0.0",
+        "cakephp/plugin-installer": "^1.0",
+        "josegonzalez/dotenv": "3.*",
         "mobiledetect/mobiledetectlib": "2.*",
-        "cakephp/migrations": "~1.0",
-        "cakephp/plugin-installer": "*",
         "google/apiclient":"^2.0.0@RC",
         "rrd/rbruteforce": "dev-master",
         "sendgrid/sendgrid": "~3.2",
@@ -17,11 +18,11 @@
         "rrd108/cakephp-menulink": "^1.0"
     },
     "require-dev": {
-        "psy/psysh": "@stable",
-        "phpunit/phpunit": "^5.2",
+        "cakephp/bake": "^1.1",
         "cakephp/cakephp-codesniffer": "^3.0",
-        "cakephp/bake": "~1.1",
-        "cakephp/debug_kit": "~3.2"
+        "cakephp/debug_kit": "^3.15.0",
+        "psy/psysh": "@stable",
+        "phpunit/phpunit": "^5.2"
     },
     "suggest": {
         "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification.",
@@ -48,10 +49,12 @@
             "@test",
             "@cs-check"
         ],
-        "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests",
-        "cs-fix": "phpcbf --colors --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests",
+        "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/",
+        "cs-fix": "phpcbf --colors --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/",
         "test": "phpunit --colors=always"
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    }
 }

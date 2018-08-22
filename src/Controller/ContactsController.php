@@ -26,13 +26,6 @@ class ContactsController extends AppController
 
     public $helpers = ['Number'];
 
-    public $components = ['RequestHandler' =>
-            ['viewClassMap' => [
-                'csv' => 'CsvView.Csv'
-                ]
-            ]
-        ];
-
     public $paginate = ['limit' => 20];
 
     public function isAuthorized($user = null)
