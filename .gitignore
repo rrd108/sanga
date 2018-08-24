@@ -21,3 +21,5 @@
 /webroot/files/uj_contact_felvitele.ogv
 
 /.idea
+
+config/extras\.php
