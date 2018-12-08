@@ -6,16 +6,17 @@
     "license": "GPL",
     "require": {
         "php": ">=5.6",
+        "burzum/cakephp-imagine-plugin": "2.*",
         "cakephp/cakephp": "3.6.*",
         "cakephp/migrations": "^2.0.0",
         "cakephp/plugin-installer": "^1.0",
+        "friendsofcake/cakephp-csvview": "~3.0",
+        "google/apiclient": "^2.0.0@RC",
         "josegonzalez/dotenv": "3.*",
         "mobiledetect/mobiledetectlib": "2.*",
-        "google/apiclient":"^2.0.0@RC",
         "rrd/rbruteforce": "dev-master",
-        "sendgrid/sendgrid": "~3.2",
-        "friendsofcake/cakephp-csvview": "~3.0",
-        "rrd108/cakephp-menulink": "^1.0"
+        "rrd108/cakephp-menulink": "^1.0",
+        "sendgrid/sendgrid": "~3.2"
     },
     "require-dev": {
         "cakephp/bake": "^1.1",
