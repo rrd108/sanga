@@ -1088,7 +1088,7 @@ class ContactsController extends AppController
     public function documentSave()
     {
         if (! empty($this->request->getData('contactid'))) {
-            $contactid = $this->request->getData('contactid');
+            $contactId = $this->request->getData('contactid');
 
             if (empty($this->request->getData('document_title'))) {
                 $this->request = $this->request->withData('document_title', $this->request->getData('uploadfile.name'));
@@ -1097,7 +1097,7 @@ class ContactsController extends AppController
             if (! empty($this->request->getData('uploadfile.type'))) {
                 $document = $this->Contacts->Documents->newEntity();
 
-                $document->contact_id = $contactid;
+                $document->contact_id = $contactId;
                 $document->name = $this->request->getData('document_title');
                 $document->file_name = $this->request->getData('uploadfile.name');
                 $document->file_type = $this->request->getData('uploadfile.type');
@@ -1111,10 +1111,14 @@ class ContactsController extends AppController
 
                 //TODO add history event
 
-                return $this->redirect(['action' => 'view', $contactid]);
+                if ($contactId == pathinfo($this->request->getData('uploadfile.name'), PATHINFO_FILENAME)) {
+                    //TODO generate profile pic
+                }
+
+                return $this->redirect(['action' => 'view', $contactId]);
             } else {
                 $this->Flash->error(__('The document could not be saved.'));
-                return $this->redirect(['action' => 'view', $contactid]);
+                return $this->redirect(['action' => 'view', $contactId]);
             }
         }
     }
