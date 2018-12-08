@@ -1,6 +1,7 @@
 <?php
 echo $this->Html->script('gmap3.min.js', ['block' => true]);
-echo $this->Html->script('https://maps.google.com/maps/api/js?sensor=false&amp;language=' . $lang, ['block' => true]);
+echo $this->Html->script('https://maps.google.com/maps/api/js?key=AIzaSyCNmvEo-Ogi4ArqgU6oLVDy-oT_S8bMaEY
+&amp;language=' . $lang, ['block' => true]);
 echo $this->Html->css('googleMaps.css', ['block' => true]);
 
 //debug($result);
