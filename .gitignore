@@ -9,6 +9,7 @@
 /webroot/coverage/*
 
 /webroot/img/contacts/*
+!/webroot/img/contacts/noimg.png
 /webroot/scss/.sass-cache/*
 /webroot/scss/components/default/.sass-cache/*
 /webroot/scss/components/css/*
