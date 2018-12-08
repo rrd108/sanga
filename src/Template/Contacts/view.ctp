@@ -85,11 +85,10 @@ echo $this->element('ajax-images');
         <div class="row">
             <?php
             if (file_exists(WWW_ROOT . 'img/contacts/' . $contact->id . '.jpg')) {
-                $img = $contact->id . '.jpg';
+                echo $this->Html->image('contacts/' . $contact->id . '.jpg', ['class' => 'fl']);
             } else {
-                $img = 'noimg.png';
+                echo $this->Html->image('contacts/noimg.png', ['class' => 'fl']);
             }
-            echo $this->Html->image('contacts/' . $img, ['class' => 'fl']);
             ?>
             <div class="large-9 columns strings">
 

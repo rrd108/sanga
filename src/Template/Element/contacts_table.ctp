@@ -57,12 +57,13 @@ function setGroupCss($group, $userId)
     <tr>
         <td>
             <?php
-            $cs = '';
-            if ($contact->sex) {
-                $cs = $contact->sex;
+            if (file_exists(WWW_ROOT . 'img/contacts/' . $contact->id . '.jpg')) {
+                $img = $this->Html->image('contacts/' . $contact->id . '.jpg', ['class' => 'fl']);
+            } else {
+                $img = $this->Html->image('contact' . $contact->sex . '.png');
             }
             echo $this->Html->link(
-                $this->Html->image('contact'.$cs.'.png'),
+                $img,
                 ['action' => 'view', $contact->id],
                 ['escape' => false, 'title' => __('View')]
             );
