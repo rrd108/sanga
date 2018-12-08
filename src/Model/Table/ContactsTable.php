@@ -83,6 +83,12 @@ class ContactsTable extends Table
             'sort' => ['Documents.name' => 'ASC'],
             ]
         );
+
+        $this->hasOne('ProfileImage', ['className' => 'Documents'])
+            ->setProperty('profile_image')
+            ->setConditions(['ProfileImage.file_name' => '8802.jpg'])
+            ->setDependent(true);
+
         $this->belongsToMany(
             'Groups',
             [

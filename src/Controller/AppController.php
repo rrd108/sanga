@@ -30,6 +30,8 @@ use Cake\I18n\I18n;
 class AppController extends Controller
 {
 
+    public $helpers = ['Tools.Html'];
+
     public $components = [
         'Cookie',
         'Auth' => [

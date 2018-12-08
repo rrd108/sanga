@@ -395,7 +395,7 @@ class ContactsController extends AppController
             [
                 'contain' => [
                     'WorkplaceZips', 'Zips', 'Contactsources', 'Groups',
-                    'Skills', 'Users', 'Histories', 'Documents'
+                    'Skills', 'Users', 'Histories', 'Documents', 'ProfileImage'
                 ]
             ]
         );

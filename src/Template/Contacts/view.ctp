@@ -84,8 +84,8 @@ echo $this->element('ajax-images');
         ?>
         <div class="row">
             <?php
-            if (file_exists(WWW_ROOT . 'img/contacts/' . $contact->id . '.jpg')) {
-                echo $this->Html->image('contacts/' . $contact->id . '.jpg', ['class' => 'fl']);
+            if ($contact->profile_image) {
+                echo $this->Html->imageFromBlob(stream_get_contents($contact->profile_image->data), ['class' => 'fl']);
             } else {
                 echo $this->Html->image('contacts/noimg.png', ['class' => 'fl']);
             }
