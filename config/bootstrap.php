@@ -221,5 +221,4 @@ Plugin::load('RBruteForce', ['bootstrap' => false, 'routes' => true]);
 Plugin::load('CsvView', ['bootstrap' => false, 'routes' => false]);
 Plugin::load('MenuLink');
 
-
 require __DIR__ . '/events.php';

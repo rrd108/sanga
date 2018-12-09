@@ -58,7 +58,10 @@ function setGroupCss($group, $userId)
         <td>
             <?php
             if (file_exists(WWW_ROOT . 'img/contacts/' . $contact->id . '.jpg')) {
-                $img = $this->Html->image('contacts/' . $contact->id . '.jpg', ['class' => 'fl']);
+                $img = $this->Html->image(
+                    'contacts/' . $contact->id . '.jpg',
+                    ['class' => 'fl', 'width' => 100, 'height' => 100]
+                );
             } else {
                 $img = $this->Html->image('contact' . $contact->sex . '.png');
             }

@@ -15,6 +15,7 @@ use Cake\Network\Exception\NotImplementedException;
 use Cake\Network\Exception\BadRequestException;
 
 use Cake\Network\Email\Email;
+use Gumlet\ImageResize;
 
 /**
  * Contacts Controller
@@ -395,7 +396,7 @@ class ContactsController extends AppController
             [
                 'contain' => [
                     'WorkplaceZips', 'Zips', 'Contactsources', 'Groups',
-                    'Skills', 'Users', 'Histories', 'Documents'
+                    'Skills', 'Users', 'Histories', 'Documents', 'ProfileImage'
                 ]
             ]
         );
@@ -1088,16 +1089,15 @@ class ContactsController extends AppController
     public function documentSave()
     {
         if (! empty($this->request->getData('contactid'))) {
-            $contactid = $this->request->getData('contactid');
+            $contactId = $this->request->getData('contactid');
 
             if (empty($this->request->getData('document_title'))) {
                 $this->request = $this->request->withData('document_title', $this->request->getData('uploadfile.name'));
             }
 
-            if (! empty($this->request->getData('uploadfile.type'))) {
+            if (!empty($this->request->getData('uploadfile.type'))) {
                 $document = $this->Contacts->Documents->newEntity();
-
-                $document->contact_id = $contactid;
+                $document->contact_id = $contactId;
                 $document->name = $this->request->getData('document_title');
                 $document->file_name = $this->request->getData('uploadfile.name');
                 $document->file_type = $this->request->getData('uploadfile.type');
@@ -1111,10 +1111,16 @@ class ContactsController extends AppController
 
                 //TODO add history event
 
-                return $this->redirect(['action' => 'view', $contactid]);
+                if ($this->request->getData('document_title') == 'profile') {
+                    $profileImage = new ImageResize($this->request->getData('uploadfile.tmp_name'));
+                    $profileImage->crop(200, 200);
+                    $profileImage->save(WWW_ROOT . 'img/contacts/' . $contactId . '.jpg', IMAGETYPE_JPEG);
+                }
+
+                return $this->redirect(['action' => 'view', $contactId]);
             } else {
-                $this->Flash->error(__('The document could not be saved.'));
-                return $this->redirect(['action' => 'view', $contactid]);
+                $this->Flash->error(__('The document could not be saved. The file maybe was to big.'));
+                return $this->redirect(['action' => 'view', $contactId]);
             }
         }
     }
