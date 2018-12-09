@@ -57,14 +57,11 @@ function setGroupCss($group, $userId)
     <tr>
         <td>
             <?php
-            if ($contact->documents) {
-                $img = $contact->documents->filter(function ($document, $key) use ($contact) {
-                    return pathinfo($document->file_name, PATHINFO_FILENAME) == $contact->id;
-                });
-            }
-
             if (file_exists(WWW_ROOT . 'img/contacts/' . $contact->id . '.jpg')) {
-                $img = $this->Html->image('contacts/' . $contact->id . '.jpg', ['class' => 'fl']);
+                $img = $this->Html->image(
+                    'contacts/' . $contact->id . '.jpg',
+                    ['class' => 'fl', 'width' => 100, 'height' => 100]
+                );
             } else {
                 $img = $this->Html->image('contact' . $contact->sex . '.png');
             }

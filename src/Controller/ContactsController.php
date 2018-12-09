@@ -15,6 +15,7 @@ use Cake\Network\Exception\NotImplementedException;
 use Cake\Network\Exception\BadRequestException;
 
 use Cake\Network\Email\Email;
+use Gumlet\ImageResize;
 
 /**
  * Contacts Controller
@@ -1094,9 +1095,8 @@ class ContactsController extends AppController
                 $this->request = $this->request->withData('document_title', $this->request->getData('uploadfile.name'));
             }
 
-            if (! empty($this->request->getData('uploadfile.type'))) {
+            if (!empty($this->request->getData('uploadfile.type'))) {
                 $document = $this->Contacts->Documents->newEntity();
-
                 $document->contact_id = $contactId;
                 $document->name = $this->request->getData('document_title');
                 $document->file_name = $this->request->getData('uploadfile.name');
@@ -1111,13 +1111,15 @@ class ContactsController extends AppController
 
                 //TODO add history event
 
-                if ($contactId == pathinfo($this->request->getData('uploadfile.name'), PATHINFO_FILENAME)) {
-                    //TODO generate profile pic
+                if ($this->request->getData('document_title') == 'profile') {
+                    $profileImage = new ImageResize($this->request->getData('uploadfile.tmp_name'));
+                    $profileImage->crop(200, 200);
+                    $profileImage->save(WWW_ROOT . 'img/contacts/' . $contactId . '.jpg', IMAGETYPE_JPEG);
                 }
 
                 return $this->redirect(['action' => 'view', $contactId]);
             } else {
-                $this->Flash->error(__('The document could not be saved.'));
+                $this->Flash->error(__('The document could not be saved. The file maybe was to big.'));
                 return $this->redirect(['action' => 'view', $contactId]);
             }
         }

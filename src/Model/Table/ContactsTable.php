@@ -86,7 +86,7 @@ class ContactsTable extends Table
 
         $this->hasOne('ProfileImage', ['className' => 'Documents'])
             ->setProperty('profile_image')
-            ->setConditions(['ProfileImage.file_name' => '8802.jpg'])
+            ->setConditions(['ProfileImage.name' => 'profile'])
             ->setDependent(true);
 
         $this->belongsToMany(
