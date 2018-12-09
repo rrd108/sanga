@@ -99,7 +99,7 @@ class SettingsTable extends Table
     }
 
     /**
-     * Returns the user's saved list of fileds for displaying the list of contacts
+     * Returns the user's saved list of fields for displaying the list of contacts
      *
      * @param int $userId the id of the user
      * @return array of default groups' ids or null if there are no default groups
