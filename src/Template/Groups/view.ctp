@@ -9,21 +9,22 @@ print $this->Html->script('moment.min.js', ['block' => true]);
 print $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
 ?>
 <div class="groups view large-12 columns">
-    <?php if(isset($group)) : ?>
+    <?php if (isset($group)) : ?>
         <div class="related row">
             <div class="column large-12">
                 <div class="fr">
                     <?php
-                    if($isWritable) {
+                    if ($isWritable) {
                         print $this->Html->link(
                             __('Save as CSV'),
                             [
                                 'controller' => 'Groups',
-                                'action' => 'view', h($group->id),
-                                '_ext' => 'csv'
+                                'action' => 'view',
+                                h($group->id),
+                                '_ext' => 'csv',
                             ],
                             [
-                                'class' => 'button radius'
+                                'class' => 'button radius',
                             ]
                         );
                     }
@@ -32,7 +33,7 @@ print $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
 
                 <h1><?= h($group->name) ?></h1>
                 <div class="row">
-                    <div class="large-5 columns strings">
+                    <div class="large-6 columns strings">
                         <h6 class="subheader">
                             <?= __('Description') ?> :
                             <?= h($group->description) ?>
@@ -49,139 +50,48 @@ print $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                             <?= __('Members') ?> :
                             <?= count($group->contacts); ?>
                         </h6>
+                        <h6 class="subheader">
+                            <?= __('Has access as group member') ?>
+                            <?php if (!empty($group->users)): ?>
+                                <?php foreach ($group->users as $users): ?>
+                                    <?= h($users->name) ?> |
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </h6>
+                    </div>
+
+                    <div class="large-6 columns strings">
+                        <h4 class="subheader"><?= __('Add Contacts to this Group') ?></h4>
+                        <?php
+                        print $this->Form->create(null, ['id' => 'addMember']);
+                        print $this->Form->input('name', ['label' => __('Contactname or Legalname')]);
+                        print $this->Form->end();
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="related row access">
-            <div class="column large-12">
-            <h4 class="subheader"><?= __('Has access as group member') ?></h4>
-            <?php if (!empty($group->users)): ?>
-                <ul>
-                <?php foreach ($group->users as $users): ?>
-                <li>
-                    <?= h($users->name) ?>
-                </li>
-                <?php endforeach; ?>
-                </ul>
-            <?php endif; ?>
-            </div>
-        </div>
-
         <?php
-        if($isWritable) :
-        ?>
-        <div class="related row">
-            <div class="row">
-                <div class="column large-6">
-                    <h4 class="subheader"><?= __('Add Contacts to this Group') ?></h4>
-                    <?php
-                    print $this->Form->create(null, ['id' => 'addMember']);
-                    print $this->Form->input('name', ['label' => __('Contactname or Legalname')]);
-                    print $this->Form->end();
-                    ?>
-                </div>
-                <div class="column large-6">
-                    <h4 class="subheader"><?= __('Group Members') ?></h4>
-                    <ul id="members">
+        if ($isWritable) :
+            ?>
+            <div class="related row">
+                <div class="row">
+                    <div class="column large-6">
+                        <h4 class="subheader"><?= __('Group Members') ?></h4>
                         <?php
-                        $hasEmail = 0;
-                        if (!empty($group->contacts)) {
-                            foreach ($group->contacts as $contacts) {
-                                print '<li>';
-                                    print $this->Html->link($contacts->contactname ? h($contacts->contactname) : h($contacts->legalname),
-                                                                   ['controller' => 'Contacts',
-                                                                    'action' => 'view', $contacts->id]);
-                                    print $this->Html->image('remove.png',
-                                                                    ['class' => 'ajaxremove',
-                                                                     'title' => __('Click to remove from group')]);
-                                print '</li>';
-
-                                if($contacts->email != '') {
-                                    $hasEmail++;
-                                }
-                            }
-                        }
+                        echo $this->element(
+                            'contacts_table',
+                            [
+                                'fields' => ['contactname'],
+                                'contacts' => $group->contacts,
+                                'settings' => false
+                            ]
+                        );
                         ?>
-                    </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-
-
-        <div class="related row">
-            <div class="column large-12">
-                <h4 class="subheader"><?= __('Add History Event to all Group Members') ?></h4>
-                <table id="hTable" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <th><?= $this->Paginator->sort('date') ?></th>
-                        <th><?= $this->Paginator->sort('user_id') ?></th>
-                        <th><?= $this->Paginator->sort('group_id') ?></th>
-                        <th><?= $this->Paginator->sort('event_id') ?></th>
-                        <th><?= $this->Paginator->sort('detail') ?></th>
-                        <th><?= $this->Paginator->sort('quantity') ?></th>
-                        <th class="actions"><?= __('Actions') ?></th>
-                    </tr>
-                    <?= $this->element('history-add-form', ['e_noContactTd' => true, 'e_group' => $group]) ?>
-                    <?php
-                    foreach($group->histories as $history) :
-                    ?>
-                    <tr>
-                        <td>
-                            <?= h($history->date) ?>
-                        </td>
-                        <td>
-                            <?= h($history->user->name) ?>
-                        </td>
-                        <td id="uName">
-                            <?= h($group->name) ?>
-                        </td>
-                        <td>
-                            <?= h($history->event->name) ?>
-                        </td>
-                        <td>
-                            <?= h($history->detail) ?>
-                        </td>
-                        <td>
-                            <?= h($history->quantity) ?>
-                        </td>
-                        <td>
-                            <?php
-                            if ( isset($history->unit)) {
-                                print h($history->unit->name);
-                            }
-                            ?>
-                        </td>
-                        <td id="hInfo">
-                        </td>
-                    </tr>
-                    <?php
-                    endforeach;
-                    ?>
-                </table>
-            </div>
-        </div>
         <?php endif; ?>
     <?php endif; ?>
 </div>
-
-<?php
-/*
-<div class="related row">
-    <div class="column large-12">
-        <h4 class="subheader"><?= __('Send Mail to all Group Members') ?></h4>
-        <h6 class="subheader"><?= __('Sender') ?></h6>
-        <?= $this->request->session()->read('Auth.User.email') ?>
-        <h6 class="subheader"><?= __('To') ?></h6>
-        <?php
-        print h($group->name) . ' (' . $hasEmail . ' ' . __('recepients') . ')';
-        print $this->Form->input('subject');
-        print $this->Form->input('message',
-                                ['type' => 'textarea']);
-        print $this->Form->button(__('Submit'), ['id' => 'sendmail']);
-        ?>
-    </div>
-</div>
-*/
-?>
