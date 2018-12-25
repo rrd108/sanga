@@ -1,8 +1,11 @@
 <?php
 echo $this->Html->css('daterangepicker.css', ['block' => true]);
 
-echo $this->Html->script('sanga.autocompleteBuilder.js', ['block' => true]);
+echo $this->Html->script('jquery.rAutocompleters', ['block' => true]);
 echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
+
+// TODO remove autocompleBuilder as it does the same as rAutocompleters
+echo $this->Html->script('sanga.autocompleteBuilder.js', ['block' => true]);
 echo $this->Html->script('sanga.histories.index.js', ['block' => true]);
 echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
 
@@ -15,6 +18,15 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
         echo $this->element('ajax-images');
         ?>
         <div class="histories index columns">
+            <?= $this->Form->create(
+                null,
+                [
+                    'id' => 'fForm',
+                    'url' => [
+                        'controller' => 'Histories',
+                        'action' => 'index'
+                    ]
+                ]) ?>
             <table id="hTable" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
