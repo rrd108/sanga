@@ -1,17 +1,5 @@
 <tr>
     <?php
-    echo $this->Form->create(
-        null,
-        [
-            'id' => 'hForm',
-            'url' => [
-                'controller' => 'Histories',
-                'action' => 'add'
-            ]
-        ]
-    );
-    ?>
-    <?php
     if ( ! isset($e_noContactTd)) :
     ?>
     <td>
@@ -59,17 +47,33 @@
             echo $this->Form->input('group_id', ['type' => 'hidden', 'value' => $e_group->id]);
             echo $this->Form->input('target_group_id', ['type' => 'hidden', 'value' => true]);
         } else {
-            echo $this->Form->input('group_id', ['type' => 'hidden']);
-            echo $this->Form->input('xgroup_id', ['label' => false, 'type' => 'text']);
+            echo $this->Form->control(
+                'group_id',
+                [
+                    'type' => 'text',
+                    'data-ac' => '/groups/search',
+                    'templates' => [
+                        'inputContainer' => '{{content}}',
+                        'label' => false
+                    ]
+                ]
+            );
             echo $this->Form->input('target_group_id', ['type' => 'hidden', 'value' => false]);
         }
         ?>
     </td>
     <td>
-        <?php
-        echo $this->Form->input('event_id', ['type' => 'hidden']);
-        echo $this->Form->input('xevent_id', ['label' => false, 'type' => 'text']);
-        ?>
+        <?= $this->Form->control(
+            'event_id',
+            [
+                'type' => 'text',
+                'data-ac' => '/events/search',
+                'templates' => [
+                    'inputContainer' => '{{content}}',
+                    'label' => false
+                ]
+            ]
+        ) ?>
     </td>
     <td>
         <?php
@@ -104,9 +108,6 @@
         ?>
     </td>
     <td id="hInfo">
-        <?php
-            echo $this->Form->submit('ajaxsave.png', ['id' => 'hsave']);
-            echo $this->Form->end();
-        ?>
+        <?= $this->Form->submit('ajaxsave.png', ['id' => 'hsave']) ?>
     </td>
 </tr>

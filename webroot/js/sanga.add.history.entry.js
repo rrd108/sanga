@@ -1,5 +1,7 @@
 $(function() {
 
+    $.createAutocompleters('hForm', {baseUrl : $.sanga.baseUrl});
+
 	//for adding new entries
 
 	$('#date').datepicker({
@@ -145,8 +147,8 @@ $(function() {
 				}
 				cols += '<td>' + $('#date').val() + '</td>';
 				cols += '<td>' + $('#uName').text() + '</td>';
-				cols += '<td>' + $('#xgroup-id').val() + '</td>';
-				cols += '<td>' + $('#xevent-id').val() + '</td>';
+				cols += '<td>' + $('#ac-group-id').val() + '</td>';
+				cols += '<td>' + $('#ac-event-id').val() + '</td>';
 				cols += '<td>' + $('#detail').val() + '</td>';
 				cols += '<td class="r">';
 				if ($('#quantity').val()) {
