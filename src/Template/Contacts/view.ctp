@@ -1,7 +1,9 @@
-<?= $this->Html->script('sanga.contacts.view.min', ['block' => true]) ?>
-<?= $this->Html->script('sanga.contacts.add.js', ['block' => true]) ?>
-<?= $this->Html->script('sanga.add.history.entry.min', ['block' => true]) ?>
-<?= $this->Html->script('sanga.get.history.detail.min', ['block' => true]) ?>
+<?php
+echo $this->Html->script('jquery.rAutocompleters', ['block' => true]);
+echo $this->Html->script('sanga.contacts.view.js', ['block' => true]);
+echo $this->Html->script('sanga.contacts.add.js', ['block' => true]);
+echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
+echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
 
 
 <?= $this->Html->link(
