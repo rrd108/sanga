@@ -643,22 +643,18 @@ echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
                 </div>
                 <?= $this->Form->end() ?>
 
-                <div id="tabs-5" class="large-12 medium-12 small-12 columns">
-                    <div class="row">
-                        <div class="column large-12">
-                            <?php if (!empty($histories)) : ?>
-                            <?php
-                            echo $this->Form->create(
-                                null,
+            <div id="tabs-5" class="contacts view large-12 columns">
+                <div class="row">
+                    <div class="column large-12">
+                        <?php if (!empty($histories)): ?>
+                            <?=$this->Form->create(null,
                                 [
                                     'id' => 'hForm',
                                     'url' => [
                                         'controller' => 'Histories',
                                         'action' => 'add',
                                     ],
-                                ]
-                            );
-                            ?>
+                                ]) ?>
                             <table id="hTable" cellpadding="0" cellspacing="0">
                                 <thead>
                                     <tr>
