@@ -1,8 +1,7 @@
-<div class="main-logo">
-    <?php echo $this->Html->image('logo-main-big.png', ['alt' => 'Sanga logo', 'url' => '/']); ?>
-</div>
-
     <nav class="primary">
+    <div class="main-logo">
+        <?php echo $this->Html->image('logo-main-big.png', ['alt' => 'Sanga logo', 'url' => '/']); ?>
+    </div>
         <ul class="sf-menu">
             <?php
             if($this->request->session()->read('Auth.User.id')):
@@ -328,36 +327,39 @@
                         ) . '</li>';
                     ?>
                 </ul>
+                 <?php endif; ?>
             </li>
-            <?php endif; ?>
+
+            <?php
+             if($this->request->session()->read('Auth.User.id')):
+             ?>
+                <div class="header-search">
+                   <?php
+                      print $this->Form->create(
+                         null,
+                            [
+                               'id' => 'qForm',
+                               'url' => [
+                               'plugin' => null,
+                               'prefix' => false,
+                               'controller' => 'Search',
+                               'action' => 'quicksearch'
+                                ]
+                                ]
+                                );
+                                print $this->Form->input(
+                                'quickterm',
+                                [
+                                'label' => false,
+                                'placeholder' => __('Search')
+                                ]
+                                );
+                                print $this->Form->end();
+                                endif;?>
+                                </div>
+
         </ul>
     </nav>
 
-        <?php
-        if($this->request->session()->read('Auth.User.id')):
-        ?>
-        <div class="header-search">
-            <?php
-            print $this->Form->create(
-                null,
-                [
-                    'id' => 'qForm',
-                    'url' => [
-                        'plugin' => null,
-                        'prefix' => false,
-                        'controller' => 'Search',
-                        'action' => 'quicksearch'
-                    ]
-                ]
-            );
-            print $this->Form->input(
-                'quickterm',
-                [
-                    'label' => false,
-                    'placeholder' => __('Search')
-                ]
-            );
-            print $this->Form->end();
-            endif;?>
-        </div>
+
 </div>
