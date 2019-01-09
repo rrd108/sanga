@@ -24,7 +24,6 @@ use Gumlet\ImageResize;
  */
 class ContactsController extends AppController
 {
-
     public $helpers = ['Number'];
 
     public $paginate = ['limit' => 20];
@@ -34,9 +33,9 @@ class ContactsController extends AppController
         return true;
     }
 
-/**
-* Used at contacts/add, Histories/add, etc for getting owned contacts (should it be accessible?)
-*/
+    /**
+    * Used at contacts/add, Histories/add, etc for getting owned contacts (should it be accessible?)
+    */
     public function search()
     {
         $contact = $this->Contacts->newEntity($this->request->getData());
@@ -87,7 +86,7 @@ class ContactsController extends AppController
                     '_limit' => false
                 ]
             );
-        } else if ($type == 'owned') {
+        } elseif ($type == 'owned') {
             $result = $this->Contacts->find(
                 'ownedBy',
                 [
@@ -186,13 +185,13 @@ class ContactsController extends AppController
                 $limit = $this->paginate['limit'];
             }
 
-            if(isset($queryArray['sort']) && $queryArray['sort'] != '' ) {
+            if (isset($queryArray['sort']) && $queryArray['sort'] != '') {
                 $sort = strpos($queryArray['sort'], '.') ? $queryArray['sort'] : 'Contacts.'.$queryArray['sort'];
                 $direction = isset($queryArray['direction']) && $queryArray['direction'] != '' ? $queryArray['direction'] : 'ASC';
                 $order[$sort] = $direction;
-            } else if (in_array('Contacts.contactname', $select)) {
+            } elseif (in_array('Contacts.contactname', $select)) {
                 $order['Contacts.contactname'] = 'ASC';
-            } else if (in_array('Contacts.legalname', $select)) {
+            } elseif (in_array('Contacts.legalname', $select)) {
                 $order['Contacts.legalname'] = 'ASC';
             } else {
                 $order = null;
@@ -232,7 +231,7 @@ class ContactsController extends AppController
                 foreach ($query as $contact) {
                     $csvData[$i] = [];
                     foreach ($selectCsv as $s) {
-                        if(strpos($s, 'Contacts') === 0) {
+                        if (strpos($s, 'Contacts') === 0) {
                             $field = substr($s, strpos($s, '.') + 1);
                             $csvData[$i][] = $contact->$field;
                         } else {
@@ -630,13 +629,13 @@ class ContactsController extends AppController
         }
     }
 
- /**
- * Set contacts inactive method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+    /**
+    * Set contacts inactive method
+    *
+    * @param  string $id
+    * @return void
+    * @throws \Cake\Network\Exception\NotFoundException
+    */
     public function setinactive($id = null)
     {
         $contact = $this->Contacts->get($id);
@@ -1032,14 +1031,13 @@ class ContactsController extends AppController
             );
             $val = $client->getAuth()->authenticatedRequest($req);
             $gContacts = json_decode($val->getResponseBody());
-            //we should loop throught the entry to check what data is changed
+        //we should loop throught the entry to check what data is changed
             //ignore name changes
             //gd$email, gd$phoneNumber, gd$postalAddress
             //collect changed contacts in our database
             //check if there is any conflict
             //save local changes to goole
             //save google changes to local
-
         } else {
             $this->log('Unsuccessful sync', 'debug');
         }
@@ -1140,6 +1138,5 @@ class ContactsController extends AppController
         $this->response->setDownload($result->file_name);
 
         return $this->response;
-
     }
 }
