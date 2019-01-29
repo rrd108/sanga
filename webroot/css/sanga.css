@@ -486,14 +486,11 @@ td.actions a.active {
         float: right;
         padding-top: 5px;
     }
-
-    .main-logo {
-        position: relative;
-        bottom: 40px;
-    }
-
     .none_menu {
         display: none;
+    }
+    nav.side-nav {
+      display: none;
     }
 }
 /*MOBILE CSS*/
@@ -522,10 +519,6 @@ td.actions a.active {
         float: right;
         padding-top: 5px;
     }
-    .main-logo {
-        position: relative;
-        bottom: 40px;
-    }
     .none_menu {
         display: none;
     }
@@ -538,5 +531,7 @@ td.actions a.active {
     nav.primary ul > li ul  {
       width: 10px;
     }
+    nav.side-nav {
+      display: none;
+    }
 }
-
