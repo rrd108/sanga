@@ -18,7 +18,7 @@ function setGroupCss($group, $userId)
 }
 ?>
 <table cellpadding="0" cellspacing="0">
-<thead>
+  <thead class="responsive">
     <tr>
         <th>
             <?php
@@ -54,7 +54,7 @@ function setGroupCss($group, $userId)
 </thead>
 <tbody>
     <?php foreach ($contacts as $contact): ?>
-    <tr>
+    <tr class="res">
         <td>
             <?php
             if (file_exists(WWW_ROOT . 'img/contacts/' . $contact->id . '.jpg')) {

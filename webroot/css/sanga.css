@@ -492,7 +492,7 @@ td.actions a.active {
     nav.side-nav {
       display: none;
     }
-}
+  }
 /*MOBILE CSS*/
 @media screen and (max-width: 579px) {
     nav.primary ul {
@@ -533,5 +533,10 @@ td.actions a.active {
     }
     nav.side-nav {
       display: none;
+    }
+    .res {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
     }
 }
