@@ -1,6 +1,8 @@
+php_value memory_limit 248M
+php_value max_execution_time 300
 <IfModule mod_rewrite.c>
     RewriteEngine on
-    RewriteBase /~mualim/sanga/
+	RewriteBase /~rrd/sanga/
     RewriteRule    ^$    webroot/    [L]
     RewriteRule    (.*) webroot/$1    [L]
 </IfModule>
