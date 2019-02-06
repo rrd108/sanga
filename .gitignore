@@ -24,3 +24,4 @@
 /.idea
 
 config/extras\.php
+/nbproject/private/

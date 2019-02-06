@@ -61,13 +61,10 @@ $(function() {
   });
 });
 
-function myFunction(x) {
-  x.classList.toggle("change");
-}
-
 $(document).ready(function() {
   $(".container").click(function() {
     $(".none_menu").toggle();
+    $(".side-nav").toggle();
   });
   if ($(window).width() <= 940) {
     $("nav.primary ul li ").click(function() {
@@ -81,7 +78,9 @@ $(document).ready(function() {
 $(window).resize(function() {
   if ($(window).width() >= 940) {
     $(".none_menu").fadeIn();
+    $(".side-nav").fadeIn();
   } else {
     $(".none_menu").hide();
+    $(".side-nav").hide();
   }
 });
