@@ -61,10 +61,6 @@ $(function() {
   });
 });
 
-function myFunction(x) {
-    x.classList.toggle("change");
-}
-
 $(document).ready(function() {
   $(".container").click(function() {
     $(".none_menu").toggle();
