@@ -39,6 +39,16 @@
                 <p><?= __('Last week\'s activity') ?></p>
             </div>
 
+            <?php if ($dash['usergroups']->count()) : ?>
+                <h2 class="cl"><?= __('Last week activity in your user groups') ?></h2>
+                <?php foreach ($dash['usergroups'] as $userInGroups) : ?>
+                    <div class="dashstat">
+                        <h6><?= $this->Number->format(count($userInGroups->histories)) ?></h6>
+                        <p><?= h($userInGroups->name) ?></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
             <h2 class="cl"><?= __('Total') ?></h2>
             <div class="dashstat">
                 <h6><?= $this->Number->format($dash['contacts']['total'], ['places' => 0]) ?></h6>

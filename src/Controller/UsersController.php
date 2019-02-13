@@ -2,7 +2,6 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\Network\Exception\ForbiddenException;
 use Cake\Event\Event;
 
 use Cake\Routing\Router;
@@ -285,6 +284,13 @@ class UsersController extends AppController
             ->find('ownedBy', ['User.id' => $this->Auth->user('id')])
             ->where(['Histories.date >= ' => date('Y-m-d', strtotime('-14 days', strtotime('now')))])
             ->count();
+
+        $dash['usergroups'] = $this->Users->find()
+            ->matching('Usergroups', function ($q) {
+                return $q->where(['Usergroups.admin_user_id' => $this->Auth->user('id')]);
+            })->contain('Histories', function ($q) use ($lastweek) {
+                return $q->where(['Histories.date >= ' => $lastweek]);
+            });
 
         $this->set(compact('dash'));
     }
