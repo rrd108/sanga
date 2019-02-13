@@ -63,6 +63,7 @@ $(function() {
 
 $(document).ready(function() {
   $(".container").click(function() {
+    $(".sidebar-wrapper").toggle();
     $(".none_menu").toggle();
     $(".side-nav").toggle();
   });
@@ -79,8 +80,10 @@ $(window).resize(function() {
   if ($(window).width() >= 940) {
     $(".none_menu").fadeIn();
     $(".side-nav").fadeIn();
+    $(".sidebar-wrapper").fadeIn();
   } else {
     $(".none_menu").hide();
     $(".side-nav").hide();
+    $(".sidebar-wrapper").hide();
   }
 });
