@@ -539,4 +539,8 @@ td.actions a.active {
     .none_menu {
       display: none;
     }
+    #divem {
+      position: relative;
+      right: 170px;
+    }
 }
