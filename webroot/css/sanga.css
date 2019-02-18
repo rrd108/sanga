@@ -486,9 +486,6 @@ td.actions a.active {
         float: right;
         padding-top: 5px;
     }
-    .none_menu {
-        display: none;
-    }
     nav.side-nav {
       display: none;
     }
@@ -519,9 +516,6 @@ td.actions a.active {
         float: right;
         padding-top: 5px;
     }
-    .none_menu {
-        display: none;
-    }
     nav.primary ul > li ul li {
       display: none;
     }
@@ -538,5 +532,15 @@ td.actions a.active {
       display: flex;
       flex-direction: column;
       width: 100%;
+    }
+    .sidebar-wrapper {
+      display: none;
+    }
+    .none_menu {
+      display: none;
+    }
+    #divem {
+      position: relative;
+      right: 170px;
     }
 }
