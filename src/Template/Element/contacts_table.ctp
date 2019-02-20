@@ -18,7 +18,7 @@ function setGroupCss($group, $userId)
 }
 ?>
 <table cellpadding="0" cellspacing="0">
-  <thead class="responsive">
+  <thead class="responsive felso_menu">
     <tr>
         <th>
             <?php
