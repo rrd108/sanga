@@ -497,7 +497,8 @@ td.actions a.active {
         flex-direction: column;
         position: relative;
         top: 10em;
-        right: 177px;
+        right: 179px;
+        background-color: #15848f;
     }
     nav.primary ul li {
         width: 174px;
@@ -538,9 +539,16 @@ td.actions a.active {
     }
     .none_menu {
       display: none;
+      height: 0;
     }
-    #divem {
+    .content-wrapper {
+      padding-left: 1rem;
+    }
+    .felso_menu {
+      display: none;
+    }
+    .pagination-counter {
       position: relative;
-      right: 170px;
+      top: 2em;
     }
 }
