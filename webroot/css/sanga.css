@@ -207,7 +207,7 @@ main {
     padding: 0 1em 0 0;
 }
 
-@media screen and (min-width: 539px) {
+@media screen and (min-width: 62.5em) {
     tr {
         display: table-row;
     }

@@ -10,7 +10,9 @@
         <?php echo $this->element('menu'); ?>
     </header>
     <main id="container" class="row">
-        <div class="column large-12"><?= $this->Flash->render() ?></div>
+        <?php if ($this->request->getSession()->read('Flash')) : ?>
+            <div class="column large-12"><?= $this->Flash->render() ?></div>
+        <?php endif; ?>
         <?= $this->fetch('content') ?>
     </main>
     <footer>
