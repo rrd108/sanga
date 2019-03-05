@@ -162,7 +162,17 @@ main {
     margin: 0;
 }
 
-.message.error, .error-message {
+.message-box, .message {
+    border-style: solid;
+    border-width: 1px;
+    display: block;
+    margin: 0 auto 0.625rem;
+    padding: 0.625rem;
+    max-width: 680px;
+    width: 100%;
+    border-radius: 5px;
+}
+.message-box.alert, .message-box.error, .message.alert, .message.error, .error-message {
     background: #ffd6d0;
     border-color: #ff4f37;
     color: #222222;
@@ -170,6 +180,30 @@ main {
 .message.error::before, .error-message::before {
     content: "✖";
     padding: 0px 1em 0px 0px;
+}
+.message-box.alert:before, .message.alert:before, .message-box.warning, .message.warning {
+    background: #ffdd22;
+    color: #222222;
+}
+.message-box.warning:before, .message.warning:before {
+    content: "❗";
+    padding: 0 1em 0 0;
+}
+.message-box.success:before, .message.success:before {
+    content: "✔";
+    padding: 0 1em 0 0;
+}
+.message-box.success, .message.success {
+    background: #7dc142;
+    color: #222222;
+}
+.message-box.help, .message.help {
+    background: #b2ebf2;
+    color: #222222;
+}
+.message-box.help:before, .message.help:before {
+    content: "❓";
+    padding: 0 1em 0 0;
 }
 
 @media screen and (min-width: 539px) {
