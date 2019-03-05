@@ -8,11 +8,13 @@
 
 <?= $this->Html->css(
     [
-        'default',
-        'main',
+        //'default',
+        //'main',
         'https://fonts.googleapis.com/css?family=Quicksand',
-        'animate.css',  //for noty
-        'sanga.css',
+        'animate',  //for noty
+        'foundation.min',
+        'foundation-icons',
+        'sanga.min'
     ]
 ) ?>
 <?php
@@ -28,6 +30,7 @@ echo $this->Html->script('ui.datepicker-hu.js');
 echo $this->Html->script('jquery.rStorage.min.js');
 
 echo $this->Html->script('jquery.noty.packaged.min.js');
+echo $this->Html->script('foundation.min');
 
 echo $this->Html->script('sanga.js');
 

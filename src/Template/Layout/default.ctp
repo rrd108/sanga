@@ -17,21 +17,18 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
 <!DOCTYPE html>
 <html>
-<head>
+<head class="row">
     <?php echo $this->element('head'); ?>
 </head>
 <body>
     <header>
         <?php echo $this->element('menu'); ?>
     </header>
-    <main id="container" class="primary-content">
+    <main id="container" class="row">
         <?= $this->Flash->render() ?>
         <?= $this->fetch('content') ?>
     </main>
     <footer>
-        <?php
-            //debug($this->Notifications);
-        ?>
     </footer>
 </body>
 </html>
