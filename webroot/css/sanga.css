@@ -196,17 +196,14 @@ main {
     padding: 0 1em 0 0;
 }
 
-.paginator {
-    display: block;
-    position: relative;
-    width: 100%;
+.paginator li.active a {
+    background: #15848f;
+    color: #eee;
 }
-.paginator .pagination-counter {
-    font-size: 0.875rem;
-    color: #b3b3b3;
-    display: block;
-    text-align: center;
-    transform: translateY(-50%);
+
+td a i {
+    padding: 0 1em;
+    font-size: 1.4rem;
 }
 
 @media screen and (min-width: 62.5em) {
