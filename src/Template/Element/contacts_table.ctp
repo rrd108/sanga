@@ -188,16 +188,4 @@ function setGroupCss($group, $userId)
     </tbody>
 </table>
 
-<div class="paginator column">
-    <ul class="pagination centered row align-center">
-        <?php
-        echo $this->Paginator->prev('< ' . __('previous'));
-        echo $this->Paginator->numbers();
-        echo $this->Paginator->next(__('next') . ' >');
-        ?>
-    </ul>
-    <div class="pagination-counter row align-center">
-        <?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} records out of
-     {{count}} total, starting on record {{start}}, ending on {{end}}')) ?>
-    </div>
-</div>
+<?= $this->element('paginator') ?>

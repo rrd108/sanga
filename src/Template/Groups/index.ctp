@@ -6,52 +6,56 @@
         ?>
         <table cellpadding="0" cellspacing="0">
             <thead>
-            <tr>
-                <th><?= $this->Paginator->sort('admin_user_id') ?></th>
-                <th><?= $this->Paginator->sort('shared') ?></th>
-                <th><?= $this->Paginator->sort('name') ?></th>
-                <th><?= __('Members') ?></th>
-                <th><?= $this->Paginator->sort('description') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
-            </tr>
+                <tr>
+                    <th><?= $this->Paginator->sort('admin_user_id') ?></th>
+                    <th><?= $this->Paginator->sort('shared') ?></th>
+                    <th><?= $this->Paginator->sort('name') ?></th>
+                    <th><?= __('Members') ?></th>
+                    <th><?= $this->Paginator->sort('description') ?></th>
+                    <th class="actions"><?= __('Actions') ?></th>
+                </tr>
             </thead>
             <tbody>
-            <tr>
-                <?php
-                echo '<td>';
-                if ($this->request->session()->read('Auth.User.id') >= 9) {
-                    echo $this->Form->input('admin_user_id',
+                <tr>
+                    <?php
+                    echo '<td>';
+                    if ($this->request->session()->read('Auth.User.id') >= 9) {
+                        echo $this->Form->input(
+                            'admin_user_id',
+                            [
+                                'label' => false,
+                                'options' => $users,
+                                'value' => $this->request->session()->read('Auth.User.id')
+                            ]
+                        );
+                    } else {
+                        echo '<span class="label mine">' . $this->request->session()->read('Auth.User.name') . '</span>';
+                    }
+                    echo '</td>';
+                    echo '<td>';
+                    echo $this->Form->input(
+                        'shared',
                         [
-                            'label' => false,
-                            'options' => $users,
-                            'value' => $this->request->session()->read('Auth.User.id')
-                        ]);
-                } else {
-                    echo '<span class="label mine">' . $this->request->session()->read('Auth.User.name') . '</span>';
-                }
-                echo '</td>';
-                echo '<td>';
-                echo $this->Form->input('shared',
-                    [
-                        'label' => false
-                    ]);
-                echo '</td>';
-                echo '<td>';
-                echo $this->Form->input('name', ['label' => false]);
-                echo '</td>';
-                echo '<td>';
-                echo '</td>';
-                echo '<td>';
-                echo $this->Form->input('description', ['label' => false]);
-                echo '</td>';
-                //echo $this->Form->input('users._ids', ['options' => $users]);
-                //echo $this->Form->input('contacts._ids', ['options' => $contacts]);
-                echo '<td>';
-                echo $this->Form->button(__('Submit'), ['class' => 'radius']);
-                echo '</td>';
-                ?>
-            </tr>
-            <?php foreach ($groups as $group): ?>
+                            'label' => false
+                        ]
+                    );
+                    echo '</td>';
+                    echo '<td>';
+                    echo $this->Form->input('name', ['label' => false]);
+                    echo '</td>';
+                    echo '<td>';
+                    echo '</td>';
+                    echo '<td>';
+                    echo $this->Form->input('description', ['label' => false]);
+                    echo '</td>';
+                    //echo $this->Form->input('users._ids', ['options' => $users]);
+                    //echo $this->Form->input('contacts._ids', ['options' => $contacts]);
+                    echo '<td>';
+                    echo $this->Form->button(__('Submit'), ['class' => 'radius']);
+                    echo '</td>';
+                    ?>
+                </tr>
+                <?php foreach ($groups as $group) : ?>
                 <tr>
                     <td>
                         <?php
@@ -84,27 +88,32 @@
                                 ['action' => 'edit', $group->id],
                                 ['class' => 'editlink']
                             );
-                            echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $group->id],
-                                ['confirm' => __('Are you sure you want to delete # {0}?', $group->id)]);
+                            echo $this->Form->postLink(
+                                __('Delete'),
+                                ['action' => 'delete', $group->id],
+                                ['confirm' => __('Are you sure you want to delete # {0}?', $group->id)]
+                            );
                         }
                         ?>
                     </td>
                 </tr>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
             </tbody>
         </table>
         <?php
         echo $this->Form->end();
         ?>
-        <div class="paginator">
-            <ul class="pagination centered">
+        <div class="paginator column">
+            <ul class="pagination centered row align-center">
                 <?php
                 echo $this->Paginator->prev('< ' . __('previous'));
                 echo $this->Paginator->numbers();
                 echo $this->Paginator->next(__('next') . ' >');
                 ?>
             </ul>
-            <div class="pagination-counter"><?= $this->Paginator->counter() ?></div>
+            <div class="pagination-counter row align-center">
+                <?= $this->Paginator->counter() ?>
+            </div>
         </div>
     </div>
 </div>

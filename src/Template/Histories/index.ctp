@@ -16,87 +16,87 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
         ?>
         <div class="histories index columns">
             <table id="hTable" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <?php
-                    echo $this->Form->create(
-                        null,
-                        [
-                            'id' => 'fForm',
-                            'url' => [
-                                'controller' => 'Histories',
-                                'action' => 'index'
-                            ]
-                         ]
-                    );
-                    ?>
-                    <td>
+                <thead>
+                    <tr>
                         <?php
-                        echo $this->Form->input('fcontact_id', ['type' => 'hidden', 'value' => false]);
-                        echo $this->Form->input('xfcontact_id', ['type' => 'text', 'value' => false, 'label' => false]);
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        echo $this->Form->input(
-                            'daterange',
+                        echo $this->Form->create(
+                            null,
                             [
-                                'label' => false,
-                                'value' => false
+                                'id' => 'fForm',
+                                'url' => [
+                                    'controller' => 'Histories',
+                                    'action' => 'index'
+                                ]
                             ]
                         );
                         ?>
-        
-                    </td>
-                    <td>
-                        <?php
-                        echo $this->Form->input('fuser_id', ['type' => 'hidden', 'value' => false]);
-                        echo $this->Form->input('xfuser_id', ['type' => 'text', 'value' => false, 'label' => false]);
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        echo $this->Form->input('fgroup_id', ['type' => 'hidden', 'value' => false]);
-                        echo $this->Form->input('xfgroup_id', ['label' => false, 'value' => false, 'type' => 'text']);
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        echo $this->Form->input('fevent_id', ['type' => 'hidden', 'value' => false]);
-                        echo $this->Form->input('xfevent_id', ['label' => false, 'value' => false, 'type' => 'text']);
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        echo $this->Form->input('fdetail', ['label' => false, 'value' => false]);
-                        ?>
-                    </td>
-                    <td>
-                        
-                    </td>
-                    <td>
-                        <?= $this->Form->button('↺', ['title' => __('Filter'), 'class' => 'radius']) ?>
-                    </td>
-                    <?php
-                    echo $this->Form->end();
-                    ?>
-                </tr>
-                <tr>
-                    <th><?= $this->Paginator->sort('contact_id') ?></th>
-                    <th><?= $this->Paginator->sort('date') ?></th>
-                    <th><?= $this->Paginator->sort('user_id') ?></th>
-                    <th><?= $this->Paginator->sort('group_id') ?></th>
-                    <th><?= $this->Paginator->sort('event_id') ?></th>
-                    <th><?= $this->Paginator->sort('short_detail') ?></th>
-                    <th><?= $this->Paginator->sort('quantity') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
-            </thead>
-            <tbody>
+                        <td>
+                            <?php
+                            echo $this->Form->input('fcontact_id', ['type' => 'hidden', 'value' => false]);
+                            echo $this->Form->input('xfcontact_id', ['type' => 'text', 'value' => false, 'label' => false]);
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->Form->input(
+                                'daterange',
+                                [
+                                    'label' => false,
+                                    'value' => false
+                                ]
+                            );
+                            ?>
 
-                <?= $this->element('history-add-form') ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->Form->input('fuser_id', ['type' => 'hidden', 'value' => false]);
+                            echo $this->Form->input('xfuser_id', ['type' => 'text', 'value' => false, 'label' => false]);
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->Form->input('fgroup_id', ['type' => 'hidden', 'value' => false]);
+                            echo $this->Form->input('xfgroup_id', ['label' => false, 'value' => false, 'type' => 'text']);
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->Form->input('fevent_id', ['type' => 'hidden', 'value' => false]);
+                            echo $this->Form->input('xfevent_id', ['label' => false, 'value' => false, 'type' => 'text']);
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->Form->input('fdetail', ['label' => false, 'value' => false]);
+                            ?>
+                        </td>
+                        <td>
 
-                <?php foreach ($histories as $history): ?>
+                        </td>
+                        <td>
+                            <?= $this->Form->button('↺', ['title' => __('Filter'), 'class' => 'radius']) ?>
+                        </td>
+                        <?php
+                        echo $this->Form->end();
+                        ?>
+                    </tr>
+                    <tr>
+                        <th><?= $this->Paginator->sort('contact_id') ?></th>
+                        <th><?= $this->Paginator->sort('date') ?></th>
+                        <th><?= $this->Paginator->sort('user_id') ?></th>
+                        <th><?= $this->Paginator->sort('group_id') ?></th>
+                        <th><?= $this->Paginator->sort('event_id') ?></th>
+                        <th><?= $this->Paginator->sort('short_detail') ?></th>
+                        <th><?= $this->Paginator->sort('quantity') ?></th>
+                        <th class="actions"><?= __('Actions') ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <?= $this->element('history-add-form') ?>
+
+                    <?php foreach ($histories as $history) : ?>
                     <tr>
                         <td>
                             <?php
@@ -105,16 +105,16 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                                 $cName .= '<span class="legalname">' . $history->contact->legalname . '</span>';
                             }
                             echo $history->has('contact') ?
-                                    $this->Html->link(
-                                        $cName,
-                                        [
-                                            'controller' => 'Contacts',
-                                            'action' => 'view',
-                                            $history->contact->id
-                                        ],
-                                        ['escape' => false]
-                                    )
-                                    : '';
+                                $this->Html->link(
+                                    $cName,
+                                    [
+                                        'controller' => 'Contacts',
+                                        'action' => 'view',
+                                        $history->contact->id
+                                    ],
+                                    ['escape' => false]
+                                )
+                                : '';
                             ?>
                         </td>
                         <td><?= $history->date ?></td>
@@ -140,8 +140,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                                         ]
                                     )
                                 );
-                            }
-                            else{
+                            } else {
                                 echo h($history->quantity);
                             }
                             ?>
@@ -149,25 +148,26 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                         <td class="actions">
                             <?php
                                 //csak akkor szerkeszthető az esemény, ha nem system eseményről van szó
-                                if ( $history->event->id != 1)
-                                {
+                            if ($history->event->id != 1) {
                                     echo $this->Html->link(__('Edit'), ['action' => 'edit', $history->id]);
                                 }
                             ?>
                         </td>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
+                    <?php endforeach; ?>
+                </tbody>
             </table>
-            <div class="paginator">
-                <ul class="pagination centered">
-                <?php
+            <div class="paginator column">
+                <ul class="pagination centered row align-center">
+                    <?php
                     echo $this->Paginator->prev('< ' . __('previous'));
                     echo $this->Paginator->numbers();
                     echo $this->Paginator->next(__('next') . ' >');
-                ?>
+                    ?>
                 </ul>
-                <div class="pagination-counter"><?= $this->Paginator->counter() ?></div>
+                <div class="pagination-counter row align-center">
+                    <?= $this->Paginator->counter() ?>
+                </div>
             </div>
         </div>
     </div>
