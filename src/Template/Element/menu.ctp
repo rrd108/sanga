@@ -10,7 +10,7 @@
             <?php if ($this->request->session()->read('Auth.User.id')) : ?>
             <?php if ($this->request->session()->read('Auth.User.role') == 10) : ?>
             <li>
-                <?= __('Admin') ?>
+                <i class="fi-key"></i> <?= __('Admin') ?>
                 <ul>
                     <li>
                         <?= $this->Html->link(
@@ -109,7 +109,7 @@
             </li>
             <?php endif; ?>
             <li>
-                <?= __('CRM') ?>
+                <i class="fi-anchor"></i> <?= __('CRM') ?>
                 <ul>
                     <li>
                         <?= $this->Html->link(
@@ -186,7 +186,7 @@
                 </ul>
             </li>
             <li>
-                <?= __('Import') ?>
+                <i class="fi-arrow-right"></i> <?= __('Import') ?>
                 <ul>
                     <li>
                         <?= $this->Html->link(
@@ -227,7 +227,7 @@
                 </ul>
             </li>
             <li>
-                <?= __('Master data') ?>
+                <i class="fi-target"></i> <?= __('Master data') ?>
                 <ul>
                     <li>
                         <?= $this->Html->link(
@@ -294,7 +294,7 @@
                 </ul>
             </li>
             <li>
-                <?= $this->request->session()->read('Auth.User.realname') ?>
+                <i class="fi-widget"></i> <?= $this->request->session()->read('Auth.User.realname') ?>
                 <?php print $cell = $this->cell('Notification', [$this->request->session()->read('Auth.User.id')]); ?>
                 <ul>
                     <li>

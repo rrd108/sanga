@@ -6,7 +6,9 @@ $(function () {
     });
 
     $('#menu > ul > li').click(function () {
-        $(this).find('ul').toggle('350');
+        if ($(window).width() <= 540) {
+            $(this).find('ul').toggle('350');
+        }
     });
 
     $('ul.sf-menu').superfish({

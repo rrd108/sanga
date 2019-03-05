@@ -211,6 +211,19 @@ main {
         display: block;
     }
 
+    #menu ul li:hover ul {
+        background: #15848f;
+        display: block;
+        position: absolute;
+        width: 15rem;
+    }
+
+    #menu a {
+        padding: 1em;
+        border-bottom: 1px solid #068;
+        display: inline-block;
+    }
+
     .header-search input {
         margin: 0;
     }
