@@ -6,7 +6,6 @@
         </ul>
     </nav>
 </div>
-<!-- sidebar wrapper -->
 
 <div class="content-wrapper large-10 medium-10 small-12 columns">
     <div class="row">
