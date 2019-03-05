@@ -15,6 +15,10 @@ body {
     padding: 0;
 }
 
+tr {
+    display: flex;
+    flex-direction: column;
+}
 header {
     height: 50px;
     width: 100%;

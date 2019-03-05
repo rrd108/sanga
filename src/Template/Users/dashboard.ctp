@@ -1,15 +1,15 @@
 <div class="sidebar-wrapper columns large-2 medium-2 hide-for-small-only">
     <nav class="side-nav">
         <ul>
-            <li><?= $this->Html->link(__('Contacts'), ['controller' => 'Contacts']) ?></li>
-            <li><?= $this->Html->link(__('Histories'), ['controller' => 'Histories']) ?></li>
+            <li><?= $this->Html->link(__('<i class="fi-heart"></i> Contacts'), ['controller' => 'Contacts'], ['escape' => false]) ?></li>
+            <li><?= $this->Html->link(__('<i class="fi-flag"></i> Histories'), ['controller' => 'Histories'], ['escape' => false]) ?></li>
         </ul>
     </nav>
 </div>
 
-<div class="content-wrapper">
+<div class="content-wrapper large-10 medium-10 small-12 columns">
     <div class="row">
-        <div class="index large-12 columns">
+        <div id="dashboard" class="large-12 small-12 columns">
             <h1><?= __('Dashboard') ?></h1>
 
             <h2 class="cl"><?= $this->request->session()->read('Auth.User.realname') ?></h2>
