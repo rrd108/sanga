@@ -32,7 +32,7 @@
                     }
                     echo '</td>';
                     echo '<td>';
-                    echo $this->Form->button(__('Submit'), ['class' => 'radius']);
+                    echo $this->Form->button(__('Submit'), ['class' => 'button']);
                     echo '</td>';
                     ?>
                 </tr>
@@ -41,7 +41,7 @@
                 <tr>
                     <td><?= h($event->name) ?></td>
                     <td>
-                        <?= $event->has('user') ? $this->Html->link($event->user->name, ['controller' => 'Users', 'action' => 'view', $event->user->id]) : '' ?>
+                        <?= $event->has('user') ? $this->Html->link($event->user->name, ['controller' => 'Users', 'action' => 'view', $event->user->id], ['class' => 'label']) : '' ?>
                     </td>
                     <td class="actions">
                         <?php
