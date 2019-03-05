@@ -8,8 +8,6 @@
 
 <?= $this->Html->css(
     [
-        //'default',
-        //'main',
         'https://fonts.googleapis.com/css?family=Quicksand',
         'animate',  //for noty
         'foundation.min',
@@ -19,8 +17,9 @@
 ) ?>
 <?php
 echo $this->Html->script('jquery.js');    //this should be the very first js file
-echo $this->Html->script('jquery-ui.min.js');
 
+// TODO are these used somewhere?
+echo $this->Html->script('jquery-ui.min.js');
 //dropdown menu
 echo $this->Html->script('superfish.js');
 echo $this->Html->script('hoverIntent.js');
