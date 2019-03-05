@@ -35,5 +35,4 @@ echo $this->Html->script('sanga.js');
 
 echo $this->fetch('meta');
 echo $this->fetch('css');
-echo $this->fetch('script');
 ?>

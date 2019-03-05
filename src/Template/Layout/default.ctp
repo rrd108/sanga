@@ -11,12 +11,11 @@
     </header>
     <main id="container" class="row align-center">
         <?php if ($this->request->getSession()->read('Flash')) : ?>
-            <div class="column large-12"><?= $this->Flash->render() ?></div>
+        <div class="column large-12"><?= $this->Flash->render() ?></div>
         <?php endif; ?>
         <?= $this->fetch('content') ?>
     </main>
-    <footer>
-    </footer>
+    <footer></footer>
+    <?= $this->fetch('script') ?>
 </body>
-
 </html>
