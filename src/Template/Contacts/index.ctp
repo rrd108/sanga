@@ -28,17 +28,15 @@ echo $this->Html->script('sanga.contacts.index.js', ['block' => true]);
     echo $this->Form->end();
     ?>
 </div>
-<div class="row">
-    <div class="contacts index columns large-12">
-        <?php
-        echo $this->element(
-            'contacts_table',
-            [
-                'fields' => array_keys($this->request->data),
-                'contacts' => $contacts,
-                'settings' => true
-            ]
-        );
-        ?>
-    </div>
+<div class="contacts index columns large-12">
+    <?php
+    echo $this->element(
+        'contacts_table',
+        [
+            'fields' => array_keys($this->request->data),
+            'contacts' => $contacts,
+            'settings' => true
+        ]
+    );
+    ?>
 </div>
