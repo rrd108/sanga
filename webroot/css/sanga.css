@@ -173,6 +173,10 @@ main {
 }
 
 @media screen and (min-width: 539px) {
+    tr {
+        display: table-row;
+    }
+
     main.row {
         max-width: none;
     }

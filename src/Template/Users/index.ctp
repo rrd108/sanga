@@ -23,7 +23,7 @@
                     if ($user->responsible) {
                         $responsibilities = explode(', ', $user->responsible);
                         foreach ($responsibilities as $resp) {
-                            print '<span class="tag tag-viewable">' . h($resp) . '</span>';
+                            print '<span class="label viewable">' . h($resp) . '</span>';
                         }
                     }
                     ?>

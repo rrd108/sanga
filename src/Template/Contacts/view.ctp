@@ -155,7 +155,7 @@ echo $this->element('ajax-images');
                                             $myContact = true;
                                             $css = 'mine';
                                         }
-                                        echo '<span class="tag tag-' . $css . '">' . h($usr->name) . '</span> ';
+                                        echo '<span class="label ' . $css . '">' . h($usr->name) . '</span> ';
                                     }
                                 }
                                 ?>
@@ -449,7 +449,7 @@ echo $this->element('ajax-images');
                                     <?php
                                     foreach ($family as $familymember) {
                                         if ($familymember->id != $contact->id) {
-                                            echo '<span class="tag tag-viewable draggable">';
+                                            echo '<span class="label viewable draggable">';
                                             $name = '';
                                             $name .= $familymember->contactname ? $familymember->contactname : '';
                                             $name .= $familymember->legalname ? ' (' . $familymember->legalname . ')' : '';
@@ -604,7 +604,7 @@ echo $this->element('ajax-images');
                             <?php if (!empty($contact->skills)): ?>
                                 <?php
                                 foreach ($contact->skills as $skills):
-                                    echo '<span class="tag tag-shared removeable" data-id="' . $skills->id . '">';
+                                    echo '<span class="label shared removeable" data-id="' . $skills->id . '">';
                                     echo h($skills->name);
                                     echo '</span> ';
                                 endforeach;
@@ -653,8 +653,8 @@ echo $this->element('ajax-images');
                             }
 
                             ?>
-                            <span class="<?= $draggable ?> member tag tag-<?= $cssStyle ?>"
-                                  data-css="tag-<?= $cssStyle ?>"
+                            <span class="<?= $draggable ?> member label <?= $cssStyle ?>"
+                                  data-css="<?= $cssStyle ?>"
                                   data-id="<?= $groups->id ?>"><?= h($groups->name) ?></span>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -668,8 +668,8 @@ echo $this->element('ajax-images');
                             //$cGroups[] = $group->id;
                             $cssStyle = $group->shared ? 'shared' : (($group->admin_user_id == $this->request->session()->read('Auth.User.id')) ? 'mine' : 'viewable');
                             echo "\n" .
-                                '<span class="draggable notmember tag tag-default"
-                                    data-css="tag-' . $cssStyle . '"
+                                '<span class="draggable notmember label default"
+                                    data-css="' . $cssStyle . '"
                                     data-id="' . $group->id . '">' .
                                 h($group->name) .
                                 '</span>';

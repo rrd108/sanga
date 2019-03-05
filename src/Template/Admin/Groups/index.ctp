@@ -17,22 +17,20 @@
                 <td>
                     <?php
                     $css = ($group->admin_user_id == $this->request->session()->read('Auth.User.id')) ? 'mine' : 'viewable';
-                    print '<span class="tag tag-'.$css.'">' . $group->admin_user->name . '</span>';
+                    print '<span class="label '.$css.'">' . $group->admin_user->name . '</span>';
                     ?>
                 </td>
                 <td><?= ($group->shared)?'✔':'' ?></td>
                 <td>
                     <?php
-                    if($group->shared){
+                    if ($group->shared) {
                         $css = 'shared';
-                    }
-                    elseif($group->admin_user_id == $this->request->session()->read('Auth.User.id')){
+                    } elseif ($group->admin_user_id == $this->request->session()->read('Auth.User.id')) {
                         $css = 'mine';
-                    }
-                    else{
+                    } else {
                         $css = 'viewable';
                     }
-                    echo '<span class="tag tag-'.$css.'">' . $group->name . '</span>';
+                    echo '<span class="label '.$css.'">' . $group->name . '</span>';
                     ?>
                 </td>
                 <td><?= count($group->contacts) ?></td>
@@ -41,7 +39,7 @@
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $group->id]) ?>
                     <?php
-                    if($group->admin_user_id == $this->request->session()->read('Auth.User.id')){
+                    if ($group->admin_user_id == $this->request->session()->read('Auth.User.id')) {
                         //echo $this->Html->link(__('Edit'), ['action' => 'edit', $group->id]);
                         echo $this->Form->postLink(__('Delete'), ['action' => 'delete', $group->id], ['confirm' => __('Are you sure you want to delete # {0}?', $group->id)]);
                     }

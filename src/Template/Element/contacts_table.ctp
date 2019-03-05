@@ -98,12 +98,12 @@ function setGroupCss($group, $userId)
                         echo isset($contact->birth) ? h($contact->birth) : '';
                         break;
                     case 'contactsource_id' :
-                        echo $contact->has('contactsource') ? '<span class="tag tag-shared">' . $contact->contactsource->name . '</span>' : '' ;
+                        echo $contact->has('contactsource') ? '<span class="label shared">' . $contact->contactsource->name . '</span>' : '' ;
                         break;
                     case 'Contactsources.name' :
                         if ($contact->has('contactsource')) {
                             if ($contact->contactsource->name) {
-                                echo '<span class="tag tag-shared">' . $contact->contactsource->name . '</span>';
+                                echo '<span class="label shared">' . $contact->contactsource->name . '</span>';
                             }
                         }
                         break;
@@ -115,14 +115,14 @@ function setGroupCss($group, $userId)
                         if (isset($contact->users)){
                             foreach($contact->users as $user){
                                 $css = ($user->id == $this->request->session()->read('Auth.User.id')) ? 'mine' : 'viewable';
-                                print '<span class="tag tag-'.$css.'">' . $user->name . '</span>' . "\n";
+                                print '<span class="label '.$css.'">' . $user->name . '</span>' . "\n";
                             }
                         }
                         break;
                     case 'skills' :
                         if (isset($contact->skills)){
                             foreach($contact->skills as $skill){
-                                print '<span class="tag tag-shared">' . $skill->name . '</span>' . "\n";
+                                print '<span class="label shared">' . $skill->name . '</span>' . "\n";
                             }
                         }
                         break;
@@ -130,7 +130,7 @@ function setGroupCss($group, $userId)
                         if (isset($contact->groups)){
                             foreach ($contact->groups as $group){
                                 $css = setGroupCss($group, $this->request->session()->read('Auth.User.id'));
-                                print '<span class="tag tag-'.$css.'">' . $group->name . '</span>' . "\n";
+                                print '<span class="label '.$css.'">' . $group->name . '</span>' . "\n";
                             }
                         }
                         break;
@@ -140,7 +140,7 @@ function setGroupCss($group, $userId)
                             foreach ($groupNames as $groupName){
                                 //TODO $css = setGroupCss($groupName, $this->request->session()->read('Auth.User.id'));
                                 $css = 'shared';
-                                print '<span class="tag tag-'.$css.'">' . $groupName . '</span>' . "\n";
+                                print '<span class="label '.$css.'">' . $groupName . '</span>' . "\n";
                             }
                         }
                         break;

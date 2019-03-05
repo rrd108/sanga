@@ -27,7 +27,7 @@
                             'value' => $this->request->session()->read('Auth.User.id')
                         ]);
                 } else {
-                    echo '<span class="tag tag-mine">' . $this->request->session()->read('Auth.User.name') . '</span>';
+                    echo '<span class="label mine">' . $this->request->session()->read('Auth.User.name') . '</span>';
                 }
                 echo '</td>';
                 echo '<td>';
@@ -56,7 +56,7 @@
                     <td>
                         <?php
                         $css = ($group->admin_user_id == $this->request->session()->read('Auth.User.id')) ? 'mine' : 'viewable';
-                        print '<span class="tag tag-' . $css . '">' . $group->admin_user->name . '</span>';
+                        print '<span class="label ' . $css . '">' . $group->admin_user->name . '</span>';
                         ?>
                     </td>
                     <td><?= ($group->shared) ? '✔' : '' ?></td>
@@ -69,7 +69,7 @@
                         } else {
                             $css = 'viewable';
                         }
-                        echo '<span class="tag tag-' . $css . '">' . $group->name . '</span>';
+                        echo '<span class="label ' . $css . '">' . $group->name . '</span>';
                         ?>
                     </td>
                     <td><?= count($group->contacts) ?></td>

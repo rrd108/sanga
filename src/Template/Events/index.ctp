@@ -26,7 +26,7 @@
                                              ]);
                     }
                     else{
-                        echo '<span class="tag tag-mine">' . $this->request->session()->read('Auth.User.name') . '</span>';
+                        echo '<span class="label mine">' . $this->request->session()->read('Auth.User.name') . '</span>';
                     }
                 echo '</td>';
                 echo '<td>';

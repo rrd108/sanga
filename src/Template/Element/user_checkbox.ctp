@@ -12,8 +12,8 @@ foreach($users as $user){
             $disabled = 'disabled="disabled"';
         }
     }
-    
-    echo '<span class="tag tag-'.$css.'">';
+
+    echo '<span class="label '.$css.'">';
     echo '<input type="checkbox"
                 id="users-ids-'.$user->id.'"
                 '.$checked.'

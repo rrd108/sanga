@@ -114,16 +114,16 @@ function getDataName($name, $type)
                         ];
                     foreach ($filterFields as $field => $fLabel) {
                         if ( ! empty($selected) && in_array($field, $selected)) {
-                            $css = 'tag-viewable';
+                            $css = 'viewable';
                         } else {
-                            $css = 'tag-default';
+                            $css = 'default';
                         }
                         if (strpos($field, '.')) {
                             $dataName = $field;
                         } else {
                             $dataName = 'Contacts.'.$field;
                         }
-                        print '<span class="tag ' . $css . '" data-name="' . $dataName . '">';
+                        print '<span class="label ' . $css . '" data-name="' . $dataName . '">';
                             print $fLabel;
                         print '</span>';
                     }

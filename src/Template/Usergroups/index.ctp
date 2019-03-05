@@ -26,7 +26,7 @@
                         <td><?= h($usergroup->name) ?></td>
                         <td>
                             <?php
-                            print '<span class="tag tag-viewable">' .
+                            print '<span class="label viewable">' .
                                 $this->request->session()->read('Auth.User.name') .
                                 '</span>';
                             ?>
@@ -39,11 +39,11 @@
                             );
                             foreach ($usergroup->users as $user) {
 
-                                $usr = '<span class="tag ';
+                                $usr = '<span class="label ';
                                 if ($user->_joinData->joined) {
-                                    $usr .= 'tag-viewable"';
+                                    $usr .= 'viewable"';
                                 } else {
-                                    $usr .= 'tag-shared"';
+                                    $usr .= 'shared"';
                                 }
                                 $usr .= '>' . $user->realname . '</span>';
                                 $link = $this->Html->link(
@@ -133,7 +133,7 @@
                         <td><?= h($usergroup->name) ?></td>
                         <td>
                             <?php
-                            print '<span class="tag tag-shared">' .
+                            print '<span class="label shared">' .
                                 $usergroup->admin_user->name .
                                 '</span>';
                             ?>
@@ -142,11 +142,11 @@
                             <?php
                             foreach ($usergroup->users as $user) {
 
-                                $usr = '<span class="tag ';
+                                $usr = '<span class="label ';
                                 if ($user->id == $this->request->session()->read('Auth.User.id')) {
-                                    $usr .= 'tag-viewable"';
+                                    $usr .= 'viewable"';
                                 } else {
-                                    $usr .= 'tag-shared"';
+                                    $usr .= 'shared"';
                                 }
                                 $usr .= '>' . $user->realname . '</span>';
                                 print $usr;

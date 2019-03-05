@@ -27,7 +27,7 @@
                     <td>
                         <?php
                             foreach ($usergroup->users as $user) {
-                                print '<span class="tag tag-viewable">' . $user->name . '</span>';
+                                print '<span class="label viewable">' . $user->name . '</span>';
                             }
                         ?>
                     </td>
