@@ -1,29 +1,16 @@
 $(function() {
 
-	$(window).on('load', function(){
-		var isDisplay = $.localStorage('sanga.contactBlockPersonal');
-		$('fieldset#personal_data div').css('display', isDisplay);
-		if(isDisplay == 'none') {
-			$('fieldset#personal_data legend').addClass('block-closed');
-		}
-
-		var isDisplay = $.localStorage('sanga.contactBlockWorkplace');
-		$('fieldset#workplace_skills div').css('display', isDisplay);
-		if(isDisplay == 'none') {
-			$('fieldset#workplace_skills legend').addClass('block-closed');
+	$.each($.localStorage('sanga.contacs.add'), function (key, value) {
+		if (!value) {
+			$('#' + key).siblings().hide();
+            $('#' + key).addClass('grayed');
 		}
 	});
 
-	$('fieldset#personal_data legend').click(function () {
-		$('fieldset#personal_data legend').toggleClass('block-closed');
-		$('fieldset#personal_data div').toggle();
-		$.localStorage('sanga', {contactBlockPersonal : $('fieldset#personal_data div').css('display')});
-
-	});
-	$('fieldset#workplace_skills legend').click(function () {
-		$('fieldset#workplace_skills legend').toggleClass('block-closed');
-		$('fieldset#workplace_skills div').toggle();
-		$.localStorage('sanga', {contactBlockWorkplace : $('fieldset#workplace_skills div').css('display')});
+	$('fieldset legend').click(function () {
+		$(this).toggleClass('grayed');
+		$(this).siblings().toggle();
+		$.localStorage('sanga.contacs.add.' + $(this).attr('id'), $($(this).siblings()[0]).is(':visible'));
 	});
 
 	$('#birth').datepicker({
@@ -32,7 +19,7 @@ $(function() {
 		changeMonth: true,
 		changeYear: true
     });
-	
+
 	function addSkillSpanAndInput(event, ui){
 		var t = $(event.target);
 		var tag = "";
@@ -50,17 +37,17 @@ $(function() {
 		} else {
 			t.parent().append('<input type="hidden" name="skills[][name]" value="' + tag + '">');
 		}
-		
+
 		t.val("");
 		t.focus();
 	}
-	
+
 	$(document).on('click', '.removeable', function(){
 		//remove acidently added skills
 		$(this).next().remove();
 		$(this).remove();
 	});
-	
+
 	$('#skills')
 		.bind("keydown", function(event) {
 			// don't navigate away from the field on tab when selecting an item
@@ -89,13 +76,13 @@ $(function() {
 				return false;
 			}
 		});
-	
+
 	$('#xzip').autocomplete({
 		minLength : 2,
 		source : $.sanga.baseUrl + '/Zips/search',
 		focus: function() {
 			return false;
-		},		
+		},
 		select : function(event, ui) {	//when we select something from the dropdown
 			this.value = ui.item.label;
 			$('#zip-id').val(ui.item.value);
@@ -107,13 +94,13 @@ $(function() {
 			return false;
 		}
 	});
-	
+
 	$('#xworkplace-zip').autocomplete({
 		minLength : 2,
 		source : $.sanga.baseUrl + '/Zips/search',
 		focus: function() {
 			return false;
-		},		
+		},
 		select : function(event, ui) {	//when we select something from the dropdown
 			this.value = ui.item.label;
 			$('#workplace-zip-id').val(ui.item.value);
@@ -132,7 +119,7 @@ $(function() {
 		html: true,
 		focus: function() {
 			return false;
-		},		
+		},
 		select : function(event, ui) {	//when we select something from the dropdown
 			this.value = ui.item.label.replace(/(<([^>]+)>)/ig,'');		//remove highlight html code;
 			$('#family-member-id').val(ui.item.value);

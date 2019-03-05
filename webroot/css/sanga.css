@@ -20,6 +20,26 @@ tr {
     flex-direction: column;
 }
 
+fieldset {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1.25rem;
+    margin: 1.125rem 0;
+}
+fieldset legend {
+    cursor: pointer;
+    background: url(../img/arrow-up.png) 0 4px no-repeat;
+    padding-left: 1.4rem;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+label {
+    font-size: 1rem;
+}
+
 header {
     height: 50px;
     width: 100%;
@@ -104,6 +124,7 @@ nav.primary {
 
 main {
     padding-top: 50px;
+    font-size: 1.2rem;
 }
 
 #loginform {
@@ -150,6 +171,11 @@ main {
 .dashstat h6 {
     font-size: 4rem;
     margin: 0;
+}
+
+#contact-add-group .checkbox {
+    float: left;
+    padding-right: 3rem;
 }
 
 .message-box, .message {
@@ -207,6 +233,9 @@ main {
 .default { background: #777777; }
 .danger { background: #D9534F; }
 
+.grayed {
+    color: #ccc;
+}
 
 td a i {
     padding: 0 1em;
