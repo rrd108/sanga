@@ -7,8 +7,8 @@
     </div>
     <div id="menu">
         <ul>
-            <?php if ($this->request->session()->read('Auth.User.id')) : ?>
-            <?php if ($this->request->session()->read('Auth.User.role') == 10) : ?>
+            <?php if ($this->request->getSession()->read('Auth.User.id')) : ?>
+            <?php if ($this->request->getSession()->read('Auth.User.role') == 10) : ?>
             <li>
                 <i class="fi-key"></i> <?= __('Admin') ?>
                 <ul>
@@ -253,7 +253,7 @@
                             ['escape' => false]
                         ) ?>
                     </li>
-                    <?php if (in_array($this->request->session()->read('Auth.User.role'), [9, 10])) : ?>
+                    <?php if (in_array($this->request->getSession()->read('Auth.User.role'), [9, 10])) : ?>
                     <li>
                         <?= $this->Html->link(
                             '<i class="fi-die-two"></i> ' . __('Contact sources'),
@@ -294,8 +294,8 @@
                 </ul>
             </li>
             <li>
-                <i class="fi-widget"></i> <?= $this->request->session()->read('Auth.User.realname') ?>
-                <?php print $cell = $this->cell('Notification', [$this->request->session()->read('Auth.User.id')]); ?>
+                <i class="fi-widget"></i> <?= $this->request->getSession()->read('Auth.User.realname') ?>
+                <?php print $cell = $this->cell('Notification', [$this->request->getSession()->read('Auth.User.id')]); ?>
                 <ul>
                     <li>
                         <?= $this->Html->link(
@@ -333,7 +333,7 @@
                             ['escape' => false, 'escapeTitle' => false]
                         ) ?>
                     </li>
-                    <?php if ($this->request->session()->read('switchUser')) : ?>
+                    <?php if ($this->request->getSession()->read('switchUser')) : ?>
                     <li>
                         <?= $this->Html->link(
                             '<i class="fi-key"></i> ' . __('Back to admin'),
@@ -341,7 +341,7 @@
                                 'plugin' => null,
                                 'prefix' => 'admin',
                                 'controller' => 'Users',
-                                'action' => 'personalize/' . $this->request->session()->read('Auth.User.id')
+                                'action' => 'personalize/' . $this->request->getSession()->read('Auth.User.id')
                             ],
                             ['escape' => false]
                         ) ?>
@@ -363,7 +363,7 @@
                 <?php endif; ?>
             </li>
 
-            <?php if ($this->request->session()->read('Auth.User.id')) : ?>
+            <?php if ($this->request->getSession()->read('Auth.User.id')) : ?>
             <div class="header-search">
                 <?= $this->Form->create(
                     null,
@@ -377,7 +377,7 @@
                         ]
                     ]
                 ) ?>
-                <?= $this->Form->input(
+                <?= $this->Form->control(
                     'quickterm',
                     [
                         'label' => false,

@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-use Cake\I18n\Time;
 use Cake\Utility\Hash;
 
 /**
@@ -29,41 +28,32 @@ class UsergroupsController extends AppController
     {
         $owned = $this->Usergroups->find(
             'ownedBy',
-            [
-                'User.id' => $this->Auth->user('id'),
-            ]
+            ['User.id' => $this->Auth->user('id')]
         );
 
         if ($filter == 'month') {
             $filter = date('Y-m') . '-01';
-        } elseif ($filter == 'week') {
-            $filter = date('Y-m-d', strtotime('-1 weeks'));
-        } else {
-            $filter = '1900-01-01';
         }
-        $query = $this->Usergroups->Users->find()
-            ->where(
-                [
-                    'Users.id IN' => Hash::extract($owned->toArray(), '{n}.users.{n}.id')
-                ]
-            );
-        $query->select(['Users.id', 'total_contacts' => $query->func()->count('Contacts.id'), 'total_histories' => $query->func()->count('Histories.id')])
-            ->where(['Contacts.created >=' => $filter])
-            ->orWhere(['Histories.created >=' => $filter])
-            ->leftJoinWith('Contacts')
-            ->leftJoinWith('Histories')
-            ->group(['Users.id']);
-        $totalsByUsers = Hash::combine($query->toArray(), '{n}.id', '{n}');
-        $this->set(compact('totalsByUsers'));
+        if ($filter == 'week') {
+            $filter = date('Y-m-d', strtotime('-1 weeks'));
+        }
+
+        $owned->select(['Usergroups.id', 'Usergroups.name', 'Users.name', 'total_contacts' => $owned->func()->count('Contacts.id'), 'total_histories' => $owned->func()->count('Histories.id')]);
+
+        if ($filter) {
+            $owned->where(['Histories.created >=' => $filter]);
+        }
+
+        $owned->leftJoinWith('Users.Contacts.Histories')
+            ->group(['Usergroups.id', 'Users.id']);
+
+        $this->set(compact('owned'));
 
         $memberships = $this->Usergroups->find(
             'memberships',
-            [
-                'User.id' => $this->Auth->user('id')
-            ]
+            ['User.id' => $this->Auth->user('id')]
         );
 
-        $this->set('ownedBy', $owned);
         $this->set('memberships', $memberships);
     }
 
