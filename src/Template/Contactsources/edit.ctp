@@ -1,4 +1,4 @@
-<div class="sidebar-wrapper">
+<div class="sidebar-wrapper columns large-2 medium-2 hide-for-small-only">
     <nav class="side-nav">
         <ul>
             <li><?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $contactsource->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contactsource->id)]) ?></li>
@@ -10,7 +10,7 @@
 </div>
 <!-- sidebar wrapper -->
 
-<div class="content-wrapper">
+<div class="content-wrapper large-10 medium-10 small-12 columns">
     <div class="row">
         <div class="contactsources form large-10 medium-9 columns">
         <?= $this->Form->create($contactsource) ?>

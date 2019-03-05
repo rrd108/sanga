@@ -1,4 +1,4 @@
-<div class="sidebar-wrapper">
+<div class="sidebar-wrapper columns large-2 medium-2 hide-for-small-only">
     <nav class="side-nav">
         <ul>
             <li><?= $this->Html->link(__('Edit Family'), ['action' => 'edit', $family->id]) ?> </li>
@@ -10,7 +10,7 @@
 </div>
 <!-- sidebar wrapper -->
 
-<div class="content-wrapper">
+<div class="content-wrapper large-10 medium-10 small-12 columns">
     <div class="row">
         <div class="families view large-10 medium-9 columns">
             <h2><?= h($family->id) ?></h2>

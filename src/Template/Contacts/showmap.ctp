@@ -6,7 +6,7 @@ echo $this->Html->script('gmap3.min.js', ['block' => true]);
 //debug($result);
 ?>
 
-<div class="sidebar-wrapper">
+<div class="sidebar-wrapper columns large-2 medium-2 hide-for-small-only">
     <h6><?= __('Filter') ?></h6>
     <nav class="side-nav">
         <ul>
@@ -18,7 +18,7 @@ echo $this->Html->script('gmap3.min.js', ['block' => true]);
 </div>
 
 
-<div class="content-wrapper">
+<div class="content-wrapper large-10 medium-10 small-12 columns">
 <div class="row">
     <h1><?= __('{0} contacts on map', count($result)) ?></h1>
 </div>

@@ -1,7 +1,5 @@
-<?php
-print $this->Html->script('sanga.contacts.import.js', ['block' => true]);
-?>
-<div class="sidebar-wrapper">
+<?= $this->Html->script('sanga.contacts.import.js', ['block' => true]); ?>
+<div class="sidebar-wrapper columns large-2 medium-2 hide-for-small-only">
     <nav class="side-nav">
         <ul>
         <li><?= $this->Html->link(__('Sample import file'), $this->Html->webroot . '/files/contact_csv-import.xlsx') ?></li>
@@ -10,7 +8,7 @@ print $this->Html->script('sanga.contacts.import.js', ['block' => true]);
 </div>
 <!-- sidebar wrapper -->
 
-<div class="content-wrapper">
+<div class="content-wrapper large-10 medium-10 small-12 columns">
     <div class="row">
         <h1><?= __('Contact Import') ?></h1>
         <div class="imports index large-10 medium-9 columns">
@@ -22,7 +20,7 @@ print $this->Html->script('sanga.contacts.import.js', ['block' => true]);
             ?>
         </div>
     </div>
-    
+
     <?php if (isset($imported) && $imported) : ?>
     <div class="row">
         <h2><?= __('Imported') ?></h2>

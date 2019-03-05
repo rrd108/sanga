@@ -36,7 +36,7 @@ if (isset($contact)) :
 </div>
 
 <div id="tabs">
-    <div class="sidebar-wrapper">
+    <div class="sidebar-wrapper columns large-2 medium-2 hide-for-small-only">
         <nav class="side-nav">
             <ul class="side-nav">
                 <li id="tabnav-1"><a href="#tabs-1"><?= __('Personal data') ?></a></li>
@@ -51,7 +51,7 @@ if (isset($contact)) :
             </ul>
         </nav>
     </div>
-    <div class="content-wrapper">
+    <div class="content-wrapper large-10 medium-10 small-12 columns">
         <div class="row">
             <h2>
                 <?= h($contact->contactname) ? h($contact->contactname) : h($contact->legalname) ?>

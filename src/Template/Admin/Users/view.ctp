@@ -1,7 +1,7 @@
 <?php
 echo $this->Html->script('sanga.users.view.js', ['block' => true]);
 ?>
-<div class="sidebar-wrapper">
+<div class="sidebar-wrapper columns large-2 medium-2 hide-for-small-only">
     <nav class="side-nav">
         <ul>
             <li><?php //echo $this->Html->link(__('List Users'), ['action' => 'index']) ?> </li>
@@ -10,7 +10,7 @@ echo $this->Html->script('sanga.users.view.js', ['block' => true]);
 </div>
 <!-- sidebar wrapper -->
 
-<div class="content-wrapper">
+<div class="content-wrapper large-10 medium-10 small-12 columns">
     <div class="row"><div class="large-10 medium-9 columns">
         <?php
         echo $this->Html->link($this->Html->image('edit.png'),

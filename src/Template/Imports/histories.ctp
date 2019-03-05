@@ -2,7 +2,7 @@
 print $this->Html->script('sanga.autocompleteBuilder.js', ['block' => true]);
 print $this->Html->script('sanga.histories.import.js', ['block' => true]);
 ?>
-<div class="sidebar-wrapper">
+<div class="sidebar-wrapper columns large-2 medium-2 hide-for-small-only">
     <nav class="side-nav">
         <ul>
         <li><?= $this->Html->link(__('Sample import file'), $this->Html->webroot . '/files/histories_csv-import.xlsx') ?></li>
@@ -11,7 +11,7 @@ print $this->Html->script('sanga.histories.import.js', ['block' => true]);
 </div>
 <!-- sidebar wrapper -->
 
-<div class="content-wrapper">
+<div class="content-wrapper large-10 medium-10 small-12 columns">
     <div class="row">
         <h1><?= __('Histories Import') ?></h1>
         <div class="imports index large-10 medium-9 columns">
@@ -82,4 +82,3 @@ print $this->Html->script('sanga.histories.import.js', ['block' => true]);
         </div>
     <?php endif; ?>
 </div>
-

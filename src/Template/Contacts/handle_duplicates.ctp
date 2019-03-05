@@ -1,7 +1,7 @@
 <?php
 print $this->Html->script('sanga.contacts.handle_duplicates.js', ['block' => true]);
 ?>
-<div class="content-wrapper">
+<div class="content-wrapper large-10 medium-10 small-12 columns">
     <div class="row">
         <h1><?= __('Handle Duplicates') ?></h1>
         <?php
@@ -14,10 +14,10 @@ print $this->Html->script('sanga.contacts.handle_duplicates.js', ['block' => tru
         else :
             print '<h3>' . __('Steps for handling duplicates') . '</h3>';
             print '<ol>';
-            print '<li>' . __('One block shows contacts seemed to be duplicates. If any of them is not a duplicate 
+            print '<li>' . __('One block shows contacts seemed to be duplicates. If any of them is not a duplicate
                 remove them by clicking the non duplicate button at the top.') . '</li>';
             print '<li>' . __('After this you can select which values are correct by clicking on them.') . '</li>';
-            print '<li>' . __('When you are ready with a block click Merge. This will save the selected values 
+            print '<li>' . __('When you are ready with a block click Merge. This will save the selected values
                 for the user, and merge group memberships, skills, histories, etc from the duplicated contacts.') . '</li>';
             print '</ol>';
             print '<p>' . __('Be careful after mergeing there is no way to cancel what you did.') . '</p>';
