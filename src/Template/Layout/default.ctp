@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<head class="row">
+<head>
     <?php echo $this->element('head'); ?>
 </head>
 
