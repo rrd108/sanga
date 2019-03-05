@@ -15,7 +15,7 @@
             <?php
             echo $this->Form->create(null, ['type' => 'file']);
             echo $this->Form->input('file', ['type' => 'file']);
-            echo $this->Form->submit();
+            echo $this->Form->submit(__('Submit'), ['class' => 'button']);
             echo $this->Form->end();
             ?>
         </div>
