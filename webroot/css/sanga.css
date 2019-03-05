@@ -201,6 +201,13 @@ main {
     color: #eee;
 }
 
+.mine { background: #428BCA; }
+.viewable { background: #5CB85C; }
+.shared { background: #5BC0DE; }
+.default { background: #777777; }
+.danger { background: #D9534F; }
+
+
 td a i {
     padding: 0 1em;
     font-size: 1.4rem;
