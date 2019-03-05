@@ -1,14 +1,14 @@
-<div class="main-login">
-    <div class="row">
-    <div class="users form large-4 medium-6 small-10 small-centered column" id="loginform">
-        <?php $this->assign('title',  __('Login')); ?>
+<?php $this->assign('title', __('Login')); ?>
+
+<div class="row align-center">
+    <div class="large-6 medium-6 small-10 column" id="loginform">
         <?= $this->Flash->render('auth') ?>
-        <div class="row">
-            <div class="main-login-logo column large-6 small-centered">
+        <div class="row align-center">
+            <div class="column large-6">
                 <?php echo $this->Html->image('logo-big.png', ['alt' => 'Sanga logo']) ?>
             </div>
         </div>
-        <?php if ( ! isset($mailsent)) : ?>
+        <?php if (! isset($mailsent)) : ?>
         <?= $this->Form->create(
                 'Users',
                 [
@@ -29,18 +29,17 @@
                 <?= $this->Form->control('password') ?>
             </div>
         </div>
-        <div class="row">
-            <div class="column large-12">
-                <?= $this->Form->button(__('Login'), ['class' => 'radius']); ?>
-                <?= $this->Form->button(
-                    __('Password Reminder'),
-                    [
-                        'class' => 'radius',
-                        'name' => 'passreminder',
-                        'value' => 'remindme'
-                    ]
-                ); ?>
-            </div>
+        <div class="row align-center">
+            <?= $this->Form->button(__('Login'), ['class' => 'button']); ?>
+        </div>
+        <div class="row align-center">
+            <?= $this->Form->button(
+                __('Password Reminder'),
+                [
+                    'name' => 'passreminder',
+                    'value' => 'remindme'
+                ]
+            ); ?>
         </div>
         <?= $this->Form->end() ?>
         <?php endif; ?>
