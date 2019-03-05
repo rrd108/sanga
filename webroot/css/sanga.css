@@ -121,6 +121,7 @@ main {
 }
 .sidebar-wrapper ul {
     list-style-type: none;
+    width: 100%;
 }
 .sidebar-wrapper a {
     color: #eee;
