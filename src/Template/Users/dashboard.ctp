@@ -1,4 +1,4 @@
-<div class="sidebar-wrapper">
+<div class="sidebar-wrapper columns large-2 medium-2 hide-for-small-only">
     <nav class="side-nav">
         <ul>
             <li><?= $this->Html->link(__('Contacts'), ['controller' => 'Contacts']) ?></li>
@@ -6,7 +6,6 @@
         </ul>
     </nav>
 </div>
-<!-- sidebar wrapper -->
 
 <div class="content-wrapper">
     <div class="row">
@@ -40,13 +39,13 @@
             </div>
 
             <?php if ($dash['usergroups']->count()) : ?>
-                <h2 class="cl"><?= __('Last week activity in your user groups') ?></h2>
-                <?php foreach ($dash['usergroups'] as $userInGroups) : ?>
-                    <div class="dashstat">
-                        <h6><?= $this->Number->format(count($userInGroups->histories)) ?></h6>
-                        <p><?= h($userInGroups->name) ?></p>
-                    </div>
-                <?php endforeach; ?>
+            <h2 class="cl"><?= __('Last week activity in your user groups') ?></h2>
+            <?php foreach ($dash['usergroups'] as $userInGroups) : ?>
+            <div class="dashstat">
+                <h6><?= $this->Number->format(count($userInGroups->histories)) ?></h6>
+                <p><?= h($userInGroups->name) ?></p>
+            </div>
+            <?php endforeach; ?>
             <?php endif; ?>
 
             <h2 class="cl"><?= __('Total') ?></h2>
