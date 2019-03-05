@@ -179,6 +179,8 @@ main {
     padding-right: 3rem;
 }
 
+.ed input {margin: 0;}
+
 .message-box, .message {
     border-style: solid;
     border-width: 1px;
@@ -238,6 +240,11 @@ main {
     color: #ccc;
 }
 
+#editForm i {
+    color: #2ba6cb;
+    cursor: pointer;
+}
+
 td a i {
     padding: 0 1em;
     font-size: 1.4rem;
@@ -261,7 +268,7 @@ td a i {
         max-width: 20%;
     }
 
-    #hamburger {
+    #hamburger, .hidden {
         display: none;
     }
 

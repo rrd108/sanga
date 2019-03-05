@@ -1,24 +1,17 @@
 $(function() {
-	
+
 	$('.editbox').hide();
-	
+
 	$('#editForm').submit(function(event){
 		event.preventDefault();
 	});
 
-	$('p.ed').hover(
-		function(){		//handlerIn
-			if ($(this).find('#ajaxsave').length) {	//if ajaxsave is there we do not needmeditlink
-				$('#editlink').hide();
-			} else {
-				$(this).append($('#editlink').show());
-			}
-		}/*,
-		function(){		//handlerOut
-			$('#editlink').hide();
-		}*/
-	);
-	
+	$('p.ed').hover(function () {
+		if ($('#ajaxsave').is(':hidden')) {
+			$(this).parent().parent().append($('#editlink').show());
+		}
+	});
+
 	$('#editlink').click(function(event){
 		//if there is any other open input we should close it
 		$('.editbox').hide();
@@ -29,19 +22,21 @@ $(function() {
 		$('#ajaxsave').hide();
 		event.preventDefault();
 	});
-	
-	$('.editbox').keypress(function(event){
+
+	$('.editbox').keyup(function(event){
 		//hide editlink and show ajaxsave
 		$('#editlink').hide();
-		$(this).parent().append($('#ajaxsave').show());
-		if (event.keyCode == 27) {		// escape key maps to keycode `27`
+		$(this).parent().parent().parent().append($('#ajaxsave').show());
+		if (event.key == 'Enter') {
+			$('#ajaxsave').click();
+		}
+		if (event.key == 'Escape') {
 			$(this).hide();
 			$(this).parent().find('.dta').show();
 			$('#ajaxsave').hide();
-		}   
+		}
 
 	});
-
 
 	$('#ajaxsave').click(function(event){
 		var theSpan, newData;
@@ -103,5 +98,5 @@ $(function() {
 		editbox.hide();
 		theSpan.show();
 	});
-	
+
 });
