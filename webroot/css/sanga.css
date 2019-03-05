@@ -196,6 +196,19 @@ main {
     padding: 0 1em 0 0;
 }
 
+.paginator {
+    display: block;
+    position: relative;
+    width: 100%;
+}
+.paginator .pagination-counter {
+    font-size: 0.875rem;
+    color: #b3b3b3;
+    display: block;
+    text-align: center;
+    transform: translateY(-50%);
+}
+
 @media screen and (min-width: 62.5em) {
     tr {
         display: table-row;
@@ -259,7 +272,7 @@ main {
     .dashstat:nth-child(odd) {
         clear: none;
     }
-    #dashboard div:nth-of-type(3n+1) {
+    .dashgroup div:nth-of-type(3n+1) {
         clear: both;
     }
     .dashstat {
