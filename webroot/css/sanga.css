@@ -19,6 +19,7 @@ tr {
     display: flex;
     flex-direction: column;
 }
+
 header {
     height: 50px;
     width: 100%;
@@ -72,7 +73,7 @@ nav.primary {
     background: #15848f;
     position: absolute;
     right: 0;
-    width: 50%;
+    width: 70%;
     transform-origin: top right;
     transition: opacity 350ms ease-in-out, transform 350ms ease-in-out;
     padding-left: 1em;
@@ -98,7 +99,7 @@ nav.primary {
     padding: 0.3em 1em;
 }
 #menu a:hover{
-    background-color: #155e8c;
+    background-color: #068;
 }
 
 main {
@@ -113,7 +114,23 @@ main {
 }
 
 .sidebar-wrapper {
+    font-size: 1.2rem;
     background: #15848f;
+    color: #eee;
+    padding: 0;
+}
+.sidebar-wrapper ul {
+    list-style-type: none;
+}
+.sidebar-wrapper a {
+    color: #eee;
+    padding: 1em;
+    border-bottom: 1px solid #068;
+    display: inline-block;
+    width: 100%;
+}
+.sidebar-wrapper a:hover {
+    background: #068;
 }
 
 .message-box, .message {
@@ -126,6 +143,25 @@ main {
     width: 100%;
     border-radius: 5px;
 }
+
+#dashboard h2 {
+    clear: both;
+}
+.dashstat:nth-child(odd) {
+    clear: both;
+}
+.dashstat {
+    width: 40%;
+    float: left;
+    text-align: center;
+    margin: 1rem;
+    font-size: 1.5rem;
+}
+.dashstat h6 {
+    font-size: 4rem;
+    margin: 0;
+}
+
 .message.error, .error-message {
     background: #ffd6d0;
     border-color: #ff4f37;
@@ -134,4 +170,48 @@ main {
 .message.error::before, .error-message::before {
     content: "✖";
     padding: 0px 1em 0px 0px;
+}
+
+@media screen and (min-width: 539px) {
+    main.row {
+        max-width: none;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .main-logo {
+        max-width: 20%;
+    }
+
+    #hamburger {
+        display: none;
+    }
+
+    #menu {
+        transform: none;
+        width: 100%;
+        opacity: 1;
+        display: flex;
+        position: static;
+    }
+
+    #menu ul {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+    #menu li {
+        display: block;
+    }
+
+    .header-search input {
+        margin: 0;
+    }
 }
