@@ -1,11 +1,6 @@
-<?php
-print $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]);
+<?= $this->Html->script('sanga.contacts.searchquery.js', ['block' => true]) ?>
 
-/**
- * @param $name
- * @param $type
- * @return mixed
- */
+<?php
 function getDataName($name, $type)
 {
     $dataName = preg_replace('/_/', '.', str_replace($type . '_', '', $name), 1);
@@ -19,37 +14,29 @@ function getDataName($name, $type)
 
 <div class="sidebar-wrapper columns large-2 medium-2 hide-for-small-only">
     <nav class="side-nav">
-        <ul>
-            <li><?= $this->Html->link(__('Save Query'), [], ['id' => 'savequery']) ?></li>
-        </ul>
-        <h6><?= __('Saved Queries') ?></h6>
         <ul id="savedqueries">
-            <?php
-            if (isset($savedQueries)) {
-                foreach ($savedQueries as $q) {
-                    parse_str($q->value, $savedQuery);
-                    print '<li>';
-                        print $this->Html->link($savedQuery['qName'], ['action' => 'searchquery', $q->id]);
-                    print '</li>';
-                }
-            }
-
-            ?>
+            <li><?= $this->Html->link(__('Save Query'), [], ['id' => 'savequery']) ?></li>
+            <?php if (isset($savedQueries)) : ?>
+                <?php foreach ($savedQueries as $q) : ?>
+                    <?php parse_str($q->value, $savedQuery) ?>
+                        <li>
+                            <?= $this->Html->link($savedQuery['qName'], ['action' => 'searchquery', $q->id]) ?>
+                        </li>
+                <?php endforeach ?>
+            <?php endif; ?>
         </ul>
     </nav>
     <div id="dialog">
-        <?php
-        print $this->Form->create(null, ['id' => 'querySaveForm']);
-        print $this->Form->input(
+        <?= $this->Form->create(null, ['id' => 'querySaveForm']) ?>
+        <?= $this->Form->input(
             'queryname',
             [
                 'class' => 'radius',
                  'type' => 'text'
             ]
-        );
-        print $this->Form->button(__('Save'), ['class' => 'radius']);
-        print $this->Form->end();
-        ?>
+        ) ?>
+        <?= $this->Form->button(__('Save'), ['class' => 'radius']) ?>
+        <?= $this->Form->end() ?>
     </div>
 </div>
 
@@ -69,7 +56,6 @@ function getDataName($name, $type)
                             'title' => __('Click to delete')
                         ]
                     );
-
                 }
                 ?>
             </h1>
@@ -112,7 +98,7 @@ function getDataName($name, $type)
                         'Users.name' => __('User'),
                         ];
                     foreach ($filterFields as $field => $fLabel) {
-                        if ( ! empty($selected) && in_array($field, $selected)) {
+                        if (! empty($selected) && in_array($field, $selected)) {
                             $css = 'viewable';
                         } else {
                             $css = 'default';
@@ -123,21 +109,21 @@ function getDataName($name, $type)
                             $dataName = 'Contacts.'.$field;
                         }
                         print '<span class="label ' . $css . '" data-name="' . $dataName . '">';
-                            print $fLabel;
+                        print $fLabel;
                         print '</span>';
                     }
                 print '</div>';
 
                 print '<div class="cl small">';
                 print '<h2>' . __('Where') . '</h2>';
-                print '<div id="where">';
+                print '<div id="query-where">';
 
                 if (isset($queryArray)) {
                     foreach ($queryArray as $name => $values) {
-                        if ( ! is_array($values)) {        //connect
+                        if (! is_array($values)) {        //connect
                             if (strpos($name, 'connect_') === 0) {
                                 $dataName = getDataName($name, 'connect');
-                                if (substr($values, 0, 1)  == '&' || $values == ''){
+                                if (substr($values, 0, 1)  == '&' || $values == '') {
                                     $img = 'and.png';
                                     $title = '*' . __('and') . '* ' . __('Click to change');
                                 } else {
@@ -217,26 +203,26 @@ function getDataName($name, $type)
                     }
 
                     if (isset($imgPlus)) {
-                        foreach($imgPlus as $dataName => $x) {
+                        foreach ($imgPlus as $dataName => $x) {
                             print '<div data-name="' . $dataName . '">';
-                                if (isset($connect[$dataName])) {
-                                    print $connect[$dataName];
-                                }
-                                print $imgPlus[$dataName];
-                                print $label[$dataName];
-                                foreach ($selects[$dataName] as $i => $select) {
-                                    print $select;
-                                    print $inputs[$dataName][$i];
-                                }
+                            if (isset($connect[$dataName])) {
+                                print $connect[$dataName];
+                            }
+                            print $imgPlus[$dataName];
+                            print $label[$dataName];
+                            foreach ($selects[$dataName] as $i => $select) {
+                                print $select;
+                                print $inputs[$dataName][$i];
+                            }
                             print '</div>';
                         }
                     }
                 }
             print '</div>';
-            print '<div class="cl">';
-            print $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'radius']);
+            print '<div>';
+            print $this->Form->button(__('Search'), ['id' => 'sButton', 'class' => 'button']);
             print '&nbsp;';
-            print $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'radius']);
+            print $this->Form->button(__('Save as CSV'), ['id' => 'csvButton', 'class' => 'button']);
             print '</div>';
 
             print '</div>';
@@ -248,7 +234,7 @@ function getDataName($name, $type)
         <div class="contacts form large-12 medium-9 columns">
             <?php
             //debug($contacts);
-            if (isset($contacts)){
+            if (isset($contacts)) {
                 print '<h2>' . __('Search results') . '</h2>';
 
                 print $this->element(

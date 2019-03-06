@@ -13,7 +13,7 @@
             <h1><?= __('Dashboard') ?></h1>
 
             <div class="dashgroup">
-                <h2 class="cl"><?= $this->request->session()->read('Auth.User.realname') ?></h2>
+                <h2><?= $this->request->session()->read('Auth.User.realname') ?></h2>
                 <div class="dashstat">
                     <h6><?= $this->Number->format($dash['contacts']['own'], ['places' => 0]) ?></h6>
                     <p><?= __('Contacts') ?></p>
@@ -42,7 +42,7 @@
 
             <?php if ($dash['usergroups']->count()) : ?>
             <div class="dashgroup">
-                <h2 class="cl"><?= __('Last week activity in your user groups') ?></h2>
+                <h2><?= __('Last week activity in your user groups') ?></h2>
                 <?php foreach ($dash['usergroups'] as $userInGroups) : ?>
                 <div class="dashstat">
                     <h6><?= $this->Number->format(count($userInGroups->histories)) ?></h6>
@@ -53,7 +53,7 @@
             <?php endif; ?>
 
             <div class="dashgroup">
-                <h2 class="cl"><?= __('Total') ?></h2>
+                <h2><?= __('Total') ?></h2>
                 <div class="dashstat">
                     <h6><?= $this->Number->format($dash['contacts']['total'], ['places' => 0]) ?></h6>
                     <p><?= __('Contacts') ?></p>

@@ -40,12 +40,12 @@ $(function() {
 		return input;
 	};
 
-	addedDivs = $('.tag-viewable').length;
+	addedDivs = $('.viewable').length;
 
 	$('#query-select-box span').click(function(event){
-		if ($(this).hasClass('tag-default')) {
-			$(this).removeClass('tag-default');
-			$(this).addClass('tag-viewable');
+		if ($(this).hasClass('default')) {
+			$(this).removeClass('default');
+			$(this).addClass('viewable');
 
 			var imgPlus, imgAndOr, connectAndOr, label, select, input;
 			imgAndOr = connectAndOr = '';
@@ -70,7 +70,7 @@ $(function() {
 			'</label>';
 			select = createSelect($(this).data('name'), false);
 			input = createInput($(this).data('name'));
-			$('#where').append('<div data-name="' + $(this).data('name') + '">' +
+			$('#query-where').append('<div data-name="' + $(this).data('name') + '">' +
 				imgAndOr +
 				connectAndOr +
 				imgPlus +
@@ -80,13 +80,13 @@ $(function() {
 			'</div>');
 			addedDivs++;
 		} else {
-			$(this).removeClass('tag-viewable');
-			$(this).addClass('tag-default');
+			$(this).removeClass('viewable');
+			$(this).addClass('default');
 			$('div[data-name="' + $(this).data('name') + '"]').remove();
 		}
 	});
 
-	$('#where').on('click', 'img', function(event){
+	$('#query-where').on('click', 'img', function(event){
 		if ($(this).data('name')) {	//this is the "plus" img
 			var img, selet, input;
 			select = createSelect($(this).data('name'), true);

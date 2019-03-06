@@ -241,10 +241,10 @@ main {
 .ui-autocomplete li a { color: #ffffff; display: block; padding: 0.3rem 1rem; width: 100%; }
 .ui-autocomplete li a:hover, .ui-state-focus { background: #068; }
 
+.default { background: #999; }
 .mine { background: #428BCA; }
 .viewable { background: #5CB85C; }
 .shared { background: #5BC0DE; }
-.default { background: #777777; }
 .danger { background: #D9534F; }
 
 .grayed {
@@ -259,6 +259,21 @@ main {
 td a i {
     padding: 0 1em;
     font-size: 1.4rem;
+}
+
+#query-select-box span {
+    font-size: 1rem;
+    width: 15%;
+    margin: 0.5rem;
+    cursor: pointer;
+}
+#query-where > div {
+    width: 30%;
+    float: left;
+    margin: 0.5rem;
+}
+#query-where + div {
+    clear: both;
 }
 
 @media screen and (min-width: 62.5em) {
