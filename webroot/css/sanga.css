@@ -117,13 +117,13 @@ nav.primary {
     color: #eee;
     width: 100%;
     display: inline-block;
-    padding: 0.3em 1em;
-    border-left: .25em solid #068;
+    padding: 0.3rem 1rem;
+    border-left: .25rem solid #068;
     transition: background 350ms ease, border 350ms ease;
 }
 #menu a:hover{
     background-color: #068;
-    border-left: 1em solid #015;
+    border-left: 1rem solid #015;
     color: #fff;
 }
 
@@ -210,7 +210,7 @@ main {
     color: #222222;
 }
 .message-box.warning:before, .message.warning:before {
-    content: "❗";
+    content: "☢";
     padding: 0 1em 0 0;
 }
 .message-box.success:before, .message.success:before {
@@ -226,7 +226,7 @@ main {
     color: #222222;
 }
 .message-box.help:before, .message.help:before {
-    content: "❓";
+    content: '⚑';
     padding: 0 1em 0 0;
 }
 
@@ -238,7 +238,7 @@ main {
 .ui-autocomplete { background: #15848f; display: block; right: 0; min-width: 100px; max-height: 90vh; overflow-y: auto; position: absolute; top: 100%; z-index: 100; }
 .ui-autocomplete li { display: block; float: none; margin: 0; padding: 0; widows: 100%; }
 .ui-autocomplete li:before { display: none; }
-.ui-autocomplete li a { color: #ffffff; display: block; padding: 0.3125rem 1rem; width: 100%; }
+.ui-autocomplete li a { color: #ffffff; display: block; padding: 0.3rem 1rem; width: 100%; }
 .ui-autocomplete li a:hover, .ui-state-focus { background: #068; }
 
 .mine { background: #428BCA; }
@@ -320,6 +320,7 @@ td a i {
 
     .header-search input {
         margin: 0;
+        width: 25em;
     }
 
     .dashstat:nth-child(odd) {
