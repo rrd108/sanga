@@ -118,9 +118,13 @@ nav.primary {
     width: 100%;
     display: inline-block;
     padding: 0.3em 1em;
+    border-left: .25em solid #068;
+    transition: background 350ms ease, border 350ms ease;
 }
 #menu a:hover{
     background-color: #068;
+    border-left: 1em solid #015;
+    color: #fff;
 }
 
 main {
