@@ -11,7 +11,7 @@
     </header>
     <main id="container" class="row align-center">
         <?php if ($this->request->getSession()->read('Flash')) : ?>
-        <div class="column large-12"><?= $this->Flash->render() ?></div>
+        <div class="column large-12 small-12"><?= $this->Flash->render() ?></div>
         <?php endif; ?>
         <?= $this->fetch('content') ?>
     </main>
