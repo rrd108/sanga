@@ -119,11 +119,13 @@ nav.primary {
     display: inline-block;
     padding: 0.3rem 1rem;
     border-left: .25rem solid #068;
+}
+#menu a, .sidebar-wrapper li {
     transition: background 350ms ease, border 350ms ease;
 }
-#menu a:hover{
+#menu a:hover, .ui-state-active, .sidebar-wrapper li:hover {
     background-color: #068;
-    border-left: 1rem solid #015;
+    border-left: 1em solid #015;
     color: #fff;
 }
 
@@ -251,6 +253,9 @@ main {
     color: #ccc;
 }
 
+#editForm {
+    display: contents;
+}
 #editForm i {
     color: #2ba6cb;
     cursor: pointer;
@@ -274,6 +279,10 @@ td a i {
 }
 #query-where + div {
     clear: both;
+}
+
+#tabs {
+    height: 100vh;
 }
 
 @media screen and (min-width: 62.5em) {

@@ -1,5 +1,4 @@
 $(function() {
-
 	$.each($.localStorage('sanga.contacs.add'), function (key, value) {
 		if (!value) {
 			$('#' + key).siblings().hide();
