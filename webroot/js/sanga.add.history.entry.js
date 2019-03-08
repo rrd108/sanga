@@ -1,16 +1,24 @@
 $(function() {
-	
+
 	//for adding new entries
-	
-	$('#date').datepicker();
-	
+
+	$('#date').datepicker({
+		beforeShow: function (textbox, instance) {
+			if (window.navigator.userAgent.search(/Firefox/)) {
+				instance.dpDiv.css({
+					top: 220 + (textbox.offsetHeight) + 'px',
+				});
+			}
+		}
+	});
+
 	$('#xcontact-id').autocomplete({
 		minLength : 2,
 		html: true,
 		source : $.sanga.baseUrl + '/Contacts/search',
 		focus: function() {
 			return false;
-		},		
+		},
 		select : function(event, ui) {	//when we select something from the dropdown
 			this.value = ui.item.label.replace(/(<([^>]+)>)/ig,'');		//remove highlight html code;
 			$('#contact-id').val(ui.item.value);
@@ -22,14 +30,14 @@ $(function() {
 			return false;
 		}
 	});
-	
+
 	$('#xgroup-id').autocomplete({
 		minLength : 2,
 		html: true,
 		source : $.sanga.baseUrl + '/Groups/search',
 		focus: function() {
 			return false;
-		},		
+		},
 		select : function(event, ui) {	//when we select something from the dropdown
 			this.value = ui.item.label.replace(/(<([^>]+)>)/ig,'');		//remove highlight html code;
 			$('#group-id').val(ui.item.value);
@@ -48,7 +56,7 @@ $(function() {
 		source : $.sanga.baseUrl + '/Events/search',
 		focus: function() {
 			return false;
-		},		
+		},
 		select : function(event, ui) {	//when we select something from the dropdown
 			this.value = ui.item.label.replace(/(<([^>]+)>)/ig,'');		//remove highlight html code;
 			$('#event-id').val(ui.item.value);
@@ -60,14 +68,14 @@ $(function() {
 			return false;
 		}
 	});
-	
+
 	/*$('#xunit-id').autocomplete({
 		minLength : 1,
 		html: true,
 		source : $.sanga.baseUrl + '/Units/search',
 		focus: function() {
 			return false;
-		},		
+		},
 		select : function(event, ui) {	//when we select something from the dropdown
 			this.value = ui.item.label.replace(/(<([^>]+)>)/ig,'');		//remove highlight html code;
 			$('#unit-id').val(ui.item.value);
@@ -125,11 +133,11 @@ $(function() {
 				});
 				var newRow = $("<tr>");
 				var cols = '';
-				
+
 				if(location.pathname.search(/histories/i) != -1){	//if we are at History index we have an extra coloumn
 					cols += '<td>' +
 								'<a href="' + $.sanga.baseUrl + '/contacts/view/' + $('#contact-id').val() + '">' +
-									$('#xcontact-id').val() + 
+									$('#xcontact-id').val() +
 								'</a>' +
 							'</td>';
 				} else {
@@ -150,7 +158,7 @@ $(function() {
 				cols += '<td></td>';
 				newRow.append(cols);
 				$('#hTable > tbody').children('tr:first').after(newRow);
-				
+
 				$('#hForm :input').not('.dontdel').val('');
 				$('#hsave').show();
 			}
@@ -158,5 +166,5 @@ $(function() {
 		event.preventDefault();
 		return false;
 	});
-	
+
 });

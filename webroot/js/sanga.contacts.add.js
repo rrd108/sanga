@@ -1,10 +1,12 @@
-$(function() {
-	$.each($.localStorage('sanga.contacs.add'), function (key, value) {
-		if (!value) {
-			$('#' + key).siblings().hide();
-            $('#' + key).addClass('grayed');
-		}
-	});
+$(function () {
+    if ($.localStorage('sanga.contacs.add')) {
+        $.each($.localStorage('sanga.contacs.add'), function (key, value) {
+            if (!value) {
+                $('#' + key).siblings().hide();
+                $('#' + key).addClass('grayed');
+            }
+        });
+    }
 
 	$('fieldset legend').click(function () {
 		$(this).toggleClass('grayed');
@@ -16,7 +18,7 @@ $(function() {
 		showMonthAfterYear: true,
 		yearRange: '1900:' + new Date().getFullYear(),
 		changeMonth: true,
-		changeYear: true
+        changeYear: true,
     });
 
 	function addSkillSpanAndInput(event, ui){

@@ -243,6 +243,15 @@ main {
 .ui-autocomplete li a { color: #ffffff; display: block; padding: 0.3rem 1rem; width: 100%; }
 .ui-autocomplete li a:hover, .ui-state-focus { background: #068; }
 
+.ui-datepicker-header {
+    background: #15848f;
+    color: #eee;
+}
+.ui-datepicker-header a {color: #eee;}
+.ui-datepicker-prev {float: left;}
+.ui-datepicker-next {float: right;}
+.ui-datepicker-title {text-align: center; font-weight: bold}
+
 .default { background: #999; }
 .mine { background: #428BCA; }
 .viewable { background: #5CB85C; }
