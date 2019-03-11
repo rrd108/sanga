@@ -158,7 +158,7 @@
                             <label><?= __('Address') ?></label>
                         </div>
                         <div class="column large-8">
-                            <p class="ed">
+                            <p class="ed">&nbsp;
                                 <span class="dta zip zip-zip">
                                     <?php if (isset($contact->zip)) : ?>
                                     <?= $contact->zip->zip ?>
@@ -209,7 +209,7 @@
                             <label><?= __('Phone') ?></label>
                         </div>
                         <div class="column large-8">
-                            <p class="ed">
+                            <p class="ed">&nbsp;
                                 <span class="dta"><?= h($contact->phone) ?></span>
                                 <?= $this->Form->control(
                                     'phone',
@@ -229,7 +229,7 @@
                             <label><?= __('Email') ?></label>
                         </div>
                         <div class="column large-8">
-                            <p class="ed">
+                            <p class="ed">&nbsp;
                                 <span class="dta"><?= h($contact->email) ?></span>
                                 <?= $this->Form->control(
                                     'email',
@@ -249,7 +249,7 @@
                             <label><?= __('Birth') ?></label>
                         </div>
                         <div class="column large-8">
-                            <p class="ed">
+                            <p class="ed">&nbsp;
                                 <span class="dta">
                                     <?= h($contact->birth) ?>
                                 </span>
@@ -272,7 +272,7 @@
                             <label><?= __('Sex') ?></label>
                         </div>
                         <div class="column large-8">
-                            <p class="ed">
+                            <p class="ed">&nbsp;
                                 <span class="dta">
                                     <?php
                                     if ($contact->sex == 1) {
@@ -309,7 +309,7 @@
                             <label><?= __('Contactsource') ?></label>
                         </div>
                         <div class="column large-8">
-                            <p class="ed">
+                            <p class="ed">&nbsp;
                                 <span class="dta">
                                     <?= $contact->has('contactsource') ? h($contact->contactsource->name) : '' ?>
                                 </span>
@@ -355,7 +355,7 @@
                     <div class="row">
                         <div class="column large-12">
                             <label><?= __('Comment') ?></label>
-                            <p class="ed">
+                            <p class="ed">&nbsp;
                                 <span class="dta">
                                     <?= nl2br(h($contact->comment)); ?>
                                 </span>
@@ -390,7 +390,7 @@
                                     <label><?= __('Family') ?></label>
                                 </div>
                                 <div class="large-8 columns strings">
-                                    <p class="ed">
+                                    <p class="ed">&nbsp;
                                         <?php
                                         //echo $contact->family_id;
                                         ?>
@@ -440,7 +440,7 @@
                                     <label><?= __('Workplace') ?></label>
                                 </div>
                                 <div class="large-8 column">
-                                    <p class="ed">
+                                    <p class="ed">&nbsp;
 
                                         <span class="dta"><?= h($contact->workplace) ?></span>
                                         <?php
@@ -463,7 +463,7 @@
                                     <label><?= __('Workplace Address') ?></label>
                                 </div>
                                 <div class="column large-8">
-                                    <p class="ed">
+                                    <p class="ed">&nbsp;
                                         <?php
                                         echo '<span class="dta workplace_zip workplace_zip-zip">';
                                         if (isset($contact->workplace_zip)) {
@@ -520,7 +520,7 @@
                                     <label><?= __('Workplace Phone') ?></label>
                                 </div>
                                 <div class="large-8 column">
-                                    <p class="ed">
+                                    <p class="ed">&nbsp;
 
                                         <span class="dta"><?= h($contact->workplace_phone) ?></span>
                                         <?php
@@ -542,7 +542,7 @@
                                     <label><?= __('Workplace Email') ?></label>
                                 </div>
                                 <div class="large-8 column">
-                                    <p class="ed">
+                                    <p class="ed">&nbsp;
 
                                         <span class="dta"><?= h($contact->workplace_email) ?></span>
                                         <?php
@@ -565,7 +565,7 @@
                                 </div>
                                 <div class="large-8 column">
                                     <p class="ed">
-                                        <span class="dta">
+                                        <span class="dta">&nbsp;
                                             <?php if (!empty($contact->skills)) : ?>
                                             <?php
                                             foreach ($contact->skills as $skills) :
