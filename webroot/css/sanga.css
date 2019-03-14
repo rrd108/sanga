@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+dl, ol, ul {
+    list-style-position: inside;
+}
+
 body {
     background: #ffffff;
     color: #222222;
