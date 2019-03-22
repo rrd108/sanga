@@ -7,7 +7,6 @@ use Cake\Utility\Text;
 
 class SearchController extends AppController
 {
-    
     public function isAuthorized($user = null)
     {
         return true;
@@ -16,41 +15,40 @@ class SearchController extends AppController
     public function quicksearch()
     {
         $this->Contacts = TableRegistry::get('Contacts');
-        if ($this->request->getQuery('term')[0] == '^') {
-            $this->request = $this->request->withQueryParams(['term' => substr($this->request->getQuery('term'), 1)]);
-        } else {
-            $this->request = $this->request->withQueryParams(['term' => '%' . $this->request->getQuery('term')]);
-        }
-        //TODO find only accessible
+
+        $term = $this->request->getQuery('term') . $this->request->getData('quickterm');
+
+        // TODO find only accessible
+        // TODO replace this tofunc call for better security
         $query = $this->Contacts->find()
             ->select(['id', 'contactname', 'legalname', 'email', 'phone', 'birth', 'workplace', 'comment'])
-            ->where(['contactname LIKE "'.$this->request->getQuery('term').'%"'])
-            ->orWhere(['legalname LIKE "'.$this->request->getQuery('term').'%"'])
-            ->orWhere(['email LIKE "'.$this->request->getQuery('term').'%"'])
-            ->orWhere(['phone LIKE "'.$this->request->getQuery('term').'%"'])
-            ->orWhere(['comment LIKE "'.$this->request->getQuery('term').'%"'])
-            ->orWhere(['workplace LIKE "'.$this->request->getQuery('term').'%"'])
+            ->where(['contactname LIKE "'.$term.'%"'])
+            ->orWhere(['legalname LIKE "'.$term.'%"'])
+            ->orWhere(['email LIKE "'.$term.'%"'])
+            ->orWhere(['phone LIKE "'.$term.'%"'])
+            ->orWhere(['comment LIKE "'.$term.'%"'])
+            ->orWhere(['workplace LIKE "'.$term.'%"'])
             ->limit(25);
         foreach ($query as $row) {
             $label = '';
             if ($this->Contacts->isAccessible($row->id, $this->Auth->user('id'))) {
-                if ($this->createHighlight($row->contactname) || $this->createHighlight($row->legalname)) {
+                if ($this->createHighlight($row->contactname, $term) || $this->createHighlight($row->legalname, $term)) {
                     $label .= '<span class="noaccess">';
-                        $label .= $this->createHighlight($row->contactname) ? '♥ ' . $this->createHighlight($row->contactname) . ' ' : '';
-                        $label .= $this->createHighlight($row->legalname) ? '♥ ' . $this->createHighlight($row->legalname) . ' ' : '';
+                    $label .= $this->createHighlight($row->contactname, $term) ? '♥ ' . $this->createHighlight($row->contactname, $term) . ' ' : '';
+                    $label .= $this->createHighlight($row->legalname, $term) ? '♥ ' . $this->createHighlight($row->legalname, $term) . ' ' : '';
                     $label .= '</span>';
                 }
                 if ($row->contactname) {
-                    $label .= $this->createHighlight($row->contactname) ? '♥ ' . $this->createHighlight($row->contactname) . ' ' : '♥ ' . $row->contactname . ' ';
+                    $label .= $this->createHighlight($row->contactname, $term) ? '♥ ' . $this->createHighlight($row->contactname, $term) . ' ' : '♥ ' . $row->contactname . ' ';
                 }
                 if ($row->legalname) {
-                    $label .= $this->createHighlight($row->legalname) ? '♥ ' . $this->createHighlight($row->legalname) . ' ' : '♥ ' . $row->legalname . ' ';
+                    $label .= $this->createHighlight($row->legalname, $term) ? '♥ ' . $this->createHighlight($row->legalname, $term) . ' ' : '♥ ' . $row->legalname . ' ';
                 }
-                $label .= $this->createHighlight($row->email) ? '✉ ' . $this->createHighlight($row->email) . ' ' : '';
-                $label .= $this->createHighlight($row->phone) ? '☏ ' . $this->createHighlight($row->phone) . ' ' : '';
-                $label .= (isset($row->birth) && $this->createHighlight($row->birth->format('Y-m-d'))) ? '↫ ' . $this->createHighlight($row->birth->format('Y-m-d')) . ' ' : '';
-                $label .= $this->createHighlight($row->workplace) ? '♣ ' . $this->createHighlight($row->workplace) . ' ' : '';
-                $label .= $this->createHighlight($row->comment) ? '✍ ' : '';
+                $label .= $this->createHighlight($row->email, $term) ? '✉ ' . $this->createHighlight($row->email, $term) . ' ' : '';
+                $label .= $this->createHighlight($row->phone, $term) ? '☏ ' . $this->createHighlight($row->phone, $term) . ' ' : '';
+                $label .= (isset($row->birth) && $this->createHighlight($row->birth->format('Y-m-d'), $term)) ? '↫ ' . $this->createHighlight($row->birth->format('Y-m-d'), $term) . ' ' : '';
+                $label .= $this->createHighlight($row->workplace, $term) ? '♣ ' . $this->createHighlight($row->workplace, $term) . ' ' : '';
+                $label .= $this->createHighlight($row->comment, $term) ? '✍ ' : '';
             }
             if ($label) {
                 $result[] = [
@@ -69,26 +67,26 @@ class SearchController extends AppController
                 'shared' => true
             ]
         )
-            ->where(['name LIKE "'.$this->request->getQuery('term').'%"']);
+            ->where(['name LIKE "'.$term.'%"']);
         foreach ($query as $row) {
-            if ($this->createHighlight($row->name)) {
-                $label = '⁂ ' . $this->createHighlight($row->name);
+            if ($this->createHighlight($row->name, $term)) {
+                $label = '⁂ ' . $this->createHighlight($row->name, $term);
                 $result[] = [
                     'value' => 'g' . $row->id,
                     'label' => $label
                 ];
             }
         }
-        
+
         //skills
         $this->Skills = TableRegistry::get('Skills');
         $query = $this->Skills
             ->find()
-            ->where(['name LIKE "'.$this->request->getQuery('term').'%"']);
+            ->where(['name LIKE "'.$term.'%"']);
         //debug($query->toArray());die();
         foreach ($query as $row) {
-            if ($this->createHighlight($row->name)) {
-                $label = '✄ ' . $this->createHighlight($row->name);
+            if ($this->createHighlight($row->name, $term)) {
+                $label = '✄ ' . $this->createHighlight($row->name, $term);
                 $result[] = [
                     'value' => 's' . $row->id,
                     'label' => $label
@@ -107,17 +105,16 @@ class SearchController extends AppController
             $result[] = array('value' => $row->id,
                               'label' => $label);
         }*/
-        
-        $this->set('result', $result);
+
+        $this->set(compact('result', 'term'));
         $this->set('_serialize', 'result');
     }
 
-    private function createHighlight($value = null)
+    private function createHighlight($value = null, $term)
     {
         //sql returns ékezetes, but this one not
         $highlight = ['format' => '<span class="b i">\1</span>'];
         //remove % from beginning
-        $term = $this->request->getQuery('term');
         if (strpos($value, '%') === 0) {
             $value = substr($value, 1);
         }
