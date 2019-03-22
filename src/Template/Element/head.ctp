@@ -20,7 +20,6 @@ echo $this->Html->script('jquery.js');    //this should be the very first js fil
 
 // TODO are these used somewhere?
 echo $this->Html->script('jquery-ui.min.js');
-//dropdown menu
 echo $this->Html->script('superfish.js');
 echo $this->Html->script('hoverIntent.js');
 

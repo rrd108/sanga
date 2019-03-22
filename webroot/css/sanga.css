@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+body, h1, h2, h3, h4, h5, h6 {
+    font-family: Quicksand, sans-serif;
+}
+
 dl, ol, ul {
     list-style-position: inside;
 }
@@ -11,12 +15,15 @@ body {
     background: #ffffff;
     color: #222222;
     cursor: auto;
-    font-family: Quicksand, sans-serif;
     font-style: normal;
     font-weight: normal;
     line-height: 1.5;
     margin: 0;
     padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
 }
 
 tr {
@@ -275,7 +282,6 @@ main {
 }
 
 td a i {
-    padding: 0 1em;
     font-size: 1.4rem;
 }
 
