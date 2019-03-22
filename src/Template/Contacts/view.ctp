@@ -4,7 +4,7 @@ echo $this->Html->script('sanga.contacts.view.js', ['block' => true]);
 echo $this->Html->script('sanga.contacts.add.js', ['block' => true]);
 echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
 echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
-
+?>
 
 <?= $this->Html->link(
     $this->Html->image('edit.png'),
@@ -647,14 +647,16 @@ echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
                 <div class="row">
                     <div class="column large-12">
                         <?php if (!empty($histories)): ?>
-                            <?=$this->Form->create(null,
+                            <?=$this->Form->create(
+                            null,
                                 [
                                     'id' => 'hForm',
                                     'url' => [
                                         'controller' => 'Histories',
                                         'action' => 'add',
                                     ],
-                                ]) ?>
+                                ]
+                        ) ?>
                             <table id="hTable" cellpadding="0" cellspacing="0">
                                 <thead>
                                     <tr>

@@ -1,7 +1,8 @@
+<?= $this->Html->script('jquery.rAutocompleters.min', ['block' => true]) ?>
 <?= $this->Html->script('sanga.contacts.add.min', ['block' => true]) ?>
-<div class="column large-11 medium-11 small-12">
-    <?= $this->Form->create($contact) ?>
 
+<div class="column large-11 medium-11 small-12">
+    <?= $this->Form->create($contact, ['id' => 'addContact']) ?>
     <fieldset>
         <legend id="personal"><?= ('Personal data') ?></legend>
 
@@ -126,7 +127,7 @@
     </fieldset>
 
     <fieldset>
-        <legend id="skills"><?= __('Workplace and Skills') ?></legend>
+        <legend id="workplaceAndSkills"><?= __('Workplace and Skills') ?></legend>
 
         <div class="row">
             <?= $this->Form->input(
@@ -146,7 +147,7 @@
                         'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
                         'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
                     ],
-                    'class' => 'radius',
+                    'data-ac' => '/Skills/search',
                     'type' => 'text'
                 ]
             ) ?>

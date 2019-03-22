@@ -209,6 +209,7 @@ main {
     width: 100%;
     border-radius: 5px;
 }
+
 .message-box.alert, .message-box.error, .message.alert, .message.error, .error-message {
     background: #ffd6d0;
     border-color: #ff4f37;

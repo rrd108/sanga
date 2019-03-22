@@ -12,8 +12,13 @@
 * You can change cache name and have baseUrl set
 *
 * $.createAutocompleters('FormId',
-*   {cacheName : 'MyApplicationName', baseUrl : 'https://example.com/'}
-*   );
+*   {
+        cacheName : 'MyApplicationName',    // give the name for the localstorage cache
+        baseUrl : 'https://example.com/',   // base url for the autocompleters
+        notFoundMessage : 'No results',     // display message on no results found
+        onlyExistingValue : true            // only data from the server (or the cache) accepted, other values are rejected
+    }
+* );
 *
 * */
 
@@ -22,14 +27,15 @@ $.rAutocompleteCacheName = 'rAutocompleteCache';
 $.createAutocompleters = function (formId, options) {
     options = $.extend({
         cacheName : $.rAutocompleteCacheName,
-        baseUrl : ''
+        baseUrl: '',
+        notFoundMessage: 'Nothing found',
+        onlyExistingValue : true,
     }, options);
 
     function setValForHiddenPair(element) {
         var elementId = element.attr('id').replace('ac-', '');
         if (element.data('selectedId')) {
             $('#' + elementId).val(element.data('selectedId'));
-            element.removeClass('callout alert');
         }
     }
 
@@ -47,7 +53,7 @@ $.createAutocompleters = function (formId, options) {
                 element.data('selectedId', cache[0].value);
                 setValForHiddenPair(element);
             } else {
-                //if not start another ajax call
+                //if no cache value is present start another ajax call
                 //as this happens async we should set values in success
                 element.addClass('loading');
                 //prevent submits during ajax call
@@ -65,15 +71,17 @@ $.createAutocompleters = function (formId, options) {
                                 setValForHiddenPair(element);
                                 $(':input[data-type="submit"]').prop('disabled', false);
                             } else {
-                                element.effect('shake');
-                                element.val('???');
-                                noty({
-                                    layout: 'topRight',
-                                    type: 'error',
-                                    timeout: 5000,
-                                    closeWith: ['click'],
-                                    text: 'Data error'
-                                });
+                                if (options.onlyExistingValue) {
+                                    element.effect('shake');
+                                    element.val('???');
+                                    noty({
+                                        layout: 'topRight',
+                                        type: 'error',
+                                        timeout: 5000,
+                                        closeWith: ['click'],
+                                        text: options.notFoundMessage
+                                    });
+                                }
                             }
                         }
                     }
@@ -111,7 +119,8 @@ $.createAutocompleters = function (formId, options) {
             $.autocompletefactory(
                 {
                     url : options.baseUrl + $(this).data('ac'),
-                    cacheName : options.cacheName
+                    cacheName : options.cacheName,
+                    notFoundMessage : options.notFoundMessage
                 }
             )
         );
@@ -119,20 +128,20 @@ $.createAutocompleters = function (formId, options) {
         $(this).blur(blurHandler);
     });
 
-    $('body').append('<div id="dialog"></div>');
-    $('#dialog').dialog(
+    $('body').append('<div id="rAutocompleterDialog"></div>');
+    $('#rAutocompleterDialog').dialog(
         {
             autoOpen : false,
             width : 500
         }
     );
 
-    $('#dialog').on('click', function (event) {
+    $('#rAutocompleterDialog').on('click', function (event) {
         var acId = $(event.target).data('target');
         var inputId = acId.replace('ac-', '');
         $('#' + acId).val($(event.target).text());
         $('#' + acId).data('selectedId', $(event.target).data('id'));
-        $('#dialog').dialog('close');
+        $('#rAutocompleterDialog').dialog('close');
     });
 };
 
@@ -147,7 +156,6 @@ $.createAutocompleters = function (formId, options) {
  *  { label: "Label 2", value: "radha" }
  * ];
 */
-
 $.autocompletefactory = function (options) {
     var settings = $.extend({
         resultCount : 5,        //this is the limit parameter for cake find all method
@@ -184,7 +192,7 @@ $.autocompletefactory = function (options) {
         source : function (request, response) {    //the data to use
             var key = settings.url + '/' + request.term;
             var dataResp;
-            if(key in $.localStorage(settings.cacheName) ) {        //if the query is already in the cache
+            if (key in $.localStorage(settings.cacheName) ) {        //if the query is already in the cache
                 dataResp = $.localStorage(settings.cacheName)[key];
             } else {
                 $.ajax(
@@ -205,7 +213,7 @@ $.autocompletefactory = function (options) {
             }
             if (dataResp.length == 0) {
                 response({
-                    label : 'Hiba: nincs talรฝlat!',
+                    label : options.notFoundMessage,
                     value : -1
                 });
                 return false;
@@ -251,16 +259,16 @@ $.autocompletefactory = function (options) {
                         input : $(this),
                         success : function (data) {
                             // this.input
-                            $('#dialog').dialog('option', 'title', ui.item.label);
+                            $('#rAutocompleterDialog').dialog('option', 'title', ui.item.label);
                             var inputId = this.input.attr('id');
                             $.each(data, function (index, result) {
-                                $('#dialog').append(
+                                $('#rAutocompleterDialog').append(
                                     '<li data-id="' + result.value + '" data-target="' + inputId + '">'
                                     + result.label
                                     + '</li>'
                                 );
                             });
-                            $('#dialog').dialog('open');
+                            $('#rAutocompleterDialog').dialog('open');
                         }
                     }
                 );

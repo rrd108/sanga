@@ -1,5 +1,10 @@
 $(function () {
-    if ($.localStorage('sanga.contacs.add')) {
+
+	$.createAutocompleters('addContact',
+		{ baseUrl: $.sanga.baseUrl, onlyExistingValue : false }
+	);
+
+	if ($.localStorage('sanga.contacs.add')) {
         $.each($.localStorage('sanga.contacs.add'), function (key, value) {
             if (!value) {
                 $('#' + key).siblings().hide();
@@ -21,6 +26,7 @@ $(function () {
         changeYear: true,
     });
 
+	/* removed as now we use rAutocompleter
 	function addSkillSpanAndInput(event, ui){
 		var t = $(event.target);
 		var tag = "";
@@ -76,7 +82,7 @@ $(function () {
 				addSkillSpanAndInput(event, ui);
 				return false;
 			}
-		});
+		});*/
 
 	$('#xzip').autocomplete({
 		minLength : 2,
@@ -132,5 +138,21 @@ $(function () {
 			return false;
 		}
 	});
+
+	$('#addContact').submit(function () {
+		if($('#skills').val() && !isNaN($('#skills').val())) {
+			$('#skills').after('<input ' +
+				'name="skills[][id]" ' +
+				'value="' + $('#skills').val() + '" ' +
+				'type="hidden">');
+		}
+
+		if ($('#ac-skills').val() && !$('#skills').val()) {
+			$('#skills').after('<input ' +
+				'name="skills[][name]" ' +
+				'value="' + $('#ac-skills').val() + '" ' +
+				'type="hidden">');
+		}
+	 });
 
 });
