@@ -10,7 +10,6 @@ use App\Controller\AppController;
  */
 class EventsController extends AppController
 {
-
     public function isAuthorized($user = null)
     {
         return true;
@@ -20,7 +19,7 @@ class EventsController extends AppController
     {
         $query = $this->Events->find()
             ->select(['id', 'name'])
-            ->where(['name LIKE "'.$this->request->getQuery('term').'%"']);
+            ->where(['name LIKE "%'.$this->request->getQuery('term').'%"']);
         foreach ($query as $row) {
             $result[] = array('value' => $row->id,
                               'label' => $row->name
@@ -42,7 +41,7 @@ class EventsController extends AppController
             'contain' => ['Users']
         ];
         $this->set('events', $this->paginate($this->Events));
-        
+
         //for adding new event
         $this->set('event', $this->Events->newEntity($this->request->getData()));
     }
