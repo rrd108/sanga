@@ -20,6 +20,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
         echo $this->element('ajax-images');
         ?>
         <div class="histories index columns">
+
             <?= $this->Form->create(
                 null,
                 [
@@ -28,82 +29,75 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                         'controller' => 'Histories',
                         'action' => 'index'
                     ]
-                ]) ?>
-            <table id="hTable" cellpadding="0" cellspacing="0">
+                ]
+            ) ?>
+            <table id="fTable" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
-                        <?php
-                        echo $this->Form->create(
-                            null,
-                            [
-                                'id' => 'fForm',
-                                'url' => [
-                                    'controller' => 'Histories',
-                                    'action' => 'index'
-                                ]
-                            ]
-                        );
-                        ?>
-                        <td>
+                        <th width="15%">
                             <?php
                             echo $this->Form->input('fcontact_id', ['type' => 'hidden', 'value' => false]);
-                            echo $this->Form->input('xfcontact_id', ['type' => 'text', 'value' => false, 'label' => false]);
+                            echo $this->Form->input('xfcontact_id', ['type' => 'text', 'value' => false, 'label' => false, 'placeholder' => __('Contact')]);
                             ?>
-                        </td>
-                        <td>
+                        </th>
+                        <th width="10%">
                             <?php
                             echo $this->Form->input(
                                 'daterange',
                                 [
                                     'label' => false,
-                                    'value' => false
+                                    'value' => false,
+                                    'placeholder' => __('Date'),
                                 ]
                             );
                             ?>
 
-                        </td>
-                        <td>
+                        </th>
+                        <th width="10%">
                             <?php
                             echo $this->Form->input('fuser_id', ['type' => 'hidden', 'value' => false]);
-                            echo $this->Form->input('xfuser_id', ['type' => 'text', 'value' => false, 'label' => false]);
+                            echo $this->Form->input('xfuser_id', ['type' => 'text', 'value' => false, 'label' => false, 'placeholder' => __('User')]);
                             ?>
-                        </td>
-                        <td>
+                        </th>
+                        <th width="10%">
                             <?php
                             echo $this->Form->input('fgroup_id', ['type' => 'hidden', 'value' => false]);
-                            echo $this->Form->input('xfgroup_id', ['label' => false, 'value' => false, 'type' => 'text']);
+                            echo $this->Form->input('xfgroup_id', ['label' => false, 'value' => false, 'type' => 'text', 'placeholder' => __('Group')]);
                             ?>
-                        </td>
-                        <td>
+                        </th>
+                        <th width="10%">
                             <?php
                             echo $this->Form->input('fevent_id', ['type' => 'hidden', 'value' => false]);
-                            echo $this->Form->input('xfevent_id', ['label' => false, 'value' => false, 'type' => 'text']);
+                            echo $this->Form->input('xfevent_id', ['label' => false, 'value' => false, 'type' => 'text','placeholder' => __('Event')]);
                             ?>
-                        </td>
-                        <td>
+                        </th>
+                        <th width="25%">
                             <?php
-                            echo $this->Form->input('fdetail', ['label' => false, 'value' => false]);
+                            echo $this->Form->input('fdetail', ['label' => false, 'value' => false, 'placeholder' => __('Detail')]);
                             ?>
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-                            <?= $this->Form->button('↺', ['title' => __('Filter'), 'class' => 'radius']) ?>
-                        </td>
-                        <?php
-                        echo $this->Form->end();
-                        ?>
+                        </th>
+                        <th width="15%">
+                            <?= $this->Form->input('fquantity', ['label' => false, 'value' => false, 'placeholder' => __('Quantity'), 'disabled' => true]) ?>
+                        </th>
+                        <th width="5%" class="text-center">
+                            <?= $this->Form->button('<i class="fi-magnifying-glass"></i>', ['title' => __('Filter'), 'escape' => false]) ?>
+                        </th>
+                        <?= $this->Form->end() ?>
                     </tr>
+                </thead>
+            </table>
+
+            <table id="hTable" class="hover stack">
+                <thead>
                     <tr>
-                        <th><?= $this->Paginator->sort('contact_id') ?></th>
-                        <th><?= $this->Paginator->sort('date') ?></th>
-                        <th><?= $this->Paginator->sort('user_id') ?></th>
-                        <th><?= $this->Paginator->sort('group_id') ?></th>
-                        <th><?= $this->Paginator->sort('event_id') ?></th>
-                        <th><?= $this->Paginator->sort('short_detail') ?></th>
-                        <th><?= $this->Paginator->sort('quantity') ?></th>
-                        <th class="actions"><?= __('Actions') ?></th>
+                        <th width="15%" class="text-center"><?= $this->Paginator->sort('contact_id') ?></th>
+                        <th width="10%" class="text-center"><?= $this->Paginator->sort('date') ?></th>
+                        <th width="10%" class="text-center"><?= $this->Paginator->sort('user_id') ?></th>
+                        <th width="10%" class="text-center"><?= $this->Paginator->sort('group_id') ?></th>
+                        <th width="10%" class="text-center"><?= $this->Paginator->sort('event_id') ?></th>
+                        <th width="25%" class="text-center"><?= $this->Paginator->sort('short_detail') ?></th>
+                        <th width="15%" class="text-center"><?= $this->Paginator->sort('quantity') ?></th>
+                        <th width="5%"  class="text-center"> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -159,13 +153,16 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                             }
                             ?>
                         </td>
-                        <td class="actions">
+                        <td class="text-center">
                             <?php
-                                //csak akkor szerkeszthető az esemény, ha nem system eseményről van szó
-                            if ($history->event->id != 1) {
-                                    echo $this->Html->link(__('Edit'), ['action' => 'edit', $history->id]);
-                                }
-                            ?>
+                            //csak akkor szerkeszthető az esemény, ha nem system eseményről van szó
+                            if ($history->event->id != 1) : ?>
+                                <?= $this->Html->link(
+                                    '<i class="fi-pencil"></i>',
+                                    ['action' => 'edit', $history->id],
+                                    ['escape' => false]
+                                ) ?>
+                        <?php endif; ?>
                         </td>
                     </tr>
                     <?php endforeach; ?>

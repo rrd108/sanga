@@ -1,4 +1,6 @@
 <?php
+ // TODO remove autocompleBuilder as it does the same as rAutocompleters
+
 print $this->Html->script('sanga.autocompleteBuilder.js', ['block' => true]);
 print $this->Html->script('sanga.histories.import.js', ['block' => true]);
 ?>
@@ -56,17 +58,17 @@ print $this->Html->script('sanga.histories.import.js', ['block' => true]);
                     $tdContent = $tdTitle = $tdClass = '';
                     if (isset($e['data'][$field])) {
                         if (isset($e['errors']) && strpos($e['errors'], $field) !== false) {
-                                $tdTitle =  ' title="' . $e['errors'] . ' ' . __('Click to edit') . '"';
-                                $tdClass = ' class="message error"';
-                                $tdContent = $e['data'][$field];
-                            } else {
+                            $tdTitle =  ' title="' . $e['errors'] . ' ' . __('Click to edit') . '"';
+                            $tdClass = ' class="message error"';
+                            $tdContent = $e['data'][$field];
+                        } else {
                             $tdContent = $e['data'][$field];
                         }
                     }
                     echo '<td data-id="' . $field . '"' . $tdTitle . $tdClass . '>';
                     if (is_array($tdContent)) {
-                            echo implode(',', $tdContent['_ids']);
-                        } else {
+                        echo implode(',', $tdContent['_ids']);
+                    } else {
                         echo $tdContent;
                     }
                     echo '</td>';
