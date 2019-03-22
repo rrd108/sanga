@@ -87,6 +87,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                 </thead>
             </table>
 
+            <?= $this->Form->create(null, ['id' => 'hForm']) ?>
             <table id="hTable" class="hover stack">
                 <thead>
                     <tr>
@@ -168,6 +169,8 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <?= $this->Form->end() ?>
+            
             <div class="paginator column">
                 <ul class="pagination centered row align-center">
                     <?php

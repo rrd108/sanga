@@ -1,21 +1,19 @@
+
 <tr>
     <td>
-        <?= $this->Form->create(null, ['id' => 'hForm']) ?>
         <?php
         echo $this->Form->input('contact_id', ['type' => 'hidden']);
         echo $this->Form->input('xcontact_id', ['type' => 'text', 'label' => false]);
         ?>
     </td>
     <td>
-        <?php
-        echo $this->Form->input(
+        <?= $this->Form->input(
             'date',
             [
                 'label' => false,
                 'value' => date('Y-m-d')
             ]
-        );
-        ?>
+        ) ?>
     </td>
     <td id="uName">
         <?= $this->request->session()->read('Auth.User.name') ?>
@@ -32,7 +30,6 @@
                 ]
             ]
         ) ?>
-        <?= $this->Form->input('target_group_id', ['type' => 'hidden', 'value' => false]) ?>
     </td>
     <td>
         <?= $this->Form->control(
@@ -71,4 +68,3 @@
         <?= $this->Form->submit('ok.png', ['id' => 'hsave']) ?>
     </td>
 </tr>
-<?= $this->Form->end() ?>
