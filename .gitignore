@@ -25,3 +25,5 @@
 
 config/extras\.php
 /nbproject/private/
+
+/webroot/js/.gitignore
