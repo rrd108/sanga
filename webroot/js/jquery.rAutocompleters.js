@@ -1,13 +1,15 @@
 /*
 * if the input has data-ac="url/for/search" attribute in the given form
 *
-* creates an copy of the input what will be an autocompleter,
+* creates a copy of the input what will be an autocompleter,
 * and makes the original input hidden
 *
 * the original input will receive the selected items id from the
 * autocompleters dropdown
 *
 * $.createAutocompleters('FormId'); shold be called
+*
+* You can change cache name and have baseUrl set
 *
 * $.createAutocompleters('FormId',
 *   {cacheName : 'MyApplicationName', baseUrl : 'https://example.com/'}
@@ -203,7 +205,7 @@ $.autocompletefactory = function (options) {
             }
             if (dataResp.length == 0) {
                 response({
-                    label : 'Hiba: nincs találat!',
+                    label : 'Hiba: nincs talรฝlat!',
                     value : -1
                 });
                 return false;

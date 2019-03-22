@@ -1,11 +1,13 @@
 <?php
 echo $this->Html->css('daterangepicker.css', ['block' => true]);
 
-echo $this->Html->script('jquery.rAutocompleters', ['block' => true]);
-echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
+echo $this->Html->script('jquery.rAutocompleters.min', ['block' => true]);
 
 // TODO remove autocompleBuilder as it does the same as rAutocompleters
 echo $this->Html->script('sanga.autocompleteBuilder.js', ['block' => true]);
+
+echo $this->Html->script('sanga.add.history.entry.min', ['block' => true]);
+
 echo $this->Html->script('sanga.histories.index.js', ['block' => true]);
 echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
 
