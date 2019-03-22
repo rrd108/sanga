@@ -33,7 +33,7 @@ $(function() {
 		}
 	});
 
-	/*$('#xgroup-id').autocomplete({
+	$('#xgroup-id').autocomplete({
 		minLength : 2,
 		html: true,
 		source : $.sanga.baseUrl + '/Groups/search',
