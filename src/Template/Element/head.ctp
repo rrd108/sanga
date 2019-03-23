@@ -18,10 +18,7 @@
 <?php
 echo $this->Html->script('jquery.js');    //this should be the very first js file
 
-// TODO are these used somewhere?
 echo $this->Html->script('jquery-ui.min.js');
-echo $this->Html->script('superfish.js');
-echo $this->Html->script('hoverIntent.js');
 
 echo $this->Html->script('jquery.ui.autocomplete.html.js');
 echo $this->Html->script('ui.datepicker-hu.js');
