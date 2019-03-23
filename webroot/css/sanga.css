@@ -47,7 +47,7 @@ legend {
     font-weight: bold;
     font-size: 1.4rem;
 }
-label {
+label, .label {
     font-size: 1rem;
 }
 

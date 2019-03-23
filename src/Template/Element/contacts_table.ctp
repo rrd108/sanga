@@ -73,7 +73,7 @@ function setGroupCss($group, $userId)
                 }
                 echo $this->Html->link(
                     $icon,
-                    ['action' => 'view', $contact->id],
+                    ['controller' => 'Contacts', 'action' => 'view', $contact->id],
                     ['escape' => false, 'title' => __('View')]
                 );
                 ?>
