@@ -79,7 +79,7 @@ class AppController extends Controller
         //get locale cookie
         $locale = $this->Cookie->read('User.locale');
         if ($locale) {
-            I18n::locale(h($locale));
+            I18n::setLocale(h($locale));
         }
     }
 

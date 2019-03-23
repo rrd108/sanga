@@ -7,7 +7,7 @@
         <legend id="personal"><?= ('Personal data') ?></legend>
 
         <div class="row">
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'contactname',
                 [
                     'templates' => [
@@ -19,7 +19,7 @@
                     'title' => __('Like initiated name, nickname, etc')
                 ]
             ) ?>
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'legalname',
                 [
                     'templates' => [
@@ -34,7 +34,7 @@
         </div>
 
         <div class="row">
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'xzip',
                 [
                     'templates' => [
@@ -46,11 +46,11 @@
                     'label' => __('Zip')
                 ]
             ) ?>
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'zip_id',
                 ['type' => 'hidden']
             ) ?>
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'address',
                 [
                     'templates' => [
@@ -63,7 +63,7 @@
         </div>
 
         <div class="row">
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'phone',
                 [
                     'templates' => [
@@ -73,7 +73,7 @@
                     'class' => 'radius'
                 ]
             ) ?>
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'email',
                 [
                     'templates' => [
@@ -86,7 +86,7 @@
         </div>
 
         <div class="row">
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'birth',
                 [
                     'templates' => [
@@ -98,7 +98,7 @@
                     'type' => 'text'
                 ]
             ) ?>
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'sex',
                 [
                     'templates' => ['inputContainer' => '<div class="column large-6 medium-6 radio">{{content}}</div>'],
@@ -111,7 +111,7 @@
         </div>
 
         <div class="row">
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'xfamily',
                 [
                     'templates' => [
@@ -123,7 +123,7 @@
                     'label' => __('Family')
                 ]
             ) ?>
-            <?= $this->Form->input('family_member_id', ['type' => 'hidden']) ?>
+            <?= $this->Form->control('family_member_id', ['type' => 'hidden']) ?>
         </div>
     </fieldset>
 
@@ -131,7 +131,7 @@
         <legend id="workplaceAndSkills"><?= __('Workplace and Skills') ?></legend>
 
         <div class="row">
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'workplace',
                 [
                     'templates' => [
@@ -141,7 +141,7 @@
                     'class' => 'radius'
                 ]
             ) ?>
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'skills',
                 [
                     'templates' => [
@@ -155,7 +155,7 @@
         </div>
 
         <div class="row">
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'xworkplace_zip',
                 [
                     'templates' => [
@@ -167,11 +167,11 @@
                     'label' => __('Zip')
                 ]
             ) ?>
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'workplace_zip_id',
                 ['type' => 'hidden']
             ) ?>
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'workplace_address',
                 [
                     'templates' => [
@@ -184,7 +184,7 @@
         </div>
 
         <div class="row">
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'workplace_phone',
                 [
                     'templates' => [
@@ -194,7 +194,7 @@
                     'class' => 'radius'
                 ]
             ) ?>
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'workplace_email',
                 [
                     'templates' => [
@@ -210,7 +210,7 @@
     <fieldset>
         <legend id="csource"><?= __('Contactsource') ?></legend>
         <div class="row">
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'contactsource_id',
                 [
                     'templates' => ['inputContainer' => '<div class="column large-12 radio">{{content}}</div>'],
@@ -227,7 +227,7 @@
         <legend id="comment"><?= __('Comment') ?></legend>
 
         <div class="row">
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'comment',
                 [
                     'templates' => ['inputContainer' => '<div class="column large-12">{{content}}</div>'],
@@ -243,7 +243,7 @@
         <legend id="groups"><?= __('Groups') ?></legend>
 
         <div class="row">
-            <?= $this->Form->input(
+            <?= $this->Form->control(
                 'groups._ids',
                 [
                     'options' => $groups->map(function ($group, $key) {

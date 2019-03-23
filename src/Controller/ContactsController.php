@@ -471,6 +471,7 @@ class ContactsController extends AppController
         if (! empty($this->request->getData('family_member_id'))) {
             $contact->family_id = $this->getFamilyId($contact, $this->request->getData('family_member_id'));
         }
+        $result = [];
         if ($this->request->is('post')) {
             $contact->loggedInUser = $this->Auth->user('id');
             if ($this->Contacts->save($contact)) {
