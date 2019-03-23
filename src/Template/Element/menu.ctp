@@ -61,6 +61,18 @@
                     </li>
                     <li>
                         <?= $this->Html->link(
+                            '<i class="fi-plus"></i> ' . __('New user'),
+                            [
+                                'plugin' => null,
+                                'prefix' => 'admin',
+                                'controller' => 'Users',
+                                'action' => 'add'
+                            ],
+                            ['escape' => false]
+                        ) ?>
+                    </li>
+                    <li>
+                        <?= $this->Html->link(
                             '<i class="fi-torsos-all"></i> ' . __('User groups'),
                             [
                                 'plugin' => null,
