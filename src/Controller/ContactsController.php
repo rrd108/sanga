@@ -106,6 +106,7 @@ class ContactsController extends AppController
         $result = $result->toArray();
 
         //debug($result);
+        $this->set('type', $type);
         $this->set('result', $result);
         $this->set('lang', substr(h($this->Cookie->read('User.locale')), 0, 2));
     }

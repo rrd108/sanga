@@ -13,7 +13,8 @@
 
 <div class="content-wrapper large-10 medium-10 small-12 columns">
     <div class="row">
-        <h1><?= __('{0} contacts on map', count($result)) ?></h1>
+        <h1 class="column large-8"><?= __('{0} contacts on map', count($result)) ?></h1>
+        <h2 class="column large-4"><?= $type ?></h2>
     </div>
 
     <div id="map" class="row"></div>
