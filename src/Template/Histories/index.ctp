@@ -68,7 +68,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                         <th width="10%">
                             <?php
                             echo $this->Form->input('fevent_id', ['type' => 'hidden', 'value' => false]);
-                            echo $this->Form->input('xfevent_id', ['label' => false, 'value' => false, 'type' => 'text','placeholder' => __('Event')]);
+                            echo $this->Form->input('xfevent_id', ['label' => false, 'value' => false, 'type' => 'text', 'placeholder' => __('Event')]);
                             ?>
                         </th>
                         <th width="25%">
@@ -87,7 +87,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                 </thead>
             </table>
 
-            <?= $this->Form->create(null, ['id' => 'hForm']) ?>
+            <?= $this->Form->create(null, ['id' => 'hForm', 'url' => ['controller' => 'Histories', 'action' => 'add']]) ?>
             <table id="hTable" class="hover stack">
                 <thead>
                     <tr>
@@ -98,7 +98,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                         <th width="10%" class="text-center"><?= $this->Paginator->sort('event_id') ?></th>
                         <th width="25%" class="text-center"><?= $this->Paginator->sort('short_detail') ?></th>
                         <th width="15%" class="text-center"><?= $this->Paginator->sort('quantity') ?></th>
-                        <th width="5%"  class="text-center"> </th>
+                        <th width="5%" class="text-center"> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -158,19 +158,19 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                             <?php
                             //csak akkor szerkeszthető az esemény, ha nem system eseményről van szó
                             if ($history->event->id != 1) : ?>
-                                <?= $this->Html->link(
-                                    '<i class="fi-pencil"></i>',
-                                    ['action' => 'edit', $history->id],
-                                    ['escape' => false]
-                                ) ?>
-                        <?php endif; ?>
+                            <?= $this->Html->link(
+                                '<i class="fi-pencil"></i>',
+                                ['action' => 'edit', $history->id],
+                                ['escape' => false]
+                            ) ?>
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
             <?= $this->Form->end() ?>
-            
+
             <div class="paginator column">
                 <ul class="pagination centered row align-center">
                     <?php

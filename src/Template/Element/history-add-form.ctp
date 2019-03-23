@@ -1,10 +1,11 @@
-
 <tr>
     <td>
-        <?php
-        echo $this->Form->input('contact_id', ['type' => 'hidden']);
-        echo $this->Form->input('xcontact_id', ['type' => 'text', 'label' => false]);
-        ?>
+        <?php if (isset($contactId)) : ?>
+            <?= $this->Form->input('contact_id', ['type' => 'hidden', 'value' => $contactId]) ?>
+        <?php else : ?>
+            <?= $this->Form->input('contact_id', ['type' => 'hidden']) ?>
+            <?= $this->Form->input('xcontact_id', ['type' => 'text', 'label' => false]) ?>
+        <?php endif; ?>
     </td>
     <td>
         <?= $this->Form->input(

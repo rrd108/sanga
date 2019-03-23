@@ -647,16 +647,15 @@ echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
                 <div class="row">
                     <div class="column large-12">
                         <?php if (!empty($histories)): ?>
-                            <?=$this->Form->create(
-                            null,
+                            <?= $this->Form->create(
+                                null,
                                 [
                                     'id' => 'hForm',
                                     'url' => [
                                         'controller' => 'Histories',
                                         'action' => 'add',
                                     ],
-                                ]
-                        ) ?>
+                                ]) ?>
                             <table id="hTable" cellpadding="0" cellspacing="0">
                                 <thead>
                                     <tr>
@@ -673,12 +672,12 @@ echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
                                         <th><?= $this->Paginator->sort('Event.name') ?></th>
                                         <th><?= $this->Paginator->sort('short_detail') ?></th>
                                         <th><?= $this->Paginator->sort('quantity') ?></th>
-                                        <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                        <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    <?= $this->element('history-add-form', ['e_ContactId' => $contact->id]) ?>
+                                    <?= $this->element('history-add-form', ['contactId' => $contact->id]) ?>
 
                                     <?php foreach ($histories as $history) : ?>
                                     <tr>
