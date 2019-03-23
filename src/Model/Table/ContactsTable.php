@@ -3,9 +3,7 @@
 namespace App\Model\Table;
 
 use App\Model\Entity\Contact;
-use Cake\Core\Exception\Exception;
 use Cake\Filesystem\File;
-use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -15,13 +13,9 @@ use ArrayObject;
 use Cake\ORM\TableRegistry;
 use Cake\ORM\Entity;
 use Cake\Log\Log;
-use Cake\Utility\Hash;
-use Cake\Collection\Collection;
 
 use Cake\Event\Event;
-use Cake\Event\EventManager;
 
-use Cake\Datasource\ConnectionManager;
 
 /**
  * Contacts Model.
