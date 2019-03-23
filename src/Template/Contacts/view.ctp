@@ -1,10 +1,8 @@
-<?php
-echo $this->Html->script('jquery.rAutocompleters', ['block' => true]);
-echo $this->Html->script('sanga.contacts.view.js', ['block' => true]);
-echo $this->Html->script('sanga.contacts.add.js', ['block' => true]);
-echo $this->Html->script('sanga.add.history.entry.js', ['block' => true]);
-echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
-?>
+<?= $this->Html->script('jquery.rAutocompleters', ['block' => true]) ?>
+<?= $this->Html->script('sanga.contacts.view.min', ['block' => true]) ?>
+<?= $this->Html->script('sanga.contacts.add.min', ['block' => true]) ?>
+<?= $this->Html->script('sanga.add.history.entry.min', ['block' => true]) ?>
+<?= $this->Html->script('sanga.get.history.detail.min', ['block' => true]) ?>
 
 <?= $this->Html->link(
     $this->Html->image('edit.png'),
@@ -590,6 +588,7 @@ echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
                                             [
                                                 'templates' => ['inputContainer' => '{{content}}'],
                                                 'class' => 'editbox',
+                                                'data-ac' => '/Skills/search',
                                                 'label' => false,
                                                 'value' => false,
                                                 'type' => 'text',
