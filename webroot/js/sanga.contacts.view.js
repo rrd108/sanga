@@ -1,5 +1,9 @@
 $(function() {
 
+	$.createAutocompleters('editForm',
+		{ baseUrl: $.sanga.baseUrl, onlyExistingValue: false }
+	);
+
 	$('.editbox').hide();
 
 	var n = $.localStorage('sanga.userViewActiveTab') ? $.localStorage('sanga.userViewActiveTab') : 0;
