@@ -249,6 +249,10 @@ main {
     color: #eee;
 }
 
+.form-error {
+    display: unset;
+}
+
 .ui-autocomplete { background: #15848f; display: block; right: 0; min-width: 100px; max-height: 90vh; overflow-y: auto; position: absolute; top: 100%; z-index: 100; }
 .ui-autocomplete li { display: block; float: none; margin: 0; padding: 0; widows: 100%; }
 .ui-autocomplete li:before { display: none; }

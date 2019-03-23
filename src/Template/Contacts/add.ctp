@@ -93,7 +93,8 @@
                         'inputContainer' => '<div class="column large-6 medium-6">{{content}}</div>',
                         'inputContainerError' => '<div class="column large-6 medium-6 {{type}}{{required}} error">{{content}}{{error}}</div>'
                     ],
-                    'class' => 'radius',
+                    'placeholder' => __('YYYY-MM-DD'),
+                    'pattern' => '^\d{4}-?(\d{2})?-?(\d{2})?$',
                     'type' => 'text'
                 ]
             ) ?>
