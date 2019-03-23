@@ -52,41 +52,47 @@ echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
             <div class="row">
                 <h2>
                     <?= h($contact->contactname) ? h($contact->contactname) : h($contact->legalname) ?>
-                    <?php if ($contact->google_id) : ?>
-                    <?= $this->Html->image('google.png') ?>
-                    <?php else : ?>
-                    <?= $this->Html->link(
-                        $this->Html->image(
-                            'google-inactive.png',
-                            [
-                                'id' => 'gImg',
-                                'title' => __('Save to Google Contacts'),
-                            ]
-                        ),
-                        ['action' => 'google_save', $contact->id],
-                        ['id' => 'gSave', 'escape' => false]
-                    ) ?>
-                    <?php endif; ?>
                 </h2>
+                <?php if ($contact->google_id) : ?>
+                <?= $this->Html->image('google.png') ?>
+                <?php else : ?>
+                <?= $this->Html->link(
+                    $this->Html->image(
+                        'google-inactive.png',
+                        [
+                            'id' => 'gImg',
+                            'title' => __('Save to Google Contacts'),
+                        ]
+                    ),
+                    ['action' => 'google_save', $contact->id],
+                    ['id' => 'gSave', 'escape' => false]
+                ) ?>
+                <?php endif; ?>
             </div>
 
             <div class="row">
                 <?= $this->Form->create($contact, ['id' => 'editForm', 'url' => ['action' => 'edit']]) ?>
                 <div id="tabs-1" class="large-12 medium-12 small-12 columns">
-                    <?= $this->Html->link(
-                        __('Inactive'),
-                        ['action' => 'setinactive', $contact->id, ],
-                        [
-                            'class' => 'setChange button',
-                            'title' => __('Make contact inactive (remove from all lists)'),
-                            'confirm' => __('Are you sure you want to delete this contact?'),
-                        ]
-                    ) ?>
-                    <?php if ($contact->profile_image) : ?>
-                    <?= $this->Html->image('contacts/' . $contact->id) ?>
-                    <?php else : ?>
-                    <?= $this->Html->image('contacts/noimg.png') ?>
-                    <?php endif ?>
+                    <div class="row">
+                        <div class="column large-8">
+                            <?php if ($contact->profile_image) : ?>
+                            <?= $this->Html->image('contacts/' . $contact->id) ?>
+                            <?php else : ?>
+                            <?= $this->Html->image('contacts/noimg.png') ?>
+                            <?php endif ?>
+                        </div>
+                        <div class="column large-4">
+                            <?= $this->Html->link(
+                                __('Inactive'),
+                                ['action' => 'setinactive', $contact->id, ],
+                                [
+                                    'class' => 'setChange button',
+                                    'title' => __('Make contact inactive (remove from all lists)'),
+                                    'confirm' => __('Are you sure you want to delete this contact?'),
+                                ]
+                            ) ?>
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="column large-4">
@@ -643,10 +649,10 @@ echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
                 </div>
                 <?= $this->Form->end() ?>
 
-            <div id="tabs-5" class="contacts view large-12 columns">
-                <div class="row">
-                    <div class="column large-12">
-                        <?php if (!empty($histories)): ?>
+                <div id="tabs-5" class="contacts view large-12 columns">
+                    <div class="row">
+                        <div class="column large-12">
+                            <?php if (!empty($histories)) : ?>
                             <?= $this->Form->create(
                                 null,
                                 [
@@ -655,7 +661,8 @@ echo $this->Html->script('sanga.get.history.detail.js', ['block' => true]);
                                         'controller' => 'Histories',
                                         'action' => 'add',
                                     ],
-                                ]) ?>
+                                ]
+                            ) ?>
                             <table id="hTable" cellpadding="0" cellspacing="0">
                                 <thead>
                                     <tr>
