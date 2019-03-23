@@ -2,11 +2,7 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
-use Cake\Network\Exception\ForbiddenException;
 use Cake\Event\Event;
-
-use Cake\Routing\Router;
-use Cake\Network\Email\Email;
 
 /**
  * Users Controller
@@ -19,7 +15,7 @@ use Cake\Network\Email\Email;
  */
 class UsersController extends AppController
 {
-    
+
     public $components = ['RBruteForce.RBruteForce'];
 
     public function beforeFilter(Event $event)
@@ -29,7 +25,7 @@ class UsersController extends AppController
 
     public function isAuthorized($user = null)
     {
-        if ($user['role'] >= 9) {
+        if ($user['role'] >= 9 || $this->request->session()->read('switchUser') == 2) {//TODO HC
             return true;
         }
         return false;
