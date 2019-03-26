@@ -46,7 +46,7 @@ class SearchController extends AppController
                 }
                 $label .= $this->createHighlight($row->email, $term) ? '✉ ' . $this->createHighlight($row->email, $term) . ' ' : '';
                 $label .= $this->createHighlight($row->phone, $term) ? '☏ ' . $this->createHighlight($row->phone, $term) . ' ' : '';
-                $label .= (isset($row->birth) && $this->createHighlight($row->birth->format('Y-m-d'), $term)) ? '↫ ' . $this->createHighlight($row->birth->format('Y-m-d'), $term) . ' ' : '';
+                $label .= (isset($row->birth) && $this->createHighlight($row->birth, $term)) ? '↫ ' . $this->createHighlight($row->birth, $term) . ' ' : '';
                 $label .= $this->createHighlight($row->workplace, $term) ? '♣ ' . $this->createHighlight($row->workplace, $term) . ' ' : '';
                 $label .= $this->createHighlight($row->comment, $term) ? '✍ ' : '';
             }

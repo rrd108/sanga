@@ -218,7 +218,7 @@ class ContactsTable extends Table
         if ($entity->isNew()) {
             if ((!empty($entity->contactname) + !empty($entity->legalname) + !empty($entity->zip_id)
                 + !empty($entity->address) + !empty($entity->phone) + !empty($entity->email)
-                + !empty($entity->birth->time) + !empty($entity->workplace)
+                + !empty($entity->birth) + !empty($entity->workplace)
                 + !empty($entity->workplace_address)  + !empty($entity->workplace_phone)
                 + !empty($entity->workplace_email) + !empty($entity->workplace->zip_id)
                 + !empty($entity->contactsource_id) + !empty($entity->family_id)) >= 2
