@@ -19,6 +19,7 @@
 echo $this->Html->script('jquery.js');    //this should be the very first js file
 
 echo $this->Html->script('jquery-ui.min.js');
+echo $this->Html->script('superfish.js');   // TODO remove
 
 echo $this->Html->script('jquery.ui.autocomplete.html.js');
 echo $this->Html->script('ui.datepicker-hu.js');
