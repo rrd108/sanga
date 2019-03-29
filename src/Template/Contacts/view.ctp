@@ -722,7 +722,22 @@
                                             }
                                             ?>
                                         </td>
-                                        <td></td>
+                                        <td class="text-center">
+                                            <?php
+                                            //csak akkor szerkeszthet? az esemény, ha nem system eseményr?l van szó
+                                            if ($history->event->id != 1) : ?>
+                                            <?php /* $this->Html->link(
+                                                '<i class="fi-pencil"></i>',
+                                                ['action' => 'edit', $history->id],
+                                                ['escape' => false]
+                                            ) */ ?>
+                                            <?= $this->Form->postLink(
+                                                '<i class="fi-trash"></i>',
+                                                ['controller' => 'Histories', 'action' => 'delete', $history->id],
+                                                ['confirm' => __('Are you sure you want to delete {0}?', strip_tags($history->short_detail)), 'escape' => false]
+                                            ) ?>
+                                            <?php endif; ?>
+                                        </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -981,4 +996,4 @@
             </div>
         </div>
     </div>
-</div>
+</div >

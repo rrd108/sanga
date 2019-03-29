@@ -1,4 +1,7 @@
 <?php
+
+use Cake\Utility\Text;
+
 echo $this->Html->css('daterangepicker.css', ['block' => true]);
 
 echo $this->Html->script('jquery.rAutocompleters.min', ['block' => true]);
@@ -111,7 +114,7 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                             <?php
                             $cName = $history->contact->contactname;
                             if ($history->contact->legalname) {
-                                $cName .= '<span class="legalname">' . $history->contact->legalname . '</span>';
+                                $cName .= ' <span class="legalname">' . $history->contact->legalname . '</span>';
                             }
                             echo $history->has('contact') ?
                                 $this->Html->link(
@@ -158,10 +161,15 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                             <?php
                             //csak akkor szerkeszthető az esemény, ha nem system eseményről van szó
                             if ($history->event->id != 1) : ?>
-                            <?= $this->Html->link(
+                            <?php /* $this->Html->link(
                                 '<i class="fi-pencil"></i>',
                                 ['action' => 'edit', $history->id],
                                 ['escape' => false]
+                            ) */?>
+                            <?= $this->Form->postLink(
+                                '<i class="fi-trash"></i>',
+                                ['action' => 'delete', $history->id],
+                                ['confirm' => __('Are you sure you want to delete # {0}?', strip_tags($cName) . ' / ' . strip_tags($history->short_detail)), 'escape' => false]
                             ) ?>
                             <?php endif; ?>
                         </td>
