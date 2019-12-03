@@ -258,6 +258,8 @@ main {
 .ui-autocomplete li:before { display: none; }
 .ui-autocomplete li a { color: #ffffff; display: block; padding: 0.3rem 1rem; width: 100%; }
 .ui-autocomplete li a:hover, .ui-state-focus { background: #068; }
+.ui-autocomplete-loading { background:url('../img/ajax-loader.gif') no-repeat center }
+
 
 .ui-datepicker-header {
     background: #15848f;

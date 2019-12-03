@@ -22,13 +22,12 @@ class SearchController extends AppController
         // TODO replace this tofunc call for better security
         $query = $this->Contacts->find()
             ->select(['id', 'contactname', 'legalname', 'email', 'phone', 'birth', 'workplace', 'comment'])
-            ->where(['contactname LIKE "'.$term.'%"'])
-            ->orWhere(['legalname LIKE "'.$term.'%"'])
-            ->orWhere(['email LIKE "'.$term.'%"'])
-            ->orWhere(['phone LIKE "'.$term.'%"'])
-            ->orWhere(['comment LIKE "'.$term.'%"'])
-            ->orWhere(['workplace LIKE "'.$term.'%"'])
-            ->limit(25);
+            ->where(['contactname LIKE "%'.$term.'%"'])
+            ->orWhere(['legalname LIKE "%'.$term.'%"'])
+            ->orWhere(['email LIKE "%'.$term.'%"'])
+            ->orWhere(['phone LIKE "%'.$term.'%"'])
+            ->orWhere(['comment LIKE "%'.$term.'%"'])
+            ->orWhere(['workplace LIKE "%'.$term.'%"']);
         foreach ($query as $row) {
             $label = '';
             if ($this->Contacts->isAccessible($row->id, $this->Auth->user('id'))) {
