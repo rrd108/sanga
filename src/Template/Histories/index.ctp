@@ -79,8 +79,10 @@ echo $this->Html->script('jquery.daterangepicker.js', ['block' => true]);
                             echo $this->Form->input('fdetail', ['label' => false, 'value' => false, 'placeholder' => __('Detail')]);
                             ?>
                         </th>
-                        <th width="15%">
-                            <?= $this->Form->input('fquantity', ['label' => false, 'value' => false, 'placeholder' => __('Quantity'), 'disabled' => true]) ?>
+                         <th width="15%">
+							<?php
+							echo $this->Form->input('fquantity_id', ['type' => 'hidden', 'value' => false]); 
+							echo $this->Form->input('xfquantity_id', ['type' => 'text','label' => false, 'value' => false, 'placeholder' => __('Quantity'), 'disabled' => false]) ?>
                         </th>
                         <th width="5%" class="text-center">
                             <?= $this->Form->button('<i class="fi-magnifying-glass"></i>', ['title' => __('Filter'), 'escape' => false]) ?>
