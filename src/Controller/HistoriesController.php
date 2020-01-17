@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\Utility\Text;
 /**
  * Histories Controller
  *
@@ -29,9 +29,9 @@ class HistoriesController extends AppController
         $order = ['Histories.date' => 'DESC', 'Histories.id' => 'DESC'];
 
         if (! empty($this->request->getData())) {
+			
             //TODO see accessible only
             $where = [];
-
             if (! empty($this->request->getData('fcontact_id'))) {
                 $where['Histories.contact_id'] = $this->request->getData('fcontact_id');
             }
@@ -52,10 +52,13 @@ class HistoriesController extends AppController
             }
             if (! empty($this->request->getData('fdetail'))) {
                 $where['Histories.detail LIKE'] = '%' . $this->request->getData('fdetail') . '%';
+			}
+			if (! empty($this->request->getData('fquantity_id'))) {
+                $where['Histories.id'] = $this->request->getData('fquantity_id');
             }
+			
 
             $histories = $this->Histories->find()->where($where);
-
             if (isset($dates)) {
                 $histories->andWhere($between);
             }
@@ -63,6 +66,7 @@ class HistoriesController extends AppController
                 ->order($order);
             $this->set('histories', $this->paginate($histories));
         } else {
+			//
             //we should call paginate like this to do not mess up union
             $histories = $this->Histories->find();
             $this->paginate = [
@@ -79,7 +83,43 @@ class HistoriesController extends AppController
             $this->set('histories', $this->paginate());
         }
     }
+	
+	
+	/**
+    * Quantity auto suggest search function
+    */
+	public function search()
+    {
 
+		$contact = $this->Histories->newEntity($this->request->getData());
+			$query = $this->Histories->find()
+            ->select(['id', 'quantity'])
+            ->where(['quantity LIKE "'.$this->request->getQuery('term').'%"']);
+		
+        foreach ($query as $row) {
+			
+            $label = $this->createHighlight($row->quantity);
+            $result[] = [
+                'value' => $row->id,
+                'label' => $label
+            ];
+        }
+        $this->set('result', $result);
+        $this->set('_serialize', 'result');
+        $this->set('contact', $contact);
+    }
+
+    private function createHighlight($value = null)
+    {
+        if ($value && strpos(strtolower($value), $this->request->getQuery('term')) !== false) {
+            $highlight = ['format' => '<span class="b i">\1</span>'];
+            return Text::highlight($value, $this->request->getQuery('term'), $highlight) . ' ';
+        } else {
+            return $value;
+        }
+    }
+    
+ 
     /**
  * View method
  *
@@ -226,4 +266,6 @@ class HistoriesController extends AppController
         $this->set(compact('result'));
         $this->set('_serialize', 'result');
     }
+	
+
 }

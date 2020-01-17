@@ -30,4 +30,10 @@ $(function() {
 		url : '/Events/search',
 		target : '#fevent-id'
 	});
+	
+	autocompleteBuilder({
+		selector : '#xfquantity-id',
+		url : '/Histories/search',
+		target : '#fquantity-id'
+	});
 });
