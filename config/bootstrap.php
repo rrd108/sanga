@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -217,7 +218,7 @@ if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
 
-Plugin::load('RBruteForce', ['bootstrap' => false, 'routes' => true]);
+//Plugin::load('RBruteForce', ['bootstrap' => false, 'routes' => true]);
 Plugin::load('CsvView', ['bootstrap' => false, 'routes' => false]);
 Plugin::load('MenuLink');
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
@@ -16,8 +17,6 @@ use Cake\Event\Event;
 class UsersController extends AppController
 {
 
-    public $components = ['RBruteForce.RBruteForce'];
-
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
@@ -25,17 +24,17 @@ class UsersController extends AppController
 
     public function isAuthorized($user = null)
     {
-        if ($user['role'] >= 9 || $this->request->session()->read('switchUser') == 2) {//TODO HC
+        if ($user['role'] >= 9 || $this->request->session()->read('switchUser') == 2) { //TODO HC
             return true;
         }
         return false;
     }
 
     /**
- * Index method
- *
- * @return void
- */
+     * Index method
+     *
+     * @return void
+     */
     public function index()
     {
         $this->set(
@@ -49,29 +48,29 @@ class UsersController extends AppController
     }
 
     /**
- * View method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * View method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function view($id = null)
     {
         $id = $id ? $id : $this->Auth->user('id');
         $user = $this->Users->get(
             $id,
             [
-            'contain' => ['Contacts', 'Events', 'Groups', 'Histories', 'Notifications']
+                'contain' => ['Contacts', 'Events', 'Groups', 'Histories', 'Notifications']
             ]
         );
         $this->set('user', $user);
     }
 
     /**
- * Add method
- *
- * @return void
- */
+     * Add method
+     *
+     * @return void
+     */
     public function add()
     {
         $user = $this->Users->newEntity($this->request->getData());
@@ -90,18 +89,18 @@ class UsersController extends AppController
     }
 
     /**
- * Edit method
- *
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * Edit method
+     *
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function edit($id)
     {
         $id = $id ? $id : $this->Auth->user('id');
         $user = $this->Users->get(
             $id,
             [
-            'contain' => ['Contacts', 'Groups', 'Usergroups']
+                'contain' => ['Contacts', 'Groups', 'Usergroups']
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -118,9 +117,9 @@ class UsersController extends AppController
                     }
                 }
                 $json = [
-                         'save' => __('The user could not be saved. Please, try again.'),
-                         'error' => $error
-                         ];
+                    'save' => __('The user could not be saved. Please, try again.'),
+                    'error' => $error
+                ];
             }
         }
         $this->set(compact('json'));
@@ -128,12 +127,12 @@ class UsersController extends AppController
     }
 
     /**
- * Delete method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * Delete method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function delete($id = null)
     {
         $user = $this->Users->get($id);
@@ -147,7 +146,8 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function personalize($id) {
+    public function personalize($id)
+    {
         if (!$this->request->session()->read('switchUser')) {
             $this->request->session()->write('switchUser', $this->Auth->user('id'));
             $this->Auth->setUser($this->Users->get($id));

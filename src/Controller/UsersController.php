@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -20,8 +21,6 @@ use Cake\I18n\I18n;
  */
 class UsersController extends AppController
 {
-
-    public $components = ['RBruteForce.RBruteForce'];
 
     public function beforeFilter(Event $event)
     {
@@ -115,11 +114,12 @@ class UsersController extends AppController
     {
         $query = $this->Users->find()
             ->select(['id', 'name'])
-            ->where(['name LIKE "'.$this->request->getQuery('term').'%"']);
+            ->where(['name LIKE "' . $this->request->getQuery('term') . '%"']);
         foreach ($query as $row) {
-            $result[] = ['value' => $row->id,
-                              'label' => $row->name
-                              ];
+            $result[] = [
+                'value' => $row->id,
+                'label' => $row->name
+            ];
         }
         //debug($result);die();
         $this->set(compact('result'));
@@ -145,7 +145,7 @@ class UsersController extends AppController
 
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->RBruteForce->check(['maxAttempts' => 3, 'dataLog' => true]);        //should be here - so banned out user would not able to login with correct password
+            //$this->RBruteForce->check(['maxAttempts' => 3, 'dataLog' => true]);        //should be here - so banned out user would not able to login with correct password
             $this->Flash->error(__('Invalid username or password, try again'));
         }
     }
