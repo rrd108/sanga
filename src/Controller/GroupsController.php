@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -20,11 +21,12 @@ class GroupsController extends AppController
     {
         $query = $this->Groups->find()
             ->select(['id', 'name'])
-            ->where(['name LIKE "'.$this->request->getQuery('term').'%"']);
+            ->where(['name LIKE "' . $this->request->getQuery('term') . '%"']);
         foreach ($query as $row) {
-            $result[] = array('value' => $row->id,
-                              'label' => $row->name
-                              );
+            $result[] = array(
+                'value' => $row->id,
+                'label' => $row->name
+            );
         }
         //debug($result);die();
         $this->set('result', $result);
@@ -32,20 +34,20 @@ class GroupsController extends AppController
     }
 
     /**
- * Index method
- *
- * @return void
- */
+     * Index method
+     *
+     * @return void
+     */
     public function index()
     {
         $groups = $this->Groups->find(
             'accessible',
             [
-            'User.id' => $this->Auth->user('id'),
-            'shared' => true
+                'User.id' => $this->Authentication->getIdentity()->id,
+                'shared' => true
             ]
         )
-        ->contain(['Contacts', 'AdminUsers']);
+            ->contain(['Contacts', 'AdminUsers']);
         $this->set('groups', $this->paginate($groups));
 
         //for adding new group
@@ -56,27 +58,28 @@ class GroupsController extends AppController
     }
 
     /**
- * View method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * View method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function view($id = null)
     {
         if ($id) {
 
-            if(! $this->Groups->isReadable($this->Auth->User('id'), $id)) {
+            if (!$this->Groups->isReadable($this->Authentication->getIdentity()->id, $id)) {
                 $this->Flash->error(__('Permission deined'));
                 $this->render();
             }
 
-            $this->set('isWritable', $this->Groups->isWritable($this->Auth->User('id'), $id));
+            $this->set('isWritable', $this->Groups->isWritable($this->Authentication->getIdentity()->id, $id));
 
             $group = $this->Groups->get(
                 $id,
                 [
-                    'contain' => ['Users', 'Contacts', 'Contacts.Zips', 'Contacts.WorkplaceZips',
+                    'contain' => [
+                        'Users', 'Contacts', 'Contacts.Zips', 'Contacts.WorkplaceZips',
                         'AdminUsers',
                         'Histories' => function ($q) {
                             return $q->group(['date', 'event_id', 'detail', 'Histories.id']);
@@ -105,8 +108,10 @@ class GroupsController extends AppController
                     $csvData[$i][] = $contact['workplace_email'];
                     $i++;
                 }
-                $_header = array_merge($_header, ['zip', 'city', 'address', 'workplace', 'workplace zip',
-                    'workplace address', 'workplace city', 'workplace phone', 'workplace email']);
+                $_header = array_merge($_header, [
+                    'zip', 'city', 'address', 'workplace', 'workplace zip',
+                    'workplace address', 'workplace city', 'workplace phone', 'workplace email'
+                ]);
                 $_delimiter = ';';
                 $_serialize = 'csvData';
                 $this->response->setDownload($group->name . '.csv');
@@ -118,14 +123,14 @@ class GroupsController extends AppController
     }
 
     /**
- * Add method
- *
- * @return void
- */
+     * Add method
+     *
+     * @return void
+     */
     public function add()
     {
         if (!$this->request->getData('admin_user_id')) {
-            $this->request = $this->request->withData('admin_user_id', $this->Auth->User('id'));
+            $this->request = $this->request->withData('admin_user_id', $this->Authentication->getIdentity()->id);
         }
 
         $group = $this->Groups->newEntity($this->request->getData());
@@ -143,12 +148,12 @@ class GroupsController extends AppController
     }
 
     /**
- * Edit method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * Edit method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function edit($id = null)
     {
         $group = $this->Groups->get($id);
@@ -165,12 +170,12 @@ class GroupsController extends AppController
     }
 
     /**
- * Delete method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * Delete method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function delete($id = null)
     {
         $group = $this->Groups->get($id);

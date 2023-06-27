@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -42,7 +43,7 @@ class SettingsController extends AppController
         $setting = $this->Settings->get(
             $id,
             [
-            'contain' => ['Users']
+                'contain' => ['Users']
             ]
         );
         $this->set('setting', $setting);
@@ -58,15 +59,17 @@ class SettingsController extends AppController
     {
         $setting = $this->Settings->newEntity();
         if ($this->request->is('post') || $this->request->is('ajax')) {
-            if (! $this->request->getData('user_id')) {
-                $this->request = $this->request->withData('user_id', $this->Auth->user('id'));
+            if (!$this->request->getData('user_id')) {
+                $this->request = $this->request->withData('user_id', $this->Authentication->getIdentity()->id);
             }
-            
+
             $setting = $this->Settings->patchEntity($setting, $this->request->getData());
             if ($this->Settings->save($setting)) {
                 $this->Flash->success(__('The setting has been saved.'));
-                $setting = ['message' => __('The setting has been saved.'),
-                            'id' => $setting->id];
+                $setting = [
+                    'message' => __('The setting has been saved.'),
+                    'id' => $setting->id
+                ];
             } else {
                 $this->Flash->error(__('The setting could not be saved. Please, try again.'));
                 $setting = ['message' => __('The setting could not be saved. Please, try again.')];
@@ -88,7 +91,7 @@ class SettingsController extends AppController
             ->find()
             ->where(
                 [
-                    'user_id' => $this->Auth->user('id'),
+                    'user_id' => $this->Authentication->getIdentity()->id,
                     'name' => $this->request->getData('sName')
                 ]
             )
@@ -124,12 +127,12 @@ class SettingsController extends AppController
         }
         $this->request = $this->request->withParsedBody(
             [
-                'user_id' => $this->Auth->user('id'),
+                'user_id' => $this->Authentication->getIdentity()->id,
                 'name' => $this->request->getData('sName'),
                 'value' => json_encode($select)
             ]
         );
-        
+
         if (empty($setting)) {
             $this->add();
             return;

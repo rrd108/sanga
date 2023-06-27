@@ -52,19 +52,19 @@
                     <?= h($contact->contactname) ? h($contact->contactname) : h($contact->legalname) ?>
                 </h2>
                 <?php if ($contact->google_id) : ?>
-                <?= $this->Html->image('google.png') ?>
+                    <?= $this->Html->image('google.png') ?>
                 <?php else : ?>
-                <?= $this->Html->link(
-                    $this->Html->image(
-                        'google-inactive.png',
-                        [
-                            'id' => 'gImg',
-                            'title' => __('Save to Google Contacts'),
-                        ]
-                    ),
-                    ['action' => 'google_save', $contact->id],
-                    ['id' => 'gSave', 'escape' => false]
-                ) ?>
+                    <?= $this->Html->link(
+                        $this->Html->image(
+                            'google-inactive.png',
+                            [
+                                'id' => 'gImg',
+                                'title' => __('Save to Google Contacts'),
+                            ]
+                        ),
+                        ['action' => 'google_save', $contact->id],
+                        ['id' => 'gSave', 'escape' => false]
+                    ) ?>
                 <?php endif; ?>
             </div>
 
@@ -74,15 +74,15 @@
                     <div class="row">
                         <div class="column large-8">
                             <?php if ($contact->profile_image) : ?>
-                            <?= $this->Html->image('contacts/' . $contact->id) ?>
+                                <?= $this->Html->image('contacts/' . $contact->id) ?>
                             <?php else : ?>
-                            <?= $this->Html->image('contacts/noimg.png') ?>
+                                <?= $this->Html->image('contacts/noimg.png') ?>
                             <?php endif ?>
                         </div>
                         <div class="column large-4">
                             <?= $this->Html->link(
                                 __('Inactive'),
-                                ['action' => 'setinactive', $contact->id, ],
+                                ['action' => 'setinactive', $contact->id,],
                                 [
                                     'class' => 'setChange button',
                                     'title' => __('Make contact inactive (remove from all lists)'),
@@ -142,17 +142,17 @@
                             <p>
                                 <span>
                                     <?php if (!empty($contact->users)) : ?>
-                                    <?php $myContact = false ?>
-                                    <?php foreach ($contact->users as $usr) : ?>
-                                    <?php
-                                    $css = 'viewable';
-                                    if ($usr->id == $this->request->session()->read('Auth.User.id')) {
-                                        $myContact = true;
-                                        $css = 'mine';
-                                    }
-                                    ?>
-                                    <span class="label <?= $css ?> "><?= h($usr->name) ?></span>
-                                    <?php endforeach; ?>
+                                        <?php $myContact = false ?>
+                                        <?php foreach ($contact->users as $usr) : ?>
+                                            <?php
+                                            $css = 'viewable';
+                                            if ($usr->id == $this->request->session()->read('Auth.User.id')) {
+                                                $myContact = true;
+                                                $css = 'mine';
+                                            }
+                                            ?>
+                                            <span class="label <?= $css ?> "><?= h($usr->name) ?></span>
+                                        <?php endforeach; ?>
                                     <?php endif; ?>
                                 </span>
                             </p>
@@ -167,12 +167,12 @@
                             <p class="ed">&nbsp;
                                 <span class="dta zip zip-zip">
                                     <?php if (isset($contact->zip)) : ?>
-                                    <?= $contact->zip->zip ?>
+                                        <?= $contact->zip->zip ?>
                                     <?php endif ?>
                                 </span>
                                 <span class="dta zip-name">
                                     <?php if (isset($contact->zip)) : ?>
-                                    <?= $contact->zip->name ?>
+                                        <?= $contact->zip->name ?>
                                     <?php endif; ?>
                                 </span>
                                 <?= $this->Form->control(
@@ -573,13 +573,13 @@
                                     <p class="ed">
                                         <span class="dta">&nbsp;
                                             <?php if (!empty($contact->skills)) : ?>
-                                            <?php
-                                            foreach ($contact->skills as $skills) :
-                                                echo '<span class="label shared removeable" data-id="' . $skills->id . '">';
-                                                echo h($skills->name);
-                                                echo '</span> ';
-                                            endforeach;
-                                            ?>
+                                                <?php
+                                                foreach ($contact->skills as $skills) :
+                                                    echo '<span class="label shared removeable" data-id="' . $skills->id . '">';
+                                                    echo h($skills->name);
+                                                    echo '</span> ';
+                                                endforeach;
+                                                ?>
                                             <?php endif; ?>
                                         </span>
                                         <?php
@@ -622,9 +622,9 @@
                                     $draggable = 'draggable';
                                 }
 
-                                ?>
-                        <span class="<?= $draggable ?> member label <?= $cssStyle ?>" data-css="<?= $cssStyle ?>" data-id="<?= $groups->id ?>"><?= h($groups->name) ?></span>
-                        <?php endforeach; ?>
+                        ?>
+                                <span class="<?= $draggable ?> member label <?= $cssStyle ?>" data-css="<?= $cssStyle ?>" data-id="<?= $groups->id ?>"><?= h($groups->name) ?></span>
+                            <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
 
@@ -652,100 +652,100 @@
                     <div class="row">
                         <div class="column large-12">
                             <?php if (!empty($histories)) : ?>
-                            <?= $this->Form->create(
-                                null,
-                                [
-                                    'id' => 'hForm',
-                                    'url' => [
-                                        'controller' => 'Histories',
-                                        'action' => 'add',
-                                    ],
-                                ]
-                            ) ?>
-                            <table id="hTable" cellpadding="0" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th><?= $this->Html->image(
-                                                'settings.png',
-                                                [
-                                                    'id' => 'settings',
-                                                    'title' => _('Settings'),
-                                                ]
-                                            ) ?></th>
-                                        <th><?= $this->Paginator->sort('date') ?></th>
-                                        <th><?= $this->Paginator->sort('User.name') ?></th>
-                                        <th><?= $this->Paginator->sort('Group.name') ?></th>
-                                        <th><?= $this->Paginator->sort('Event.name') ?></th>
-                                        <th><?= $this->Paginator->sort('short_detail') ?></th>
-                                        <th><?= $this->Paginator->sort('quantity') ?></th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                <?= $this->Form->create(
+                                    null,
+                                    [
+                                        'id' => 'hForm',
+                                        'url' => [
+                                            'controller' => 'Histories',
+                                            'action' => 'add',
+                                        ],
+                                    ]
+                                ) ?>
+                                <table id="hTable" cellpadding="0" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th><?= $this->Html->image(
+                                                    'settings.png',
+                                                    [
+                                                        'id' => 'settings',
+                                                        'title' => __('Settings'),
+                                                    ]
+                                                ) ?></th>
+                                            <th><?= $this->Paginator->sort('date') ?></th>
+                                            <th><?= $this->Paginator->sort('User.name') ?></th>
+                                            <th><?= $this->Paginator->sort('Group.name') ?></th>
+                                            <th><?= $this->Paginator->sort('Event.name') ?></th>
+                                            <th><?= $this->Paginator->sort('short_detail') ?></th>
+                                            <th><?= $this->Paginator->sort('quantity') ?></th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                    <?= $this->element('history-add-form', ['contactId' => $contact->id]) ?>
+                                        <?= $this->element('history-add-form', ['contactId' => $contact->id]) ?>
 
-                                    <?php foreach ($histories as $history) : ?>
-                                    <tr>
-                                        <td></td>
-                                        <td><?php echo $history->date; ?></td>
-                                        <td>
-                                            <?php
-                                            if (isset($history->user->name)) {
-                                                echo $history->user->name;
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if ($history->group) {
-                                                echo $history->group->name;
-                                            }
-                                            ?>
-                                        </td>
-                                        <td><?= h($history->event->name) ?></td>
-                                        <td class="_hd" data-h-id="<?= $history->id ?>"><?= h($history->short_detail) ?></td>
-                                        <td class="r">
-                                            <?php
-                                            if (isset($history->unit->name) && $history->quantity) {
-                                                echo h(
-                                                    $this->Number->currency(
-                                                        $history->quantity,
-                                                        $history->unit->name,
-                                                        [
-                                                            'places' => 0,
-                                                        ]
-                                                    )
-                                                );
-                                            } else {
-                                                echo h($history->quantity);
-                                            }
-                                            ?>
-                                        </td>
-                                        <td class="text-center">
-                                            <?php
-                                            //csak akkor szerkeszthet? az esemény, ha nem system eseményr?l van szó
-                                            if ($history->event->id != 1) : ?>
-                                            <?php /* $this->Html->link(
+                                        <?php foreach ($histories as $history) : ?>
+                                            <tr>
+                                                <td></td>
+                                                <td><?php echo $history->date; ?></td>
+                                                <td>
+                                                    <?php
+                                                    if (isset($history->user->name)) {
+                                                        echo $history->user->name;
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    if ($history->group) {
+                                                        echo $history->group->name;
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td><?= h($history->event->name) ?></td>
+                                                <td class="_hd" data-h-id="<?= $history->id ?>"><?= h($history->short_detail) ?></td>
+                                                <td class="r">
+                                                    <?php
+                                                    if (isset($history->unit->name) && $history->quantity) {
+                                                        echo h(
+                                                            $this->Number->currency(
+                                                                $history->quantity,
+                                                                $history->unit->name,
+                                                                [
+                                                                    'places' => 0,
+                                                                ]
+                                                            )
+                                                        );
+                                                    } else {
+                                                        echo h($history->quantity);
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td class="text-center">
+                                                    <?php
+                                                    //csak akkor szerkeszthet? az esemï¿½ny, ha nem system esemï¿½nyr?l van szï¿½
+                                                    if ($history->event->id != 1) : ?>
+                                                        <?php /* $this->Html->link(
                                                 '<i class="fi-pencil"></i>',
                                                 ['action' => 'edit', $history->id],
                                                 ['escape' => false]
                                             ) */ ?>
-                                            <?= $this->Form->postLink(
-                                                '<i class="fi-trash"></i>',
-                                                ['controller' => 'Histories', 'action' => 'delete', $history->id],
-                                                ['confirm' => __('Are you sure you want to delete {0}?', strip_tags($history->short_detail)), 'escape' => false]
-                                            ) ?>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                            <?php
-                            echo $this->Form->end();
-                            ?>
-                            <?= $this->element('paginator') ?> <?php endif; ?>
+                                                        <?= $this->Form->postLink(
+                                                            '<i class="fi-trash"></i>',
+                                                            ['controller' => 'Histories', 'action' => 'delete', $history->id],
+                                                            ['confirm' => __('Are you sure you want to delete {0}?', strip_tags($history->short_detail)), 'escape' => false]
+                                                        ) ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                                <?php
+                                echo $this->Form->end();
+                                ?>
+                                <?= $this->element('paginator') ?> <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -768,45 +768,45 @@
                                 <?php
                                 $total = 0;
                                 foreach ($finances as $history) :
-                                    ?>
-                                <tr>
-                                    <td><?php echo $history->date; ?></td>
-                                    <td>
-                                        <?php
-                                        if (isset($history->user->name)) {
-                                            echo $history->user->name;
-                                        }
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        if ($history->group) {
-                                            echo $history->group->name;
-                                        }
-                                        ?>
-                                    </td>
-                                    <td><?= h($history->event->name) ?></td>
-                                    <td><?= h($history->detail) ?></td>
-                                    <td class="r">
-                                        <?php
-                                        if (isset($history->unit->name) && $history->quantity) {
-                                            $total += $history->quantity;
-                                            echo h(
-                                                $this->Number->currency(
-                                                    $history->quantity,
-                                                    $history->unit->name,
-                                                    [
-                                                        'places' => 0,
-                                                    ]
-                                                )
-                                            );
-                                        } else {
-                                            echo h($history->quantity);
-                                        }
-                                        ?>
-                                    </td>
-                                    <td></td>
-                                </tr>
+                                ?>
+                                    <tr>
+                                        <td><?php echo $history->date; ?></td>
+                                        <td>
+                                            <?php
+                                            if (isset($history->user->name)) {
+                                                echo $history->user->name;
+                                            }
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                            if ($history->group) {
+                                                echo $history->group->name;
+                                            }
+                                            ?>
+                                        </td>
+                                        <td><?= h($history->event->name) ?></td>
+                                        <td><?= h($history->detail) ?></td>
+                                        <td class="r">
+                                            <?php
+                                            if (isset($history->unit->name) && $history->quantity) {
+                                                $total += $history->quantity;
+                                                echo h(
+                                                    $this->Number->currency(
+                                                        $history->quantity,
+                                                        $history->unit->name,
+                                                        [
+                                                            'places' => 0,
+                                                        ]
+                                                    )
+                                                );
+                                            } else {
+                                                echo h($history->quantity);
+                                            }
+                                            ?>
+                                        </td>
+                                        <td></td>
+                                    </tr>
                                 <?php endforeach; ?>
                                 </tbody>
                                 <tfoot>
@@ -885,24 +885,24 @@
                     <div class="row">
                         <div class="column large-12">
                             <?php if (h($contact->email)) : ?>
-                            <h6 class="subheader"><?= __('Sender') ?></h6>
-                            <?= $this->request->session()->read('Auth.User.email') ?>
-                            <h6 class="subheader"><?= __('To') ?></h6>
-                            <?= h($contact->email) ?>
-                            <?php
-                            echo $this->Form->control('subject');
-                            echo $this->Form->control(
-                                'message',
-                                ['type' => 'textarea']
-                            );
-                            echo $this->Form->button(__('Submit'), ['id' => 'sendmail']);
-                            ?>
+                                <h6 class="subheader"><?= __('Sender') ?></h6>
+                                <?= $this->request->session()->read('Auth.User.email') ?>
+                                <h6 class="subheader"><?= __('To') ?></h6>
+                                <?= h($contact->email) ?>
+                                <?php
+                                echo $this->Form->control('subject');
+                                echo $this->Form->control(
+                                    'message',
+                                    ['type' => 'textarea']
+                                );
+                                echo $this->Form->button(__('Submit'), ['id' => 'sendmail']);
+                                ?>
 
                             <?php
-                        else :
-                            echo __('We do not have the contact\'s email address, so we can not send mail');
-                        endif;
-                        ?>
+                            else :
+                                echo __('We do not have the contact\'s email address, so we can not send mail');
+                            endif;
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -945,47 +945,48 @@
                                 </thead>
                                 <tbody>
                                     <?php foreach ($contact->documents as $document) : ?>
-                                    <tr>
-                                        <td>
-                                            <?php
-                                            switch ($document->file_type): case 'application/pdf':
-                                                    echo $this->Html->image('doctype_icon_pdf.png');
-                                                    break;
-                                                case 'image/jpeg':
-                                                    echo $this->Html->image('doctype_icon_jpg.png');
-                                                    break;
-                                                case 'image/png':
-                                                    echo $this->Html->image('doctype_icon_png.png');
-                                                    break;
-                                                case 'text/plain':
-                                                    echo $this->Html->image('doctype_icon_txt.png');
-                                                    break;
-                                                default:
-                                                    echo $this->Html->image('doctype_icon_unk.png');
-                                            endswitch;
-                                            ?>
-                                        </td>
-                                        <td><?php echo $document->name; ?></td>
-                                        <td>
-                                            <?php
-                                            foreach ($uploaders as $uploader) :
-                                                if ($document->user_id == $uploader->id) :
-                                                    echo $uploader->name;
-                                                endif;
-                                            endforeach;
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            echo $this->Number->toReadableSize($document->size);
-                                            ?>
-                                        </td>
-                                        <td><?php echo $document->created; ?></td>
-                                        <td><?php echo $this->Html->link(
-                                                __('Download'),
-                                                ['action' => 'documentGet', $document->id]
-                                            ); ?></td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                <?php
+                                                switch ($document->file_type):
+                                                    case 'application/pdf':
+                                                        echo $this->Html->image('doctype_icon_pdf.png');
+                                                        break;
+                                                    case 'image/jpeg':
+                                                        echo $this->Html->image('doctype_icon_jpg.png');
+                                                        break;
+                                                    case 'image/png':
+                                                        echo $this->Html->image('doctype_icon_png.png');
+                                                        break;
+                                                    case 'text/plain':
+                                                        echo $this->Html->image('doctype_icon_txt.png');
+                                                        break;
+                                                    default:
+                                                        echo $this->Html->image('doctype_icon_unk.png');
+                                                endswitch;
+                                                ?>
+                                            </td>
+                                            <td><?php echo $document->name; ?></td>
+                                            <td>
+                                                <?php
+                                                foreach ($uploaders as $uploader) :
+                                                    if ($document->user_id == $uploader->id) :
+                                                        echo $uploader->name;
+                                                    endif;
+                                                endforeach;
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                echo $this->Number->toReadableSize($document->size);
+                                                ?>
+                                            </td>
+                                            <td><?php echo $document->created; ?></td>
+                                            <td><?php echo $this->Html->link(
+                                                    __('Download'),
+                                                    ['action' => 'documentGet', $document->id]
+                                                ); ?></td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
@@ -996,4 +997,4 @@
             </div>
         </div>
     </div>
-</div >
+</div>

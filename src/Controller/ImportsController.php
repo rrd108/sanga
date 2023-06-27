@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -16,7 +17,8 @@ class ImportsController extends AppController
     public function contacts()
     {
         //debug($this->request->data);
-        if (!empty($this->request->getData())
+        if (
+            !empty($this->request->getData())
             && is_uploaded_file($this->request->getData('file.tmp_name'))
         ) {
             if ($this->isCsv($this->getMime())) {
@@ -108,10 +110,10 @@ class ImportsController extends AppController
                         }
 
                         if (!empty($dataArray)) {
-                            $dataArray['users'] = ['_ids' => [$this->Auth->user('id')]];    //add myself as the contact person
+                            $dataArray['users'] = ['_ids' => [$this->Authentication->getIdentity()->id]];    //add myself as the contact person
                             //debug($dataArray);
                             $contact = $this->Contacts->newEntity($dataArray);
-                            $contact->loggedInUser = $this->Auth->user('id');
+                            $contact->loggedInUser = $this->Authentication->getIdentity()->id;
                             $e = $contact->errors();
                             if (empty($e)) {
                                 if ($this->Contacts->save($contact)) {
@@ -184,7 +186,8 @@ class ImportsController extends AppController
     public function histories()
     {
         //debug($this->request->data);
-        if (!empty($this->request->getData())
+        if (
+            !empty($this->request->getData())
             && is_uploaded_file($this->request->getData('file.tmp_name'))
         ) {
             if ($this->isCsv($this->getMime())) {
@@ -215,7 +218,7 @@ class ImportsController extends AppController
                                             $contact = $this->Contacts->find(
                                                 'accessibleBy',
                                                 [
-                                                    'User.id' => $this->Auth->user('id'),
+                                                    'User.id' => $this->Authentication->getIdentity()->id,
                                                     '_where' => [
                                                         'Contacts.contactname' => [
                                                             'condition' => ['&='],
@@ -292,7 +295,7 @@ class ImportsController extends AppController
                             }
 
                             if (!empty($dataArray)) {
-                                $dataArray['user_id'] = $this->Auth->user('id');
+                                $dataArray['user_id'] = $this->Authentication->getIdentity()->id;
                                 $history = $this->Histories->newEntity($dataArray);
                                 if (empty($history->errors())) {
                                     if ($this->Histories->save($history)) {
@@ -359,8 +362,10 @@ class ImportsController extends AppController
      */
     protected function getFileData()
     {
-        $fileData = fread(fopen($this->request->getData('file.tmp_name'), "r"),
-            $this->request->getData('file.size'));
+        $fileData = fread(
+            fopen($this->request->getData('file.tmp_name'), "r"),
+            $this->request->getData('file.size')
+        );
         return $fileData;
     }
 

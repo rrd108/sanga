@@ -56,7 +56,7 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $id = $id ? $id : $this->Auth->user('id');
+        $id = $id ? $id : $this->Authentication->getIdentity()->id;
         $user = $this->Users->get(
             $id,
             [
@@ -96,7 +96,7 @@ class UsersController extends AppController
      */
     public function edit($id)
     {
-        $id = $id ? $id : $this->Auth->user('id');
+        $id = $id ? $id : $this->Authentication->getIdentity()->id;
         $user = $this->Users->get(
             $id,
             [
@@ -149,7 +149,7 @@ class UsersController extends AppController
     public function personalize($id)
     {
         if (!$this->request->session()->read('switchUser')) {
-            $this->request->session()->write('switchUser', $this->Auth->user('id'));
+            $this->request->session()->write('switchUser', $this->Authentication->getIdentity()->id);
             $this->Auth->setUser($this->Users->get($id));
         } else {
             $this->Auth->setUser($this->Users->get($this->request->session()->read('switchUser')));

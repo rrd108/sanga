@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -17,73 +18,74 @@ class NotificationsController extends AppController
     }
 
     /**
- * Index method
- *
- * @return void
- */
+     * Index method
+     *
+     * @return void
+     */
     public function index()
     {
         $query = $this->Notifications->find()
-            ->where(['user_id' => $this->Auth->user('id'), 'unread' => true])
+            ->where(['user_id' => $this->Authentication->getIdentity()->id, 'unread' => true])
             ->order(['Notifications.created' => 'DESC'])
             ->contain(['Senders']);
         $this->set('newNotifications', $this->paginate($query));
 
         $query = $this->Notifications->find()
-            ->where(['user_id' => $this->Auth->user('id'), 'unread' => false])
+            ->where(['user_id' => $this->Authentication->getIdentity()->id, 'unread' => false])
             ->order(['Notifications.created' => 'DESC'])
             ->contain(['Senders']);
         $this->set('readNotifications', $this->paginate($query));
 
         $query = $this->Notifications->find()
-            ->where(['sender_id' => $this->Auth->user('id')])
+            ->where(['sender_id' => $this->Authentication->getIdentity()->id])
             ->order(['Notifications.created' => 'DESC'])
             ->contain(['Users']);
         $this->set('sentNotifications', $this->paginate($query));
     }
 
     /**
- * View method
- *
- * Viewing a notification by its owner sets unread to false
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * View method
+     *
+     * Viewing a notification by its owner sets unread to false
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function view($id = null)
     {
         $notification = $this->Notifications->get(
             $id,
             [
-            'contain' => ['Senders']
+                'contain' => ['Senders']
             ]
         );
-        if ($notification->user_id == $this->Auth->user('id')) {
+        if ($notification->user_id == $this->Authentication->getIdentity()->id) {
             $notification->unread = false;
             $this->Notifications->save($notification);
         }
         $this->set(
             'notification_count',
-            ($this->Notifications->find('unread', ['User.id' => $this->Auth->user('id')])->count()));
+            ($this->Notifications->find('unread', ['User.id' => $this->Authentication->getIdentity()->id])->count())
+        );
         $this->set('notification', $notification);
     }
 
     /**
- * Add method
- *
- * @return void
- */
+     * Add method
+     *
+     * @return void
+     */
     public function add($user_id = null)
     {
         $notification = $this->Notifications->newEntity($this->request->getData());
         if ($user_id) {
             $notification->user_id = $user_id;
         } else {
-            $notification->user_id = $notification->user_id ? $notification->user_id : $this->Auth->user('id');
+            $notification->user_id = $notification->user_id ? $notification->user_id : $this->Authentication->getIdentity()->id;
         }
         if ($this->request->is('post')) {
-            $notification->sender_id = $this->Auth->user('id');
+            $notification->sender_id = $this->Authentication->getIdentity()->id;
             if ($this->Notifications->save($notification)) {
                 $this->Flash->success(__('The notification has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -96,18 +98,18 @@ class NotificationsController extends AppController
     }
 
     /**
- * Edit method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * Edit method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function edit($id = null)
     {
         $notification = $this->Notifications->get(
             $id,
             [
-            'contain' => []
+                'contain' => []
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -124,12 +126,12 @@ class NotificationsController extends AppController
     }
 
     /**
- * Delete method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * Delete method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function delete($id = null)
     {
         $notification = $this->Notifications->get($id);

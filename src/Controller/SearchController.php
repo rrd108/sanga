@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -22,15 +23,15 @@ class SearchController extends AppController
         // TODO replace this tofunc call for better security
         $query = $this->Contacts->find()
             ->select(['id', 'contactname', 'legalname', 'email', 'phone', 'birth', 'workplace', 'comment'])
-            ->where(['contactname LIKE "%'.$term.'%"'])
-            ->orWhere(['legalname LIKE "%'.$term.'%"'])
-            ->orWhere(['email LIKE "%'.$term.'%"'])
-            ->orWhere(['phone LIKE "%'.$term.'%"'])
-            ->orWhere(['comment LIKE "%'.$term.'%"'])
-            ->orWhere(['workplace LIKE "%'.$term.'%"']);
+            ->where(['contactname LIKE "%' . $term . '%"'])
+            ->orWhere(['legalname LIKE "%' . $term . '%"'])
+            ->orWhere(['email LIKE "%' . $term . '%"'])
+            ->orWhere(['phone LIKE "%' . $term . '%"'])
+            ->orWhere(['comment LIKE "%' . $term . '%"'])
+            ->orWhere(['workplace LIKE "%' . $term . '%"']);
         foreach ($query as $row) {
             $label = '';
-            if ($this->Contacts->isAccessible($row->id, $this->Auth->user('id'))) {
+            if ($this->Contacts->isAccessible($row->id, $this->Authentication->getIdentity()->id)) {
                 if ($this->createHighlight($row->contactname, $term) || $this->createHighlight($row->legalname, $term)) {
                     $label .= '<span class="noaccess">';
                     $label .= $this->createHighlight($row->contactname, $term) ? '♥ ' . $this->createHighlight($row->contactname, $term) . ' ' : '';
@@ -51,7 +52,7 @@ class SearchController extends AppController
             }
             if ($label) {
                 $result[] = [
-                    'value' => 'c'.$row->id,
+                    'value' => 'c' . $row->id,
                     'label' => $label
                 ];
             }
@@ -62,11 +63,11 @@ class SearchController extends AppController
         $query = $this->Groups->find(
             'accessible',
             [
-                'User.id' => $this->Auth->user('id'),
+                'User.id' => $this->Authentication->getIdentity()->id,
                 'shared' => true
             ]
         )
-            ->where(['name LIKE "'.$term.'%"']);
+            ->where(['name LIKE "' . $term . '%"']);
         foreach ($query as $row) {
             if ($this->createHighlight($row->name, $term)) {
                 $label = '⁂ ' . $this->createHighlight($row->name, $term);
@@ -81,7 +82,7 @@ class SearchController extends AppController
         $this->Skills = TableRegistry::get('Skills');
         $query = $this->Skills
             ->find()
-            ->where(['name LIKE "'.$term.'%"']);
+            ->where(['name LIKE "' . $term . '%"']);
         //debug($query->toArray());die();
         foreach ($query as $row) {
             if ($this->createHighlight($row->name, $term)) {

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -19,11 +20,12 @@ class EventsController extends AppController
     {
         $query = $this->Events->find()
             ->select(['id', 'name'])
-            ->where(['name LIKE "%'.$this->request->getQuery('term').'%"']);
+            ->where(['name LIKE "%' . $this->request->getQuery('term') . '%"']);
         foreach ($query as $row) {
-            $result[] = array('value' => $row->id,
-                              'label' => $row->name
-                              );
+            $result[] = array(
+                'value' => $row->id,
+                'label' => $row->name
+            );
         }
         //debug($result);die();
         $this->set('result', $result);
@@ -31,10 +33,10 @@ class EventsController extends AppController
     }
 
     /**
- * Index method
- *
- * @return void
- */
+     * Index method
+     *
+     * @return void
+     */
     public function index()
     {
         $this->paginate = [
@@ -48,14 +50,14 @@ class EventsController extends AppController
 
 
     /**
- * Add method
- *
- * @return void
- */
+     * Add method
+     *
+     * @return void
+     */
     public function add()
     {
         if (!$this->request->getData('user_id') && $this->Auth->User('role') < 9) {
-            $this->request = $this->request->withData('user_id', $this->Auth->User('id'));
+            $this->request = $this->request->withData('user_id', $this->Authentication->getIdentity()->id);
         }
 
         $event = $this->Events->newEntity($this->request->getData());
@@ -72,18 +74,18 @@ class EventsController extends AppController
     }
 
     /**
- * Edit method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * Edit method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function edit($id = null)
     {
         $event = $this->Events->get(
             $id,
             [
-            'contain' => []
+                'contain' => []
             ]
         );
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -100,12 +102,12 @@ class EventsController extends AppController
     }
 
     /**
- * Delete method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * Delete method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function delete($id = null)
     {
         $event = $this->Events->get($id);

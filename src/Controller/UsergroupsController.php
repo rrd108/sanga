@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -28,7 +29,7 @@ class UsergroupsController extends AppController
     {
         $owned = $this->Usergroups->find(
             'ownedBy',
-            ['User.id' => $this->Auth->user('id')]
+            ['User.id' => $this->Authentication->getIdentity()->id]
         );
 
         if ($filter == 'month') {
@@ -51,20 +52,20 @@ class UsergroupsController extends AppController
 
         $memberships = $this->Usergroups->find(
             'memberships',
-            ['User.id' => $this->Auth->user('id')]
+            ['User.id' => $this->Authentication->getIdentity()->id]
         );
 
         $this->set('memberships', $memberships);
     }
 
     /**
- * Add method
- *
- * @return \Cake\Network\Response|void
+     * Add method
+     *
+     * @return \Cake\Network\Response|void
      */
     public function add()
     {
-        $this->request->withData('admin_user_id', $this->Auth->user('id'));
+        $this->request->withData('admin_user_id', $this->Authentication->getIdentity()->id);
         $usergroup = $this->Usergroups->newEntity($this->request->getData());
         if ($this->request->is('post')) {
             if ($this->Usergroups->save($usergroup)) {
@@ -92,7 +93,7 @@ class UsergroupsController extends AppController
      */
     public function join(int $id)
     {
-        $joined = $this->Usergroups->join($id, $this->Auth->user('id'));
+        $joined = $this->Usergroups->join($id, $this->Authentication->getIdentity()->id);
         if ($joined) {
             $this->Flash->success('You have successfully joined');
             //TODO notify admin
@@ -132,12 +133,12 @@ class UsergroupsController extends AppController
     }
 
     /**
- * Delete method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * Delete method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function delete($id = null)
     {
         $usergroup = $this->Usergroups->get($id);

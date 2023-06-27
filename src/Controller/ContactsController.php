@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -34,19 +35,19 @@ class ContactsController extends AppController
     }
 
     /**
-    * Used at contacts/add, Histories/add, etc for getting owned contacts (should it be accessible?)
-    */
+     * Used at contacts/add, Histories/add, etc for getting owned contacts (should it be accessible?)
+     */
     public function search()
     {
         $contact = $this->Contacts->newEntity($this->request->getData());
-        $query = $this->Contacts->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+        $query = $this->Contacts->find('ownedBy', ['User.id' => $this->Authentication->getIdentity()->id])
             ->select(['id', 'contactname', 'legalname'])
-            ->where(['contactname LIKE "%'.$this->request->getQuery('term').'%"'])
-            ->orWhere(['legalname LIKE "%'.$this->request->getQuery('term').'%"']);
+            ->where(['contactname LIKE "%' . $this->request->getQuery('term') . '%"'])
+            ->orWhere(['legalname LIKE "%' . $this->request->getQuery('term') . '%"']);
         //debug($query);
         foreach ($query as $row) {
             $label = $this->createHighlight($row->contactname) .
-                    $this->createHighlight($row->legalname);
+                $this->createHighlight($row->legalname);
             $result[] = [
                 'value' => $row->id,
                 'label' => $label
@@ -79,7 +80,7 @@ class ContactsController extends AppController
             $result = $this->Contacts->find(
                 'accessibleBy',
                 [
-                    'User.id' => $this->Auth->user('id'),
+                    'User.id' => $this->Authentication->getIdentity()->id,
                     '_select' => $select,
                     '_where' => $where,
                     '_contain' => $contain,
@@ -90,7 +91,7 @@ class ContactsController extends AppController
             $result = $this->Contacts->find(
                 'ownedBy',
                 [
-                    'User.id' => $this->Auth->user('id')
+                    'User.id' => $this->Authentication->getIdentity()->id
                 ]
             );
             $result = $result->select($select)
@@ -116,7 +117,7 @@ class ContactsController extends AppController
     {
         if ($id) {
             $query = $this->Contacts->Users->Settings->get($id);
-            if ($query->user_id != $this->Auth->user('id')) {
+            if ($query->user_id != $this->Authentication->getIdentity()->id) {
                 $this->Flash->error(__('Permission deined'));
                 $this->render();
             }
@@ -149,7 +150,7 @@ class ContactsController extends AppController
                         $selected[] = substr(strstr($field, '.'), 1);
                     } else {
                         $modelName = strstr($field, '.', true); //TODO több pöttyös - ha egyáltalán kell a contain
-                        if (! in_array($modelName, $contain)) {
+                        if (!in_array($modelName, $contain)) {
                             $contain[] = $modelName;
                         }
                         $selected[] = $field;
@@ -187,7 +188,7 @@ class ContactsController extends AppController
             }
 
             if (isset($queryArray['sort']) && $queryArray['sort'] != '') {
-                $sort = strpos($queryArray['sort'], '.') ? $queryArray['sort'] : 'Contacts.'.$queryArray['sort'];
+                $sort = strpos($queryArray['sort'], '.') ? $queryArray['sort'] : 'Contacts.' . $queryArray['sort'];
                 $direction = isset($queryArray['direction']) && $queryArray['direction'] != '' ? $queryArray['direction'] : 'ASC';
                 $order[$sort] = $direction;
             } elseif (in_array('Contacts.contactname', $select)) {
@@ -201,7 +202,7 @@ class ContactsController extends AppController
             $this->paginate = [
                 'finder' => [
                     'accessibleBy' => [
-                        'User.id' => $this->Auth->user('id'),
+                        'User.id' => $this->Authentication->getIdentity()->id,
                         '_where' => $conditions,
                         '_contain' => $contain, //TODO remove
                         '_select' => $select,
@@ -220,7 +221,7 @@ class ContactsController extends AppController
                 $query = $this->Contacts->find(
                     'accessibleBy',
                     [
-                        'User.id' => $this->Auth->user('id'),
+                        'User.id' => $this->Authentication->getIdentity()->id,
                         '_where' => $conditions,
                         '_contain' => $contain,
                         '_select' => $select,
@@ -255,12 +256,12 @@ class ContactsController extends AppController
                     $i++;
                 }
                 $_serialize = 'csvData';
-                $_header = /*$_extract = */$selectCsv;
+                $_header = /*$_extract = */ $selectCsv;
                 $this->set(compact('csvData', '_serialize', '_header'/*, '_extract'*/));
             }
         }
 
-        $savedQueries = $this->Contacts->Users->Settings->getSavedQueries($this->Auth->user('id'));
+        $savedQueries = $this->Contacts->Users->Settings->getSavedQueries($this->Authentication->getIdentity()->id);
         $this->set('savedQueries', $savedQueries);
     }
 
@@ -285,13 +286,13 @@ class ContactsController extends AppController
     */
 
     /**
- * Index method
- *
- * @return void
- */
+     * Index method
+     *
+     * @return void
+     */
     public function index()
     {
-        $select = $this->Contacts->Users->Settings->getDefaultContactFields($this->Auth->user('id'));
+        $select = $this->Contacts->Users->Settings->getDefaultContactFields($this->Authentication->getIdentity()->id);
         $s = $this->createArraysForFind($select);
 
         $this->request->data = $s['selected'];
@@ -310,7 +311,7 @@ class ContactsController extends AppController
         $this->paginate = [
             'finder' => [
                 'accessibleBy' => [
-                    'User.id' => $this->Auth->user('id'),
+                    'User.id' => $this->Authentication->getIdentity()->id,
                     '_select' => $s['select'],
                     '_contain' => $s['contain'],
                     '_order' => $order,
@@ -323,11 +324,11 @@ class ContactsController extends AppController
     }
 
     /**
- * Create $select, $selected and $contain arrays for the next find
- *
- * @param array $select array of selected fields
- * @return array
- */
+     * Create $select, $selected and $contain arrays for the next find
+     *
+     * @param array $select array of selected fields
+     * @return array
+     */
     private function createArraysForFind($select)
     {
         if (empty($select)) {
@@ -375,16 +376,16 @@ class ContactsController extends AppController
     }
 
     /**
- * View method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * View method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function view($id = null)
     {
         //$id = $id ? $id : $this->request->data['contactname'];
-        if (! $this->Contacts->isAccessible($id, $this->Auth->user('id'))) {
+        if (!$this->Contacts->isAccessible($id, $this->Authentication->getIdentity()->id)) {
             $contactPersons = $this->Contacts->get($id, ['contain' => ['Users']]);
             $this->set('contactPersons', $contactPersons);
 
@@ -418,7 +419,7 @@ class ContactsController extends AppController
             ->find()
             ->where(
                 [
-                    'user_id' => $this->Auth->user('id'),
+                    'user_id' => $this->Authentication->getIdentity()->id,
                     'name' => 'Contacts/view/history/system'
                 ]
             )
@@ -450,7 +451,7 @@ class ContactsController extends AppController
             ->order(['Histories.date' => 'DESC', 'Histories.id' => 'DESC']);
         $this->set('finances', $this->paginate($finances));
 
-        $accessibleGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
+        $accessibleGroups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Authentication->getIdentity()->id, 'shared' => true]);
         $this->set(compact('accessibleGroups'));
 
         $hasAccess = $this->Contacts->hasAccess($id);
@@ -461,20 +462,20 @@ class ContactsController extends AppController
     }
 
     /**
- * Add method
- *
- * @return void
- */
+     * Add method
+     *
+     * @return void
+     */
     public function add()
     {
-        $data = $this->request->withData('users._ids', [$this->Auth->user('id')]);        //add auth user as contact person
+        $data = $this->request->withData('users._ids', [$this->Authentication->getIdentity()->id]);        //add auth user as contact person
         $contact = $this->Contacts->newEntity($data->getData());
-        if (! empty($this->request->getData('family_member_id'))) {
+        if (!empty($this->request->getData('family_member_id'))) {
             $contact->family_id = $this->getFamilyId($contact, $this->request->getData('family_member_id'));
         }
         $result = [];
         if ($this->request->is('post')) {
-            $contact->loggedInUser = $this->Auth->user('id');
+            $contact->loggedInUser = $this->Authentication->getIdentity()->id;
             if ($this->Contacts->save($contact)) {
                 $message = __('The contact has been saved.');
                 if ($this->request->is('ajax')) {
@@ -502,7 +503,7 @@ class ContactsController extends AppController
         }
         $zips = $this->Contacts->Zips->find('list', ['keyField' => 'id', 'valueField' => 'full_zip']);
         $contactsources = $this->Contacts->Contactsources->find('list');
-        $groups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Auth->user('id'), 'shared' => true]);
+        $groups = $this->Contacts->Groups->find('accessible', ['User.id' => $this->Authentication->getIdentity()->id, 'shared' => true]);
         $default_groups = $this->Contacts->Users->Settings->getDefaultGroups();
         $skills = $this->Contacts->Skills->find('list');
         $users = $this->Contacts->Users->find();
@@ -548,15 +549,15 @@ class ContactsController extends AppController
     }
 
     /**
- * Edit method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * Edit method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function edit($id = null)
     {
-        if (! $this->Contacts->isAccessible($id, $this->Auth->user('id'))) {
+        if (!$this->Contacts->isAccessible($id, $this->Authentication->getIdentity()->id)) {
             $this->Flash->error(__('Permission deined'));
             $this->render();
         }
@@ -564,10 +565,10 @@ class ContactsController extends AppController
         $contact = $this->Contacts->get(
             $id,
             [
-            'contain' => ['Groups', 'Skills', 'Users', 'Zips']
+                'contain' => ['Groups', 'Skills', 'Users', 'Zips']
             ]
         );
-        if (! empty($this->request->getData())) {
+        if (!empty($this->request->getData())) {
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $contact = $this->Contacts->patchEntity($contact, $this->request->getData());
 
@@ -575,7 +576,7 @@ class ContactsController extends AppController
                     $contact->family_id = $this->getFamilyId($contact, $this->request->getData('family_member_id'));
                 }
 
-                $contact->loggedInUser = $this->Auth->user('id');
+                $contact->loggedInUser = $this->Authentication->getIdentity()->id;
                 //debug($contact);die();
                 $saved = $this->Contacts->save($contact);
                 if ($saved) {
@@ -632,16 +633,16 @@ class ContactsController extends AppController
     }
 
     /**
-    * Set contacts inactive method
-    *
-    * @param  string $id
-    * @return void
-    * @throws \Cake\Network\Exception\NotFoundException
-    */
+     * Set contacts inactive method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function setinactive($id = null)
     {
         $contact = $this->Contacts->get($id);
-        if ($this->Contacts->isAccessibleAsContactPerson($id, $this->Auth->user('id'))) {
+        if ($this->Contacts->isAccessibleAsContactPerson($id, $this->Authentication->getIdentity()->id)) {
             $contact->active = false;
             if ($this->Contacts->save($contact)) {
                 $this->Flash->success('The contact has been deleted.');
@@ -659,8 +660,8 @@ class ContactsController extends AppController
         //this is a long running one, put to the background
         //the user will be notified when it is ready
         //TODO a kreált fileban olyanokat is látok akik nem az enyémek!
-        exec(WWW_ROOT.'../bin/cake duplicate_filter '.$this->Auth->user('id').' > /dev/null &');
-        //$duplicates = $this->Contacts->checkDuplicates($this->Auth->user('id'));
+        exec(WWW_ROOT . '../bin/cake duplicate_filter ' . $this->Authentication->getIdentity()->id . ' > /dev/null &');
+        //$duplicates = $this->Contacts->checkDuplicates($this->Authentication->getIdentity()->id);
         //$duplicates = $this->Contacts->checkDuplicates();
     }
 
@@ -709,12 +710,12 @@ class ContactsController extends AppController
     public function editGroup($id = null)
     {
         if ($this->request->is('post') && $this->request->is('ajax')) {
-            if ($this->Contacts->isAccessible($id, $this->Auth->user('id'))) {
+            if ($this->Contacts->isAccessible($id, $this->Authentication->getIdentity()->id)) {
                 $contact = $this->Contacts->get($id, ['contain' => ['Groups']]);
                 foreach ($contact->groups as $group) {
                     $this->request->data['groups']['_ids'][] = $group->id;
                 }
-                $contact->loggedInUser = $this->Auth->user('id');
+                $contact->loggedInUser = $this->Authentication->getIdentity()->id;
                 $this->Contacts->patchEntity($contact, $this->request->getData());
                 if ($this->Contacts->save($contact)) {
                     $result = ['message' => __('New Group membership saved')];
@@ -735,8 +736,10 @@ class ContactsController extends AppController
             $contact = $this->Contacts->get($id, ['contain' => ['Groups']]);
             $group = $this->Contacts->Groups->get($this->request->getData('group_id'));
             $this->Contacts->Groups->unlink($contact, [$group]);
-            $result = ['saved' => true,
-                       'message' => __('Group membership removed')];
+            $result = [
+                'saved' => true,
+                'message' => __('Group membership removed')
+            ];
             $this->set(compact('result'));
             $this->set('_serialize', 'result');
         }
@@ -748,8 +751,10 @@ class ContactsController extends AppController
             $contact = $this->Contacts->get($this->request->getData('contact_id'));
             $skill = $this->Contacts->Skills->get($this->request->getData('skill_id'));
             $this->Contacts->Skills->unlink($contact, [$skill]);
-            $result = ['saved' => true,
-                       'message' => __('Skill removed')];
+            $result = [
+                'saved' => true,
+                'message' => __('Skill removed')
+            ];
             $this->set(compact('result'));
             $this->set('_serialize', 'result');
         }
@@ -764,11 +769,13 @@ class ContactsController extends AppController
         $client->setRedirectUri(Configure::read('Google.redirectUri'));
 
         $client->setScopes(
-            ['http://www.google.com/m8/feeds/',
-                            'https://www.googleapis.com/auth/userinfo.email']
+            [
+                'http://www.google.com/m8/feeds/',
+                'https://www.googleapis.com/auth/userinfo.email'
+            ]
         );
 
-        $user = $this->Contacts->Users->get($this->Auth->user('id'));
+        $user = $this->Contacts->Users->get($this->Authentication->getIdentity()->id);
 
         if ($this->request->getQuery('code')) {
             //google callback: saves access token and (at the very first time) refesh token
@@ -824,11 +831,11 @@ class ContactsController extends AppController
             $maxResults = 51;
             $startIndex = 1 + $maxResults * $page;
             $req = new Google_Http_Request(
-                'https://www.google.com/m8/feeds/contacts/default/full'.
-                '?alt=json'.
-                '&group=http://www.google.com/m8/feeds/groups/'.$googleUser->data->email.'/base/6'.
-                '&max-results='.$maxResults.
-                '&start-index='.$startIndex
+                'https://www.google.com/m8/feeds/contacts/default/full' .
+                    '?alt=json' .
+                    '&group=http://www.google.com/m8/feeds/groups/' . $googleUser->data->email . '/base/6' .
+                    '&max-results=' . $maxResults .
+                    '&start-index=' . $startIndex
             );
             $val = $client->getAuth()->authenticatedRequest($req);
             $gContacts = json_decode($val->getResponseBody());
@@ -855,14 +862,15 @@ class ContactsController extends AppController
                     //get photo bytes
                     $photo = $this->google_get_photo($gId, $client);
 
-                    $contacts[] = ['gId' => $gId,
-                                   'contactname' => isset($entry->title->{'$t'}) ? $entry->title->{'$t'} : '',
-                                   'updated' => $entry->updated->{'$t'},
-                                   'email' => isset($entry->{'gd$email'}) ? $entry->{'gd$email'} : '',
-                                   'phone' => isset($entry->{'gd$phoneNumber'}) ? $entry->{'gd$phoneNumber'} : '',
-                                   'address' => isset($entry->{'gd$postalAddress'}) ? $entry->{'gd$postalAddress'} : '',
-                                   'photo' =>    $photo
-                                   ];
+                    $contacts[] = [
+                        'gId' => $gId,
+                        'contactname' => isset($entry->title->{'$t'}) ? $entry->title->{'$t'} : '',
+                        'updated' => $entry->updated->{'$t'},
+                        'email' => isset($entry->{'gd$email'}) ? $entry->{'gd$email'} : '',
+                        'phone' => isset($entry->{'gd$phoneNumber'}) ? $entry->{'gd$phoneNumber'} : '',
+                        'address' => isset($entry->{'gd$postalAddress'}) ? $entry->{'gd$postalAddress'} : '',
+                        'photo' =>    $photo
+                    ];
                 }
                 $this->set(compact('contacts', 'contactsTotal', 'maxResults', 'page'));
             }
@@ -895,7 +903,7 @@ class ContactsController extends AppController
     {
         if ($this->request->getData() && $this->request->is('post') && $this->request->is('ajax')) {
             //add contacts person
-            $this->request = $this->request->withData('users', ['_ids' => [$this->Auth->user('id')]]);
+            $this->request = $this->request->withData('users', ['_ids' => [$this->Authentication->getIdentity()->id]]);
 
             if ($this->request->getData('address')) {
                 $address = $this->formatAddress($this->request->getData('address'));
@@ -904,7 +912,7 @@ class ContactsController extends AppController
             }
 
             $contact = $this->Contacts->newEntity($this->request->getData());
-            $contact->loggedInUser = $this->Auth->user('id');
+            $contact->loggedInUser = $this->Authentication->getIdentity()->id;
             if ($this->Contacts->save($contact)) {
                 $result = ['save' => __('The contact has been saved.')];
 
@@ -933,43 +941,43 @@ class ContactsController extends AppController
 
             $contact = $this->Contacts->get($id, ['contain' => ['Zips' => ['Countries']]]);
 
-            $contactEntry = "<atom:entry xmlns:atom='http://www.w3.org/2005/Atom' ".
-                                "xmlns:gd='http://schemas.google.com/g/2005' ".
-                                "xmlns:gContact='http://schemas.google.com/contact/2008'>".
-                              "\n<atom:category scheme='http://schemas.google.com/g/2005#kind' ".
-                                "term='http://schemas.google.com/contact/2008#contact'/>";
+            $contactEntry = "<atom:entry xmlns:atom='http://www.w3.org/2005/Atom' " .
+                "xmlns:gd='http://schemas.google.com/g/2005' " .
+                "xmlns:gContact='http://schemas.google.com/contact/2008'>" .
+                "\n<atom:category scheme='http://schemas.google.com/g/2005#kind' " .
+                "term='http://schemas.google.com/contact/2008#contact'/>";
 
             $contactName = $contact->contactname ? $contact->contactname : $contact->legalname;
 
-            $contactEntry .= "\n<gd:name>".
-                                "<gd:fullName>" . $contactName . "</gd:fullName>".
-                              "</gd:name>";
+            $contactEntry .= "\n<gd:name>" .
+                "<gd:fullName>" . $contactName . "</gd:fullName>" .
+                "</gd:name>";
 
             if ($contact->email) {
-                $contactEntry .= "\n<gd:email rel='http://schemas.google.com/g/2005#work' ".
-                                "primary='true' ".
-                                "address='".$contact->email."'/>";
+                $contactEntry .= "\n<gd:email rel='http://schemas.google.com/g/2005#work' " .
+                    "primary='true' " .
+                    "address='" . $contact->email . "'/>";
             }
 
             if ($contact->phone) {
-                $contactEntry .= "\n<gd:phoneNumber rel='http://schemas.google.com/g/2005#work' ".
-                                "primary='true'>".$contact->phone.
-                                "</gd:phoneNumber>";
+                $contactEntry .= "\n<gd:phoneNumber rel='http://schemas.google.com/g/2005#work' " .
+                    "primary='true'>" . $contact->phone .
+                    "</gd:phoneNumber>";
             }
 
             if ($contact->address) {
-                $contactEntry .= "\n<gd:structuredPostalAddress ".
-                                  "rel='http://schemas.google.com/g/2005#work' ".
-                                  "primary='true'>".
-                                    "<gd:city>".$contact->zip->name."</gd:city>".
-                                    "<gd:street>".$contact->address."</gd:street>".
-                                    "<gd:postcode>".$contact->zip->zip."</gd:postcode>".
-                                    "<gd:country>".$contact->zip->country->name."</gd:country>".
-                                "</gd:structuredPostalAddress>";
+                $contactEntry .= "\n<gd:structuredPostalAddress " .
+                    "rel='http://schemas.google.com/g/2005#work' " .
+                    "primary='true'>" .
+                    "<gd:city>" . $contact->zip->name . "</gd:city>" .
+                    "<gd:street>" . $contact->address . "</gd:street>" .
+                    "<gd:postcode>" . $contact->zip->zip . "</gd:postcode>" .
+                    "<gd:country>" . $contact->zip->country->name . "</gd:country>" .
+                    "</gd:structuredPostalAddress>";
             }
 
-            $contactEntry .= "\n<gContact:groupMembershipInfo deleted='false' ".
-                "href='http://www.google.com/m8/feeds/groups/".$googleUser->data->email."/base/6' />";    //add to my contacts group
+            $contactEntry .= "\n<gContact:groupMembershipInfo deleted='false' " .
+                "href='http://www.google.com/m8/feeds/groups/" . $googleUser->data->email . "/base/6' />";    //add to my contacts group
 
             $contactEntry .= "\n</atom:entry>";
             //$this->log($contactEntry, 'debug');
@@ -977,9 +985,11 @@ class ContactsController extends AppController
             $req = new Google_Http_Request('https://www.google.com/m8/feeds/contacts/default/full?alt=json');
             $req->setRequestMethod('POST');
             $req->setRequestHeaders(
-                ['content-length' => strlen($contactEntry),
-                                     'GData-Version'=> '3.0',
-                                     'content-type'=>'application/atom+xml; charset=UTF-8; type=feed']
+                [
+                    'content-length' => strlen($contactEntry),
+                    'GData-Version' => '3.0',
+                    'content-type' => 'application/atom+xml; charset=UTF-8; type=feed'
+                ]
             );
             $req->setPostBody($contactEntry);
             $val = $client->getAuth()->authenticatedRequest($req);
@@ -1014,9 +1024,9 @@ class ContactsController extends AppController
         $address = str_replace($zip->zip, '', $address);
         $address = str_replace($zip->name, '', $address);
         $zip = [
-                'zip_id' => $zip->id,
-                'address' => $address
-                ];
+            'zip_id' => $zip->id,
+            'address' => $address
+        ];
         return $zip;
     }
 
@@ -1027,13 +1037,13 @@ class ContactsController extends AppController
             //this will run with cron every 6 hours
             //collect changed contacts at google
             $req = new Google_Http_Request(
-                'https://www.google.com/m8/feeds/contacts/default/full'.
-                '?alt=json'.
-                '&updated-min='.gmdate('Y-m-d\TH:i:s', strtotime('-6 hours'))
+                'https://www.google.com/m8/feeds/contacts/default/full' .
+                    '?alt=json' .
+                    '&updated-min=' . gmdate('Y-m-d\TH:i:s', strtotime('-6 hours'))
             );
             $val = $client->getAuth()->authenticatedRequest($req);
             $gContacts = json_decode($val->getResponseBody());
-        //we should loop throught the entry to check what data is changed
+            //we should loop throught the entry to check what data is changed
             //ignore name changes
             //gd$email, gd$phoneNumber, gd$postalAddress
             //collect changed contacts in our database
@@ -1072,23 +1082,27 @@ class ContactsController extends AppController
         $history = $this->Contacts->Histories->newEntity();
         $history->contact_id = $contactId;
         $history->date = date('Y-m-d H:i:s');
-        $history->user_id = $this->Auth->user('id');
+        $history->user_id = $this->Authentication->getIdentity()->id;
         $history->event_id = 3;    //TODO HC
         $history->detail = $this->request->getData('subject') . ' : ' . $this->request->getData('message');
         $saved = $this->Contacts->Histories->save($history);
         if ($saved) {
-            $result = ['save' => true,
-                        'message' => __('The history has been saved.')];
+            $result = [
+                'save' => true,
+                'message' => __('The history has been saved.')
+            ];
         } else {
-            $result = ['save' => false,
-                        'message' => __('The history could not be saved.')];
+            $result = [
+                'save' => false,
+                'message' => __('The history could not be saved.')
+            ];
         }
         $this->set('result', $result);
     }
 
     public function documentSave()
     {
-        if (! empty($this->request->getData('contactid'))) {
+        if (!empty($this->request->getData('contactid'))) {
             $contactId = $this->request->getData('contactid');
 
             if (empty($this->request->getData('document_title'))) {
@@ -1103,7 +1117,7 @@ class ContactsController extends AppController
                 $document->file_type = $this->request->getData('uploadfile.type');
                 $document->size = $this->request->getData('uploadfile.size');
                 $document->data = file_get_contents($this->request->getData('uploadfile.tmp_name'));
-                $document->user_id = $this->Auth->user('id');
+                $document->user_id = $this->Authentication->getIdentity()->id;
 
                 $this->Contacts->Documents->save($document);
 
@@ -1133,7 +1147,7 @@ class ContactsController extends AppController
 
         $this->response->setHeader(
             [
-            "Content-type: $result->file_type"
+                "Content-type: $result->file_type"
             ]
         );
         $this->response->setBody(stream_get_contents($result->data));

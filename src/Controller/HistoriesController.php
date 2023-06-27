@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Utility\Text;
+
 /**
  * Histories Controller
  *
@@ -19,44 +21,44 @@ class HistoriesController extends AppController
     }
 
     /**
- * Index method
- *
- * @return void
- */
+     * Index method
+     *
+     * @return void
+     */
     public function index()
     {
         $contain = ['Contacts', 'Users', 'Groups', 'Events', 'Units'];
         $order = ['Histories.date' => 'DESC', 'Histories.id' => 'DESC'];
 
-        if (! empty($this->request->getData())) {
-			
+        if (!empty($this->request->getData())) {
+
             //TODO see accessible only
             $where = [];
-            if (! empty($this->request->getData('fcontact_id'))) {
+            if (!empty($this->request->getData('fcontact_id'))) {
                 $where['Histories.contact_id'] = $this->request->getData('fcontact_id');
             }
-            if (! empty($this->request->getData('daterange'))) {
+            if (!empty($this->request->getData('daterange'))) {
                 $dates = str_split(' - ', $this->request->getData('daterange'));
                 $between = function ($exp) use ($dates) {
                     return $exp->between('date', $dates[0], $dates[1], 'date');
                 };
             }
-            if (! empty($this->request->getData('fuser_id'))) {
+            if (!empty($this->request->getData('fuser_id'))) {
                 $where['Histories.user_id'] = $this->request->getData('fuser_id');
             }
-            if (! empty($this->request->getData('fgroup_id'))) {
+            if (!empty($this->request->getData('fgroup_id'))) {
                 $where['Histories.group_id'] = $this->request->getData('fgroup_id');
             }
-            if (! empty($this->request->getData('fevent_id'))) {
+            if (!empty($this->request->getData('fevent_id'))) {
                 $where['Histories.event_id'] = $this->request->getData('fevent_id');
             }
-            if (! empty($this->request->getData('fdetail'))) {
+            if (!empty($this->request->getData('fdetail'))) {
                 $where['Histories.detail LIKE'] = '%' . $this->request->getData('fdetail') . '%';
-			}
-			if (! empty($this->request->getData('fquantity_id'))) {
+            }
+            if (!empty($this->request->getData('fquantity_id'))) {
                 $where['Histories.id'] = $this->request->getData('fquantity_id');
             }
-			
+
 
             $histories = $this->Histories->find()->where($where);
             if (isset($dates)) {
@@ -66,13 +68,13 @@ class HistoriesController extends AppController
                 ->order($order);
             $this->set('histories', $this->paginate($histories));
         } else {
-			//
+            //
             //we should call paginate like this to do not mess up union
             $histories = $this->Histories->find();
             $this->paginate = [
                 'finder' => [
                     'accessibleBy' => [
-                        'User.id' => $this->Auth->user('id'),
+                        'User.id' => $this->Authentication->getIdentity()->id,
                         '_contain' => $contain,
                         '_order' => $order,
                         '_page' => $this->request->getQuery('page') ? $this->request->getQuery('page') : 1,
@@ -83,21 +85,21 @@ class HistoriesController extends AppController
             $this->set('histories', $this->paginate());
         }
     }
-	
-	
-	/**
-    * Quantity auto suggest search function
-    */
-	public function search()
+
+
+    /**
+     * Quantity auto suggest search function
+     */
+    public function search()
     {
 
-		$contact = $this->Histories->newEntity($this->request->getData());
-			$query = $this->Histories->find()
+        $contact = $this->Histories->newEntity($this->request->getData());
+        $query = $this->Histories->find()
             ->select(['id', 'quantity'])
-            ->where(['quantity LIKE "'.$this->request->getQuery('term').'%"']);
-		
+            ->where(['quantity LIKE "' . $this->request->getQuery('term') . '%"']);
+
         foreach ($query as $row) {
-			
+
             $label = $this->createHighlight($row->quantity);
             $result[] = [
                 'value' => $row->id,
@@ -118,43 +120,45 @@ class HistoriesController extends AppController
             return $value;
         }
     }
-    
- 
+
+
     /**
- * View method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * View method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function view($id = null)
     {
         $history = $this->Histories->get(
             $id,
             [
-            'contain' => ['Contacts', 'Users', 'Groups', 'Events', 'Units']
+                'contain' => ['Contacts', 'Users', 'Groups', 'Events', 'Units']
             ]
         );
         $this->set('history', $history);
     }
 
     /**
- * Add method
- *
- * @return void
- */
+     * Add method
+     *
+     * @return void
+     */
     public function add()
     {
         $history = $this->Histories->newEntity($this->request->getData());
-        $history->user_id = $this->Auth->user('id');
+        $history->user_id = $this->Authentication->getIdentity()->id;
         if ($this->request->is('post')) {
             //debug($this->request->data);die();
 
-            if ($this->request->getData('target_group_id') && ! $this->request->getData('contact_id')) {    //add an event to multiple group members
+            if ($this->request->getData('target_group_id') && !$this->request->getData('contact_id')) {    //add an event to multiple group members
                 $group = $this->Histories->groups->get($this->request->getData('group_id'), ['contain' => 'Contacts']);
-                exec(WWW_ROOT . '../bin/cake history ' . json_encode(json_encode($history)) . ' ' . json_encode(json_encode($group)) . ' ' . $this->Auth->user('id') . ' > /dev/null &');
-                $result = ['save' => true,
-                            'message' => __('Adding history event to all group members started in the background')];
+                exec(WWW_ROOT . '../bin/cake history ' . json_encode(json_encode($history)) . ' ' . json_encode(json_encode($group)) . ' ' . $this->Authentication->getIdentity()->id . ' > /dev/null &');
+                $result = [
+                    'save' => true,
+                    'message' => __('Adding history event to all group members started in the background')
+                ];
             } else {
                 $saved = $this->Histories->save($history);
                 if ($saved) {
@@ -199,21 +203,21 @@ class HistoriesController extends AppController
     }
 
     /**
- * Edit method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * Edit method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function edit($id = null)
     {
         $history = $this->Histories->get(
             $id,
             [
-            'contain' => []
+                'contain' => []
             ]
         );
-        if ($this->Auth->user('id') ==  $history->user_id) {
+        if ($this->Authentication->getIdentity()->id ==  $history->user_id) {
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $history = $this->Histories->patchEntity($history, $this->request->getData());
                 if ($this->Histories->save($history)) {
@@ -236,12 +240,12 @@ class HistoriesController extends AppController
     }
 
     /**
- * Delete method
- *
- * @param  string $id
- * @return void
- * @throws \Cake\Network\Exception\NotFoundException
- */
+     * Delete method
+     *
+     * @param  string $id
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException
+     */
     public function delete($id = null)
     {
         $history = $this->Histories->get($id);
@@ -266,6 +270,4 @@ class HistoriesController extends AppController
         $this->set(compact('result'));
         $this->set('_serialize', 'result');
     }
-	
-
 }
