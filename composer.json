@@ -6,6 +6,7 @@
     "license": "GPL",
     "require": {
         "php": ">=5.6",
+        "cakephp/authentication": "^1.0",
         "cakephp/cakephp": "3.9.*",
         "cakephp/migrations": "^2.0.0",
         "cakephp/plugin-installer": "^1.0",
@@ -44,7 +45,6 @@
     "scripts": {
         "post-install-cmd": "App\\Console\\Installer::postInstall",
         "post-create-project-cmd": "App\\Console\\Installer::postInstall",
-        "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
         "check": [
             "@test",
             "@cs-check"

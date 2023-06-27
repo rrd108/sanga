@@ -26,7 +26,7 @@ class UsersController extends AppController
     {
         parent::beforeFilter($event);
         // Allow users to access logout without logged in
-        $this->Auth->allow(['logout', 'forgotpass', 'resetpass']);
+        $this->Authentication->allowUnauthenticated(['login', 'logout', 'forgotpass', 'resetpass']);
     }
 
     public function isAuthorized($user = null)
@@ -66,7 +66,7 @@ class UsersController extends AppController
 
     public function profile()
     {
-        $this->view($this->Auth->user('id'));
+        $this->view($this->Authentication->getIdentity()->id);
     }
 
     /**
@@ -78,7 +78,7 @@ class UsersController extends AppController
     public function edit()
     {
         $user = $this->Users->get(
-            $this->Auth->user('id'),
+            $this->Authentication->getIdentity()->id,
             [
                 'contain' => ['Contacts', 'Groups', 'Usergroups']
             ]
@@ -131,19 +131,20 @@ class UsersController extends AppController
         if ($this->request->getData('passreminder')) {
             $this->forgotpass();
         } elseif ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->Auth->setUser($user);
+            $result = $this->Authentication->getResult();
+            if ($result->isValid()) {
+                $user = $this->Authentication->getIdentity();
                 $this->removeResetToken($user);
 
                 I18n::locale(h($user['locale']));
+                $this->Cookie->configKey('User', 'encryption', false);
                 $this->Cookie->write('User.locale', h($user['locale']));
 
-                $user = $this->Users->get($this->Auth->user('id'));
+                $user = $this->Users->get($this->Authentication->getIdentity()->id);
                 $user['last_login'] = date('Y-m-d H:i:s');
                 $this->Users->save($user);
 
-                return $this->redirect($this->Auth->redirectUrl());
+                return $this->redirect($this->Authentication->getLoginRedirect());
             }
             //$this->RBruteForce->check(['maxAttempts' => 3, 'dataLog' => true]);        //should be here - so banned out user would not able to login with correct password
             $this->Flash->error(__('Invalid username or password, try again'));
@@ -153,15 +154,14 @@ class UsersController extends AppController
     private function removeResetToken($user)
     {
         //remove reset token on sucessful login (the user find out the pass, and did not used the token)
-        $id = $this->Auth->user('id');
-        $user = $this->Users->get($id);
+        $user = $this->Users->get($this->Authentication->getIdentity()->id);
         $user->resettoken = '';
         $this->Users->save($user);
     }
 
     public function logout()
     {
-        return $this->redirect($this->Auth->logout());
+        return $this->Authentication->logout();
     }
 
     private function forgotpass()
@@ -254,10 +254,10 @@ class UsersController extends AppController
             ->find()->count();
 
         $dash['contacts']['own'] = $this->Users->Contacts
-            ->find('ownedBy', ['User.id' => $this->Auth->user('id')])->count();
+            ->find('ownedBy', ['User.id' => $this->Authentication->getIdentity()->id])->count();
 
         $dash['contacts']['birthdayown'] = $this->Users->Contacts
-            ->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+            ->find('ownedBy', ['User.id' => $this->Authentication->getIdentity()->id])
             ->where(
                 [
                     'CONCAT(MONTH(Contacts.birth),"-",DAY(Contacts.birth)) >=' => date('n-j'),
@@ -267,27 +267,27 @@ class UsersController extends AppController
             ->count();
 
         $dash['contacts']['newown'] = $this->Users->Contacts
-            ->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+            ->find('ownedBy', ['User.id' => $this->Authentication->getIdentity()->id])
             ->where(['Contacts.created >=' => $lastweek])
             ->count();
 
         $dash['histories']['own'] = $this->Users->Histories
-            ->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+            ->find('ownedBy', ['User.id' => $this->Authentication->getIdentity()->id])
             ->count();
 
         $dash['histories']['week'] = $this->Users->Histories
-            ->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+            ->find('ownedBy', ['User.id' => $this->Authentication->getIdentity()->id])
             ->where(['Histories.date >= ' => date('Y-m-d', $lastweek)])
             ->count();
 
         $dash['histories']['last2weeks'] = $this->Users->Histories
-            ->find('ownedBy', ['User.id' => $this->Auth->user('id')])
+            ->find('ownedBy', ['User.id' => $this->Authentication->getIdentity()->id])
             ->where(['Histories.date >= ' => date('Y-m-d', strtotime('-14 days', strtotime('now')))])
             ->count();
 
         $dash['usergroups'] = $this->Users->find()
             ->matching('Usergroups', function ($q) {
-                return $q->where(['Usergroups.admin_user_id' => $this->Auth->user('id')]);
+                return $q->where(['Usergroups.admin_user_id' => $this->Authentication->getIdentity()->id]);
             })->contain('Histories', function ($q) use ($lastweek) {
                 return $q->where(['Histories.date >= ' => $lastweek]);
             });

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -29,6 +30,13 @@ if (version_compare(PHP_VERSION, '5.6.0') < 0) {
  */
 if (!extension_loaded('intl')) {
     trigger_error('You must enable the intl extension to use CakePHP.' . PHP_EOL, E_USER_ERROR);
+}
+
+/*
+ * You can remove this if you are confident you have proper version of intl.
+ */
+if (version_compare(INTL_ICU_VERSION, '50.1', '<')) {
+    trigger_error('ICU >= 50.1 is needed to use CakePHP. Please update the `libicu` package of your system.' . PHP_EOL, E_USER_ERROR);
 }
 
 /*
