@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\SettingsTable;
@@ -17,27 +18,27 @@ class SettingsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'Settings' => 'app.settings',
-        'Users' => 'app.users',
-        'Events' => 'app.events',
-        'Histories' => 'app.histories',
-        'Contacts' => 'app.contacts',
-        'Zips' => 'app.zips',
-        'Countries' => 'app.countries',
-        'WorkplaceZips' => 'app.zips',
-        'Contactsources' => 'app.contactsources',
-        'Groups' => 'app.groups',
-        'AdminUsers' => 'app.users',
-        'AdminGroups' => 'app.groups',
-        'ContactsGroups' => 'app.contacts_groups',
-        'groups_users' => 'app.groups_users',
-        'Notifications' => 'app.notifications',
-        'ContactsUsers' => 'app.contacts_users',
-        'Usergroups' => 'app.usergroups',
-        'UsersUsergroups' => 'app.users_usergroups',
-        'Skills' => 'app.skills',
-        'ContactsSkills' => 'app.contacts_skills',
-        'Units' => 'app.units'
+        'Settings' => 'app.Settings',
+        'Users' => 'app.Users',
+        'Events' => 'app.Events',
+        'Histories' => 'app.Histories',
+        'Contacts' => 'app.Contacts',
+        'Zips' => 'app.Zips',
+        'Countries' => 'app.Countries',
+        'WorkplaceZips' => 'app.Zips',
+        'Contactsources' => 'app.Contactsources',
+        'Groups' => 'app.Groups',
+        'AdminUsers' => 'app.Users',
+        'AdminGroups' => 'app.Groups',
+        'ContactsGroups' => 'app.ContactsGroups',
+        'groups_users' => 'app.GroupsUsers',
+        'Notifications' => 'app.Notifications',
+        'ContactsUsers' => 'app.ContactsUsers',
+        'Usergroups' => 'app.Usergroups',
+        'UsersUsergroups' => 'app.UsersUsergroups',
+        'Skills' => 'app.Skills',
+        'ContactsSkills' => 'app.ContactsSkills',
+        'Units' => 'app.Units'
     ];
 
     /**
@@ -89,8 +90,10 @@ class SettingsTableTest extends TestCase
         $actual = $this->Settings->getDefaultContactFields(10);
         $this->assertEquals($expected, $actual);
 
-        $expected = ['Contacts.contactname', 'Contacts.legalname', 'Contacts.zip_id',
-                    'Contacts.phone', 'Contacts.email', 'Contacts.users'];
+        $expected = [
+            'Contacts.contactname', 'Contacts.legalname', 'Contacts.zip_id',
+            'Contacts.phone', 'Contacts.email', 'Contacts.users'
+        ];
         $actual = $this->Settings->getDefaultContactFields(2);
         $this->assertEquals($expected, $actual);
     }

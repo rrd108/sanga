@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Test\TestCase\Model\Table;
 
 use Cake\ORM\TableRegistry;
@@ -11,25 +12,25 @@ use Cake\TestSuite\TestCase;
 class HistoriesTableTest extends TestCase
 {
 
-/**
- * Fixtures
- *
- * @var array
- */
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
     public $fixtures = [
-        'app.histories',
-        'app.contacts',
-        'app.users',
-        'app.usergroups',
-        'app.users_usergroups',
-        'app.units'
+        'app.Histories',
+        'app.Contacts',
+        'app.Users',
+        'app.Usergroups',
+        'app.UsersUsergroups',
+        'app.Units'
     ];
 
-/**
- * setUp method
- *
- * @return void
- */
+    /**
+     * setUp method
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -37,11 +38,11 @@ class HistoriesTableTest extends TestCase
         $this->Histories = TableRegistry::get('Histories', $config);
     }
 
-/**
- * tearDown method
- *
- * @return void
- */
+    /**
+     * tearDown method
+     *
+     * @return void
+     */
     public function tearDown()
     {
         unset($this->Histories);
@@ -49,21 +50,21 @@ class HistoriesTableTest extends TestCase
         parent::tearDown();
     }
 
-/**
- * Test initialize method
- *
- * @return void
- */
+    /**
+     * Test initialize method
+     *
+     * @return void
+     */
     public function testInitialize()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-/**
- * Test validationDefault method
- *
- * @return void
- */
+    /**
+     * Test validationDefault method
+     *
+     * @return void
+     */
     public function testValidationDefault()
     {
         $this->markTestIncomplete('Not implemented yet.');

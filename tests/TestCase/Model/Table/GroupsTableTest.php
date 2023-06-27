@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Test\TestCase\Model\Table;
 
 use Cake\ORM\TableRegistry;
@@ -11,36 +12,36 @@ use Cake\TestSuite\TestCase;
 class GroupsTableTest extends TestCase
 {
 
-/**
- * Fixtures
- *
- * @var array
- */
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
     public $fixtures = [
-        'app.groups',
-        'app.groups_users',
-        'app.users',
-        'app.events',
-        'app.histories',
-        'app.contacts',
-        'app.zips',
-        'app.countries',
-        'app.contactsources',
-        'app.contacts_groups',
-        'app.contacts_users',
-        'app.skills',
-        'app.contacts_skills',
-        'app.units',
-        'app.notifications',
-        'app.usergroups',
-        'app.users_usergroups'
+        'app.Groups',
+        'app.GroupsUsers',
+        'app.Users',
+        'app.Events',
+        'app.Histories',
+        'app.Contacts',
+        'app.Zips',
+        'app.Countries',
+        'app.Contactsources',
+        'app.ContactsGroups',
+        'app.ContactsUsers',
+        'app.Skills',
+        'app.ContactsSkills',
+        'app.Units',
+        'app.Notifications',
+        'app.Usergroups',
+        'app.UsersUsergroups'
     ];
 
-/**
- * setUp method
- *
- * @return void
- */
+    /**
+     * setUp method
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -48,11 +49,11 @@ class GroupsTableTest extends TestCase
         $this->Groups = TableRegistry::get('Groups', $config);
     }
 
-/**
- * tearDown method
- *
- * @return void
- */
+    /**
+     * tearDown method
+     *
+     * @return void
+     */
     public function tearDown()
     {
         unset($this->Groups);
@@ -79,55 +80,55 @@ class GroupsTableTest extends TestCase
 
     public function testIsAdmin()
     {
-        $actual = $this->Groups->isAdmin(2,3);
+        $actual = $this->Groups->isAdmin(2, 3);
         $this->assertTrue($actual);
 
-        $actual = $this->Groups->isAdmin(1,3);
+        $actual = $this->Groups->isAdmin(1, 3);
         $this->assertFalse($actual);
     }
 
     public function testIsWritable()
     {
-        $actual = $this->Groups->isWritable(2,1);
+        $actual = $this->Groups->isWritable(2, 1);
         $this->assertTrue($actual);
 
-        $actual = $this->Groups->isWritable(3,1);
+        $actual = $this->Groups->isWritable(3, 1);
         $this->assertFalse($actual);
 
-        $actual = $this->Groups->isWritable(2,2);
+        $actual = $this->Groups->isWritable(2, 2);
         $this->assertTrue($actual);
 
-        $actual = $this->Groups->isWritable(2,null);
+        $actual = $this->Groups->isWritable(2, null);
         $this->assertFalse($actual);
     }
 
     public function testIsReadable()
     {
-        $actual = $this->Groups->isReadable(2,1);
+        $actual = $this->Groups->isReadable(2, 1);
         $this->assertTrue($actual);
 
-        $actual = $this->Groups->isReadable(3,3);
+        $actual = $this->Groups->isReadable(3, 3);
         $this->assertFalse($actual);
 
-        $actual = $this->Groups->isReadable(3,1);
+        $actual = $this->Groups->isReadable(3, 1);
         $this->assertTrue($actual);
     }
 
-/**
- * Test initialize method
- *
- * @return void
- */
+    /**
+     * Test initialize method
+     *
+     * @return void
+     */
     public function testInitialize()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-/**
- * Test validationDefault method
- *
- * @return void
- */
+    /**
+     * Test validationDefault method
+     *
+     * @return void
+     */
     public function testValidationDefault()
     {
         $this->markTestIncomplete('Not implemented yet.');

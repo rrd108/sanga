@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Test\TestCase\Model\Table;
 
 use Cake\ORM\TableRegistry;
@@ -11,22 +12,22 @@ use Cake\TestSuite\TestCase;
 class UsergroupsTableTest extends TestCase
 {
 
-/**
- * Fixtures
- *
- * @var array
- */
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
     public $fixtures = [
-        'app.usergroups',
-        'app.users',
-        'app.users_usergroups'
+        'app.Usergroups',
+        'app.Users',
+        'app.UsersUsergroups'
     ];
 
-/**
- * setUp method
- *
- * @return void
- */
+    /**
+     * setUp method
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -34,11 +35,11 @@ class UsergroupsTableTest extends TestCase
         $this->Usergroups = TableRegistry::get('Usergroups', $config);
     }
 
-/**
- * tearDown method
- *
- * @return void
- */
+    /**
+     * tearDown method
+     *
+     * @return void
+     */
     public function tearDown()
     {
         unset($this->Usergroups);
@@ -46,21 +47,21 @@ class UsergroupsTableTest extends TestCase
         parent::tearDown();
     }
 
-/**
- * Test initialize method
- *
- * @return void
- */
+    /**
+     * Test initialize method
+     *
+     * @return void
+     */
     public function testInitialize()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-/**
- * Test validationDefault method
- *
- * @return void
- */
+    /**
+     * Test validationDefault method
+     *
+     * @return void
+     */
     public function testValidationDefault()
     {
         $this->markTestIncomplete('Not implemented yet.');
@@ -100,5 +101,4 @@ class UsergroupsTableTest extends TestCase
         $expected = [1, 2];
         $this->AssertEquals($expected, $actual);
     }
-
 }

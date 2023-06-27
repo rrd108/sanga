@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\DocumentsTable;
@@ -17,25 +18,25 @@ class DocumentsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.documents',
-        'app.contacts',
-        'app.zips',
-        'app.countries',
-        'app.contactsources',
-        'app.histories',
-        'app.users',
-        'app.events',
-        'app.notifications',
-        'app.settings',
-        'app.contacts_users',
-        'app.groups',
-        'app.contacts_groups',
-        'app.groups_users',
-        'app.usergroups',
-        'app.users_usergroups',
-        'app.units',
-        'app.skills',
-        'app.contacts_skills'
+        'app.Documents',
+        'app.Contacts',
+        'app.Zips',
+        'app.Countries',
+        'app.Contactsources',
+        'app.Histories',
+        'app.Users',
+        'app.Events',
+        'app.Notifications',
+        'app.Settings',
+        'app.ContactsUsers',
+        'app.Groups',
+        'app.ContactsGroups',
+        'app.GroupsUsers',
+        'app.Usergroups',
+        'app.UsersUsergroups',
+        'app.Units',
+        'app.Skills',
+        'app.ContactsSkills'
     ];
 
     /**

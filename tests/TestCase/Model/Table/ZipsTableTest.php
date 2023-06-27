@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\ZipsTable;
@@ -17,8 +18,8 @@ class ZipsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'Zips' => 'app.zips',
-        'Countries' => 'app.countries'
+        'Zips' => 'app.Zips',
+        'Countries' => 'app.Countries'
     ];
 
     /**
@@ -74,7 +75,7 @@ class ZipsTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
-    
+
     public function testGetIdForZip()
     {
         $actual = $this->Zips->getIdForZip(1012);

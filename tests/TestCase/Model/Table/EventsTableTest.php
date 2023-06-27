@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Test\TestCase\Model\Table;
 
 use Cake\ORM\TableRegistry;
@@ -11,38 +12,38 @@ use Cake\TestSuite\TestCase;
 class EventsTableTest extends TestCase
 {
 
-/**
- * Fixtures
- *
- * @var array
- */
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
     public $fixtures = [
-        'app.events',
-        'app.users',
-        'app.groups',
-        'app.histories',
-        'app.contacts',
-        'app.zips',
-        'app.countries',
-        'app.contactsources',
-        'app.contacts_groups',
-        
-        
-        
-        'app.contacts_users',
-        'app.skills',
-        'app.contacts_skills',
-        'app.units',
-        'app.notifications',
-        'app.usergroups',
-        'app.users_usergroups'
+        'app.Events',
+        'app.Users',
+        'app.Groups',
+        'app.Histories',
+        'app.Contacts',
+        'app.Zips',
+        'app.Countries',
+        'app.Contactsources',
+        'app.ContactsGroups',
+
+
+
+        'app.ContactsUsers',
+        'app.Skills',
+        'app.ContactsSkills',
+        'app.Units',
+        'app.Notifications',
+        'app.Usergroups',
+        'app.UsersUsergroups'
     ];
 
-/**
- * setUp method
- *
- * @return void
- */
+    /**
+     * setUp method
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -50,11 +51,11 @@ class EventsTableTest extends TestCase
         $this->Events = TableRegistry::get('Events', $config);
     }
 
-/**
- * tearDown method
- *
- * @return void
- */
+    /**
+     * tearDown method
+     *
+     * @return void
+     */
     public function tearDown()
     {
         unset($this->Events);
@@ -62,21 +63,21 @@ class EventsTableTest extends TestCase
         parent::tearDown();
     }
 
-/**
- * Test initialize method
- *
- * @return void
- */
+    /**
+     * Test initialize method
+     *
+     * @return void
+     */
     public function testInitialize()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-/**
- * Test validationDefault method
- *
- * @return void
- */
+    /**
+     * Test validationDefault method
+     *
+     * @return void
+     */
     public function testValidationDefault()
     {
         $this->markTestIncomplete('Not implemented yet.');

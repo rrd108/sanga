@@ -84,9 +84,6 @@ try {
 if (file_exists(CONFIG . 'app_local.php')) {
     Configure::load('app_local', 'default');
 }
-if (file_exists(CONFIG . 'extras.php')) {
-    Configure::load('extras', 'default');
-}
 
 /*
  * When debug = true the metadata cache should only last
@@ -206,5 +203,3 @@ Type::build('timestamp')
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
-
-require __DIR__ . '/events.php';

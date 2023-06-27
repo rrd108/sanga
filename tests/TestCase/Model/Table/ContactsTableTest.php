@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Test\TestCase\Model\Table;
 
 use Cake\ORM\TableRegistry;
@@ -14,39 +15,39 @@ use Cake\Collection\Collection;
 class ContactsTableTest extends TestCase
 {
 
-/**
- * Fixtures
- *
- * @var array
- */
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
     public $fixtures = [
-        'Contacts' => 'app.contacts',
-        'Zips' => 'app.zips',
-        'Countries' => 'app.countries',
-        'WorkplaceZips' => 'app.zips',
-        'Contactsources' => 'app.contactsources',
-        'Histories' => 'app.histories',
-        'Users' => 'app.users',
-        'Events' => 'app.events',
-        'AdminGroups' => 'app.groups',
-        'AdminUsers' => 'app.users',
-        'Notifications' => 'app.notifications',
-        'ContactsUsers' => 'app.contacts_users',
-        'Groups' => 'app.groups',
-        'ContactsGroups' => 'app.contacts_groups',
-        'groups_users' => 'app.groups_users',
-        'Usergroups' => 'app.usergroups',
-        'UsersUsergroups' => 'app.users_usergroups',
-        'Units' => 'app.units',
-        'Skills' => 'app.skills',
-        'ContactsSkills' => 'app.contacts_skills'
+        'Contacts' => 'app.Contacts',
+        'Zips' => 'app.Zips',
+        'Countries' => 'app.Countries',
+        'WorkplaceZips' => 'app.Zips',
+        'Contactsources' => 'app.Contactsources',
+        'Histories' => 'app.Histories',
+        'Users' => 'app.Users',
+        'Events' => 'app.Events',
+        'AdminGroups' => 'app.Groups',
+        'AdminUsers' => 'app.Users',
+        'Notifications' => 'app.Notifications',
+        'ContactsUsers' => 'app.ContactsUsers',
+        'Groups' => 'app.Groups',
+        'ContactsGroups' => 'app.ContactsGroups',
+        'groups_users' => 'app.GroupsUsers',
+        'Usergroups' => 'app.Usergroups',
+        'UsersUsergroups' => 'app.UsersUsergroups',
+        'Units' => 'app.Units',
+        'Skills' => 'app.Skills',
+        'ContactsSkills' => 'app.ContactsSkills'
     ];
 
-/**
- * setUp method
- *
- * @return void
- */
+    /**
+     * setUp method
+     *
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -54,11 +55,11 @@ class ContactsTableTest extends TestCase
         $this->Contacts = TableRegistry::get('Contacts', $config);
     }
 
-/**
- * tearDown method
- *
- * @return void
- */
+    /**
+     * tearDown method
+     *
+     * @return void
+     */
     public function tearDown()
     {
         unset($this->Contacts);
@@ -146,16 +147,16 @@ class ContactsTableTest extends TestCase
         $actual = $this->Contacts->checkDuplicatesOnGeo();
         $expected = [
             [
-            'id1' => 3,
-            'id2' => 4,
-            'field' => 'geo',
-            'data' => '3287 & Nitáj krt 26 : 3287 & Nitáj krt 25'
+                'id1' => 3,
+                'id2' => 4,
+                'field' => 'geo',
+                'data' => '3287 & Nitáj krt 26 : 3287 & Nitáj krt 25'
             ],
             [
-            'id1' => 5,
-            'id2' => 7,
-            'field' => 'geo',
-            'data' => '3 & Temesvári utca 6. : 3 & Temesvári utca 5.'
+                'id1' => 5,
+                'id2' => 7,
+                'field' => 'geo',
+                'data' => '3 & Temesvári utca 6. : 3 & Temesvári utca 5.'
             ]
         ];
         $this->assertEquals($expected, $actual);
@@ -182,10 +183,10 @@ class ContactsTableTest extends TestCase
                 'field' => 'name',
                 'data' => 'Lokanatha dasa & Borsos László : Borsos László & Dvaipayan pr',
                 'levenshtein' => [
-                   'lcc' => 13,
-                   'lcl' => 12,
-                   'llc' => 0,
-                   'lll' => 13
+                    'lcc' => 13,
+                    'lcl' => 12,
+                    'llc' => 0,
+                    'lll' => 13
                 ]
             ]
         ];
@@ -199,9 +200,9 @@ class ContactsTableTest extends TestCase
     public function testFindOwnedBy()
     {
         $actual = $this->Contacts->find('ownedBy', ['User.id' => 2])
-        ->hydrate(false)
-        ->extract('id')
-        ->toArray();
+            ->hydrate(false)
+            ->extract('id')
+            ->toArray();
         $expected = [2, 3, 4, 5];
         $this->assertEquals($expected, $actual);
     }
@@ -348,28 +349,36 @@ class ContactsTableTest extends TestCase
     public function testHasAccess()
     {
         $actual = $this->filterHasAccess($this->Contacts->hasAccess(3));
-        $expected = ['contactPersons' => [2],
-                    'groupMembers' => [],
-                    'usergroupMembers' => []];
+        $expected = [
+            'contactPersons' => [2],
+            'groupMembers' => [],
+            'usergroupMembers' => []
+        ];
         $this->assertEquals($expected, $actual);
 
         $actual = $this->filterHasAccess($this->Contacts->hasAccess(5));
-        $expected = ['contactPersons' => [2, 3],
-                    'groupMembers' => [],
-                    'usergroupMembers' => [1, 3]];
+        $expected = [
+            'contactPersons' => [2, 3],
+            'groupMembers' => [],
+            'usergroupMembers' => [1, 3]
+        ];
         $this->assertEquals($expected, $actual);
 
         $actual = $this->filterHasAccess($this->Contacts->hasAccess(2));
         //debug($actual);
-        $expected = ['contactPersons' => [2],
-                    'groupMembers' => [1, 2],
-                    'usergroupMembers' => []];
+        $expected = [
+            'contactPersons' => [2],
+            'groupMembers' => [1, 2],
+            'usergroupMembers' => []
+        ];
         $this->assertEquals($expected, $actual);
 
         $actual = $this->filterHasAccess($this->Contacts->hasAccess(6));
-        $expected = ['contactPersons' => [3],
-                    'groupMembers' => [2],
-                    'usergroupMembers' => [1, 3]];
+        $expected = [
+            'contactPersons' => [3],
+            'groupMembers' => [2],
+            'usergroupMembers' => [1, 3]
+        ];
         $this->assertEquals($expected, $actual);
     }
 
@@ -450,7 +459,7 @@ class ContactsTableTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-        public function testRemoveEmptyConditions()
+    public function testRemoveEmptyConditions()
     {
         $class = new \ReflectionClass($this->Contacts);
         $method = $class->getMethod('removeEmptyConditions');
@@ -579,7 +588,7 @@ class ContactsTableTest extends TestCase
             ],
             'WorkplaceZips.name' => [
                 'connect' => '&',
-                'condition' => ['&%','|%'],
+                'condition' => ['&%', '|%'],
                 'value' => ['buda', 'pest']
             ],
             'Groups.name' => [
@@ -668,9 +677,11 @@ class ContactsTableTest extends TestCase
                 '_limit' => 20,
                 '_order' => ['Contacts.contactname' => 'ASC'],
                 '_page' => 1,
-                '_select' => ['Contacts.active', 'Contacts.id', 'Contacts.sex', 'Contacts.contactname',
+                '_select' => [
+                    'Contacts.active', 'Contacts.id', 'Contacts.sex', 'Contacts.contactname',
                     'Contacts.legalname', 'Zips.name', 'WorkplaceZips.name', 'Groups.name', 'Histories.date',
-                    'Events.name'],
+                    'Events.name'
+                ],
                 '_where' => [
                     'Contacts.contactname' => [
                         'condition' => ['&%'],
@@ -707,7 +718,8 @@ class ContactsTableTest extends TestCase
                         'value' => ['email']
                     ]
                 ]
-            ]);
+            ]
+        );
         $expected = [
             [
                 'Zips.name' => [
@@ -793,41 +805,41 @@ class ContactsTableTest extends TestCase
     }
 
 
-        /**
- * Test initialize method
- *
- * @return void
- */
+    /**
+     * Test initialize method
+     *
+     * @return void
+     */
     public function testInitialize()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-/**
- * Test validationDefault method
- *
- * @return void
- */
+    /**
+     * Test validationDefault method
+     *
+     * @return void
+     */
     public function testValidationDefault()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-/**
- * Test beforeSave method
- *
- * @return void
- */
+    /**
+     * Test beforeSave method
+     *
+     * @return void
+     */
     public function testBeforeSave()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-/**
- * Test afterSave method
- *
- * @return void
- */
+    /**
+     * Test afterSave method
+     *
+     * @return void
+     */
     public function testAfterSave()
     {
         $this->markTestIncomplete('Not implemented yet.');

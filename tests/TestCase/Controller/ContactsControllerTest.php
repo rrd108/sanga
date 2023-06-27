@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\ContactsController;
@@ -16,25 +17,25 @@ class ContactsControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.contacts',
-        'app.zips',
-        'app.countries',
-        'app.contactsources',
-        'app.histories',
-        'app.users',
-        'app.events',
-        'app.notifications',
-        'app.settings',
-        'app.contacts_users',
-        'app.groups',
-        'app.contacts_groups',
-        'app.groups_users',
-        'app.usergroups',
-        'app.users_usergroups',
-        'app.units',
-        'app.documents',
-        'app.skills',
-        'app.contacts_skills'
+        'app.Contacts',
+        'app.Zips',
+        'app.Countries',
+        'app.Contactsources',
+        'app.Histories',
+        'app.Users',
+        'app.Events',
+        'app.Notifications',
+        'app.Settings',
+        'app.ContactsUsers',
+        'app.Groups',
+        'app.ContactsGroups',
+        'app.GroupsUsers',
+        'app.Usergroups',
+        'app.UsersUsergroups',
+        'app.Units',
+        'app.Documents',
+        'app.Skills',
+        'app.ContactsSkills'
     ];
 
     public function testAddUnauthenticatedFails()
@@ -43,7 +44,8 @@ class ContactsControllerTest extends IntegrationTestCase
         $this->assertRedirect(['controller' => 'Users', 'action' => 'login']);
     }
 
-    private function authenticate(){
+    private function authenticate()
+    {
         $this->session([
             'Auth' => [
                 'User' => [
